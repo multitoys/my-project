@@ -1,0 +1,78 @@
+.scroll-pane { 
+	    width: 130px; /* Ширина видимой области*/
+	    height: 70px; /* Высота видимой области*/
+	    overflow: auto; /* Если отключены скрипты это правило позволит отобразить обычный скролл */
+	}
+
+
+
+
+/*
+	ScrollBar Styles
+*/
+
+
+.jScrollPaneContainer {
+	position: relative;
+	overflow: hidden;
+	z-index: 1;
+}
+
+
+.jScrollPaneTrack {
+	position: absolute;
+	cursor: pointer;
+	right: 0;
+	top: 0;
+	height: 100%;
+	background: url(scrollTrak.gif) repeat-y;
+}
+.jScrollPaneDrag {
+	position: absolute;
+	background: url(scrollDrag.gif) repeat-y;
+	cursor: pointer;
+	overflow: hidden;
+	left:1px;
+}
+
+.jScrollPaneDragTop {
+	position: absolute;
+	top: 0;
+	left: 0;
+	overflow: hidden;
+	background: url(scrollDragTop.gif) no-repeat;
+	height:3px;
+}
+
+.jScrollPaneDragBottom {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	overflow: hidden;
+	background: url(scrollDragBot.gif) no-repeat;
+	height:3px;
+}
+
+a.jScrollArrowUp {
+	display: block;
+	position: absolute;
+	z-index: 1;
+	top: 0;
+	right: 0;
+	text-indent: -2000px;
+	overflow: hidden;
+	height: 18px;
+	background: url(arrow_up.gif) no-repeat;
+}
+
+a.jScrollArrowDown {
+	display: block;
+	position: absolute;
+	z-index: 1;
+	bottom: 0;
+	right: 0;
+	text-indent: -2000px;
+	overflow: hidden;
+	height: 18px;
+	background: url(arrow_down.gif) no-repeat;
+}

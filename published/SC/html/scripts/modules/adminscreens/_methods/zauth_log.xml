@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interfaces>
+    <interface>
+        <name>zauth_log</name>
+        <key>zauth_log</key>
+    </interface>
+</interfaces>

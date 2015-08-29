@@ -1,0 +1,46 @@
+{* product top *}
+{strip}
+<div class=product_topview_area>
+	<h1>{"$str"|translate}</h1>
+	{if $str eq 'str_akcia_items'}
+		<a href="/category/akcija/">Посмотреть все акционные товары...</a>
+	{/if}
+    <ul>
+        {foreach from=$top item=_top}
+        <li>
+            <div class=topview-pict>
+                <a href='{"?productID=`$_top.productID`&product_slug=`$_top.slug`"|set_query_html}'>
+                {if $_top.thumbnail || $_top.picture}
+                     <img width=160 height=120 src="{$smarty.const.URL_PRODUCTS_PICTURES}/{if $_top.thumbnail}{$_top.thumbnail|escape:'url'}{else}{$_top.picture|escape:'url'}{/if}" alt="{$_top.name|escape:'html'}" title="{$_top.name|escape:'html'}">
+                {else}
+                    <img width=153 height=117 src='/img/nophoto.jpg'>
+                {/if}
+                </a>
+                <div class="corner right_list color
+                    {if $_top.akcia}
+                        _akcia"><span></span>Акция{if $_top.akcia_skidka > 0} - {$_top.akcia_skidka}%{/if}
+                    {elseif $_top.sort_order}
+                        _newitemspostup"><span></span>Новое поступление
+                    {elseif $_top.items_sold}
+                        _hit"><span></span>Хит продаж
+                    {else}
+                        ">
+                    {/if}
+                </div>
+                <p><a href='{"?productID=`$_top.productID`&product_slug=`$_top.slug`"|set_query_html}'>{$_top.name}</a></p>
+            </div>
+            <div class=topview-price>
+				{if $_top.list_price > 0}
+					старая цена&nbsp;<span class=list_price>{$_top.list_price_str}</span><br>
+					<span style="color: blue;">новая цена&nbsp;</span>
+					<span class=akcia>{$_top.price_str}</span>
+                {elseif $_top.Price}
+					{$_top.price_str}
+				{/if}
+            </div>
+        </li>
+        {/foreach}
+    </ul>
+    <div class=clear></div>
+</div>
+{/strip}

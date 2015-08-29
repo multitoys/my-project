@@ -41,3 +41,58 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+
+# ===============
+# Project Files
+# ===============
+
+*.jpg
+*.png
+*.gif
+*.swf
+*.txt
+*.psd
+*.log
+*.csv
+*[0-9].*
+*[0-9]
+[0-9]*.html
+[0-9]*.php
+.idea/
+data/
+dblist/
+*images*/
+*img*/
+includes/
+installer/
+login/
+moving.page/
+temp/
+shop/
+suspended.page/
+system/
+upload/
+webstat/
+kernel/
+published/AA/
+published/common/
+published/docs/
+published/login/
+published/MW/
+published/UG/
+published/wbsadmin/
+published/WG/
+*pictures*/
+published/publicdata/MULTITOYS/attachments/SC/rss/
+published/publicdata/MULTITOYS/attachments/SC/sitemap/
+published/publicdata/MULTITOYS/attachments/SC/themes/multitoys02112014/
+published/publicdata/MULTITOYS/attachments/SC/themes/multitoys/
+published/publicdata/MULTITOYS/attachments/SC/themes/user_multi-new/temp_overridestyles/
+published/SC/classes/
+published/SC/help/
+published/SC/localization/
+published/SC/html/cssbased/
+published/SC/html/scripts/3rdparty/
+published/SC/html/scripts/callbackhandlers/
+published/SC/html/scripts/tinymce/
+published/SC/html/scripts/repo_themes/

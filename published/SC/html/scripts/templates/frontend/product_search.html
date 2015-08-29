@@ -1,0 +1,18 @@
+<div class="z">
+<table border="0">
+<tr><td valign="top">
+<form action="{'?ukey=search'|set_query_html}" method="post">
+{assign var=_str value='search_products'|transcape}
+<input type="text" id="searchstring" name="searchstring" value='{$searchstring|default:$_str}' rel="{'search_products'|transcape}" class="input_message"/>
+</td><td width="26" height="23" class="ok" valign="top">
+<span style="margin-left:10px">
+<a href="/multi/shop/index.php?ukey=search">OK</a>
+</span>
+</form>
+</td></tr></table>
+</div>
+<!--
+<input type="submit" value="{'btn_find'|transcape}" class="ok" border="0"/>
+</td></tr></table>
+</form>
+-->

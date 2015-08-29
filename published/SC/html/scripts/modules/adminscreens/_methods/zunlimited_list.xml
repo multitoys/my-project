@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interfaces>
+    <interface>
+        <name>zunlimited_list</name>
+        <key>zunlimited_list</key>
+    </interface>
+</interfaces>

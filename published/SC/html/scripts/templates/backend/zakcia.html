@@ -1,0 +1,63 @@
+<style type="text/css">
+{literal}
+
+.akcia-body {
+	padding: 10px;
+}
+
+{/literal}
+</style>
+
+<div class="akcia-body">
+	<h3>Акции</h3>
+
+	{if $GridRows}
+	<table class="grid" width="100%">
+	<tr class="gridsheader">
+		<td>ID</td>
+		<td>Наименование</td>
+		<td>Дата начала</td>
+		<td>Дата окончания</td>
+		<td align="center">Опубликован</td>
+		<td align="center">Удалить</td>
+	</tr>
+
+	{foreach from=$GridRows item=_row}
+	{assign var="_answer_url" value="&akciaID=`$_row.akciaID`"|set_query_html}
+	<tr class="{cycle values='gridline,gridline1'}">
+		<td nowrap="nowrap"><a href='{$_answer_url}'>{$_row.akciaID}</a></td>
+		<td nowrap="nowrap"><a href='{$_answer_url}'>{$_row.name_ru}</a></td>
+		<td><a href='{$_answer_url}'>{$_row.start_date|date_format:"%d.%m.%Y %H:%M"}</a></td>
+		<td><a href='{$_answer_url}'>{$_row.end_date|date_format:"%d.%m.%Y %H:%M"}</a></td>
+		<td align="center">
+		{if $_row.enabled==1}
+			<a href='{"unpublish=`$_row.akciaID`"|set_query_html}' title="{"Скрыть?"|translate}" class="confirm_action">
+				<img src="images_common/star1.gif" alt="{"Скрыть?"|translate}" />
+			</a>
+		{else}
+			<a href='{"publish=`$_row.akciaID`"|set_query_html}' title="{"Опубликовать?"|translate}" class="confirm_action">
+				<img src="images_common/starvote.gif" alt="{"Опубликовать?"|translate}" />
+			</a>
+		{/if}
+		</td>
+		<td align="center">
+			<a href='{"delete=`$_row.akciaID`"|set_query_html}' title='{"cnfrm_delete"|translate}' class="confirm_action">
+				<img src="images_common/remove.gif" alt="{"btn_delete"|translate}" />
+			</a>
+		</td>
+	</tr>
+	{/foreach}
+
+	<tr class="gridsfooter"> 
+		
+	</tr>
+	</table>
+	{/if}
+	<br>
+	<br>
+	<form method="POST" name="add_akcia">
+		<input name="akcia_action" value="add" hidden />
+		<input type="submit" value="Создать новую акцию" />
+	</form>
+
+</div>

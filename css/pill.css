@@ -1,0 +1,24 @@
+/* Pill style */
+#scrollUp {
+    bottom: 50px;
+    left: 65px;
+    background: #FF7F50;
+    color: #FFFFFF;
+    font-size: 12px;
+    font-family: sans-serif;
+    text-decoration: none;
+    opacity: 0.75;
+    padding: 10px 15px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    -webkit-transition: opacity 200ms linear;
+    -moz-transition: opacity 200ms linear;
+    transition: opacity 200ms linear;
+}
+#scrollUp:hover {
+    /* background: #BC2040; */
+
+    opacity: 1;
+    box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.40), -2px -2px 3px rgba(0, 0, 0, 0.40);
+}

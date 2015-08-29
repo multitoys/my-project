@@ -1,0 +1,386 @@
+{*<!-- <script type="text/javascript" src="{$smarty.const.URL_JS}/JsHttpRequest.js"></script>
+<script type='text/javascript' src='{$smarty.const.URL_JS}/jquery.1.4.2.js'></script>
+<script type='text/javascript' src='/js/jquery.spin.js'></script>
+<script type='text/javascript' src='/js/jquery.tooltip.js'></script>
+
+{literal}
+<SCRIPT>
+  $(document).ready(function()
+  {
+    $('.preview').tooltip({
+      delay: 0,
+      showURL: false,
+      bodyHandler: function()
+      {
+          return $("<img/>").attr("src", $(this).attr('pid'));
+      }
+    });
+
+  });
+</SCRIPT>
+{/literal}
+ -->*}
+<div id="blck-content">
+
+{*if "IMPORT"|cs_import_lock}
+    <span style="font-size: 16px;">Подождите пожалуйста, идет обновление остатков. Это займет не более 10 минут</span>
+
+{else*}
+
+<table cellpadding="0" cellspacing="0" width="100%">
+<tr>
+	<td {if $PAGE_VIEW eq 'noframe'}class="background_cart_top"{/if} id="cart_page_title">
+		<h1 style='margin:0;'>{$CurrentDivision.name|translate}</h1>
+	{*if $cart_content&&!$widget_view*}
+	<div>
+		<a id="my_closeLink" href='{"?ukey=home&view=frame"|set_query_html}' target="_parent" onclick="window.history.back()">
+			{lbl_goto_shopping}
+		</a>
+	</div>
+	{*/if*}
+	</td>
+	{*if $cart_content}
+	<td {if $PAGE_VIEW eq 'noframe'}class="background_cart_top"{/if} id="cart_clear" style='text-align:right;'>
+	  <a href='{"clear_cart=yes"|set_query}'>{"cart_clear_cart"|translate}</a>
+	</td>
+	{/if*}
+</tr>
+</table>
+
+<div {if $PAGE_VIEW eq 'noframe'}class="paddingblock"{/if}>
+
+{$MessageBlock}
+
+{* shopping cart *}
+
+{if $cart_content}
+	{if $make_more_exact_cart_content}
+	<p>{"cart_items_left_from_prev_session"|translate}</p>
+	{/if}
+	{*if $cart_amount lt $smarty.const.CONF_MINIMAL_ORDER_AMOUNT & $cart_error_show eq 1 & !$MessageBlock*}
+	<div class='error_block'><span class="error_flag" style="font-size: 150%; color: red;">{"cart_min_order_amount_not_reached"|translate} {$cart_min}</span></div>
+	{*/if*}
+
+	<form action="{''|set_query_html}" name="ShoppingCartForm" method="post" target="_self">
+	<input type="hidden" name="update" value="1" />
+	<input type="hidden" name="shopping_cart" value="1" />
+	<table id="cart_content_tbl" cellspacing="0">
+    <colgroup>
+        <col width="1%" />
+        <col width="1%" />
+        <col width="35%" />
+        <col width="12%" />
+        <col width="10%" />
+        <col width="10%" />
+		<col width="10%" />
+        <col width="13%" />
+        <col width="8%" />
+    </colgroup>
+	<tr id="cart_content_header">
+		<td></td>
+		<td></td>
+		<td align="center">
+            <a href="/?ukey=cart&sort=name&direction={if $direction=='ASC'}DESC{else}ASC{/if}">
+            <table><tr><td>Наименование товара</td><td>
+                <div class="{if $direction=='ASC'&&$sort=='name'}z_sort_desc{else}z_sort_asc{/if}"></div>
+            </td></tr></table>
+        </a>
+        </td>
+		<td align="center"><a href="/?ukey=cart&sort=Price&direction={if $direction=='ASC'}DESC{else}ASC{/if}">
+            <table><tr><td>Цена</td><td>
+                <div class="{if $direction=='ASC'&&$sort=='Price'}z_sort_desc{else}z_sort_asc{/if}"></div>
+            </td></tr></table>
+        </a></td>
+        <td align="center"><a href="/?ukey=cart&sort=Bonus&direction={if $direction=='ASC'}DESC{else}ASC{/if}">
+            <table><tr><td>Кол-во бонусов</td><td>
+                <div class="{if $direction=='ASC'&&$sort=='Bonus'}z_sort_desc{else}z_sort_asc{/if}"></div>
+            </td></tr></table>
+            </a>
+        </td>
+        <td align="center">
+            <table><tr><td>Остаток</td></tr></table>
+        </td>
+		<td align="center"><a href="/?ukey=cart&sort=count&direction={if $direction=='ASC'}DESC{else}ASC{/if}">
+            <table><tr><td>{lbl_cart_product_quantity}</td><td>
+                <div class="{if $direction=='ASC'&&$sort=='count'}z_sort_desc{else}z_sort_asc{/if}"></div>
+            </td></tr></table>
+        </a></td>
+		<td align="center">Сумма</td>
+		<td align="center">Удалить</td>
+	</tr>
+	{assign var="ProductsNum" value=0}
+	{assign var="num" value=1}
+	{section loop=$cart_content name=i}
+
+	<tr class='row_{cycle values="odd,even"}' style='height:20px;'>
+	  <td width="1%" align='right'>
+     	{$num++})
+    </td>
+		<td align="center" valign="top" width="1%">{if $cart_content[i].thumbnail_url}
+       <img class='preview' data-pid='{$cart_content[i].picture_url|escape:'html'}' src="{$cart_content[i].thumbnail_url|escape:'html'}" style="width:75px;" />
+		   {else}&nbsp;{/if}</td>
+		<td>
+			{if !$widget_view}
+			<a href='{"?ukey=product&productID=`$cart_content[i].productID`&product_slug=`$cart_content[i].slug`"|set_query_html}' {if $PAGE_VIEW eq 'noframe'}class="gofromfade"{/if}>{$cart_content[i].name} (арт.{$cart_content[i].product_code})</a>
+                {if $cart_content[i].productID|is_new_product>0}
+                    &nbsp;&nbsp;<span style='color: white; background-color: red;'>&nbsp;Новинка!&nbsp;</span>
+                {/if}
+
+			{else}
+			{$cart_content[i].name}
+                {if $cart_content[i].productID|is_new_product>0}
+                    &nbsp;&nbsp;<span style='color: white; background-color: red;'>&nbsp;Новинка!&nbsp;</span>
+                {/if}
+			{/if}
+		</td>
+		<td align="center">{$cart_content[i].costUC}</td>
+        <td align="center">
+            {$cart_content[i].Bonus|string_format:"%d"}&nbsp;бал.
+        </td>
+		<td align="center">{$cart_content[i].ostatok}&nbsp;шт.</td>
+		<td align="center" style='white-space:nowrap;'>
+			{assign var="ProductsNum" value=$ProductsNum+$cart_content[i].quantity}
+
+			{if $session_items}{assign var=_prdid value=$session_items[i]}
+			{else}{assign var=_prdid value=$cart_content[i].id}
+			{/if}
+
+			<input class="cart_product_quantity digit" type="text" maxlength="3" name="count_{$_prdid}" value="{$cart_content[i].quantity}" size="3" />
+
+			{if $cart_content[i].min_order_amount}
+			<div class="error_block"><span class="error_msg" style="font-size:150%; color: red;">
+				{"prdset_minimal_order_quantity"|translate}
+				{$cart_content[i].min_order_amount}
+				{"str_items"|translate}
+			</span></div>
+			{/if}
+		</td>
+		<td align="center" nowrap="nowrap">
+			{$cart_content[i].cost}
+		</td>
+		<td align="center">
+			<input type="checkbox" class='del_chkbtn' name='del_{$_prdid}' data-pid="{$_prdid}"/>
+			<a href='{"remove=`$_prdid`"|set_query_html}' title='{"btn_delete"|transcape}'>
+			<img src="{$smarty.const.URL_IMAGES}/remove.gif" alt='{"btn_delete"|transcape}' style='color:white;'/>
+			</a>
+		</td>
+	</tr>
+	{/section}
+
+    {if $cart_discount neq ''}
+    <tr>
+        <td colspan="3" class="cart_discount_label">
+            {"usr_custinfo_group_discount"|translate},&nbsp;{$discount_percent|string_format:'%0.1f%%'}
+        </td>
+        <td align="center" nowrap="nowrap">
+            - <span id="discount_value">{$cart_discount}</span>
+        </td>
+        <td></td>
+    </tr>
+    {/if}
+
+    {if $smarty.const.CONF_DSC_COUPONS_ENABLED eq 'Y'}
+    	<tr id="coupon_form" style="display: {if $current_coupon neq '0'}none{/if};">
+    		<td colspan="3" class="cart_discount_label">
+    			{"lbl_frnt_discount_coupon"|translate}:
+                <input type="text" size="12" maxlength="10" name="discount_coupon_code" id="discount_coupon_code" value="" onBlur="onApplyButtonClick();" onkeypress="return noenter(event);" />
+                <button type="button" onClick="onApplyButtonClick();"  tabindex="1001">{"btn_apply"|translate}</button>
+    		</td>
+    		<td align="center">
+                <span id="wrong_coupon_lbl" style="color: #666666; font-size: 80%; display: none;">{"lbl_wrong_coupon"|translate}</span>
+                <b id="processing_coupon_lbl" style="color: blue; display: none;">{"lbl_processing_coupon"|translate}</b>
+            </td>
+    	</tr>
+        <tr id="coupon_info" style="display: {if $current_coupon eq '0'}none{/if};">
+            <td colspan="3" class="cart_discount_label">
+                {"lbl_frnt_discount_coupon"|translate}:
+                <b id="coupon_info_code">{$current_coupon}</b>
+                <button type="button" onClick="onDeleteCouponClick();" tabindex="1002">{"btn_change"|translate}</button>
+            </td>
+            <td align="center">
+                - <span id="coupon_discount_value">{$coupon_discount}</span>
+            </td>
+        </tr>
+    {/if}
+
+    {if $cart_discount eq '' and $smarty.const.CONF_DSC_COUPONS_ENABLED eq 'N'}
+    <tr style="height: 30px;"></tr>
+    {/if}
+
+	<tr>
+		<td id="cart_total_label" colspan="3"></td>
+		<td align="center" style="color:blue; font-size: 110%;"><b>{"str_total"|translate}:</b></td>
+        <td align="center" style="color:green; font-size: 110%;"><b>{$bonus_total}</b>&nbsp;баллов</td>
+        <td></td><td></td>
+		<td id="cart_total" align="center" style="color:red; font-size: 110%;"><b>{$cart_total}</b></td>
+		<td align='right'></td>
+	</tr>
+	
+<tr style="height: 10px;"></tr>
+	<tr>
+		<td colspan='4' style='text-align:right;'>
+		  <input type='hidden' name="123" id="recalculate" value='123'>
+		  <input type="button" class="blue-button check" value='Обновить заказ' tabindex="1004" onclick='del_items();'/>
+		</td>
+		<td colspan="4"  style='text-align:left;' id="cart_checkout_btn">
+			<input type="submit" class="btn_checkout blue-button check" name="checkout" value="{"str_checkout"|translate}" id="btn-checkout" tabindex="1005" />
+
+			{if ($GoogleCheckout_CheckoutButton || $PPExpressCheckout_button) && $PAGE_VIEW ne 'mobile'}
+			<p>{lbl_cart_checkout_alternative}</p>
+			<table>
+			<tr>
+				<td valign="middle">{$GoogleCheckout_CheckoutButton}</td>
+				<td valign="middle">{$PPExpressCheckout_button}</td>
+			</tr>
+			</table>
+			{/if}
+		</td>
+	</tr>
+	</table>
+	</form>
+{else}
+
+	<p style="text-align: center;">{"cart_cart_is_empty"|translate}</p>
+{/if}
+</div>
+  <br>
+  {*"coming_soon"|cs_load_auxpage*}
+</div>
+
+{*<script type="text/javascript" language="javascript">
+{if $PAGE_VIEW eq 'noframe' && !$smarty.get.external} { adjust cart window height }
+
+	{literal}
+	function adjust_cart_window(){
+
+		var wndSize = getWindowSize(parent);
+
+		var scr_h = wndSize[1] - 100;
+		var wnd_h = getLayer('blck-content').offsetHeight + 85;
+		parent.resizeFadeIFrame(null, Math.min(scr_h, wnd_h));
+	}
+	{/literal}
+	adjust_cart_window();
+
+	{if $ProductsNum}
+		parent.document.getElementById('shpcrtgc').innerHTML="{$ProductsNum} {"srch_products_plural"|translate}";
+		parent.document.getElementById('shpcrtca').innerHTML='{$cart_total}';
+	{else}
+		parent.document.getElementById('shpcrtgc').innerHTML="{"cart_content_empty"|translate}";
+		parent.document.getElementById('shpcrtca').innerHTML="&nbsp;";
+	{/if}
+{/if}
+
+	{if $jsgoto}
+		document.getElementById('btn-checkout').disabled = true;
+		if (!top)closeFadeIFrame();
+	    if (top)top.location = "{$jsgoto}";
+	    else document.location.href = "{$jsgoto}";
+	{/if}
+
+{literal}
+
+function del_items()
+{
+  $(".del_chkbtn:checked").each(function(){
+    var id = $(this).attr('pid');
+    var query = '?ukey=cart&view=noframe&remove='+id;
+    $.ajax({
+      type: "GET",
+      url: query,
+      dataType: "html",
+      async: false
+    });
+  });
+  $('#recalculate').attr('name','recalculate');
+  $('form').submit();
+}
+
+function onApplyButtonClick()
+{
+    var coupon_code = document.getElementById('discount_coupon_code').value;
+    document.getElementById('wrong_coupon_lbl').style.display = 'none';
+    document.getElementById('processing_coupon_lbl').style.display = '';
+    document.forms['ShoppingCartForm'].recalculate.disabled = true;
+    document.forms['ShoppingCartForm'].checkout.disabled = true;
+
+    var req = new JsHttpRequest();
+    req.onreadystatechange = function()
+    {
+        if (req.readyState != 4)return;
+
+        document.getElementById('processing_coupon_lbl').style.display = 'none';
+        document.forms['ShoppingCartForm'].recalculate.disabled = false;
+        document.forms['ShoppingCartForm'].checkout.disabled = false;
+        if(req.responseJS.applied == 'N')
+        {
+            document.getElementById('wrong_coupon_lbl').style.display = '';
+            return;
+        };
+
+        document.getElementById('coupon_form').style.display = 'none';
+        document.getElementById('coupon_info').style.display = '';
+        document.getElementById('coupon_info_code').innerHTML = coupon_code;
+        document.getElementById('cart_total').innerHTML = req.responseJS.new_total_show_value;
+        {/literal}{if $PAGE_VIEW eq 'noframe' && !$smarty.get.external}{literal}
+            parent.document.getElementById('shpcrtca').innerHTML = req.responseJS.new_total_show_value;
+        {/literal}{/if}{literal}
+        if(req.responseJS.new_coupon_show != '')
+        {
+            document.getElementById('coupon_discount_value').innerHTML = req.responseJS.new_coupon_show;
+        };
+    };
+
+    try
+    {
+        req.open(null, set_query('&ukey=cart&caller=1&initscript=ajaxservice'), true);
+        req.send({'action': 'try_apply_discount_coupon', 'coupon_code': coupon_code});
+    }
+    catch ( e )
+    {
+      catchResult(e);
+    }
+    finally { ;}
+};
+
+function onDeleteCouponClick()
+{
+    var req = new JsHttpRequest();
+    req.onreadystatechange = function()
+    {
+        if (req.readyState != 4)return;
+        document.getElementById('coupon_form').style.display = '';
+        document.getElementById('wrong_coupon_lbl').style.display = 'none';
+        document.getElementById('coupon_info').style.display = 'none';
+        document.getElementById('discount_coupon_code').value = document.getElementById('coupon_info_code').innerHTML;
+        document.getElementById('cart_total').innerHTML = req.responseJS.new_total_show_value;
+        {/literal}{if $PAGE_VIEW eq 'noframe' && !$smarty.get.external}{literal}
+            parent.document.getElementById('shpcrtca').innerHTML = req.responseJS.new_total_show_value;
+        {/literal}{/if}{literal}
+    };
+
+    try
+    {
+        req.open(null, set_query('&ukey=cart&caller=1&initscript=ajaxservice'), true);
+        req.send({'action': 'remove_doscount_coupon'});
+    }
+    catch ( e )
+    {
+      catchResult(e);
+    }
+    finally { ;}
+};
+
+function noenter(event)
+{
+    if(event.keyCode == 13)
+    {
+        document.getElementById('discount_coupon_code').blur();
+        return false;
+    };
+};
+
+{/literal}
+</script>*}
+
+{*/if*}

@@ -1,0 +1,31 @@
+{literal}
+<style>
+
+.zu_body {
+	padding: 10px;
+}
+
+.zu_list td{
+
+}
+
+</style>
+{/literal}
+
+<div class="zu_body">
+	<h3>Список пользователей с открытым доступом</h3>
+	<table cellpadding=5 cellspacing=5 class="zu_list">
+		<tr style="background-color: #e5e5e5">
+			<td>Имя</td>
+			<td>Логин</td>
+			<td>Email</td>		
+		</tr>
+	{foreach from=$o_users item=foo}
+		<tr>
+			<td><a href="/index.php?ukey=user_info&userID={$foo.customerID}&rdid=22">{$foo.last_name} {$foo.first_name}</a></td>
+			<td><a href="/index.php?ukey=user_info&userID={$foo.customerID}&rdid=22">{$foo.Login}</a></td>
+			<td><a href="/index.php?ukey=user_info&userID={$foo.customerID}&rdid=22">{$foo.Email}</a></td>
+		</tr>
+	{/foreach}
+	</table>
+</div>

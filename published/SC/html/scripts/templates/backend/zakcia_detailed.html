@@ -1,0 +1,52 @@
+<script type="text/javascript" src="{$smarty.const.URL_JS}/jquery.1.4.2.js"></script>
+
+<style type="text/css">
+{literal}
+
+.akcia-body {
+	padding: 10px;
+}
+
+{/literal}
+</style>
+
+<div class="akcia-body">
+	<h3>Новая акция</h3>
+	<br>
+	<br>
+	<form name="add_akcia" method="POST">
+	<input name="akcia_action" value="{if $AkciaData}update_akcia{else}save_akcia{/if}" hidden />
+	{if $AkciaData}<input name="akciaID" value="{$AkciaData[0].akciaID}" hidden /> {/if}
+	<table>
+		<tr>
+			<td>Название:</td>
+			<td><input type="text" name="akcia_name" {if $AkciaData} value="{$AkciaData[0].name_ru}" {/if} /></td>
+		</tr>
+		<tr>
+			<td>Дата начала:</td>
+			<td><input type="text" class="datepickerTimeField" name="akcia_start" {if $AkciaData} value='{$AkciaData[0].start_date|date_format:"%d.%m.%Y %H:%M"}' {/if}/></td>
+		</tr>
+		<tr>
+			<td>Дата окончания:</td>
+			<td><input type="text" class="datepickerTimeField" name="akcia_end" {if $AkciaData} value='{$AkciaData[0].end_date|date_format:"%d.%m.%Y %H:%M"}' {/if}/></td>
+		</tr>
+		<tr>
+			<td>Описание:</td>
+			<td><textarea id="zaBody" class="mceEditor" name="za_body" cols="60" rows="10" >{if $AkciaData} {$AkciaData[0].text_ru} {/if}</textarea></td>
+		</tr>
+		<tr>
+			<td>Опубликовать:</td>
+			<td><input type="checkbox" name="akcia_enabled" {if $AkciaData&&$AkciaData[0].enabled==1} checked {/if} /></td>
+		</tr>
+		<tr>
+			<td><input type="submit" value="Сохранить" /></td>
+			<td></td>
+		</tr>
+	</table>
+</form>
+</div>
+
+<link type="text/css" href="{$smarty.const.URL_CSS}/latest.css" rel="Stylesheet" />
+<script type="text/javascript" src="{$smarty.const.URL_JS}/latest.js"></script>
+
+{include file="backend/tiny_mce_config.html"}

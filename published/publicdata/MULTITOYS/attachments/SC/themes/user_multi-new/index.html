@@ -1,0 +1,148 @@
+{strip}
+<div>
+	{if $smarty.session.log}
+		<div id="multi-logo-mini">
+            <!-- cpt_container_start -->
+            {cpt_logo file='logo_mini.png'}
+            <!-- cpt_container_end -->
+		</div>
+		<div id="out-login">
+			<div class="seans_out"><a href="/logout" id="logout">Выйти из сеанса</a></div>
+			<div><a href="/myaccount" id="myaccount">Личный кабинет</a></div>
+		</div>
+	{else}
+		<div id="multi-logo">
+			<!-- cpt_container_start[id=2] -->
+			{cpt_logo file='logo.png'}
+			<!-- cpt_container_end -->
+		</div>
+		<div id="pass-login">
+			{include file="`$smarty.const.DIR_FTPLS`/login2.html"}
+		</div>
+	{/if}
+		<div class="header{if $smarty.session.log} inlog{/if}">
+		{if $smarty.session.cs_may_order > 0}
+			<div>
+			  {welcome}, <span> {$smarty.session.cs_first_name} {$smarty.session.cs_last_name}</span>!
+			  {*if $smarty.session.log|cs_bonus>0}У Вас <span>{$smarty.session.log|cs_bonus} баллов</span>!{/if*}
+			  {if $smarty.session.cs_unlimited > 0}
+				 Вам открыт постоянный доступ!
+			  {else}
+				 Доступ открыт до <span>{$smarty.session.cs_may_order_until}</span>.
+			  {/if}
+			</div>
+		{/if}
+		</div>
+		<div id="header">
+			{if $smarty.session.log}
+                <div class="cpt_product_search">
+                    <form method="get" name="form" action="/search">
+                        <input type="text" class="input_message" rel="Поиск товаров" value="Поиск товаров" name="searchstring"  autocomplete="off" id="searchstring">
+                        <input type="submit" value="" id='search_ok' class="submit">
+                    </form>
+                    {*<form action="/search.php" method="post" name="form" onsubmit="return false;">*}
+                    {*<p>*}
+                    {*<input name="search" type="text" id="search">*}
+                    {*<label for="search">Живой поиск</label>*}
+                    {*</p>*}
+                    {*</form>*}
+                    <div id="live_search"></div>
+                </div>
+			{/if}
+			{if $smarty.session.cs_may_order}
+				<a href="/cart"><div id='my__cart'></div></a>
+			{/if}
+				<nav class="m_nav clearfix">
+				{if $smarty.get.already}
+					<div id="message-block"><span  class="error_message">Указанный пользователь уже авторизовался в системе!</span></div>
+				{elseif $MessageBlock}
+					{$MessageBlock}
+				{else}	
+					<ul class="m_hmenu">
+						<li class="cl-effect-21"><a href="/auxpage_1">О нас</a></li>
+						<li class="cl-effect-21"><a href="/auxpage_2">Сотрудничество</a></li>
+						<li class="cl-effect-21"><a href="/auxpage_bonus-programm">Бонусная программа</a></li>
+						<li class="cl-effect-21"><a href="/auxpage_contacts">Контакты</a></li>
+						<li class="cl-effect-21"><a href="/news">Новости</a></li>
+						<li class="cl-effect-21"><a href="/auxpage_zamena-braka">Замена брака</a></li>
+					</ul>
+				{/if}
+				</nav>
+		</div>
+		<div id='main_content'>
+			<div id="columns">
+				<div id="left">
+                    <div class="cpt_maincolumns">
+                        {*<!-- cpt_container_start -->*}
+                        {*cpt_category_tree overridestyle=':uttm14'*}
+                        {*<!-- cpt_container_end -->*}
+                        {if $smarty.get.ukey eq 'auxpage_divoland'}
+                            {conc_tree auxpage='divoland'}
+                        {elseif $smarty.get.ukey eq 'auxpage_mixtoys'}
+                            {conc_tree auxpage='mixtoys'}
+                        {elseif $smarty.get.ukey eq 'auxpage_dreamtoys'}
+                            {conc_tree auxpage='dreamtoys'}
+                        {elseif $smarty.get.ukey eq 'auxpage_alliance'}
+                            {conc_tree auxpage='alliance'}
+                        {else}
+                            {newtree login=$smarty.session.log}
+                        {/if}
+                        {if $smarty.session.cs_may_order}
+                            <div class="predloj">
+                                <div>Курс валют:</div>
+                                <div><span><b>USD = {$smarty.session.usd} грн</b></span></div>
+                                {if !$smarty.session.cs_margin}
+                                <div><b>скидка -&nbsp;{$smarty.session.cs_skidka}%</b></div>
+                                {/if}
+                            <!-- cpt_container_start -->
+                            {cpt_currency_selection}
+                            <!-- cpt_container_end -->
+                            </div>
+                        {/if}
+                    </div>
+				</div>
+				<div id="center" {if $smarty.get.ukey eq 'auxpage_divoland' or $smarty.get.ukey eq 'auxpage_mixtoys' or $smarty.get.ukey eq 'auxpage_dreamtoys' or $smarty.get.ukey eq 'auxpage_alliance'}class=conc{/if}>
+					{if $smarty.session.log}
+						{if $smarty.session.cs_may_order}
+							{cpt_maincontent}
+						{else}
+							{if $CurrentDivision.ukey|isauthpage}
+								{cpt_maincontent}
+							{else}
+								<p id = "non-acsess">
+									Для получения доступа к полному перечню товаров,<br>
+									Вам необходимо связаться с нашим представителем
+								</p><br>
+								{cpt_product_lists list_id='hitu' limit='25'}
+							{/if}
+						{/if}
+					{else}
+						{if $CurrentDivision.ukey|isauthpage}
+							{cpt_maincontent}
+						{else}
+							{if $smarty.get.already == 1}
+							{$MessageBlock}
+								{include file="remind_password.html"}
+							{elseif $smarty.get.ukey=="act_customer"}
+								{include file="login.html"}
+							{else}
+								{cs_show_main_page}
+							{/if}
+						{/if}
+					{/if}
+				</div>
+				<div id="right" {if $smarty.get.ukey eq 'auxpage_divoland' or $smarty.get.ukey eq 'auxpage_mixtoys' or $smarty.get.ukey eq 'auxpage_dreamtoys' or $smarty.get.ukey eq 'auxpage_alliance'}class=conc{/if}>
+					<div class="cpt_maincolumns">
+                        {if $smarty.get.ukey eq 'auxpage_divoland' or $smarty.get.ukey eq 'auxpage_mixtoys' or $smarty.get.ukey eq 'auxpage_dreamtoys' or $smarty.get.ukey eq 'auxpage_alliance'}
+                        {else}
+							<!-- cpt_container_start -->
+							{cpt_product_lists list_id='hitu' limit='30'}
+							<!-- cpt_container_end -->
+                        {/if}
+					</div>
+				</div>
+			</div>
+		</div>
+</div>
+{/strip}
+{*debug*}

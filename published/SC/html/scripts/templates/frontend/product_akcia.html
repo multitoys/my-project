@@ -1,0 +1,32 @@
+{* product akcia *}
+
+<div class="product_topview_area">
+
+    <center><h1>{"str_akcia_items"|translate}</h1></center>
+<div><a href="/category/akcija">Посмотреть все акционные товары...</a></div>
+    <ul>
+        {foreach from=$akcia item=_akcia}
+        <li>
+            <div class="topview-pict">
+                {if $_akcia.thumbnail || $_akcia.picture}
+                    <a href='{"?productID=`$_akcia.productID`&product_slug=`$_akcia.slug`"|set_query_html}'>
+                        <img src="{$smarty.const.URL_PRODUCTS_PICTURES}/{if $_akcia.thumbnail}{$_akcia.thumbnail|escape:'url'}{else}{$_akcia.picture|escape:'url'}{/if}"
+									  pid="{$smarty.const.URL_PRODUCTS_PICTURES}/{$_akcia.picture|escape:'url'}"
+                            alt="{$_akcia.name|escape:'html'}" title="{$_akcia.name|escape:'html'}" class="preview"></a>
+                {/if}
+
+                <p><a href='{"?productID=`$_akcia.productID`&product_slug=`$_akcia.slug`"|set_query_html}'>{$_akcia.name}<span class='akcia' style='font-size:110%;'>&nbsp;-{$_akcia.productID|akcia_skidka}%</span></a></p>
+            </div>
+				<div class="topview-price">
+                {if $_akcia.list_price > 0}старая цена&nbsp;<span class='list_price'>{$_akcia.list_price}{/if}&nbsp;грн.</span>
+            </div>
+            <div class="topview-price"><span style="color: blue;">новая цена&nbsp;</span>
+                {if $_akcia.Price}<span style="color: red;
+	font-size: 110%; font-weight: bold; font-style:italic; text-shadow: 1px 1px 2px white, 0 0 3px red;">{$_akcia.price_str}{/if}</span>
+            </div>
+        </li>
+        {/foreach}
+    </ul>
+    <div class="clear"></div>
+
+</div>

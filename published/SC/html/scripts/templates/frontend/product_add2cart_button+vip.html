@@ -1,0 +1,63 @@
+{if !$printable_version}
+	{if $product_info.ordering_available && $product_info.Price>0 && ( $smarty.const.CONF_SHOW_ADD2CART eq 1 ) && ( $smarty.const.CONF_CHECKSTOCK==0 || $product_info.in_stock > 0 ) }
+<table width='175px'>
+	<tbody>
+    <tr>
+{if $smarty.session.log|cs_vip}
+		  { if $product_info.doza != 0}
+          <td>
+
+          <input name="product_qty" id='qty{$product_info.productID}' class="cart_product_quantity" pid='{$product_info.productID}' type="text" size="2" value="{$product_info.doza}" title='Количество'
+{literal}
+  onkeypress='if (event.keyCode == 13){add_2cart("#qty{/literal}{$product_info.productID}{literal}");}'>&nbsp;
+{/literal}
+
+
+        </td>
+		  
+		  {else}
+		  <td>
+          <input name="product_qty" id='qty{$product_info.productID}' class="cart_product_quantity" pid='{$product_info.productID}' type="text" size="2" value="" title='Количество'
+{literal}
+  onkeypress='if (event.keyCode == 13){add_2cart("#qty{/literal}{$product_info.productID}{literal}");}'>&nbsp;
+{/literal}
+
+        </td>
+		  {/if}
+{else}
+
+	     <td>
+          <input name="product_qty" id='qty{$product_info.productID}' class="cart_product_quantity" pid='{$product_info.productID}' type="text" size="2" value="" title='Количество'
+{literal}
+  onkeypress='if (event.keyCode == 13){add_2cart("#qty{/literal}{$product_info.productID}{literal}");}'>&nbsp;
+{/literal}
+
+        
+
+        </td>
+{/if}
+        <td style='vertical-align:middle;white-space:nowrap;'>
+          <div class="ostatok_div">
+             &nbsp;{$product_info.ostatok}&nbsp;шт.
+          </div>
+        </td>
+<td>
+   <td style='vertical-align:middle;'>
+	        <button class="z_add_cart" onclick='add_2cart("#qty{$product_info.productID}");' type="button">
+	          <div id="zpid_{$product_info.productID}" style='margin-top:3px; margin-right:-14px;'>{z_shopping_count productID=$product_info.productID}</div>
+          </button>
+        	{*
+            <input name='add2cart' type="image" pid='{$product_info.productID}' src="/img/add_cart1.gif" alt="{"str_add_to_cart_string"|translate}" title="{"str_add_to_cart_string"|translate}"
+        		{if $smarty.const.CONF_SHOPPING_CART_VIEW ne $smarty.const.SHCART_VIEW_PAGE || $widget}
+        		  class="add2cart_handler" rel="{if $widget}widget{/if}"
+        		{/if} />
+        	*}
+	      </td>
+      </tr>
+		</tbody>
+    </table>
+	{elseif $smarty.const.CONF_SHOW_ADD2CART eq 1 && $smarty.const.CONF_CHECKSTOCK && !$product_info.in_stock && $product_info.ordering_available}
+    <div class="prd_out_of_stock">{lbl_prd_out_of_stock}</div>
+	{/if}
+
+{/if}

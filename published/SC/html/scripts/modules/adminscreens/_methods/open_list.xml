@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interfaces>
+    <interface>
+        <name>open_list</name>
+        <key>open_list</key>
+    </interface>
+</interfaces>

@@ -56,7 +56,6 @@ Temporary Items
 *.csv
 *[0-9].*
 *[0-9]
-[0-9]*.html
 [0-9]*.php
 .idea/
 data/
@@ -73,7 +72,15 @@ suspended.page/
 system/
 upload/
 webstat/
-kernel/
+kernel/wbs.xml
+kernel/wbsmodules/
+kernel/robots/
+kernel/pear/
+kernel/modules/
+kernel/smarty/compiled/
+kernel/smarty/internals/
+kernel/smarty/resources/
+kernel/dbfunctions_cmn.php
 published/AA/
 published/common/
 published/docs/
@@ -85,7 +92,6 @@ published/WG/
 *pictures*/
 published/publicdata/MULTITOYS/attachments/SC/rss/
 published/publicdata/MULTITOYS/attachments/SC/sitemap/
-published/publicdata/MULTITOYS/attachments/SC/themes/multitoys02112014/
 published/publicdata/MULTITOYS/attachments/SC/themes/multitoys/
 published/publicdata/MULTITOYS/attachments/SC/themes/user_multi-new/temp_overridestyles/
 published/SC/classes/

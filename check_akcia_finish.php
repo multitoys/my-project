@@ -1,6 +1,6 @@
 <?php
 
-	define('DIR_ROOT', $_SERVER['DOCUMENT_ROOT']."/published/SC/html/scripts");
+  define('DIR_ROOT', $_SERVER['DOCUMENT_ROOT']."/published/SC/html/scripts");
   $DebugMode = true;
   $Warnings = array();
   include_once(DIR_ROOT.'/includes/init.php');
@@ -23,16 +23,18 @@
   }
 
   $headers  = 'MIME-Version: 1.0' . "\r\n";
-	$headers .= 'Content-type: text/html; charset=utf-8' . "\r\n";
+  $headers .= 'Content-type: text/html; charset=utf-8' . "\r\n";
 
-	$query = "SELECT settings_value FROM SC_settings where settings_constant_name='CONF_GENERAL_EMAIL'";
+  $query = "SELECT settings_value FROM SC_settings where settings_constant_name='CONF_GENERAL_EMAIL'";
   $res = mysql_query($query) or die(mysql_error()."<br>$query");
+  
   $row = mysql_fetch_assoc($res);
   $addr = $row["settings_value"];
 
   $subject = "Закончен период активности акции";
-	$body = "У следующих акций закончен период действия:\r\n";
+  $body = "У следующих акций закончен период действия:\r\n";
   $ids = array();
+  
   foreach ($r as $key => $value) {
    	$body.=$value["name_ru"]." - дата начала: ".date("d.m.Y H:i", strtotime($value["start_date"]))." - дата окончания: ".date("d.m.Y H:i", strtotime($value["end_date"]))."\r\n";
   	$ids[] = $value["akciaID"];

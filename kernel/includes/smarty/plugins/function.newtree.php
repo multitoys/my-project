@@ -1,0 +1,71 @@
+<?php
+function smarty_function_newtree()
+{
+    if (isset($_SESSION['newtree'])) {
+        $disp = $_SESSION['newtree'];
+        return $disp;
+    }
+    $disp = '<ul id="navmenu-v">';
+    if ($_SESSION['cs_vip'] == 1) {
+            $disp .= '<li><a href="#" aria-haspopup=true>Конкуренты</a><ul class="animated slideInRight"><li><a href="/auxpage_divoland" aria-haspopup=true>Диволенд</a></li><li><a href="/auxpage_mixtoys" aria-haspopup=true>Микстойс</a></li><li><a href="/auxpage_dreamtoys" aria-haspopup=true>Веселка</a></li><li><a href="/auxpage_alliance" aria-haspopup=true>Альянс</a></li></ul></li>';
+    }
+    $query = '
+                    SELECT count(*) AS tov_all_count
+                    FROM SC_category_product
+                    WHERE categoryID = 100003
+                  ';
+    $res = mysql_query($query) or die(mysql_error().$query);
+    $product_count = mysql_fetch_object($res);
+    $count = (int)($product_count->tov_all_count);
+    //echo $count;
+
+    $sql = 'SELECT categoryID, slug, name_ru AS name FROM SC_categories WHERE parent=1 ORDER BY sort_order, name';
+    if ($r = mysql_query($sql)) {
+
+        while ($res = mysql_fetch_assoc($r)) {
+            $a = '';
+            if ($res['slug'] === 'akcija') {
+                $a = 'style="color: red;text-shadow: 1px 1px 3px rgb(200, 104, 104),-1px -1px 3px rgb(255,255,255);"';
+            }
+            if ($res['slug'] !== 'akcija-bally' || $count > 0 ) {
+                $disp .= '<li>';
+                if ($res['slug'] !== '')
+                    $disp .= '<a '.$a.' href="/category/'.$res['slug'].'" aria-haspopup=true>'.$res['name'].'</a>';
+                else
+                    $disp .= '<a href="?categoryID='.$res['categoryID'].'">'.$res['name'].'</a>';
+                $disp .= subcat($res['categoryID']).'';
+            }
+        }
+    }
+
+    $disp .= '</li><li><a href="/auxpage_new_items">Последние поступления</a></li></ul>';
+//    if ($_SESSION['log'] == 'sales' || $_SESSION['log'] == 'multitoys') {
+//        $disp .= '<li><a href="" aria-haspopup=true>Конкуренты</a><ul class="animated slideInRight"><li><a href="/auxpage_divoland/" aria-haspopup=true>Диволенд</a></li><li><a href="/auxpage_mixtoys/" aria-haspopup=true>Микстойс</a></li><li><a href="/auxpage_dreamtoys/" aria-haspopup=true>Веселка</a></li><li><a href="/auxpage_alliance/" aria-haspopup=true>Альянс</a></li></ul></li></ul>';
+//    } else {
+//        $disp .= '</ul>';
+//    }
+    if (isset($_SESSION['log'])) {
+        $_SESSION['newtree'] = $disp;
+    }
+    return $disp;
+}
+
+function subcat($parid)
+{
+    $sql = 'SELECT categoryID, slug, name_ru AS name FROM SC_categories WHERE parent='.$parid.' ORDER BY sort_order, name';
+    $disp = '';
+    $r = mysql_query($sql);
+    if (mysql_num_rows($r) > 0) {
+        $disp .= '<ul class="animated slideInRight">';
+        while ($res = mysql_fetch_assoc($r)) {
+            $disp .= '<li aria-haspopup=true>';
+            if ($res['slug'] != '')
+                $disp .= '<a href="/category/'.$res['slug'].'">'.$res['name'].'</a>';
+            else
+                $disp .= '<a href="?categoryID='.$res['categoryID'].'">'.$res['name'].'</a>';
+            $disp .= subcat($res['categoryID']).'';
+        }
+        $disp .= '</li></ul>';
+    }
+    return $disp;
+}

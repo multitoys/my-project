@@ -1,65 +1,109 @@
-$(document).ready(function () {
-    var preview = $(".preview");
-    var controls = $(".controls");
-    var quantity = $(".cart_product_quantity");
-    var scrollPane = $(".scroll-pane1");
-    var productLists = $(".cpt_product_lists");
-    var content = $("#content");
-
-    function RealMarginLi() {
-        var idCenter = $("#center").find(".product_topview_area");
-        var product_topview_area_width = idCenter.width();
-        var centerLi = idCenter.find("ul li");
-        var li_width = centerLi.width() + 6;
-        var liNum = Math.floor(product_topview_area_width / li_width);
-        var margin = Math.round((product_topview_area_width - li_width * liNum) / (liNum + 1));
-        centerLi.css({"margin-left": margin, "margin-bottom": margin});
-    }
-
-    function RealResizeCatalog() {
-        var header_height = $("#header").height() + $(".header").height() + 5;
-        var maincontent_height = $(window).height() - header_height;
-        var columns_height = $(document).height() - header_height;
-        var delta = $(".product_brief_head").height() + $(".navigator").height();
-        scrollPane.height(maincontent_height - delta);
-        $("#columns").height(columns_height);
-        productLists.height(columns_height);
-    }
-
-    function ResizeCatalog() {
-        scrollPane.height(1);
-        $("#columns").height(1);
-        productLists.height(1);
-        setTimeout(RealResizeCatalog, 500);
-    }
-
-    $(function () {
-        $.scrollUp({
-            scrollName: "scrollUp",
-            topDistance: "200",
-            topSpeed: 1000,
-            animation: "fade",
-            animationInSpeed: 1000,
-            animationOutSpeed: 1000,
-            scrollText: "Наверх",
-            activeOverlay: false
-        });
+var preview = $(".preview");
+var quantity = $(".cart_product_quantity");
+var scrollPane = $(".scroll-pane1");
+var productLists = $(".cpt_product_lists");
+var myCart = $("#my__cart");
+var content = $("#content");
+function RealMarginLi() {
+    var idCenter = $("#center");
+    var product_topview_area_width = idCenter.width();
+    var centerLi = idCenter.find("ul li");
+    var li_width = centerLi.width() + 6;
+    var liNum = Math.floor(product_topview_area_width / li_width);
+    var margin = Math.round((product_topview_area_width - li_width * liNum) / (liNum + 1));
+    centerLi.css({"margin-left": margin, "margin-bottom": margin});
+}
+function RealResizeCatalog() {
+    var header_height = $("#header").height() + $(".header").height() + 5;
+    var maincontent_height = $(window).height() - header_height;
+    var columns_height = $(document).height() - header_height;
+    var delta = $(".product_brief_head").height() + $(".navigator").height();
+    scrollPane.height(maincontent_height - delta);
+    $("#columns").height(columns_height);
+    productLists.height(columns_height);
+}
+function ResizeCatalog() {
+    scrollPane.height(1);
+    $("#columns").height(1);
+    productLists.height(1);
+    setTimeout(RealResizeCatalog, 500);
+}
+function zakcia(seconds) {
+    var _date = new Date();
+    _date.setSeconds(seconds);
+    $("#z_counter").countdown({image: "/img/_digits.png", startTime: _date});
+}
+function load_cart() {
+    $("#my__cart").load("/popup/show_cart.php");
+}
+function update_cient_info(id, qt) {
+    var zpid = $("#zpid_" + id);
+    var old_val = Number(zpid.text());
+    var new_val = old_val + Number(qt);
+    zpid.html('<div class="animated fadeInDownBig">' + new_val + "</div>");
+}
+function add_all2cart() {
+    myCart.html('<div style="float:right"><p style="font-size:14px;line-height:37px;color:white">Загрузка товаров...</p></div>');
+    $("[name=product_qty]").each(function () {
+        var id = $(this).attr("data-id");
+        var qt = $(this).val();
+        var query = "?ukey=cart&view=noframe&action=add_product&force=yes&productID=" + id + "&product_qty=" + qt;
+        if (qt > 0) {
+            $.ajax({
+                type: "GET", url: query, dataType: "html", async: true, success: function () {
+                    update_cient_info(id, qt);
+                }
+            });
+            $(this).val("");
+        }
     });
+    setTimeout(load_cart, 300);
+}
+function add_2cart(who) {
+    myCart.html('<div style="float:right"><p style="font-size:14px;line-height:37px;color:white">Загрузка товаров...</p></div>');
+    $(who).each(function () {
+        var id = $(this).attr("data-id");
+        var qt = $(this).val();
+        if (qt == "") {
+            qt = 1;
+        }
+        var query = "?ukey=cart&view=noframe&action=add_product&force=yes&productID=" + id + "&product_qty=" + qt;
+        if (qt > 0) {
+            $.ajax({
+                type: "GET", url: query, dataType: "html", async: false, success: function () {
+                    update_cient_info(id, qt);
+                }
+            });
+        }
+    });
+    $(who).val("");
+    setTimeout(load_cart, 250);
+}
+$(function () {
+    $.scrollUp({
+        scrollName: "scrollUp",
+        topDistance: "200",
+        topSpeed: 1000,
+        animation: "fade",
+        animationInSpeed: 1000,
+        animationOutSpeed: 1000,
+        scrollText: "Наверх",
+        activeOverlay: false
+    });
+});
+$(document).ready(function () {
     RealMarginLi();
     ResizeCatalog();
     $(window).resize(function () {
         RealMarginLi();
         setTimeout(ResizeCatalog, 300);
     });
+    $("[name=add2cart]").click(function () {
+        var id = $(this).attr("data-id");
+        $("[data-id=" + id + "]").val("0");
+    });
     if (preview.tooltip) {
         preview.tooltip({
-            delay: 0, bodyHandler: function () {
-                return $("<img/>").attr("src", $(this).attr("data-pid"));
-            }
-        });
-    }
-    if (controls.tooltip) {
-        controls.tooltip({
             delay: 0, bodyHandler: function () {
                 return $("<img/>").attr("src", $(this).attr("data-pid"));
             }
@@ -101,11 +145,6 @@ $(document).ready(function () {
                             $(".cart_product_quantity").siblings().remove();
                             $(".cart_product_quantity").spin({min: 0, max: 999});
                             $(".preview").tooltip({
-                                delay: 0, showURL: false, bodyHandler: function () {
-                                    return $("<img/>").attr("src", $(this).attr("data-pid"));
-                                }
-                            });
-                            $(".controls").tooltip({
                                 delay: 0, showURL: false, bodyHandler: function () {
                                     return $("<img/>").attr("src", $(this).attr("data-pid"));
                                 }
@@ -164,11 +203,6 @@ $(document).ready(function () {
                                     return $("<img/>").attr("src", $(this).attr("data-pid"));
                                 }
                             });
-                            $(".controls").tooltip({
-                                delay: 0, showURL: false, bodyHandler: function () {
-                                    return $("<img/>").attr("src", $(this).attr("data-pid"));
-                                }
-                            });
                             notProgress = true;
                         }
                     }
@@ -180,63 +214,6 @@ $(document).ready(function () {
     });
     load_cart();
 });
-function zakcia(seconds) {
-    var _date = new Date();
-    _date.setSeconds(seconds);
-    $("#z_counter").countdown({image: "/img/_digits.png", startTime: _date});
-}
-function load_cart() {
-    $("#my__cart").load("/popup/show_cart.php");
-}
-$("[name=add2cart]").click(function () {
-    var id = $(this).attr("data-id");
-    $("[data-id=" + id + "]").val("0");
-});
-function update_cient_info(id, qt) {
-    var zpid = $("#zpid_" + id);
-    var old_val = Number(zpid.text());
-    var new_val = old_val + Number(qt);
-    zpid.html('<div class="animated fadeInDownBig">' + new_val + "</div>");
-}
-function add_all2cart() {
-    var myCart = $("#my__cart");
-    myCart.html('<div style="float:right"><p style="font-size:14px;line-height:37px;color:white">Загрузка товаров...</p></div>');
-    $("[name=product_qty]").each(function () {
-        var id = $(this).attr("data-id");
-        var qt = $(this).val();
-        var query = "?ukey=cart&view=noframe&action=add_product&force=yes&productID=" + id + "&product_qty=" + qt;
-        if (qt > 0) {
-            $.ajax({
-                type: "GET", url: query, dataType: "html", async: true, success: function () {
-                    update_cient_info(id, qt);
-                }
-            });
-            $(this).val("");
-        }
-    });
-    setTimeout(load_cart, 300);
-}
-function add_2cart(who) {
-    var myCart = $("#my__cart");
-    myCart.html('<div style="float:right"><p style="font-size:14px;line-height:37px;color:white">Загрузка товаров...</p></div>');
-    $(who).each(function () {
-        var id = $(this).attr("data-id");
-        var qt = $(this).val();
-        if (qt == "") {
-            qt = 1;
-        }
-        var query = "?ukey=cart&view=noframe&action=add_product&force=yes&productID=" + id + "&product_qty=" + qt;
-        if (qt > 0) {
-            $.ajax({
-                type: "GET", url: query, dataType: "html", async: false, success: function () {
-                    update_cient_info(id, qt);
-                }
-            });
-        }
-    });
-    $(who).val("");
-    setTimeout(load_cart, 250);
-}
 function _changeCurrency() {
     document.ChangeCurrencyForm.submit();
 }
@@ -300,37 +277,33 @@ function changePic(id, direction) {
     var element = document.getElementById("pic" + id);
     var picNums = Number(element.getAttribute("data-pics"));
     var currPic = Number(element.getAttribute("data-current"));
-    var startOfSrc = "/published/publicdata/MULTITOYS/attachments/SC/products_pictures/";
     var newPic;
     var endOfSrc;
-    var ext = "_thm.jpg";
-    var extDiv = ".jpg";
     if (direction > 0) {
         if (currPic < picNums) {
             newPic = currPic + direction;
-            endOfSrc = "-" + newPic;
+            endOfSrc = "-" + newPic + "_thm.jpg";
         } else {
             newPic = 0;
-            endOfSrc = "";
+            endOfSrc = "_thm.jpg";
         }
     } else {
         if (currPic > 1) {
             newPic = currPic + direction;
-            endOfSrc = "-" + newPic;
+            endOfSrc = "-" + newPic + "_thm.jpg";
         } else {
             if (currPic == 1) {
                 newPic = 0;
-                endOfSrc = "";
+                endOfSrc = "_thm.jpg";
             } else {
                 newPic = picNums;
-                endOfSrc = "-" + newPic;
+                endOfSrc = "-" + newPic + "_thm.jpg";
             }
         }
     }
-    element.setAttribute("src", startOfSrc + id + endOfSrc + ext);
+    var startOfSrc = "/published/publicdata/MULTITOYS/attachments/SC/products_pictures/";
+    element.setAttribute("src", startOfSrc + id + endOfSrc);
     element.setAttribute("data-current", newPic);
-    var cotrolDiv = element.previousElementSibling;
-    cotrolDiv.setAttribute("data-pid", startOfSrc + id + endOfSrc + extDiv);
 }
 (function ($) {
     $.scrollUp = function (options) {

@@ -29,6 +29,7 @@ $RECYCLE.BIN/
 .LSOverride
 
 # Thumbnails
+/dblist/MULTITOYS.xml
 ._*
 
 # Files that might appear on external disk
@@ -54,7 +55,6 @@ Temporary Items
 *.psd
 *.log
 *.csv
-*[0-9].*
 *[0-9]
 [0-9]*.php
 .idea/
@@ -102,3 +102,64 @@ published/SC/html/scripts/3rdparty/
 published/SC/html/scripts/callbackhandlers/
 published/SC/html/scripts/tinymce/
 published/SC/html/scripts/repo_themes/
+/kernel/includes/wbsmodules
+/kernel/includes/robots
+/kernel/includes/pear
+/kernel/includes/modules
+/kernel/classes
+/lib
+/popup/language
+/system
+/moving.page
+/login
+/kernel/includes/dbinfo.xml
+/kernel/includes/dateclass.php
+/kernel/includes/con_settings.xml
+/kernel/includes/safehtml.php
+/kernel/includes/mail_envelope.txt
+/kernel/includes/mail_envelope.htm
+/kernel/includes/locloader.class.php
+/kernel/includes/mimetypes.dat
+/kernel/class.classmanager.php
+/kernel/errors.(2015.06.05 20.51.58).log
+/kernel/contacts.php
+/kernel/modules.php
+/kernel/quotas.php
+/kernel/dbfunctions_cmn.php
+/kernel/complete
+/kernel/sysconsts.php
+/kernel/sms.php
+/kernel/domxml-php4-to-php5.php
+/kernel/classes.php
+/kernel/database.php
+/kernel/dbfunctions.php
+/kernel/functions.php
+/kernel/class.cm_folderstreedescriptor.php
+/kernel/dbaccess.php
+/kernel/wbs.xml
+/kernel/.htaccess
+/kernel/queries.php
+/kernel/csvfiles.php
+/kernel/languages.csv
+/kernel/errors.log
+/kernel/ur_screens.php
+/kernel/queries_cmn.php
+/kernel/kernel.php
+/kernel/kernel130814.php
+/kernel/ur_manager.php
+/kernel/htareplaced
+/kernel/wbsinit.php
+/published/UG
+/.idea
+/css
+/includes
+/installer
+/kernel/includes/smarty/Smarty.class.php
+/kernel/includes/smarty/debug.tpl
+/kernel/includes/smarty/Smarty_Compiler.class.php
+/kernel/includes/smarty/Smarty.class.php.19032015
+/kernel/includes/smarty/debug.htm
+/kernel/includes/smarty/Config_File.class.php
+/kernel/includes/smarty/resources
+/kernel/includes/smarty/internals
+

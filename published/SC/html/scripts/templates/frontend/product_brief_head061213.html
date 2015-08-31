@@ -1,0 +1,90 @@
+<table class="cs_product_info">
+	  <tbody>
+      <tr>
+	    <td width="160px">
+      </td>
+	    <td width="220px">
+        <div class="prdbrief_name" style="text-align:center;">
+          <div class="{if $sort=='name'} z_sort_active {else} z_sort_inactive {/if}">
+            <a href="/?categoryID={$selected_category.categoryID}&sort=name&direction={if $direction=='ASC'}DESC{else}ASC{/if}">
+              <table><tr><td style="width: 130px;">Наименование товара</td><td>
+                <div class="{if $direction=='ASC'&&$sort=='name'}z_sort_desc{else}z_sort_asc{/if}"></div>
+              </td></tr></table>
+            </a>
+          </div>
+        </div>
+      </td>
+	    <td width="80">
+        <div class="{if $sort=='product_code'} z_sort_active {else} z_sort_inactive {/if}">
+          <a href="/?categoryID={$selected_category.categoryID}&sort=product_code&direction={if $direction=='ASC'}DESC{else}ASC{/if}">
+    	      <table><tr><td style="width: 50px;">Артикул</td><td>
+                <div class="{if $direction=='ASC'&&$sort=='product_code'}z_sort_desc{else}z_sort_asc{/if}"></div>
+              </td></tr></table>
+          </a>
+        </div>
+      </td>
+      <td width="80">
+        <div style="overflow:hidden; width:120px; text-align:center;">
+          <div class="{if $sort=='Bonus'} z_sort_active {else} z_sort_inactive {/if}">
+            <a href="/?categoryID={$selected_category.categoryID}&sort=Bonus&direction={if $direction=='ASC'}DESC{else}ASC{/if}">
+              <table><tr><td style="width: 120px;">Количество бонусов</td><td>
+                <div class="{if $direction=='ASC'&&$sort=='Bonus'}z_sort_desc{else}z_sort_asc{/if}"></div>
+              </td></tr></table>
+            </a>
+          </div>
+        </div>
+      </td>
+ {if $smarty.session.log|cs_vip}
+	  <td width="80">
+        <div style="overflow:hidden; width:120px; text-align:center;">
+          <div class="{if $sort=='doza'} z_sort_active {else} z_sort_inactive {/if}">
+            <a href="/?categoryID={$selected_category.categoryID}&sort=doza&direction={if $direction=='ASC'}DESC{else}ASC{/if}">
+              <table><tr><td style="width: 120px;"><span style="color: purple;"><i>Доза</i></span></td><td>
+                <div class="{if $direction=='ASC'&&$sort=='doza'}z_sort_desc{else}z_sort_asc{/if}"></div>
+              </td></tr></table>
+            </a>
+          </div>
+        </div>
+      </td>
+ <td width="80">
+        <div style="overflow:hidden; width:80px; text-align:center;">
+          <div class="{if $sort=='Price'} z_sort_active {else} z_sort_inactive {/if}">
+            <a href="/?categoryID={$selected_category.categoryID}&sort=Price&direction={if $direction=='ASC'}DESC{else}ASC{/if}">
+              <table><tr><td style="width: 120px;">Цена<br /><span style="color: purple;"><i>VIP-цена</i></span></td><td>
+
+                <div class="{if $direction=='ASC'&&$sort=='Price'}z_sort_desc{else}z_sort_asc{/if}"></div>
+              </td></tr></table>
+            </a>
+          </div>
+        </div>
+      </td>
+{else}
+      <td width="80">
+        <div style="overflow:hidden; width:80px; text-align:center;">
+          <div class="{if $sort=='Price'} z_sort_active {else} z_sort_inactive {/if}">
+            <a href="/?categoryID={$selected_category.categoryID}&sort=Price&direction={if $direction=='ASC'}DESC{else}ASC{/if}">
+              <table><tr><td style="width: 120px;">Цена</td><td>
+                <div class="{if $direction=='ASC'&&$sort=='Price'}z_sort_desc{else}z_sort_asc{/if}"></div>
+              </td></tr></table>
+            </a>
+          </div>
+        </div>
+      </td>
+	  {/if}
+      <td>
+      </td>
+      <td width="120">
+        <div class="pravay_chast">
+          <div class="cpt_product_add2cart_button" style="text-align: center;">
+            Остаток
+          </div>
+        </div>
+      </td>
+      <td width="80">
+        <div class="pravay_chast">
+          <div class="cpt_product_add2cart_button">Заказано</div>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>

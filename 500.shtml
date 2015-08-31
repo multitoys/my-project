@@ -1,0 +1,12 @@
+﻿<table cellspacing="0" cellpadding="0" border="0" align="CENTER" width="95%" class="body">
+      <tbody>
+        <tr>
+          <td valign="TOP">
+            <p align="CENTER" class="page_heading">HTTP Error 500(Internal Server Error, Внутренняя ошибка сервера)</p>
+            <blockquote>
+			<p>код статуса в протоколе HTTP, сообщающий, что серверная программа работает, но встречается с серьёзными внутренними ошибками, препятствующими нормальной обработке запроса клиента. Ошибка должна быть исправлена на стороне сервера.</p>
+            </blockquote>
+          </td>
+        </tr>
+      </tbody>
+    </table>

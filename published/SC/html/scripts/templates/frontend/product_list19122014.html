@@ -1,0 +1,51 @@
+<!-- <table align="center" cellpadding="0" cellspacing="0">
+<tr>
+<td>
+<ul class="product_list">
+{*foreach from=$__products item=_product}
+{if $_product.slug}
+{assign var=_product_url value="?productID=`$_product.productID`&product_slug=`$_product.slug`"|set_query_html}
+{else}
+{assign var=_product_url value="?productID=`$_product.productID`"|set_query_html}
+{/if}
+<li style="width: {$smarty.const.CONF_PRDPICT_THUMBNAIL_SIZE-26}px; height: {if $__block_height}{$__block_height}{elseif $_product.thumbnail}{$smarty.const.CONF_PRDPICT_THUMBNAIL_SIZE+45}{else}55{/if}px;">
+{if $_product.thumbnail}
+<table cellpadding="0" cellspacing="0" style="width: {$smarty.const.CONF_PRDPICT_THUMBNAIL_SIZE-40}px; height: {$smarty.const.CONF_PRDPICT_THUMBNAIL_SIZE};"><tr><td valign="bottom" align="center">
+<a href="{$_product_url}"><img src="{$smarty.const.URL_PRODUCTS_PICTURES}/{$_product.thumbnail|escape:'url'}" alt="{$_product.name|escape:'html'}"></a>
+</td></tr></table>
+{/if}
+<a href="{$_product_url}">{$_product.name}</a>{if $smarty.session.log|cs_may_order}
+{if $_product.Price}<div class="totalPrice">{$_product.price_str}</div>{/if}{/if}
+</li>
+{/foreach*}
+</ul>
+
+</td>
+</tr>
+</table>
+ -->
+<table align="center" cellpadding="0" cellspacing="0">
+<tr>
+<td>
+<ul class="product_list">
+{section name=i loop=$__products max=10}
+{if $__products[i].slug}
+{assign var=_product_url value="?productID=`$__products[i].productID`&product_slug=`$__products[i].slug`"|set_query_html}
+{else}
+{assign var=_product_url value="?productID=`$__products[i].productID`"|set_query_html}
+{/if}
+<li style="width: {$smarty.const.CONF_PRDPICT_THUMBNAIL_SIZE-26}px; {*height: {if $__block_height}{$__block_height}{elseif $__products[i].thumbnail}{$smarty.const.CONF_PRDPICT_THUMBNAIL_SIZE+45}{else}55{/if}px;*}">
+{if $__products[i].thumbnail}
+<table cellpadding="0" cellspacing="0" style="width: {$smarty.const.CONF_PRDPICT_THUMBNAIL_SIZE-40}px; height: {$smarty.const.CONF_PRDPICT_THUMBNAIL_SIZE};"><tr><td valign="bottom" align="center">
+<a href="{$_product_url}"><img src="{$smarty.const.URL_PRODUCTS_PICTURES}/{$__products[i].thumbnail|escape:'url'}" alt="{$__products[i].name|escape:'html'}"></a>
+</td></tr></table>
+{/if}
+<a href="{$_product_url}">{$__products[i].name}</a>{if $smarty.session.log|cs_may_order}
+{if $__products[i].Price}<div class="totalPrice">{$__products[i].price_str}</div>{/if}{/if}
+</li>
+{/section}
+</ul>
+
+</td>
+</tr>
+</table>

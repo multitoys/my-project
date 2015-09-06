@@ -199,6 +199,9 @@ if(!class_exists('test',false)){
 			'b_reports_vcategories'=> array(
 			'name' => 'Самые просматриваемые категории',
 			),
+            'competitors' => array(
+                'name' => 'Сравнение конкурентов',
+            ),
 			'b_reports_products'=> array(
 			'name' => 'Отчет по продуктам',
 			),

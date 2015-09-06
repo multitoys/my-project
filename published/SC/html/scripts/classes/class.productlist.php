@@ -85,31 +85,33 @@ class ProductList extends DBObject {
 		// return $products;
 	// }
 
-	function getProducts($enabled = null, $limit=false){
+    function getProducts($enabled = null, $limit = '')
+    {
 		
 		// if (isset($_SESSION['log'])) {
 			// $Customer=GetCustomerByCustomerLogin($_SESSION['log']);
 		// }
 		$limit = ($limit) ? 'LIMIT '.$limit : '';
-		
-		// $dbq = '
+
+        //$dbq = '
 			// SELECT t1.*, t3.thumbnail, t3.filename FROM ?#PRODUCTS_TABLE t1 LEFT JOIN ?#TBL_PRODUCT_LIST_ITEM t2 ON t1.productID=t2.productID
 			// LEFT JOIN ?#PRODUCT_PICTURES t3 ON t1.default_picture=t3.photoID
 			// WHERE'.(is_null($enabled)?'':' t1.enabled='.intval($enabled).' AND t1.categoryID != 1 AND').' t2.list_id=? ORDER BY RAND() '.$limit.'';
 
 		$dbq = '
-			SELECT t1.productID, t1.name_ru, t1.Price, t1.SpecialPrice, t1.items_sold, t1.list_price, t1.akcia_skidka, t1.akcia, t1.items_sold, t1.sort_order, t1.skidka, t1.default_picture, t1.slug, t1.zakaz, t3.thumbnail, t3.filename FROM ?#PRODUCTS_TABLE t1 LEFT JOIN ?#TBL_PRODUCT_LIST_ITEM t2 ON t1.productID=t2.productID
+			SELECT t1.productID, t1.name_ru,  t1.enabled, t1.Price, t1.SpecialPrice, t1.items_sold, t1.list_price, t1.akcia_skidka, t1.akcia, t1.items_sold, t1.sort_order, t1.skidka, t1.default_picture, t1.slug, t1.zakaz, t3.thumbnail, t3.filename FROM ?#PRODUCTS_TABLE t1 LEFT JOIN ?#TBL_PRODUCT_LIST_ITEM t2 ON t1.productID=t2.productID
 			LEFT JOIN ?#PRODUCT_PICTURES t3 ON t1.default_picture=t3.photoID
 			WHERE'.(is_null($enabled)?'':' t1.enabled='.intval($enabled).' AND t1.categoryID != 1 AND').' t2.list_id=? ORDER BY RAND() '.$limit.'';
 
 		$dbres = db_phquery($dbq, $this->id);
 		$products = array();
 		while($row = db_fetch_assoc($dbres)){
-			// LanguagesManager::ml_fillFields(PRODUCTS_TABLE, $row);
+            LanguagesManager::ml_fillFields(PRODUCTS_TABLE, $row);
 			if(!$row['thumbnail'] || !file_exists(DIR_PRODUCTS_PICTURES.'/'.$row['thumbnail']))unset($row['thumbnail']);
 			$price = ZCalcPrice($row["Price"], $row["SpecialPrice"], $row["skidka"]);
 			$row["price_str"] = show_price($price);
 			$row["list_price_str"] = show_price($row["list_price"]);
+            //$row["enabled"] = (int)$row["enabled"];
 			$products[] = $row;
 		}
 		return $products;

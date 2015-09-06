@@ -1,0 +1,77 @@
+{* product brief view (from a category or search) *}
+
+{if $product_info ne NULL}
+  {if $product_info.slug}
+    {assign var=_product_url value="?ukey=product&productID=`$product_info.productID`&product_slug=`$product_info.slug`"|set_query_html}
+  {else}
+    {assign var=_product_url value="?ukey=product&productID=`$product_info.productID`"|set_query_html}
+  {/if}
+  {if $widget}{assign var=_form_action_url value="&view=noframe&external=1"}{/if}
+	{assign var=_cnt value=''}
+
+	<table class='cs_product_info'>
+	  <tr>
+	    <td width='160px'>
+        {if $product_info.thumbnail && $product_info.picture}<div class="div_izobrag">
+          <a {$target} href='{$_product_url}'>
+              <img class='preview' pid='{$smarty.const.URL_PRODUCTS_PICTURES}/{$product_info.picture|escape:'url'}' src="{$smarty.const.URL_PRODUCTS_PICTURES}/{$product_info.thumbnail|escape:'url'}" alt="{$product_info.name|escape:'html'}" title="{$product_info.name|escape:'html'}" />
+          </a></div>
+        {else}<div class="div_izobrag">
+          <a href="{$_product_url}">
+            <img class='preview' width='150' src="/img/nophoto.jpg"/>
+          </a></div>
+        {/if}
+	    </td>
+	    <td>{if $product_info.productID|is_akcia_product>0}
+            <span style='color: red;'><b>АКЦИЯ!</b></span>
+          {/if}
+    	  <div class="prdbrief_name"><a href='{$_product_url}'>{$product_info.name|escape:'html'}</a>
+          {if $product_info.productID|is_new_product>0}
+            &nbsp&nbsp<span style='color: white; background-color: red;'>&nbspНовое!&nbsp</span>
+          {/if}
+        </div>
+      </td>
+	    <td width='80'>
+    	  <div class="prdbrief_name"><a href='{$_product_url}'>{$product_info.product_code|escape:'html'}</a></div>
+      </td>
+      <td width='80'>
+        <div style='overflow:hidden; width:80px; text-align:center;'>
+          <span class="totalPrice">{$product_info.Bonus|string_format:"%d"}</span>
+        </div>
+      </td>
+{if $product_info.productID|is_akcia_product>0}
+
+      <td width='80'>
+        <div style='overflow:hidden; width:80px; text-align:right;'>
+          <span style='color: red;font-size: 14px; text-shadow: 1px 1px 2px white, 0 0 3px red;'><b>{$product_info.productID|withSkidka}&nbspгрн.</b></span><br /><span style='color: blue;text-decoration: line-through;'>{$product_info.list_price|string_format:"%.2f"}&nbspгрн.</span>
+
+        </div>
+      </td>
+{else}
+      <td width='80'>
+        <div style='overflow:hidden; width:80px; text-align:right;'>
+          <span class="totalPrice">{$product_info.productID|withSkidka} грн. </span>
+        </div>
+      </td>
+{/if}
+      <td>
+      </td>
+      <td width='120'>
+     	  {if $currencies_count ne 0 && $product_info.Price > 0}
+          <div class="pravay_chast">
+              {cpt_product_add2cart_button request_product_count='request_product_count' overridestyle=':qa8pav'}
+          </div>
+      	{/if}
+      </td>
+    </tr>
+  </table>
+
+  <div class='delimiter'></div>
+
+
+  {if $product_info.ordering_available && $product_info.Price>0 && ( $smarty.const.CONF_SHOW_ADD2CART eq 1 ) && ( $smarty.const.CONF_CHECKSTOCK==0 || $product_info.in_stock > 0 ) }
+  {elseif $smarty.const.CONF_SHOW_ADD2CART eq 1 && $smarty.const.CONF_CHECKSTOCK && !$product_info.in_stock && $product_info.ordering_available}
+	  <div class="prd_out_of_stock">{lbl_prd_out_of_stock}</div>
+  {/if}
+
+{/if}

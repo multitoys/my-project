@@ -238,6 +238,7 @@ TAG
         while (($data = fgetcsv($handle, 1000, ";")) !== false) {
             set_time_limit(0);
             $row++;
+            $ua = $data[0];
             $id            = $data[1];
             $code          = mysql_real_escape_string(DecodeCodepage1251($data[2]));
             $catid         = is_numeric($data[3])?$data[3]:1;
@@ -266,6 +267,7 @@ TAG
             if (!is_numeric($special_price)) $special_price = preg_replace('/[^0-9.]/', '', $special_price);
             if (!is_numeric($optprice)) $optprice = preg_replace('/[^0-9.]/', '', $optprice);
 
+            $ua = ($ua > 1) ? 1 : 0;
             $skidka       = is_numeric($skidka)?$skidka:0;
             $bonus        = is_numeric($bonus)?$bonus:0;
             $hit          = ($hit > 0)?$hit:0;
@@ -302,9 +304,9 @@ TAG
                     $query
                         = "
 							INSERT INTO SC_products
-								   (categoryID, Price, SpecialPrice,   Bonus, in_stock, items_sold, list_price, akcia,   akcia_skidka,   enabled, product_code, sort_order , ordering_available, slug , name_ru, skidka , code_1c, ostatok  , optprice  , doza  ,  box,   minorder   , zakaz, brand, eproduct_available_days)
+								   (categoryID, Price, SpecialPrice,   Bonus, in_stock, items_sold, list_price, akcia,   akcia_skidka,   enabled, product_code, sort_order , ordering_available, slug , name_ru, skidka , code_1c, ostatok  , ukraine  , doza  ,  box,   minorder   , zakaz, brand, eproduct_available_days)
 							VALUES
-									($catid    , $price,$special_price, $bonus, 200 , $hit  , '$oldprice','$akcia', '$akcia_skidka', 1     , '$code'     , $new_postup, 1                 , '$slug','$name',  $skidka, '$id'  ,'$ostatok','$optprice','$doza','$box', '$minorder', '$zakaz', '$brand', $new)";
+									($catid    , $price,$special_price, $bonus, 200 , $hit  , '$oldprice','$akcia', '$akcia_skidka', 1     , '$code'     , $new_postup, 1                 , '$slug','$name',  $skidka, '$id'  ,'$ostatok',$ua,'$doza','$box', '$minorder', '$zakaz', '$brand', $new)";
                     $res = mysql_query($query) or die(mysql_error()."<br>$query");
                     $productID = mysql_insert_id();
                 } else {
@@ -330,7 +332,7 @@ TAG
 								name_ru = '$name',
 								skidka = $skidka ,
 								ostatok = '$ostatok',
-								optprice = '$optprice',
+								ukraine = $ua,
 								doza = '$doza',
 								box = '$box',
 								zakaz= '$zakaz',
@@ -391,7 +393,7 @@ TAG
                 $no++;
                 $progress = round(($no / ($rowcount - 1) * 100), 0, PHP_ROUND_HALF_DOWN);
                 if ($progress > $percent) {
-                    $percent = $progress."%";
+                    $percent = $progress.'%';
                     ProgressBar('products', $percent, $start2);
                     BuferOut();
                 }
@@ -403,25 +405,24 @@ TAG
     }
     echo('<span style="color:blue;"><br>Обработано '.$no.' товаров</span><br>');
 
-    $query = "UPDATE SC_products SET enabled = FALSE, items_sold = 0 WHERE in_stock = 100";
+    $query = 'UPDATE SC_products SET enabled = FALSE, items_sold = 0 WHERE in_stock = 100';
     $res = mysql_query($query) or die(mysql_error()."<br>$query");
 
-    $query = "UPDATE SC_products SET in_stock =100 WHERE in_stock = 200";
+    $query = 'UPDATE SC_products SET in_stock =100 WHERE in_stock = 200';
     $res = mysql_query($query) or die(mysql_error()."<br>$query");
 
-    $query = "UPDATE SC_products SET `min_order_amount` = `box` WHERE `zakaz` = 1 OR `minorder` = 1";
+    $query = 'UPDATE SC_products SET `min_order_amount` = `box` WHERE `zakaz` = 1 OR `minorder` = 1';
     $res = mysql_query($query) or die(mysql_error()."<br>$query");
 
-    $query = "DELETE FROM SC_category_product WHERE priority = 0";
+    $query = 'DELETE FROM SC_category_product WHERE priority = 0';
     $res = mysql_query($query) or die(mysql_error()."<br>$query");
 
-    $query = "UPDATE SC_category_product SET priority = 0";
+    $query = 'UPDATE SC_category_product SET priority = 0';
     $res = mysql_query($query) or die(mysql_error()."<br>$query");
 
-
-    $query = "DELETE FROM SC_product_list_item WHERE priority = 0";
+    $query = 'DELETE FROM SC_product_list_item WHERE priority = 0';
     $res = mysql_query($query) or die(mysql_error()."<br>$query");
-    $query = "UPDATE SC_product_list_item SET priority = 0";
+    $query = 'UPDATE SC_product_list_item SET priority = 0';
     $res = mysql_query($query) or die(mysql_error()."<br>$query");
 
     $new_count = 500;
@@ -445,7 +446,8 @@ TAG
     $res = mysql_query($query) or die(mysql_error()."<br>$query");
 
     $query
-        = 'INSERT INTO Search_products (categoryID, code_1c, product_code, name_ru, Price,enabled) SELECT  categoryID, code_1c, product_code, name_ru, Price, enabled FROM SC_products  WHERE in_stock = 100';
+        = 'INSERT INTO Search_products (categoryID, code_1c, product_code, name_ru, Price,enabled) 
+           SELECT  categoryID, code_1c, product_code, name_ru, Price, enabled FROM SC_products  WHERE in_stock = 100';
     $res = mysql_query($query) or die(mysql_error()."<br>$query");
 
     // Оптимизация таблиц
@@ -455,7 +457,7 @@ TAG
 
     mysql_close();
 
-    echo('<span style="color:red;"><br>курс доллара - '.(1 / $usd).' грн</span>');
+    //echo('<span style="color:red;"><br>курс доллара - '.(1 / $usd).' грн</span>');
 
     // Удаление временных файлов
     RemoveDir($_SERVER['DOCUMENT_ROOT'].'/upload/');
@@ -478,11 +480,11 @@ TAG
     {
         $dir = opendir($directory);
         while (($file = readdir($dir))) {
-            if (is_file($directory."/".$file)) {
-                unlink($directory."/".$file);
+            if (is_file($directory.'/'.$file)) {
+                unlink($directory.'/'.$file);
             } else {
-                if (is_dir($directory."/".$file) && ($file != ".") && ($file != "..")) {
-                    RemoveDir($directory."/".$file);
+                if (is_dir($directory.'/'.$file) && ($file != '.') && ($file != '..')) {
+                    RemoveDir($directory.'/'.$file);
                 }
             }
         }
@@ -502,14 +504,14 @@ TAG
 
     function UpdateValue($table, $new_value, $condition = '')
     {
-        $condition = ($condition)?"WHERE $condition":"";
+        $condition = ($condition) ? "WHERE $condition" : '';
         $query     = "UPDATE $table SET $new_value $condition";
         $result = mysql_query($query) or die('Ошибка в запросе: '.mysql_error().'<br>'.$query);
     }
 
     function DeleteRow($table, $condition = '')
     {
-        $condition = ($condition)?"WHERE $condition":"";
+        $condition = ($condition) ? "WHERE $condition" : '';
         $query     = "DELETE FROM $table $condition";
         $result = mysql_query($query) or die('Ошибка в запросе: '.mysql_error().'<br>'.$query);
     }
@@ -566,7 +568,7 @@ TAG
         $str = Rus2Translit($str);
         $str = strtolower($str);
         $str = preg_replace('~[^-a-z0-9_]+~u', '-', $str);
-        $str = trim($str, "-");
+        $str = trim($str, '-');
 
         return $str;
     }
@@ -574,7 +576,7 @@ TAG
     function ProgressBar($import_items, $percent, $full = false)
     {
         if ($full === true) {
-            $full = "background-image:linear-gradient(to bottom, #6AFF7D, #00DC08)";
+            $full = 'background-image:linear-gradient(to bottom, #6AFF7D, #00DC08)';
         }
         echo "<script language='javascript'>
                     document.getElementById('$import_items').innerHTML=\"<div style='width:$percent;$full'>$percent</div>\"

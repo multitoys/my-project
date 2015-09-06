@@ -21,11 +21,11 @@
     $concs = array('divoland', 'mixtoys', 'dreamtoys', 'alliance');
     $table = 'Conc__analogs';
     deleteRow($table);
-
+    $usd = 1 / getValue('currency_value', 'CID = 10', 'SC_currency_types');
     $query
         = "INSERT INTO $table
-                      (categoryID, code_1c, product_code, name_ru, Price,enabled)
-          SELECT  categoryID, code_1c, product_code, name_ru, Price, enabled
+                      (categoryID, code_1c, product_code, name_ru, brand, Price, price_usd,  ukraine, enabled)
+          SELECT       categoryID, code_1c, product_code, name_ru, brand, Price, Price/$usd, ukraine, enabled
           FROM SC_products
           WHERE in_stock = 100 AND Price <> 0.00";
     $res = mysql_query($query) or die(mysql_error()."<br>$query");
@@ -47,6 +47,7 @@
                 $query3
                     = "UPDATE $table
                             SET    $conc      = $analog[0],
+                                   usd_$conc  = $analog[0]/$usd,
                                    diff_$conc = ROUND((Price/$analog[0]-1)*100)
                             WHERE  code_1c    = '$Codes->code_1c'";
                 $res3 = mysql_query($query3) or die(mysql_error()."<br>$query");

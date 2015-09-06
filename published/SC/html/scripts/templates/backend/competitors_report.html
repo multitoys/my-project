@@ -1,0 +1,101 @@
+{literal}
+    <style>
+        .za_body h3 {
+            padding-left: 5px;
+            padding-top: 15px;
+            color: tomato;
+        }
+    </style>
+{/literal}
+
+<div class="za_body">
+    <h3>Сравнение цен по конкурентам</h3>
+
+    <form name="MainForm" method="get" action="{''|set_query}">
+        <input type="hidden" name="did" value="{$CurrentDivision.id}"/>
+
+        <table border="0" cellspacing="1" cellpadding="3">
+            <tr>
+                <td colspan="10"><p>{"competitors_search_params"|translate}</p></td>
+            </tr>
+            <tr>
+                <td colspan="5">
+                    <input type="checkbox" name="enabled" value="1" id="enabled">
+                    <label for="enabled" style="color: #116DCE; font-style: italic">только товары на остатке</label>
+                </td>
+                <td colspan="5">
+                    <input type="checkbox" name="ukraine" value="1" id="enabled">
+                    <label for="enabled" style="color: #45AF10; font-style: italic">только украинские товары</label>
+                </td>
+            </tr>
+            <tr>
+                <td>{"usr_custinfo_last_name"|translate}</td>
+                <td><input type="text" name="last_name" value='{$smarty.get.last_name|escape:'html'}'></td>
+                <td>{"usr_custinfo_first_name"|translate}</td>
+                <td><input type="text" name="first_name" value='{$smarty.get.first_name|escape:'html'}'></td>
+                <td>IP-адрес</td>
+                <td><input type="text" name="IP_address" value='{$smarty.get.IP_address|escape:'html'}'></td>
+                <td>Тип события:</td>
+                {*<td><input type="text" name="type_event" value='{$smarty.get.type_event|escape:'html'}'></td>*}
+                <td>
+                    <select name="type_event">
+                        <option value='-1'{if $smarty.get.type_event eq -1} selected="selected"{/if}>Все события
+                        </option>
+                        <option value='1'{if $smarty.get.type_event eq 1} selected="selected"{/if}>Вход</option>
+                        <option value='2'{if $smarty.get.type_event eq 2} selected="selected"{/if}>Попытка</option>
+                        <option value='3'{if $smarty.get.type_event eq 3} selected="selected"{/if}>Выход</option>
+                        <option value='4'{if $smarty.get.type_event eq 4} selected="selected"{/if}>WARNING</option>
+                    </select>
+                <td><input type="submit" name="search" value="{"btn_find"|translate}"></td>
+            </tr>
+        </table>
+
+        <br>
+
+    </form>
+    {if $GridRows}
+
+        {if $navigator}<p>{$navigator}{/if}
+        <p>
+        <table width="100%" border="0" cellpadding="0" cellspacing="0" class="grid">
+            <tr class="gridsheader">
+                {include file="backend/gridheader.tpl.html"}
+            </tr>
+            {section name=i loop=$GridRows}
+                {assign var=customer_url value="did=&ukey=user_info&userID=`$GridRows[i].customerID`"|set_query_html}
+                <tr class="{cycle values="gridline1,gridline"}">
+                    <td><!-- <a href='{$customer_url}'> -->
+                        {$GridRows[i].date_event|date_format:"%d.%m.%Y %H:%M"}<!-- </a> --></td>
+                    <td><a href='{$customer_url}'><font color="blue">{$GridRows[i].last_name|escape:'html'}</font></a>
+                    </td>
+                    <td><a href='{$customer_url}'>{$GridRows[i].first_name|escape:'html'}</a></td>
+                    <td><a href='{$customer_url}'>{$GridRows[i].Login|escape:'html'}</a></td>
+                    <td><!-- <a href='{$customer_url}'> --><font
+                                color="blue"><strong>{$GridRows[i].IP_address|escape:'html'}</strong></font><!-- </a> -->
+                    </td>
+                    <td><!-- <a href='{$customer_url}'> -->{$GridRows[i].region|escape:'html'}<!-- </a> --></td>
+                    <td><!-- <a href='{$customer_url}'> -->{$GridRows[i].city|escape:'html'}<!-- </a> --></td>
+                    <td><!-- <a href='{$customer_url}'> -->
+                        {if $GridRows[i].type_event eq 1}<font color="green">Вход</font>{/if}
+                        {if $GridRows[i].type_event eq 3}<font color="blue">Выход</font>{/if}
+                        {if $GridRows[i].type_event eq 2}<font color="orange">Попытка</font>{/if}
+                        {if $GridRows[i].type_event eq 4}<font color="red">WARNING</font>{/if}
+                        <!-- </a> --></td>
+                    <td><!--<a href='{$customer_url}'>-->
+                        {$GridRows[i].reg_datetime|date_format:"%d.%m.%Y %H:%M"}<!-- </a> --></td>
+                    <td><span style="font-size:85%;color:grey">{$GridRows[i].all_ip_info|escape:'html'}</span></td>
+                    <!-- <td><span style="font-size:85%;color:grey;background-color: rgba(230, 230, 250, 0.5);">{$GridRows[i].all_ip_info|escape:'html'}</span></td> -->
+                    {*<td><!-- <a href='{$customer_url}'> -->{$GridRows[i].may_order_until|date_format:"%d.%m.%Y %H:%M"}<!-- </a> --></td>
+                    <td>{if $GridRows[i].type_event eq 1}{$GridRows[i].logged|date_format:"%d.%m.%Y %H:%M"}{/if}
+                                                  {if $GridRows[i].type_event eq 2}{$GridRows[i].logged|date_format:"%d.%m.%Y %H:%M"}{/if}
+                                                  {if $GridRows[i].type_event eq 3}Не авторизован{/if}</td>*}
+                </tr>
+            {/section}
+            <tr class="gridsfooter">
+                <td colspan="11">{$TotalFound} &nbsp;{include file="backend/lister.tpl.html"}</td>
+            </tr>
+        </table>
+    {else}
+        <p>&lt;{'lbl_not_found'|translate}&gt;</p>
+    {/if}
+</div>

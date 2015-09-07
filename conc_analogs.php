@@ -24,7 +24,7 @@
     $usd = 1 / getValue('currency_value', 'CID = 10', 'SC_currency_types');
     $query
         = "INSERT INTO $table
-                      (categoryID, code_1c, product_code, name_ru, brand, Price, price_usd,  ukraine, enabled)
+                      (categoryID, code_1c, product_code, name_ru, brand, Price, usd_Price,  ukraine, enabled)
           SELECT       categoryID, code_1c, product_code, name_ru, brand, Price, Price/$usd, ukraine, enabled
           FROM SC_products
           WHERE in_stock = 100 AND Price <> 0.00";

@@ -5,6 +5,24 @@
             padding-top: 15px;
             color: tomato;
         }
+        .price_conc {
+            text-align: right;
+        }
+        label {
+            vertical-align: top;
+        }
+        .red {
+            color: red;
+        }
+        .yellow{
+            color: yellow;
+        }
+        .green{
+            color: green;
+        }
+        .border {
+            border-left: 1px dotted grey;
+        }
     </style>
 {/literal}
 
@@ -13,82 +31,100 @@
 
     <form name="MainForm" method="get" action="{''|set_query}">
         <input type="hidden" name="did" value="{$CurrentDivision.id}"/>
-
         <table border="0" cellspacing="1" cellpadding="3">
             <tr>
                 <td colspan="10"><p>{"competitors_search_params"|translate}</p></td>
             </tr>
             <tr>
-                <td colspan="5">
-                    <input type="checkbox" name="enabled" value="1" id="enabled">
-                    <label for="enabled" style="color: #116DCE; font-style: italic">только товары на остатке</label>
+                <td colspan="2">
+                    <input type="checkbox" name="enabled" value="1" id="enabled" 
+                            {if $smarty.get.enabled} checked="checked"{/if}>
+                    <label for="enabled" style="color: #116DCE; font-style: italic">- только товары на остатке</label>
                 </td>
-                <td colspan="5">
-                    <input type="checkbox" name="ukraine" value="1" id="enabled">
-                    <label for="enabled" style="color: #45AF10; font-style: italic">только украинские товары</label>
+                <td colspan="2">
+                    <input type="checkbox" name="ukraine" value="1" id="ukraine"
+                            {if $smarty.get.ukraine} checked="checked"{/if}>
+                    <label for="ukraine" style="color: #45AF10; font-style: italic">- только украинские товары</label>
+                </td>
+                <td colspan="2">
+                    <input type="checkbox" name="currency" value="1" id="currency"
+                            {if $smarty.get.currency} checked="checked"{/if}>
+                    <label for="currency" style="color: darkred; font-style: italic">- цены в $USD</label>
                 </td>
             </tr>
             <tr>
-                <td>{"usr_custinfo_last_name"|translate}</td>
-                <td><input type="text" name="last_name" value='{$smarty.get.last_name|escape:'html'}'></td>
-                <td>{"usr_custinfo_first_name"|translate}</td>
-                <td><input type="text" name="first_name" value='{$smarty.get.first_name|escape:'html'}'></td>
-                <td>IP-адрес</td>
-                <td><input type="text" name="IP_address" value='{$smarty.get.IP_address|escape:'html'}'></td>
-                <td>Тип события:</td>
-                {*<td><input type="text" name="type_event" value='{$smarty.get.type_event|escape:'html'}'></td>*}
-                <td>
-                    <select name="type_event">
-                        <option value='-1'{if $smarty.get.type_event eq -1} selected="selected"{/if}>Все события
-                        </option>
-                        <option value='1'{if $smarty.get.type_event eq 1} selected="selected"{/if}>Вход</option>
-                        <option value='2'{if $smarty.get.type_event eq 2} selected="selected"{/if}>Попытка</option>
-                        <option value='3'{if $smarty.get.type_event eq 3} selected="selected"{/if}>Выход</option>
-                        <option value='4'{if $smarty.get.type_event eq 4} selected="selected"{/if}>WARNING</option>
+                <td colspan="2">
+                    <label for="competitor" style="color: #FF0000">Сравнить с: </label>
+                    <select name="competitor" id="competitor">
+                        <option value='all'      {if $smarty.get.competitor eq 'all'} selected="selected"{/if}>Все конкуренты</option>
+                        <option value='Alliance' {if $smarty.get.competitor eq 'Alliance'} selected="selected"{/if}>Альянс</option>
+                        <option value='Divoland' {if $smarty.get.competitor eq 'Divoland'} selected="selected"{/if}>Диволенд</option>
+                        <option value='Dreamtoys'{if $smarty.get.competitor eq 'Dreamtoys'} selected="selected"{/if}>Веселка</option>
+                        <option value='Mixtoys'  {if $smarty.get.competitor eq 'Mixtoys'} selected="selected"{/if}>Микстойс</option>
                     </select>
+                </td>
+                <td colspan="2">
+                    <label for="brand" style="color: #C00DC1">По торговой марке: </label>
+                    <select name="brand" id="brand">
+                        <option value='all'>Все TM</option>
+                    {section name=i loop=$Brands}
+                        <option value='{$Brands[i]|escape:'html'}' {if $smarty.get.brand eq $Brands[i]|escape:'html'} selected="selected"{/if}>{$Brands[i]|escape:'html'}</option>
+                    {/section}
+                    </select>
+                </td>
+                <td colspan="2">
+                    <label for="category" style="color: darkorange">По категории: </label>
+                    <select name="category" id="category">
+                        <option value='all'>Все категории</option>
+                    {section name=i loop=$Categories}
+                        <option value='{$Categories[i]|escape:'html'}' {if $smarty.get.category eq $Categories[i]|escape:'html'} selected="selected"{/if}>{$Categories[i]|escape:'html'}</option>
+                    {/section}
+                    </select>
+                </td>
                 <td><input type="submit" name="search" value="{"btn_find"|translate}"></td>
             </tr>
         </table>
-
-        <br>
-
     </form>
+    
     {if $GridRows}
-
-        {if $navigator}<p>{$navigator}{/if}
-        <p>
+        {*{if $navigator}<p>{$navigator}</p>{/if}*}
+        {*<p class="gridsfooter">{$TotalFound} &nbsp;{include file="backend/lister.tpl.html"}</p>*}
         <table width="100%" border="0" cellpadding="0" cellspacing="0" class="grid">
             <tr class="gridsheader">
                 {include file="backend/gridheader.tpl.html"}
             </tr>
             {section name=i loop=$GridRows}
-                {assign var=customer_url value="did=&ukey=user_info&userID=`$GridRows[i].customerID`"|set_query_html}
-                <tr class="{cycle values="gridline1,gridline"}">
-                    <td><!-- <a href='{$customer_url}'> -->
-                        {$GridRows[i].date_event|date_format:"%d.%m.%Y %H:%M"}<!-- </a> --></td>
-                    <td><a href='{$customer_url}'><font color="blue">{$GridRows[i].last_name|escape:'html'}</font></a>
-                    </td>
-                    <td><a href='{$customer_url}'>{$GridRows[i].first_name|escape:'html'}</a></td>
-                    <td><a href='{$customer_url}'>{$GridRows[i].Login|escape:'html'}</a></td>
-                    <td><!-- <a href='{$customer_url}'> --><font
-                                color="blue"><strong>{$GridRows[i].IP_address|escape:'html'}</strong></font><!-- </a> -->
-                    </td>
-                    <td><!-- <a href='{$customer_url}'> -->{$GridRows[i].region|escape:'html'}<!-- </a> --></td>
-                    <td><!-- <a href='{$customer_url}'> -->{$GridRows[i].city|escape:'html'}<!-- </a> --></td>
-                    <td><!-- <a href='{$customer_url}'> -->
-                        {if $GridRows[i].type_event eq 1}<font color="green">Вход</font>{/if}
-                        {if $GridRows[i].type_event eq 3}<font color="blue">Выход</font>{/if}
-                        {if $GridRows[i].type_event eq 2}<font color="orange">Попытка</font>{/if}
-                        {if $GridRows[i].type_event eq 4}<font color="red">WARNING</font>{/if}
-                        <!-- </a> --></td>
-                    <td><!--<a href='{$customer_url}'>-->
-                        {$GridRows[i].reg_datetime|date_format:"%d.%m.%Y %H:%M"}<!-- </a> --></td>
-                    <td><span style="font-size:85%;color:grey">{$GridRows[i].all_ip_info|escape:'html'}</span></td>
-                    <!-- <td><span style="font-size:85%;color:grey;background-color: rgba(230, 230, 250, 0.5);">{$GridRows[i].all_ip_info|escape:'html'}</span></td> -->
-                    {*<td><!-- <a href='{$customer_url}'> -->{$GridRows[i].may_order_until|date_format:"%d.%m.%Y %H:%M"}<!-- </a> --></td>
-                    <td>{if $GridRows[i].type_event eq 1}{$GridRows[i].logged|date_format:"%d.%m.%Y %H:%M"}{/if}
-                                                  {if $GridRows[i].type_event eq 2}{$GridRows[i].logged|date_format:"%d.%m.%Y %H:%M"}{/if}
-                                                  {if $GridRows[i].type_event eq 3}Не авторизован{/if}</td>*}
+                {*{assign var=customer_url value="did=&ukey=user_info&userID=`$GridRows[i].customerID`"|set_query_html}*}
+                <tr class="{cycle values="odd,even"}">
+                    <td>
+                        {*<!-- <a href='{$customer_url}'> -->*}
+                        {$GridRows[i].code_1c}<!-- </a> --></td>
+                    <td><font color="blue">{$GridRows[i].product_code|escape:'html'}</font></td>
+                    <td>{$GridRows[i].name_ru|escape:'html'}</td>
+                    <td>{$GridRows[i].brand|escape:'html'}</td>
+                    <td class="price_conc"><font color="blue">{$GridRows[i].Price|escape:'html'}</font></td>
+                {if $smarty.get.competitor eq 'Alliance'}
+                    <td class="price_conc border {if $GridRows[i].diff_alliance > 5}red{elseif $GridRows.diff_alliance > 0}yellow{else}green{/if}">{$GridRows[i].Alliance|escape:'html'}</td>
+                    <td class="price_conc {if $GridRows[i].diff_alliance > 5}red{elseif $GridRows.diff_alliance > 0}yellow{else}green{/if}">{$GridRows[i].diff_alliance|escape:'html'}</td>
+                {elseif $smarty.get.competitor eq 'Divoland'}
+                    <td class="price_conc border {if $GridRows[i].diff_divoland > 5}red{elseif $GridRows.diff_alliance > 0}yellow{else}green{/if}">{$GridRows[i].Divoland|escape:'html'}</td>
+                    <td class="price_conc {if $GridRows[i].diff_divoland > 5}red{elseif $GridRows.diff_alliance > 0}yellow{else}green{/if}">{$GridRows[i].diff_divoland|escape:'html'}</td>
+                {elseif $smarty.get.competitor eq 'Dreamtoys'}
+                    <td class="price_conc border {if $GridRows[i].diff_dreamtoys > 5}red{elseif $GridRows.diff_alliance > 0}yellow{else}green{/if}">{$GridRows[i].Dreamtoys|escape:'html'}</td>
+                    <td class="price_conc {if $GridRows[i].diff_dreamtoys > 5}red{elseif $GridRows.diff_alliance > 0}yellow{else}green{/if}">{$GridRows[i].diff_dreamtoys|escape:'html'}</td>
+                {elseif $smarty.get.competitor eq 'Mixtoys'}
+                    <td class="price_conc border {if $GridRows[i].diff_mixtoys > 5}red{elseif $GridRows.diff_alliance > 0}yellow{else}green{/if}">{$GridRows[i].Mixtoys|escape:'html'}</td>
+                    <td class="price_conc {if $GridRows[i].diff_mixtoys > 5}red{elseif $GridRows.diff_alliance > 0}yellow{else}green{/if}">{$GridRows[i].diff_mixtoys|escape:'html'}</td>
+                {else}
+                    <td class="price_conc border {if $GridRows[i].diff_alliance > 5}red{elseif $GridRows.diff_alliance > 0}yellow{else}green{/if}">{$GridRows[i].Alliance|escape:'html'}</td>
+                    <td class="price_conc {if $GridRows[i].diff_alliance > 5}red{elseif $GridRows.diff_alliance > 0}yellow{else}green{/if}">{$GridRows[i].diff_alliance|escape:'html'}</td>
+                    <td class="price_conc border {if $GridRows[i].diff_divoland > 5}red{elseif $GridRows.diff_alliance > 0}yellow{else}green{/if}">{$GridRows[i].Divoland|escape:'html'}</td>
+                    <td class="price_conc {if $GridRows[i].diff_divoland > 5}red{elseif $GridRows.diff_alliance > 0}yellow{else}green{/if}">{$GridRows[i].diff_divoland|escape:'html'}</td>
+                    <td class="price_conc border {if $GridRows[i].diff_dreamtoys > 5}red{elseif $GridRows.diff_alliance > 0}yellow{else}green{/if}">{$GridRows[i].Dreamtoys|escape:'html'}</td>
+                    <td class="price_conc {if $GridRows[i].diff_dreamtoys > 5}red{elseif $GridRows.diff_alliance > 0}yellow{else}green{/if}">{$GridRows[i].diff_dreamtoys|escape:'html'}</td>
+                    <td class="price_conc border {if $GridRows[i].diff_mixtoys > 5}red{elseif $GridRows.diff_alliance > 0}yellow{else}green{/if}">{$GridRows[i].Mixtoys|escape:'html'}</td>
+                    <td class="price_conc {if $GridRows[i].diff_mixtoys > 5}red{elseif $GridRows.diff_alliance > 0}yellow{else}green{/if}">{$GridRows[i].diff_mixtoys|escape:'html'}</td>
+                {/if}  
                 </tr>
             {/section}
             <tr class="gridsfooter">

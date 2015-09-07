@@ -1,0 +1,213 @@
+<style>
+.label {
+	cursor: pointer;
+}
+.label:hover {
+	color: #000 !important;
+}
+.label, .active, img { 
+    -moz-user-select:none;
+    -webkit-user-select:none; 
+}
+.slider {
+	margin: 0 auto;
+}
+.input{
+	display: none;
+}
+#slide1:checked ~ .slides .inner { margin-left:0; }
+#slide2:checked ~ .slides .inner { margin-left:-100%; }
+#slide3:checked ~ .slides .inner { margin-left:-200%; }
+#slide4:checked ~ .slides .inner { margin-left:-300%; }
+#slide5:checked ~ .slides .inner { margin-left:-400%; }
+.overflow {
+	width: 160px;
+	overflow: hidden;
+}
+article img {
+	width: 160px;
+	height: 120px
+}
+.slides .inner {
+	width: 500%;
+	line-height: 0;
+}
+.slides article {
+	width: 20%;
+	float: left;
+}
+.controls .label { 
+	width: 30px;
+	height: 30px;
+	opacity: 0.5;
+}
+.active {
+	text-align: center;
+}
+.active .label {
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	display: inline-block;
+	width: 10px;
+	height: 10px;
+	background: #bbb;
+}
+.active .label:hover {
+	background: #ccc;
+	border-color: #777 !important;
+}
+.controls .label:hover {
+	opacity: 1;
+}
+.next {
+	background: url('images/next.png') no-repeat;
+	float: right;
+	margin: 0 -5px 0 0;
+	display: block;
+}
+.prev {
+	background: url('images/prev.png') no-repeat;
+	float: left;
+	margin: 0 0 0 -5px;
+	display: block;
+}
+#slide1:checked ~ .active .label:nth-child(1),
+#slide2:checked ~ .active .label:nth-child(2),
+#slide3:checked ~ .active .label:nth-child(3),
+#slide4:checked ~ .active .label:nth-child(4),
+#slide5:checked ~ .active .label:nth-child(5) {
+	background: #333;
+	border-color: #333 !important;
+}
+.slides {
+	margin: 0;
+	border-radius: 0;
+	box-shadow: 1px 1px 4px #666;
+	padding: 0;
+	background: #fff;
+}
+.slides .inner {
+	-webkit-transform: translateZ(0);
+	-webkit-transition: all 800ms cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+	-moz-transition: all 800ms cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+    -ms-transition: all 800ms cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+     -o-transition: all 800ms cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+        transition: all 800ms cubic-bezier(0.770, 0.000, 0.175, 1.000);
+
+	-webkit-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+	-moz-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+    -ms-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+     -o-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+        transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
+}
+.slider {
+	-webkit-transform: translateZ(0);
+	-webkit-transition: all 0.5s ease-out;
+	-moz-transition: all 0.5s ease-out;
+	-o-transition: all 0.5s ease-out;
+	transition: all 0.5s ease-out;
+}
+.controls .label{
+	-webkit-transform: translateZ(0);
+	-webkit-transition: opacity 0.2s ease-out;
+	-moz-transition: opacity 0.2s ease-out;
+	-o-transition: opacity 0.2s ease-out;
+	transition: opacity 0.2s ease-out;
+}
+#slide1:checked ~ .slides article:nth-child(1) .info,
+#slide2:checked ~ .slides article:nth-child(2) .info,
+#slide3:checked ~ .slides article:nth-child(3) .info,
+#slide4:checked ~ .slides article:nth-child(4) .info,
+#slide5:checked ~ .slides article:nth-child(5) .info {
+	opacity: 1;
+	-webkit-transition: all 1s ease-out 0.6s;
+	-moz-transition: all 1s ease-out 0.6s;
+	-o-transition: all 1s ease-out 0.6s;
+	transition: all 1s ease-out 0.6s;
+}
+.controls, .slides, .active, .active .label{
+	-webkit-transform: translateZ(0);
+	-webkit-transition: all 0.5s ease-out;
+	-moz-transition: all 0.5s ease-out;
+	-o-transition: all 0.5s ease-out;
+	transition: all 0.5s ease-out;
+}
+.slider {
+	width: 160px;
+	height: 120px;
+}
+.slider .controls {
+  margin-top: -77px;
+  width: 160px;
+  height: 40px;
+}
+.slider .active {
+	margin: 18px 0 0;
+}
+.slider .slides {
+	padding: 0;
+	-webkit-border-radius: 0px;
+	-moz-border-radius: 0px;
+	border-radius: 0px;
+}
+</style>
+<script>
+function changePic(id, direction) {
+	var element = document.getElementById('pic'+id);
+	var picNums = Number(element.getAttribute('data-pics'));
+	var currPic = Number(element.getAttribute('data-current'));
+	var newPic;
+	var endOfSrc;
+	if (direction > 0) {
+		if (currPic < picNums) {
+			newPic   = currPic + direction;
+			endOfSrc = '-' + newPic + '_thm.jpg';
+		} else {
+			newPic   = 0;
+			endOfSrc = '_thm.jpg';
+		}
+	} else {
+		if (currPic > 1) {
+			newPic   = currPic + direction;
+			endOfSrc = '-' + newPic + '_thm.jpg';
+		} else if (currPic == 1) {
+			newPic   = 0;
+			endOfSrc = '_thm.jpg';
+		} else {
+			newPic   = picNums;
+			endOfSrc = '-' + newPic + '_thm.jpg';
+		}
+	}
+	var startOfSrc = '/published/publicdata/MULTITOYS/attachments/SC/products_pictures/';
+    element.setAttribute('src', startOfSrc + id + endOfSrc);
+	element.setAttribute('data-current', newPic);
+    return;
+}
+</script>
+<div class=slider>
+    <!-- Slider Setup -->
+
+    <!-- The Slider -->
+    <div class=slides>	
+        <div class=overflow>	
+            <div class=inner>
+                <article>
+                    <img id='pic39594' data-pics=4 data-current=0 src="/published/publicdata/MULTITOYS/attachments/SC/products_pictures/39594_thm.jpg">
+                </article>
+            </div>
+        </div>
+    </div>
+    <!-- Controls and Active Slide Display -->
+    <div class=controls>
+        <div class='label prev' onclick="changePic(39594,-1)"></div>
+        <div class='label next' onclick="changePic(39594, 1)"></div>
+    </div>
+<!--    <div class=active>
+        <label for=slide1></label>
+        <label for=slide2></label>
+        <label for=slide3></label>
+        <label for=slide4></label>
+        <label for=slide5></label>
+    </div> -->
+</div>

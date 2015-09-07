@@ -1,0 +1,49 @@
+<table cellpadding="0" cellspacing="0" width='100%'>
+  <tr>
+    <td>
+      <table cellpadding="0" cellspacing="0" style="margin:20px 0 10px 0; width:100%;">
+        <tr>
+          <td width='60'></td>
+          <td>Название товара</td>
+          <td width='80'>Артикул</td>
+          <td width='100'>Стоимость</td>
+        </tr>
+      </table>
+	  <div class="scroll-pane1">
+      {foreach from=$__products item=_product}
+        {if $_product.slug}
+          {assign var=_product_url value="?productID=`$_product.productID`&product_slug=`$_product.slug`"|set_query_html}
+        {else}
+          {assign var=_product_url value="?productID=`$_product.productID`"|set_query_html}
+        {/if}
+        <table cellpadding="10" cellspacing="0" style='width:100%';>
+          <tr>
+            <td height="" width='160px'>
+              {if $_product.thumbnail}<div class="div_izobrag">
+                <a href="{$_product_url}">
+                  <img class='preview'  src="{$smarty.const.URL_PRODUCTS_PICTURES}/{$_product.thumbnail|escape:'url'}" pid="{$smarty.const.URL_PRODUCTS_PICTURES}/{$_product.filename|escape:'url'}"/>
+                </a></div>
+              {else}
+                <a href="{$_product_url}">
+                  <img class='preview' width='150' src="/img/nophoto.jpg"/>
+                </a>
+              {/if}
+            </td>
+            <td align="left">
+              <a href="{$_product_url}">{$_product.name}</a>
+            </td>
+            <td width='80' align='left'>{$_product.product_code}</td>
+            <td width='100'>
+              {if $_product.Price}
+{*                <div class="totalPrice">{$_product.price_str}</div> *}
+                <div class="totalPrice">{$_product.productID|withSkidka} грн.</div>
+              {/if}
+            </td>
+          </tr>
+        </table>
+        <div class='delimiter'></div>
+      {/foreach}
+	  </div>
+    </td>
+  </tr>
+</table>

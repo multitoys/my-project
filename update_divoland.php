@@ -75,7 +75,7 @@ TAG
                 $name
                            = mysql_real_escape_string(trim(str_replace($replace_name, '', DecodeCodepage($products[2][$i]))));
                 $price     = (double)$products[3][$i];
-                $price_usd = $price / 22.40;
+                $price_usd = $price / 21.60;
                 $productID = GetValue('productID', 'Conc__divoland', "code = '$code'");
 
                 if ($productID) {
@@ -118,6 +118,9 @@ TAG
     echo('<hr><span style="color:blue;">Обработано '.$no.' товаров</span><br><br>Новых '.$error.' товаров</span><br>');
 
     // Оптимизация таблиц
+	$query = 'UPDATE `Conc__divoland` SET `parent`='', `category`='' WHERE `enabled`=0';
+    $res = mysql_query($query) or die(mysql_error()."<br>$query");
+	
     $query = 'OPTIMIZE TABLE `Conc__divoland`, `Conc_search__divoland`';
     $res = mysql_query($query) or die(mysql_error()."<br>$query");
     mysql_close();

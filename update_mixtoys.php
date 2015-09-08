@@ -100,7 +100,7 @@ TAG
             if (!is_numeric($price)) {
                 $price = preg_replace('/[^0-9.]/', '', $price);
             }
-            $price_usd = $price / 21.95;
+            $price_usd = $price / 21.50;
 
             $productID = GetValue('productID', 'Conc__mixtoys', "code = '$code'");
 
@@ -146,6 +146,9 @@ TAG
 
     // Оптимизация таблиц
     //DeleteRow('Conc__mixtoys', 'price_uah = 0.00');
+	$query = 'UPDATE `Conc__mixtoys` SET `parent`='', `category`='' WHERE `enabled`=0';
+    $res = mysql_query($query) or die(mysql_error()."<br>$query");
+	
     $query = 'OPTIMIZE TABLE Conc__mixtoys';
     $res = mysql_query($query) or die(mysql_error() . "<br>$query");
     mysql_close();

@@ -7,8 +7,10 @@
         $sql = 'SELECT DISTINCT parent FROM Conc__'.$auxpage.' ORDER BY parent';
         if ($r = mysql_query($sql))
             while ($res = mysql_fetch_assoc($r)) {
-                $disp .= '<li><a href="/auxpage_'.$auxpage.'?div_par='.$res['parent'].'" aria-haspopup=true>'.$res['parent'].'</a>';
-                $disp .= subcategory($res['parent'], $auxpage).'';
+                if ($res['parent'] !== '') {
+                    $disp .= '<li><a href="/auxpage_'.$auxpage.'?div_par='.$res['parent'].'" aria-haspopup=true>'.$res['parent'].'</a>';
+                    $disp .= subcategory($res['parent'], $auxpage).'';
+                }
             }
         $disp .= '</ul>';
         return $disp;
@@ -22,8 +24,10 @@
             if (mysql_num_rows($r) > 0) {
                 $disp .= '<ul class="animated slideInRight">';
                 while ($res = mysql_fetch_assoc($r)) {
-                    $disp .= '<li>';
-                    $disp .= '<a href="/auxpage_'.$auxpage.'?div_cat='.$res['category'].'" aria-haspopup=true>'.$res['category'].'</a>';
+                    if ($res['category'] !== '') {
+                        $disp .= '<li>';
+                        $disp .= '<a href="/auxpage_'.$auxpage.'?div_cat='.$res['category'].'" aria-haspopup=true>'.$res['category'].'</a>';
+                    }
                 }
                 $disp .= '</li></ul>';
             }

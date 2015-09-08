@@ -21,11 +21,11 @@
     $concs = array('divoland', 'mixtoys', 'dreamtoys', 'alliance');
     $table = 'Conc__analogs';
     deleteRow($table);
-    $usd = 1 / getValue('currency_value', 'CID = 10', 'SC_currency_types');
+    $usd0 = 1 / getValue('currency_value', 'CID = 10', 'SC_currency_types');
     $query
         = "INSERT INTO $table
                       (categoryID, code_1c, product_code, name_ru, brand, Price, usd_Price,  ukraine, enabled)
-          SELECT       categoryID, code_1c, product_code, name_ru, brand, Price, Price/$usd, ukraine, enabled
+          SELECT       categoryID, code_1c, product_code, name_ru, brand, Price, Price/$usd0, ukraine, enabled
           FROM SC_products
           WHERE in_stock = 100 AND Price <> 0.00";
     $res = mysql_query($query) or die(mysql_error()."<br>$query");
@@ -33,7 +33,13 @@
     foreach ($concs as $conc) {
         $query = "SELECT code, code_1c FROM Conc_search__$conc";
         $res = mysql_query($query) or die(mysql_error().$query);
-
+		
+		$usd = $usd0;
+		
+		if ($conc == 'divoland') {
+			$usd = $usd0 + 0.10;
+		}
+		
         while ($Codes = mysql_fetch_object($res)) {
             $query2
                 = "SELECT
@@ -41,7 +47,7 @@
                     FROM
                         Conc__$conc
                     WHERE
-                        code = '$Codes->code'";
+                        code = '$Codes->code' AND enabled=1";
             $res2 = mysql_query($query2) or die(mysql_error().$query2);
             if ($analog = mysql_fetch_row($res2)) {
                 $query3

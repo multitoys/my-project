@@ -71,9 +71,11 @@
 			{if $GridRows[i].type_event eq 2}<font color="orange">Попытка</font>{/if}
 			{if $GridRows[i].type_event eq 4}<font color="red">WARNING</font>{/if}
 		<!-- </a> --></td>
-		<td><!--<a href='{$customer_url}'>-->{$GridRows[i].reg_datetime|date_format:"%d.%m.%Y %H:%M"}<!-- </a> --></td>
-		<td><span style="font-size:85%;color:grey">{$GridRows[i].all_ip_info|escape:'html'}</span></td>
-		<!-- <td><span style="font-size:85%;color:grey;background-color: rgba(230, 230, 250, 0.5);">{$GridRows[i].all_ip_info|escape:'html'}</span></td> -->
+		<td colspan="2" ><span style="font-size:85%;color:navy"><!--<a href='{$customer_url}'>-->{$GridRows[i].user_agent|escape:'html'}<!-- </a> --></span></td>
+		{*<td><span style="font-size:85%;color:grey">{$GridRows[i].all_ip_info|escape:'html'}</span></td>*}
+		<!-- <td><span style="font-size:85%;color:grey;background-color: rgba(230, 230, 250, 0.5);">
+		{*{$GridRows[i].all_ip_info|escape:'html'}*}
+		</span></td> -->
 		{*<td><!-- <a href='{$customer_url}'> -->{$GridRows[i].may_order_until|date_format:"%d.%m.%Y %H:%M"}<!-- </a> --></td>
 		<td>{if $GridRows[i].type_event eq 1}{$GridRows[i].logged|date_format:"%d.%m.%Y %H:%M"}{/if}
 									  {if $GridRows[i].type_event eq 2}{$GridRows[i].logged|date_format:"%d.%m.%Y %H:%M"}{/if}

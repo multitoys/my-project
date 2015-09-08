@@ -1,10 +1,5 @@
 <?php
-/*	
-	ZUnlimited_ListController 
-	By Zerg Solutions
-	http://zerg-solutions.com.ua
-*/
-
+    
 /**
  * @package Modules
  * @subpackage AdministratorScreens
@@ -54,8 +49,8 @@ class ZAuth_LogController extends ActionsController {
 		$gridEntry->registerHeader('Облать', 'region', false, 'asc');
 		$gridEntry->registerHeader('Город', 'city', false, 'asc');
 		$gridEntry->registerHeader('Тип', 'type_event', false, 'asc');
-		$gridEntry->registerHeader('Зарегистрирован', 'reg_datetime', false, 'asc');
-		$gridEntry->registerHeader('Все IP', 'all_ip_info', false, 'asc');
+		$gridEntry->registerHeader('User Agent', 'user_agent', false, 'asc');
+//		$gridEntry->registerHeader('Все IP', 'all_ip_info', false, 'asc');
 		// $gridEntry->registerHeader('Доступ до:', 'may_order_until', false, 'asc');
 		// $gridEntry->registerHeader('Авторизован до:', 'logged', false, 'asc');
 		$gridEntry->prepare();
@@ -71,8 +66,8 @@ class ZAuth_LogController extends ActionsController {
 			$rows[$k]['region'] = $rows[$k]['region'];
 			$rows[$k]['city'] = $rows[$k]['city'];
 			$rows[$k]['type_event'] = $rows[$k]['type_event'];
-			$rows[$k]['reg_datetime'] = $rows[$k]['reg_datetime'];
-			$rows[$k]['all_ip_info'] = $rows[$k]['all_ip_info'];
+			$rows[$k]['user_agent'] = $rows[$k]['user_agent'];
+//			$rows[$k]['all_ip_info'] = $rows[$k]['all_ip_info'];
 			// $rows[$k]['may_order_until'] = $rows[$k]['may_order_until'];
 			// $rows[$k]['logged'] = $rows[$k]['logged'];
 		}
@@ -87,4 +82,3 @@ class ZAuth_LogController extends ActionsController {
 	}
 }	
 ActionsController::exec('ZAuth_LogController');
-?>

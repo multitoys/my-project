@@ -211,8 +211,8 @@
                     $grid->registerHeader('разница', 'diff_Mixtoys', false, 'ASC', 'right');
                     break;
                 default:
-                    $grid->registerHeader('Альянс', 'Alliance', false, 'ASC', 'right');
-                    $grid->registerHeader('разница', 'diff_alliance', false, 'ASC', 'right');
+//                    $grid->registerHeader('Альянс', 'Alliance', false, 'ASC', 'right');
+//                    $grid->registerHeader('разница', 'diff_alliance', false, 'ASC', 'right');
                     $grid->registerHeader('Диволенд', 'Divoland', false, 'ASC', 'right');
                     $grid->registerHeader('разница', 'diff_divoland', false, 'ASC', 'right');
                     $grid->registerHeader('Веселка', 'Dreamtoys', false, 'ASC', 'right');
@@ -230,6 +230,7 @@
                 $rows[$k]['code_1c'] = $rows[$k]['code_1c'];
                 $rows[$k]['product_code'] = $rows[$k]['product_code'];
                 $rows[$k]['img'] = '/published/publicdata/MULTITOYS/attachments/SC/search_pictures/'.$rows[$k]['code_1c'].'_s.jpg';
+                $rows[$k]['img_big'] = '/published/publicdata/MULTITOYS/attachments/SC/products_pictures/'.$rows[$k]['code_1c'].'.jpg';
                 $rows[$k]['name_ru'] = $rows[$k]['name_ru'];
                 $rows[$k]['brand'] = $rows[$k]['brand'];
                 $rows[$k]['Price'] = $rows[$k][$this->currency.'Price'];

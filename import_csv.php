@@ -2,7 +2,7 @@
 
     $start = microtime(true);
     ini_set('display_errors', true);
-    define('DIR_ROOT', $_SERVER['DOCUMENT_ROOT'].'published/SC/html/scripts');
+    define('DIR_ROOT', $_SERVER['DOCUMENT_ROOT'].'/published/SC/html/scripts');
 
     include_once(DIR_ROOT.'/includes/init.php');
     include_once(DIR_CFG.'/connect.inc.wa.php');

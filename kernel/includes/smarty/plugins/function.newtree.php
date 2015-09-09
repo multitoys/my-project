@@ -24,7 +24,7 @@ function smarty_function_newtree()
 
         while ($res = mysql_fetch_assoc($r)) {
             $a = '';
-            if ($res['slug'] === 'akcija') {
+            if ($res['slug'] === 'akcija' || $res['slug'] === 'akcija-bally') {
                 $a = 'style="color: red;text-shadow: 1px 1px 3px rgb(200, 104, 104),-1px -1px 3px rgb(255,255,255);"';
             }
             if ($res['slug'] !== 'akcija-bally' || $count > 0 ) {

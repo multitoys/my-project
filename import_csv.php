@@ -2,7 +2,7 @@
 
     $start = microtime(true);
     ini_set('display_errors', true);
-    define('DIR_ROOT', $_SERVER['DOCUMENT_ROOT'].'/published/SC/html/scripts');
+    define('DIR_ROOT', $_SERVER['DOCUMENT_ROOT'].'published/SC/html/scripts');
 
     include_once(DIR_ROOT.'/includes/init.php');
     include_once(DIR_CFG.'/connect.inc.wa.php');
@@ -121,7 +121,7 @@ TAG
         define('CAT_AKCIA_ID', GetValue('categoryID', 'SC_categories', "name_ru = 'Акция'"));
 
         // Идентификатор категории "акция "Баллы"
-        define('CAT_AKCIA_BALLY_ID', GetValue('categoryID', 'SC_categories', "name_ru = 'Акция - Супертрехдневка'"));
+        define('CAT_AKCIA_BALLY_ID', GetValue('categoryID', 'SC_categories', "name_ru = 'Суперцена'"));
 
         // Идентификатор категории "Все бонусные товары"
         define('CAT_BONUS_ID', GetValue('categoryID', 'SC_categories', "name_ru = 'Все бонусные товары'"));
@@ -428,6 +428,7 @@ TAG
     $new_count = 500;
     $query     = "SELECT productID FROM SC_products WHERE enabled = 1 ORDER BY code_1c DESC LIMIT $new_count";
     $res = mysql_query($query) or die('Ошибка в запросе: '.mysql_error().'<br>'.$query);
+    
     while ($ids = mysql_fetch_object($res)) {
         $id     = $ids->productID;
 

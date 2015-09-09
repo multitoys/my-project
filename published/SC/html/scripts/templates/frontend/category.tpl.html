@@ -133,6 +133,8 @@
                                 <div class="corner color
                                     {if $products_to_show[i1].akcia}
                                          _akcia"><span></span>Акция{if $products_to_show[i1].akcia_skidka > 0} - {$products_to_show[i1].akcia_skidka}%{/if}
+                                    {elseif $products_to_show[i1].eproduct_available_days > 5}
+                                         _superprice"><span></span>Суперцена!
                                     {elseif $products_to_show[i1].sort_order}
                                          _newitemspostup"><span></span>Новое поступление
                                     {elseif $products_to_show[i1].items_sold}

@@ -1784,6 +1784,14 @@ div#message-block {
     border-top-color: #f00
 }
 
+.color_superprice {
+    background: darkorchid
+}
+
+.corner.color_superprice span {
+    border-top-color: darkorchid
+}
+
 .color_newitemspostup {
     background: #008dd9
 }

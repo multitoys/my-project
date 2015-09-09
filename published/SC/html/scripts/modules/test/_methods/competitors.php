@@ -182,9 +182,10 @@
             $grid->registerHeader('Наименование', 'name_ru', true, 'ASC');
             $grid->registerHeader('Торговая Марка', 'brand', false, 'ASC');
             $grid->registerHeader('Мультитойс', 'Price', false, 'ASC', 'right');
-            
+            $grid->registerHeader('MAX-разница', 'max_diff', false, 'ASC', 'right');
+
             switch ($this->conc) {
-                
+
                 case 'Alliance':
                     $grid->registerHeader('Альянс', 'Alliance', false, 'ASC', 'right');
                     $grid->registerHeader('разница', 'diff_Alliance', false, 'ASC', 'right');
@@ -223,6 +224,15 @@
                 $rows[$k]['brand'] = $rows[$k]['brand'];
                 $rows[$k]['Price'] = $rows[$k][$this->currency.'Price'];
 
+                $max_diff = max(
+                    (int)$rows[$k]['diff_alliance'],
+                    (int)$rows[$k]['diff_divoland'],
+                    (int)$rows[$k]['diff_dreamtoys'],
+                    (int)$rows[$k]['diff_mixtoys']
+                );
+
+                $rows[$k]['max_diff'] = ($max_diff > 0) ? $max_diff.'%' : '-----';
+
                 $rows[$k]['Alliance'] = ($rows[$k][$this->currency.'Alliance']?$rows[$k][$this->currency.'Alliance']:'-----');
                 $rows[$k]['diff_alliance'] = $rows[$k]['diff_alliance'].($rows[$k]['diff_alliance']?'%':'-----');
                 $rows[$k]['Divoland'] = ($rows[$k][$this->currency.'Divoland'] ? $rows[$k][$this->currency.'Divoland'] : '-----');
@@ -231,6 +241,7 @@
                 $rows[$k]['diff_dreamtoys'] = $rows[$k]['diff_dreamtoys'].($rows[$k]['diff_dreamtoys']?'%':'-----');
                 $rows[$k]['Mixtoys'] = ($rows[$k][$this->currency.'Mixtoys'] ? $rows[$k][$this->currency.'Mixtoys'] : '-----');
                 $rows[$k]['diff_mixtoys'] = $rows[$k]['diff_mixtoys'].($rows[$k]['diff_mixtoys']?'%':'-----');
+
             }
 
             $count_rows = array('100' => 100, '500' => 500, '1000' => 1000);

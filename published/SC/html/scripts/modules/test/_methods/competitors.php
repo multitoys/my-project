@@ -8,7 +8,7 @@
          * @var DataBase
          */
         var $DBHandler;
-        var $enabled = '';
+//        var $enabled = '';
         var $manufactured = '';
         var $competitor = ' AND (Alliance OR Divoland OR Dreamtoys OR Mixtoys)';
         var $conc = '';
@@ -21,10 +21,10 @@
         var $new = '';
         var $table = 'Conc__analogs';
 
-        function __setEnabled()
-        {
-            $this->enabled = ' AND enabled = 1';
-        }
+//        function __setEnabled()
+//        {
+//            $this->enabled = ' AND enabled = 1';
+//        }
 
         function __setCurrency()
         {
@@ -144,9 +144,9 @@
 
             $grid = ClassManager::getInstance('grid');
 
-            if (isset($_GET['enabled'])) {
-                $this->__setEnabled();
-            }
+//            if (isset($_GET['enabled'])) {
+//                $this->__setEnabled();
+//            }
             if (isset($_GET['currency'])) {
                 $this->__setCurrency();
             }
@@ -172,12 +172,12 @@
             $grid->query_total_rows_num = "
                 SELECT COUNT(*) FROM $this->table
                 WHERE 1
-                $this->enabled $this->manufactured $this->brand $this->category $this->bestsellers $this->new $this->competitor";
+                $this->manufactured $this->brand $this->category $this->bestsellers $this->new $this->competitor";
 
             $grid->query_select_rows = "
                 SELECT * FROM $this->table
                 WHERE 1
-                $this->enabled $this->manufactured $this->brand $this->category $this->bestsellers $this->new $this->competitor";
+                $this->manufactured $this->brand $this->category $this->bestsellers $this->new $this->competitor";
 
             $grid->show_rows_num_select = false;
             $grid->default_sort_direction = 'DESC';
@@ -232,23 +232,23 @@
                 $rows[$k]['brand'] = $rows[$k]['brand'];
                 $rows[$k]['Price'] = $rows[$k][$this->currency.'Price'];
 
-                $max_diff = max(
-                    (int)$rows[$k]['diff_alliance'],
-                    (int)$rows[$k]['diff_divoland'],
-                    (int)$rows[$k]['diff_dreamtoys'],
-                    (int)$rows[$k]['diff_mixtoys']
-                );
+//                $max_diff = max(
+//                    (int)$rows[$k]['diff_alliance'],
+//                    (int)$rows[$k]['diff_divoland'],
+//                    (int)$rows[$k]['diff_dreamtoys'],
+//                    (int)$rows[$k]['diff_mixtoys']
+//                );
 
-                $rows[$k]['max_diff'] = ($max_diff > 0)?$max_diff.'%':'-----';
+                $rows[$k]['max_diff'] = ($rows[$k]['max_diff'] > 0)?$rows[$k]['max_diff'].'%':'-----';
 
-                $rows[$k]['Alliance'] = ($rows[$k][$this->currency.'Alliance']?$rows[$k][$this->currency.'Alliance']:'-----');
-                $rows[$k]['diff_alliance'] = $rows[$k]['diff_alliance'].($rows[$k]['diff_alliance']?'%':'-----');
-                $rows[$k]['Divoland'] = ($rows[$k][$this->currency.'Divoland'] ? $rows[$k][$this->currency.'Divoland'] : '-----');
-                $rows[$k]['diff_divoland'] = $rows[$k]['diff_divoland'].($rows[$k]['diff_divoland']?'%':'-----');
-                $rows[$k]['Dreamtoys'] = ($rows[$k][$this->currency.'Dreamtoys'] ? $rows[$k][$this->currency.'Dreamtoys'] : '-----');
-                $rows[$k]['diff_dreamtoys'] = $rows[$k]['diff_dreamtoys'].($rows[$k]['diff_dreamtoys']?'%':'-----');
-                $rows[$k]['Mixtoys'] = ($rows[$k][$this->currency.'Mixtoys'] ? $rows[$k][$this->currency.'Mixtoys'] : '-----');
-                $rows[$k]['diff_mixtoys'] = $rows[$k]['diff_mixtoys'].($rows[$k]['diff_mixtoys']?'%':'-----');
+                $rows[$k]['Alliance'] = ($rows[$k][$this->currency.'Alliance'] != 0)?$rows[$k][$this->currency.'Alliance']:'-----';
+                $rows[$k]['diff_alliance'] = ($rows[$k]['diff_alliance'] != 0)?$rows[$k]['diff_alliance'].'%':'-----';
+                $rows[$k]['Divoland'] = ($rows[$k][$this->currency.'Divoland'] != 0)? $rows[$k][$this->currency.'Divoland'] : '-----';
+                $rows[$k]['diff_divoland'] = ($rows[$k]['diff_divoland'] != 0)?$rows[$k]['diff_divoland'].'%':'-----';
+                $rows[$k]['Dreamtoys'] = ($rows[$k][$this->currency.'Dreamtoys'] != 0)? $rows[$k][$this->currency.'Dreamtoys'] : '-----';
+                $rows[$k]['diff_dreamtoys'] = ($rows[$k]['diff_dreamtoys'] != 0)?$rows[$k]['diff_dreamtoys'].'%':'-----';
+                $rows[$k]['Mixtoys'] = ($rows[$k][$this->currency.'Mixtoys'] != 0)?$rows[$k][$this->currency.'Mixtoys'] : '-----';
+                $rows[$k]['diff_mixtoys'] = ($rows[$k]['diff_mixtoys'] != 0)?$rows[$k]['diff_mixtoys'].'%':'-----';
 
             }
 

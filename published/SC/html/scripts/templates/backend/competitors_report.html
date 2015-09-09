@@ -56,11 +56,11 @@
                         <option value='China' {if $smarty.get.manufactured eq 'China'} selected="selected"{/if}>только Китай</option>
                     </select>
                 </td>
-                <td>
-                    <input type="checkbox" name="enabled" value="1" id="enabled" 
-                            {if $smarty.get.enabled} checked="checked"{/if}>
-                    <label for="enabled" style="color: #116DCE; font-style: italic">- только товары на остатке</label>
-                </td>
+                {*<td>*}
+                    {*<input type="checkbox" name="enabled" value="1" id="enabled" *}
+                            {*{if $smarty.get.enabled} checked="checked"{/if}>*}
+                    {*<label for="enabled" style="color: #116DCE; font-style: italic">- только товары на остатке</label>*}
+                {*</td>*}
                 <td>
                     <input type="checkbox" name="bestsellers" value="1" id="bestsellers"
                             {if $smarty.get.bestsellers} checked="checked"{/if}>

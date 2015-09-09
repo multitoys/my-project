@@ -24,10 +24,10 @@
     $usd0 = 1 / getValue('currency_value', 'CID = 10', 'SC_currency_types');
     $query
         = "INSERT INTO $table
-                      (categoryID, code_1c, product_code, name_ru, brand, Price, usd_Price,  ukraine, enabled)
-          SELECT       categoryID, code_1c, product_code, name_ru, brand, Price, Price/$usd0, ukraine, enabled
+                      (categoryID, code_1c, product_code, name_ru, brand, Price, usd_Price,  ukraine)
+          SELECT       categoryID, code_1c, product_code, name_ru, brand, Price, Price/$usd0, ukraine
           FROM SC_products
-          WHERE in_stock = 100 AND Price <> 0.00";
+          WHERE in_stock = 100 AND enabled AND Price <> 0.00";
     $res = mysql_query($query) or die(mysql_error()."<br>$query");
 
     foreach ($concs as $conc) {
@@ -60,7 +60,8 @@
             }
         }
     }
-
+    $query = "UPDATE $table SET max_diff = GREATEST(diff_alliance, diff_divoland, diff_dreamtoys, diff_mixtoys)";
+    $res = mysql_query($query) or die(mysql_error().$query);
     optimizeTable($table);
 
     function getValue($what, $condition, $table='')

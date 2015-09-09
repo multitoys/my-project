@@ -454,7 +454,79 @@ TAG
     $query
         = 'OPTIMIZE TABLE `SC_auth_log`, `SC_categories`, `SC_category_product`, `SC_currency_types`, `SC_customers`, `SC_customer_addresses`, `SC_customer_reg_fields_values`, `SC_ordered_carts`, `SC_orders`, `SC_order_status_changelog`, `SC_products`, `SC_product_list_item`, `SC_product_pictures`, `SC_shopping_carts`, `SC_shopping_cart_items`, `SC_subscribers`, `Search_products`, `Conc__alliance`, `Conc__divoland`, `Conc__dreamtoys`, `Conc__mixtoys`, `Conc_search__alliance`, `Conc_search__divoland`, `Conc_search__dreamtoys`, `Conc_search__mixtoys`';
     $res = mysql_query($query) or die(mysql_error()."<br>$query");
+    
+    /*------------------------------------*/
+    $concs = array('divoland', 'mixtoys', 'dreamtoys', 'alliance');
+    $table = 'Conc__analogs';
+    deleteRow($table);
+    $usd0 = 1 / getValue('currency_value', 'CID = 10', 'SC_currency_types');
+    $query
+        = "INSERT INTO $table
+                      (categoryID, code_1c, product_code, name_ru, brand, Price, usd_Price,  ukraine)
+          SELECT       categoryID, code_1c, product_code, name_ru, brand, Price, Price/$usd0, ukraine
+          FROM SC_products
+          WHERE in_stock = 100 AND enabled AND Price <> 0.00";
+    $res = mysql_query($query) or die(mysql_error()."<br>$query");
 
+    foreach ($concs as $conc) {
+        $query = "SELECT code, code_1c FROM Conc_search__$conc";
+        $res = mysql_query($query) or die(mysql_error().$query);
+
+        $usd = $usd0;
+
+        if ($conc == 'divoland') {
+            $usd = $usd0 + 0.10;
+        }
+
+        while ($Codes = mysql_fetch_object($res)) {
+            $query2
+                = "SELECT
+                        price_uah
+                    FROM
+                        Conc__$conc
+                    WHERE
+                        code = '$Codes->code' AND enabled=1";
+            $res2 = mysql_query($query2) or die(mysql_error().$query2);
+            if ($analog = mysql_fetch_row($res2)) {
+                $query3
+                    = "UPDATE $table
+                            SET    $conc      = $analog[0],
+                                   usd_$conc  = $analog[0]/$usd,
+                                   diff_$conc = ROUND((Price/$analog[0]-1)*100)
+                            WHERE  code_1c    = '$Codes->code_1c'";
+                $res3 = mysql_query($query3) or die(mysql_error()."<br>$query");
+            }
+        }
+    }
+    $query = "UPDATE $table SET max_diff = GREATEST(diff_alliance, diff_divoland, diff_dreamtoys, diff_mixtoys)";
+    $res = mysql_query($query) or die(mysql_error().$query);
+    optimizeTable($table);
+
+//    function getValue($what, $condition, $table='')
+//    {
+//        $query = "SELECT $what FROM $table WHERE $condition LIMIT 1";
+//        $result = mysql_query($query) or die('Ошибка в запросе: '.mysql_error().'<br>'.$query);
+//        $row = mysql_fetch_row($result);
+//        return $row[0];
+//    }
+
+    function deleteRow($table, $condition='')
+    {
+        $condition = ($condition) ? "WHERE $condition" : "";
+        $query = "DELETE FROM $table $condition";
+        $result = mysql_query($query) or die('Ошибка в запросе: ' . mysql_error() . '<br>' . $query);
+    }
+
+    function optimizeTable($table)
+    {
+        $query = "OPTIMIZE TABLE $table";
+        $res = mysql_query($query) or die(mysql_error()."<br>$query");
+        mysql_close();
+    }
+    
+    /*-----------------------------------*/
+    
+    
     mysql_close();
 
     //echo('<span style="color:red;"><br>курс доллара - '.(1 / $usd).' грн</span>');
@@ -509,12 +581,12 @@ TAG
         $result = mysql_query($query) or die('Ошибка в запросе: '.mysql_error().'<br>'.$query);
     }
 
-    function DeleteRow($table, $condition = '')
-    {
-        $condition = ($condition) ? "WHERE $condition" : '';
-        $query     = "DELETE FROM $table $condition";
-        $result = mysql_query($query) or die('Ошибка в запросе: '.mysql_error().'<br>'.$query);
-    }
+//    function DeleteRow($table, $condition = '')
+//    {
+//        $condition = ($condition) ? "WHERE $condition" : '';
+//        $query     = "DELETE FROM $table $condition";
+//        $result = mysql_query($query) or die('Ошибка в запросе: '.mysql_error().'<br>'.$query);
+//    }
 
     function DecodeCodepage($text)
     {

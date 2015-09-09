@@ -9,7 +9,7 @@
          */
         var $DBHandler;
         var $enabled = '';
-        var $ukraine = '';
+        var $manufactured = '';
         var $competitor = ' AND (Alliance OR Divoland OR Dreamtoys OR Mixtoys)';
         var $conc = '';
         var $currency = '';
@@ -26,14 +26,20 @@
             $this->enabled = ' AND enabled = 1';
         }
 
-        function __setUkraine()
-        {
-            $this->ukraine = ' AND ukraine = 1';
-        }
-
         function __setCurrency()
         {
             $this->currency = 'usd_';
+        }
+
+        function __setManufactured()
+        {
+            $made_in = '< 1';
+
+            if (xEscapeSQLstring($_GET['manufactured']) === 'Ukraine') {
+                $made_in = '> 0';
+            }
+
+            $this->manufactured = ' AND ukraine '.$made_in;
         }
 
         function __setBrand()
@@ -141,9 +147,6 @@
             if (isset($_GET['enabled'])) {
                 $this->__setEnabled();
             }
-            if (isset($_GET['ukraine'])) {
-                $this->__setUkraine();
-            }
             if (isset($_GET['currency'])) {
                 $this->__setCurrency();
             }
@@ -152,6 +155,9 @@
             }
             if (isset($_GET['new'])) {
                 $this->__getNew();
+            }
+            if (isset($_GET['manufactured']) && $_GET['manufactured'] !== 'all') {
+                $this->__setManufactured();
             }
             if (isset($_GET['brand']) && $_GET['brand'] !== 'all') {
                 $this->__setBrand();
@@ -166,12 +172,12 @@
             $grid->query_total_rows_num = "
                 SELECT COUNT(*) FROM $this->table
                 WHERE 1
-                $this->enabled $this->ukraine $this->brand $this->category $this->bestsellers $this->new $this->competitor";
+                $this->enabled $this->manufactured $this->brand $this->category $this->bestsellers $this->new $this->competitor";
 
             $grid->query_select_rows = "
                 SELECT * FROM $this->table
                 WHERE 1
-                $this->enabled $this->ukraine $this->brand $this->category $this->bestsellers $this->new $this->competitor";
+                $this->enabled $this->manufactured $this->brand $this->category $this->bestsellers $this->new $this->competitor";
 
             $grid->show_rows_num_select = false;
             $grid->default_sort_direction = 'DESC';
@@ -231,7 +237,7 @@
                     (int)$rows[$k]['diff_mixtoys']
                 );
 
-                $rows[$k]['max_diff'] = ($max_diff > 0) ? $max_diff.'%' : '-----';
+                $rows[$k]['max_diff'] = ($max_diff > 0)?$max_diff.'%':'-----';
 
                 $rows[$k]['Alliance'] = ($rows[$k][$this->currency.'Alliance']?$rows[$k][$this->currency.'Alliance']:'-----');
                 $rows[$k]['diff_alliance'] = $rows[$k]['diff_alliance'].($rows[$k]['diff_alliance']?'%':'-----');

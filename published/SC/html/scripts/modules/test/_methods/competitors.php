@@ -186,6 +186,7 @@
             $grid->registerHeader('№');
             $grid->registerHeader('Код 1С', 'code_1c', false, 'ASC');
             $grid->registerHeader('Артикул', 'product_code', false, 'ASC');
+            $grid->registerHeader('Фото');
             $grid->registerHeader('Наименование', 'name_ru', true, 'ASC');
             $grid->registerHeader('Торговая Марка', 'brand', false, 'ASC');
             $grid->registerHeader('Мультитойс', 'Price', false, 'ASC', 'right');
@@ -228,6 +229,7 @@
                 $rows[$k]['num'] = $k + 1;
                 $rows[$k]['code_1c'] = $rows[$k]['code_1c'];
                 $rows[$k]['product_code'] = $rows[$k]['product_code'];
+                $rows[$k]['img'] = '/published/publicdata/MULTITOYS/attachments/SC/search_pictures/'.$rows[$k]['code_1c'].'_s.jpg';
                 $rows[$k]['name_ru'] = $rows[$k]['name_ru'];
                 $rows[$k]['brand'] = $rows[$k]['brand'];
                 $rows[$k]['Price'] = $rows[$k][$this->currency.'Price'];
@@ -254,6 +256,7 @@
 
             $count_rows = array('100' => 100, '500' => 500, '1000' => 1000);
 
+//            $smarty->assign('IMG_URL', '/published/publicdata/MULTITOYS/attachments/SC/search_pictures');
             $smarty->assign('Brands', $this->brands);
             $smarty->assign('Categories', $this->categories);
             $smarty->assign('GridRows', $rows);

@@ -183,6 +183,7 @@
             $grid->default_sort_direction = 'DESC';
             $grid->rows_num = 100;
 
+            $grid->registerHeader('№');
             $grid->registerHeader('Код 1С', 'code_1c', false, 'ASC');
             $grid->registerHeader('Артикул', 'product_code', false, 'ASC');
             $grid->registerHeader('Наименование', 'name_ru', true, 'ASC');
@@ -223,7 +224,8 @@
             $rows = $smarty->get_template_vars('GridRows');
 
             for ($k = count($rows) - 1; $k >= 0; $k--) {
-                
+
+                $rows[$k]['num'] = $k + 1;
                 $rows[$k]['code_1c'] = $rows[$k]['code_1c'];
                 $rows[$k]['product_code'] = $rows[$k]['product_code'];
                 $rows[$k]['name_ru'] = $rows[$k]['name_ru'];

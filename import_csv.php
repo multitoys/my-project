@@ -459,7 +459,7 @@ TAG
     $concs = array('divoland', 'mixtoys', 'dreamtoys', 'alliance');
     $table = 'Conc__analogs';
     deleteRow($table);
-    $usd0 = 1 / getValue('currency_value', 'CID = 10', 'SC_currency_types');
+    $usd0 = 1 / get('currency_value', 'CID = 10', 'SC_currency_types');
     $query
         = "INSERT INTO $table
                       (categoryID, code_1c, product_code, name_ru, brand, Price, usd_Price,  ukraine)
@@ -502,13 +502,13 @@ TAG
     $res = mysql_query($query) or die(mysql_error().$query);
     optimizeTable($table);
 
-//    function getValue($what, $condition, $table='')
-//    {
-//        $query = "SELECT $what FROM $table WHERE $condition LIMIT 1";
-//        $result = mysql_query($query) or die('Ошибка в запросе: '.mysql_error().'<br>'.$query);
-//        $row = mysql_fetch_row($result);
-//        return $row[0];
-//    }
+    function get($what, $condition, $table='')
+    {
+        $query = "SELECT $what FROM $table WHERE $condition LIMIT 1";
+        $result = mysql_query($query) or die('Ошибка в запросе: '.mysql_error().'<br>'.$query);
+        $row = mysql_fetch_row($result);
+        return $row[0];
+    }
 
     function deleteRow($table, $condition='')
     {

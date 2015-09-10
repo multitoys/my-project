@@ -146,7 +146,7 @@ TAG
 
     // Оптимизация таблиц
     //DeleteRow('Conc__mixtoys', 'price_uah = 0.00');
-	$query = 'UPDATE `Conc__mixtoys` SET `parent`='', `category`='' WHERE `enabled`=0';
+	$query = "UPDATE `Conc__mixtoys` SET parent='', category='' WHERE enabled=0";
     $res = mysql_query($query) or die(mysql_error()."<br>$query");
 	
     $query = 'OPTIMIZE TABLE Conc__mixtoys';

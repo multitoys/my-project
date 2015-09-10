@@ -118,7 +118,7 @@ TAG
     echo('<hr><span style="color:blue;">Обработано '.$no.' товаров</span><br><br>Новых '.$error.' товаров</span><br>');
 
     // Оптимизация таблиц
-	$query = 'UPDATE `Conc__divoland` SET `parent`='', `category`='' WHERE `enabled`=0';
+	$query = "UPDATE Conc__divoland SET parent='', category='' WHERE enabled=0";
     $res = mysql_query($query) or die(mysql_error()."<br>$query");
 	
     $query = 'OPTIMIZE TABLE `Conc__divoland`, `Conc_search__divoland`';

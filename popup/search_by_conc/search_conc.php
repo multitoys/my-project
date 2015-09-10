@@ -193,7 +193,7 @@ function getProductLike($value, $price = 0, $k = 0)
     return $res;
 }
 
-function getValue($what, $condition, $auxpage='')
+function getValue($what, $condition, $auxpage)
 {
     $query = "SELECT $what FROM Conc_search__$auxpage WHERE $condition LIMIT 1";
     $result = mysql_query($query) or die('Ошибка в запросе: '.mysql_error().'<br>'.$query);

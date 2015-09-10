@@ -49,9 +49,7 @@
 
         function __setCategory()
         {
-            $category_name = xEscapeSQLstring($_GET['category']);
-            $categoryID = $this->__getCategory($category_name);
-            $this->category = ' AND categoryID = '.$categoryID.'';
+            $this->category = ' AND category LIKE "%'.xEscapeSQLstring($_GET['category']).'%"';
         }
 
         function __setCompetitor()
@@ -92,7 +90,7 @@
 
         function __getBrandsArray()
         {
-            $query = "SELECT DISTINCT brand FROM $this->table";
+            $query = "SELECT DISTINCT brand FROM $this->table WHERE (Alliance OR Divoland OR Dreamtoys OR Mixtoys)";
             $res = mysql_query($query) or die(mysql_error().$query);
 
             while($Brands = mysql_fetch_object($res)) {
@@ -105,18 +103,18 @@
         
         function __getCategoriesArray()
         {
-            $query = 'SELECT categoryID, name_ru FROM SC_categories';
+            $query = "SELECT DISTINCT category FROM $this->table WHERE (Alliance OR Divoland OR Dreamtoys OR Mixtoys)";
             $res = mysql_query($query) or die(mysql_error().$query);
 
             while ($Categories = mysql_fetch_object($res)) {
-                $this->categories[] = $Categories->name_ru;
+                $this->categories[] = $Categories->category;
             }
             sort($this->categories);
         }
 
-        function __getCategory($what)
+        function __getCategory()
         {
-            $query = "SELECT categoryID FROM SC_categories WHERE name_ru LIKE '$what' LIMIT 1";
+            $query = "SELECT DISTINCT category FROM $this->table";
             $result = mysql_query($query) or die('Ошибка в запросе: '.mysql_error().'<br>'.$query);
             $row = mysql_fetch_row($result);
             return $row[0];
@@ -188,7 +186,7 @@
             $grid->registerHeader('Артикул', 'product_code', false, 'ASC');
             $grid->registerHeader('Фото');
             $grid->registerHeader('Наименование', 'name_ru', true, 'ASC');
-            $grid->registerHeader('Торговая Марка', 'brand', false, 'ASC');
+            $grid->registerHeader('Категория', 'category', false, 'ASC');
             $grid->registerHeader('Мультитойс', 'Price', false, 'ASC', 'right');
             $grid->registerHeader('MAX-разница', 'max_diff', false, 'ASC', 'right');
 
@@ -232,7 +230,7 @@
                 $rows[$k]['img'] = '/published/publicdata/MULTITOYS/attachments/SC/search_pictures/'.$rows[$k]['code_1c'].'_s.jpg';
                 $rows[$k]['img_big'] = '/published/publicdata/MULTITOYS/attachments/SC/products_pictures/'.$rows[$k]['code_1c'].'.jpg';
                 $rows[$k]['name_ru'] = $rows[$k]['name_ru'];
-                $rows[$k]['brand'] = $rows[$k]['brand'];
+                $rows[$k]['category'] = $rows[$k]['category'];
                 $rows[$k]['Price'] = $rows[$k][$this->currency.'Price'];
 
 //                $max_diff = max(

@@ -4,8 +4,11 @@
 {else*}
 <!DOCTYPE html>
 {*/if*}
-<html dir="{if $lang_direction}rtl{else}ltr{/if}">
+{*<html dir="{if $lang_direction}rtl{else}ltr{/if}">*}
+<html>
 <head>
+<meta http-equiv="Content-Language" content="ru">
+<link rel="shortcut icon" href="/favicon.ico">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <base href="{$smarty.const.CONF_FULL_SHOP_URL}">
 {if $rss_link}	<link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="{$smarty.const.URL_ROOT}/{$rss_link}">{/if}
@@ -25,9 +28,9 @@
 <script {$deffer|default:' '} src="{$smarty.const.URL_JS}/functions-1437581122255.js"></script>
 {*<script defer src="{$smarty.const.URL_JS}/behavior.js"></script>*}
 {*<script defer src="{$smarty.const.URL_JS}/frame.js"></script>*}
-{if $smarty.get.step eq 'shipping'}
+{*{if $smarty.get.step eq 'shipping'}*}
 {*<script {$deffer|default:' '} src="{$smarty.const.URL_JS}/step_shipping.js"></script>*}
-{/if}
+{*{/if}*}
 {*<script type="text/javascript">
 <!--
 {$current_currency_js}
@@ -50,16 +53,16 @@ window.moveTo(Math.floor(x),50);
 </script>*}
 {/if}
 {/if}
-{literal}
-<script>
-(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-ga('create', 'UA-28553532-1', { 'userId':{/literal} '{$smarty.session.log}' {literal}});
-ga('send', 'pageview');
-</script>
-{/literal}
+{*{literal}*}
+{*<script>*}
+{*(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){*}
+{*(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),*}
+{*m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)*}
+{*})(window,document,'script','//www.google-analytics.com/analytics.js','ga');*}
+{*ga('create', 'UA-28553532-1', { 'userId':{/literal} '{$smarty.session.log}' {literal}});*}
+{*ga('send', 'pageview');*}
+{*</script>*}
+{*{/literal}*}
 </head>
 <body  id="qwe" {*$GOOGLE_ANALYTICS_SET_TRANS*}{if $main_body_style} {$main_body_style}{/if}{if $PAGE_VIEW eq 'printable'} style="background-color:#FFFFFF;background-image:none;"{/if}{if $page_not_found404} class="body-page-404"{/if}>
 <!--  BODY -->

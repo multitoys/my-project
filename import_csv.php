@@ -260,12 +260,14 @@ TAG
             $oldprice      = $data[22];
             $zakaz         = $data[26];
             $brand         = mysql_real_escape_string(DecodeCodepage1251($data[27]));
+            $purchase      = $data[28];
 
             // Исправление цен
             if (!is_numeric($price)) $price = preg_replace('/[^0-9.]/', '', $price);
             if (!is_numeric($oldprice)) $oldprice = preg_replace('/[^0-9.]/', '', $oldprice);
             if (!is_numeric($special_price)) $special_price = preg_replace('/[^0-9.]/', '', $special_price);
             if (!is_numeric($optprice)) $optprice = preg_replace('/[^0-9.]/', '', $optprice);
+            if (!is_numeric($purchase)) $purchase = preg_replace('/[^0-9.]/', '', $purchase);
 
             $ua = ($ua > 1) ? 1 : 0;
             $skidka       = is_numeric($skidka)?$skidka:0;
@@ -304,9 +306,9 @@ TAG
                     $query
                         = "
 							INSERT INTO SC_products
-								   (categoryID, Price, SpecialPrice,   Bonus, in_stock, items_sold, list_price, akcia,   akcia_skidka,   enabled, product_code, sort_order , ordering_available, slug , name_ru, skidka , code_1c, ostatok  , ukraine  , doza  ,  box,   minorder   , zakaz, brand, eproduct_available_days)
+								   (categoryID, purchase, Price, SpecialPrice,   Bonus, in_stock, items_sold, list_price, akcia,   akcia_skidka,   enabled, product_code, sort_order , ordering_available, slug , name_ru, skidka , code_1c, ostatok  , ukraine  , doza  ,  box,   minorder   , zakaz, brand, eproduct_available_days)
 							VALUES
-									($catid    , $price,$special_price, $bonus, 200 , $hit  , '$oldprice','$akcia', '$akcia_skidka', 1     , '$code'     , $new_postup, 1                 , '$slug','$name',  $skidka, '$id'  ,'$ostatok',$ua,'$doza','$box', '$minorder', '$zakaz', '$brand', $new)";
+									($catid    , $purchase, $price,$special_price, $bonus, 200 , $hit  , '$oldprice','$akcia', '$akcia_skidka', 1     , '$code'     , $new_postup, 1                 , '$slug','$name',  $skidka, '$id'  ,'$ostatok',$ua,'$doza','$box', '$minorder', '$zakaz', '$brand', $new)";
                     $res = mysql_query($query) or die(mysql_error()."<br>$query");
                     $productID = mysql_insert_id();
                 } else {
@@ -316,6 +318,7 @@ TAG
                         = "
 							UPDATE SC_products
 							SET categoryID = $catid,
+							    purchase = $purchase,
 								Price = $price,
 								SpecialPrice = $special_price,
 								Bonus = $bonus,
@@ -463,8 +466,8 @@ TAG
     $usd0 = 1 / get('currency_value', 'CID = 10', 'SC_currency_types');
     $query
         = "INSERT INTO $table
-                      (categoryID, code_1c, product_code, name_ru, brand, Price, usd_Price,  ukraine)
-          SELECT       categoryID, code_1c, product_code, name_ru, brand, Price, Price/$usd0, ukraine
+                      (categoryID, code_1c, product_code, name_ru, brand, purchase, usd_purchase,   Price, usd_Price,   ukraine)
+          SELECT       categoryID, code_1c, product_code, name_ru, brand, purchase, purchase/$usd0, Price, Price/$usd0, ukraine
           FROM SC_products
           WHERE in_stock = 100 AND enabled AND Price <> 0.00";
     $res = mysql_query($query) or die(mysql_error()."<br>$query");

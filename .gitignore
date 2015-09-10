@@ -1,3 +1,11 @@
+/popup/sendpics.php
+/popup/conc_auxpages.php
+/popup/my_auxpages.php
+/popup/update_alliance.php
+/popup/search_conc.php
+/popup/search.php
+/popup/ajax_auxpages.php
+/popup/search_by_conc/conc_auxpages.php
 # Windows image file caches
 Thumbs.db
 ehthumbs.db

@@ -24,7 +24,6 @@ TAG
     );
 
     $archive_dir = $_SERVER['DOCUMENT_ROOT'].'/upload/';
-//$dest_dir = $_SERVER['DOCUMENT_ROOT'].'/temp/import/';
 
 //----------- Импорт товаров ----------- 
     $filename = $archive_dir.'dreamtoys.csv';
@@ -53,7 +52,9 @@ TAG
         'Хоз. товары', 'Товары для праздников'
     );
     if (($handle = fopen($filename, 'r')) !== false) {
-//      DeleteRow('Conc__dreamtoys');
+        DeleteRow('Conc__dreamtoys', "category='Новинки!'");
+        DeleteRow('Conc_search__dreamtoys', "code LIKE '99%'");
+
         UpdateValue('Conc__dreamtoys', 'enabled = 0');
 
         while (($data = fgetcsv($handle, 1000, ';')) !== false) {

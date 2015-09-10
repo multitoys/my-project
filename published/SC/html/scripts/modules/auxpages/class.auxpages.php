@@ -962,22 +962,22 @@ class AuxPages extends ComponentModule {
 //    } else {
         $tov_count = 50;
 //    }
-        $div_cat = 'WHERE enabled ';
+        $div_cat = '';
         //$cat_div = '';
         //$selected_category = '';
         if (isset($_GET['div_cat'])) {
             $selected_category = $_GET['div_cat'];
-            $div_cat .= "AND category LIKE '$selected_category'";
+            $div_cat = " AND category LIKE '$selected_category'";
             $cat_div = 'div_cat';
         } elseif (isset($_GET['div_par'])) {
             $selected_category = $_GET['div_par'];
-            $div_cat .= "AND parent LIKE '$selected_category'";
+            $div_cat = " AND parent LIKE '$selected_category'";
             $cat_div = 'div_par';
         }
         // Общее количество товаров
         $query = '
             SELECT count(*) AS tov_all_count
-            FROM Conc__'.$auxpage.' '.$div_cat;
+            FROM Conc__'.$auxpage.' WHERE enabled '.$div_cat;
         $res = mysql_query($query) or die(mysql_error().$query);
         $product_list_item = mysql_fetch_object($res);
         $tov_all_count = (int)$product_list_item->tov_all_count;
@@ -1007,12 +1007,17 @@ class AuxPages extends ComponentModule {
             $category_name[$Categories->categoryID] = $Categories->name_ru;
         }
 
+        $order = 'name ASC';
+
+        if ($div_cat === '') {
+            $order = 'code DESC';
+        }
         $query2 = "SELECT
 					category, code, product_code, name, price_uah
 				FROM
-					Conc__$auxpage $div_cat
+					Conc__$auxpage WHERE enabled $div_cat
 				ORDER BY
-					date_added DESC, code DESC
+					$order
 				LIMIT
 					$start_row, $tov_count";
         $res2 = mysql_query($query2) or die(mysql_error().$query2);

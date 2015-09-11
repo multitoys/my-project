@@ -177,7 +177,7 @@
                 WHERE 1
                 $this->manufactured $this->brand $this->category $this->bestsellers $this->new $this->competitor";
 
-            $grid->show_rows_num_select = false;
+            $grid->show_rows_num_select = true;
             $grid->default_sort_direction = 'DESC';
             $grid->rows_num = 100;
 

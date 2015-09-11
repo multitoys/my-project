@@ -469,7 +469,7 @@ TAG
                       (categoryID, category, code_1c, product_code, name_ru, brand, purchase, usd_purchase,   Price, usd_Price,   ukraine)
           SELECT       categoryID AS ID, (SELECT name_ru FROM  SC_categories WHERE categoryID=ID), code_1c, product_code, name_ru, brand, purchase, purchase/$usd0, Price, Price/$usd0, ukraine
           FROM SC_products
-          WHERE in_stock = 100 AND enabled AND Price <> 0.00";
+          WHERE in_stock = 100 AND enabled AND Price <> 0.00 AND ostatok NOT LIKE 'под заказ'";
     $res = mysql_query($query) or die(mysql_error()."<br>$query");
 
     foreach ($concs as $conc) {

@@ -563,7 +563,7 @@ class AuxPages extends ComponentModule {
             }
 
             $url = '/auxpage_new_items/';
-            $out = SimpleNavigator($tov_all_count, $start_row, $p_count, $url, &$out);
+            $out = SimpleNavigator($tov_all_count, $start_row, $p_count, $url, $out);
             $start = $start_row;
             $direction_nav = 'ASC';
             if ($direction) {
@@ -583,93 +583,6 @@ class AuxPages extends ComponentModule {
                                 >$out</div>
                                 ";
 
-            //$newitems_start .= '
-            //            <div class=shapka>
-            //                <table class=cs_product_info>
-            //                    <tbody>
-            //                        <tr>
-            //                            <td width=160px>
-            //                            </td>
-            //                            <td>
-            //                                <div class=sort_name>
-            //                                    <div class='.$sort_class_name.'>
-            //                                        <a href="/auxpage_new_items/name_ru/'.$new_dir.'/">
-            //                                            <table>
-            //                                                <tr>
-            //                                                    <td style="padding-left:5px;">
-            //                                                        <div class=arbopr>Наименование&nbsp;</div>
-            //                                                        <div class='.$arrow_name.'></div>
-            //                                                    </td>
-            //                                                </tr>
-            //                                            </table>
-            //                                        </a>
-            //                                    </div>
-            //                                </div>
-            //                            </td>
-            //                            <td width=100px>
-            //                                <div>
-            //                                    <div class='.$sort_class_pc.'>
-            //                                        <a href="/auxpage_new_items/product_code/'.$new_dir.'/">
-            //                                            <table width=100px>
-            //                                                <tr>
-            //                                                    <td>
-            //                                                        <div class=arbopr>Артикул</div>
-            //                                                        <div class='.$arrow_product_code.'></div>
-            //                                                    </td>
-            //                                                </tr>
-            //                                            </table>
-            //                                        </a>
-            //                                    </div>
-            //                                </div>
-            //                            </td>
-            //                            <td width=60px>
-            //                                <div>
-            //                                    <div class='.$sort_class_bonus.'>
-            //                                        <a href="/auxpage_new_items/Bonus/'.$new_dir.'/">
-            //                                            <table width=60px>
-            //                                                <tr>
-            //                                                    <td>
-            //                                                        <div class=arbopr>Баллы</div>
-            //                                                        <div class='.$arrow_bonus.'></div>
-            //                                                    </td>
-            //                                                </tr>
-            //                                            </table>
-            //                                        </a>
-            //                                    </div>
-            //                                </div>
-            //                            </td>
-            //                            <td width=80px>
-            //                                <div>
-            //                                    <div class='.$sort_class_price.'>
-            //                                        <a href="/auxpage_new_items/Price/'.$new_dir.'/">
-            //                                            <table width=80px>
-            //                                                <tr>
-            //                                                    <td>
-            //                                                        <div class=arbopr>Цена</div>
-            //                                                        <div class='.$arrow_price.'></div>
-            //                                                    </td>
-            //                                                </tr>
-            //                                            </table>
-            //                                        </a>
-            //                                    </div>
-            //                                </div>
-            //                            </td>
-            //                            <td width=50px>
-            //                            </td>
-            //                            <td width=70px>
-            //                                <div class=ost>Остаток</div>
-            //                            </td>
-            //                            <td width=55px>
-            //                                <div class=zakaz>Заказано</div>
-            //                            </td>
-            //                        </tr>
-            //                    </tbody>
-            //                </table>
-            //            </div>
-            //        </div>
-            //        <div class=scroll-pane1>
-            //            <div id=content>
-            //';
             $newitems_start .= '
                         <div class=shapka>
                             <table class=cs_product_info  style="padding-left: 5px">
@@ -909,7 +822,7 @@ class AuxPages extends ComponentModule {
                     $newitems .= '<div class=delimiter></div>';
                 }
             }
-            $out_end = SimpleNavigator($tov_all_count, $start, $tov_count, $url, &$out_end);
+            $out_end = SimpleNavigator($tov_all_count, $start, $tov_count, $url, $out_end);
             $newitems .= '
                                 </div>';
             $newitems_end = "</div><div
@@ -987,7 +900,7 @@ class AuxPages extends ComponentModule {
             $start_row = 0;
         $url = '/'.$name.'/';
         //$pag_content = pagination($tov_all_count, $tov_count, 50, $start_row, $cat_div, $url, $selected_category);
-        $out = SimpleNavigator($tov_all_count, $start_row, $tov_count, $url, &$out);
+        $out = SimpleNavigator($tov_all_count, $start_row, $tov_count, $url, $out);
         //$newitems    = $pag_content;
         $newitems = "<div class='simple-pagination compact-theme'>$out</div>";
         $newitems .= '</div>
@@ -1099,4 +1012,3 @@ class AuxPages extends ComponentModule {
 //    $newitems .= '</div>';
     }
 }
-?>

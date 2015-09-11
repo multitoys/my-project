@@ -138,7 +138,7 @@
             }
 
             $url = '/auxpage_new_items/';
-            $out = SimpleNavigator($tov_all_count, $start_row, $p_count, $url, &$out);
+            $out = SimpleNavigator($tov_all_count, $start_row, $p_count, $url, $out);
             $start = $start_row;
             $direction_nav = 'ASC';
             if ($direction) {
@@ -484,7 +484,7 @@
                     $newitems .= '<div class=delimiter></div>';
                 }
             }
-            $out_end = SimpleNavigator($tov_all_count, $start, $tov_count, $url, &$out_end);
+            $out_end = SimpleNavigator($tov_all_count, $start, $tov_count, $url, $out_end);
 			$newitems .= '
                                 </div>';
             $newitems_end = "</div><div

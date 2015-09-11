@@ -1,5 +1,5 @@
 <?php
-	//LinkPoint Connect payment module file
+    //LinkPoint Connect payment module file
 	//this routine can not be executed from browser by simple pointing. Only by POST method.
 	if (!isset($_POST["oid"]) || !isset($_POST["chargetotal"])) exit;
 

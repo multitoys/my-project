@@ -169,91 +169,91 @@
         return $currencyEntry->convertUnits($price, true);
     }
 
-    function AuxpageNavigator($a, $p, $q, $path, &$out)
-    {
-        //shows navigator [prev] 1 2 3 4 � [next]
-        //$a - count of elements in the array, which is being navigated
-        //$p - current p in array (showing elements [$p ... $p+$q])
-        //$q - quantity of items per page
-        //$path - link to the page (f.e: "index.php?categoryID=1&")
-
-        if ($a > $q) //if all elements couldn't be placed on the page
-        {
-            $c = (int)($p + $q) / $q;
-            $out .= "<ul class=uk-pagination data-uk-pagination=\"{items:$a, itemsOnPage:$q, currentPage:$c}\">";
-            //[prev]
-            if ($p > 0) $out .= '<li><a href="'.xHtmlSetQuery($path.'&p='.($p - $q)).'">&lt;&lt; '.translate('str_previous').'</a></li> &nbsp;&nbsp;';
-
-            //digital links
-            $k = $p / $q;
-
-            //not more than 4 links to the left
-            $min = $k - 4;
-            if ($min < 0) {
-                $min = 0;
-            } else {
-                if ($min >= 1) { //link on the 1st page
-                    $out .= "<li><a href=\"".xHtmlSetQuery($path.'&p=0')."\">1</a></li> &nbsp;&nbsp;";
-                    if ($min != 1) {
-                        $out .= '<li><span class=pagination>...</span></li>&nbsp;';
-                    };
-                }
-            }
-
-            for ($i = $min; $i < $k; $i++) {
-                $m = $i * $q + $q;
-                if ($m > $a) $m = $a;
-
-                $out .= '<li><a href="'.xHtmlSetQuery($path.'&p='.($i * $q))."\">".($i + 1).'</a></li> &nbsp;&nbsp;';
-            }
-
-            //# of current page
-            if (strcmp($p, 'show_all')) {
-                $min = $p + $q;
-                if ($min > $a) $min = $a;
-                $out .= '<li class=uk-active><span>'.($k + 1).'</span></li> &nbsp;&nbsp;';
-            } else {
-                $min = $q;
-                if ($min > $a) $min = $a;
-                $out .= '<li><a href="'.xHtmlSetQuery($path.'&p=0').'">1</a> </li>&nbsp;&nbsp;';
-            }
-
-            //not more than 5 links to the right
-            $min = $k + 4;
-            if ($min > ceil($a / $q)) {
-                $min = ceil($a / $q);
-            };
-            for ($i = $k + 1; $i < $min; $i++) {
-                $m = $i * $q + $q;
-                if ($m > $a) $m = $a;
-
-                $out .= '<li><a href="'.xHtmlSetQuery($path.'&p='.($i * $q))."\">".($i + 1).'</a></li> &nbsp;&nbsp;';
-            }
-
-            if ($min * $q < $a) { //the last link
-                if ($min * $q < $a - $q) $out .= '<li><span class=pagination>...</span></li>&nbsp;&nbsp;';
-                if (!($a % $q == 0))
-                    $out .= '<li><a href=\''.xHtmlSetQuery($path.'&p='.($a - $a % $q)).'\'>'.(floor($a / $q) + 1).'</a></li> &nbsp;&nbsp;';
-                else //$a is divided by $q
-                    $out .= '<li><a href=\''.xHtmlSetQuery($path.'&p='.($a - $q)).'\'>'.(floor($a / $q)).'</a></li> &nbsp;&nbsp;';
-            }
-
-            //[next]
-            if (strcmp($p, 'show_all'))
-                if ($p < $a - $q) $out .= '<li><a href="'.xHtmlSetQuery($path.'&p='.($p + $q)).'">'.translate('str_next').' &gt;&gt;</a></li> ';
-
-            //[show all]
-            if (SHOWALL_ALLOWED_RECORDS_NUM >= $a || (!SystemSettings::is_hosted() && SystemSettings::is_backend())) {
-                if (strcmp($p, 'show_all'))
-                    $out .= ' |&nbsp; <li><a href="'.xHtmlSetQuery($path.'&p=&show_all=yes').'">'.translate('str_showall').'</a></li>';
-                else
-                    $out .= ' |&nbsp; <li><a class=pagination></a><B>'.translate('str_showall').'</B></li>';
-            }
-            $out .= '</ul>';
-
-            return $out;
-        }
-    }
+    //    function AuxpageNavigator($a, $p, $q, $path, &$out)
+    //    {
+    //        //shows navigator [prev] 1 2 3 4 � [next]
+    //        //$a - count of elements in the array, which is being navigated
+    //        //$p - current p in array (showing elements [$p ... $p+$q])
+    //        //$q - quantity of items per page
+    //        //$path - link to the page (f.e: "index.php?categoryID=1&")
+    //
+    //        if ($a > $q) //if all elements couldn't be placed on the page
+    //        {
+    //            $c = (int)($p + $q) / $q;
+    //            $out .= "<ul class=uk-pagination data-uk-pagination=\"{items:$a, itemsOnPage:$q, currentPage:$c}\">";
+    //            //[prev]
+    //            if ($p > 0) $out .= '<li><a href="'.xHtmlSetQuery($path.'&p='.($p - $q)).'">&lt;&lt; '.translate('str_previous').'</a></li> &nbsp;&nbsp;';
+    //
+    //            //digital links
+    //            $k = $p / $q;
+    //
+    //            //not more than 4 links to the left
+    //            $min = $k - 4;
+    //            if ($min < 0) {
+    //                $min = 0;
+    //            } else {
+    //                if ($min >= 1) { //link on the 1st page
+    //                    $out .= "<li><a href=\"".xHtmlSetQuery($path.'&p=0')."\">1</a></li> &nbsp;&nbsp;";
+    //                    if ($min != 1) {
+    //                        $out .= '<li><span class=pagination>...</span></li>&nbsp;';
+    //                    };
+    //                }
+    //            }
+    //
+    //            for ($i = $min; $i < $k; $i++) {
+    //                $m = $i * $q + $q;
+    //                if ($m > $a) $m = $a;
+    //
+    //                $out .= '<li><a href="'.xHtmlSetQuery($path.'&p='.($i * $q))."\">".($i + 1).'</a></li> &nbsp;&nbsp;';
+    //            }
+    //
+    //            //# of current page
+    //            if (strcmp($p, 'show_all')) {
+    //                $min = $p + $q;
+    //                if ($min > $a) $min = $a;
+    //                $out .= '<li class=uk-active><span>'.($k + 1).'</span></li> &nbsp;&nbsp;';
+    //            } else {
+    //                $min = $q;
+    //                if ($min > $a) $min = $a;
+    //                $out .= '<li><a href="'.xHtmlSetQuery($path.'&p=0').'">1</a> </li>&nbsp;&nbsp;';
+    //            }
+    //
+    //            //not more than 5 links to the right
+    //            $min = $k + 4;
+    //            if ($min > ceil($a / $q)) {
+    //                $min = ceil($a / $q);
+    //            };
+    //            for ($i = $k + 1; $i < $min; $i++) {
+    //                $m = $i * $q + $q;
+    //                if ($m > $a) $m = $a;
+    //
+    //                $out .= '<li><a href="'.xHtmlSetQuery($path.'&p='.($i * $q))."\">".($i + 1).'</a></li> &nbsp;&nbsp;';
+    //            }
+    //
+    //            if ($min * $q < $a) { //the last link
+    //                if ($min * $q < $a - $q) $out .= '<li><span class=pagination>...</span></li>&nbsp;&nbsp;';
+    //                if (!($a % $q == 0))
+    //                    $out .= '<li><a href=\''.xHtmlSetQuery($path.'&p='.($a - $a % $q)).'\'>'.(floor($a / $q) + 1).'</a></li> &nbsp;&nbsp;';
+    //                else //$a is divided by $q
+    //                    $out .= '<li><a href=\''.xHtmlSetQuery($path.'&p='.($a - $q)).'\'>'.(floor($a / $q)).'</a></li> &nbsp;&nbsp;';
+    //            }
+    //
+    //            //[next]
+    //            if (strcmp($p, 'show_all'))
+    //                if ($p < $a - $q) $out .= '<li><a href="'.xHtmlSetQuery($path.'&p='.($p + $q)).'">'.translate('str_next').' &gt;&gt;</a></li> ';
+    //
+    //            //[show all]
+    //            if (SHOWALL_ALLOWED_RECORDS_NUM >= $a || (!SystemSettings::is_hosted() && SystemSettings::is_backend())) {
+    //                if (strcmp($p, 'show_all'))
+    //                    $out .= ' |&nbsp; <li><a href="'.xHtmlSetQuery($path.'&p=&show_all=yes').'">'.translate('str_showall').'</a></li>';
+    //                else
+    //                    $out .= ' |&nbsp; <li><a class=pagination></a><B>'.translate('str_showall').'</B></li>';
+    //            }
+    //            $out .= '</ul>';
+    //
+    //            return $out;
+    //        }
+    //    }
 
     function SimpleNavigator($a, $p, $q, $path, &$out)
     {

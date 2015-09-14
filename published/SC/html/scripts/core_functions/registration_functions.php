@@ -125,8 +125,8 @@
         // " SET logged = TIMESTAMP(0) WHERE (may_order_until < CURRENT_TIMESTAMP()) OR (logged < CURRENT_TIMESTAMP());") or die (db_error());
         $q = db_query("UPDATE ".CUSTOMERS_TABLE.
             " SET logged = TIMESTAMP(0) WHERE (NOT unlimited_order AND may_order_until < CURRENT_TIMESTAMP()) OR (logged < CURRENT_TIMESTAMP());") or die (db_error());
-        $q = db_query("UPDATE ".CUSTOMERS_TABLE.
-            " SET logged = TIMESTAMP(0) WHERE (logged < CURRENT_TIMESTAMP());") or die (db_error());
+        //        $q = db_query("UPDATE ".CUSTOMERS_TABLE.
+        //            " SET logged = TIMESTAMP(0) WHERE (logged < CURRENT_TIMESTAMP());") or die (db_error());
 
         $login = xEscapeSQLstring($login);
         $password = xEscapeSQLstring($password);

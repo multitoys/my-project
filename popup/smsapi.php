@@ -25,5 +25,5 @@
     curl_setopt($rCurl, CURLOPT_RETURNTRANSFER, 1);
     curl_setopt($rCurl, CURLOPT_POST, 1);
     $sAnswer = curl_exec($rCurl);
-    var_dump($sAnswer);
+    echo($sAnswer);
     curl_close($rCurl);

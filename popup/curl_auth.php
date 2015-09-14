@@ -6,7 +6,18 @@
      * Time: 10:06
      */
 
-    function login($url, $login, $pass, $enter = '')
+    /**
+     * @param $url
+     *
+     * @param $login
+     *
+     * @param $pass
+     *
+     * @param $enter
+     *
+     * @return mixed
+     */
+    function postAuth($url, $login, $pass, $enter = '')
     {
         $ch = curl_init();
         if (strtolower((substr($url, 0, 5)) == 'https')) { // если соединяемся с https
@@ -41,7 +52,12 @@
     }
 
     // чтение страницы после авторизации
-    function Read($url)
+    /**
+     * @param $url
+     *
+     * @return mixed
+     */
+    function readUrl($url)
     {
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
@@ -61,7 +77,7 @@
         return $result;
     }
 
-    login('http://multitoys.com.ua', 'user_login=sales', '&user_pw=172092', '&enter=1');
-    Read('http://multitoys.com.ua/auxpage_new_items');
-    //    login('http://dreamtoys.com.ua/index.php?option=com_user&task=login', '&username=detkikonfetki', '&passwd=7777777');
-    //    Read('http://dreamtoys.com.ua/index.php?page=shop.browse&category=&option=com_virtuemart&Itemid=1');
+    postAuth('http://multitoys.com.ua', 'user_login=sales', '&user_pw=172092', '&enter=1');
+    readUrl('http://multitoys.com.ua/auxpage_new_items');
+    //    postAuth('http://dreamtoys.com.ua/index.php?option=com_user&task=login', '&username=detkikonfetki', '&passwd=7777777');
+    //    readUrl('http://dreamtoys.com.ua/index.php?page=shop.browse&category=&option=com_virtuemart&Itemid=1');

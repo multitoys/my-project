@@ -74,6 +74,12 @@
                     {*<label for="enabled" style="color: #116DCE; font-style: italic">- только товары на остатке</label>*}
                 {*</td>*}
                 <td>
+                    <input type="checkbox" name="new_items_postup" value="1" id="new_items_postup"
+                            {if $smarty.get.new_items_postup} checked="checked"{/if}>
+                    <label for="new_items_postup" style="color: #C00DC1; font-style: italic">- только Новые
+                                                                                             Поступления</label>
+                </td>
+                <td>
                     <input type="checkbox" name="bestsellers" value="1" id="bestsellers"
                             {if $smarty.get.bestsellers} checked="checked"{/if}>
                     <label for="bestsellers" style="color: coral; font-style: italic">- только Хиты продаж</label>
@@ -82,12 +88,6 @@
                     <input type="checkbox" name="new" value="1" id="new"
                             {if $smarty.get.new} checked="checked"{/if}>
                     <label for="new" style="color: #3A73BD; font-style: italic">- только Новинки</label>
-                </td>
-                <td>
-                    <input type="checkbox" name="new_items_postup" value="1" id="new_items_postup"
-                            {if $smarty.get.new_items_postup} checked="checked"{/if}>
-                    <label for="new_items_postup" style="color: #3A73BD; font-style: italic">- только Новые
-                                                                                             Поступления</label>
                 </td>
                 <td>
                     <input type="checkbox" name="currency" value="1" id="currency"

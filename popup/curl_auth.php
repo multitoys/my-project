@@ -9,25 +9,25 @@
     include_once($_SERVER['DOCUMENT_ROOT'].'/published/SC/html/scripts/classes/class.simple_html_dom.php');
 
     /**
-     * @param       $url
+     * @param       $login_url
      * @param       $auth_data
      * @param array $headers
      *
      * @return mixed
      */
-    function postAuth($url, $auth_data, array $headers)
+    function postAuth($login_url, $auth_data, array $headers)
     {
         $curl = curl_init();
-        if (strtolower((substr($url, 0, 5)) === 'https')) { // если соединяемся с https
+        if (strtolower((substr($login_url, 0, 5)) === 'https')) { // если соединяемся с https
             curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
             curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
         }
-        curl_setopt($curl, CURLOPT_URL, $url);
+        curl_setopt($curl, CURLOPT_URL, $login_url);
         if (is_array($headers) && count($headers)) {
             curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
         }
         // откуда пришли на эту страницу
-        curl_setopt($curl, CURLOPT_REFERER, $url);
+        curl_setopt($curl, CURLOPT_REFERER, $login_url);
 
         // cURL будет выводить подробные сообщения о всех производимых действиях
         curl_setopt($curl, CURLOPT_VERBOSE, 1);
@@ -57,19 +57,19 @@
     /**
      * @param        $url
      * @param        $filename
-     * @param string $referer
+     * @param string $refferer
      *
      * @param array  $headers
      *
      * @return mixed
      */
-    function readUrl($url, $filename = '', $referer = '', array $headers)
+    function readUrl($url, $filename = '', $refferer = '', array $headers)
     {
-        $referer = ($referer) ?: $url;
+        $refferer = ($refferer)? :$url;
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $url);
         // откуда пришли на эту страницу
-        curl_setopt($curl, CURLOPT_REFERER, $referer);
+        curl_setopt($curl, CURLOPT_REFERER, $refferer);
 
         if (is_array($headers) && count($headers)) {
             curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
@@ -128,11 +128,18 @@
     (
         ''
     );
-    //    postAuth('http://gtoys.com.ua/ru/user/login', 'UserLogin[username]=Elenna&UserLogin[password]=0675230623', $headers);
-    postAuth('http://multitoys.com.ua', 'user_login=sales&user_pw=172092&enter=1', $headers);
-    //file_put_contents($_SERVER['DOCUMENT_ROOT'].'/popup/1.txt', readUrl('http://multitoys.com.ua/cart', $headers, $url));
 
-    //    readUrl('http://gtoys.com.ua/ru/shop/order/create', $headers, $url);
-    readUrl('http://multitoys.com.ua/cart', $_SERVER['DOCUMENT_ROOT'].'/popup/1/2.html', $url, $headers);
+    $login_url = 'http://kr-kindermarket.com.ua/auth';
+    //    postAuth('http://gtoys.com.ua/ru/user/login', 'UserLogin[username]=Elenna&UserLogin[password]=0675230623', $headers);
+    //    postAuth('http://multitoys.com.ua', 'user_login=sales&user_pw=172092&enter=1', $headers);
+    //    postAuth($login_url, 'email=alenkiselev%40mail.ru&password=bondarenko&login=', $headers);
+    //file_put_contents($_SERVER['DOCUMENT_ROOT'].'/popup/1.txt', readUrl('http://multitoys.com.ua/cart', $headers, $login_url));
+    $refferer = 'http://kr-kindermarket.com.ua/';
+    //    $url = 'http://kr-kindermarket.com.ua/category/novie_postupleniya';
+    $url = 'http://kr-kindermarket.com.ua/category/tehnok&count_panel=5000';
+    $filename = $_SERVER['DOCUMENT_ROOT'].'/popup/tehnok.html';
+    //    readUrl('http://gtoys.com.ua/ru/shop/order/create', $headers, $login_url);
+    //    readUrl($url, $_SERVER['DOCUMENT_ROOT'].'/popup/Novye postuplenija.html', $refferer, $headers);
+    readUrl($url, $filename, $refferer, $headers);
     //    postAuth('http://dreamtoys.com.ua/index.php?option=com_user&task=login', '&username=detkikonfetki', '&passwd=7777777');
     //    readUrl('http://dreamtoys.com.ua/index.php?page=shop.browse&category=&option=com_virtuemart&Itemid=1');

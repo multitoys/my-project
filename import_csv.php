@@ -230,6 +230,7 @@ TAG
 );
     if (!$rowcount) die(ShowError("CSV-файл ($filename) не содержит данных! (rowcount = $rowcount)"));
     $no      = 0;
+    $new_id = 0;
     $row     = 0;
     $percent = 0;
 
@@ -311,6 +312,7 @@ TAG
 									($catid    , $purchase, $price,$special_price, $bonus, 200 , $hit  , '$oldprice','$akcia', '$akcia_skidka', 1     , '$code'     , $new_postup, 1                 , '$slug','$name',  $skidka, '$id'  ,'$ostatok',$ua,'$doza','$box', '$minorder', '$zakaz', '$brand', $new)";
                     $res = mysql_query($query) or die(mysql_error()."<br>$query");
                     $productID = mysql_insert_id();
+                    $new_id++;
                 } else {
 
 
@@ -406,7 +408,7 @@ TAG
         }
         fclose($handle);
     }
-    echo('<span style="color:blue;"><br>Обработано '.$no.' товаров</span><br>');
+    echo('<span style="color:blue;"><br>Обработано '.$no.' товаров</span><br><span>Новых '.$new_id.' товаров</span><br>');
 
     $query = 'UPDATE SC_products SET enabled = FALSE, items_sold = 0 WHERE in_stock = 100';
     $res = mysql_query($query) or die(mysql_error()."<br>$query");
@@ -529,7 +531,6 @@ TAG
     }
     
     /*-----------------------------------*/
-    
     
     mysql_close();
 

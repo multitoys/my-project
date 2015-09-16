@@ -55,12 +55,14 @@
 
     /**
      * @param        $url
-     * @param array  $headers
+     * @param        $filename
      * @param string $referer
+     *
+     * @param array  $headers
      *
      * @return mixed
      */
-    function readUrl($url, array $headers, $referer = '')
+    function readUrl($url, $filename = '', $referer = '', array $headers)
     {
         $referer = ($referer) ?: $url;
         $curl = curl_init();
@@ -77,11 +79,20 @@
         //отсылаем серверу COOKIE полученные от него при авторизации
         curl_setopt($curl, CURLOPT_COOKIEFILE, $_SERVER['DOCUMENT_ROOT'].'/popup/cookie.txt');
         curl_setopt($curl, CURLOPT_USERAGENT, 'Mozilla/4.0 (Windows; U; Windows NT 5.0; En; rv:1.8.0.2) Gecko/20070306 Firefox/1.0.0.4');
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 
         $html = curl_exec($curl);
         curl_close($curl);
 
+        if ($filename) {
+            $fh = fopen($filename, 'w');
+            fwrite($fh, $html);
+            fclose($fh);
+        }
+
+
         return $html;
+
     }
 
     //function curlInFile {
@@ -116,8 +127,11 @@
     (
         ''
     );
+    //    postAuth('http://gtoys.com.ua/ru/user/login', 'UserLogin[username]=Elenna&UserLogin[password]=0675230623', $headers);
     postAuth('http://multitoys.com.ua', 'user_login=sales&user_pw=172092&enter=1', $headers);
     //file_put_contents($_SERVER['DOCUMENT_ROOT'].'/popup/1.txt', readUrl('http://multitoys.com.ua/cart', $headers, $url));
-    readUrl('http://multitoys.com.ua/cart', $headers, $url);
+
+    //    readUrl('http://gtoys.com.ua/ru/shop/order/create', $headers, $url);
+    readUrl('http://multitoys.com.ua/cart', $_SERVER['DOCUMENT_ROOT'].'/popup/1/2.html', $url, $headers);
     //    postAuth('http://dreamtoys.com.ua/index.php?option=com_user&task=login', '&username=detkikonfetki', '&passwd=7777777');
     //    readUrl('http://dreamtoys.com.ua/index.php?page=shop.browse&category=&option=com_virtuemart&Itemid=1');

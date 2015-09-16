@@ -445,8 +445,8 @@ TAG
 
         $new_count--;
     }
-    // $query = "DELETE FROM `SC_auth_log` WHERE `Login` = 'sales'";
-    // $res   = mysql_query($query) or die(mysql_error()."<br>$query");
+    $query = "DELETE FROM `SC_auth_log` WHERE `Login` = 'sales'";
+    $res = mysql_query($query) or die(mysql_error()."<br>$query");
 
     $query = 'TRUNCATE TABLE  Search_products';
     $res = mysql_query($query) or die(mysql_error()."<br>$query");

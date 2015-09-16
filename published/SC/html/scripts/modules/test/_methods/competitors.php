@@ -19,6 +19,7 @@
         var $categories = array();
         var $bestsellers = '';
         var $new = '';
+        var $new_items_postup = '';
         var $table = 'Conc__analogs';
 
 //        function __setEnabled()
@@ -88,6 +89,23 @@
             $this->new = ' AND code_1c IN ('.$ids.')';
         }
 
+        function __getNewItemsPostup()
+        {
+            $query = "SELECT t1.code_1c FROM SC_products t1 
+                    LEFT JOIN SC_product_list_item t2  USING(productID)
+                    WHERE t2.list_id = 'newitemspostup'";
+            $res = mysql_query($query) or die(mysql_error().$query);
+
+            $ids = array();
+
+            while ($row = mysql_fetch_object($res)) {
+                $ids[] = $row->code_1c;
+            }
+            $ids = implode(',', $ids);
+
+            $this->new_items_postup = ' AND code_1c IN ('.$ids.')';
+        }
+
         function __getBrandsArray()
         {
             $query = "SELECT DISTINCT brand FROM $this->table WHERE (Alliance OR Divoland OR Dreamtoys OR Mixtoys)";
@@ -154,6 +172,9 @@
             if (isset($_GET['new'])) {
                 $this->__getNew();
             }
+            if (isset($_GET['new_items_postup'])) {
+                $this->__getNewItemsPostup();
+            }
             if (isset($_GET['manufactured']) && $_GET['manufactured'] !== 'all') {
                 $this->__setManufactured();
             }
@@ -170,12 +191,12 @@
             $grid->query_total_rows_num = "
                 SELECT COUNT(*) FROM $this->table
                 WHERE 1
-                $this->manufactured $this->brand $this->category $this->bestsellers $this->new $this->competitor";
+                $this->manufactured $this->brand $this->category $this->bestsellers $this->new $this->new_items_postup $this->competitor";
 
             $grid->query_select_rows = "
                 SELECT * FROM $this->table
                 WHERE 1
-                $this->manufactured $this->brand $this->category $this->bestsellers $this->new $this->competitor";
+                $this->manufactured $this->brand $this->category $this->bestsellers $this->new  $this->new_items_postup$this->competitor";
 
             $grid->show_rows_num_select = true;
             $grid->default_sort_direction = 'DESC';

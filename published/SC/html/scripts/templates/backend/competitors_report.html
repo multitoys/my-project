@@ -84,6 +84,12 @@
                     <label for="new" style="color: #3A73BD; font-style: italic">- только Новинки</label>
                 </td>
                 <td>
+                    <input type="checkbox" name="new_items_postup" value="1" id="new_items_postup"
+                            {if $smarty.get.new_items_postup} checked="checked"{/if}>
+                    <label for="new_items_postup" style="color: #3A73BD; font-style: italic">- только Новые
+                                                                                             Поступления</label>
+                </td>
+                <td>
                     <input type="checkbox" name="currency" value="1" id="currency"
                             {if $smarty.get.currency} checked="checked"{/if}>
                     <label for="currency" style="color: darkred; font-style: italic">- цены в $USD</label>

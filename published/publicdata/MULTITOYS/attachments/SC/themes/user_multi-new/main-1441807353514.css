@@ -1036,7 +1036,7 @@ ul#navmenu-v:after {
 }
 
 ul#navmenu-v li:hover {
-    background: #5dacb5
+    background: #5dacb5 !important;
 }
 
 ul#navmenu-v li ul, ul#navmenu-v li ul li ul {

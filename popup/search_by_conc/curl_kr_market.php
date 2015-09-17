@@ -6,123 +6,163 @@
      * Time: 22:10
      */
 
-    function postAuth($login_url, $auth_data, array $headers)
-    {
-        $curl = curl_init();
-        if (strtolower((substr($login_url, 0, 5)) === 'https')) {
-            curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
-            curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
-        }
-        curl_setopt($curl, CURLOPT_URL, $login_url);
-        if (is_array($headers) && count($headers)) {
-            curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
-        }
-        curl_setopt($curl, CURLOPT_REFERER, $login_url);
-        curl_setopt($curl, CURLOPT_VERBOSE, true);
-        curl_setopt($curl, CURLOPT_POST, true);
-        curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
-        curl_setopt($curl, CURLOPT_MAXREDIRS, 5);
-        curl_setopt($curl, CURLOPT_POSTFIELDS, $auth_data);
-        //        curl_setopt($curl, CURLOPT_USERAGENT, 'Mozilla/4.0 (Windows; U; Windows NT 5.0; En; rv:1.8.0.2) Gecko/20070306 Firefox/1.0.0.4');
-        curl_setopt($curl, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.85 Safari/537.36');
-        curl_setopt($curl, CURLOPT_HEADER, true);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($curl, CURLOPT_COOKIEJAR, $_SERVER['DOCUMENT_ROOT'].'/popup/cookie.txt');
-        $html = curl_exec($curl);
-        curl_close($curl);
+    $start = microtime(true);
+    ini_set('display_errors', true);
 
-        return $html;
-    }
+    define('DIR_ROOT', $_SERVER['DOCUMENT_ROOT'].'/published/SC/html/scripts');
+    define('DIR_COMPETITORS', $_SERVER['DOCUMENT_ROOT'].'/popup/search_by_conc');
 
-    function readUrl($url, $filename = '', $refferer = '', array $headers)
-    {
-        $refferer = ($refferer) ?: $url;
-        $curl = curl_init();
-        curl_setopt($curl, CURLOPT_URL, $url);
-        curl_setopt($curl, CURLOPT_REFERER, $refferer);
-        curl_setopt($curl, CURLOPT_AUTOREFERER, true);
+    include_once(DIR_ROOT.'/includes/init.php');
+    include_once(DIR_CFG.'/connect.inc.wa.php');
+    include(DIR_FUNC.'/setting_functions.php');
+    include_once(DIR_COMPETITORS.'/curl_competitors.php');
 
-        if (is_array($headers) && count($headers)) {
-            curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
-        }
-        curl_setopt($curl, CURLOPT_POST, false);
-        curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
-        curl_setopt($curl, CURLOPT_MAXREDIRS, 5);
-        curl_setopt($curl, CURLOPT_COOKIEFILE, $_SERVER['DOCUMENT_ROOT'].'/popup/cookies.txt');
-        curl_setopt($curl, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.85 Safari/537.36');
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+    $DB_tree = new DataBase();
+    $DB_tree->connect(SystemSettings::get('DB_HOST'), SystemSettings::get('DB_USER'), SystemSettings::get('DB_PASS'));
+    $DB_tree->selectDB(SystemSettings::get('DB_NAME'));
 
-        $html = curl_exec($curl);
-        curl_close($curl);
+    echo(<<<TAG
 
-        if ($filename) {
-            $fh = fopen($filename, 'w');
-            fwrite($fh, $html);
-            fclose($fh);
-        }
-    }
+			<html>
+				<head>
+					<link rel='stylesheet' type='text/css' href='css/import.css'>
+				</head>
+				<body>
+                <div id='products'>
+                    <div style='width:0;'>&nbsp;</div>
+                </div>
+
+TAG
+    );
+
+    define('SLASH', '|');
+    define('CATEGORY_PATTERN', '<a[^<>]*?class=""[\s]+href="(/category/[^"]+?)"[^<>]*?>\s+([^<>]*?)\s*</a>');
+    define('CODE_PATTERN', '<div[\s]+class="forimgmain">[^<>]*?<a[\s]+href="/item/([\d]+?)"[^<>]*?>[^<>]*?');
+    define('NAME_PATTERN', '<img[\s]+alt="([^"]*?)"[^<>]*?>[^<>]*?</a>[^<>]*?</div>[^<>]*?<div[\s]+class="h5[\s]+m0"[^<>]*?>[^<>]*?</div>[^<>]*?<div[\s]+class="fll[\s]+wpc50"[^<>]*?>[^<>]*?');
+    define('PRICE_PATTERN', '<div[\s]+class="price"[^<>]*?>[\s]+([0-9.]+?)');
+    define('ART_PATTERN', '[^<>]*?<div[\s]+class="green-color"[^<>]*?>[^<>]*?</div>[^<>]*?</div>[^<>]*?</div>[^<>]*?<div[\s]+class="flr[\s]+wpc50[\s]+tar"[^<>]*?>[^<>]*?<small>[^<>]*?<b>[^<>]*?</b>[\s]+([^<>]*?)</small>');
 
     $headers = array
     (
         ''
     );
-    $html_dir = $_SERVER['DOCUMENT_ROOT'].'/popup/search_by_conc/';
+
     $login_url = 'http://kr-kindermarket.com.ua/auth';
     $refferer = 'http://kr-kindermarket.com.ua/';
+    postAuth($login_url, 'email=alenkiselev%40mail.ru&password=bondarenko&login=', $headers);
+
     $url = 'http://kr-kindermarket.com.ua/category';
-//    $url = 'http://kr-kindermarket.com.ua/category/novie_postupleniya';
-    $url = 'http://kr-kindermarket.com.ua/category/tehnok&count_panel=5000';
-    $filename = $html_dir.'category.html';
+    $filename = DIR_COMPETITORS.'/category.html';
+    readUrl($url, $filename, $refferer, $headers);
+
+    UpdateValue('Conc__alliance', 'enabled = 0');
+
     $html = file_get_contents($filename);
 
-    define('CODE_PATTERN', '<h2>[^<>]*?<a[^<>]*?[\s]+href="/item/[\w]+/([\d])+?)"[^<>]*?>([^<>]*?)</a>[^<>]*?</h2>[^<>]*?</div>[^<>]*?<div[\s]+class="forimgmain"[^<>]*?>[^<>]*?<a[^<>]*?>[^<>]*?<img[^<>]*?>[^<>]*?</a>[^<>]*?</div>[^<>]*?<div[^<>]*?>[^<>]*?</div>[^<>]*?<div[^<>]*?>[^<>]*?<div[\s]+class="price"[^<>]*?>[\s]*?([0-9.]+).*?</b>[\s]+([^<>]+)</small>');
-
-    define('CATEGORY_PATTERN', '<a[^<>]*?class=""[\s]+href="(/category/[\w]+?)"[^<>]*?>([^<>]*?)</a>');
-
-    define('SLASH', '|');
-
     preg_match_all(
-        SLASH.CODE_PATTERN.SLASH.'U',
+        SLASH.CATEGORY_PATTERN.SLASH.'U',
         $html,
         $categories,
         PREG_PATTERN_ORDER
     );
-
     $category_count = count($categories[1]);
-    echo $category_count;
-    var_dump($categories[1]);
-    //for ($i = 0; $i < $category_count; $i++) {
-    //    set_time_limit(0);
-    //    $category = mysql_real_escape_string(DecodeCodepage($categories[2][$i]));
-    //readUrl($url, $filename, $refferer, $headers);
-    //    $name
-    //        = mysql_real_escape_string(trim(str_replace($replace_name, '', DecodeCodepage($products[2][$i]))));
-    //    $price     = (double)$products[3][$i];
-    //    $price_usd = $price / 21.60;
-    //    $productID = GetValue('productID', 'Conc__divoland', "code = '$code'");
-    //
-    //    if ($productID) {
-    //        $query
-    //            = "
-    //                            UPDATE  Conc__divoland
-    //                            SET     parent    = '$parent',
-    //                                    category  = '$category',
-    //                                    name      = '$name',
-    //                                    price_uah = $price,
-    //                                    price_usd = $price_usd,
-    //                                    enabled   = 1
-    //                            WHERE   productID =  $productID
-    //                ";
-    //        $res = mysql_query($query) or die(mysql_error()."<br>$query");
-    //    } else {
-    //        $query
-    //            = "
-    //                            INSERT INTO Conc__divoland
-    //                                     (parent, category, code, name, price_uah, price_usd)
-    //                            VALUES   ('$parent', '$category', '$code', '$name', $price, $price_usd)
-    //                ";
-    //        $res = mysql_query($query) or die(mysql_error()."<br>$query");
-    //        $error++;
-    //    }
-    //
-    //}
+
+    define('URL_COMPETITORS', 'http://kr-kindermarket.com.ua');
+    define('URL_POSTFIX', '&count_panel=5000');
+    define('EXT', '.html');
+
+    DeleteRow('Conc__alliance');
+    DeleteRow('Conc_search__alliance');
+
+    $no = 0;
+    $new = 0;
+    $part = 0;
+    $percent = 0;
+    $replace_name = array('\'', '"');
+
+    for ($i = 0; $i < $category_count; $i++) {
+
+        set_time_limit(0);
+        $category_url = $categories[1][$i];
+        $category_url = URL_COMPETITORS.$category_url.URL_POSTFIX;
+        $category = Rus2Translit(trim($categories[2][$i]));
+        $filename = DIR_COMPETITORS.'/'.$category.EXT;
+        $products = '';
+
+        readUrl($category_url, $filename, '', $headers);
+
+        $html = file_get_contents($filename);
+        preg_match_all(
+            SLASH.CODE_PATTERN.NAME_PATTERN.PRICE_PATTERN.ART_PATTERN.SLASH.'U',
+            $html,
+            $products,
+            PREG_PATTERN_ORDER
+        );
+
+        $rowcount = count($products[1]);
+        echo('<p>обновление цен категории <b>&laquo;'.$category.'&raquo;</b>...(<i>'.$rowcount.' товаров</i>)</p>');
+        BuferOut();
+
+        $category = mysql_real_escape_string($category);
+
+        for ($j = 0; $j < $rowcount; $j++) {
+            set_time_limit(0);
+            $code = mysql_real_escape_string(DecodeCodepage($products[1][$j]));
+            $name
+                = mysql_real_escape_string(trim(str_replace($replace_name, '', DecodeCodepage($products[2][$j]))));
+            $price = (double)$products[3][$j];
+            $price_usd = $price / 20.51;
+            $product_code = mysql_real_escape_string(trim($products[4][$j]));
+            $productID = GetValue('productID', 'Conc__alliance', "code = '$code'");
+
+            if ($productID) {
+                $query
+                    = "
+                                UPDATE  Conc__alliance
+                                SET     parent       = '$category',
+                                        category     = '$category',
+                                        product_code = '$product_code',
+                                        name         = '$name',
+                                        price_uah    = $price,
+                                        price_usd    = $price_usd,
+                                        enabled      = 1
+                                WHERE   productID    =  $productID
+                    ";
+                $res = mysql_query($query) or die(mysql_error()."<br>$query");
+            } else {
+                $query
+                    = "
+                            INSERT INTO Conc__alliance
+                                        (parent, category, code, product_code, name, price_uah, price_usd)
+                            VALUES      ('$category', '$category', '$code', '$product_code', '$name', $price, $price_usd)
+                          ";
+                $res = mysql_query($query) or die(mysql_error()."<br>$query");
+                $new++;
+            }
+            $no++;
+        }
+        $part++;
+        $progress = round(($part / $parts * 100), 0, PHP_ROUND_HALF_DOWN);
+
+        if ($progress > $percent) {
+            $percent = $progress.'%';
+            ProgressBar('products', $percent);
+            BuferOut();
+        }
+    }
+    ProgressBar('products', $percent, true);
+    echo('<hr><span style="color:blue;">Обработано '.$no.' товаров</span><br><br>Новых '.$new.' товаров</span><br>');
+
+    // Оптимизация таблиц
+    $query = "UPDATE Conc__alliance SET parent='', category='' WHERE enabled=0";
+    $res = mysql_query($query) or die(mysql_error()."<br>$query");
+
+    $query = 'OPTIMIZE TABLE `Conc__alliance`, `Conc_search__alliance`';
+    $res = mysql_query($query) or die(mysql_error()."<br>$query");
+    mysql_close();
+
+    echo('
+        <br>
+          <div id=\'end\'>Импорт завершен!</div>
+      ');
+    Debugging($start);

@@ -486,8 +486,8 @@ class AuxPages extends ComponentModule {
                     $arrow_price = 'z_sort_desc';
                 }
             }
-
             // NAME
+
             if ($sort === 'name_ru') {
                 $sort_class_name = 'z_sort_active';
                 $arrow_name = ($direction === 'DESC') ? 'z_sort_desc' : 'z_sort_asc';
@@ -513,6 +513,16 @@ class AuxPages extends ComponentModule {
                 $default_sort = 't1.sort_order, t1.categoryID,';
             }
 
+            $date = 0;
+            $selected_date = '';
+            if (isset($_GET['date']) && (int)$_GET['date'] > 0) {
+                $date = (int)$_GET['date'];
+                $selected_date = " AND date = $date";
+            } elseif (isset($_POST['date']) && (int)$_POST['date'] > 0) {
+                $date = (int)$_POST['date'];
+                $selected_date = " AND t2.date = $date";
+            }
+            
             // Количество выводимых товаров на один запрос
             //$add_count = 0;
             $tov_count = 50;
@@ -546,11 +556,10 @@ class AuxPages extends ComponentModule {
             }
 
             // Общее количество товаров
-            $query = '
+            $query = "
                     SELECT count(*) AS tov_all_count
                     FROM SC_product_list_item
-                    WHERE list_id = \'newitemspostup\'
-                  ';
+                    WHERE list_id = 'newitemspostup' $selected_date";
             $res = mysql_query($query) or die(mysql_error().$query);
             $product_list_item = mysql_fetch_object($res);
             $tov_all_count = (int)($product_list_item->tov_all_count);
@@ -562,7 +571,7 @@ class AuxPages extends ComponentModule {
                 $start_row = ($start_row === -1) ? 0 : $start_row;
             }
 
-            $url = '/auxpage_new_items/';
+            $url = '/auxpage_new_items/'.$date.'/';
             $out = SimpleNavigator($tov_all_count, $start_row, $p_count, $url, $out);
             $start = $start_row;
             $direction_nav = 'ASC';
@@ -578,6 +587,7 @@ class AuxPages extends ComponentModule {
                                     data-add         = $tov_count
                                     data-show        = 0
                                     data-page        = $start
+                                    data-date        = $date
                                     data-sort        = $ajax_sort
                                     data-direction   = $direction_nav
                                 >$out</div>
@@ -591,7 +601,7 @@ class AuxPages extends ComponentModule {
                                         <td>
                                             <div class='.$sort_class_name.'>
                                                 <div class="arbopr sort_name">
-                                                    <a href="/auxpage_new_items/name_ru/'.$new_dir.'/">Наименование</a>
+                                                    <a href="/auxpage_new_items/'.$date.'/name_ru/'.$new_dir.'/">Наименование</a>
                                                 </div>
                                                 <div class='.$arrow_name.'></div>
                                             </div>
@@ -599,7 +609,7 @@ class AuxPages extends ComponentModule {
                                         <td width=100px>
                                             <div class="'.$sort_class_pc.' ">
                                                 <div class=arbopr>
-                                                    <a href="/auxpage_new_items/product_code/'.$new_dir.'/">Артикул</a>
+                                                    <a href="/auxpage_new_items/'.$date.'/product_code/'.$new_dir.'/">Артикул</a>
                                                 </div>
                                                 <div class='.$arrow_product_code.'></div>
                                             </div>
@@ -607,7 +617,7 @@ class AuxPages extends ComponentModule {
                                         <td width=60px>
                                             <div class='.$sort_class_bonus.'>
                                                 <div class=arbopr>
-                                                    <a href="/auxpage_new_items/Bonus/'.$new_dir.'/">Баллы</a>
+                                                    <a href="/auxpage_new_items/'.$date.'/Bonus/'.$new_dir.'/">Баллы</a>
                                                 </div>
                                                 <div class='.$arrow_bonus.'></div>
                                             </div>
@@ -615,7 +625,7 @@ class AuxPages extends ComponentModule {
                                         <td width=80px>
                                             <div class='.$sort_class_price.'>
                                                 <div class=arbopr>
-                                                    <a href="/auxpage_new_items/Price/'.$new_dir.'/">Цена</a>
+                                                    <a href="/auxpage_new_items/'.$date.'/Price/'.$new_dir.'/">Цена</a>
                                                 </div>
                                                 <div class='.$arrow_price.'></div>
                                             </div>
@@ -681,7 +691,7 @@ class AuxPages extends ComponentModule {
                     FROM SC_products t1
                     LEFT JOIN SC_product_list_item t2  USING(productID)
                     LEFT JOIN SC_product_pictures t3 ON t1.default_picture = t3.photoID
-                    WHERE t2.list_id = 'newitemspostup'
+                    WHERE t2.list_id = 'newitemspostup' $selected_date
                     ORDER BY $default_sort  t1.$sort $direction
                     LIMIT $start_row, $tov_count
                 ";

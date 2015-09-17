@@ -391,7 +391,7 @@ TAG
                 }
                 if ($new_postup) {
                     $query
-                        = "INSERT INTO SC_product_list_item (list_id, productID, priority) VALUES ('newitemspostup', $productID, 1)";
+                        = "INSERT INTO SC_product_list_item (list_id, productID, priority, date) VALUES ('newitemspostup', $productID, 1, $new_postup)";
                     $res = mysql_query($query) or die(mysql_error()."<br>$query");
                 }
 

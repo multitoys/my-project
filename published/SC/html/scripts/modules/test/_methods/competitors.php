@@ -214,7 +214,7 @@
             switch ($this->conc) {
 
                 case 'Alliance':
-                    $grid->registerHeader('Альянс', 'Alliance', false, 'ASC', 'right');
+                    $grid->registerHeader('Киндер-Маркет', 'Alliance', false, 'ASC', 'right');
                     $grid->registerHeader('разница', 'diff_Alliance', false, 'ASC', 'right');
                     break;
                 case 'Divoland':
@@ -230,8 +230,8 @@
                     $grid->registerHeader('разница', 'diff_Mixtoys', false, 'ASC', 'right');
                     break;
                 default:
-//                    $grid->registerHeader('Альянс', 'Alliance', false, 'ASC', 'right');
-//                    $grid->registerHeader('разница', 'diff_alliance', false, 'ASC', 'right');
+                    $grid->registerHeader('Киндер-Маркет', 'Alliance', false, 'ASC', 'right');
+                    $grid->registerHeader('разница', 'diff_alliance', false, 'ASC', 'right');
                     $grid->registerHeader('Диволенд', 'Divoland', false, 'ASC', 'right');
                     $grid->registerHeader('разница', 'diff_divoland', false, 'ASC', 'right');
                     $grid->registerHeader('Веселка', 'Dreamtoys', false, 'ASC', 'right');

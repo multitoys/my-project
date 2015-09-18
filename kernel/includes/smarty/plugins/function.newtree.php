@@ -1,5 +1,5 @@
 <?php
-    function smarty_function_newtree()
+    function smarty_function_newtree($params, &$smarty)
     {
         if (isset($_SESSION['newtree'])) {
             $disp = $_SESSION['newtree'];

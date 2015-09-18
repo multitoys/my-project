@@ -100,12 +100,18 @@
                     <label for="competitor" style="color: #FF0000">Сравнить с: </label>
                     <select name="competitor" id="competitor">
                         <option value='all'      {if $smarty.get.competitor eq 'all'} selected="selected"{/if}>Все конкуренты</option>
-                        <option value='Alliance' {if $smarty.get.competitor eq 'Alliance'} selected="selected"{/if}>
+                        <option value='kindermarket' {if $smarty.get.competitor eq 'kindermarket'} selected="selected"{/if}>
                             Киндер-Маркет
                         </option>
-                        <option value='Divoland' {if $smarty.get.competitor eq 'Divoland'} selected="selected"{/if}>Диволенд</option>
-                        <option value='Dreamtoys'{if $smarty.get.competitor eq 'Dreamtoys'} selected="selected"{/if}>Веселка</option>
-                        <option value='Mixtoys'  {if $smarty.get.competitor eq 'Mixtoys'} selected="selected"{/if}>Микстойс</option>
+                        <option value='divoland' {if $smarty.get.competitor eq 'divoland'} selected="selected"{/if}>
+                            Диволенд
+                        </option>
+                        <option value='dreamtoys'{if $smarty.get.competitor eq 'dreamtoys'} selected="selected"{/if}>
+                            Веселка
+                        </option>
+                        <option value='mixtoys' {if $smarty.get.competitor eq 'mixtoys'} selected="selected"{/if}>
+                            Микстойс
+                        </option>
                     </select>
                 </td>
                 <td>
@@ -156,26 +162,26 @@
                     <td class="brand">{$GridRows[i].category|escape:'html'}</td>
                     <td class="to_right"><font color="blue">{$GridRows[i].Price|escape:'html'}</font></td>
                     <td class="to_right {if $GridRows[i].max_diff > 0}red{else}green{/if}"><strong>{$GridRows[i].max_diff|escape:'html'}</strong></td>
-                {if $smarty.get.competitor eq 'Alliance'}
-                    <td class="to_right border {if $GridRows[i].diff_alliance > 0}red{else}green{/if}">{$GridRows[i].Alliance|escape:'html'}</td>
-                    <td class="to_right {if $GridRows[i].diff_alliance > 0}red{else}green{/if}">{$GridRows[i].diff_alliance|escape:'html'}</td>
-                {elseif $smarty.get.competitor eq 'Divoland'}
-                    <td class="to_right border {if $GridRows[i].diff_divoland > 0}red{else}green{/if}">{$GridRows[i].Divoland|escape:'html'}</td>
+                    {if $smarty.get.competitor eq 'kindermarket'}
+                        <td class="to_right border {if $GridRows[i].diff_kindermarket > 0}red{else}green{/if}">{$GridRows[i].kindermarket|escape:'html'}</td>
+                        <td class="to_right {if $GridRows[i].diff_kindermarket > 0}red{else}green{/if}">{$GridRows[i].diff_kindermarket|escape:'html'}</td>
+                    {elseif $smarty.get.competitor eq 'divoland'}
+                        <td class="to_right border {if $GridRows[i].diff_divoland > 0}red{else}green{/if}">{$GridRows[i].divoland|escape:'html'}</td>
                     <td class="to_right {if $GridRows[i].diff_divoland > 0}red{else}green{/if}">{$GridRows[i].diff_divoland|escape:'html'}</td>
-                {elseif $smarty.get.competitor eq 'Dreamtoys'}
-                    <td class="to_right border {if $GridRows[i].diff_dreamtoys > 0}red{else}green{/if}">{$GridRows[i].Dreamtoys|escape:'html'}</td>
+                    {elseif $smarty.get.competitor eq 'dreamtoys'}
+                        <td class="to_right border {if $GridRows[i].diff_dreamtoys > 0}red{else}green{/if}">{$GridRows[i].dreamtoys|escape:'html'}</td>
                     <td class="to_right {if $GridRows[i].diff_dreamtoys > 0}red{else}green{/if}">{$GridRows[i].diff_dreamtoys|escape:'html'}</td>
-                {elseif $smarty.get.competitor eq 'Mixtoys'}
-                    <td class="to_right border {if $GridRows[i].diff_mixtoys > 0}red{else}green{/if}">{$GridRows[i].Mixtoys|escape:'html'}</td>
+                    {elseif $smarty.get.competitor eq 'mixtoys'}
+                        <td class="to_right border {if $GridRows[i].diff_mixtoys > 0}red{else}green{/if}">{$GridRows[i].mixtoys|escape:'html'}</td>
                     <td class="to_right {if $GridRows[i].diff_mixtoys > 0}red{else}green{/if}">{$GridRows[i].diff_mixtoys|escape:'html'}</td>
                 {else}
-                    <td class="to_right border {if $GridRows[i].diff_alliance > 0}red{else}green{/if}">{$GridRows[i].Alliance|escape:'html'}</td>
-                    <td class="to_right {if $GridRows[i].diff_alliance > 0}red{else}green{/if}">{$GridRows[i].diff_alliance|escape:'html'}</td>
-                    <td class="to_right border {if $GridRows[i].diff_divoland > 0}red{else}green{/if}">{$GridRows[i].Divoland|escape:'html'}</td>
+                        <td class="to_right border {if $GridRows[i].diff_kindermarket > 0}red{else}green{/if}">{$GridRows[i].kindermarket|escape:'html'}</td>
+                        <td class="to_right {if $GridRows[i].diff_kindermarket > 0}red{else}green{/if}">{$GridRows[i].diff_kindermarket|escape:'html'}</td>
+                        <td class="to_right border {if $GridRows[i].diff_divoland > 0}red{else}green{/if}">{$GridRows[i].divoland|escape:'html'}</td>
                     <td class="to_right {if $GridRows[i].diff_divoland > 0}red{else}green{/if}">{$GridRows[i].diff_divoland|escape:'html'}</td>
-                    <td class="to_right border {if $GridRows[i].diff_dreamtoys > 0}red{else}green{/if}">{$GridRows[i].Dreamtoys|escape:'html'}</td>
+                        <td class="to_right border {if $GridRows[i].diff_dreamtoys > 0}red{else}green{/if}">{$GridRows[i].dreamtoys|escape:'html'}</td>
                     <td class="to_right {if $GridRows[i].diff_dreamtoys > 0}red{else}green{/if}">{$GridRows[i].diff_dreamtoys|escape:'html'}</td>
-                    <td class="to_right border {if $GridRows[i].diff_mixtoys > 0}red{else}green{/if}">{$GridRows[i].Mixtoys|escape:'html'}</td>
+                        <td class="to_right border {if $GridRows[i].diff_mixtoys > 0}red{else}green{/if}">{$GridRows[i].mixtoys|escape:'html'}</td>
                     <td class="to_right {if $GridRows[i].diff_mixtoys > 0}red{else}green{/if}">{$GridRows[i].diff_mixtoys|escape:'html'}</td>
                 {/if}  
                 </tr>

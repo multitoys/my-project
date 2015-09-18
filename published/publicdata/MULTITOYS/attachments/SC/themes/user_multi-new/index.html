@@ -82,7 +82,7 @@
                             {conc_tree auxpage='mixtoys'}
                         {elseif $smarty.get.ukey eq 'auxpage_dreamtoys'}
                             {conc_tree auxpage='dreamtoys'}
-                        {elseif $smarty.get.ukey eq 'auxpage_alliance'}
+                        {elseif $smarty.get.ukey eq 'auxpage_kindermarket'}
                             {conc_tree auxpage='alliance'}
                         {else}
                             {newtree login=$smarty.session.log}
@@ -101,7 +101,8 @@
                         {/if}
                     </div>
 				</div>
-				<div id="center" {if $smarty.get.ukey eq 'auxpage_divoland' or $smarty.get.ukey eq 'auxpage_mixtoys' or $smarty.get.ukey eq 'auxpage_dreamtoys' or $smarty.get.ukey eq 'auxpage_alliance'}class=conc{/if}>
+                <div id="center"
+                     {if $smarty.get.ukey eq 'auxpage_divoland' or $smarty.get.ukey eq 'auxpage_mixtoys' or $smarty.get.ukey eq 'auxpage_dreamtoys' or $smarty.get.ukey eq 'auxpage_kindermarket'}class=conc{/if}>
 					{if $smarty.session.log}
 						{if $smarty.session.cs_may_order}
 							{cpt_maincontent}
@@ -131,9 +132,10 @@
 						{/if}
 					{/if}
 				</div>
-				<div id="right" {if $smarty.get.ukey eq 'auxpage_divoland' or $smarty.get.ukey eq 'auxpage_mixtoys' or $smarty.get.ukey eq 'auxpage_dreamtoys' or $smarty.get.ukey eq 'auxpage_alliance'}class=conc{/if}>
+                <div id="right"
+                     {if $smarty.get.ukey eq 'auxpage_divoland' or $smarty.get.ukey eq 'auxpage_mixtoys' or $smarty.get.ukey eq 'auxpage_dreamtoys' or $smarty.get.ukey eq 'auxpage_kindermarket'}class=conc{/if}>
 					<div class="cpt_maincolumns">
-                        {if $smarty.get.ukey eq 'auxpage_divoland' or $smarty.get.ukey eq 'auxpage_mixtoys' or $smarty.get.ukey eq 'auxpage_dreamtoys' or $smarty.get.ukey eq 'auxpage_alliance'}
+                        {if $smarty.get.ukey eq 'auxpage_divoland' or $smarty.get.ukey eq 'auxpage_mixtoys' or $smarty.get.ukey eq 'auxpage_dreamtoys' or $smarty.get.ukey eq 'auxpage_kindermarket'}
                         {else}
 							<!-- cpt_container_start -->
 							{cpt_product_lists list_id='hitu' limit='30'}

@@ -3,7 +3,7 @@
     {
         $auxpage = $params['auxpage'];
         $disp  = '<ul id="navmenu-v"> ';
-        $disp .= '<li><a href="" aria-haspopup=true>Конкуренты</a><ul><li><a href="/auxpage_divoland" aria-haspopup=true>Диволенд</a></li><li><a href="/auxpage_mixtoys" aria-haspopup=true>Микстойс</a></li><li><a href="/auxpage_dreamtoys" aria-haspopup=true>Веселка</a></li><li><a href="/auxpage_alliance" aria-haspopup=true>Альянс</a></li></ul></li>';
+        $disp .= '<li><a href="" aria-haspopup=true>Конкуренты</a><ul><li><a href="/auxpage_divoland" aria-haspopup=true>Диволенд</a></li><li><a href="/auxpage_mixtoys" aria-haspopup=true>Микстойс</a></li><li><a href="/auxpage_dreamtoys" aria-haspopup=true>Веселка</a></li><li><a href="/auxpage_kindermarket" aria-haspopup=true>Киндер-Маркет</a></li></ul></li>';
         $sql = 'SELECT DISTINCT parent FROM Conc__'.$auxpage.' ORDER BY parent';
         if ($r = mysql_query($sql))
             while ($res = mysql_fetch_assoc($r)) {

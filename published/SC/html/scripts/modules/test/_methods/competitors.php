@@ -10,7 +10,7 @@
         var $DBHandler;
 //        var $enabled = '';
         var $manufactured = '';
-        var $competitor = ' AND (Alliance OR Divoland OR Dreamtoys OR Mixtoys)';
+        var $competitor = ' AND (kindermarket OR divoland OR dreamtoys OR mixtoys)';
         var $conc = '';
         var $currency = '';
         var $brand = '';
@@ -108,7 +108,7 @@
 
         function __getBrandsArray()
         {
-            $query = "SELECT DISTINCT brand FROM $this->table WHERE (Alliance OR Divoland OR Dreamtoys OR Mixtoys)";
+            $query = "SELECT DISTINCT brand FROM $this->table WHERE (kindermarket OR divoland OR dreamtoys OR mixtoys)";
             $res = mysql_query($query) or die(mysql_error().$query);
 
             while($Brands = mysql_fetch_object($res)) {
@@ -121,7 +121,7 @@
         
         function __getCategoriesArray()
         {
-            $query = "SELECT DISTINCT category FROM $this->table WHERE (Alliance OR Divoland OR Dreamtoys OR Mixtoys)";
+            $query = "SELECT DISTINCT category FROM $this->table WHERE (kindermarket OR divoland OR dreamtoys OR mixtoys)";
             $res = mysql_query($query) or die(mysql_error().$query);
 
             while ($Categories = mysql_fetch_object($res)) {
@@ -213,30 +213,30 @@
 
             switch ($this->conc) {
 
-                case 'Alliance':
-                    $grid->registerHeader('Киндер-Маркет', 'Alliance', false, 'ASC', 'right');
-                    $grid->registerHeader('разница', 'diff_Alliance', false, 'ASC', 'right');
+                case 'kindermarket':
+                    $grid->registerHeader('Киндер-Маркет', 'kindermarket', false, 'ASC', 'right');
+                    $grid->registerHeader('разница', 'diff_kindermarket', false, 'ASC', 'right');
                     break;
-                case 'Divoland':
-                    $grid->registerHeader('Диволенд', 'Divoland', false, 'ASC', 'right');
-                    $grid->registerHeader('разница', 'diff_Divoland', false, 'ASC', 'right');
+                case 'divoland':
+                    $grid->registerHeader('Диволенд', 'divoland', false, 'ASC', 'right');
+                    $grid->registerHeader('разница', 'diff_divoland', false, 'ASC', 'right');
                     break;
-                case 'Dreamtoys':
-                    $grid->registerHeader('Веселка', 'Dreamtoys', false, 'ASC', 'right');
-                    $grid->registerHeader('разница', 'diff_Dreamtoys', false, 'ASC', 'right');
+                case 'dreamtoys':
+                    $grid->registerHeader('Веселка', 'dreamtoys', false, 'ASC', 'right');
+                    $grid->registerHeader('разница', 'diff_dreamtoys', false, 'ASC', 'right');
                     break;
-                case 'Mixtoys':
-                    $grid->registerHeader('Микстойс', 'Mixtoys', false, 'ASC', 'right');
-                    $grid->registerHeader('разница', 'diff_Mixtoys', false, 'ASC', 'right');
+                case 'mixtoys':
+                    $grid->registerHeader('Микстойс', 'mixtoys', false, 'ASC', 'right');
+                    $grid->registerHeader('разница', 'diff_mixtoys', false, 'ASC', 'right');
                     break;
                 default:
-                    $grid->registerHeader('Киндер-Маркет', 'Alliance', false, 'ASC', 'right');
-                    $grid->registerHeader('разница', 'diff_alliance', false, 'ASC', 'right');
-                    $grid->registerHeader('Диволенд', 'Divoland', false, 'ASC', 'right');
+                    $grid->registerHeader('Киндер-Маркет', 'kindermarket', false, 'ASC', 'right');
+                    $grid->registerHeader('разница', 'diff_kindermarket', false, 'ASC', 'right');
+                    $grid->registerHeader('Диволенд', 'divoland', false, 'ASC', 'right');
                     $grid->registerHeader('разница', 'diff_divoland', false, 'ASC', 'right');
-                    $grid->registerHeader('Веселка', 'Dreamtoys', false, 'ASC', 'right');
+                    $grid->registerHeader('Веселка', 'dreamtoys', false, 'ASC', 'right');
                     $grid->registerHeader('разница', 'diff_dreamtoys', false, 'ASC', 'right');
-                    $grid->registerHeader('Микстойс', 'Mixtoys', false, 'ASC', 'right');
+                    $grid->registerHeader('Микстойс', 'mixtoys', false, 'ASC', 'right');
                     $grid->registerHeader('разница', 'diff_mixtoys', false, 'ASC', 'right');
             }
             $grid->prepare();
@@ -255,7 +255,7 @@
                 $rows[$k]['Price'] = $rows[$k][$this->currency.'Price'];
 
 //                $max_diff = max(
-//                    (int)$rows[$k]['diff_alliance'],
+                //                    (int)$rows[$k]['diff_kindermarket'],
 //                    (int)$rows[$k]['diff_divoland'],
 //                    (int)$rows[$k]['diff_dreamtoys'],
 //                    (int)$rows[$k]['diff_mixtoys']
@@ -263,13 +263,13 @@
 
                 $rows[$k]['max_diff'] = ($rows[$k]['max_diff'] > 0)?$rows[$k]['max_diff'].'%':'-----';
 
-                $rows[$k]['Alliance'] = ($rows[$k][$this->currency.'Alliance'] != 0)?$rows[$k][$this->currency.'Alliance']:'-----';
-                $rows[$k]['diff_alliance'] = ($rows[$k]['diff_alliance'] != 0)?$rows[$k]['diff_alliance'].'%':'-----';
-                $rows[$k]['Divoland'] = ($rows[$k][$this->currency.'Divoland'] != 0)? $rows[$k][$this->currency.'Divoland'] : '-----';
+                $rows[$k]['kindermarket'] = ($rows[$k][$this->currency.'kindermarket'] != 0)?$rows[$k][$this->currency.'kindermarket']:'-----';
+                $rows[$k]['diff_kindermarket'] = ($rows[$k]['diff_kindermarket'] != 0)?$rows[$k]['diff_kindermarket'].'%':'-----';
+                $rows[$k]['divoland'] = ($rows[$k][$this->currency.'divoland'] != 0)?$rows[$k][$this->currency.'divoland']:'-----';
                 $rows[$k]['diff_divoland'] = ($rows[$k]['diff_divoland'] != 0)?$rows[$k]['diff_divoland'].'%':'-----';
-                $rows[$k]['Dreamtoys'] = ($rows[$k][$this->currency.'Dreamtoys'] != 0)? $rows[$k][$this->currency.'Dreamtoys'] : '-----';
+                $rows[$k]['dreamtoys'] = ($rows[$k][$this->currency.'dreamtoys'] != 0)?$rows[$k][$this->currency.'dreamtoys']:'-----';
                 $rows[$k]['diff_dreamtoys'] = ($rows[$k]['diff_dreamtoys'] != 0)?$rows[$k]['diff_dreamtoys'].'%':'-----';
-                $rows[$k]['Mixtoys'] = ($rows[$k][$this->currency.'Mixtoys'] != 0)?$rows[$k][$this->currency.'Mixtoys'] : '-----';
+                $rows[$k]['mixtoys'] = ($rows[$k][$this->currency.'mixtoys'] != 0)?$rows[$k][$this->currency.'mixtoys']:'-----';
                 $rows[$k]['diff_mixtoys'] = ($rows[$k]['diff_mixtoys'] != 0)?$rows[$k]['diff_mixtoys'].'%':'-----';
 
             }

@@ -458,11 +458,11 @@ TAG
 
     // Оптимизация таблиц
     $query
-        = 'OPTIMIZE TABLE `SC_auth_log`, `SC_categories`, `SC_category_product`, `SC_currency_types`, `SC_customers`, `SC_customer_addresses`, `SC_customer_reg_fields_values`, `SC_ordered_carts`, `SC_orders`, `SC_order_status_changelog`, `SC_products`, `SC_product_list_item`, `SC_product_pictures`, `SC_shopping_carts`, `SC_shopping_cart_items`, `SC_subscribers`, `Search_products`, `Conc__alliance`, `Conc__divoland`, `Conc__dreamtoys`, `Conc__mixtoys`, `Conc_search__alliance`, `Conc_search__divoland`, `Conc_search__dreamtoys`, `Conc_search__mixtoys`';
+        = 'OPTIMIZE TABLE `SC_auth_log`, `SC_categories`, `SC_category_product`, `SC_currency_types`, `SC_customers`, `SC_customer_addresses`, `SC_customer_reg_fields_values`, `SC_ordered_carts`, `SC_orders`, `SC_order_status_changelog`, `SC_products`, `SC_product_list_item`, `SC_product_pictures`, `SC_shopping_carts`, `SC_shopping_cart_items`, `SC_subscribers`, `Search_products`, `Conc__kindermarket`, `Conc__divoland`, `Conc__dreamtoys`, `Conc__mixtoys`, `Conc_search__kindermarket`, `Conc_search__divoland`, `Conc_search__dreamtoys`, `Conc_search__mixtoys`';
     $res = mysql_query($query) or die(mysql_error()."<br>$query");
     
     /*------------------------------------*/
-    $concs = array('divoland', 'mixtoys', 'dreamtoys', 'alliance');
+    $concs = array('divoland', 'mixtoys', 'dreamtoys', 'kindermarket');
     $table = 'Conc__analogs';
     deleteRow($table);
     $usd0 = 1 / get('currency_value', 'CID = 10', 'SC_currency_types');
@@ -504,7 +504,7 @@ TAG
             }
         }
     }
-    $query = "UPDATE $table SET max_diff = GREATEST(diff_alliance, diff_divoland, diff_dreamtoys, diff_mixtoys)";
+    $query = "UPDATE $table SET max_diff = GREATEST(diff_kindermarket, diff_divoland, diff_dreamtoys, diff_mixtoys)";
     $res = mysql_query($query) or die(mysql_error().$query);
     optimizeTable($table);
 

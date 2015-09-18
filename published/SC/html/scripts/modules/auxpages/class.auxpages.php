@@ -309,7 +309,7 @@ class AuxPages extends ComponentModule {
                     //include(DIR_ROOT . '/../../../../popup/search_by_conc/conc_auxpages.php');
                     //$row = transform_auxpage_conc($a['ukey'], $row);
                     //break;
-                case 'auxpage_alliance':
+                case 'auxpage_kindermarket':
                     $row = $this->transform_auxpage_conc($a['ukey'], $row);
                     //include(DIR_ROOT . '/../../../../popup/search_by_conc/conc_auxpages.php');
                     //$row = transform_auxpage_conc($a['ukey'], $row);
@@ -652,7 +652,7 @@ class AuxPages extends ComponentModule {
 
             /**************************************************************************************************************/
             if ($vip) {
-                $auxpages = array('divoland', 'mixtoys', 'dreamtoys');
+                $auxpages = array('divoland', 'mixtoys', 'dreamtoys', 'kindermarket');
 
                 foreach ($auxpages as $aux) {
                     $query = "SELECT code, code_1c FROM Conc_search__$aux";
@@ -705,7 +705,7 @@ class AuxPages extends ComponentModule {
 
                 if ($vip) {
                     //$codes_multi = array();
-                    $auxpages = array('divoland', 'mixtoys', 'dreamtoys');
+                    $auxpages = array('divoland', 'mixtoys', 'dreamtoys', 'kindermarket');
                     foreach ($auxpages as $aux) {
                         if ($matched_product = $codes_multi[$aux][$Product->code_1c]) {
                             $query3

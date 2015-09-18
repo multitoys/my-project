@@ -9,10 +9,19 @@
 
         $disp = '<ul id="navmenu-v">';
         if ((int)$_SESSION['cs_vip'] === 1) {
-            $disp .= '<li style="background: tomato"><a href="#" aria-haspopup=true style="color: floralwhite;
-                                                                text-shadow: 1px 1px 1px rgba(0, 0, 0, .4) !important;
-                                                                font-size: 16px;
-                                                                ">Конкуренты</a><ul class="animated slideInRight"><li><a href="/auxpage_divoland" aria-haspopup=true>Диволенд</a></li><li><a href="/auxpage_mixtoys" aria-haspopup=true>Микстойс</a></li><li><a href="/auxpage_dreamtoys" aria-haspopup=true>Веселка</a></li><li><a href="/auxpage_alliance" aria-haspopup=true>Киндер-Маркет</a></li></ul></li>';
+            $disp .= '<li style="background: tomato">
+                        <a href="#" aria-haspopup=true style="
+                            color: floralwhite;
+                            text-shadow: 1px 1px 1px rgba(0, 0, 0, .4) !important;
+                            font-size: 16px;
+                            ">Конкуренты</a>
+                        <ul class="animated slideInRight">
+                            <li><a href="/auxpage_divoland" aria-haspopup=true>Диволенд</a></li>
+                            <li><a href="/auxpage_mixtoys" aria-haspopup=true>Микстойс</a></li>
+                            <li><a href="/auxpage_dreamtoys" aria-haspopup=true>Веселка</a></li>
+                            <li><a href="/auxpage_kindermarket" aria-haspopup=true>Киндер-Маркет</a></li>
+                        </ul>
+                    </li>';
         }
         $query = '
                     SELECT count(*) AS tov_all_count
@@ -43,19 +52,19 @@
                     }
                 }
             }
-            $disp .= '</li><li style="background: tomato"><a href="/auxpage_new_items/0/" 
-                                                                aria-haspopup=true 
-                                                                style="color: floralwhite;
-                                                                text-shadow: 1px 1px 1px rgba(0, 0, 0, .4) !important;
-                                                                font-size: 16px;
-                                                                ">Новые поступления</a>'.newItemsCategory().'</li></ul>';
+            $disp .= '</li>
+                      <li style="background: tomato">
+                        <a href="/auxpage_new_items/0/" 
+                            aria-haspopup=true 
+                            style="color: floralwhite;
+                            text-shadow: 1px 1px 1px rgba(0, 0, 0, .4) !important;
+                            font-size: 16px;
+                            ">Новые поступления</a>
+                            '.newItemsCategory().'
+                      </li>
+                    </ul>';
         }
 
-        //    if ($_SESSION['log'] == 'sales' || $_SESSION['log'] == 'multitoys') {
-        //        $disp .= '<li><a href="" aria-haspopup=true>Конкуренты</a><ul class="animated slideInRight"><li><a href="/auxpage_divoland/" aria-haspopup=true>Диволенд</a></li><li><a href="/auxpage_mixtoys/" aria-haspopup=true>Микстойс</a></li><li><a href="/auxpage_dreamtoys/" aria-haspopup=true>Веселка</a></li><li><a href="/auxpage_alliance/" aria-haspopup=true>Альянс</a></li></ul></li></ul>';
-        //    } else {
-        //        $disp .= '</ul>';
-        //    }
         if (isset($_SESSION['log'])) {
             $_SESSION['newtree'] = $disp;
         }

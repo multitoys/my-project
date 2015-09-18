@@ -17,32 +17,29 @@
     $DB_tree->connect(SystemSettings::get('DB_HOST'), SystemSettings::get('DB_USER'), SystemSettings::get('DB_PASS'));
     $DB_tree->selectDB(SystemSettings::get('DB_NAME'));
     define('VAR_DBHANDLER','DBHandler');
-    
-    $concs = array('divoland', 'mixtoys', 'dreamtoys', 'alliance');
-    $table = 'Conc__analogs';
-    
-    deleteRow($table);
-    
-    $usd0 = 1 / getValue('currency_value', 'CID = 10', 'SC_currency_types');
 
+    $concs = array('divoland', 'mixtoys', 'dreamtoys', 'kindermarket');
+    $table = 'Conc__analogs';
+    deleteRow($table);
+    $usd0 = 1 / get('currency_value', 'CID = 10', 'SC_currency_types');
     $query
         = "INSERT INTO $table
                       (categoryID, category, code_1c, product_code, name_ru, brand, purchase, usd_purchase,   Price, usd_Price,   ukraine)
           SELECT       categoryID AS ID, (SELECT name_ru FROM  SC_categories WHERE categoryID=ID), code_1c, product_code, name_ru, brand, purchase, purchase/$usd0, Price, Price/$usd0, ukraine
           FROM SC_products
-          WHERE in_stock = 100 AND enabled AND Price <> 0.00";
+          WHERE in_stock = 100 AND enabled AND Price <> 0.00 AND ostatok NOT LIKE 'под заказ'";
     $res = mysql_query($query) or die(mysql_error()."<br>$query");
 
     foreach ($concs as $conc) {
         $query = "SELECT code, code_1c FROM Conc_search__$conc";
         $res = mysql_query($query) or die(mysql_error().$query);
-		
-		$usd = $usd0;
-		
-		if ($conc == 'divoland') {
-			$usd = $usd0 + 0.10;
-		}
-		
+
+        $usd = $usd0;
+
+        if ($conc == 'divoland') {
+            $usd = $usd0 + 0.10;
+        }
+
         while ($Codes = mysql_fetch_object($res)) {
             $query2
                 = "SELECT
@@ -63,11 +60,11 @@
             }
         }
     }
-    $query = "UPDATE $table SET max_diff = GREATEST(diff_alliance, diff_divoland, diff_dreamtoys, diff_mixtoys)";
+    $query = "UPDATE $table SET max_diff = GREATEST(diff_kindermarket, diff_divoland, diff_dreamtoys, diff_mixtoys)";
     $res = mysql_query($query) or die(mysql_error().$query);
     optimizeTable($table);
 
-    function getValue($what, $condition, $table='')
+    function get($what, $condition, $table = '')
     {
         $query = "SELECT $what FROM $table WHERE $condition LIMIT 1";
         $result = mysql_query($query) or die('Ошибка в запросе: '.mysql_error().'<br>'.$query);

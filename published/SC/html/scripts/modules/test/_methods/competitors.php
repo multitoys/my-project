@@ -208,6 +208,8 @@
             $grid->registerHeader('Фото');
             $grid->registerHeader('Наименование', 'name_ru', true, 'ASC');
             $grid->registerHeader('Категория', 'category', false, 'ASC');
+            $grid->registerHeader('Закупка', 'purchase', false, 'ASC', 'right');
+            $grid->registerHeader('MAX-разница', 'max_diff', false, 'ASC', 'right');
             $grid->registerHeader('Мультитойс', 'Price', false, 'ASC', 'right');
             $grid->registerHeader('MAX-разница', 'max_diff', false, 'ASC', 'right');
 

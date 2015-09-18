@@ -100,7 +100,7 @@ TAG
             if (!is_numeric($price)) {
                 $price = preg_replace('/[^0-9.]/', '', $price);
             }
-            $price_usd = $price / 21.50;
+            $price_usd = $price / 20.51;
 
             $productID = GetValue('productID', 'Conc__mixtoys', "code = '$code'");
 

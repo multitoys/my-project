@@ -7,32 +7,33 @@
         /**
          * @var DataBase
          */
-        var $DBHandler;
-//        var $enabled = '';
-        var $manufactured = '';
-        var $competitor = ' AND (kindermarket OR divoland OR dreamtoys OR mixtoys)';
-        var $conc = '';
-        var $currency = '';
-        var $brand = '';
-        var $brands = array();
-        var $category = '';
-        var $categories = array();
-        var $bestsellers = '';
-        var $new = '';
-        var $new_items_postup = '';
-        var $table = 'Conc__analogs';
 
-//        function __setEnabled()
+        protected $DBHandler;
+        protected $manufactured = '';
+        protected $competitor = ' AND (kindermarket OR divoland OR dreamtoys OR mixtoys)';
+        protected $conc = '';
+        protected $currency = '';
+        protected $brand = '';
+        protected $brands = array();
+        protected $category = '';
+        protected $categories = array();
+        protected $bestsellers = '';
+        protected $new = '';
+        protected $new_items_postup = '';
+        protected $table = 'Conc__analogs';
+//        protected $enabled = '';
+
+//        protected function __setEnabled()
 //        {
 //            $this->enabled = ' AND enabled = 1';
 //        }
 
-        function __setCurrency()
+        protected function __setCurrency()
         {
             $this->currency = 'usd_';
         }
 
-        function __setManufactured()
+        protected function __setManufactured()
         {
             $made_in = '< 1';
 
@@ -43,23 +44,23 @@
             $this->manufactured = ' AND ukraine '.$made_in;
         }
 
-        function __setBrand()
+        protected function __setBrand()
         {
             $this->brand = ' AND brand LIKE "%'.xEscapeSQLstring($_GET['brand']).'%"';
         }
 
-        function __setCategory()
+        protected function __setCategory()
         {
             $this->category = ' AND category LIKE "%'.xEscapeSQLstring($_GET['category']).'%"';
         }
 
-        function __setCompetitor()
+        protected function __setCompetitor()
         {
             $this->conc = xEscapeSQLstring($_GET['competitor']);
             $this->competitor = ' AND '.$this->conc;
         }
 
-        function __getBestsellers()
+        protected function __getBestsellers()
         {
             $query = 'SELECT code_1c FROM SC_products WHERE items_sold > 0';
             $res = mysql_query($query) or die(mysql_error().$query);
@@ -74,9 +75,9 @@
             $this->bestsellers = ' AND code_1c IN ('.$ids.')';
         }
 
-        function __getNew()
+        protected function __getNew()
         {
-            $query = "SELECT code_1c FROM SC_products WHERE enabled = 1 ORDER BY code_1c DESC LIMIT 500";
+            $query = 'SELECT code_1c FROM SC_products WHERE enabled = 1 ORDER BY code_1c DESC LIMIT 500';
             $res = mysql_query($query) or die(mysql_error().$query);
 
             $ids = array();
@@ -89,7 +90,7 @@
             $this->new = ' AND code_1c IN ('.$ids.')';
         }
 
-        function __getNewItemsPostup()
+        protected function __getNewItemsPostup()
         {
             $query = "SELECT t1.code_1c FROM SC_products t1 
                     LEFT JOIN SC_product_list_item t2  USING(productID)
@@ -106,7 +107,7 @@
             $this->new_items_postup = ' AND code_1c IN ('.$ids.')';
         }
 
-        function __getBrandsArray()
+        protected function __getBrandsArray()
         {
             $query = "SELECT DISTINCT brand FROM $this->table WHERE (kindermarket OR divoland OR dreamtoys OR mixtoys)";
             $res = mysql_query($query) or die(mysql_error().$query);
@@ -118,8 +119,8 @@
             }
             sort($this->brands);
         }
-        
-        function __getCategoriesArray()
+
+        protected function __getCategoriesArray()
         {
             $query = "SELECT DISTINCT category FROM $this->table WHERE (kindermarket OR divoland OR dreamtoys OR mixtoys)";
             $res = mysql_query($query) or die(mysql_error().$query);
@@ -130,15 +131,15 @@
             sort($this->categories);
         }
 
-        function __getCategory()
+        protected function __getCategory()
         {
             $query = "SELECT DISTINCT category FROM $this->table";
             $result = mysql_query($query) or die('Ошибка в запросе: '.mysql_error().'<br>'.$query);
             $row = mysql_fetch_row($result);
             return $row[0];
         }
-        
-        function CompetitorsController()
+
+        public function __construct()
         {
 
             $Register = &Register::getInstance();
@@ -150,7 +151,7 @@
             $this->__getCategoriesArray();
         }
 
-        function main()
+        public function main()
         {
 
             $Register = &Register::getInstance();
@@ -209,7 +210,7 @@
             $grid->registerHeader('Наименование', 'name_ru', true, 'ASC');
             $grid->registerHeader('Категория', 'category', false, 'ASC');
             $grid->registerHeader('Закупка', 'purchase', false, 'ASC', 'right');
-            $grid->registerHeader('MAX-разница', 'max_diff', false, 'ASC', 'right');
+            $grid->registerHeader('Наценка', '', false, 'ASC', 'right');
             $grid->registerHeader('Мультитойс', 'Price', false, 'ASC', 'right');
             $grid->registerHeader('MAX-разница', 'max_diff', false, 'ASC', 'right');
 
@@ -248,16 +249,19 @@
             for ($k = count($rows) - 1; $k >= 0; $k--) {
 
                 $rows[$k]['num'] = $k + 1;
-                $rows[$k]['code_1c'] = $rows[$k]['code_1c'];
-                $rows[$k]['product_code'] = $rows[$k]['product_code'];
+                //$rows[$k]['code_1c'] = $rows[$k]['code_1c'];
+                //$rows[$k]['product_code'] = $rows[$k]['product_code'];
                 $rows[$k]['img'] = '/published/publicdata/MULTITOYS/attachments/SC/search_pictures/'.$rows[$k]['code_1c'].'_s.jpg';
                 $rows[$k]['img_big'] = '/published/publicdata/MULTITOYS/attachments/SC/products_pictures/'.$rows[$k]['code_1c'].'.jpg';
-                $rows[$k]['name_ru'] = $rows[$k]['name_ru'];
-                $rows[$k]['category'] = $rows[$k]['category'];
+                //$rows[$k]['name_ru'] = $rows[$k]['name_ru'];
+                //$rows[$k]['category'] = $rows[$k]['category'];
+                $rows[$k]['purchase'] = $rows[$k][$this->currency.'purchase'];
                 $rows[$k]['Price'] = $rows[$k][$this->currency.'Price'];
+                $rows[$k]['margin'] = round((100 * ($rows[$k]['Price'] /
+                            $rows[$k]['purchase']) - 100), 0).'%';
 
 //                $max_diff = max(
-                //                    (int)$rows[$k]['diff_kindermarket'],
+//                    (int)$rows[$k]['diff_kindermarket'],
 //                    (int)$rows[$k]['diff_divoland'],
 //                    (int)$rows[$k]['diff_dreamtoys'],
 //                    (int)$rows[$k]['diff_mixtoys']

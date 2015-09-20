@@ -1,0 +1,224 @@
+<html>
+<head>
+    <title>error_functions.php</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <style type="text/css">
+        .ln {
+            color: rgb(0, 0, 0);
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        .s0 {
+            color: rgb(205, 168, 105);
+        }
+
+        .s1 {
+            color: rgb(248, 248, 248);
+        }
+
+        .s2 {
+            color: rgb(95, 90, 96);
+            font-style: italic;
+        }
+
+        .s3 {
+            color: rgb(155, 112, 63);
+        }
+
+        .s4 {
+            color: rgb(117, 135, 166);
+        }
+
+        .s5 {
+            color: rgb(204, 120, 50);
+        }
+
+        .s6 {
+            color: rgb(147, 73, 137);
+            font-style: italic;
+        }
+
+        .s7 {
+            color: rgb(143, 157, 106);
+        }
+
+        .s8 {
+            color: rgb(155, 133, 157);
+        }
+
+        .s9 {
+            color: rgb(207, 106, 76);
+        }
+    </style>
+</head>
+<BODY BGCOLOR="#70707">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0">
+    <TR>
+        <TD>
+            <CENTER>
+                <FONT FACE="Arial, Helvetica" COLOR="#000000">
+                    error_functions.php</FONT>
+            </center>
+        </TD>
+    </TR>
+</TABLE>
+<pre>
+
+<span class="s0">&lt;?php</span><span class="s1"> 
+ 
+</span><span class="s2">/** 
+ * @param mixed $message 
+ * @param int $msg_type: MSG_SUCCESS|MSG_ERROR 
+ */</span><span class="s1"> 
+</span><span class="s0">function </span><span class="s3">throwMessage</span><span class="s1">(</span><span class="s4">$message</span><span
+            class="s5">, </span><span class="s4">$msg_type </span><span class="s0">= </span><span
+            class="s3">MSG_ERROR</span><span class="s1">){
+ 
+    </span><span class="s0">if</span><span class="s1">(</span><span class="s3">PEAR</span><span
+            class="s0">::</span><span class="s3">isError</span><span class="s1">(</span><span class="s4">$message</span><span
+            class="s1">)){
+        </span><span class="s6">/*@var $message PEAR_Error*/</span><span class="s1"> 
+        </span><span class="s4">$message </span><span class="s0">= </span><span class="s4">$message</span><span
+            class="s0">-&gt;</span><span class="s3">getMessage</span><span class="s1">()</span><span class="s5">;</span><span
+            class="s1">
+    } 
+    </span><span class="s3">Message</span><span class="s0">::</span><span class="s3">raiseMessageRedirectSQ</span><span
+            class="s1">(</span><span class="s4">$msg_type</span><span class="s5">, </span><span
+            class="s7">''</span><span class="s5">, </span><span class="s4">$message</span><span class="s1">)</span><span
+            class="s5">;</span><span class="s1">
+} 
+ 
+ 
+</span><span class="s0">function </span><span class="s3">error_handler</span><span class="s1">(</span><span class="s4">$errno</span><span
+            class="s5">, </span><span class="s4">$errstr</span><span class="s5">, </span><span
+            class="s4">$errfile</span><span class="s5">, </span><span class="s4">$errline</span><span
+            class="s5">, </span><span class="s4">$vars </span><span class="s0">= </span><span
+            class="s3">null</span><span class="s1">){
+    </span><span class="s3">log_error</span><span class="s1">(</span><span class="s4">$errno</span><span
+            class="s5">, </span><span class="s4">$errstr</span><span class="s5">, </span><span
+            class="s4">$errfile</span><span class="s5">, </span><span class="s4">$errline</span><span
+            class="s1">)</span><span class="s5">;</span><span class="s1">
+} 
+ 
+</span><span class="s2">/** 
+ * Error handler. Saves error information in the form of HTML-string within the file 
+ * 
+ * @param int $errno - error number 
+ * @param string $errstr - error text 
+ * @param string $errfile - file for storing 
+ * @param int $errline - number of line, where error occured 
+ */</span><span class="s1"> 
+</span><span class="s0">function </span><span class="s3">log_error</span><span class="s1">( </span><span class="s4">$errno</span><span
+            class="s5">, </span><span class="s4">$errstr</span><span class="s5">, </span><span
+            class="s4">$errfile</span><span class="s5">, </span><span class="s4">$errline </span><span class="s1">)
+{ 
+    </span><span class="s0">global </span><span class="s4">$silentMode</span><span class="s5">;</span><span class="s1"> 
+ 
+    </span><span class="s0">if </span><span class="s1">( </span><span class="s4">$silentMode </span><span class="s1">){ 
+        </span><span class="s6">//  return;</span><span class="s1"> 
+    } 
+ 
+    </span><span class="s0">if </span><span class="s1">(( </span><span class="s8">defined</span><span
+            class="s1">( </span><span class="s7">&quot;WBS_DEBUGMODE&quot; </span><span class="s1">) </span><span
+            class="s0">&amp;&amp; </span><span class="s3">WBS_DEBUGMODE </span><span class="s0">!= </span><span
+            class="s9">0 </span><span class="s1">) </span><span class="s0">|| </span><span class="s1">( </span><span
+            class="s4">$errno </span><span class="s0">!= </span><span class="s9">2048 </span><span
+            class="s0">&amp;&amp; </span><span class="s4">$errno </span><span class="s0">!= </span><span class="s3">E_NOTICE </span><span
+            class="s1">) ){
+        </span><span class="s4">$errorLogName </span><span class="s0">= </span><span
+            class="s3">getErrorLogName</span><span class="s1">()</span><span class="s5">;</span><span class="s1">
+        </span><span class="s4">$errorMessage </span><span class="s0">= </span><span class="s8">sprintf</span><span
+            class="s1">( </span><span class="s7">&quot;%s. %s File: %s Line: %s Error #: %s</span><span
+            class="s9">\r\n</span><span class="s7">&quot;</span><span class="s5">,</span><span class="s1">
+        </span><span class="s8">date</span><span class="s1">(</span><span class="s7">&quot;Y-m-d H:i&quot;</span><span
+            class="s1">)</span><span class="s5">,</span><span class="s1">
+        </span><span class="s4">$errstr</span><span class="s5">,</span><span class="s1"> 
+        </span><span class="s4">$errfile</span><span class="s5">,</span><span class="s1"> 
+        </span><span class="s4">$errline</span><span class="s5">,</span><span class="s1"> 
+        </span><span class="s4">$errno</span><span class="s1">)</span><span class="s5">;</span><span class="s1"> 
+        </span><span class="s6">#error_log ($errorMessage, 3, $errorLogName, &quot;\n&quot;);</span><span class="s1"> 
+    } 
+} 
+</span><span class="s2">/** 
+ * Function for handling PEAR errors. Saves error message content within the file 
+ * 
+ * @param PEAR_Error $error 
+ */</span><span class="s1"> 
+</span><span class="s0">function </span><span class="s3">handlePEARError</span><span class="s1">( </span><span
+            class="s4">$error </span><span class="s1">)
+{ 
+    </span><span class="s0">global </span><span class="s4">$silentMode</span><span class="s5">;</span><span class="s1"> 
+    </span><span class="s0">if </span><span class="s1">( ( </span><span class="s8">defined</span><span
+            class="s1">( </span><span class="s7">&quot;WBS_DEBUGMODE&quot; </span><span class="s1">) </span><span
+            class="s0">&amp;&amp; </span><span class="s3">WBS_DEBUGMODE </span><span class="s0">== </span><span
+            class="s9">0 </span><span class="s1">) </span><span class="s0">|| </span><span class="s1">(</span><span
+            class="s4">$error</span><span class="s0">-&gt;</span><span class="s3">getCode</span><span
+            class="s1">() </span><span class="s0">&gt;= </span><span class="s3">ERRCODE_APPLICATION_ERR</span><span
+            class="s1">) </span><span class="s0">|| </span><span class="s4">$silentMode </span><span class="s1">){
+        </span><span class="s0">return</span><span class="s5">;</span><span class="s1"> 
+    } 
+    </span><span class="s4">$errorLogName </span><span class="s0">= </span><span class="s3">getErrorLogName</span><span
+            class="s1">()</span><span class="s5">;</span><span class="s1">
+    </span><span class="s0">if</span><span class="s1">(</span><span class="s4">$fp </span><span
+            class="s0">= @</span><span class="s8">fopen</span><span class="s1">(</span><span
+            class="s4">$errorLogName </span><span class="s5">, </span><span class="s7">&quot;a&quot; </span><span
+            class="s1">)){
+        </span><span class="s4">$file </span><span class="s0">= </span><span class="s4">$line </span><span
+            class="s0">= </span><span class="s4">$function </span><span class="s0">= </span><span class="s7">&quot;&quot;</span><span
+            class="s5">;</span><span class="s1">
+        </span><span class="s4">$btLen </span><span class="s0">= </span><span class="s8">count</span><span
+            class="s1">(</span><span class="s4">$error</span><span class="s0">-&gt;</span><span
+            class="s3">backtrace</span><span class="s1">)</span><span class="s5">;</span><span class="s1">
+        </span><span class="s0">if </span><span class="s1">( </span><span class="s4">$btLen </span><span class="s1">) { 
+            </span><span class="s4">$file </span><span class="s0">= </span><span class="s4">$error</span><span
+            class="s0">-&gt;</span><span class="s3">backtrace</span><span class="s1">[</span><span
+            class="s4">$btLen</span><span class="s1">][</span><span class="s7">&quot;file&quot;</span><span
+            class="s1">]</span><span class="s5">;</span><span class="s1">
+            </span><span class="s4">$line </span><span class="s0">= </span><span class="s4">$error</span><span
+            class="s0">-&gt;</span><span class="s3">backtrace</span><span class="s1">[</span><span
+            class="s4">$btLen</span><span class="s1">][</span><span class="s7">&quot;line&quot;</span><span
+            class="s1">]</span><span class="s5">;</span><span class="s1">
+            </span><span class="s4">$function </span><span class="s0">= </span><span class="s4">$error</span><span
+            class="s0">-&gt;</span><span class="s3">backtrace</span><span class="s1">[</span><span
+            class="s4">$btLen</span><span class="s1">][</span><span class="s7">&quot;function&quot;</span><span
+            class="s1">]</span><span class="s5">;</span><span class="s1">
+        } 
+ 
+        </span><span class="s4">$errorMessage </span><span class="s0">= </span><span class="s8">sprintf</span><span
+            class="s1">( </span><span class="s7">&quot;%s. File: %s, Line %s, function %s. %s</span><span class="s9">\r\n</span><span
+            class="s7">&quot;</span><span class="s5">,</span><span class="s1">
+        </span><span class="s8">date</span><span class="s1">( </span><span class="s7">&quot;Y-m-d H:i&quot; </span><span
+            class="s1">)</span><span class="s5">,</span><span class="s1">
+        </span><span class="s8">basename</span><span class="s1">(</span><span class="s4">$file</span><span
+            class="s1">)</span><span class="s5">, </span><span class="s4">$line</span><span class="s5">, </span><span
+            class="s4">$function</span><span class="s5">, </span><span class="s4">$error</span><span
+            class="s0">-&gt;</span><span class="s3">message </span><span class="s1">)</span><span
+            class="s5">;</span><span class="s1">
+ 
+        </span><span class="s0">@</span><span class="s8">fwrite</span><span class="s1">( </span><span
+            class="s4">$fp</span><span class="s5">, </span><span class="s4">$errorMessage </span><span
+            class="s1">)</span><span class="s5">;</span><span class="s1">
+        </span><span class="s0">@</span><span class="s8">fclose</span><span class="s1">( </span><span
+            class="s4">$fp </span><span class="s1">)</span><span class="s5">;</span><span class="s1">
+    } 
+} 
+</span><span class="s0">function </span><span class="s3">getErrorLogName</span><span class="s1">() 
+{ 
+    </span><span class="s0">if</span><span class="s1">(</span><span class="s8">defined</span><span
+            class="s1">(</span><span class="s7">'ERR_SCLOG_FILE'</span><span class="s1">)</span><span class="s0">&amp;&amp;</span><span
+            class="s8">file_exists</span><span class="s1">(</span><span class="s8">dirname</span><span
+            class="s1">(</span><span class="s8">constant</span><span class="s1">(</span><span class="s7">'ERR_SCLOG_FILE'</span><span
+            class="s1">)))){
+        </span><span class="s0">return </span><span class="s8">constant</span><span class="s1">(</span><span class="s7">'ERR_SCLOG_FILE'</span><span
+            class="s1">)</span><span class="s5">;</span><span class="s1">
+    }</span><span class="s0">else</span><span class="s1">{ 
+        </span><span class="s0">return </span><span class="s8">sprintf</span><span class="s1">(</span><span class="s7">'%s/kernel/sc-error.log'</span><span
+            class="s5">,</span><span class="s3">WBS_DIR</span><span class="s1">)</span><span class="s5">;</span><span
+            class="s1">
+    } 
+} 
+</span><span class="s0">?&gt;</span><span class="s1"> 
+</span></pre>
+</body>
+</html>

@@ -1036,7 +1036,7 @@ ul#navmenu-v:after {
 }
 
 ul#navmenu-v li:hover {
-    background: #5dacb5
+    background: #5dacb5 !important;
 }
 
 ul#navmenu-v li ul, ul#navmenu-v li ul li ul {
@@ -1159,28 +1159,27 @@ ul#navmenu-v li:hover ul ul {
 }
 
 #parent_popup {
-    background-color: rgba(0, 0, 0, 0.4);
     display: none;
-    position: fixed;
+    position: absolute;
     z-index: 99999;
     top: 0;
     right: 0;
     bottom: 0;
-    left: 0
+    left: 0;
+    height: 100%;
 }
 
 #popup {
-    background: #fff;
-    width: 600px;
+    background: rgba(0, 0, 0, 0.9);
+    width: 630px;
     margin: 8% auto;
-    padding: 5px 20px 13px;
-    border: #fd8105 solid 12px;
+    padding: 15px;
+    border: #9A5080 solid 10px;
     position: relative;
     box-shadow: 0 0 30px #000;
-    border-radius: 5px;
     font-size: 130%;
     text-align: center;
-    z-index: 9999
+    z-index: 9999;
 }
 
 .close {

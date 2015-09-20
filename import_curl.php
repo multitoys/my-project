@@ -324,7 +324,7 @@
         }
         fclose($handle);
     }
-    $res_end = "Обработано $no товаров\r\nНовых $new_id товаров";
+    $res_end = "Обработано $no товаров.\r\n Новых $new_id товаров";
 
     $query = 'UPDATE SC_products SET enabled = FALSE, items_sold = 0 WHERE in_stock = 100';
     $res = mysql_query($query) or exit(1);
@@ -550,11 +550,11 @@
         return $str;
     }
 
-    function Debugging($start)
+    function DebuggingForMail($start)
     {
         $memoscript_peak = memory_get_peak_usage(true) / 1048576;
         $time = microtime(true) - $start;
-        $res = 'Скрипт выполнялся: '.$time."\r\nПик оперативной памяти: ".$memoscript_peak."\r\n";
+        $res = 'Скрипт выполнялся: '.$time.".\r\n Пик оперативной памяти: ".$memoscript_peak."\r\n";
 
         return $res;
     }

@@ -1,5 +1,5 @@
 <?php
-
+    $start = microtime(true);
     $DebugMode = true;
     $Warnings = array();
     define('DIR_ROOT', $_SERVER['DOCUMENT_ROOT'].'/published/SC/html/scripts');
@@ -315,6 +315,7 @@
                         = "INSERT INTO SC_product_list_item (list_id, productID, priority, date) VALUES ('newitemspostup', $productID, 1, $new_postup)";
                     $res = mysql_query($query) or exit(1);
                 }
+                $no++;
             } else {
                 $subject = "Неверный id ($id) (строка $row) - позиция проигнорирована";
                 $body = $subject;
@@ -323,7 +324,7 @@
         }
         fclose($handle);
     }
-    echo('<span style="color:blue;"><br>Обработано '.$no.' товаров</span><br><span>Новых '.$new_id.' товаров</span><br>');
+    $res_end = "Обработано $no товаров\r\nНовых $new_id товаров";
 
     $query = 'UPDATE SC_products SET enabled = FALSE, items_sold = 0 WHERE in_stock = 100';
     $res = mysql_query($query) or exit(1);
@@ -430,8 +431,8 @@
     RemoveDir($_SERVER['DOCUMENT_ROOT'].'/upload/');
 
     $subject = 'Импорт товаров завершен!';
-    $body = $subject;
-    mail('multitoys.dp@gmail.com', $subject, $body, $headers);
+    $body_end = $subject.$res_end."\r\n".Debugging($start);
+    mail('multitoys.dp@gmail.com', $subject, $body_end, $headers);
 
     exit(0);
 
@@ -547,4 +548,13 @@
         $str = trim($str, '-');
 
         return $str;
+    }
+
+    function Debugging($start)
+    {
+        $memoscript_peak = memory_get_peak_usage(true) / 1048576;
+        $time = microtime(true) - $start;
+        $res = 'Скрипт выполнялся: '.$time."\r\nПик оперативной памяти: ".$memoscript_peak."\r\n";
+
+        return $res;
     }

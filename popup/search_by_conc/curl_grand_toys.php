@@ -36,110 +36,155 @@ TAG
     );
 
     define('SLASH', '|');
-    define('CATEGORY_PATTERN', '<a[^<>]*?class=""[\s]+href="(/category/[^"]+?)"[^<>]*?>\s+([^<>]*?)\s*</a>');
-    define('CODE_PATTERN', '<div[\s]+class="forimgmain">[^<>]*?<a[\s]+href="/item/([\d]+?)"[^<>]*?>[^<>]*?');
-    define('NAME_PATTERN', '<img[\s]+alt="([^"]*?)"[^<>]*?>[^<>]*?</a>[^<>]*?</div>[^<>]*?<div[\s]+class="h5[\s]+m0"[^<>]*?>[^<>]*?</div>[^<>]*?<div[\s]+class="fll[\s]+wpc50"[^<>]*?>[^<>]*?');
-    define('PRICE_PATTERN', '<div[\s]+class="price"[^<>]*?>[\s]+([0-9.]+?)');
-    define('ART_PATTERN', '[^<>]*?<div[\s]+class="green-color"[^<>]*?>[^<>]*?</div>[^<>]*?</div>[^<>]*?</div>[^<>]*?<div[\s]+class="flr[\s]+wpc50[\s]+tar"[^<>]*?>[^<>]*?<small>[^<>]*?<b>[^<>]*?</b>[\s]+([^<>]*?)</small>');
+    define('NAME_PATTERN', '<div\s+class="block[0-9]*?"[^<>]*?>[^<>]*?<div\s+class="product-overview-image"[^<>]*?>[^<>]*?<div\s+id="img-radius"[^<>]*?>[^<>]*?<a[^<>]*?>[^<>]*?</a>[^<>]*?</div>[^<>]*?</div>[^<>]*?<div\s+class="product-title"[^<>]*?>[^<>]*?<a[^<>]*?>[\s]*([^<>]+?)[\s]*</a>[^<>]*?</div>[^<>]*?');
+    define('PRICE_PATTERN', '<div\s+class="product-price"[^<>]*?>[\s]+([0-9.]+?)[^<>]*?');
+    define('CODE_PATTERN', '<div\s+class="available"[^<>]*?>[^<>]*?</div>[^<>]*?<form[^<>]*?>[^<>]*?<input\s+type="[^"]*?"\s+value="([0-9]+?)"[^<>]*?>');
 
     $headers = array
     (
         ''
     );
-
-    $login_url = 'http://kr-kindermarket.com.ua/auth';
-    $refferer = 'http://kr-kindermarket.com.ua/';
-    postAuth($login_url, 'email=alenkiselev%40mail.ru&password=bondarenko&login=', $headers);
-
-    $url = 'http://kr-kindermarket.com.ua/category';
-    $filename = DIR_COMPETITORS.'/category.html';
-    readUrl($url, $filename, $refferer, $headers);
-
-    UpdateValue('Conc__alliance', 'enabled = 0');
-
-    $html = file_get_contents($filename);
-
-    preg_match_all(
-        SLASH.CATEGORY_PATTERN.SLASH.'U',
-        $html,
-        $categories,
-        PREG_PATTERN_ORDER
+    $categories = array(
+        'Детские игрушки (4516)'      => array(
+            'Конструкторы (489)'          => '/ru/566-Konstruktori',
+            'Летний ассортимент (46)'     => '/ru/569-Letnii-assortiment',
+            'Мягкие игрушки (85)'         => '/ru/549-Myagkie-igrushki',
+            'Настольные игры (438)'       => '/ru/735-Nastolnie-igri',
+            'Развивающие игры (263)'      => '/ru/568-Razvivayuschie-igri',
+            'Творчество (53)'             => '/ru/1060-05Detskoe-tvorchestvo',
+            'Товары для девочек (717)'    => '/ru/570-Tovari-dlya-devochek',
+            'Товары для детей (728)'      => '/ru/571-Tovari-dlya-detei',
+            'Товары для мальчиков (1284)' => '/ru/572-Tovari-dlya-malchikov',
+            'Украинский пластик (412)'    => '/ru/577-Ukr-plastik'
+        ),
+        'Велосипеды (18)'             => array(
+            '2-х колесные (9)'  => '/ru/979-2-h-kolesnie',
+            '3-х колесные (5)'  => '/ru/977-3-h-kolesnie',
+            'Электромобили (4)' => '/ru/1142-Elektromobili'
+        ),
+        'Спорттовары (82)'            => array(
+            'Аксессуары для спорта (9)'   => '/ru/1074-Aksessuari-dlya-sporta',
+            'Бадминтоны (4)'              => '/ru/734-Badmintoni',
+            'Баскетбол (2)'               => '/ru/796-Basketbol',
+            'Боксерские наборы (1)'       => '/ru/535-Bokserskie-nabori',
+            'Дартс (4)'                   => '/ru/541-Darts',
+            'Защита, шлемы (1)'           => '/ru/249-Zaschita-shlemi',
+            'Мячи (7)'                    => '/ru/544-Myachi',
+            'Мячи резиновые детские (13)' => '/ru/396-Myachi-rezinovie-detskie',
+            'Ролики (11)'                 => '/ru/536-Roliki',
+            'Самокаты (15)'               => '/ru/538-Samokati',
+            'Скакалки (2)'                => '/ru/43-Skakalki',
+            'Скейты (5)'                  => '/ru/344-Skeiti',
+            'Теннис (5)'                  => '/ru/543-Tennis-',
+            'Хулахупы и обручи (3)'       => '/ru/61-Hulahupi-i-obruchi'
+        ),
+        'Надувные изделия (129)'      => array(
+            'BK Toys Ltd. (10)' => '/ru/1110-BK-Toys-Ltd',
+            'INTEX (119)'       => '/ru/1059-04INTEX'
+        ),
+        'Офисная канцелярия (1)'      => array(
+            'Блоки для заметок (1)' => '/ru/1030-Bloki-dlya-zametok'
+        ),
+        'Школьные принадлежности (7)' => array(
+            'Детское творчество (1)'       => '/ru/442-Detskoe-tvorchestvo',
+            'Закладки (1)'                 => '/ru/217-Zakladki',
+            'Рюкзаки и сумки (4)'          => '/ru/435-Ryukzaki',
+            'Чертежные принадлежности (1)' => '/ru/439-Chertezhnie-prinadlezhnosti'
+        ),
+        'Печатная продукция (25)'     => array(
+            'Книги (25)' => '/ru/426-Knigi'
+        ),
+        'Товары для детей (6)'        => array(
+            'Мебель для детей (6)' => '/ru/1016-11Mebel-dlya-detei'
+        ),
+        'Сувенирная продукция (6)'    => array(
+            'Наборы (1)'            => '/ru/1139-Podarochnie-paketi',
+            'Небесные фонарики (3)' => '/ru/1136-Nebesnie-fonariki',
+            'Открытки (2)'          => '/ru/1078-Otkritki'
+        )
     );
-    $category_count = count($categories[1]);
 
-    define('URL_COMPETITORS', 'http://kr-kindermarket.com.ua');
-    define('URL_POSTFIX', '&count_panel=5000');
+    define('URL_COMPETITORS', 'http://gtoys.com.ua');
+    define('URL_POSTFIX', '/page_size');
     define('EXT', '.html');
 
-    DeleteRow('Conc__alliance');
-    DeleteRow('Conc_search__alliance');
+    $login_url = URL_COMPETITORS.'/ru/user/login';
+    $refferer = URL_COMPETITORS;
+    postAuth($login_url, 'UserLogin[username]=Elenna&UserLogin[password]=0675230623', $headers);
+
+    UpdateValue('Conc__grandtoys', 'enabled = 0');
+
+    //    DeleteRow('Conc__grandtoys');
+    //    DeleteRow('Conc_search__grandtoys');
 
     $no = 0;
     $new = 0;
     $part = 0;
     $percent = 0;
-    $replace_name = array('\'', '"');
+    $products_cnt = 2000;
+    $replace_name = array('&quot;', '\'', '"');
 
-    for ($i = 0; $i < $category_count; $i++) {
+    foreach ($categories as $parent => $cats) {
 
         set_time_limit(0);
-        $category_url = $categories[1][$i];
-        $category_url = URL_COMPETITORS.$category_url.URL_POSTFIX;
-        $category = Rus2Translit(trim($categories[2][$i]));
-        $filename = DIR_COMPETITORS.'/'.$category.EXT;
-        $products = '';
+        $category_urls = $cats;
 
-        readUrl($category_url, $filename, '', $headers);
+        foreach ($category_urls as $category => $url) {
 
-        $html = file_get_contents($filename);
-        preg_match_all(
-            SLASH.CODE_PATTERN.NAME_PATTERN.PRICE_PATTERN.ART_PATTERN.SLASH.'U',
-            $html,
-            $products,
-            PREG_PATTERN_ORDER
-        );
+            $category_url = URL_COMPETITORS.$url.URL_POSTFIX.$products_cnt;
+            $filename = Rus2Translit(trim($category));
+            $filename = DIR_COMPETITORS.'/'.$filename.EXT;
+            $products = '';
 
-        $rowcount = count($products[1]);
-        echo('<p>обновление цен категории <b>&laquo;'.$category.'&raquo;</b>...(<i>'.$rowcount.' товаров</i>)</p>');
-        BuferOut();
+            readUrl($category_url, $filename, '', $headers);
 
-        $category = mysql_real_escape_string($category);
+            $html = file_get_contents($filename);
+            preg_match_all(
+                SLASH.NAME_PATTERN.PRICE_PATTERN.CODE_PATTERN.SLASH.'U',
+                $html,
+                $products,
+                PREG_PATTERN_ORDER
+            );
 
-        for ($j = 0; $j < $rowcount; $j++) {
-            set_time_limit(0);
-            $code = mysql_real_escape_string(DecodeCodepage($products[1][$j]));
-            $name
-                = mysql_real_escape_string(trim(str_replace($replace_name, '', DecodeCodepage($products[2][$j]))));
-            $price = (double)$products[3][$j];
-            $price_usd = $price / 20.51;
-            $product_code = mysql_real_escape_string(trim($products[4][$j]));
-            $productID = GetValue('productID', 'Conc__alliance', "code = '$code'");
+            $rowcount = count($products[1]);
+            echo('<p>обновление цен категории <b>&laquo;'.$category.'&raquo;</b>...(<i>'.$rowcount.' товаров</i>)</p>');
+            BuferOut();
 
-            if ($productID) {
-                $query
-                    = "
-                                UPDATE  Conc__alliance
-                                SET     parent       = '$category',
-                                        category     = '$category',
-                                        product_code = '$product_code',
-                                        name         = '$name',
-                                        price_uah    = $price,
-                                        price_usd    = $price_usd,
-                                        enabled      = 1
-                                WHERE   productID    =  $productID
-                    ";
-                $res = mysql_query($query) or die(mysql_error()."<br>$query");
-            } else {
-                $query
-                    = "
-                            INSERT INTO Conc__alliance
-                                        (parent, category, code, product_code, name, price_uah, price_usd)
-                            VALUES      ('$category', '$category', '$code', '$product_code', '$name', $price, $price_usd)
-                          ";
-                $res = mysql_query($query) or die(mysql_error()."<br>$query");
-                $new++;
+            $category = mysql_real_escape_string($category);
+
+            for ($j = 0; $j < $rowcount; $j++) {
+                set_time_limit(0);
+                $name = mysql_real_escape_string(trim(str_replace($replace_name, '', DecodeCodepage($products[1][$j]))));
+                $price = (double)$products[2][$j];
+                $code = mysql_real_escape_string(DecodeCodepage($products[3][$j]));
+                $price_usd = $price / 20.51;
+                $productID = GetValue('productID', 'Conc__grandtoys', "code = '$code'");
+
+                if ($productID) {
+                    $query
+                        = "
+                                    UPDATE  Conc__grandtoys
+                                    SET     parent       = '$parent',
+                                            category     = '$category',
+                                            name         = '$name',
+                                            price_uah    = $price,
+                                            price_usd    = $price_usd,
+                                            enabled      = 1
+                                    WHERE   productID    =  $productID
+                        ";
+                    $res = mysql_query($query) or die(mysql_error()."<br>$query");
+                } else {
+                    $query
+                        = "
+                                INSERT INTO Conc__grandtoys
+                                            (parent, category, code, name, price_uah, price_usd)
+                                VALUES      ('$parent', '$category', $code, '$name', $price, $price_usd)
+                              ";
+                    $res = mysql_query($query) or die(mysql_error()."<br>$query");
+                    $new++;
+                }
+                $no++;
             }
-            $no++;
         }
         $part++;
         $progress = round(($part / $parts * 100), 0, PHP_ROUND_HALF_DOWN);
@@ -154,10 +199,10 @@ TAG
     echo('<hr><span style="color:blue;">Обработано '.$no.' товаров</span><br><br>Новых '.$new.' товаров</span><br>');
 
     // Оптимизация таблиц
-    $query = "UPDATE Conc__alliance SET parent='', category='' WHERE enabled=0";
+    $query = "UPDATE Conc__grandtoys SET parent='', category='' WHERE enabled=0";
     $res = mysql_query($query) or die(mysql_error()."<br>$query");
 
-    $query = 'OPTIMIZE TABLE `Conc__alliance`, `Conc_search__alliance`';
+    $query = 'OPTIMIZE TABLE `Conc__grandtoys`, `Conc_search__grandtoys`';
     $res = mysql_query($query) or die(mysql_error()."<br>$query");
     mysql_close();
 

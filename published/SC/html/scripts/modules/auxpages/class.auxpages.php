@@ -510,7 +510,7 @@ class AuxPages extends ComponentModule {
             if ($sort === 'name') {
                 $ajax_sort = $sort;
                 $sort = 'name_ru';
-                $default_sort = 't1.sort_order, t1.categoryID,';
+                $default_sort = 't1.sort_order, t1.ukraine, t1.categoryID,';
             }
 
             $date = 0;

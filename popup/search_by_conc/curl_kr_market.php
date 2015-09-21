@@ -71,14 +71,14 @@ TAG
     define('URL_POSTFIX', '&count_panel=5000');
     define('EXT', '.html');
 
-    DeleteRow('Conc__alliance');
-    DeleteRow('Conc_search__alliance');
-
+    //    DeleteRow('Conc__alliance');
+    //    DeleteRow('Conc_search__alliance');
+    UpdateValue('Conc__alliance', 'enabled = 0');
     $no = 0;
     $new = 0;
     $part = 0;
     $percent = 0;
-    $replace_name = array('\'', '"');
+    $replace_name = array('&quot;', '\'', '"');
 
     for ($i = 0; $i < $category_count; $i++) {
 

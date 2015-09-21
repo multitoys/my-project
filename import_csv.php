@@ -529,13 +529,16 @@ TAG
         $res = mysql_query($query) or die(mysql_error()."<br>$query");
         mysql_close();
     }
-    
-    /*-----------------------------------*/
+
+    /*----------- Фото ----------*/
+    $zip = new ZipArchive();
+    $fileName = $archive_dir."pics.zip";
+
+    if ($zip->open($fileName) == true) {
+        include($_SERVER['DOCUMENT_ROOT'].'/.php');
+    }
     
     mysql_close();
-
-    //echo('<span style="color:red;"><br>курс доллара - '.(1 / $usd).' грн</span>');
-
     // Удаление временных файлов
     RemoveDir($_SERVER['DOCUMENT_ROOT'].'/upload/');
 

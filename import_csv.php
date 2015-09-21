@@ -1,5 +1,5 @@
 <?php
-
+    apache_setenv('no-gzip', '1');
     $start = microtime(true);
     ini_set('display_errors', true);
     define('DIR_ROOT', $_SERVER['DOCUMENT_ROOT'].'/published/SC/html/scripts');
@@ -481,7 +481,7 @@ TAG
         $usd = $usd0;
 
         if ($conc == 'divoland') {
-            $usd = $usd0 + 0.10;
+            $usd = $usd0 + 0.09;
         }
 
         while ($Codes = mysql_fetch_object($res)) {
@@ -535,7 +535,7 @@ TAG
     $fileName = $archive_dir."pics.zip";
 
     if ($zip->open($fileName) == true) {
-        include($_SERVER['DOCUMENT_ROOT'].'/.php');
+        include($_SERVER['DOCUMENT_ROOT'].'/curl_pics.php');
     }
     
     mysql_close();
@@ -666,7 +666,7 @@ TAG
 
     function BuferOut($delay = 0)
     {
-        echo str_repeat(' ', 1024 * 64);
+        echo str_repeat(' ', 1024 * 4);
         flush();
         usleep($delay);
     }

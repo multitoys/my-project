@@ -63,11 +63,13 @@
                 $price_conc = $_POST['priceConc'];
                 $set_conc = "onclick=setAnalogs(\"$conc\",\"$code\",\"$code1c\",\"$price_conc\")";
             }
-
+            $search = mb_strtolower($search, 'UTF-8');
+            $name_ru = mb_strtolower($sql['name_ru'], 'UTF-8');
+            $product_code = mb_strtolower($sql['product_code'], 'UTF-8');
             $picture = substr($sql['filename'], 0, -4).'_s.jpg';
             $price = ($vip)?'<p><span style="color:#008DD9">цена: '.$sql['Price'].'</span></p>':'';
-            $name_ru = str_replace($search, "<mark class=mark_name>$search</mark>", $sql['name_ru']);
-            $product_code = str_replace($search, "<span class=mark_code>$search</span>", $sql['product_code']);
+            $name_ru = str_replace($search, "<mark class=mark_name>$search</mark>", $name_ru);
+            $product_code = str_replace($search, "<span class=mark_code>$search</span>", $product_code);
             echo "
                 <li>
                     <a $set_conc>

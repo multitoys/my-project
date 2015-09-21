@@ -669,4 +669,4 @@ ORDER BY `cnt` DESC");
         print 'time: <strong>'.$T->timerStop().'</strong><br />';
     }
 
-    Debugging($start);
+    //    Debugging($start);

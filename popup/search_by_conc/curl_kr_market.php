@@ -25,7 +25,7 @@
 
 			<html>
 				<head>
-					<link rel='stylesheet' type='text/css' href='css/import.css'>
+					<link rel='stylesheet' type='text/css' href='http://multitoys.com.ua/css/import.css'>
 				</head>
 				<body>
                 <div id='products'>

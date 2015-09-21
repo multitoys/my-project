@@ -84,6 +84,8 @@
                             {conc_tree auxpage='dreamtoys'}
                         {elseif $smarty.get.ukey eq 'auxpage_kindermarket'}
                             {conc_tree auxpage='kindermarket'}
+                        {elseif $smarty.get.ukey eq 'auxpage_grandtoys'}
+                            {conc_tree auxpage='grandtoys'}
                         {else}
                             {newtree login=$smarty.session.log}
                         {/if}
@@ -133,9 +135,9 @@
 					{/if}
 				</div>
                 <div id="right"
-                     {if $smarty.get.ukey eq 'auxpage_divoland' or $smarty.get.ukey eq 'auxpage_mixtoys' or $smarty.get.ukey eq 'auxpage_dreamtoys' or $smarty.get.ukey eq 'auxpage_kindermarket'}class=conc{/if}>
+                     {if $smarty.get.ukey eq 'auxpage_divoland' or $smarty.get.ukey eq 'auxpage_mixtoys' or $smarty.get.ukey eq 'auxpage_dreamtoys' or $smarty.get.ukey eq 'auxpage_kindermarket' or $smarty.get.ukey eq 'auxpage_grandtoys'}class=conc{/if}>
 					<div class="cpt_maincolumns">
-                        {if $smarty.get.ukey eq 'auxpage_divoland' or $smarty.get.ukey eq 'auxpage_mixtoys' or $smarty.get.ukey eq 'auxpage_dreamtoys' or $smarty.get.ukey eq 'auxpage_kindermarket'}
+                        {if $smarty.get.ukey eq 'auxpage_divoland' or $smarty.get.ukey eq 'auxpage_mixtoys' or $smarty.get.ukey eq 'auxpage_dreamtoys' or $smarty.get.ukey eq 'auxpage_kindermarket' or $smarty.get.ukey eq 'auxpage_grandtoys'}
                         {else}
 							<!-- cpt_container_start -->
 							{cpt_product_lists list_id='hitu' limit='30'}

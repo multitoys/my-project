@@ -310,6 +310,7 @@ class AuxPages extends ComponentModule {
                     //$row = transform_auxpage_conc($a['ukey'], $row);
                     //break;
                 case 'auxpage_kindermarket':
+                case 'auxpage_grandtoys':
                     $row = $this->transform_auxpage_conc($a['ukey'], $row);
                     //include(DIR_ROOT . '/../../../../popup/search_by_conc/conc_auxpages.php');
                     //$row = transform_auxpage_conc($a['ukey'], $row);

@@ -1,7 +1,10 @@
 <?php
+
+    ignore_user_abort(true);
+    set_time_limit(0);
+
     $start = microtime(true);
-    $DebugMode = true;
-    $Warnings = array();
+
     define('DIR_ROOT', $_SERVER['DOCUMENT_ROOT'].'/published/SC/html/scripts');
 
     include_once(DIR_ROOT.'/includes/init.php');
@@ -397,7 +400,7 @@
         $usd = $usd0;
 
         if ($conc == 'divoland') {
-            $usd = $usd0 + 0.10;
+            $usd = $usd0 + 0.09;
         }
 
         while ($Codes = mysql_fetch_object($res)) {
@@ -430,11 +433,11 @@
     // Удаление временных файлов и информирование об успешном окончании импорта
     RemoveDir($_SERVER['DOCUMENT_ROOT'].'/upload/');
 
-    $subject = "Импорт товаров завершен!\r\n";
-    $body_end = $subject.$res_end." \r\n ".Debugging($start);
+    $subject = 'Импорт товаров завершен!';
+    $body_end = $subject.$res_end."\r\n".Debugging($start);
     mail('multitoys.dp@gmail.com', $subject, $body_end, $headers);
 
-    exit(0);
+//    exit(0);
 
     /*--------- Функции ---------*/
     function get($what, $condition, $table = '')

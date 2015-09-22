@@ -1,5 +1,4 @@
 <?php
-    include(DIR_FUNC.'/competitors_report_function.php');
 
     class CompetitorsController extends ActionsController
     {
@@ -232,6 +231,10 @@
                     $grid->registerHeader('Микстойс', 'mixtoys', false, 'ASC', 'right');
                     $grid->registerHeader('разница', 'diff_mixtoys', false, 'ASC', 'right');
                     break;
+                case 'mixtoys':
+                    $grid->registerHeader('ГрандТойс', 'grandtoys', false, 'ASC', 'right');
+                    $grid->registerHeader('разница', 'diff_grandtoys', false, 'ASC', 'right');
+                    break;
                 default:
                     $grid->registerHeader('Киндер-Маркет', 'kindermarket', false, 'ASC', 'right');
                     $grid->registerHeader('разница', 'diff_kindermarket', false, 'ASC', 'right');
@@ -240,7 +243,9 @@
                     $grid->registerHeader('Веселка', 'dreamtoys', false, 'ASC', 'right');
                     $grid->registerHeader('разница', 'diff_dreamtoys', false, 'ASC', 'right');
                     $grid->registerHeader('Микстойс', 'mixtoys', false, 'ASC', 'right');
-                    $grid->registerHeader('разница', 'diff_mixtoys', false, 'ASC', 'right');
+                    $grid->registerHeader('разница', 'diff_grandtoys', false, 'ASC', 'right');
+                    $grid->registerHeader('ГрандТойс', 'grandtoys', false, 'ASC', 'right');
+                    $grid->registerHeader('разница', 'diff_grandtoys', false, 'ASC', 'right');
             }
             $grid->prepare();
 
@@ -277,6 +282,8 @@
                 $rows[$k]['diff_dreamtoys'] = ($rows[$k]['diff_dreamtoys'] != 0)?$rows[$k]['diff_dreamtoys'].'%':'-----';
                 $rows[$k]['mixtoys'] = ($rows[$k][$this->currency.'mixtoys'] != 0)?$rows[$k][$this->currency.'mixtoys']:'-----';
                 $rows[$k]['diff_mixtoys'] = ($rows[$k]['diff_mixtoys'] != 0)?$rows[$k]['diff_mixtoys'].'%':'-----';
+                $rows[$k]['mixtoys'] = ($rows[$k][$this->currency.'grandtoys'] != 0)?$rows[$k][$this->currency.'grandtoys']:'-----';
+                $rows[$k]['diff_mixtoys'] = ($rows[$k]['diff_grandtoys'] != 0)?$rows[$k]['diff_grandtoys'].'%':'-----';
 
             }
 

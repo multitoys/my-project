@@ -209,7 +209,7 @@
             $grid->registerHeader('Наименование', 'name_ru', true, 'ASC');
             $grid->registerHeader('Категория', 'category', false, 'ASC');
             $grid->registerHeader('Закупка', 'purchase', false, 'ASC', 'right');
-            $grid->registerHeader('Наценка', '', false, 'ASC', 'right');
+            $grid->registerHeader('Наценка', 'margin', false, 'ASC', 'right');
             $grid->registerHeader('Мультитойс', 'Price', false, 'ASC', 'right');
             $grid->registerHeader('MAX-%', 'max_diff', false, 'ASC', 'right');
 
@@ -262,8 +262,7 @@
                 //$rows[$k]['category'] = $rows[$k]['category'];
                 $rows[$k]['purchase'] = $rows[$k][$this->currency.'purchase'];
                 $rows[$k]['Price'] = $rows[$k][$this->currency.'Price'];
-                $rows[$k]['margin'] = round((100 * ($rows[$k]['Price'] /
-                            $rows[$k]['purchase']) - 100), 0).'%';
+                $rows[$k]['margin'] .= '%';
 
 //                $max_diff = max(
 //                    (int)$rows[$k]['diff_kindermarket'],

@@ -217,35 +217,35 @@
 
                 case 'kindermarket':
                     $grid->registerHeader('К.-Маркет', 'kindermarket', false, 'ASC', 'right');
-                    $grid->registerHeader('%', 'diff_kindermarket', false, 'ASC', 'right');
+                    $grid->registerHeader('раз-ца', 'diff_kindermarket', false, 'ASC', 'right');
                     break;
                 case 'divoland':
                     $grid->registerHeader('Диволенд', 'divoland', false, 'ASC', 'right');
-                    $grid->registerHeader('%', 'diff_divoland', false, 'ASC', 'right');
+                    $grid->registerHeader('раз-ца', 'diff_divoland', false, 'ASC', 'right');
                     break;
                 case 'dreamtoys':
                     $grid->registerHeader('Веселка', 'dreamtoys', false, 'ASC', 'right');
-                    $grid->registerHeader('%', 'diff_dreamtoys', false, 'ASC', 'right');
+                    $grid->registerHeader('раз-ца', 'diff_dreamtoys', false, 'ASC', 'right');
                     break;
                 case 'mixtoys':
                     $grid->registerHeader('Микстойс', 'mixtoys', false, 'ASC', 'right');
-                    $grid->registerHeader('%', 'diff_mixtoys', false, 'ASC', 'right');
+                    $grid->registerHeader('раз-ца', 'diff_mixtoys', false, 'ASC', 'right');
                     break;
                 case 'grandtoys':
                     $grid->registerHeader('Г.-Тойс', 'grandtoys', false, 'ASC', 'right');
-                    $grid->registerHeader('%', 'diff_grandtoys', false, 'ASC', 'right');
+                    $grid->registerHeader('раз-ца', 'diff_grandtoys', false, 'ASC', 'right');
                     break;
                 default:
                     $grid->registerHeader('К.-Маркет', 'kindermarket', false, 'ASC', 'right');
-                    $grid->registerHeader('%', 'diff_kindermarket', false, 'ASC', 'right');
+                    $grid->registerHeader('раз-ца', 'diff_kindermarket', false, 'ASC', 'right');
                     $grid->registerHeader('Диволенд', 'divoland', false, 'ASC', 'right');
-                    $grid->registerHeader('%', 'diff_divoland', false, 'ASC', 'right');
+                    $grid->registerHeader('раз-ца', 'diff_divoland', false, 'ASC', 'right');
                     $grid->registerHeader('Веселка', 'dreamtoys', false, 'ASC', 'right');
-                    $grid->registerHeader('%', 'diff_dreamtoys', false, 'ASC', 'right');
+                    $grid->registerHeader('раз-ца', 'diff_dreamtoys', false, 'ASC', 'right');
                     $grid->registerHeader('Микстойс', 'mixtoys', false, 'ASC', 'right');
-                    $grid->registerHeader('%', 'diff_grandtoys', false, 'ASC', 'right');
+                    $grid->registerHeader('раз-ца', 'diff_grandtoys', false, 'ASC', 'right');
                     $grid->registerHeader('Г.Тойс', 'grandtoys', false, 'ASC', 'right');
-                    $grid->registerHeader('%', 'diff_grandtoys', false, 'ASC', 'right');
+                    $grid->registerHeader('раз-ца', 'diff_grandtoys', false, 'ASC', 'right');
             }
             $grid->prepare();
 

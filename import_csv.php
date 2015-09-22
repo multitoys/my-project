@@ -379,13 +379,18 @@ TAG
                         $res = mysql_query($query) or die(mysql_error()."<br>$query");
                     }
 
-                    //--------- Дополнительные категории и Списки продуктов---------
                     //if ($new === 7) {
                     //    //$query = "INSERT INTO SC_category_product VALUES ($productID, ".CAT_NOVINKI_ID.", 1)";
                     //    //$res   = mysql_query($query) or die(mysql_error()."<br>$query");
                     //    $query = "INSERT INTO SC_product_list_item (list_id, productID, priority) VALUES ('newitems', $productID, 1)";
                     //    $res = mysql_query($query) or die(mysql_error()."<br>$query");
                     //}
+                    //if ($akcia_bally) {
+                    //    $query = "INSERT INTO SC_category_product VALUES ($productID, ".CAT_AKCIA_BALLY_ID.", 1)";
+                    //    $res = mysql_query($query) or die(mysql_error()."<br>$query");
+                    //}
+
+                    //--------- Дополнительные категории и Списки продуктов---------//
                     if ($akcia) {
                         $query = "INSERT INTO SC_category_product VALUES ($productID, ".CAT_AKCIA_ID.", 1)";
                         $res = mysql_query($query) or die(mysql_error()."<br>$query");
@@ -393,10 +398,6 @@ TAG
                             = "INSERT INTO SC_product_list_item (list_id, productID, priority) VALUES ('akcia', $productID, 1)";
                         $res = mysql_query($query) or die(mysql_error()."<br>$query");
                     }
-                    //if ($akcia_bally) {
-                    //    $query = "INSERT INTO SC_category_product VALUES ($productID, ".CAT_AKCIA_BALLY_ID.", 1)";
-                    //    $res = mysql_query($query) or die(mysql_error()."<br>$query");
-                    //}
                     if ($new === 7) {
                         $query = "INSERT INTO SC_product_list_item (list_id, productID, priority) VALUES ('newitems', $productID, 1)";
                         $res = mysql_query($query) or die(mysql_error()."<br>$query");

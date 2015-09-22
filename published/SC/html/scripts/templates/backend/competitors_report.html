@@ -122,6 +122,9 @@
                         <option value='mixtoys' {if $smarty.get.competitor eq 'mixtoys'} selected="selected"{/if}>
                             Микстойс
                         </option>
+                        <option value='grandtoys' {if $smarty.get.competitor eq 'grandtoys'} selected="selected"{/if}>
+                            ГрандТойс
+                        </option>
                     </select>
                 </td>
                 <td>
@@ -172,9 +175,10 @@
                     <td class="brand">{$GridRows[i].category|escape:'html'}</td>
                     <td class="to_right choco">{$GridRows[i].purchase}</td>
                     <td class="to_right choco">{$GridRows[i].margin}</td>
-                    <td class="to_right {if $GridRows[i].diff_divoland > 0}red{else}blue{/if}">{$GridRows[i].Price}</td>
+                    <td class="to_right {if $GridRows[i].max_diff > 0}red{else}blue{/if}">{$GridRows[i].Price}</td>
                     <td class="to_right {if $GridRows[i].max_diff > 0}red{else}green{/if}">
-                        <strong>{$GridRows[i].max_diff}</strong></td>
+                        <strong>{$GridRows[i].max_diff}</strong>
+                    </td>
                     {if $smarty.get.competitor eq 'kindermarket'}
                         <td class="to_right border {if $GridRows[i].diff_kindermarket > 0}red{else}green{/if}">{$GridRows[i].kindermarket}</td>
                         <td class="to_right {if $GridRows[i].diff_kindermarket > 0}red{else}green{/if}">{$GridRows[i].diff_kindermarket}</td>
@@ -187,6 +191,9 @@
                     {elseif $smarty.get.competitor eq 'mixtoys'}
                         <td class="to_right border {if $GridRows[i].diff_mixtoys > 0}red{else}green{/if}">{$GridRows[i].mixtoys}</td>
                         <td class="to_right {if $GridRows[i].diff_mixtoys > 0}red{else}green{/if}">{$GridRows[i].diff_mixtoys}</td>
+                    {elseif $smarty.get.competitor eq 'grandtoys'}
+                        <td class="to_right border {if $GridRows[i].diff_grandtoys > 0}red{else}green{/if}">{$GridRows[i].grandtoys}</td>
+                        <td class="to_right {if $GridRows[i].diff_grandtoys > 0}red{else}green{/if}">{$GridRows[i].diff_grandtoys}</td>
                 {else}
                         <td class="to_right border {if $GridRows[i].diff_kindermarket > 0}red{else}green{/if}">{$GridRows[i].kindermarket}</td>
                         <td class="to_right {if $GridRows[i].diff_kindermarket > 0}red{else}green{/if}">{$GridRows[i].diff_kindermarket}</td>
@@ -196,6 +203,8 @@
                         <td class="to_right {if $GridRows[i].diff_dreamtoys > 0}red{else}green{/if}">{$GridRows[i].diff_dreamtoys}</td>
                         <td class="to_right border {if $GridRows[i].diff_mixtoys > 0}red{else}green{/if}">{$GridRows[i].mixtoys}</td>
                         <td class="to_right {if $GridRows[i].diff_mixtoys > 0}red{else}green{/if}">{$GridRows[i].diff_mixtoys}</td>
+                        <td class="to_right border {if $GridRows[i].diff_grandtoys > 0}red{else}green{/if}">{$GridRows[i].grandtoys}</td>
+                        <td class="to_right {if $GridRows[i].diff_grandtoys > 0}red{else}green{/if}">{$GridRows[i].diff_grandtoys}</td>
                 {/if}  
                 </tr>
             {/section}

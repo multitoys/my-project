@@ -282,8 +282,8 @@
                 $rows[$k]['diff_dreamtoys'] = ($rows[$k]['diff_dreamtoys'] != 0)?$rows[$k]['diff_dreamtoys'].'%':'-----';
                 $rows[$k]['mixtoys'] = ($rows[$k][$this->currency.'mixtoys'] != 0)?$rows[$k][$this->currency.'mixtoys']:'-----';
                 $rows[$k]['diff_mixtoys'] = ($rows[$k]['diff_mixtoys'] != 0)?$rows[$k]['diff_mixtoys'].'%':'-----';
-                $rows[$k]['mixtoys'] = ($rows[$k][$this->currency.'grandtoys'] != 0)?$rows[$k][$this->currency.'grandtoys']:'-----';
-                $rows[$k]['diff_mixtoys'] = ($rows[$k]['diff_grandtoys'] != 0)?$rows[$k]['diff_grandtoys'].'%':'-----';
+                $rows[$k]['grandtoys'] = ($rows[$k][$this->currency.'grandtoys'] != 0)?$rows[$k][$this->currency.'grandtoys']:'-----';
+                $rows[$k]['diff_grandtoys'] = ($rows[$k]['diff_grandtoys'] != 0)?$rows[$k]['diff_grandtoys'].'%':'-----';
 
             }
 

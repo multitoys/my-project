@@ -462,7 +462,7 @@ TAG
     $res = mysql_query($query) or die(mysql_error()."<br>$query");
     
     /*------------------------------------*/
-    $concs = array('divoland', 'mixtoys', 'dreamtoys', 'kindermarket');
+    $concs = array('divoland', 'mixtoys', 'dreamtoys', 'kindermarket', 'grandtoys');
     $table = 'Conc__analogs';
     deleteRow($table);
     $usd0 = 1 / get('currency_value', 'CID = 10', 'SC_currency_types');
@@ -504,7 +504,7 @@ TAG
             }
         }
     }
-    $query = "UPDATE $table SET max_diff = GREATEST(diff_kindermarket, diff_divoland, diff_dreamtoys, diff_mixtoys)";
+    $query = "UPDATE $table SET max_diff = GREATEST(diff_kindermarket, diff_divoland, diff_dreamtoys, diff_mixtoys, diff_grandtoys)";
     $res = mysql_query($query) or die(mysql_error().$query);
     optimizeTable($table);
 
@@ -666,7 +666,7 @@ TAG
 
     function BuferOut($delay = 0)
     {
-        echo str_repeat(' ', 1024 * 4);
+        echo str_repeat(' ', 1024 * 64);
         flush();
         usleep($delay);
     }

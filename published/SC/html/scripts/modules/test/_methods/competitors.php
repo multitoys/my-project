@@ -231,7 +231,7 @@
                     $grid->registerHeader('Микстойс', 'mixtoys', false, 'ASC', 'right');
                     $grid->registerHeader('%', 'diff_mixtoys', false, 'ASC', 'right');
                     break;
-                case 'mixtoys':
+                case 'grandtoys':
                     $grid->registerHeader('Г.-Тойс', 'grandtoys', false, 'ASC', 'right');
                     $grid->registerHeader('%', 'diff_grandtoys', false, 'ASC', 'right');
                     break;

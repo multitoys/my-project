@@ -9,7 +9,7 @@
 
         protected $DBHandler;
         protected $manufactured = '';
-        protected $competitor = ' AND (kindermarket OR divoland OR dreamtoys OR mixtoys)';
+        protected $competitor = ' AND (kindermarket OR divoland OR dreamtoys OR mixtoys OR grandtoys)';
         protected $conc = '';
         protected $currency = '';
         protected $brand = '';
@@ -61,7 +61,7 @@
 
         protected function __getBestsellers()
         {
-            $query = 'SELECT code_1c FROM SC_products WHERE items_sold > 0';
+            $query = 'SELECT code_1c FROM SC_products ORDER BY items_sold DESC LIMIT 200';
             $res = mysql_query($query) or die(mysql_error().$query);
 
             $ids = array();
@@ -158,7 +158,8 @@
             $smarty = &$Register->get(VAR_SMARTY);
             /*@var $smarty Smarty*/
 
-            $grid = ClassManager::getInstance('grid');
+            //            $grid = ClassManager::getInstance('grid');
+            $grid = new Grid();
 
 //            if (isset($_GET['enabled'])) {
 //                $this->__setEnabled();

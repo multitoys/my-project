@@ -250,7 +250,7 @@ TAG
     if (($handle = fopen($filename, 'r')) !== false) {
         
         $start2 = microtime(true);
-        $concs = array('divoland', 'mixtoys', 'dreamtoys', 'kindermarket', 'grandtoys');
+
         $table = 'Conc__analogs';
         deleteRow($table);
 
@@ -424,6 +424,10 @@ TAG
                         $res = mysql_query($query) or die(mysql_error()."<br>$query");
                     }
 
+                    // добавление товара в таблицу сравнения конкурентов
+                    /**
+                     * TODO: добавить productID
+                     */
                     if ($ostatok !== 'под заказ') {
                         $margin = round((100 * ($price / $purchase) - 100), 0);
                         $query
@@ -434,7 +438,8 @@ TAG
                                        ($catid, '$categories[$catid]', '$id', '$code', '$name', '$brand', $purchase, ($purchase/$usd), $margin, $price, ($price/$usd), $ua)";
                         $res = mysql_query($query) or die(mysql_error()."<br>$query");
                     }
-
+                    // -----------
+                    
                     $progress = round(($no / ($rowcount - 2) * 100), 0, PHP_ROUND_HALF_DOWN);
 
                     if ($progress > $percent) {
@@ -523,14 +528,24 @@ TAG
     //          WHERE in_stock = 100 AND enabled AND Price <> 0.00 AND ostatok NOT LIKE 'под заказ'";
     //    $res = mysql_query($query) or die(mysql_error()."<br>$query");
 
+    $concs = array('divoland', 'mixtoys', 'dreamtoys', 'kindermarket', 'grandtoys');
+    $currency_table = 'Conc__currency';
+
+    $query = 'SELECT * FROM Conc__currency';
+    $res = mysql_query($query) or die(mysql_error()."<br>$query");
+    $currencies = array();
+    while ($Currs = mysql_fetch_object($res)) {
+        $currencies[$Currs->competitor] = $Currs->currency_value;
+    }
+    
     foreach ($concs as $conc) {
         $query = "SELECT code, code_1c FROM Conc_search__$conc";
         $res = mysql_query($query) or die(mysql_error().$query);
 
         $usd_conc = $usd;
 
-        if ($conc === 'divoland') {
-            $usd_conc = $usd + 0.09;
+        if (array_key_exists($conc, $currencies)) {
+            $usd_conc = $currencies[$conc];
         }
 
         while ($Codes = mysql_fetch_object($res)) {

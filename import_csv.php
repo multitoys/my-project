@@ -433,9 +433,9 @@ TAG
                         $query
                             = "
                                 INSERT INTO $table
-                                       (categoryID, category, code_1c, product_code, name_ru, brand, purchase, usd_purchase, margin, Price, usd_Price, ukraine)
+                                       (productID, categoryID, category, code_1c, product_code, name_ru, brand, purchase, usd_purchase, margin, Price, usd_Price, ukraine)
                                 VALUES 
-                                       ($catid, '$categories[$catid]', '$id', '$code', '$name', '$brand', $purchase, ($purchase/$usd), $margin, $price, ($price/$usd), $ua)";
+                                       ($productID, $catid, '$categories[$catid]', '$id', '$code', '$name', '$brand', $purchase, ($purchase/$usd), $margin, $price, ($price/$usd), $ua)";
                         $res = mysql_query($query) or die(mysql_error()."<br>$query");
                     }
                     // -----------

@@ -22,7 +22,7 @@
 
 TAG
     );
-
+    $usd = GetValue('currency_value', 'Conc__currency', 'CCID = 2');
     $archive_dir = $_SERVER['DOCUMENT_ROOT'].'/upload/';
 
 //----------- Импорт товаров ----------- 
@@ -52,9 +52,6 @@ TAG
         'Хоз. товары', 'Товары для праздников'
     );
     if (($handle = fopen($filename, 'r')) !== false) {
-        DeleteRow('Conc__dreamtoys', "category='Новинки!'");
-        DeleteRow('Conc_search__dreamtoys', "code LIKE '99%'");
-
         UpdateValue('Conc__dreamtoys', 'enabled = 0');
 
         while (($data = fgetcsv($handle, 1000, ';')) !== false) {
@@ -109,7 +106,7 @@ TAG
                 if (!is_numeric($price)) {
                     $price = preg_replace('/[^0-9.]/', '', $price);
                 }
-                $price_usd = $price / 21.50;
+                $price_usd = $price / $usd;
 
                 $productID = GetValue('productID', 'Conc__dreamtoys', "code = '$code'");
 

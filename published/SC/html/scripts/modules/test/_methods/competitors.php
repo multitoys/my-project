@@ -61,7 +61,7 @@
 
         protected function __getBestsellers()
         {
-            $query = 'SELECT code_1c FROM SC_products ORDER BY items_sold DESC LIMIT 200';
+            $query = 'SELECT code_1c FROM SC_products ORDER BY items_sold DESC LIMIT 150';
             $res = mysql_query($query) or die(mysql_error().$query);
 
             $ids = array();
@@ -91,24 +91,23 @@
 
         protected function __getNewItemsPostup()
         {
-            $query = "SELECT t1.code_1c FROM SC_products t1 
-                    LEFT JOIN SC_product_list_item t2  USING(productID)
-                    WHERE t2.list_id = 'newitemspostup'";
+            $query = "SELECT productID FROM SC_product_list_item
+                    WHERE list_id = 'newitemspostup'";
             $res = mysql_query($query) or die(mysql_error().$query);
 
             $ids = array();
 
             while ($row = mysql_fetch_object($res)) {
-                $ids[] = $row->code_1c;
+                $ids[] = $row->productID;
             }
             $ids = implode(',', $ids);
 
-            $this->new_items_postup = ' AND code_1c IN ('.$ids.')';
+            $this->new_items_postup = ' AND productID IN ('.$ids.')';
         }
 
         protected function __getBrandsArray()
         {
-            $query = "SELECT DISTINCT brand FROM $this->table WHERE (kindermarket OR divoland OR dreamtoys OR mixtoys)";
+            $query = "SELECT DISTINCT brand FROM $this->table WHERE 1  $this->competitor";
             $res = mysql_query($query) or die(mysql_error().$query);
 
             while($Brands = mysql_fetch_object($res)) {
@@ -121,7 +120,7 @@
 
         protected function __getCategoriesArray()
         {
-            $query = "SELECT DISTINCT category FROM $this->table WHERE (kindermarket OR divoland OR dreamtoys OR mixtoys)";
+            $query = "SELECT DISTINCT category FROM $this->table WHERE 1  $this->competitor";
             $res = mysql_query($query) or die(mysql_error().$query);
 
             while ($Categories = mysql_fetch_object($res)) {
@@ -133,7 +132,7 @@
         protected function __getCategory()
         {
             $query = "SELECT DISTINCT category FROM $this->table";
-            $result = mysql_query($query) or die('Ошибка в запросе: '.mysql_error().'<br>'.$query);
+            $result = mysql_query($query) or die(mysql_error().$query);
             $row = mysql_fetch_row($result);
             return $row[0];
         }
@@ -197,7 +196,7 @@
             $grid->query_select_rows = "
                 SELECT * FROM $this->table
                 WHERE 1
-                $this->manufactured $this->brand $this->category $this->bestsellers $this->new  $this->new_items_postup$this->competitor";
+                $this->manufactured $this->brand $this->category $this->bestsellers $this->new  $this->new_items_postup $this->competitor";
 
             $grid->show_rows_num_select = true;
             $grid->default_sort_direction = 'DESC';
@@ -216,10 +215,6 @@
 
             switch ($this->conc) {
 
-                case 'kindermarket':
-                    $grid->registerHeader('К.-Маркет', 'kindermarket', false, 'ASC', 'right');
-                    $grid->registerHeader('раз-ца', 'diff_kindermarket', false, 'ASC', 'right');
-                    break;
                 case 'divoland':
                     $grid->registerHeader('Диволенд', 'divoland', false, 'ASC', 'right');
                     $grid->registerHeader('раз-ца', 'diff_divoland', false, 'ASC', 'right');
@@ -236,9 +231,11 @@
                     $grid->registerHeader('Г.-Тойс', 'grandtoys', false, 'ASC', 'right');
                     $grid->registerHeader('раз-ца', 'diff_grandtoys', false, 'ASC', 'right');
                     break;
-                default:
+                case 'kindermarket':
                     $grid->registerHeader('К.-Маркет', 'kindermarket', false, 'ASC', 'right');
                     $grid->registerHeader('раз-ца', 'diff_kindermarket', false, 'ASC', 'right');
+                    break;
+                default:
                     $grid->registerHeader('Диволенд', 'divoland', false, 'ASC', 'right');
                     $grid->registerHeader('раз-ца', 'diff_divoland', false, 'ASC', 'right');
                     $grid->registerHeader('Веселка', 'dreamtoys', false, 'ASC', 'right');
@@ -247,6 +244,8 @@
                     $grid->registerHeader('раз-ца', 'diff_grandtoys', false, 'ASC', 'right');
                     $grid->registerHeader('Г.Тойс', 'grandtoys', false, 'ASC', 'right');
                     $grid->registerHeader('раз-ца', 'diff_grandtoys', false, 'ASC', 'right');
+                    $grid->registerHeader('К.-Маркет', 'kindermarket', false, 'ASC', 'right');
+                    $grid->registerHeader('раз-ца', 'diff_kindermarket', false, 'ASC', 'right');
             }
             $grid->prepare();
 
@@ -274,16 +273,16 @@
 
                 $rows[$k]['max_diff'] = ($rows[$k]['max_diff'] > 0)?$rows[$k]['max_diff'].'%':'-----';
 
-                $rows[$k]['kindermarket'] = ($rows[$k][$this->currency.'kindermarket'] != 0)?$rows[$k][$this->currency.'kindermarket']:'-----';
-                $rows[$k]['diff_kindermarket'] = ($rows[$k]['diff_kindermarket'] != 0)?$rows[$k]['diff_kindermarket'].'%':'-----';
-                $rows[$k]['divoland'] = ($rows[$k][$this->currency.'divoland'] != 0)?$rows[$k][$this->currency.'divoland']:'-----';
-                $rows[$k]['diff_divoland'] = ($rows[$k]['diff_divoland'] != 0)?$rows[$k]['diff_divoland'].'%':'-----';
-                $rows[$k]['dreamtoys'] = ($rows[$k][$this->currency.'dreamtoys'] != 0)?$rows[$k][$this->currency.'dreamtoys']:'-----';
-                $rows[$k]['diff_dreamtoys'] = ($rows[$k]['diff_dreamtoys'] != 0)?$rows[$k]['diff_dreamtoys'].'%':'-----';
-                $rows[$k]['mixtoys'] = ($rows[$k][$this->currency.'mixtoys'] != 0)?$rows[$k][$this->currency.'mixtoys']:'-----';
-                $rows[$k]['diff_mixtoys'] = ($rows[$k]['diff_mixtoys'] != 0)?$rows[$k]['diff_mixtoys'].'%':'-----';
-                $rows[$k]['grandtoys'] = ($rows[$k][$this->currency.'grandtoys'] != 0)?$rows[$k][$this->currency.'grandtoys']:'-----';
-                $rows[$k]['diff_grandtoys'] = ($rows[$k]['diff_grandtoys'] != 0)?$rows[$k]['diff_grandtoys'].'%':'-----';
+                $rows[$k]['divoland'] = (is_null($rows[$k][$this->currency.'divoland'])) ? '-----' : $rows[$k][$this->currency.'divoland'];
+                $rows[$k]['diff_divoland'] = (is_null($rows[$k]['diff_divoland'])) ? '-----' : $rows[$k]['diff_divoland'].'%';
+                $rows[$k]['dreamtoys'] = (is_null($rows[$k][$this->currency.'dreamtoys'])) ? '-----' : $rows[$k][$this->currency.'dreamtoys'];
+                $rows[$k]['diff_dreamtoys'] = (is_null($rows[$k]['diff_dreamtoys'])) ? '-----' : $rows[$k]['diff_dreamtoys'].'%';
+                $rows[$k]['mixtoys'] = (is_null($rows[$k][$this->currency.'mixtoys'])) ? '-----' : $rows[$k][$this->currency.'mixtoys'];
+                $rows[$k]['diff_mixtoys'] = (is_null($rows[$k]['diff_mixtoys'])) ? '-----' : $rows[$k]['diff_mixtoys'].'%';
+                $rows[$k]['grandtoys'] = (is_null($rows[$k][$this->currency.'grandtoys'])) ? '-----' : $rows[$k][$this->currency.'grandtoys'];
+                $rows[$k]['diff_grandtoys'] = (is_null($rows[$k]['diff_grandtoys'])) ? '-----' : $rows[$k]['diff_grandtoys'].'%';
+                $rows[$k]['kindermarket'] = (is_null($rows[$k][$this->currency.'kindermarket'])) ? '-----' : $rows[$k][$this->currency.'kindermarket'];
+                $rows[$k]['diff_kindermarket'] = (is_null($rows[$k]['diff_kindermarket'])) ? '-----' : $rows[$k]['diff_kindermarket'].'%';
 
             }
 

@@ -469,6 +469,7 @@ TAG
     } else {
         die("<br>'Ошибка в при открытии файла: $filename");
     }
+    ProgressBar('products', $percent, false, true);
     echo('<span style="color:blue;"><br>Обработано '.($no - $error).' товаров</span><br><span>Новых '.$new_id.' товаров</span><br>');
 
     $query = 'UPDATE SC_products SET enabled = FALSE, items_sold = 0 WHERE in_stock = 100';
@@ -494,7 +495,7 @@ TAG
     $new_count = 500;
     $query     = "SELECT productID FROM SC_products WHERE enabled = 1 ORDER BY code_1c DESC LIMIT $new_count";
     $res = mysql_query($query) or die('Ошибка в запросе: '.mysql_error().'<br>'.$query);
-    
+
     while ($ids = mysql_fetch_object($res)) {
         $id     = $ids->productID;
 
@@ -522,8 +523,6 @@ TAG
         = 'OPTIMIZE TABLE `SC_auth_log`, `SC_categories`, `SC_category_product`, `SC_currency_types`, `SC_customers`, `SC_customer_addresses`, `SC_customer_reg_fields_values`, `SC_ordered_carts`, `SC_orders`, `SC_order_status_changelog`, `SC_products`, `SC_product_list_item`, `SC_product_pictures`, `SC_shopping_carts`, `SC_shopping_cart_items`, `SC_subscribers`, `Search_products`, `Conc__kindermarket`, `Conc__divoland`, `Conc__dreamtoys`, `Conc__mixtoys`, `Conc_search__kindermarket`, `Conc_search__divoland`, `Conc_search__dreamtoys`, `Conc_search__mixtoys`';
     $res = mysql_query($query) or die(mysql_error()."<br>$query");
 
-    ProgressBar('products', $percent, true);
-    
     /*------------------------------------*/
 
     //    $usd0 = $usd;

@@ -220,8 +220,10 @@ TAG
 
         // echo '<img src="css/images/preloader-01.gif"/>';
         echo('<span style="color:blue;">Обработано '.$no.' категорий<br></span><br><br>Ожидайте...<br><br>');
-        ProgressBar('categories', $percent, true);
+        ProgressBar('categories', $percent, false, true);
         BuferOut();
+    } else {
+        die("<br>'Ошибка в при открытии файла: $filename");
     }
 
 
@@ -444,7 +446,8 @@ TAG
 
                     if ($progress > $percent) {
                         $percent = $progress.'%';
-                        ProgressBar('products', $percent, $start2);
+                        $start = ($progress > 20)?$start2:false;
+                        ProgressBar('products', $percent, $start);
                         BuferOut();
                     }
                 } else {
@@ -463,6 +466,8 @@ TAG
             $row++;
         }
         fclose($handle);
+    } else {
+        die("<br>'Ошибка в при открытии файла: $filename");
     }
     echo('<span style="color:blue;"><br>Обработано '.($no - $error).' товаров</span><br><span>Новых '.$new_id.' товаров</span><br>');
 
@@ -516,6 +521,8 @@ TAG
     $query
         = 'OPTIMIZE TABLE `SC_auth_log`, `SC_categories`, `SC_category_product`, `SC_currency_types`, `SC_customers`, `SC_customer_addresses`, `SC_customer_reg_fields_values`, `SC_ordered_carts`, `SC_orders`, `SC_order_status_changelog`, `SC_products`, `SC_product_list_item`, `SC_product_pictures`, `SC_shopping_carts`, `SC_shopping_cart_items`, `SC_subscribers`, `Search_products`, `Conc__kindermarket`, `Conc__divoland`, `Conc__dreamtoys`, `Conc__mixtoys`, `Conc_search__kindermarket`, `Conc_search__divoland`, `Conc_search__dreamtoys`, `Conc_search__mixtoys`';
     $res = mysql_query($query) or die(mysql_error()."<br>$query");
+
+    ProgressBar('products', $percent, true);
     
     /*------------------------------------*/
 
@@ -531,11 +538,11 @@ TAG
     $concs = array('divoland', 'mixtoys', 'dreamtoys', 'kindermarket', 'grandtoys');
     $currency_table = 'Conc__currency';
 
-    $query = 'SELECT * FROM Conc__currency';
+    $query = 'SELECT * FROM Conc__competitors';
     $res = mysql_query($query) or die(mysql_error()."<br>$query");
-    $currencies = array();
+    $competitors = array();
     while ($Currs = mysql_fetch_object($res)) {
-        $currencies[$Currs->competitor] = $Currs->currency_value;
+        $competitors[$Currs->competitor] = $Currs->currency_value;
     }
     
     foreach ($concs as $conc) {
@@ -544,8 +551,8 @@ TAG
 
         $usd_conc = $usd;
 
-        if (array_key_exists($conc, $currencies)) {
-            $usd_conc = $currencies[$conc];
+        if (array_key_exists($conc, $competitors)) {
+            $usd_conc = $competitors[$conc];
         }
 
         while ($Codes = mysql_fetch_object($res)) {
@@ -606,7 +613,6 @@ TAG
     // Удаление временных файлов
     RemoveDir($_SERVER['DOCUMENT_ROOT'].'/upload/');
 
-    ProgressBar('products', $percent, true);
     echo(<<<TAG
 	<br>
 	<div id='end'>Импорт завершен!</div>
@@ -717,13 +723,20 @@ TAG
         return $str;
     }
 
-    function ProgressBar($import_items, $percent, $full = false)
+    function ProgressBar($import_items, $percent, $start = false, $full = false)
     {
+        $end = '';
+        if ($start) {
+            $time = round(((100 - $percent) * (microtime(true) - $start) / $percent), 0);
+            $end = ' - <small>Осталось: '.$time.' сек.</small>';
+        }
+
+        $success = '';
         if ($full === true) {
-            $full = 'background-image:linear-gradient(to bottom, #6AFF7D, #00DC08)';
+            $success = 'background-image:linear-gradient(to bottom, #6AFF7D, #00DC08)';
         }
         echo "<script language='javascript'>
-                    document.getElementById('$import_items').innerHTML=\"<div style='width:$percent;$full'>$percent</div>\"
+                    document.getElementById('$import_items').innerHTML=\"<div style='width:$percent;$success'>$percent $end</div>\"
               </script>
         ";
     }

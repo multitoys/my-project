@@ -90,7 +90,7 @@
                     $art = 'font-weight:700;color:orangered;';
 
                     if (!$Product->enabled) {
-                        $disabled = 'color:grey;text-decoration:line-through;';
+                        //$disabled = 'color:grey;text-decoration:line-through;';
                         $button .= 'background-color: #848484;';
                     }
 
@@ -104,11 +104,11 @@
 //                    $search .= '<div>Ничего не найдено...</div>';
                 }
             }
-            if ($no < 1) {
-                $search .= 'Ничего не найдено...';
-            }
             if (count($conc_args)) {
                 return $search;
+            }
+            if ($no < 1) {
+                $search .= 'Ничего не найдено...';
             }
             echo $search;
         }

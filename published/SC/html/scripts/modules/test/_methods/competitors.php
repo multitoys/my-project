@@ -254,25 +254,12 @@
             for ($k = count($rows) - 1; $k >= 0; $k--) {
 
                 $rows[$k]['num'] = $k + 1;
-                //$rows[$k]['code_1c'] = $rows[$k]['code_1c'];
-                //$rows[$k]['product_code'] = $rows[$k]['product_code'];
                 $rows[$k]['img'] = '/published/publicdata/MULTITOYS/attachments/SC/search_pictures/'.$rows[$k]['code_1c'].'_s.jpg';
                 $rows[$k]['img_big'] = '/published/publicdata/MULTITOYS/attachments/SC/products_pictures/'.$rows[$k]['code_1c'].'.jpg';
-                //$rows[$k]['name_ru'] = $rows[$k]['name_ru'];
-                //$rows[$k]['category'] = $rows[$k]['category'];
                 $rows[$k]['purchase'] = $rows[$k][$this->currency.'purchase'];
                 $rows[$k]['Price'] = $rows[$k][$this->currency.'Price'];
                 $rows[$k]['margin'] .= '%';
-
-//                $max_diff = max(
-//                    (int)$rows[$k]['diff_kindermarket'],
-//                    (int)$rows[$k]['diff_divoland'],
-//                    (int)$rows[$k]['diff_dreamtoys'],
-//                    (int)$rows[$k]['diff_mixtoys']
-//                );
-
                 $rows[$k]['max_diff'] = ($rows[$k]['max_diff'] > 0)?$rows[$k]['max_diff'].'%':'-----';
-
                 $rows[$k]['divoland'] = (is_null($rows[$k][$this->currency.'divoland'])) ? '-----' : $rows[$k][$this->currency.'divoland'];
                 $rows[$k]['diff_divoland'] = (is_null($rows[$k]['diff_divoland'])) ? '-----' : $rows[$k]['diff_divoland'].'%';
                 $rows[$k]['dreamtoys'] = (is_null($rows[$k][$this->currency.'dreamtoys'])) ? '-----' : $rows[$k][$this->currency.'dreamtoys'];
@@ -283,12 +270,9 @@
                 $rows[$k]['diff_grandtoys'] = (is_null($rows[$k]['diff_grandtoys'])) ? '-----' : $rows[$k]['diff_grandtoys'].'%';
                 $rows[$k]['kindermarket'] = (is_null($rows[$k][$this->currency.'kindermarket'])) ? '-----' : $rows[$k][$this->currency.'kindermarket'];
                 $rows[$k]['diff_kindermarket'] = (is_null($rows[$k]['diff_kindermarket'])) ? '-----' : $rows[$k]['diff_kindermarket'].'%';
-
             }
-
             $count_rows = array('100' => 100, '500' => 500, '1000' => 1000);
 
-//            $smarty->assign('IMG_URL', '/published/publicdata/MULTITOYS/attachments/SC/search_pictures');
             $smarty->assign('Brands', $this->brands);
             $smarty->assign('Categories', $this->categories);
             $smarty->assign('GridRows', $rows);

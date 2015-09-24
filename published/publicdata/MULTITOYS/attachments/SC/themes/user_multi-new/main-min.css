@@ -2593,19 +2593,18 @@ h3, h3 a {
 }
 
 .find {
-    font-size: 18px;
-    width: 45%;
+    width: 90%;
     text-decoration: none;
     display: inline-block;
     text-align: center;
     color: white !important;
-    padding: 13px 26px;
+    padding: 5px;
     margin: 5px auto
 }
 
 .search-concs {
     margin: auto;
-    width: 45%;
+    width: 90%;
     font-size: 16px;
     padding: 5px;
     text-align: center

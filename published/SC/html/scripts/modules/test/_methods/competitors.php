@@ -259,17 +259,18 @@
                 $rows[$k]['purchase'] = $rows[$k][$this->currency.'purchase'];
                 $rows[$k]['Price'] = $rows[$k][$this->currency.'Price'];
                 $rows[$k]['margin'] .= '%';
-                $rows[$k]['max_diff'] = ($rows[$k]['max_diff'] > 0)?$rows[$k]['max_diff'].'%':'-----';
-                $rows[$k]['divoland'] = (is_null($rows[$k][$this->currency.'divoland'])) ? '-----' : $rows[$k][$this->currency.'divoland'];
-                $rows[$k]['diff_divoland'] = (is_null($rows[$k]['diff_divoland'])) ? '-----' : $rows[$k]['diff_divoland'].'%';
-                $rows[$k]['dreamtoys'] = (is_null($rows[$k][$this->currency.'dreamtoys'])) ? '-----' : $rows[$k][$this->currency.'dreamtoys'];
-                $rows[$k]['diff_dreamtoys'] = (is_null($rows[$k]['diff_dreamtoys'])) ? '-----' : $rows[$k]['diff_dreamtoys'].'%';
-                $rows[$k]['mixtoys'] = (is_null($rows[$k][$this->currency.'mixtoys'])) ? '-----' : $rows[$k][$this->currency.'mixtoys'];
-                $rows[$k]['diff_mixtoys'] = (is_null($rows[$k]['diff_mixtoys'])) ? '-----' : $rows[$k]['diff_mixtoys'].'%';
-                $rows[$k]['grandtoys'] = (is_null($rows[$k][$this->currency.'grandtoys'])) ? '-----' : $rows[$k][$this->currency.'grandtoys'];
-                $rows[$k]['diff_grandtoys'] = (is_null($rows[$k]['diff_grandtoys'])) ? '-----' : $rows[$k]['diff_grandtoys'].'%';
-                $rows[$k]['kindermarket'] = (is_null($rows[$k][$this->currency.'kindermarket'])) ? '-----' : $rows[$k][$this->currency.'kindermarket'];
-                $rows[$k]['diff_kindermarket'] = (is_null($rows[$k]['diff_kindermarket'])) ? '-----' : $rows[$k]['diff_kindermarket'].'%';
+                $rows[$k]['max_diff'] = ($rows[$k]['max_diff'] > 0)?$rows[$k]['max_diff'].'%':'';
+
+                $rows[$k]['divoland'] = (is_null($rows[$k][$this->currency.'divoland']))?'-----':$rows[$k][$this->currency.'divoland'];
+                $rows[$k]['diff_divoland'] = ($rows[$k]['divoland'] === '-----')?'-----':$rows[$k]['diff_divoland'].'%';
+                $rows[$k]['dreamtoys'] = (is_null($rows[$k][$this->currency.'dreamtoys']))?'-----':$rows[$k][$this->currency.'dreamtoys'];
+                $rows[$k]['diff_dreamtoys'] = ($rows[$k]['dreamtoys'] === '-----')?'-----':$rows[$k]['diff_dreamtoys'].'%';
+                $rows[$k]['mixtoys'] = (is_null($rows[$k][$this->currency.'mixtoys']))?'-----':$rows[$k][$this->currency.'mixtoys'];
+                $rows[$k]['diff_mixtoys'] = ($rows[$k]['mixtoys'] === '-----')?'-----':$rows[$k]['diff_mixtoys'].'%';
+                $rows[$k]['grandtoys'] = (is_null($rows[$k][$this->currency.'grandtoys']))?'-----':$rows[$k][$this->currency.'grandtoys'];
+                $rows[$k]['diff_grandtoys'] = ($rows[$k]['grandtoys'] === '-----')?'-----':$rows[$k]['diff_grandtoys'].'%';
+                $rows[$k]['kindermarket'] = (is_null($rows[$k][$this->currency.'kindermarket']))?'-----':$rows[$k][$this->currency.'kindermarket'];
+                $rows[$k]['diff_kindermarket'] = ($rows[$k]['kindermarket'] === '-----')?'-----':$rows[$k]['diff_kindermarket'].'%';
             }
             $count_rows = array('100' => 100, '500' => 500, '1000' => 1000);
 

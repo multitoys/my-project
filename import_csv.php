@@ -427,9 +427,6 @@ TAG
                     }
 
                     // добавление товара в таблицу сравнения конкурентов
-                    /**
-                     * TODO: добавить productID
-                     */
                     if ($ostatok !== 'под заказ') {
                         $margin = round((100 * ($price / $purchase) - 100), 0);
                         $query

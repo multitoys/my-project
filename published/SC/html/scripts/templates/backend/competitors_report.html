@@ -62,8 +62,10 @@
 {*{/literal}*}
 {*<link rel="stylesheet" href="/published/publicdata/MULTITOYS/attachments/SC/themes/user_multi-new/main.css" type="text/css">*}
 <div class="za_body">
-    <h3>Сравнение цен по конкурентам</h3>
-
+    <h3>Сравнение цен по конкурентам (
+        <small>{$TotalFound}</small>
+        )
+    </h3>
     <form name="MainForm" method="get" action="{''|set_query}">
         <input type="hidden" name="did" value="{$CurrentDivision.id}"/>
         <table border="0" cellspacing="1" cellpadding="3">

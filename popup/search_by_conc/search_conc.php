@@ -48,6 +48,9 @@
             $price = $conc_args[2];
             $limit = 1;
         }
+
+        $ajax = (!count($conc_args));
+        
         $replace = array(',', '.', ')', '(', '\'');
         $match_str = str_replace('|', ' ', str_replace($replace, '', $conc));
         $match_str = mysql_real_escape_string($match_str);
@@ -67,8 +70,9 @@
             while ($Product = mysql_fetch_object($res)) {
 
                 $score = round($Product->score, 1);
+                $min_score = ($ajax)?5:10;
 
-                if ($score > 5) {
+                if ($score > $min_score) {
 
                     $no++;
                     $name_ru = mb_strtolower($Product->name_ru, 'UTF-8');
@@ -89,9 +93,13 @@
                     $button = 'font-size:1.3em;height: 2.2em;width: 3em;';
                     $art = 'font-weight:700;color:orangered;';
 
-                    if (!$Product->enabled) {
-                        //$disabled = 'color:grey;text-decoration:line-through;';
-                        $button .= 'background-color: #848484;';
+                    if ($ajax) {
+                        if (!$Product->enabled) {
+                            //$disabled = 'color:grey;text-decoration:line-through;';
+                            $button .= 'background-color: #848484;';
+                        }
+                    } else {
+                        $button .= 'background-color: lime;';
                     }
 
                     $search .= "<div style='max-width: 800px;'><div style='float:left;'><button class='blue-button' title=''
@@ -99,12 +107,14 @@
                      style=\"$button\">$score</button></div><div style=\"$disabled\">
                     $no) $Product->code_1c  <span style=$art>[$product_code]</span> $name_ru
                     <span style='color:$marked'>$Product->Price</span> &#8372; <br><span style='color: #03A9F4;font-style: italic;'>разница: </span><span style='color:$marked;font-weight:700'>$price_diff%</span>
-                    <br><small style='font-size:0.7em;'>категория: &laquo;$category&raquo;</small><hr></div></div>";
-//                } else {
-//                    $search .= '<div>Ничего не найдено...</div>';
+                    <br><small style='font-size:0.7em;'>категория: &laquo;$category&raquo;</small>";
+                    if (!count($conc_args)) {
+                        $search .= '<hr>';
+                    }
+                    $search .= '</div></div>';
                 }
             }
-            if (count($conc_args)) {
+            if (!$ajax) {
                 return $search;
             }
             if ($no < 1) {

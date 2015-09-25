@@ -976,7 +976,7 @@ ol {
     max-width: 400px;
     min-width: 400px;
     width: 400px;
-    max-height: 100%;
+    max-height: 100%
 }
 
 .cl-effect-21 a {
@@ -1042,7 +1042,7 @@ ul#navmenu-v li:hover {
 
 ul#navmenu-v li ul, ul#navmenu-v li ul li ul {
     background: rgba(0, 0, 0, 0.6);
-    min-height: 579px; /* height: 96%; */
+    min-height: 579px
 }
 
 ul#navmenu-v a {
@@ -1150,7 +1150,7 @@ ul#navmenu-v li:hover ul, ul#navmenu-v ul li:hover ul {
     overflow: hidden;
     border-radius: 2px;
     padding-top: 10px;
-    top: 0;
+    top: 0
 }
 
 ul#navmenu-v li:hover ul ul {
@@ -2390,14 +2390,16 @@ div.compact-theme ul li {
 }
 
 .mark_name {
-    box-shadow: 2px 2px 4px #99a
+    box-shadow: 2px 2px 4px #99a;
+    font-size: larger
 }
 
 .mark_code {
     color: white;
     background: red;
     box-shadow: 2px 2px 4px #99a;
-    display: inline !important
+    display: inline !important;
+    font-size: larger
 }
 
 .animated {
@@ -2414,7 +2416,7 @@ div.compact-theme ul li {
 
 .animated.slideInRight {
     -webkit-animation-duration: .5s;
-    animation-duration: .5s;
+    animation-duration: .5s
 }
 
 .animated.bounceInDown {

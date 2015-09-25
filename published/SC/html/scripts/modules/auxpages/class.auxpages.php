@@ -917,7 +917,7 @@ class AuxPages extends ComponentModule {
         //$newitems    = $pag_content;
         $newitems = "<div class='simple-pagination compact-theme'>$out</div>";
         $newitems .= '</div>
-                    <div class=scroll-pane1>';
+                    <div class=scroll-pane1 style="background-color: whitesmoke;">';
 
         $query1 = "SELECT code, code_1c FROM Conc_search__$auxpage";
         $res1 = mysql_query($query1) or die(mysql_error().$query1);

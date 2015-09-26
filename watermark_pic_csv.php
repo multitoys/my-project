@@ -63,7 +63,7 @@
 
         while (($data = fgetcsv($handle, 25, ';')) !== false) {
             set_time_limit(0);
-            $last_modified = 0;
+            $last_modified = 3;
             $no++;
             $row++;
             $pics = $data[0];
@@ -102,24 +102,24 @@
                 if (filemtime($file_name2) < time() - 86400 * 3) {
                     unlink($file_name2);
                     make_thumbnail($file_name, $file_name2, $stamp200, 160);
-                    $last_modified++;
+                    $last_modified--;
                 }
 
                 $file_name2 = DIR_PRODUCTS_PICTURES.'/'.$picture;
                 if (filemtime($file_name2) < time() - 86400 * 3) {
                     unlink($file_name2);
                     make_thumbnail($file_name, $file_name2, $stamp400, 400);
-                    $last_modified++;
+                    $last_modified--;
                 }
 
                 $file_name2 = DIR_PRODUCTS_PICTURES.'/'.$pics_enl;
                 if (filemtime($file_name2) < time() - 45 * 60) {
                     unlink($file_name2);
                     make_thumbnail($file_name, $file_name2, $stamp600, 600, 90);
-                    $last_modified++;
+                    $last_modified--;
                 }
 
-                if ($last_modified == 3) {
+                if ($last_modified == 0) {
                     $not_modified++;
                 }
                 unlink($file_name);

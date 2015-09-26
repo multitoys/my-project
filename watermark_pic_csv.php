@@ -102,6 +102,7 @@
                 if (filemtime($file_name2) < time() - 86400 * 3) {
                     unlink($file_name2);
                     make_thumbnail($file_name, $file_name2, $stamp200, 160);
+                } else {
                     $last_modified--;
                 }
 
@@ -109,6 +110,7 @@
                 if (filemtime($file_name2) < time() - 86400 * 3) {
                     unlink($file_name2);
                     make_thumbnail($file_name, $file_name2, $stamp400, 400);
+                } else {
                     $last_modified--;
                 }
 
@@ -116,10 +118,11 @@
                 if (filemtime($file_name2) < time() - 45 * 60) {
                     unlink($file_name2);
                     make_thumbnail($file_name, $file_name2, $stamp600, 600, 90);
+                } else {
                     $last_modified--;
                 }
 
-                if ($last_modified == 0) {
+                if ($last_modified === 0) {
                     $not_modified++;
                 }
                 unlink($file_name);

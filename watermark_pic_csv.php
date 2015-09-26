@@ -115,7 +115,7 @@
                 }
 
                 $file_name2 = DIR_PRODUCTS_PICTURES.'/'.$pics_enl;
-                if (filemtime($file_name2) < time() - 45 * 60) {
+                if (filemtime($file_name2) < time() - 86400 * 3) {
                     unlink($file_name2);
                     make_thumbnail($file_name, $file_name2, $stamp600, 600, 90);
                 } else {

@@ -55,7 +55,7 @@ TAG
     $filename = DIR_COMPETITORS.'/category.html';
     readUrl($url, $filename, $refferer, $headers);
 
-    UpdateValue('Conc__alliance', 'enabled = 0');
+    UpdateValue('Conc__kindermarket', 'enabled = 0');
 
     $html = file_get_contents($filename);
 
@@ -71,9 +71,9 @@ TAG
     define('URL_POSTFIX', '&count_panel=5000');
     define('EXT', '.html');
 
-    //    DeleteRow('Conc__alliance');
-    //    DeleteRow('Conc_search__alliance');
-    UpdateValue('Conc__alliance', 'enabled = 0');
+    //    DeleteRow('Conc__kindermarket');
+    //    DeleteRow('Conc_search__kindermarket');
+    UpdateValue('Conc__kindermarket', 'enabled = 0');
     $no = 0;
     $new = 0;
     $part = 0;
@@ -113,12 +113,12 @@ TAG
             $price = (double)$products[3][$j];
             $price_usd = $price / 20.51;
             $product_code = mysql_real_escape_string(trim($products[4][$j]));
-            $productID = GetValue('productID', 'Conc__alliance', "code = '$code'");
+            $productID = GetValue('productID', 'Conc__kindermarket', "code = '$code'");
 
             if ($productID) {
                 $query
                     = "
-                                UPDATE  Conc__alliance
+                                UPDATE  Conc__kindermarket
                                 SET     parent       = '$category',
                                         category     = '$category',
                                         product_code = '$product_code',
@@ -132,7 +132,7 @@ TAG
             } else {
                 $query
                     = "
-                            INSERT INTO Conc__alliance
+                            INSERT INTO Conc__kindermarket
                                         (parent, category, code, product_code, name, price_uah, price_usd)
                             VALUES      ('$category', '$category', '$code', '$product_code', '$name', $price, $price_usd)
                           ";
@@ -154,10 +154,10 @@ TAG
     echo('<hr><span style="color:blue;">Обработано '.$no.' товаров</span><br><br>Новых '.$new.' товаров</span><br>');
 
     // Оптимизация таблиц
-    $query = "UPDATE Conc__alliance SET parent='', category='' WHERE enabled=0";
+    $query = "UPDATE Conc__kindermarket SET parent='', category='' WHERE enabled=0";
     $res = mysql_query($query) or die(mysql_error()."<br>$query");
 
-    $query = 'OPTIMIZE TABLE `Conc__alliance`, `Conc_search__alliance`';
+    $query = 'OPTIMIZE TABLE `Conc__kindermarket`, `Conc_search__kindermarket`';
     $res = mysql_query($query) or die(mysql_error()."<br>$query");
     mysql_close();
 

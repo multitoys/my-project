@@ -65,7 +65,7 @@ TAG
     $part = 0;
     $percent = 0;
     $products_cnt = 2000;
-    $replace_name = array('&quot;', '\'', '"');
+    $replace_name = array('&laquo;', '&raquo;', '&quot;', '\'', '"');
 
     foreach ($categories as $parent => $cats) {
 

@@ -78,7 +78,7 @@ TAG
     $new = 0;
     $part = 0;
     $percent = 0;
-    $replace_name = array('&quot;', '\'', '"');
+    $replace_name = array('&laquo;', '&raquo;', '&quot;', '\'', '"');
 
     for ($i = 0; $i < $category_count; $i++) {
 

@@ -199,3 +199,5 @@
             'Открытки'          => '/ru/1078-Otkritki',
             'Подарочные пакеты' => '/ru/1139-Podarochnie-paketi')
     );
+
+    $parts = count($categories);

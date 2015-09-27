@@ -1,8 +1,8 @@
 <?php
-    $ip = $_SERVER['REMOTE_ADDR'];
-    $class_c = substr($ip, 0, strrpos($ip, '.'));
-    echo $class_c;
-    exit(0);
+    //$ip = $_SERVER['REMOTE_ADDR'];
+    //$class_c = substr($ip, 0, strrpos($ip, '.'));
+    //echo $class_c;
+    //exit(0);
     $mode = (isset($_GET['mode'])) ? $_GET['mode'] : '';
     if ($mode) {
         ini_set('display_errors', true);

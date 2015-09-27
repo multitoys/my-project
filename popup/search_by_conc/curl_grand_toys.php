@@ -97,7 +97,7 @@ TAG
 
             for ($j = 0; $j < $rowcount; $j++) {
                 set_time_limit(0);
-                $name = mysql_real_escape_string(trim(str_replace($replace_name, '', DecodeCodepage($products[1][$j]))));
+                $name = mysql_real_escape_string(trim(str_replace($replace_name, ' ', DecodeCodepage($products[1][$j]))));
                 $price = (double)$products[2][$j];
                 $code = mysql_real_escape_string(DecodeCodepage($products[3][$j]));
                 $productID = GetValue('productID', 'Conc__grandtoys', "code = '$code'");

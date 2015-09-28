@@ -163,8 +163,8 @@
                     if ($progress > $percent) {
                         $percent = $progress.'%';
                         ProgressBar('products', $percent, $start);
-                        BuferOut(100000);
                     }
+                    BuferOut();
                 }
             }
         }
@@ -265,7 +265,7 @@
 
     function BuferOut($delay = 0)
     {
-        echo str_repeat(' ', 1024 * 64);
+        echo str_repeat(' ', 1024 * 4);
         flush();
         usleep($delay);
 

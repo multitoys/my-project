@@ -204,8 +204,8 @@ TAG
                 if ($progress > $percent) {
                     $percent = $progress.'%';
                     ProgressBar('categories', $percent);
-                    BuferOut();
                 }
+                BuferOut();
                 $no++;
             } else {
                 echo(ShowError("Неверный id ($cid) или parent ($parent) в строке $row (категории)"));
@@ -445,8 +445,8 @@ TAG
                         $percent = $progress.'%';
                         $start = ($progress > 20)?$start2:false;
                         ProgressBar('products', $percent, $start);
-                        BuferOut();
                     }
+                    BuferOut();
                 } else {
                     echo(ShowError("Неверный id ($id) (строка $row) - <span style='color:red;'>позиция проигнорирована</span>"));
                     $error++;
@@ -739,7 +739,7 @@ TAG
 
     function BuferOut($delay = 0)
     {
-        echo str_repeat(' ', 1024 * 64);
+        echo str_repeat(' ', 1024 * 4);
         flush();
         usleep($delay);
     }

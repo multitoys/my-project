@@ -147,8 +147,8 @@ TAG
         if ($progress > $percent) {
             $percent = $progress.'%';
             ProgressBar('products', $percent);
-            BuferOut();
         }
+        BuferOut(5000);
     }
     ProgressBar('products', $percent, true);
     echo('<hr><span style="color:blue;">Обработано '.$no.' товаров</span><br><br>Новых '.$new.' товаров</span><br>');

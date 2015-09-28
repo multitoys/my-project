@@ -997,7 +997,8 @@ class AuxPages extends ComponentModule {
                 $analog .= "<div>
                             <a class='blue-button fancybox fancybox.ajax find' title=''
                             href='/popup/search_by_conc/search_conc.php?mode=1&conc=$name_conc&code=$Product->code&price=$Product->price_uah' onclick=\"this.style.backgroundColor = 'transparent'\">Найти совпадения</a>
-                            <input type='text' class='input_message search-concs' rel='Поиск аналогов' value='Поиск аналогов' name='searchstring'                   data-conc=$name_conc data-code=$Product->code data-price=$Product->price_uah >
+                            <input type='text' class='input_message search-concs' rel='Поиск аналогов' value='Поиск аналогов' 
+                            autocomplete='off' name='searchstring' data-conc=$name_conc data-code=$Product->code data-price=$Product->price_uah >
                             </div>";
             }
 //        $pictures  = (strlen($Product->foto)) ? "<img width=160 height=120  class=preview alt='$name' src='/$auxpage/$Product->foto' pid='/$auxpage/$Product->foto'>" : "<img width=153 height=117 alt='no foto' src='/img/nophoto.jpg'>";

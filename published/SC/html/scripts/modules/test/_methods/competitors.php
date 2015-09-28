@@ -19,6 +19,7 @@
         protected $bestsellers = '';
         protected $new = '';
         protected $new_items_postup = '';
+        protected $search = '';
         protected $table = 'Conc__analogs';
 //        protected $enabled = '';
 
@@ -57,6 +58,11 @@
         {
             $this->conc = xEscapeSQLstring($_GET['competitor']);
             $this->competitor = ' AND '.$this->conc;
+        }
+
+        protected function __setSearch()
+        {
+            $this->search = ' AND (product_code LIKE "%'.xEscapeSQLstring($_GET['searchstring']).'%" OR name_ru LIKE "%'.xEscapeSQLstring($_GET['searchstring']).'%")';
         }
 
         protected function __getBestsellers()
@@ -187,16 +193,19 @@
             if (isset($_GET['competitor']) && $_GET['competitor'] !== 'all') {
                 $this->__setCompetitor();
             }
+            if (isset($_GET['searchstring'])) {
+                $this->__setSearch();
+            }
 
             $grid->query_total_rows_num = "
                 SELECT COUNT(*) FROM $this->table
                 WHERE 1
-                $this->manufactured $this->brand $this->category $this->bestsellers $this->new $this->new_items_postup $this->competitor";
+                $this->manufactured $this->brand $this->category $this->bestsellers $this->new $this->new_items_postup $this->competitor $this->search";
 
             $grid->query_select_rows = "
                 SELECT * FROM $this->table
                 WHERE 1
-                $this->manufactured $this->brand $this->category $this->bestsellers $this->new  $this->new_items_postup $this->competitor";
+                $this->manufactured $this->brand $this->category $this->bestsellers $this->new  $this->new_items_postup $this->competitor $this->search";
 
             $grid->show_rows_num_select = true;
             $grid->default_sort_direction = 'DESC';

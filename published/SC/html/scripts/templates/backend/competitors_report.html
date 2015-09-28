@@ -29,12 +29,16 @@
 
         .blue {
             color: blue;
-            font-weight: 700;
         }
 
         .choco {
             color: #9800A0;
         }
+
+        .bold {
+            font-weight: 700;
+        }
+        
         .border {
             border-left: 1px dotted grey;
         }
@@ -183,7 +187,7 @@
                     <td class="brand">{$GridRows[i].category|escape:'html'}</td>
                     <td class="to_right choco">{$GridRows[i].purchase}</td>
                     <td class="to_right choco">{$GridRows[i].margin}</td>
-                    <td class="to_right {if $GridRows[i].max_diff > 0}red{else}blue{/if}">{$GridRows[i].Price}</td>
+                    <td class="to_right bold {if $GridRows[i].max_diff > 0}red{else}blue{/if}">{$GridRows[i].Price}</td>
                     <td class="to_right {if $GridRows[i].max_diff > 0}red{else}green{/if}">
                         <strong>{$GridRows[i].max_diff}</strong>
                     </td>

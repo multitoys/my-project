@@ -739,7 +739,7 @@ TAG
 
     function BuferOut($delay = 0)
     {
-        echo str_repeat(' ', 1024 * 4);
+        echo str_repeat(' ', 256);
         flush();
         usleep($delay);
     }

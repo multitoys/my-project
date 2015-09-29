@@ -62,7 +62,7 @@
 
         protected function __setSearch()
         {
-            $this->search = ' AND (product_code LIKE "%'.xEscapeSQLstring($_GET['searchstring']).'%" OR name_ru LIKE "%'.xEscapeSQLstring($_GET['searchstring']).'%")';
+            $this->search = ' AND (product_code LIKE "%'.xEscapeSQLstring($_GET["searchstring"]).'%" OR name_ru LIKE "%'.xEscapeSQLstring($_GET["searchstring"]).'%")';
         }
 
         protected function __getBestsellers()
@@ -193,7 +193,7 @@
             if (isset($_GET['competitor']) && $_GET['competitor'] !== 'all') {
                 $this->__setCompetitor();
             }
-            if (isset($_GET['searchstring'])) {
+            if (isset($_GET['searchstring']) && $_GET['searchstring'] !== null) {
                 $this->__setSearch();
             }
 

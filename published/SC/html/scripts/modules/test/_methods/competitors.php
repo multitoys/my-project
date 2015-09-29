@@ -62,7 +62,7 @@
 
         protected function __setSearch()
         {
-            $this->search = ' AND (product_code LIKE "%'.xEscapeSQLstring($_GET["searchstring"]).'%" OR name_ru LIKE "%'.xEscapeSQLstring($_GET["searchstring"]).'%")';
+            $this->search = ' AND (product_code LIKE "%'.xEscapeSQLstring($_GET['searchstring']).'%" OR name_ru LIKE "%'.xEscapeSQLstring($_GET['searchstring']).'%")';
         }
 
         protected function __getBestsellers()

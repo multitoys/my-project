@@ -73,7 +73,7 @@
             while ($Product = mysql_fetch_object($res)) {
 
                 $score = round($Product->score, 1);
-                $min_score = ($ajax)?5:10;
+                $min_score = ($ajax)?5:7;
 
                 if ($score > $min_score) {
 

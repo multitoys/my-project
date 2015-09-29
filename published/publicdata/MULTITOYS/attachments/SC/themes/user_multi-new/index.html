@@ -36,8 +36,12 @@
 		<div id="header">
 			{if $smarty.session.log}
                 <div class="cpt_product_search">
-                    <form method="get" name="form" action="/search">
-                        <input type="text" class="input_message" rel="Поиск товаров" value="Поиск товаров" name="searchstring"  autocomplete="off" id="searchstring">
+                    <form method="get" name="form"
+                          action="{if $smarty.get.ukey eq 'auxpage_divoland' or $smarty.get.ukey eq 'auxpage_mixtoys' or $smarty.get.ukey eq 'auxpage_dreamtoys' or $smarty.get.ukey eq 'auxpage_kindermarket' or $smarty.get.ukey eq 'auxpage_grandtoys'}{else}/search{/if}">
+                        <input type="text" class="input_message" rel="Поиск товаров" value="Поиск товаров"
+                               name="searchstring{if $smarty.get.ukey eq 'auxpage_divoland' or $smarty.get.ukey eq 'auxpage_mixtoys' or $smarty.get.ukey eq 'auxpage_dreamtoys' or $smarty.get.ukey eq 'auxpage_kindermarket' or $smarty.get.ukey eq 'auxpage_grandtoys'}_competitors{/if}"
+                               autocomplete="off"
+                               id="searchstring{if $smarty.get.ukey eq 'auxpage_divoland' or $smarty.get.ukey eq 'auxpage_mixtoys' or $smarty.get.ukey eq 'auxpage_dreamtoys' or $smarty.get.ukey eq 'auxpage_kindermarket' or $smarty.get.ukey eq 'auxpage_grandtoys'}_conc{/if}">
                         <input type="submit" value="" id='search_ok' class="submit">
                     </form>
                     {*<form action="/search.php" method="post" name="form" onsubmit="return false;">*}

@@ -75,7 +75,7 @@ TAG
                 $name
                            = mysql_real_escape_string(trim(str_replace($replace_name, '', DecodeCodepage($products[2][$i]))));
                 $price     = (double)$products[3][$i];
-                $price_usd = $price / 21.60;
+                $price_usd = $price / 20.60;
                 $productID = GetValue('productID', 'Conc__divoland', "code = '$code'");
 
                 if ($productID) {

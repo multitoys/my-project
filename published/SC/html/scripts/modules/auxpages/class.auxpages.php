@@ -903,7 +903,9 @@ class AuxPages extends ComponentModule {
 
         $search = '';
         if (isset($_GET['searchstring_competitors']) && $_GET['searchstring_competitors'] !== null) {
-            $search = ' AND (product_code LIKE "%'.xEscapeSQLstring($_GET['search_competitor']).'%" OR name LIKE "%'.xEscapeSQLstring($_GET['searchstring_competitors']).'%")';
+            $search = $_GET['searchstring_competitors'];
+            $search = (is_int($search)) ? (int)$search : xEscapeSQLstring($search);
+            $search = ' AND (product_code LIKE "%'.$search.'%" OR name LIKE "%'.$search.'%")';
         }
         
         // Общее количество товаров

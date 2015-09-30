@@ -1,18 +1,6 @@
 <?php
     // -------------------------INITIALIZATION-----------------------------//
-    function Debugging($start)
-    {
-        // $memoscript = memory_get_usage(true)/1048576;
-        $memoscript_peak = memory_get_peak_usage(true) / 1048576;
-        $time = microtime(true) - $start;
-        printf('<br>Скрипт выполнялся: %.2F сек.', $time);
-        printf('<br>Пик оперативной памяти: %.2F МБ.', $memoscript_peak);
-        // printf('<br>Использовано оперативной памяти: %.2F МБ.', $memoscript);
-    }
-
-    $start = microtime(true);
-
-    ini_set('display_errors', true);
+    ini_set('display_errors', false);
     define('DIR_ROOT', str_replace("\\", '/', realpath(dirname(__FILE__))));
     $DebugMode = false;
     $Warnings = array();
@@ -327,6 +315,7 @@ ORDER BY `cnt` DESC");
         RedirectSQ('lang_iso2=');
     }
 
+    $smarty->assign('enter', $_SESSION['enter']);
     checkLogin();
 
     if (detectMSIE()) {
@@ -668,5 +657,3 @@ ORDER BY `cnt` DESC");
 
         print 'time: <strong>'.$T->timerStop().'</strong><br />';
     }
-
-    //    Debugging($start);

@@ -6,7 +6,7 @@
      * Time: 17:07
      */
 
-    define('DIR_ROOT', $_SERVER['DOCUMENT_ROOT']."/published/SC/html/scripts");
+    define('DIR_ROOT', $_SERVER['DOCUMENT_ROOT'].'/published/SC/html/scripts');
 
     $DebugMode = true;
     $Warnings = array();
@@ -23,6 +23,6 @@
     $query = "UPDATE SC_product_list_item SET date=date+1 WHERE list_id='newitemspostup'";
     $res = mysql_query($query) or die(mysql_error()."<br>$query");
 
-    $query = "OPTIMIZE TABLE SC_product_list_item";
+    $query = 'OPTIMIZE TABLE SC_product_list_item';
     $res = mysql_query($query) or die(mysql_error()."<br>$query");
     mysql_close();

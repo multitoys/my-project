@@ -55,6 +55,7 @@
 					<div style='width:0px;'>&nbsp;</div>
 				</div>
 			 ");
+        BuferOut();
         $no = 0;
         $row = 0;
         $erorr = 0;
@@ -177,14 +178,14 @@
     $query = 'OPTIMIZE TABLE `SC_products`, `SC_product_pictures`';
     $res = mysql_query($query) or die(mysql_error()."<br>$query");
     mysql_close();
-    removeDir($dest_dir);
+    RemoveDir($_SERVER['DOCUMENT_ROOT'].'/upload/');
 
     ProgressBar('products', $percent, false, true);
     echo("
 <br></div>
   <div id='end'>Импорт завершен!</div>
 ");
-    debugging($start);
+    Debugging($start);
 
     // Функции
     function make_thumbnail($file_name, $fileout, $stamp, $max_size, $quality = 85)
@@ -250,26 +251,27 @@
 
     function ProgressBar($import_items, $percent, $start = false, $full = false)
     {
+        $end = '';
         if ($start) {
             $time = round(((100 - $percent) * (microtime(true) - $start) / $percent), 0);
-            // $end = printf('&nbsp;&nbsp;&nbsp;Осталось: %.2F сек.', $time);
-            //$end = ' - <small>Осталось: '.$time.' сек.</small>';
+            $end = ' - <small>Осталось: '.$time.' сек.</small>';
         }
-        $full = ($full) ? 'background-image:linear-gradient(to bottom, #6AFF7D, #00DC08);' : '';
-        echo '<script language="javascript">
-				document.getElementById("'.$import_items.'").innerHTML="<div style=\"width:'.$percent.';'.$full.'\">'.$percent.''.$end.'</div>";
-				</script>';
 
-        return;
+        $success = '';
+        if ($full === true) {
+            $success = 'background-image:linear-gradient(to bottom, #6AFF7D, #00DC08)';
+        }
+        echo "<script language='javascript'>
+                    document.getElementById('$import_items').innerHTML=\"<div style='width:$percent;$success'>$percent $end</div>\"
+              </script>
+        ";
     }
 
     function BuferOut($delay = 0)
     {
-        echo str_repeat(' ', 256);
+        echo str_repeat(' ', 64 * 1024);
         flush();
         usleep($delay);
-
-        return;
     }
 
     function Debugging($start)
@@ -284,21 +286,19 @@
         return;
     }
 
-    function removedir($directory)
+    function RemoveDir($directory)
     {
         $dir = opendir($directory);
         while (($file = readdir($dir))) {
-            if (is_file($directory."/".$file)) {
-                unlink($directory."/".$file);
-            } else if (is_dir($directory."/".$file) && ($file != ".") && ($file != "..")) {
-                removedir($directory."/".$file);
+            if (is_file($directory.'/'.$file)) {
+                unlink($directory.'/'.$file);
+            } else {
+                if (is_dir($directory.'/'.$file) && ($file != '.') && ($file != '..')) {
+                    RemoveDir($directory.'/'.$file);
+                }
             }
         }
         closedir($dir);
 
         return true;
     }
-
-?>
-</body>
-</html>

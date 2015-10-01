@@ -121,21 +121,18 @@
     // Returns	false if authentication failure, true - otherwise
     function regAuthenticate($login, $password, $Redirect = true)
     {
-        // $q = db_query("UPDATE ".CUSTOMERS_TABLE.
-        // " SET logged = TIMESTAMP(0) WHERE (may_order_until < CURRENT_TIMESTAMP()) OR (logged < CURRENT_TIMESTAMP());") or die (db_error());
         $q = db_query("UPDATE ".CUSTOMERS_TABLE.
-            " SET logged = TIMESTAMP(0) WHERE (NOT unlimited_order AND may_order_until < CURRENT_TIMESTAMP()) OR (logged < CURRENT_TIMESTAMP());") or die (db_error());
-        //        $q = db_query("UPDATE ".CUSTOMERS_TABLE.
-        //            " SET logged = TIMESTAMP(0) WHERE (logged < CURRENT_TIMESTAMP());") or die (db_error());
-
+            " SET logged = TIMESTAMP(0) WHERE 
+                  (NOT unlimited_order AND may_order_until < CURRENT_TIMESTAMP())
+                  OR (logged < CURRENT_TIMESTAMP()) OR token='';")
+        or die (db_error());
         $login = xEscapeSQLstring($login);
         $password = xEscapeSQLstring($password);
-        $q = db_query("SELECT cust_password, CID, ActivationCode, logged FROM ".CUSTOMERS_TABLE.
+        $q = db_query("SELECT token, cust_password, CID, ActivationCode, logged FROM ".CUSTOMERS_TABLE.
             " WHERE Login='".$login."'") or die (db_error());
         $row = db_fetch_row($q);
 
         if (CONF_ENABLE_REGCONFIRMATION && $row['ActivationCode']) {
-
             if ($Redirect) RedirectSQ('&ukey=act_customer&notact=1');
             else return false;
         }
@@ -151,9 +148,14 @@
             $_SESSION["pass"] = Crypt::PasswordCrypt($password, null);
             $_SESSION["current_currency"] = $row["CID"];
 
+            if ($row['token'] !== xEscapeSQLstring($_SESSION['enter'])) {
+                $token = xEscapeSQLstring($_SESSION['enter']);
+                db_query("UPDATE ".CUSTOMERS_TABLE." SET token = '$token' WHERE  Login='".$login."'") or die (db_error());
+            }
+            
             ZAddAuthEvent($login, 4);
-
-            return true;
+            RedirectSQ('&ukey=act_customer&already=1');
+            //            return false;
             // file_put_contents('f:/1.txt', $login, GetRealIp());
             // if($Redirect)RedirectSQ('&ukey=act_customer&already=1');
             // else return false;
@@ -161,10 +163,13 @@
             if ($row && strlen(trim($login)) > 0) {
                 // $expire = ini_get('session.gc_maxlifetime'); //session_cache_expire();
                 $expire = 1800; //session_cache_expire();
-                if ($row["cust_password"] == Crypt::PasswordCrypt($password, null)) {
+                if ($row["cust_password"] === Crypt::PasswordCrypt($password, null)) {
                     $query = "UPDATE ".CUSTOMERS_TABLE.
                         " SET logged = TIMESTAMP(ADDTIME(CURRENT_TIMESTAMP, '$expire')) WHERE Login='".$login."'";
                     $q = db_query($query) or die (db_error());
+
+                    $token = xEscapeSQLstring($_SESSION['enter']);
+                    db_query("UPDATE ".CUSTOMERS_TABLE." SET token = '$token' WHERE  Login='".$login."'") or die (db_error());
 
                     // set session variables
                     $_SESSION["log"] = $login;
@@ -176,12 +181,12 @@
                     return true;
                 } else {
                     ZAddAuthEvent($login, 2);
-
+                    unset($_SESSION['log'], $_SESSION['pass'], $_SESSION['enter']);
                     return false;
                 }
             } else {
                 ZAddAuthEvent($login, 2);
-
+                unset($_SESSION['log'], $_SESSION['pass'], $_SESSION['enter']);
                 return false;
             }
         }
@@ -1150,6 +1155,7 @@ include("./cfg/tables.inc.php");
     function ZAddAuthEvent($Login, $state)
     {
         if ($Login != "") {
+
             // $ip_address = GetRealIp();
             $ip_address = $_SERVER['REMOTE_ADDR'];
             $all_ip = get_all_ip();

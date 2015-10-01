@@ -1194,12 +1194,21 @@
     {
 
         if (isset($_SESSION['log'])) {
+
+            if ($numargs = func_num_args()) {
+                $_SESSION['enter'] = func_get_arg(0);
+            }
+            
             $Customer = GetCustomerByCustomerLogin($_SESSION['log']);
 
             if (!$Customer->unlimited_order) {
                 $cust_may_order = (strtotime($Customer->may_order_until) > $_SERVER['REQUEST_TIME']) ? 1 : 0;
             } else {
                 $cust_may_order = 1;
+            }
+            if ($Customer->token && $Customer->token !== xEscapeSQLstring($_SESSION['enter'])) {
+                unset($_SESSION['log'], $_SESSION['pass'], $_SESSION['enter']);
+                db_query("UPDATE SC_customers SET token = '', logged = TIMESTAMP(0) WHERE Login='$Customer->Login'");
             }
             $_SESSION['cs_id'] = $Customer->customerID;
             $_SESSION['cs_first_name'] = $Customer->first_name;
@@ -1211,13 +1220,13 @@
             $_SESSION['cs_may_order'] = $cust_may_order;
             $_SESSION['cs_unlimited'] = $Customer->unlimited_order;
             $_SESSION['cs_vip'] = $Customer->vip;
-            // $_SESSION['cs_bonus']         = $Customer->1C;
+            //            $_SESSION['cs_bonus'] = $Customer->1C;
 
             getUSDvalue();
 
-            if (!$Customer->cust_password || !isset($_SESSION['pass']) || strcmp($Customer->cust_password, $_SESSION['pass'])) //unauthorized access
+            if (!$Customer->token || !$Customer->cust_password || !isset($_SESSION['pass']) || strcmp($Customer->cust_password, $_SESSION['pass'])) //unauthorized access
             {
-                unset($_SESSION['log'], $_SESSION['pass']);
+                unset($_SESSION['log'], $_SESSION['pass'], $_SESSION['enter']);
                 //unset($_SESSION['pass']);
                 // session_unregister("log"); //calling session_unregister() is required since unset() may not work on some systems
                 // session_unregister("pass");

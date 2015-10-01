@@ -11,9 +11,10 @@
         if ($_SERVER['REMOTE_ADDR'] != '91.223.223.243')
             $_SESSION['remote'] = $_SERVER['REMOTE_ADDR'];
     }
-    if (!isset($_SESSION['enter'])) {
-        $_SESSION['enter'] = md5(time());
-    }
+    //    if (!isset($_SESSION['enter'])) {
+    //        $_SESSION['enter'] = md5(time());
+    //    }    
+
     $WBSPath = DIR_ROOT."/../../../../";
     if (!defined("WBS_DIR")) {
         define("WBS_DIR", realpath($WBSPath)."/");

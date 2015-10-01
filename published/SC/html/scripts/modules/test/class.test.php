@@ -1019,7 +1019,7 @@ if(!class_exists('test',false)){
 
 		  $login = $_SESSION["log"];
 		  $q = db_query("UPDATE ".CUSTOMERS_TABLE.
-		  	" SET logged = TIMESTAMP(0) WHERE Login='".$login."'") or die (db_error());
+              " SET logged = TIMESTAMP(0), token='' WHERE Login='".$login."'") or die (db_error());
 
 			// unset($_SESSION['log']);
 			// unset($_SESSION['pass']);
@@ -1032,29 +1032,31 @@ if(!class_exists('test',false)){
 			// unset($_SESSION['cs_margin']);
 			// unset($_SESSION['cs_may_order']);
 			// unset($_SESSION['cs_unlimited']);
-			// unset($_SESSION['cs_vip']);
-			// unset($_SESSION['usd']);
-			
-			unset(
-                    $_SESSION['log'],
-                    $_SESSION['usd'],
-                    $_SESSION['pass'],
-                    $_SESSION['cs_id'],
-                    $_SESSION['cs_vip'],
-                    $_SESSION['newtree'],
-                    $_SESSION['cs_skidka'],
-                    $_SESSION['cs_margin'],
-                    $_SESSION['cs_may_order'],
-                    $_SESSION['cs_unlimited'],
-                    $_SESSION['cs_last_name'],
-                    $_SESSION['cs_first_name'],
-                    $_SESSION['cs_special_price'],
-                    $_SESSION['cs_may_order_until']
-                );
+            // unset($_SESSION['cs_vip']);
+            // unset($_SESSION['usd']);
+            unset(
+                $_SESSION['log'],
+                $_SESSION['usd'],
+                $_SESSION['pass'],
+                $_SESSION['enter'],
+                $_SESSION['cs_id'],
+                $_SESSION['cs_vip'],
+                $_SESSION['newtree'],
+                $_SESSION['cs_skidka'],
+                $_SESSION['cs_margin'],
+                $_SESSION['cs_may_order'],
+                $_SESSION['cs_unlimited'],
+                $_SESSION['cs_last_name'],
+                $_SESSION['cs_first_name'],
+                $_SESSION['cs_special_price'],
+                $_SESSION['cs_may_order_until']
+            );
+
             //calling session_unregister() is required since unset() may not work on some systems
             session_unregister('log');
             session_unregister('usd');
             session_unregister('pass');
+            session_unregister('enter');
             session_unregister('cs_id');
             session_unregister('cs_vip');
             session_unregister('newtree');
@@ -1074,4 +1076,3 @@ if(!class_exists('test',false)){
 		}
 	}
 }
-?>

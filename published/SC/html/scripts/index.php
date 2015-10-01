@@ -315,8 +315,11 @@ ORDER BY `cnt` DESC");
         RedirectSQ('lang_iso2=');
     }
 
-    $smarty->assign('enter', $_SESSION['enter']);
-    checkLogin();
+    if (isset($_SESSION['enter'])) {
+        $a = $_SESSION['enter'];
+    }
+
+    checkLogin($a);
 
     if (detectMSIE()) {
         $smarty->assign('deffer', 'deffer');
@@ -516,6 +519,10 @@ ORDER BY `cnt` DESC");
 
         $smarty->template_dir = DIR_TPLS;
     } else {
+
+        $enter = md5(uniqid('multi', true).$_SESSION['remote'].$_SERVER['HTTP_USER_AGENT'].mt_rand(1, 100));
+        $smarty->assign('enter', $enter);
+
         $themeEntry = &ClassManager::getInstance('theme');
         /*@var $themeEntry Theme*/
         $res = $themeEntry->load(CONF_CURRENT_THEME);
@@ -523,12 +530,13 @@ ORDER BY `cnt` DESC");
             RedirectSQ('demo_theme_id='._getSettingOptionValue('CONF_CURRENT_THEME'));
         }
         $Register->set('CURRENT_THEME_ENTRY', $themeEntry);
-
         $smarty->assign('PAGE_VIEW', isset($GetVars['view']) ? $GetVars['view'] : '');
         $smarty->assign('main_content_template', 'home.html');
 
         include(DIR_ROOT.'/includes/authorization.php');
-
+        if (!isset($_SESSION['log'])) {
+            $_SESSION['enter'] = $enter;
+        }
         $smarty->assign('categoryID', isset($_GET['categoryID']) ? (int)$_GET['categoryID'] : 0);
         $smarty->template_dir = DIR_FTPLS;
     }

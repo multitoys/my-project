@@ -10,6 +10,7 @@
     $Warnings = array();
     include_once(DIR_ROOT . '/includes/init.php');
     include_once(DIR_FUNC . '/functions.php');
+    include_once(DIR_FUNC.'/product_functions.php');
     include_once(DIR_CFG . '/connect.inc.wa.php');
     include(DIR_FUNC . '/setting_functions.php');
 
@@ -31,6 +32,9 @@
         exit;
     }
 
+    $search_array = array();
+    $search_array = explode(' ', $search);
+    
     $limit = 'LIMIT 100';
     $order = 't1.name_ru';
     $enabled = 't1.enabled AND';
@@ -44,6 +48,7 @@
         $all_res = '<ul><li>Результаты поиска</li>';
     }
 
+    $search = mysql_real_escape_string(_searchPatternReplace($search));
     $query = mysql_query("SELECT t1.productID, t1.product_code, t1.Price, t1.name_ru, t1.code_1c,
                 t1.default_picture, t1.slug, t3.filename
                 FROM SC_products t1

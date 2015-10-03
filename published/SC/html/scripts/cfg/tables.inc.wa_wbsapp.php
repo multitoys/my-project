@@ -70,12 +70,4 @@
 
     define('TBL_PRODUCT_LIST', DBTABLE_PREFIX.'product_list');
     define('TBL_PRODUCT_LIST_ITEM', DBTABLE_PREFIX.'product_list_item');
-
-    define('COMPETITORS_PREFIX', 'Conc__');
-
-    define('COMPETITORS_TABLE', COMPETITORS_PREFIX.'analogs');
-    define('ALLIANCE_TABLE', COMPETITORS_PREFIX.'alliance');
-    define('DIVOLAND_TABLE', COMPETITORS_PREFIX.'divoland');
-    define('DREAMTOYS_TABLE', COMPETITORS_PREFIX.'dreamtoys');
-    define('MIXTOYS_TABLE', COMPETITORS_PREFIX.'mixtoys');
-    define('SEARCH_PRODUCTS_TABLE', 'Search_products');
+?>

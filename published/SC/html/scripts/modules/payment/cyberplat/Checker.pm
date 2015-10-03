@@ -5,7 +5,7 @@ use Paths;
 
 use vars qw(%checker_config);
 
-# пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ checker.exe (checker.ini)
+# Проглотить конфиг checker.exe (checker.ini)
 sub swallow_config
 {
 	open ( my $in_f, "<$SIGN_INI" );
@@ -17,7 +17,7 @@ sub swallow_config
 	close ( $in_f );
 }
 
-# пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+# Подписать сообщение секретным ключом магазина
 sub sign
 {
 	my $message = shift;
@@ -29,15 +29,15 @@ sub sign
 		$checker_config { 'keypath' } . $checker_config { 'seckeyfile'},
 		$checker_config { 'password' }
 	);
-	return 'SessionStatus=пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ' if ! $secret_key;
+	return 'SessionStatus=Невозможно загрузить секретный ключ магазина' if ! $secret_key;
 
 	my $signmessage = $signer->Sign( $message, $secret_key );
-	return 'SessionStatus=пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ' if !$signmessage;
+	return 'SessionStatus=Ошибка при подписи сообщения' if !$signmessage;
 
 	return $signmessage;
 }
 
-# пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+# Проверить подпись у сообщения
 sub verify
 {
 	my $signmessage = shift;
@@ -49,10 +49,10 @@ sub verify
 		$checker_config { 'keypath' } . $checker_config { 'pubkeyfile' },
 		$checker_config { 'bankkey' }
 	);
-	return 'SessionStatus=пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ CyberCardServer' if ! $public_key;
+	return 'SessionStatus=Невозможно загрузить публичный ключ CyberCardServer' if ! $public_key;
 
 	my $message = $signer->Verify( $signmessage, $public_key );
-	return 'SessionStatus=пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ' if ! $message;
+	return 'SessionStatus=Ошибка при проверке подписи сообщения' if ! $message;
 
 	return $message;
 }

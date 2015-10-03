@@ -298,8 +298,7 @@
             $this->query('DROP TABLE '.xEscapeSQLstring($_s_TableName));
         }
 
-        function getServerVersion()
-        {
+        function getServerVersion(){
 
             $result = $this->query('SHOW VARIABLES LIKE "VERSION"');
             $data = $result->fetchRow();
@@ -338,6 +337,5 @@
         {
             return is_resource($this->link) ? mysql_free_result($this->link) : false;
         }
-    }
-
+}
 ?>

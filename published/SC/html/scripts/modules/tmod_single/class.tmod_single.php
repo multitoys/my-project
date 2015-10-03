@@ -10,8 +10,8 @@ class tmod_single extends Module {
 				'name' => 'CONF_TESTI_DAY',
 				'value' => 15,
 				'type' => SETTING_NUMBER,
-				'title' => 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ',
-				'description' => 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ',
+                'title'       => 'пробная настройка',
+                'description' => 'описание',
 				),
 		);
 		Module::initSettings();

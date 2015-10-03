@@ -1024,7 +1024,6 @@ ol {
 #navmenu-v li ul li {
     width: 50%;
     float: left
-
 }
 
 ul#navmenu-v:after {
@@ -1042,45 +1041,42 @@ ul#navmenu-v li:hover {
 
 ul#navmenu-v li ul, ul#navmenu-v li ul li ul {
     background: rgba(0, 0, 0, 0.6);
-    min-height: 96%;
-    /* height: 85%; */
+    min-height: 530px;
+    height: 85%
 }
 
 ul#navmenu-v a {
-    padding: 0 0 0 7px;
+    padding: 0 0 0 10px;
     display: block;
     font: 14px/28px Tahoma, Arial, Helvetica, Sans-Serif;
     color: #3a6181;
     text-decoration: none;
     border-bottom: 3px double #9ccce3;
     z-index: 9999
-
 }
 
 ul#navmenu-v a:first-child:not(:last-child):after {
     content: url('images/footerbullets.png');
     position: absolute;
-    right: 16px;
+    right: 15px;
     margin-top: -2px
-
 }
 
 ul#navmenu-v > li > a:before {
     content: url('images/vmenuitemicon.png');
-    margin-right: 7px;
+    margin-right: 10px;
     bottom: 1px;
     position: relative;
     display: inline-block;
     vertical-align: middle;
     font-size: 0;
     line-height: 0
-
 }
 
 ul#navmenu-v li:hover li a:first-child:not(:last-child):before {
     content: url('images/footerbullets.png');
-    margin-right: 5px;
-    position: relative;
+    margin-right: 10px;
+    position: relative
 }
 
 ul#navmenu-v li:hover li a:first-child:not(:last-child):after {
@@ -1090,12 +1086,11 @@ ul#navmenu-v li:hover li a:first-child:not(:last-child):after {
 ul#navmenu-v a:hover, ul#navmenu-v li:hover a {
     color: #FFF;
     z-index: 999
-
 }
 
 ul#navmenu-v li:hover li a {
     padding: 0 10px 0 20px;
-    border: 0;
+    border: 0
 }
 
 ul#navmenu-v li:hover li a:hover {
@@ -1110,7 +1105,6 @@ ul#navmenu-v li:hover li:hover a {
 
 ul.animated.slideInRight {
     color: #fff
-
 }
 
 ul#navmenu-v li:hover li:hover li:hover a {
@@ -1122,11 +1116,10 @@ ul#navmenu-v li:hover li:hover li:hover a {
 ul#navmenu-v ul {
     display: none;
     position: absolute;
-    top: 0;
-    left: 185px;
+    top: 22px;
+    left: 190px;
     box-shadow: 1px 3px 6px 2px rgba(0, 0, 0, 0.4);
     z-index: 199
-
 }
 
 ul#navmenu-v li:hover ul li:hover ul {
@@ -1156,11 +1149,7 @@ ul#navmenu-v li:hover ul, ul#navmenu-v ul li:hover ul {
     min-width: 630px;
     overflow: hidden;
     border-radius: 2px;
-    padding-top: 10px;
-    /* animation-timing-function: step-start; */
-    /* width: calc(100% - 10px); */
-    /* right: 180px; */
-    /* max-width: 100%; */
+    padding-top: 10px
 }
 
 ul#navmenu-v li:hover ul ul {
@@ -2415,7 +2404,6 @@ div.compact-theme ul li {
     animation-duration: 1s;
     -webkit-animation-fill-mode: both;
     animation-fill-mode: both
-
 }
 
 .animated.bounceIn, .animated.bounceOut, .animated.fadeInDownBig {
@@ -2425,7 +2413,7 @@ div.compact-theme ul li {
 
 .animated.slideInRight {
     -webkit-animation-duration: .5s;
-    animation-duration: .5s;
+    animation-duration: .75s
 }
 
 .animated.bounceInDown {

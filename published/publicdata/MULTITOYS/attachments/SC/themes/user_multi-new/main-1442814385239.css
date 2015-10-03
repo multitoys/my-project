@@ -1041,7 +1041,8 @@ ul#navmenu-v li:hover {
 
 ul#navmenu-v li ul, ul#navmenu-v li ul li ul {
     background: rgba(0, 0, 0, 0.6);
-    min-height: 579px; /* height: 96%; */
+    min-height: 530px;
+    height: 85%
 }
 
 ul#navmenu-v a {
@@ -1148,8 +1149,7 @@ ul#navmenu-v li:hover ul, ul#navmenu-v ul li:hover ul {
     min-width: 630px;
     overflow: hidden;
     border-radius: 2px;
-    padding-top: 10px;
-    top: 0;
+    padding-top: 10px
 }
 
 ul#navmenu-v li:hover ul ul {

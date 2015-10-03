@@ -434,7 +434,7 @@
     RemoveDir($_SERVER['DOCUMENT_ROOT'].'/upload/');
 
     $subject = 'Импорт товаров завершен!';
-    $body_end = $subject.$res_end."\r\n".Debugging($start);
+    $body_end = $subject.$res_end. "\r\n" .Debugging($start);
     mail('multitoys.dp@gmail.com', $subject, $body_end, $headers);
 
 //    exit(0);

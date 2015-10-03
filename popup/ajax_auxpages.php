@@ -138,7 +138,7 @@
             }
 
             $url = '/auxpage_new_items/';
-            $out = SimpleNavigator($tov_all_count, $start_row, $p_count, $url, $out);
+            $out = SimpleNavigator($tov_all_count, $start_row, $p_count, $url, &$out);
             $start = $start_row;
             $direction_nav = 'ASC';
             if ($direction) {
@@ -484,21 +484,21 @@
                     $newitems .= '<div class=delimiter></div>';
                 }
             }
-            $out_end = SimpleNavigator($tov_all_count, $start, $tov_count, $url, $out_end);
+            $out_end = SimpleNavigator($tov_all_count, $start, $tov_count, $url, &$out_end);
 			$newitems .= '
                                 </div>';
-            //            $newitems_end = "</div><div
-            //                                    id='light-pagination'
-            //                                    class='simple-pagination compact-theme'
-            //                                    data-items       = $tov_all_count
-            //                                    data-itemsOnPage = $p_count
-            //                                    data-add         = $tov_count
-            //                                    data-show        = 0
-            //                                    data-page        = $start
-            //                                    data-sort        = $ajax_sort
-            //                                    data-direction   = $direction_nav
-            //                                >$out_end</div>";
-            $newitems_end = '</div><div style="text-align: right;">
+            $newitems_end = "</div><div
+                                    id='light-pagination'
+                                    class='simple-pagination compact-theme'
+                                    data-items       = $tov_all_count
+                                    data-itemsOnPage = $p_count
+                                    data-add         = $tov_count
+                                    data-show        = 0
+                                    data-page        = $start
+                                    data-sort        = $ajax_sort
+                                    data-direction   = $direction_nav
+                                >$out_end</div>";
+            $newitems_end .= '<div style="text-align: right;">
                                         <button
                                             class="addall_pp blue-button" onclick="add_all2cart();">Заказать все</button>
                                     </div>';

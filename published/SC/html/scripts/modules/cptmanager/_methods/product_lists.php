@@ -1,15 +1,11 @@
 <?php
     $local_settings = &$Args[0]['local_settings'];
 
-    if (!$local_settings['list_id']) {
-        return;
-    }
+    if (!$local_settings['list_id']) return;
 
     $productList = new ProductList();
     $res = $productList->loadByID($local_settings['list_id']);
-    if (!$res) {
-        return;
-    }
+    if (!$res) return;
 
     $products = $productList->getProducts(true, $local_settings['limit']);
 
@@ -18,6 +14,6 @@
     /* @var $smarty Smarty */
 
     $smarty->assign('__products', $products);
-    $smarty->assign('__block_height', (int)$local_settings['block_height']);
-    $smarty->assign('__limit', (int)$local_settings['limit']);
+    $smarty->assign('__block_height', intval($local_settings['block_height']));
+    $smarty->assign('__limit', intval($local_settings['limit']));
     $smarty->display('product_list.html');

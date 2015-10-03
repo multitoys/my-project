@@ -19,8 +19,8 @@
         $tov_count = 50;
 //    }
         $div_cat = 'WHERE enabled ';
-        //$cat_div = '';
-        //$selected_category = '';
+        $cat_div = '';
+        $selected_category = '';
         if (isset($_GET['div_cat'])) {
             $selected_category = $_GET['div_cat'];
             $div_cat .= "AND category LIKE '$selected_category'";

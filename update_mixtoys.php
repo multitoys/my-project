@@ -24,6 +24,7 @@
 TAG
     );
 
+    $usd = GetValue('currency_value', 'Conc__currency', 'CCID = 3');
     $archive_dir = $_SERVER['DOCUMENT_ROOT'] . '/upload/';
     //$dest_dir = $_SERVER['DOCUMENT_ROOT'].'/temp/import/';
 
@@ -100,7 +101,7 @@ TAG
             if (!is_numeric($price)) {
                 $price = preg_replace('/[^0-9.]/', '', $price);
             }
-            $price_usd = $price / 20.51;
+            $price_usd = $price / $usd;
 
             $productID = GetValue('productID', 'Conc__mixtoys', "code = '$code'");
 

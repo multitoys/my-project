@@ -130,16 +130,16 @@
     );
 
     $login_url = 'http://kr-kindermarket.com.ua/auth';
-    postAuth('http://gtoys.com.ua/ru/user/login', 'UserLogin[username]=Elenna&UserLogin[password]=0675230623', $headers);
-    postAuth('http://multitoys.com.ua', 'user_login=sales&user_pw=172092&enter=1', $headers);
+    //    postAuth('http://gtoys.com.ua/ru/user/login', 'UserLogin[username]=Elenna&UserLogin[password]=0675230623', $headers);
+    //    postAuth('http://multitoys.com.ua', 'user_login=sales&user_pw=172092&enter=1', $headers);
     postAuth($login_url, 'email=alenkiselev%40mail.ru&password=bondarenko&login=', $headers);
-    file_put_contents($_SERVER['DOCUMENT_ROOT'].'/popup/1.txt', readUrl('http://multitoys.com.ua/cart', $headers, $login_url));
+    //file_put_contents($_SERVER['DOCUMENT_ROOT'].'/popup/1.txt', readUrl('http://multitoys.com.ua/cart', $headers, $login_url));
     $refferer = 'http://kr-kindermarket.com.ua/';
-    $url = 'http://kr-kindermarket.com.ua/category/novie_postupleniya';
+    //    $url = 'http://kr-kindermarket.com.ua/category/novie_postupleniya';
     $url = 'http://kr-kindermarket.com.ua/category';
     $filename = $_SERVER['DOCUMENT_ROOT'].'/popup/search_by_conc/category.html';
-    readUrl('http://gtoys.com.ua/ru/shop/order/create', $headers, $login_url);
-    readUrl($url, $_SERVER['DOCUMENT_ROOT'].'/popup/Novye postuplenija.html', $refferer, $headers);
+    //    readUrl('http://gtoys.com.ua/ru/shop/order/create', $headers, $login_url);
+    //    readUrl($url, $_SERVER['DOCUMENT_ROOT'].'/popup/Novye postuplenija.html', $refferer, $headers);
     readUrl($url, $filename, $refferer, $headers);
-    postAuth('http://dreamtoys.com.ua/index.php?option=com_user&task=login', '&username=detkikonfetki', '&passwd=7777777');
-    //        readUrl('http://dreamtoys.com.ua/index.php?page=shop.browse&category=&option=com_virtuemart&Itemid=1');
+    //    postAuth('http://dreamtoys.com.ua/index.php?option=com_user&task=login', '&username=detkikonfetki', '&passwd=7777777');
+    //    readUrl('http://dreamtoys.com.ua/index.php?page=shop.browse&category=&option=com_virtuemart&Itemid=1');

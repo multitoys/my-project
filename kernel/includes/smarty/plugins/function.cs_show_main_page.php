@@ -1,5 +1,5 @@
 <?php
-    function smarty_function_cs_show_main_page($params, &$smarty)
+    function smarty_function_cs_show_main_page()
 {
     $query = "SELECT aux_page_text_ru AS text_ru FROM SC_aux_pages WHERE aux_page_slug = 'portfolio'";
     $res = mysql_query($query) or die(mysql_error() . "<br>$query");

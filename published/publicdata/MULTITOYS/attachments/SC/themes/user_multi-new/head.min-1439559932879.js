@@ -78,7 +78,6 @@ $(document).ready(function () {
             var items = parseInt(btn_more.attr("data-items"));
             var show = parseInt(btn_more.attr("data-show"));
             var page = parseInt(btn_more.attr("data-page"));
-            var date = parseInt(btn_more.attr("data-date"));
             if (page == -1) {
                 page = 0;
             }
@@ -90,11 +89,11 @@ $(document).ready(function () {
                 notProgress = false;
                 scrollPane.addClass("loader");
                 $.ajax({
-                    url: "/auxpage_new_items/" + date + "/",
+                    url: "/auxpage_new_items/",
                     type: "post",
                     dataType: "json",
                     cache: false,
-                    data: {count_show: count_show, sort: sort, direction: direction, date: date},
+                    data: {count_show: count_show, sort: sort, direction: direction},
                     success: function (data) {
                         if (data.result == "success") {
                             content.append(data.html);
@@ -140,9 +139,8 @@ $(document).ready(function () {
             }
             location.href = location.href.replace(/#page-(\d+)/, "") + page;
             var sort = pageNavigator.attr("data-sort");
-            var date = pageNavigator.attr("data-date");
             var direction = pageNavigator.attr("data-direction");
-            var url = "/auxpage_new_items/" + date + "/";
+            var url = "/auxpage_new_items/";
             content.addClass("smoke");
             scrollPane.addClass("loader");
             if (notProgress) {
@@ -152,7 +150,7 @@ $(document).ready(function () {
                     type: "post",
                     dataType: "json",
                     cache: false,
-                    data: {p: p, sort: sort, direction: direction, date: date},
+                    data: {p: p, sort: sort, direction: direction},
                     success: function (data) {
                         if (data.result == "success") {
                             content.html(data.html);

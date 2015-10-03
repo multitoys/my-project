@@ -253,7 +253,7 @@
 
     function BuferOut($delay = 0)
     {
-        echo str_repeat(' ', 256);
+        echo str_repeat(' ', 1024 * 128);
         flush();
         usleep($delay);
     }
@@ -267,29 +267,3 @@
         // printf('<br>Использовано оперативной памяти: %.2F МБ.', $memoscript);
         printf('<br>Пик оперативной памяти: %.2F МБ.', $memoscript_peak);
     }
-
-    $headers = array
-    (
-        'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-        'Accept-Language: ru,en-us;q=0.7,en;q=0.3',
-        'Origin: http://multitoys.com.ua'
-    );
-    //    $headers = array
-    //    (
-    //        ''
-    //    );
-
-    //    $login_url = 'http://kr-kindermarket.com.ua/auth';
-    //    postAuth('http://gtoys.com.ua/ru/user/login', 'UserLogin[username]=Elenna&UserLogin[password]=0675230623', $headers);
-    postAuth('http://multitoys.com.ua.local', 'user_login=sales&user_pw=172092&enter=1', $headers);
-    //    postAuth($login_url, 'email=alenkiselev%40mail.ru&password=bondarenko&login=', $headers);
-    //file_put_contents($_SERVER['DOCUMENT_ROOT'].'/popup/1.txt', readUrl('http://multitoys.com.ua/cart', $headers, $login_url));
-    //    $refferer = 'http://kr-kindermarket.com.ua/';
-    //    $url = 'http://kr-kindermarket.com.ua/category/novie_postupleniya';
-    //    $url = 'http://kr-kindermarket.com.ua/category';
-    $filename = $_SERVER['DOCUMENT_ROOT'].'/popup/search_by_conc/category.html';
-    //    readUrl('http://gtoys.com.ua/ru/shop/order/create', $headers, $login_url);
-    //    readUrl($url, $_SERVER['DOCUMENT_ROOT'].'/popup/Novye postuplenija.html', $refferer, $headers);
-    readUrl('http://multitoys.com.ua.local', $filename, $refferer, $headers);
-    //    postAuth('http://dreamtoys.com.ua/index.php?option=com_user&task=login', '&username=detkikonfetki', '&passwd=7777777');
-    //    readUrl('http://dreamtoys.com.ua/index.php?page=shop.browse

@@ -48,7 +48,7 @@
             $conc_args = func_get_args();
             $conc = $conc_args[0];
             $code = $conc_args[1];
-            $price = $conc_args[2];
+            $price = 0;
             $limit = 2;
         }
 
@@ -68,7 +68,8 @@
             }
         }
         $no = 0;
-        if ($res = getProductLike($match_str, $price, $k, $limit)) {
+        //if ($res = getProductLike($match_str, $price, $k, $limit)) {
+        if ($res = getProductLike($match_str, 0, 0, $limit)) {
 
             while ($Product = mysql_fetch_object($res)) {
 

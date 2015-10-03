@@ -38,9 +38,9 @@ TAG
     $usd = GetValue('currency_value', 'Conc__currency', 'CCID = 5');
 
     define('SLASH', '|');
-    define('NAME_PATTERN', '<div\s+class="block[0-9]*?"[^<>]*?>[^<>]*?<div\s+class="product-overview-image"[^<>]*?>[^<>]*?<div\s+id="img-radius"[^<>]*?>[^<>]*?<a[^<>]*?>[^<>]*?</a>[^<>]*?</div>[^<>]*?</div>[^<>]*?<div\s+class="product-title"[^<>]*?>[^<>]*?<a[^<>]*?>[\s]*([^<>]+?)[\s]*</a>[^<>]*?</div>[^<>]*?');
+    define('NAME_PATTERN', '<div\s+class="block[0-9]*?"[^<>]*?>[^<>]*?<div\s+class="product-title"[^<>]*?>[^<>]*?<a[^<>]*?>[\s]*([^<>]+?)[\s]*</a>[^<>]*?</div>[^<>]*?<div\s+class="block_border"[^<>]*?>[^<>]*?<div\s+class="product-overview-image"[^<>]*?>[^<>]*?<div\s+id="img-radius"[^<>]*?>[^<>]*?<a[^<>]*?>[^<>]*?</a>[^<>]*?</div>[^<>]*?</div>[^<>]*?(<div[^<>]*?>[^<>]*?<img[^<>]*?>[^<>]*?</div>[^<>]*?)?');
     define('PRICE_PATTERN', '<div\s+class="product-price"[^<>]*?>[\s]+([0-9.]+?)[^<>]*?');
-    define('CODE_PATTERN', '<div\s+class="available"[^<>]*?>[^<>]*?</div>[^<>]*?<form[^<>]*?>[^<>]*?<input\s+type="[^"]*?"\s+value="([0-9]+?)"[^<>]*?>');
+    define('CODE_PATTERN', '<div\s+class="[^"]*?"[^<>]*?>[^<>]*?</div>[^<>]*?<form[^<>]*?>[^<>]*?<input\s+type="[^"]*?"\s+value="([0-9]+?)"[^<>]*?>');
 
     $headers = array
     (
@@ -53,9 +53,9 @@ TAG
 
     $login_url = URL_COMPETITORS.'/ru/user/login';
     $refferer = URL_COMPETITORS;
-    postAuth($login_url, 'UserLogin[username]=Elenna&UserLogin[password]=0675230623', $headers);
+    //postAuth($login_url, 'UserLogin[username]=Elenna&UserLogin[password]=0675230623', $headers);
 
-    UpdateValue('Conc__grandtoys', 'enabled = 0');
+    //UpdateValue('Conc__grandtoys', 'enabled = 0');
 
     //    DeleteRow('Conc__grandtoys');
     //    DeleteRow('Conc_search__grandtoys');
@@ -79,7 +79,7 @@ TAG
             $filename = DIR_COMPETITORS.'/'.$filename.EXT;
             $products = '';
 
-            readUrl($category_url, $filename, '', $headers);
+            //readUrl($category_url, $filename, '', $headers);
 
             $html = file_get_contents($filename);
             preg_match_all(
@@ -98,8 +98,8 @@ TAG
             for ($j = 0; $j < $rowcount; $j++) {
                 set_time_limit(0);
                 $name = mysql_real_escape_string(trim(str_replace($replace_name, ' ', DecodeCodepage($products[1][$j]))));
-                $price = (double)$products[2][$j];
-                $code = mysql_real_escape_string(DecodeCodepage($products[3][$j]));
+                $price = (double)$products[3][$j];
+                $code = mysql_real_escape_string(DecodeCodepage($products[4][$j]));
                 $productID = GetValue('productID', 'Conc__grandtoys', "code = '$code'");
                 $price_usd = $price / $usd;
 
@@ -110,9 +110,9 @@ TAG
                                     SET     parent       = '$parent',
                                             category     = '$category',
                                             name         = '$name',
-                                            price_uah    = $price,
-                                            price_usd    = $price_usd,
-                                            enabled      = 1
+                                            price_uah    =  $price,
+                                            price_usd    =  $price_usd,
+                                            enabled      =  1
                                     WHERE   productID    =  $productID
                         ";
                     $res = mysql_query($query) or die(mysql_error()."<br>$query");
@@ -135,8 +135,8 @@ TAG
         if ($progress > $percent) {
             $percent = $progress.'%';
             ProgressBar('products', $percent);
+            BuferOut();
         }
-        BuferOut(5000);
     }
     ProgressBar('products', $percent, true);
     echo('<hr><span style="color:blue;">Обработано '.$no.' товаров</span><br><br>Новых '.$new.' товаров</span><br>');

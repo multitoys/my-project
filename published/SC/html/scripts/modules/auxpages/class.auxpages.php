@@ -956,8 +956,6 @@ class AuxPages extends ComponentModule {
 					$start_row, $tov_count";
         $res2 = mysql_query($query2) or die(mysql_error().$query2);
 
-        $tab = 0;
-        
         while ($Product = mysql_fetch_object($res2)) {
 
             $category_conc = escape($Product->category);
@@ -1003,13 +1001,12 @@ class AuxPages extends ComponentModule {
                     </p>";
                 }
             } else {
-                $tab++;
-                $analog = findAnalogs($name_conc, $Product->code, $Product->price_uah);
+                $analog = findAnalogs($name_conc, $Product->code);
                 $analog .= "<div>
                             <a class='blue-button fancybox fancybox.ajax find' title=''
                             href='/popup/search_by_conc/search_conc.php?mode=1&conc=$name_conc&code=$Product->code&price=$Product->price_uah' onclick=\"this.style.backgroundColor = 'transparent'\">Найти совпадения</a>
                             <input type='text' class='input_message search-concs' rel='Поиск аналогов' value='Поиск аналогов' 
-                            autocomplete='off' name='searchstring' tabindex=$tab autofocus  data-conc=$name_conc data-code=$Product->code data-price=$Product->price_uah >
+                            autocomplete='off' name='searchstring' data-conc=$name_conc data-code=$Product->code data-price=$Product->price_uah >
                             </div>";
             }
 //        $pictures  = (strlen($Product->foto)) ? "<img width=160 height=120  class=preview alt='$name' src='/$auxpage/$Product->foto' pid='/$auxpage/$Product->foto'>" : "<img width=153 height=117 alt='no foto' src='/img/nophoto.jpg'>";

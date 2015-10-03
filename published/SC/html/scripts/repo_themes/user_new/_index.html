@@ -1,0 +1,179 @@
+<SCRIPT language='JavaScript'>{if $smarty.session.log}var inlog = true;
+            {else}var inlog = false;
+    {/if}{literal}
+    function load_cart() {
+        $('#my__cart').load('/popup/show_cart.php');
+    }
+    $(document).ready(function () {
+        load_cart();
+        $('#alreg').animate({opacity: '1'}, 2000).animate({opacity: '0'}, 200).animate({opacity: '1'}, 200).animate({opacity: '0'}, 200).animate({opacity: '1'}, 200).animate({opacity: '0'}, 200).animate({opacity: '1'}, 1000);
+    });{/literal}</SCRIPT>
+<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" id="qwe">
+    <tr id='top-bg'>
+        <td colspan="3" align='center' style='text-align:center' ;>
+            <table width="1000" border="0" align="center" cellpadding="0" cellspacing="0" style='margin:0 auto;'>
+                <tr id='header' style="{if $smarty.session.log|cs_may_order}display:none;{/if}" height="253"
+                    style='height:253px !important;'>
+                    <td colspan="3" width="1000px" height="253" id="top" valign="top" style='height:253px !important;'>
+                        <div id='link2homepage'>
+                            <form action="/" method='get'><input type='submit' title='На главную' value='&nbsp;'></form>
+                        </div>
+                        <div id='link1copy'>
+                            <form action="/index.php?ukey=auxpage_cash-carry" method='post'><input type='submit'
+                                                                                                   title='Система cash&carry'
+                                                                                                   value='&nbsp;'>
+                            </form>
+                        </div>
+                        <div id='link2copy'>
+                            <form action="/index.php?ukey=auxpage_zamena-braka" method='post'><input type='submit'
+                                                                                                     title='Работа с браком'
+                                                                                                     value='&nbsp;'>
+                            </form>
+                        </div>
+                        <div id='link3copy'>
+                            <form action="/index.php?ukey=auxpage_zamena-braka" method='post'><input type='submit'
+                                                                                                     title='Учет по штрих-кодам в детском магазине'
+                                                                                                     value='&nbsp;'>
+                            </form>
+                        </div>
+                        <div id='vhod'>              {if $smarty.session.log==''}
+                                <div style='height:1px; line-height:1px; font-size:1px;'></div>
+                                <div class="form_wrapper">
+                                    <form action="/index.php?ukey=auth&did=183" method="post" name='authform'><input
+                                                type="hidden" name="enter" value="1">
+                                        <table border=0 cellspacing='0' cellpadding='0'>
+                                            <tr>
+                                                <td>{"usr_custinfo_login2"|translate}</td>
+                                                <td><input type="text" name="user_login"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>{"usr_custinfo_password2"|translate}</td>
+                                                <td><input name="user_pw" type="password"></td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan='2'
+                                                    style='text-align:center; height:16px; vertical-align:bottom;'>
+                                                    <input type='submit' value='&nbsp;'
+                                                           style='width:1px; height:1px; background:none; border:0;'> <a
+                                                            rel="nofollow" href="{'?ukey=register'|set_query_html}"
+                                                            class="ssilka">Регистрация</a> / <a
+                                                            href='javascript:document.authform.submit();'
+                                                            class='ssilka'>ВХОД</a></td>
+                                            </tr>
+                                        </table>
+                                    </form>
+                                </div>
+                            {else}
+                                <div id="privet"> Добро пожаловать,<br><font style="color:red;"> {
+                                        $smarty.session.log}! </font>
+
+                                    <div align='center'><a href="index.php?ukey=office">Личный кабинет</a> / <a
+                                                href="index.php?ukey=logout">Выйти</a></div>
+                                </div>
+                            {/if}
+                            <div id="kor1_kor">{cpt_shopping_cart_info overridestyle=':qwl6nm'}</div>
+                        </div> {if $smarty.get.already}
+                            <div id='alreg' style='color:red;'>Указанный пользователь уже авторизировался в системе
+                            </div>
+                        {/if}          </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr id='header2' style="{if !$smarty.session.log|cs_may_order}display:none;{else}height:30px;{/if}">
+        <td class="top2" style='vertical-align:middle; text-align:center;'>
+            <div id='my__cart'></div>
+        </td>
+        <td class="top2" style='vertical-align:middle; text-align:center;'> Добро пожаловать, <font style="color:red;">
+                { $smarty.session.log}!</font> Вы можете заказывать товары до <font
+                    style="color:red;">{$smarty.session.log|cs_may_order}</font></td>
+        <td class="top2" style='vertical-align:middle; text-align:center;'><a href="index.php?ukey=office">Личный
+                кабинет</a> / <a href="index.php?ukey=logout">Выйти</a></td>
+    </tr>
+    <tr height='32' id='mainmenu'>
+        <td width="225" valign="top">
+            <div id="catalog"></div>
+        </td>
+        <td colspan="2" valign="top" style='text-align:left;'>
+            <div class="mainmenu"><a href="index.php?ukey=auxpage_1" class="m1d">
+                    <div class="menudiv"></div>
+                </a> <a href="index.php?ukey=auxpage_2" class="m2d">
+                    <div class="menudiv"></div>
+                </a> <a href="index.php?ukey=auxpage_programka-shtrih-kod" class="m3d">
+                    <div class="menudiv"></div>
+                </a> <a href="index.php?ukey=auxpage_preimushestva" class="m4d">
+                    <div class="menudiv"></div>
+                </a> <a href="index.php?ukey=news" class="m5d">
+                    <div class="menudiv"></div>
+                </a> <a href="index.php?ukey=auxpage_cash-carry" class="m6d">
+                    <div class="menudiv"></div>
+                </a> <a href="index.php?ukey=auxpage_zamena-braka" class="m7d">
+                    <div class="menudiv"></div>
+                </a>{*    		<a href="index.php?ukey=auxpage_new_items"            class="m8d"><div class="menudiv"></div></a> *}
+            </div>
+        </td>
+    </tr>
+    <tr id='main_content'>
+        <td width="225" valign="top">      {if $smarty.session.log}
+                <div id="searchstring10">
+                    <div class="cpt_product_search">
+                        <form method="post" action="/shop/index.php?ukey=search"><input type="text"
+                                                                                        class="input_message"
+                                                                                        rel="Поиск товаров"
+                                                                                        value="Поиск товаров"
+                                                                                        name="searchstring"
+                                                                                        id="searchstring"> <input
+                                    type="submit" value="ок" id='search_ok'></form>
+                    </div>
+                </div>
+            {/if}
+            <div id="pane" class="scroll-pane">        <!-- cpt_container_start -->
+                {cpt_category_tree overridestyle='1:915rmk'}<!-- cpt_container_end -->
+                <div class="cpt_category_tree cptovst_915rmk">
+                    <ul>
+                        <li class="parent"><span class="bullet">&nbsp;</span><a href='index.php?ukey=auxpage_new_items'>Последние
+                                поступления</a></li>
+                    </ul>
+                </div>
+            </div>
+            <!-- cpt_container_start -->
+            <!--{cpt_divisions_navigation divisions='183' view='vertical' overridestyle=':8g3ted'}-->
+            <!-- cpt_container_end -->
+            <div class="predloj"><a href="index.php?ukey=feedback">
+                    <div style="margin-left:12px; padding-top:9px;">&nbsp; &nbsp; &nbsp; Жалобы<br> Предложения<br>
+                        Благодарность
+                    </div>
+                </a></div>
+        </td>
+        <td valign="top" id="content">      {if $smarty.session.log}
+                <div id="pane"
+                     class="scroll-pane1">          {if $smarty.session.log|cs_may_order}            {cpt_maincontent overridestyle=':16iy0h'}          {else}            {if $CurrentDivision.ukey|isauthpage}              {cpt_maincontent overridestyle=':16iy0h'}            {else}
+                        <div class="hit" style="margin-top:-1px;"></div>
+                        {cpt_product_lists list_id='hitu' overridestyle=''}            {/if}          {/if}</div>
+            {else}        {if $CurrentDivision.ukey|isauthpage}          {cpt_maincontent overridestyle=':16iy0h'}        {else}          {cs_show_main_page}        {/if}      {/if}
+        </td>
+        <td width="150" valign="top">
+            <div class='news_header'></div>
+            <div class="novinki">        {cs_show_new_item}
+                <div class='banners_right'>          {"banner1"|translate}<br> {"banner2"|translate}
+                    <br> {"banner3"|translate}<br></div>
+            </div>
+            <div class='gb_novinki_end'></div>
+        </td>
+    </tr>
+    <tr class='img-for-width'>
+        <td><img src='/img/noop.gif' width='225' height='1'></td>
+        <td><img src='/img/noop.gif' width='625' height='1'></td>
+        <td><img src='/img/noop.gif' width='150' height='1'></td>
+    </tr>{if !$smarty.session.log|cs_may_order}
+    <tr>
+        <td height="79" id="bottom1"></td>
+        <td height="79" id="bottom2"></td>
+        <td height="79" id="bottom3"></td>
+    </tr>
+    <tr>
+        <td colspan="3">123</td>
+    </tr>{else}
+    <tr style='display:none;'>
+        <td height="0" colspan="3" id="bottom" style='height:0;display:none;'></td>
+    </tr>{/if}</table>

@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<WBS VERSION="281" UPDATEDATE="2010-08-11">
+    <LANGUAGES>
+        <LANGUAGE ID="rus" NAME="Russian"/>
+        <LANGUAGE ID="eng" NAME="English"/>
+    </LANGUAGES>
+    <EMAIL ENABLED="1" ROBOTEMAIL="newsletter@multitoys.com.ua"/>
+    <HTML_SETTINGS HTTPS_PORT="443" SESSION_TIMEOUT="15"/>
+    <DIRECTORIES>
+        <DATA_DIRECTORY PATH="[WBS_PATH]/data"/>
+        <WEB_DIRECTORY PATH="/"/>
+    </DIRECTORIES>
+    <SQLSERVERS>
+        <SQLSERVER HOST="localhost" PORT="" DBCHARSET="UTF8" WEBASYST_HOST="localhost" ADMIN_USERNAME=""
+                   ADMIN_ADMINRIGHTS="FALSE" NAME="localhost" ADMIN_PASSWORD="">
+            <LANGUAGES>
+                <LANGUAGE ID="rus" NAME="1"/>
+            </LANGUAGES>
+        </SQLSERVER>
+    </SQLSERVERS>
+    <FRONTEND type="SC" dbkey="MULTITOYS" mod_rewrite="1" disable_powered_by="1"/>
+    <SYSTEM COMPANY="MultiToys" LICENSE="5F988E0F5788" MEMLIMIT="256"/>
+    <SERVER_TIME_ZONE ENABLE="1" ID="27" SERVER_TIME_ZONE_DST="1"/>
+    <PROXY host="" port="" user="" password=""/>
+    <SMTP_SERVER host="" port="" user="" password="" helo=""/>
+</WBS>

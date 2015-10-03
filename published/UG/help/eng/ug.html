@@ -1,0 +1,166 @@
+<html>
+<head>
+    <title>
+        WebAsyst: managing users and groups
+    </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link href=" ../../../common/html/classic/help_generated.css" rel="stylesheet" type="text/css">
+</head>
+<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+<p class="bookName">WebAsyst: managing users and groups</p><a name="TOC"></a>
+
+<p class="tocHdr">Table of Contents</p>
+<ul class="treeCatalogRow">
+    <li ID="742."><a href="#users-groups-at-a-glance" class="" title="Users and Groups at a glance">Users and Groups at
+            a glance</a>
+    </li>
+    <li ID="743."><a href="#adding-users" class="" title="Adding users">Adding users</a>
+    </li>
+    <li ID="746."><a href="#setting-user-access-rights" class="" title="Setting user access rights">Setting user access
+            rights</a>
+    </li>
+    <li ID="748."><a href="#managing-user-groups" class="" title="Managing user groups">Managing user groups</a>
+    </li>
+</ul>
+<table border="0" cellspacing="0" cellpadding="0" width="100%">
+    <tr>
+        <td height=0><a name="users-groups-at-a-glance"></a></td>
+    </tr>
+    <tr>
+        <td align=center>
+            <table border="0" cellspacing="0" cellpadding="0" width="98%">
+                <tr>
+                    <td><h2>Users and Groups at a glance</h2>
+
+                        <p><img src="images/usersgroups-at-glance.gif"/></p></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td height=0><a name="adding-users"></a></td>
+    </tr>
+    <tr>
+        <td align=center>
+            <table border="0" cellspacing="0" cellpadding="0" width="98%">
+                <tr>
+                    <td><h2>Adding users</h2>
+
+                        <p>To add a new user, click <strong>User -&gt; Add User</strong> from&nbsp;the toolbar. </p>
+
+                        <p>On the <strong>Contact</strong> tab add user’s name, Email address and other personal
+                            information, e.g. address, phone numbers, and etc. Click <strong>User</strong> tab to
+                            specify main user information that is required to login WebAsyst account.</p>
+
+                        <p><img src="images/add-user.gif"/></p>
+                        <ol>
+                            <li><strong>Login Name</strong> and <strong>Password</strong> which&nbsp;will be used by
+                                this user to login WebAsyst account
+                            </li>
+                            <li>Enable/disable <strong>email notification option</strong> and choose format (HTML or
+                                Text)
+                            </li>
+                            <li>Specify <strong>Language</strong> of the user interface</li>
+                            <li>User <strong>time zone</strong> and <strong>daylight saving</strong> option</li>
+                            <li><strong>Start-up page</strong> which will open first after user's successfully login
+                            </li>
+                            <li><strong>User status</strong> (active, inactive). &quot;Inactive&quot; users are not
+                                allowed to login WebAsyst account.
+                            </li>
+                        </ol>
+                        <blockquote dir="ltr">
+                            <p><strong>NOTE</strong>: Login name is assigned only once when you create new user and can
+                                not be changed later.</p></blockquote>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td height=0><a name="setting-user-access-rights"></a></td>
+    </tr>
+    <tr>
+        <td align=center>
+            <table border="0" cellspacing="0" cellpadding="0" width="98%">
+                <tr>
+                    <td><h2>Setting user access rights</h2>
+
+                        <p>Click <strong>Access</strong> to see the list of WebAsyst services and included features. An
+                            enabled checkbox by the service/feature name indicates that user is allowed to access this
+                            service/feature. Services that include folders also indicate user's access level to a folder
+                            (e.g. Read, Modify, Full). An enabled checkbox by a folder name and the corresponding access
+                            level indicate user’s access to a folder.</p>
+
+                        <p>The <strong>Access</strong> tab allows to customize user’s personal access rights and
+                            displays group access rights inherited from groups. If user belongs to one or more user
+                            groups, the combination of personal and user group access rigths will be applied, as
+                            illustrated by the following example:</p>
+
+                        <p align="center">
+                        <table cellpadding="5" border="1">
+                            <tbody>
+                            <tr align="center">
+                                <td><strong>Personal permissions</strong></td>
+                                <td><strong>Group permissions</strong></td>
+                                <td><strong>Effective permissions</strong></td>
+                            </tr>
+                            <tr align="center">
+                                <td>-</td>
+                                <td>R</td>
+                                <td>R</td>
+                            </tr>
+                            <tr align="center">
+                                <td>RW</td>
+                                <td>R</td>
+                                <td>RW</td>
+                            </tr>
+                            <tr align="center">
+                                <td>RW</td>
+                                <td>RWF</td>
+                                <td>RWF</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        </p></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td height=0><a name="managing-user-groups"></a></td>
+    </tr>
+    <tr>
+        <td align=center>
+            <table border="0" cellspacing="0" cellpadding="0" width="98%">
+                <tr>
+                    <td><h2>Managing user groups</h2>
+
+                        <p>It is often necessary to assign identical access rights to a number of users at one time,
+                            based on their role within team or organization. WebAsyst offers powerful capabilities to do
+                            so. This simplifies system management where there are a large number of users from different
+                            departments or branches.</p>
+
+                        <p>Instead of giving necessary rights to each user personally, create a group, assign its access
+                            rights, and then add&nbsp;one or more&nbsp;users to it. Every user will inherit access
+                            rights that were set up for the group.</p>
+
+                        <p>Each user can be a member of several groups and can have his own specifically set
+                            permissions. Effective rights will be a combination of personal and group rights of the
+                            user.</p>
+
+                        <p>To add a new group, click <strong>Group -&gt; Add Group</strong> and enter group’s name.</p>
+
+                        <p>To rename a group, revise members of group, or modify group access rights, click <strong>Group
+                                -&gt; Modify Group</strong>.</p>
+
+                        <p>To delete a group, select it and click <strong>Group -&gt; Delete Group</strong>.</p>
+                        <blockquote dir="ltr">
+                            <p><strong>NOTE</strong>: Deleting a group will not delete user accounts.</p></blockquote>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

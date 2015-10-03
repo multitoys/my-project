@@ -1,0 +1,176 @@
+{*if $smarty.get.ukey eq ''}	
+<style>
+{literal}
+canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  position: fixed;
+}
+
+.direction {
+  position: relative;
+  color: #ddd;
+  font-style: italic;
+}
+.direction a{
+  color: white;
+  font-weight: bold;
+}
+{/literal}
+</style>
+	<div class="main">
+    <div class="page_container">
+      <canvas width="100%" height="100%" class="snow"></canvas>
+      
+    </div>
+	</div>
+	<script type="text/javascript">
+	{literal}
+	  $(document).ready( function() {
+	    $("canvas.snow").let_it_snow({
+	      speed: 1,
+	      size: 15,
+	      count: 26,
+	      image: "img/snowflake.png"
+	    });
+	  });
+    {/literal}
+  	</script>
+{/if*}
+
+<div>
+    <script type="text/javascript">
+        {if $smarty.session.log}
+        var inlog = true;
+        {else}
+        var inlog = false;
+        {/if}
+        {literal}
+        function load_cart() {
+            $('#my__cart').load('/popup/show_cart.php');
+        }
+        $(document).ready(function () {
+            load_cart();
+            //$('#alreg').animate({opacity:'1'}, 2000).animate({opacity:'0'}, 200).animate({opacity:'1'}, 200).animate({opacity:'0'}, 200).animate({opacity:'1'}, 200).animate({opacity:'0'}, 200).animate({opacity:'1'}, 1000);
+        });
+        {/literal}
+    </script>
+    {if $smarty.session.log}
+        <div id="multi-logo-mini">
+            <!-- cpt_container_start -->
+            {cpt_logo file='logo_mini.png' overridestyle=''}
+            <!-- cpt_container_end -->
+        </div>
+        <div id="pass-login">
+            <div class="seans_out"><a href="/logout/">Выйти из сеанса</a></div>
+        </div>
+    {else}
+        <div id="multi-logo">
+            <!-- cpt_container_start -->
+            {cpt_logo file='logo.png' overridestyle=''}
+            <!-- cpt_container_end -->
+        </div>
+        <div id="pass-login">
+            {include file="`$smarty.const.DIR_FTPLS`/login2.html"}
+        </div>
+    {/if}
+    <div class="header" style='vertical-align:middle; text-align:center;'>
+        {if $smarty.session.log|cs_may_order}
+            <!-- <div id='my__cart'></div> -->
+            <div>
+                {$smarty.session.log|welcome}, <span style="color:red;"> {$smarty.session.log}!</span> У Вас <a
+                        href="/index.php?categoryID=99999"><span
+                            style="color:red; font-size: 14px;">{$smarty.session.log|cs_bonus} баллов</span></a>
+                {if $smarty.session.log|cs_unlimited>0}
+                    Вам открыт доступ для заказа товаров!
+                {else}
+                    Вы можете заказывать товары до
+                    <span style="color:red;">{$smarty.session.log|cs_may_order}</span>
+                {/if}
+            </div>
+        {/if}
+    </div>
+    <div id="header">
+        {if $smarty.session.log}
+            <div class="cpt_product_search">
+                <form method="post" action="/shop/index.php?ukey=search">
+                    <input type="text" class="input_message" rel="Поиск товаров" value="Поиск товаров"
+                           name="searchstring" id="searchstring">
+                    <input type="submit" value="" id='search_ok'>
+                </form>
+            </div>
+        {/if}
+        {if $smarty.session.log|cs_may_order}
+            <div id='my__cart'></div>
+        {/if}
+        <nav class="m_nav clearfix">
+            <ul class="m_hmenu">
+                <li class="cl-effect-21"><a href="index.php?ukey=auxpage_1">О нас</a></li>
+                <li class="cl-effect-21"><a href="index.php?ukey=auxpage_2">Сотрудничество</a></li>
+                <li class="cl-effect-21"><a href="index.php?ukey=auxpage_bonus-programm">Бонусная программа</a></li>
+                <li class="cl-effect-21"><a href="index.php?ukey=auxpage_contacts">Контакты</a></li>
+                <li class="cl-effect-21"><a href="index.php?ukey=news">Новости</a></li>
+                <li class="cl-effect-21"><a href="index.php?ukey=auxpage_zamena-braka">Замена брака</a></li>
+            </ul>
+        </nav>
+
+    </div>
+    <div id='main_content'>
+        <div id="columns">
+            <div id="left">
+                <div class="cpt_maincolumns">
+                    <!-- cpt_container_start -->
+                    {cpt_category_tree overridestyle=':uttm14'}
+                    <!-- cpt_container_end -->
+                    {if $smarty.session.log}
+                        <div class="predloj">
+                            <div style="text-align: center; /*padding-top:10px;*/">Курс валют:</div>
+                            <div style="text-align: center; color: #ff0000;"><b>USD = {$smarty.session.log|usd}
+                                    &nbsp;грн</b></div>
+                            <div style="text-align: center; color: #ffff00;"><b>скидка -{$smarty.session.log|skidka}
+                                    &nbsp;%</b></div>
+                        </div>
+                    {/if}
+                </div>
+            </div>
+            <div id="center">
+                {if $smarty.session.log}
+                    {if $smarty.session.log|cs_may_order}
+                        {cpt_maincontent overridestyle=':16iy0h'}
+                    {else}
+                        {if $CurrentDivision.ukey|isauthpage}
+                            {cpt_maincontent overridestyle=':16iy0h'}
+                        {else}
+                            <p style="text-align: center; font-size: 18px; font-weight: bold; color:red;">
+                                Для получения доступа к полному перечню товаров,<br/>
+                                Вам необходимо связаться с нашим представителем
+                            </p>
+                            <br/>
+                            {cpt_product_lists list_id='hitu' overridestyle=''}
+                        {/if}
+                    {/if}
+                {else}
+                    {if $CurrentDivision.ukey|isauthpage}
+                        {cpt_maincontent overridestyle=':16iy0h'}
+                    {else}
+                        {if $smarty.get.ukey=="remind_password"}
+                            {include file="remind_password.html"}
+                        {else}
+                            {cs_show_main_page}
+                        {/if}
+                    {/if}
+                {/if}
+            </div>
+            <div id="right">
+                <div class="cpt_maincolumns" style="valign: top">
+                    <!-- cpt_container_start -->
+                    {cpt_product_lists list_id='akcia' block_height='' overridestyle=':77qz4o'}
+                    <!-- cpt_container_end -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,4 @@
+<? foreach from=$cmfields item=field key=fieldID ?>
+<div class='Label'><? $labelsCMFields.$fieldID|default:$field.LONG_NAME ?></div>
+<? include fieldName=$fieldID file="fields/f"|cat:$field.TYPE|cat:".htm"|lower ?>
+<? /foreach ?>

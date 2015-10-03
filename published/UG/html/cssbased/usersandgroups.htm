@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <? wbs_initLayout splitter=true toolbar=true ?>
+    <link href="../../../AA/html/cm.css" rel="stylesheet" type="text/css">
+    <script src="../../../common/html/classic/tree_templates/tree_functions.js"></script>
+
+    <? include file="../../../UG/html/cssbased/uglist_js.htm" ?>
+
+    <style type="text/css">
+        .systemGroup a {
+            color: blue;
+        }
+
+        .treeCatalogRowCurrent .systemGroup a {
+            color: white;
+        }
+    </style>
+
+</head>
+<body>
+<? wbs_pageLayout toolbar="uglist_toolbar.htm"?>
+<? wbs_errorBlock ?>
+
+<? if !$fatalError ?>
+
+<? assign var=closeFoldersLink value=$hideGroupsLink ?>
+
+<? wbs_splitter ?>
+
+<? if !$hideLeftPanel ?>
+<? wbs_splitterLeftPanel width=$treePanelWidth ?>
+
+<? wbs_splitterPanelHeader
+							caption=$kernelStrings.cman_groups_title
+							id="FoldersHeadersPanel"
+							active=true
+							headerControls="../../../common/html/cssbased/pageelements/ajax/catalog_folder.close.htm"
+						?>
+
+<? wbs_splitterScrollableArea width=$treePanelWidth ?>
+<? include file="usergroups.htm" ?>
+<? /wbs_splitterScrollableArea ?>
+
+<? /wbs_splitterLeftPanel ?>
+<? /if ?>
+
+<? wbs_splitterRightPanel ?>
+<? include file="uglist_rightpanel.htm" ?>
+<? /wbs_splitterRightPanel ?>
+
+<? /wbs_splitter ?>
+
+<? /if ?>
+
+<? /wbs_pageLayout ?>
+</body>
+</html>

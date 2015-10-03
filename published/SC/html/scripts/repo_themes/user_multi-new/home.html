@@ -1,0 +1,36 @@
+<div class="string">
+    <div id="marquee"><a id="runner" href="/category/akcija">Акция! Акция! Акция! Внимание: количество товаров,
+            участвующих в акции ОГРАНИЧЕННО!</a></div>
+</div>
+<div style="width: 100%; margin: auto;">
+    <a href="/index.php?categoryID=100002">
+        {zakcia}
+    </a>
+</div>{*last_products limit=100*}
+{*<!-- <div id="parent_popup">
+  <div id="popup">
+<h1>«Поймай Ушастого!»</h1>
+<a href="http://multitoys.com.ua/published/publicdata/MULTITOYS/attachments/SC/images/Lotereya.png" target="_blank"><img src="http://multitoys.com.ua/published/publicdata/MULTITOYS/attachments/SC/images/banner.png" width="450" height="211" alt="Поймай УШАСТОГО" style="float:left;margin:5px 10px 5px 0; border:0; " /></a>
+<h2>Уважаемые, клиенты!</h2>
+<p>Обращаем Ваше внимание, что с <strong>27</strong> октября по  <strong>7</strong>декабря мы проводим<br/>
+ЛОТЕРЕЮ <strong>"Поймай УШАСТОГО"</strong>!</p>
+<p style="text-align: center;"><strong><a class="button" href="http://multitoys.com.ua/published/publicdata/MULTITOYS/attachments/SC/images/Lotereya.png" target="_blank">Подробнее »</a></strong></p>   
+<a class="close" title="Закрыть" onclick="document.getElementById('parent_popup').style.display='none';">X</a>
+  </div>
+</div>
+<script type="text/javascript">
+	var delay_popup = 1000;
+	setTimeout("document.getElementById('parent_popup').style.display='block'", delay_popup);
+</script> -->*}
+{*<!-- <a class="back" href="http://dbmast.ru/sozdaem-vsplyvayushhee-okno-pri-zagruzke-sajta-s-pomoshhyu-css3-i-nemnogo-javascript">вернуться к уроку на Dobrovoimaster</a> -->*}
+
+<!-- <div class="scroll-pane1" style="margin-top:-1px;"> -->
+{*get_topproducts var=items_sold limit=50}
+{if $items_sold}{include file="product_top.html"}{/if*}
+{*get_topproducts var=akcia limit=24}
+{if $akcia}{include file="product_akcia.html"}{/if*}
+
+{cpt_product_lists list_id='hitu' overridestyle=''}
+<!-- </div> -->
+{*get_topproducts var=akcia limit=24}
+{if $akcia}{include file="product_akcia_send.html"}{/if*}

@@ -1,0 +1,23 @@
+<? if !$smsDisabled ?>
+
+<? wbs_note ?><? $kernelStrings.sms_comment_note_text ?><? /wbs_note ?>
+
+<? wbs_formLayout ?>
+<? wbs_formContent ?>
+<tr>
+    <td><? wbs_label for="sms_credit" text=$kernelStrings.sms_amount_label fieldName="VALUE" ?></td>
+    <td>
+        <input type="text" name="sms_credit" id="sms_credit" value="<? $userBalance.SMS_BALANCE ?>" class="FormControl"
+               style="width: 70px;">
+    </td>
+</tr>
+<tr>
+    <td></td>
+    <td><? wbs_note ?><? $kernelStrings.sms_blnk_note_text ?><? /wbs_note ?></td>
+</tr>
+<? /wbs_formContent ?>
+<? /wbs_formLayout ?>
+
+<? else ?>
+<? wbs_note smallFont=false displayNoteMarker=false ?><? $kernelStrings.sms_screen_sms_disabled ?><? /wbs_note ?>
+<? /if ?>

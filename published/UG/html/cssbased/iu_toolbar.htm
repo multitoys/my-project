@@ -1,0 +1,11 @@
+<? if $csv_step == "FINISHED_SAVESCHEMA" || $csv_step == "FINISHED" ?>
+<? wbs_button caption=$kernelStrings.app_back_label|cat:" "|cat:$kernelStrings.ung_page_title name="savebtn" ?>
+<? else ?>
+<? wbs_toolbarItem?>
+<? wbs_buttonSetButton caption=$kernelStrings.icl_import_btn name="savebtn" onClick="fillSelectedLists( new Array( 'included_groups[]', 'notincluded_groups[]' ) );" ?>
+<? /wbs_toolbarItem?>
+
+<? wbs_toolbarItem?>
+<? wbs_buttonSetButton name="cancelbtn" caption=$kernelStrings.app_cancel_btn ?>
+<? /wbs_toolbarItem?>
+<? /if ?>

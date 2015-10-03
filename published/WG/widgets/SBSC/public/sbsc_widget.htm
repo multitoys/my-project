@@ -1,0 +1,216 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <style>
+        body {
+            margin: 0px;
+        }
+
+        #SBSC {
+            background: < ? $ widgetParams . BGCOLOR | default : "#E4F4B5" ? >;
+            width: < ? $ widgetParams . WIDTH ? > px;
+            border: 1px solid #C0C0C0;
+            margin-left: 7px;
+            margin-top: 7pt
+        }
+
+        #SBSC, table tr td, input {
+            font-family: "Trebuchet MS";
+            font-size: 10pt;
+        }
+
+        #SBSC tr td {
+            padding: 5px
+        }
+
+        #SBSC {
+            border: 1px solid < ? $ widgetParams . TITLE_bgcolor | default : "#99BB43" ? >
+        }
+
+        #TITLE, #BOTTOM {
+            background: < ? $ widgetParams . TITLE_bgcolor | default : "#99BB43" ? >
+        }
+
+        #TITLE {
+            font-weight: bold;
+            color: < ? $ widgetParams . TITLE_color | default : "white" ? >
+        }
+
+        .Label {
+            margin-top: 4px
+        }
+
+        input.Text {
+            width: 98%;
+            border: 1px solid #C0C0C0;
+        }
+
+        input.File {
+            width: 98%;
+            border: 1px solid #C0C0C0;
+        }
+
+        textarea.Text {
+            width: 98%;
+            border: 1px solid #C0C0C0;
+        }
+
+        select.Select {
+            width: 98%;
+            border: 1px solid #C0C0C0;
+        }
+
+        <
+        ?
+        math equation
+
+        =
+        "x-30"
+        x
+
+        =
+        $
+        widgetParams.WIDTH |default:
+
+        100
+        assign
+
+        =
+        w ? >
+        #SBSCErrorBlock {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: < ? $ w ? > px;
+            overflow-y: auto;
+            background: #F0F0F0;
+            border: 1px solid #8B0000
+        }
+
+        .SBSCError {
+            font-style: italic
+        }
+    </style>
+
+    <script>
+        function fieldChanged(fieldName, value) {
+            if (fieldName == "WIDTH")
+                document.getElementById("SBSC").style.width = value;
+            if (fieldName == "BGCOLOR")
+                document.getElementById("SBSC").style.background = value;
+            if (fieldName == "TITLE")
+                document.getElementById("TITLE").innerHTML = value;
+            if (fieldName == "TITLE_color")
+                document.getElementById("TITLE").style.color = value;
+            if (fieldName == "TITLE_bgcolor") {
+                document.getElementById("TITLE").style.background = value;
+                document.getElementById("BOTTOM").style.background = value;
+            }
+            if (fieldName == "SIGNUPTEXT" || fieldName == "CMFIELDS" || fieldName == "CMFIELDSLABELS") {
+                window.parent.needRefresh = true;
+                //tm_modalBOX('<font class=f1><? $widgetStrings.amwg_savetoapply_messagetitle	?></font>','120');
+            }
+
+            if (fieldName == "SAVEBTN")
+                document.getElementById("SAVEBTN").value = value;
+        }
+
+        function toStart() {
+            document.location.href = document.location.href;
+        }
+
+        function hideError() {
+            document.getElementById("SBSCErrorBlock").style.display = "none";
+            var objs = document.getElementsByTagName("select");
+            for (i = 0; i < objs.length; i++) {
+                var obj = objs[i];
+                obj.style.visibility = "visible";
+            }
+        }
+
+        function showError() {
+            var objs = document.getElementsByTagName("select");
+            for (i = 0; i < objs.length; i++) {
+                var obj = objs[i];
+                obj.style.visibility = "hidden";
+            }
+            var width = 0;
+            width = document.documentElement.clientWidth;
+            if (width == 0)
+                width = document.body.clientWidth;
+
+
+            if (width > 0)
+                document.getElementById("SBSCErrorBlock").style.left = (width - < ? $w ? >
+        ) /
+            2;
+        }
+    </script>
+    <? if $params.mode == "preview" ?>
+    <? include file="preview_inc.htm" ?>
+    <? /if ?>
+
+</head>
+
+<body style='height: 100%; margin: 0px; padding: 0px; <? if $params.mode == "preview" ?>background: URL("bg.gif")<? /if ?>'>
+
+<form action='' method='post' enctype='multipart/form-data'>
+    <input type='hidden' name='code' value="<? $widgetData.WG_FPRINT ?>">
+    <input type='hidden' name='mode' value="<? $params.mode ?>">
+    <input type='hidden' name='action' value="signup">
+
+    <? if $errorStr ?>
+    <table id='SBSCErrorBlock' cellspacing="0" cellpadding="0" height="0">
+        <tr>
+            <td style='background: darkred; color: white; font-weight: bold; padding: 3px'><? $wgStrings.error_title ?></td>
+        </tr>
+        <tr>
+            <td style='padding: 4px; height: 50px; overflow-y: auto' valign='top'>
+                <? $errorStr ?>
+                <BR>
+                <span style='border: 1px solid #999999; color: #666666; background: #E0E0E0; float:right; padding-left: 3px; padding-right: 3px; cursor: pointer'
+                      onClick='hideError();'>OK</span>
+            </td>
+        </tr>
+    </table>
+    <? /if ?>
+
+
+    <table align='center' style='margin-left: auto; margin-right: auto' cellspacing="0" cellpadding="0" id='SBSC'
+    <? if $result == "success" ?>onClick='toStart();'<? /if ?> height='<? $embInfo.height ?>'>
+    <tr height="30">
+        <td id='TITLE'>
+            <? $widgetParams.TITLE|htmlsafe:true:true ?>
+        </td>
+    </tr>
+    <tr height="*" valign='top'>
+        <td
+        <? if $result =="success" ?>align='center' valign='middle'<? /if ?>>
+        <? include file=$contentFilename ?>
+
+        <? if $result !="success" ?>
+        <input id='SAVEBTN' type='submit'
+               style='margin-top: 3px; color: black; border: 1px solid #C0C0C0; background: #BEBEBE; '
+               value='<? $widgetParams.SAVEBTN ?>'>
+        <? /if ?>
+        </td>
+    </tr>
+    <tr height="10">
+        <td style='padding: 0px; border-top: 1px solid #999; '>
+            <div style='background: <? $widgetParams.BGCOLOR ?>; padding: 0px; font-size: 8pt; padding-right: 5px; text-align: right'>
+                <a style='text-decoration: none' target='_blank' href='http://www.webasyst.net'>WebAsyst</a></div>
+        </td>
+    </tr>
+    </table>
+
+</form>
+
+<? if $errorStr ?>
+<script>
+    showError();
+</script>
+<? /if ?>
+
+</body>
+</html>

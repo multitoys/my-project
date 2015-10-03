@@ -1,0 +1,6 @@
+AuthType Basic
+AuthName "/www/multitoys.com.ua/login"
+AuthUserFile /var/www/multitoy/data/etc/291435.passwd
+<Limit GET POST>
+	require valid-user
+</Limit>

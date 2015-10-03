@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<DATABASE>
+    <DBSETTINGS SIGNUP_DATETIME="2010-08-11 15:32:45" CREATE_DATE="2010-08-11 15:33:06" DEFAULT_ENCODING="UTF-8"
+                EXPIRE_DATE="" READONLY="0" DATE_FORMAT="DD.MM.YYYY" DBSIZE_LIMIT="" FIRSTLOGIN="1" MAX_USER_COUNT=""
+                SQLSERVER="localhost" DB_NAME="multitoy_multitoys" DB_PASSWORD="V2AU3Fsf" DB_USER="multitoy_multi"
+                SOURCE="" DB_CREATE_OPTION="new" TEMPORARY="" MYSQL_CHARSET="UTF8" PLAN="" FREE_APPS=""
+                RECIPIENTS_LIMIT="-1" SMS_RECIPIENTS_LIMIT="5" SESSION_EXPIRE_PERIOD="300"/>
+
+    <ADMINISTRATOR PASSWORD="f7b4da831bca75eafa1e008e0ea528e8" TEMPLATE="classic" LANGUAGE="rus"/>
+    <FIRSTLOGIN COMPANYNAME="MULTITOYS" FIRSTNAME="Evgeniy" LASTNAME="Gololobov" LOGINNAME="sales"
+                PASSWORD="b53477c2821c1bf0da5d40e57b870d35" TEMPLATE="classic" LANGUAGE="eng"
+                EMAIL="multitoys.dp@gmail.com"/>
+    <APPLICATIONS>
+        <APPLICATION APP_ID="SC"/>
+    </APPLICATIONS>
+    <MODULES>
+        <ASSIGN CLASS="sms" ID="" DISABLED="1"/>
+    </MODULES>
+    <BALANCE>
+        <VALUE ID="sms" VALUE="UNLIMITED"/>
+    </BALANCE>
+    <VERSIONS SYSTEM="281" SC="281"/>
+    <ADVSETTINGS>
+        <PARAM name="show_company_top" value="no"/>
+        <PARAM name="show_company_name_top" value="no"/>
+        <PARAM name="theme" value="orn_tapestry"/>
+        <PARAM name="company_name" value="sales"/>
+    </ADVSETTINGS>
+</DATABASE>

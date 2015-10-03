@@ -1,0 +1,12 @@
+#AuthType Basic
+#AuthName "/www/multitoys.com.ua/published/wbsadmin"
+#AuthUserFile /var/www/multitoy/data/etc/141203.passwd
+#<Limit GET POST>
+#	require valid-user
+#</Limit>
+AuthType Basic
+AuthName "/www/multitoys.com.ua/published/wbsadmin"
+AuthUserFile /var/www/multitoy/data/etc/393292.passwd
+<Limit GET POST>
+	require valid-user
+</Limit>

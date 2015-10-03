@@ -1,0 +1,231 @@
+<html>
+<head>
+    <title><? $pageTitle ?></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=<? $html_encoding ?>">
+    <link href="<? " styles.css
+    "|stylesetitem:"classic":$styleSet ?>" rel="stylesheet" type="text/css">
+    <script src="../../../common/html/classic/styles/WebSubMenu.js"></script>
+</head>
+<body bgcolor="#FFFFFF" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" class="default"
+      onLoad="<? if $allowChangeName ?>focusFormControl('userdata[C_FIRSTNAME]');<? /if ?> markArrayField( '<? $invalidField ?>', 'userdata' )">
+<? strip ?>
+<form action="<? $formLink ?>" method="post" enctype="multipart/form-data" name="form">
+    <? include file="../../../common/html/classic/header.htm" nospace=0 ?>
+    <? include file="../../../common/html/classic/errblock.htm" errorStr=$errorStr ?>
+    <? if !$fatalError ?>
+
+    <? assign var=checkedCbImg value="images/menucb_checkedflag.gif"|stylesetitem:"classic":$styleSet ?>
+    <? assign var=unCheckedCbImg value="images/menucb_unchecked.gif"|stylesetitem:"classic":$styleSet ?>
+
+    <table border="0" cellpadding="0" cellspacing="0">
+        <tr>
+            <td>
+                <? include file="../../../common/html/classic/formframe_begin.htm"?>
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td>
+                            <table border="0" cellspacing="2" cellpadding="0">
+                                <tr>
+                                    <td align="right" class="label">
+                                        <? conditionalOutput invalidField=$invalidField field=U_ID text=#invalidFieldHighlight#  ?>
+                                        <? $kernelStrings.ul_userid_title|cat:":" ?>
+                                    </td>
+                                    <td class="readonly_control">
+                                        <? $userdata.U_ID ?>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="right" class="formField">&nbsp;</td>
+                                    <td class="default">&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td align="right" class="label">
+                                        <? conditionalOutput invalidField=$invalidField field=C_FIRSTNAME text=#invalidFieldHighlight#  ?>
+                                        <? $kernelStrings.amu_firstname_label|cat:":" ?>
+                                    </td>
+                                    <? if !$allowChangeName ?>
+                                    <td class="readonly_control">
+                                        <? $userdata.C_FIRSTNAME|sureecho ?>
+                                        <input name="userdata[C_FIRSTNAME]" type="hidden"
+                                               value="<? $userdata.C_FIRSTNAME|htmlsafe:true:true ?>">
+                                    </td>
+                                    <? else ?>
+                                    <td>
+                                        <input name="userdata[C_FIRSTNAME]" type="text" maxlength=50 style="width: 100%"
+                                               value="<? $userdata.C_FIRSTNAME|htmlsafe:true:true ?>">
+                                    </td>
+                                    <? /if ?>
+                                </tr>
+                                <tr>
+                                    <td align="right" class="label">
+                                        <? conditionalOutput invalidField=$invalidField field=C_LASTNAME text=#invalidFieldHighlight#  ?>
+                                        <? $kernelStrings.amu_lastname_label|cat:":" ?>
+                                    </td>
+                                    <? if !$allowChangeName ?>
+                                    <td class="readonly_control">
+                                        <? $userdata.C_LASTNAME|sureecho ?>
+                                        <input name="userdata[C_LASTNAME]" type="hidden"
+                                               value="<? $userdata.C_LASTNAME|htmlsafe:true:true ?>">
+                                    </td>
+                                    <? else ?>
+                                    <td>
+                                        <input name="userdata[C_LASTNAME]" type="text" maxlength=50 style="width: 100%"
+                                               value="<? $userdata.C_LASTNAME|htmlsafe:true:true ?>">
+                                    </td>
+                                    <? /if ?>
+                                </tr>
+                                <tr>
+                                    <td align="right" class="label">
+                                        <? conditionalOutput invalidField=$invalidField field=C_MIDDLENAME text=#invalidFieldHighlight#  ?>
+                                        <? $kernelStrings.amu_middlename_label|cat:":" ?>
+                                    </td>
+                                    <? if !$allowChangeName ?>
+                                    <td class="readonly_control">
+                                        <? $userdata.C_MIDDLENAME|sureecho ?>
+                                        <input name="userdata[C_MIDDLENAME]" type="hidden"
+                                               value="<? $userdata.C_MIDDLENAME|htmlsafe:true:true ?>">
+                                    </td>
+                                    <? else ?>
+                                    <td>
+                                        <input name="userdata[C_MIDDLENAME]" type="text" maxlength=50
+                                               style="width: 100%"
+                                               value="<? $userdata.C_MIDDLENAME|htmlsafe:true:true ?>">
+                                    </td>
+                                    <? /if ?>
+                                </tr>
+                                <tr>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td align="right" class="label">
+                                        <? $kernelStrings.app_longname_nickname|cat:":" ?>
+                                    </td>
+                                    <? if !$allowChangeName ?>
+                                    <td class="readonly_control">
+                                        <? $userdata.C_NICKNAME|sureecho ?>
+                                        <input name="userdata[C_NICKNAME]" type="hidden"
+                                               value="<? $userdata.C_NICKNAME|htmlsafe:true:true ?>">
+                                    </td>
+                                    <? else ?>
+                                    <td>
+                                        <input name="userdata[C_NICKNAME]" type="text" maxlength=255 style="width: 100%"
+                                               value="<? $userdata.C_NICKNAME|htmlsafe:true:true ?>">
+                                    </td>
+                                    <? /if ?>
+                                </tr>
+                                <tr>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td align="right" class="label">
+                                        <? conditionalOutput invalidField=$invalidField field=C_EMAILADDRESS text=#invalidFieldHighlight#  ?>
+                                        <? $kernelStrings.ul_email_title|cat:":" ?>
+                                    </td>
+                                    <? if !$allowChangeName ?>
+                                    <td class="readonly_control">
+                                        <? $userdata.C_EMAILADDRESS|sureecho ?>
+                                        <input name="userdata[C_EMAILADDRESS]" type="hidden" class="hidden"
+                                               value="<? 	$userdata.C_EMAILADDRESS|htmlsafe:true:true ?>">
+                                    </td>
+                                    <? else ?>
+                                    <td>
+                                        <input name="userdata[C_EMAILADDRESS]" type="text" maxlength=255
+                                               style="width: 100%"
+                                               value="<? $userdata.C_EMAILADDRESS|htmlsafe:true:true ?>">
+                                    </td>
+                                    <? /if ?>
+                                </tr>
+                                <tr>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <nobr><? $mw_loc_str.pf_notificationscb_label|cat:":" ?></nobr>
+                                    </td>
+                                    <td>
+                                        <? if $allowDisableEmail ?>
+                                        <input type=checkbox value=1
+                                               name="userdata[receivesmessages]" <? switchedOutput val=$userdata.receivesmessages true_val=1 str1="checked" ?>
+                                        >
+                                        <? else ?>
+                                        <img style="margin: 3px"
+                                             src="<? switchedOutput val=$userdata.receivesmessages true_val=1 str1=$checkedCbImg str2=$unCheckedCbImg ?>"
+                                             border=0>
+                                        <input type=hidden name="userdata[receivesmessages]"
+                                               value="<? $userdata.receivesmessages ?>">
+                                        <? /if ?>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="right" class="label">
+                                        <? $kernelStrings.amu_notfirmat_label|cat:":" ?>
+                                    </td>
+                                    <td class="default"><select name="userdata[mailformat]" class="control">
+                                        <? html_options values=$formatIDs selected=$userdata.mailformat output=$formatNames ?>
+                                    </select></td>
+                                </tr>
+                                <tr>
+                                    <td align="right">&nbsp;</td>
+                                    <td class="default">&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td align="right" class="label"><label>
+                                        <? $kernelStrings.amu_language_label|cat:":" ?>
+                                    </label></td>
+                                    <td class="default"><select name="userdata[language]" class="control"
+                                                                style="width: 100">
+                                        <? html_options values=$language_ids selected=$userdata.language output=$language_names ?>
+                                    </select></td>
+                                </tr>
+                                <tr>
+                                    <td align="right">&nbsp;</td>
+                                    <td class="default">&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td align="right" class="label">
+                                        <? $kernelStrings.amu_startpage_label|cat:":" ?>
+                                    </td>
+                                    <td class="default"><select name="userdata[START_PAGE]" class="control">
+                                        <? html_options values=$page_ids selected=$userdata.START_PAGE output=$page_names ?>
+                                    </select></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+                <? include file="../../../common/html/classic/formframe_end.htm" extraLine=true?>
+            </td>
+        </tr>
+    </table>
+    <table width="400" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+            <td width="5" class="smallFont">&nbsp;</td>
+            <td class="smallFont">
+                <? "<b>"|cat:$kernelStrings.app_note_text|cat:"</b>: "|cat:$mw_loc_str.pf_note_text ?>
+            </td>
+        </tr>
+        <tr>
+            <td class="default">&nbsp;</td>
+            <td class="default">&nbsp;</td>
+        </tr>
+    </table>
+    <? include file="../../../common/html/classic/button.htm" align="left" name="savebtn" caption=$kernelStrings.app_save_btn formname="form" space_left=5 space_right=10 ?>
+    <? include file="../../../common/html/classic/button.htm" align="left" name="cancelbtn" caption=$kernelStrings.app_cancel_btn formname="form"?>
+    <? else ?>
+    <? include file="../../../common/html/classic/button.htm" align="left" name="cancelbtn" caption=$kernelStrings.app_cancel_btn formname="form"?>
+    <? /if ?>
+    <input name="edited" type="hidden" id="edited" value="1">
+    <input type="hidden" name="userdata[U_ID]" value="<? $userdata.U_ID ?>">
+    <input type="hidden" name="edited" value=1>
+    <input type="hidden" name="prevTemplate" value="<? $prevTemplate ?>">
+    <input type="hidden" name="prevLanguage" value="<? $prevLanguage ?>">
+    <input type="hidden" name="prevName" value="<? $prevName ?>">
+    <input type="hidden" name="btndummy">
+    <?include file="../../../common/html/classic/pagefooter.htm"?>
+</form>
+<? /strip ?>
+</body>
+</html>

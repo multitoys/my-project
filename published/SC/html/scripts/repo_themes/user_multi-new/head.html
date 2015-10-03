@@ -1,0 +1,214 @@
+<meta name="google-site-verification" content="PR4AOHtwPe0jsJfi6dNvR-9b1ItdYXGc8p5gIsa3DJQ">
+<!-- <meta name=viewport content="width=800, initial-scale=1" > -->
+<title>{$page_title|default:$smarty.const.CONF_DEFAULT_TITLE|escape:'html'}</title>
+{$page_meta_tags}
+<link rel="icon" type="image/ico" href="/favicon.ico">
+{*<link href='http://fonts.googleapis.com/css?family=Dosis:500,600|PT+Sans:400,400italic|PT+Sans+Narrow:400,700|Ubuntu+Condensed|Open+Sans:400italic,400|Oxygen&subset=latin,cyrillic-ext' rel='stylesheet' type='text/css'>*}
+{*if $smarty.get.ukey eq ''}
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="js/jquery.let_it_snow.js"></script>
+{else}
+<script type='text/javascript' src='{$smarty.const.URL_JS}/jquery.min.js'></script>
+{/if*}
+<script type='text/javascript' src='{$smarty.const.URL_JS}/jquery.min.js'></script>
+<script type="text/javascript" src="{$smarty.const.URL_JS}/niftycube.js"></script>
+<script type='text/javascript' src='{$smarty.const.URL_JS}/jquery.nicescroll.min.js'></script>
+<script type='text/javascript' src='/js/jquery.tooltip.js'></script>
+<script type='text/javascript' src='/js/jquery.spin.js'></script>
+<script type="text/javascript" src="/js/drop.js" media="all"></script>
+<link rel="stylesheet" type="text/css" href="/css/jquery.tooltip.css">
+{literal}
+    <style>
+        /* cyrillic */
+        @font-face {
+            font-family: 'Open Sans';
+            font-style: normal;
+            font-weight: 400;
+            src: local('Open Sans'), local('OpenSans'), url(http://fonts.gstatic.com/s/opensans/v10/RjgO7rYTmqiVp7vzi-Q5UVtXRa8TVwTICgirnJhmVJw.woff2) format('woff2');
+            unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+        }
+
+        /* cyrillic */
+        @font-face {
+            font-family: 'Open Sans';
+            font-style: italic;
+            font-weight: 400;
+            src: local('Open Sans Italic'), local('OpenSans-Italic'), url(http://fonts.gstatic.com/s/opensans/v10/xjAJXh38I15wypJXxuGMBhLwxQbNcFnuWuPk3YnjToI.woff2) format('woff2');
+            unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+        }
+
+        /* latin */
+        @font-face {
+            font-family: 'Oxygen';
+            font-style: normal;
+            font-weight: 400;
+            src: local('Oxygen'), local('Oxygen-Regular'), url(http://fonts.gstatic.com/s/oxygen/v5/JBQT4XXxNjmEkBx5N6608vesZW2xOQ-xsNqO47m55DA.woff2) format('woff2');
+            unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
+        }
+
+        /* cyrillic */
+        @font-face {
+            font-family: 'PT Sans';
+            font-style: normal;
+            font-weight: 400;
+            src: local('PT Sans'), local('PTSans-Regular'), url(http://fonts.gstatic.com/s/ptsans/v8/vtwNVMP8y9C17vLvIBNZI_Y6323mHUZFJMgTvxaG2iE.woff2) format('woff2');
+            unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+        }
+
+        /* cyrillic */
+        @font-face {
+            font-family: 'PT Sans';
+            font-style: italic;
+            font-weight: 400;
+            src: local('PT Sans Italic'), local('PTSans-Italic'), url(http://fonts.gstatic.com/s/ptsans/v8/7dSh6BcuqDLzS2qAASIeuhJtnKITppOI_IvcXXDNrsc.woff2) format('woff2');
+            unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+        }
+
+        /* cyrillic */
+        @font-face {
+            font-family: 'PT Sans Narrow';
+            font-style: normal;
+            font-weight: 400;
+            src: local('PT Sans Narrow'), local('PTSans-Narrow'), url(http://fonts.gstatic.com/s/ptsansnarrow/v7/UyYrYy3ltEffJV9QueSi4Uvi3q9-zTdQoLrequQTguk.woff2) format('woff2');
+            unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+        }
+
+        /* cyrillic */
+        @font-face {
+            font-family: 'PT Sans Narrow';
+            font-style: normal;
+            font-weight: 700;
+            src: local('PT Sans Narrow Bold'), local('PTSans-NarrowBold'), url(http://fonts.gstatic.com/s/ptsansnarrow/v7/Q_pTky3Sc3ubRibGToTAYuICWD8dS1fawAsHP3zkW40.woff2) format('woff2');
+            unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+        }
+
+        /* cyrillic */
+        @font-face {
+            font-family: 'Ubuntu Condensed';
+            font-style: normal;
+            font-weight: 400;
+            src: local('Ubuntu Condensed'), local('UbuntuCondensed-Regular'), url(http://fonts.gstatic.com/s/ubuntucondensed/v6/DBCt-NXN57MTAFjitYxdrCGXDOnx9ptx3UTSPTrfsgk.woff2) format('woff2');
+            unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+        }
+    </style>
+    <SCRIPT>
+        $(document).ready(function () {
+            if ($('.preview').tooltip)
+                $('.preview').tooltip({
+                    delay: 0,
+                    showURL: false,
+                    bodyHandler: function () {
+                        return $("<img/>").attr("src", $(this).attr('pid'));
+                    }
+                });
+            if ($('.cart_product_quantity').spin)
+                $('.cart_product_quantity').spin({
+                    min: 0,
+                    max: 999
+                });
+        });
+
+        $(document).ready(
+                function () {
+                    $("body").niceScroll({
+                        cursorcolor: "#9CCCE2",
+                        // cursoropacitymin: 0.5,
+                        // scrollspeed: 20,
+                        // preservenativescrolling: false,
+                        // bouncescroll: true,
+                        horizrailenabled: false,
+                        smoothscroll: true,
+                        railalign: left,
+                        cursorwidth: 8,
+                        //touchbehavior: true,
+                    });
+                }
+        );
+
+        $(document).ready(
+                function () {
+                    $(".scroll-pane1").niceScroll({
+                        cursorcolor: "#9CCCE2",
+                        cursoropacitymin: 0.5,
+                        scrollspeed: 20,
+                        // preservenativescrolling: false,
+                        bouncescroll: true,
+                        horizrailenabled: false,
+                        smoothscroll: true,
+                        railalign: left,
+                        cursorwidth: 8,
+                        //touchbehavior: true,
+                    });
+                }
+        );
+
+        $(document).ready(
+                function () {
+                    $(".cpt_product_lists").niceScroll({
+                        cursorcolor: "#9CCCE2",
+                        scrollspeed: 20,
+                        horizrailenabled: false,
+                        cursoropacitymin: 0.5,
+                        railalign: left,
+                    });
+                }
+        );
+
+        // $(document).ready(
+        //     function() {
+        //         $("body").niceScroll({
+        // 		  cursorcolor:"#9CCCE2",
+        // 		  cursoropacitymin: 0.2,
+        // 		  //scrollspeed: 30,
+        // 		  //touchbehavior: true,
+        // 		 // autohidemode: false,
+        // 		  horizrailenabled: false,
+        // 		  railalign: left,
+        // 		  cursorwidth: 10,
+        // 		  });
+        //     }
+        // );
+
+    </SCRIPT>
+    <script type="text/javascript">
+        // $(document).ready(function(){
+        // var HeaderTop = $('.m_nav').offset().top;
+        // var CartTop = $('#pass-login').offset().top;
+
+        // $(window).scroll(function(){
+        // if( $(window).scrollTop() > HeaderTop ) {
+        // $('.m_nav').css({position: 'fixed', top: '0px'});
+        // $('.m_nav').css({width: '100%'});
+        // } else {
+        // $('.m_nav').css({position: 'static'});
+        // }
+        // if( $(window).scrollTop() > CartTop ) {
+        // $('#pass-login').css({position: 'fixed', top: '0px'});
+        // } else {
+        // $('#pass-login').css({position: 'absolute'});
+        // }
+        // });
+        // });
+        $(function () {
+
+            var marquee = $("#marquee");
+            marquee.css({"overflow": "hidden", "width": "100%"});
+
+            // оболочка для текста ввиде span (IE не любит дивы с inline-block)
+            marquee.wrapInner("<span>");
+            marquee.find("span").css({"width": "50%", "display": "inline-block", "text-align": "center"});
+            marquee.append(marquee.find("span").clone()); // тут у нас два span с текстом
+
+            marquee.wrapInner("<div>");
+            marquee.find("div").css("width", "200%");
+
+            var reset = function () {
+                $(this).css("margin-left", "0%");
+                $(this).animate({"margin-left": "-100%"}, 12000, 'linear', reset);
+            };
+
+            reset.call(marquee.find("div"));
+
+        });
+    </script>
+{/literal}

@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <? wbs_initLayout ?>
+
+</head>
+<body style='height: 300px; '>
+<div
+<? if $layout=="sidemenu" ?>style='margin-left: 120px'<? /if ?>>
+<div id='Toolbar'>
+    <div id='SubToolbar'>
+        <div><? $ugStrings.pv_page_title ?></div>
+    </div>
+
+    <div style='height: 35px'>
+        <ul>
+            <? wbs_toolbarItem ?><? wbs_button caption=$ugStrings.pv_button_title|cat:" 1"?><? /wbs_toolbarItem ?>
+            <? wbs_toolbarItem ?><? wbs_button caption=$ugStrings.pv_button_title|cat:" 2"?><? /wbs_toolbarItem ?>
+        </ul>
+    </div>
+</div>
+
+<div id="ContentScroller" style='height: 150px; overflow-y: hidden; overflow-x: hidden'>
+    <div id="Content" class="">
+
+        <div class="TabbedForm" id="TabForm1">
+            <dl class="TabbedFormList">
+                <dd style='width:60px' class="Tab Active">
+                    <a><span><? $ugStrings.pv_tab_title ?> 1</span></a>
+                </dd>
+                <dd style='width:60px' class="Tab"><a><span><? $ugStrings.pv_tab_title ?> 2</span></a>
+                </dd>
+                <dt style="width: 260px;height: 20px" class="TabPage Active">
+                <div><? $ugStrings.pv_tab_content ?> 1</div>
+                </dt>
+                <dt style="width: 260px;height: 20px" class="TabPage ">
+                <div><? $ugStrings.pv_tab_content ?> 1</div>
+                </dt>
+            </dl>
+        </div>
+        <script type="text/javascript">new TabbedForm('TabForm1');</script>
+
+    </div>
+</div>
+</div>
+
+<? if $layout == "sidemenu"?>
+<div id='MainMenu' style='width: 110px; height: 100%; position: absolute; top: 0px; left: 0px'>
+    <div id='MainMenuContent' style='padding-top: 30px; padding-left: 7px'>
+        <div class='MenuBlock'
+             style='width: 85px; margin: 0px; padding-left: 0px; padding-top: 0px; font-size: 7pt; line-height: 12px'>
+            <div style='padding: 3px; padding-right: 0px'>
+                <a><? $ugStrings.pv_mw_title ?></a><BR><a><? $ugStrings.pv_ug_title ?></a><BR><a><? $ugStrings.pv_aa_title ?></a>
+            </div>
+        </div>
+        <div class='MenuBlock'
+             style='width: 85px; margin: 0px; margin-top: 10px; padding-left: 0px; padding-top: 0px; font-size: 7pt; line-height: 12px'>
+            <div style='padding: 3px; padding-right: 0px'>
+                <a><? $ugStrings.pv_dd_title ?></a><BR><a><? $ugStrings.pv_pd_title ?></a><BR><a><? $ugStrings.pv_cm_title ?></a><BR><a><? $ugStrings.pv_mm_title ?></a><BR><a><? $ugStrings.pv_pm_title ?></a><BR><a><? $ugStrings.pv_it_title ?></a><BR><a><? $ugStrings.pv_qn_title ?></a><BR><a><? $ugStrings.pv_qp_title ?></a>
+            </div>
+        </div>
+    </div>
+</div>
+<? else ?>
+<div id='MainMenu1'
+     style='position: absolute; bottom: 0px; height: 30px; border-top: 1px solid #DDD; font-size: 1.7em; width: 100%; padding-top: 0px; padding-left: 15px; color: #BBB'>
+    <img src='../../../common/html/res/images/bottommenu_preview.gif'>
+</div>
+<? /if ?>
+</body>
+</html>

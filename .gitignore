@@ -70,4 +70,5 @@ upload/
 *pictures*/
 published/publicdata/MULTITOYS/attachments/SC/rss/
 published/publicdata/MULTITOYS/attachments/SC/themes/multitoys/
+/kernel/includes/smarty/compiled
 published/publicdata/MULTITOYS/attachments/SC/themes/user_multi-new/temp_overridestyles/

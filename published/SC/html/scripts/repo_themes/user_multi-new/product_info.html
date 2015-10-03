@@ -1,0 +1,30 @@
+<table style="width: 100%; padding: 0px;">
+    <tr>
+        <td colspan="2">
+            <div style="font-style:italic; color:#000099;">
+                <!-- cpt_container_start -->{cpt_product_name overridestyle=''}
+                {if $product_info.productID|is_new_product>0}
+                    &nbsp&nbsp
+                    <span style='color: white; background-color: red;'>&nbspНовинка!&nbsp</span>
+                    <br>
+                {/if}
+                <!-- cpt_container_end --></div>
+        </td>
+    </tr>
+    <tr>
+        <td id="prddeatailed_container">
+            {cpt_product_images}
+        </td>
+        <td>
+            <div style="font-style:italic; color:#000099;"><!-- cpt_container_start -->
+                {cpt_product_price overridestyle=':41rxw3'}{cpt_product_add2cart_button request_product_count='request_product_count' overridestyle=':qa8pav'}{cpt_product_params_selectable overridestyle=':2cbg4t'}<!-- cpt_container_end -->
+                <div style="padding-left:30px; padding-top:10px; color:#000099;"><!-- cpt_container_start -->
+                    {cpt_product_description overridestyle=''}<!-- cpt_container_end --></div>
+                <div style="padding-left:30px; padding-top:10px; color:#000099;"><!-- cpt_container_start -->
+                    <!-- cpt_container_end --></div>
+                <div style="padding-left:30px; padding-top:10px; color:#000099;"><!-- cpt_container_start -->
+                    {cpt_product_params_selectable overridestyle=''}<!-- cpt_container_end --></div>
+                <!-- cpt_container_start -->{cpt_product_discuss_link overridestyle=''}<!-- cpt_container_end -->
+        </td>
+    </tr>
+</table>

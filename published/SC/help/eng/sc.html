@@ -1,0 +1,2100 @@
+<html>
+<head>
+    <title>
+        WebAsyst Shop-Script Manual
+    </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link href=" ../../../common/html/classic/help_generated.css" rel="stylesheet" type="text/css">
+</head>
+<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+<p class="bookName">WebAsyst Shop-Script Manual</p><a name="TOC"></a>
+
+<p class="tocHdr">Table of Contents</p>
+<ul class="treeCatalogRow">
+    <li ID="933."><a href="#General-settings-of-the-store" class="" title="General settings of the store">General
+            settings of the store</a>
+        <ul class="treeCatalogRow">
+            <li ID="933.1."><a href="#Basic-settings" class="" title="Basic settings">Basic settings</a>
+            </li>
+            <li ID="933.2."><a href="#Product" class="" title="Product">Product</a>
+            </li>
+            <li ID="933.3."><a href="#Customers" class="" title="Customers">Customers</a>
+            </li>
+            <li ID="933.4."><a href="#Cart-and-checkout" class="" title="Cart and checkout">Cart and checkout</a>
+            </li>
+            <li ID="933.5."><a href="#Currencies" class="" title="Currencies">Currencies</a>
+            </li>
+            <li ID="933.6."><a href="#Countries-and-states" class="" title="Countries and states">Countries and
+                    states</a>
+            </li>
+            <li ID="933.7."><a href="#Checkout-and-signup-forms" class="" title="Checkout & Signup forms">Checkout &
+                    Signup forms</a>
+            </li>
+            <li ID="933.8."><a href="#Checkout-replacement" class="" title="Checkout Replacement">Checkout
+                    Replacement</a>
+            </li>
+        </ul>
+    </li>
+    <li ID="934."><a href="#Taxes" class="" title="Taxes">Taxes</a>
+    </li>
+    <li ID="935."><a href="#Discounts" class="" title="Discounts">Discounts</a>
+    </li>
+    <li ID="936."><a href="#Products-and-categories" class="" title="Products and categories">Products and
+            categories</a>
+        <ul class="treeCatalogRow">
+            <li ID="936.1."><a href="#Categories" class="" title="Categories">Categories</a>
+            </li>
+            <li ID="936.2."><a href="#Products" class="" title="Products">Products</a>
+            </li>
+            <li ID="936.3."><a href="#Manual-entry" class="" title="Manual entry">Manual entry</a>
+            </li>
+            <li ID="936.4."><a href="#Bulk-import-export-operations" class="" title="Bulk import/export operations">Bulk
+                    import/export operations</a>
+            </li>
+        </ul>
+    </li>
+    <li ID="937."><a href="#Payment-methods" class="" title="Payment methods">Payment methods</a>
+    </li>
+    <li ID="938."><a href="#Shipping-cost-calculations" class="" title="Shipping cost calculations">Shipping cost
+            calculations</a>
+    </li>
+    <li ID="939."><a href="#Order-processing" class="" title="Order processing">Order processing</a>
+    </li>
+    <li ID="940."><a href="#Clients-info-management" class="" title="Clients' info management">Clients' info
+            management</a>
+        <ul class="treeCatalogRow">
+            <li ID="940.1."><a href="#Customers-list" class="" title="Customers list">Customers list</a>
+            </li>
+            <li ID="940.2."><a href="#Customers-groups" class="" title="Customers groups">Customers groups</a>
+            </li>
+            <li ID="940.3."><a href="#Affiliate-program" class="" title="Affiliate program">Affiliate program</a>
+            </li>
+            <li ID="940.4."><a href="#News-letter-subscribers" class="" title="News letter subscribers">News letter
+                    subscribers</a>
+            </li>
+        </ul>
+    </li>
+    <li ID="941."><a href="#Sales-and-page-view-reports" class="" title="Sales and page view reports">Sales and page
+            view reports</a>
+    </li>
+    <li ID="942."><a href="#Extra-tools" class="" title="Extra tools">Extra tools</a>
+        <ul class="treeCatalogRow">
+            <li ID="942.1."><a href="#Widgets" class="" title="Widgets">Widgets</a>
+            </li>
+            <li ID="942.2."><a href="#Info-pages" class="" title="Info pages">Info pages</a>
+            </li>
+            <li ID="942.3."><a href="#Blog-news" class="" title="Blog/news">Blog/news</a>
+            </li>
+            <li ID="942.4."><a href="#Survey" class="" title="Survey">Survey</a>
+            </li>
+            <li ID="942.5."><a href="#Link-exchange" class="" title="Link exchange">Link exchange</a>
+            </li>
+        </ul>
+    </li>
+    <li ID="943."><a href="#Stores-design" class="" title="Store's design">Store's design</a>
+        <ul class="treeCatalogRow">
+            <li ID="943.1."><a href="#Design-editor" class="" title="Design editor">Design editor</a>
+            </li>
+            <li ID="943.2."><a href="#Languages-and-translation" class="" title="Languages and translation">Languages
+                    and translation</a>
+            </li>
+            <li ID="943.3."><a href="#Image-uploader" class="" title="Image uploader">Image uploader</a>
+            </li>
+        </ul>
+    </li>
+</ul>
+<table border="0" cellspacing="0" cellpadding="0" width="100%">
+    <tr>
+        <td height=0><a name="General-settings-of-the-store"></a></td>
+    </tr>
+    <tr>
+        <td align=center>
+            <table border="0" cellspacing="0" cellpadding="0" width="98%">
+                <tr>
+                    <td><h2>General settings and parameters of your WebAsyst Shop-Script internet store</h2>
+
+                        <p>You do not necessarily need to configure your store to start working with it.
+                            Default settings are fine for some situations. If they are not, you can change
+                            them. <strong>Settings-&gt;Settings</strong> section of the administrative back
+                            end has 8 submenues. </p>
+                        <ol>
+                            <li><a href="#Basic-settings">Basic settings</a><br/></li>
+                            <li><a href="#Product">Product</a></li>
+                            <li><a href="#Customers">Customers</a><br/></li>
+                            <li><a href="#Cart-and-checkout">Cart and checkout</a></li>
+                            <li><a href="#Currencies">Currencies</a></li>
+                            <li><a href="#Countries-and-states">Countries and states</a></li>
+                            <li><a href="#Checkout-and-signup-forms">Checkout &amp; Signup forms</a></li>
+                            <li><a href="#Checkout-replacement">Checkout Replacement</a><br/></li>
+                        </ol>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td height=0><a name="Basic-settings"></a></td>
+    </tr>
+    <tr>
+        <td align=center>
+            <table border="0" cellspacing="0" cellpadding="0" width="98%">
+                <tr>
+                    <td><h3>Basic settings</h3>
+
+                        <p>First submenu is also, surprisingly, called - <strong>Settings</strong>. </p>
+                        <blockquote>
+                            <p>Please note, all of the parameters' entry fields are limited to 255 characters.
+                                General descriptions of the parameter's purpose and function is present in
+                                the commentary below it. </p>
+                        </blockquote>
+                        <p>Some additional details and explanation follow - </p>
+
+                        <p><img src="images/Snap1.gif"/><br/></p>
+
+                        <p><strong>Store name:</strong> value entered here will be added to the &quot;Thank
+                            you for shopping at&quot; phrase of all of the emails sent to customers.</p>
+
+                        <p><strong>Store domain name (address):</strong> that needs to be typed in a
+                            browser to access your store. Make sure there are no extra spaces in it and
+                            add &quot;http://&quot; at the beginning of it. This value will also be added
+                            to store's outgoing emails.</p>
+
+                        <p><strong>General email address of your store:</strong> that will be used as
+                            originating address in all outgoing emails. It is preferable to use email registered
+                            in the same domain as your store to lessen chances of your notifications being
+                            stopped by spam filters. </p>
+
+                        <p><strong>Email address for order notifications:</strong> is your own email
+                            where you want to receive them. Make sure to use the most reliable of your email
+                            account, as this is your most important channel of communication with the clients.</p>
+
+                        <p><strong>Protection from 3rd party scripts (captcha):</strong> is a requirement
+                            to enter contents of a picture in the forms of the store before submitting them.
+                            This prevents bot spamming of product discussions and other forms in your store.</p>
+
+                        <p><strong>Date format:</strong> has to be chosen from two of the possible formats.
+                            MM/DD/YYYY or DD.MM.YYYY. This setting will affect all dates entered and presented
+                            in the store (news publication, order placement, customer registrations etc.).</p>
+
+                        <p><strong>First weekday:</strong> affects sales reports presentations.</p>
+
+                        <p><strong>Storefront pages default title:</strong> is assigned to the value
+                            of main page's HTML title tag. It is one of the most important parameters for
+                            search engine optimization. It should be concise, relevant to your store merchandise
+                            and prospective customers. Never put here just the name of your store, especially
+                            if it is not self descriptive.</p>
+
+                        <p><strong>Homepage META Keywords:</strong> should contain terms that you want
+                            to be found by in Google and other search engines separated by spaces. Even
+                            though they do not help currently, because of a large history of abuse by search
+                            engine spammers, they do not hurt either. If you place here something irrelevant
+                            to your store's merchandise, it can tip off search engines to consider your
+                            site as abusive. </p>
+
+                        <p><strong>Homepage META Description:</strong> is a three to five sentences paragraph
+                            describing your store. It will be added to the respective HTML tag of the page.
+                            Text contained here is often used by search engines as a page brief presented
+                            after a link to it in the results.</p>
+
+                        <p><strong>Google Maps API key:</strong> is used to find your customers on the
+                            map and calculate delivery routes in the store's back end interface. It is issued
+                            for free by Google. Sign up form can be found here - <a target="_blank"
+                                                                                    title="Google maps API sign-up"
+                                                                                    href="http://code.google.com/intl/en/apis/maps/signup.html">http://code.google.com/intl/en/apis/maps/signup.html</a>.
+                        </p>
+
+                        <p><strong>Your warehouse or office address:</strong> in a proper form understood
+                            by Google (e.g. 22, 5th avenue, New York). You can check your address beforehand
+                            here - <a target="_blank" title="Google maps service" href="http://maps.google.com/">http://maps.google.com/</a>
+                            It will be used to calculate delivery route to your customer. </p></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td height=0><a name="Product"></a></td>
+    </tr>
+    <tr>
+        <td align=center>
+            <table border="0" cellspacing="0" cellpadding="0" width="98%">
+                <tr>
+                    <td><h3>Product</h3>
+
+                        <p>Second tab of settings called Products contains following parameters.</p>
+
+                        <p>&nbsp;<img src="images/Snap2.gif"/></p>
+
+                        <p><strong>Default tax class:</strong> will be applied to all products added to
+                            the store after it is set. <strong><br/>
+                                Customers can rate products:</strong> will present the &quot;star&quot; rating
+                            and ability to rate products on their detailed view pages. If <strong>Allow
+                                customers to select products sorting criteria</strong> is turned on, visitors
+                            can sort products within category by rating, price etc.<br/>
+                            <strong>Weight unit:</strong> defines in what units you enter products weight
+                            and is used by weight conversion calculations for some of the shipping modules.<br/>
+                            <strong>Number of products per page (storefront):</strong> sets number of them
+                            showed on one listing page. It affects category and search results view. If
+                            number of products in the category exceeds this value, view will have additional
+                            navigation to proceed to other pages.<br/>
+                            <strong>Number of columns in the products presentation grid (storefront): </strong>affects
+                            category and search result views as well. Make sure to check results after changing
+                            these settings and use it in conjunction with picture sizes set below. Default
+                            value is 10.<br/>
+                            <strong>Stock level control:</strong> allows you to prevent customers from ordering
+                            out of stock items and deducts number of them ordered from &quot;in stock&quot;
+                            value set when product was added. When &quot;off&quot;, any item present in
+                            the store will be available for ordering and its &quot;in stock&quot; value
+                            will not be adjusted upon ordering. <br/>
+                            <strong>Show customers exact product stock information:</strong> will present
+                            visitors with the exact number of items in stock when turned on, or just a general
+                            message on availability. When previous parameter is turned off, it has no effect
+                            on store's performance. <br/>
+                            <strong>Allow customers to select products sorting criteria:</strong> if turned
+                            on, category and search results views will have additional navigation options.
+                            There will be an extra set of links around the list contents allowing to sort
+                            it by price, rating <br/>
+                            <strong>Allow comparison of products listed in simple search results:</strong>
+                            will add check mark boxes to choose products in the search listing for comparison
+                            in a table view. <br/>
+                            <strong>Product thumbnails default size:</strong> set in pixels. WebAsyst Shop-Script
+                            will automatically create resized versions of images uploaded according to the
+                            settings of this and two following parameters. This version will be shown in
+                            the list of goods inside a category. Image proportions will be kept. Default
+                            value is 150.<br/>
+                            <strong>Product picture default size: </strong>default value is 300.<strong><br/>
+                                Category thumbnail default size: </strong>default value is 100.</p></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td height=0><a name="Customers"></a></td>
+    </tr>
+    <tr>
+        <td align=center>
+            <table border="0" cellspacing="0" cellpadding="0" width="98%">
+                <tr>
+                    <td><h3>Customers</h3>
+
+                        <p>Third tab is called Customers. It has these parameters:</p>
+
+                        <p>&nbsp;<img src="images/Snap3.gif"/></p>
+
+                        <p><strong>Customer signup/checkout form - default country:</strong> set here
+                            will be already chosen from the list of all countries in the customer registration
+                            form.<br/>
+                            <strong>Default customer group:</strong> sets initial group all newly registered
+                            customers will be added. <br/>
+                            <strong>Require email verification using Activation Key:</strong> if turned
+                            on will require visitors to receive an email with registration confirmation
+                            code and either paste it into the form or follow the included link to complete
+                            registration process. Adds an extra step to the registration process, turned
+                            off by default.<br/>
+                        </p></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td height=0><a name="Cart-and-checkout"></a></td>
+    </tr>
+    <tr>
+        <td align=center>
+            <table border="0" cellspacing="0" cellpadding="0" width="98%">
+                <tr>
+                    <td><h3>Cart and checkout</h3>
+
+                        <p>Last tab named Cart and Checkout lists these settings:</p>
+
+                        <p><img src="images/Snap4.gif"/>&nbsp;</p>
+
+                        <p><strong>Enable shopping cart &amp; ordering feature:</strong> turning it off
+                            you will switch your store into an online catalog mode.It can be useful for
+                            other purposes, but in a normal course of action only if you are performing
+                            major data or code updates on a live installation with high traffic. <br/>
+                            <strong>How to show shopping cart &amp; checkout:</strong> allows you to choose
+                            between opening it in a new window or on top of the faded out current page.
+                            <strong><br/>
+                                Minimal order amount (in default currency):</strong> will affect ability to
+                            proceed with ordering. Carts with total amount under this limit will not be
+                            possible to checkout. Only goods price is taken into account (discounts, taxes
+                            and shipping are not considered).<strong><br/>
+                                Order ID prefix: </strong>can be used to impress your customers with the six
+                            digit order number implying long history of the store or to adjust running count
+                            to the previously established numbering system. <br/>
+                            <strong>Request billing address:</strong> if you need to ask for a separate
+                            address to bill your customer, different from the shipping one. <br/>
+                            <strong>Checkout is performed in SSL secure mode:</strong> should be turned
+                            on only if you have an SSL certificate installed and properly configured for
+                            your domain name. Shared certificates do not work properly. An SSL certificate
+                            is also a requirement for some of the payment modules and checkout replacements
+                            by Google and PayPal. Please note, that turning it on withoput SSL certificate
+                            will prevent visitors from placing orders. <br/>
+                            <strong>Calculate tax on shipping (select tax class):</strong> allows to apply
+                            tax to the shipping cost as well. <br/>
+                            <strong>Your store location - country:</strong> to be used in shipping cost
+                            calculations by real time shipping quotes calculator services and Google along
+                            with the next <strong> Your store location - state</strong>: parameter.</p></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td height=0><a name="Currencies"></a></td>
+    </tr>
+    <tr>
+        <td align=center>
+            <table border="0" cellspacing="0" cellpadding="0" width="98%">
+                <tr>
+                    <td><h3>Currencies</h3>
+
+                        <p>Here you manage different currencies you want to present your prices and accept orders in.
+                            One of the currencies shold be set as default. This currency should be the one you enter
+                            product prices in and all new visitors will see prices nominated in it. Other currencies
+                            should have conversion rates and ISO codes set for them. ISO codes are used in some payment
+                            modules to identify currencies, therefore consult list located <a
+                                    href="http://www.iso.org/iso/support/faqs/faqs_widely_used_standards/widely_used_standards_other/currency_codes/currency_codes_list-1.htm">
+                                here</a> or your payment processor for the right ones. When setting exchange rates for
+                            the additional currencies make them in relation to the default one, For example, you have
+                            set USD as your default currency and want to use Euro as an additional one. Then you need to
+                            set Euros rate at 0.788643. If you have Euro as your default currency then USD exchange rate
+                            will be the reversed one 1.268. Make sure to use dot to separate decimal part of the rate.
+                        </p>
+
+                        <p>Each currency also has these settings —</p>
+
+                        <p><strong>Name </strong>that is shown in the administrative interface and front end currency
+                            selector.</p>
+
+                        <p><strong>Output format </strong>that defines how price shown in this currency is formatted.
+                            You can add a special symbol or a name here.</p>
+
+                        <p><strong>Decimal symbol</strong> separator that will be used in store front price formatting.
+                        </p>
+
+                        <p><strong>Decimal places</strong> parameter sets number of digits shown after above set
+                            separator symbol.</p>
+
+                        <p><strong>Thousands delimiter</strong> is used to separate integer part of the price into
+                            groups of three digits for better presentation.</p></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td height=0><a name="Countries-and-states"></a></td>
+    </tr>
+    <tr>
+        <td align=center>
+            <table border="0" cellspacing="0" cellpadding="0" width="98%">
+                <tr>
+                    <td><h3>Countries and states</h3>
+
+                        <p>This section contains lists of countries and their regions. They are used by customers to
+                            enter shipping and billing addresses at checkout. Tax and shipping cost calculation also
+                            depend on these lists.</p>
+
+                        <p>List present in <strong>Settings-&gt;Countries </strong>contains all of the countries in the
+                            world, Each country has a name and two ISO codes (two and three letters). Codes are needed
+                            by shipping and payment integration modules. Country names can be translated to all
+                            languages available in the store. Their entire list is made available in the drop-down list
+                            of the address entry forms. Country set as default in <strong>Settings-&gt;Settings-&gt;Customers-&gt;</strong>
+                            <strong>Customer signup/checkout form - default country </strong>will be the one chosen
+                            before hand in all entry forms, and can be changed by visitors if necessary.</p>
+
+                        <p>Section <strong>Settings-&gt;States </strong>is used to add regions of the countries. To see
+                            already present ones choose necessary country from the list at the top of the page. Initial
+                            database contains lists of regions for following countries: Austria, Belarus, Canada,
+                            Germany, Romania, Russia, Spain, Switzerland, Ukraine, and United States. There is no
+                            possibility to set default region for the country, they are always presented in alphabetical
+                            order. You can add regions of your country or delete those that are not needed.</p>
+
+                        <p>This mechanism can be used to narrow down your market, by creating “country” with the name of
+                            you city and adding its districts as regions. However, such addresses will not be possible
+                            to use with some third party shipping calculation services.</p></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td height=0><a name="Checkout-and-signup-forms"></a></td>
+    </tr>
+    <tr>
+        <td align=center>
+            <table border="0" cellspacing="0" cellpadding="0" width="98%">
+                <tr>
+                    <td><h3>Checkout &amp; Signup forms</h3>
+
+                        <p>Here you edit customer registration form shown at the checkout or account creation. Top part
+                            of the page lists optional form fields. You can edit, delete or add fields. Each field has a
+                            name that will be used as its title in the actual form. Field names can be translated to all
+                            of the languages present in the store. They can be marked as optional or mandatory to make
+                            sure that customer fills them in. Order of the fields in the form is regulated according to
+                            sort order parameter settings.</p>
+
+                        <p>Lower part of the page contains a list of the already present fields. They can be set as
+                            optional or mandatory as well.</p>
+
+                        <p>Name, last name and email are always requested and can not be made optional</p>
+
+                        <p>To store made changes, click appropriate Save button.</p></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td height=0><a name="Checkout-replacement"></a></td>
+    </tr>
+    <tr>
+        <td align=center>
+            <table border="0" cellspacing="0" cellpadding="0" width="98%">
+                <tr>
+                    <td><h3>Checkout replacements</h3>
+
+                        <p>If you have a merchant account with Google Checkout or PayPal Express checkout, you can
+                            replace standard procedure built-in to the Shop-Script with their processes. As a result,
+                            customer info will be collected and processed in secure requirement of these providers and
+                            posted back to the store in the background. To enable these methods you must have cURL
+                            permitted at your hosting and SSL certificate issued by one of the providers approved by
+                            Google or PayPal respectively.</p></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td height=0><a name="Taxes"></a></td>
+    </tr>
+    <tr>
+        <td align=center>
+            <table border="0" cellspacing="0" cellpadding="0" width="98%">
+                <tr>
+                    <td><h3>Taxes</h3>
+
+                        <p>Taxes can be created to be added on top of the original product price based on the customer
+                            location and specific product. Tax rates are defined as percentages. If necessary, you can
+                            define several rates for different types of products or regions.</p>
+
+                        <p>Tax rate is effective within certain country or its regions and applied based on the
+                            customers address.</p>
+
+                        <p>Rates are defined in <strong>Settings-&gt;Taxes. </strong>There you need enter name and
+                            percentage of the tax. You can choose type of customer’s address tax is calculation is based
+                            on – shipping or billing.</p>
+
+                        <p>Once rates are defined you need to attach them to products. This is done in the product
+                            editing section. To save time you can define certain rate as a default one for all newly
+                            created products. This setting will affect both entered manually and imported from CSV
+                            files.</p></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td height=0><a name="Discounts"></a></td>
+    </tr>
+    <tr>
+        <td align=center>
+            <table border="0" cellspacing="0" cellpadding="0" width="98%">
+                <tr>
+                    <td><h3>Discounts</h3>
+
+                        <p>There are several discount types available. They can be based on a group registered customer
+                            belongs to, single order amount, running total of all successful orders and coupons. If
+                            several types used simultaneously they can be applied together or the maximum one. Discount
+                            &nbsp;settings are available in <strong>Orders-&gt;Discounts</strong> section. <strong>
+                                &nbsp;</strong></p>
+
+                        <p>&nbsp;<img src="images/Snap5.gif"/></p>
+
+                        <p>After you enable coupon discounts, you can start creating their codes, to do so click on a
+                            discount coupons link in the type description. &nbsp;Each coupon should have an alphanumeric
+                            code. It is automatically generated for your convenience, but can be changed, if necessary,
+                            to something more meaningful. Other settings for coupon discount are: active or not; type
+                            (one-time, reusable with expiry date, reusable without expiration); discount (absolute
+                            amount or percentage of the order); description. Please note, that absolute amount discounts
+                            are applied at once and if they exceed order amount it will be free and remainder not
+                            available for later use by the customer.</p>
+
+                        <p>One time coupons are convenient for situations when order amount correction is necessary.
+                            They can be also used for affiliate commission payouts with your store’s goods.</p>
+
+                        <p>Reusable coupons are good for promotions and can mailed out or published in the ads. Coupons
+                            with expiry date will be disabled automatically at it. If such date is not set, coupon can
+                            be set as inactive or deleted once it is no longer needed.</p>
+
+                        <p>Single order amount discount can be used to motivate your customer to place single orders
+                            with higher cost. Once you enable them you will be able to set ceilings and discount
+                            applicable to them. You can set several steps with own discount rate each.</p>
+
+                        <p>Total of all successful orders discount is a way to reward your customers for coming back
+                            again and again to your store. It is set up in the same fashion as single order amount
+                            discount, except that total of all orders placed, paid and processed is used to determine
+                            discount rate.</p>
+
+                        <p>Finally you can set whether multiple discounts are applied all at once or just the biggest of
+                            them all.</p></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td height=0><a name="Products-and-categories"></a></td>
+    </tr>
+    <tr>
+        <td align=center>
+            <table border="0" cellspacing="0" cellpadding="0" width="98%">
+                <tr>
+                    <td><h3>Products and categories</h3>
+
+                        <p>&nbsp;Products and categories adding and editing.<br/></p>
+                        <ol>
+                            <li><a href="#Categories">Categories</a>.</li>
+                            <li><a href="#Products">Products</a>.</li>
+                            <li><a href="#Manual-entry">Manual entry</a>.</li>
+                            <li><a href="#Bulk-import-export-operations">Bulk import/export operations</a>.<br/></li>
+                        </ol>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td height=0><a name="Categories"></a></td>
+    </tr>
+    <tr>
+        <td align=center>
+            <table border="0" cellspacing="0" cellpadding="0" width="98%">
+                <tr>
+                    <td><h3>Categories</h3>
+
+                        <p>Categories of your products are defined in Products section of the administrative backend.
+                            All categories and products are contained in system ROOT category that can not be edited or
+                            deleted. To create a new one you need to click on Add new category button at the bottom of
+                            the categories tree in the left side of the page. You will see following properties:</p>
+
+                        <p>&nbsp;<img src="images/Snap6.gif"/></p>
+
+                        <p><strong>Parent category</strong> of the current category. You can choose any category
+                            available in you catalog by clicking Select link. Default setting for this parameter is ROOT
+                            or category that was active in th tree before you click on Add new category. </p>
+
+                        <p><strong>Category name</strong> will be shown in store front and used to create a link to
+                            category. It is also a unique identifier of the category in bulk import/export operations.
+                            Maximum length is 255 symbols.</p>
+
+                        <p><strong>Category logo</strong> can be uploaded. It will be shown besides category name in all
+                            of its pages. You can upload .gif, .jpg or .png file. It will be automatically resized
+                            according Settings-&gt;Settings-&gt;Products-&gt;Category thumbnail default size parameter
+                            values. Maximum length of the file name is 30 symbols and it should not contain spaces and
+                            special symbols, as they are not properly handled by some browsers. </p>
+
+                        <p><strong>Category description</strong> will be also shown on all category pages. It can be
+                            formatted using built in text editor. Maximum length is 64 kilobytes of text. </p>
+
+                        <p><strong>Page title</strong> value will be assigned to category page TITLE HTML tag. It is a
+                            very important parameter for search engine optimization. It should be concise and relevant
+                            to the products inside category. Maximum length is 255 symbols. </p>
+
+                        <p><strong>META keywords</strong> were used by search engines to determine what page is about
+                            before, but due to the massive abuse of its setting it lost its importance. Still it does
+                            not hurt to enter words that you feel are most important for this category. Maximum length
+                            of this field is 255 symbols.</p>
+
+                        <p><strong>META description</strong> is often used as a page excerpt shown in search engines
+                            output underneath the link to a page. Make it concise and attention grabbing. Maximum length
+                            is also 255 symbols. </p>
+
+                        <p><strong>Sort order</strong> parameter defines ordering of the categories inside their parent
+                            category. If it contains identical values for several categories, they are sorted
+                            alphabetically. You can enter negative and positive integer values in this field. This can
+                            be used to quickly move up certain category by assigning it a -100 order, or down by setting
+                            it to 1000. </p>
+
+                        <p><strong>Page ID (part of page URL; utilized in links to category page)</strong> is a &quot;tail&quot;
+                            part of the page link. It is generated automatically from the category name, but can be
+                            redefined by entering necessary text in this field. Search engines give bigger ratings to
+                            pages that have their content keyword in their address. Maximum length is 255 symbols.</p>
+
+                        <p><strong>Allow customer to compare products within this category</strong> flag turns on
+                            comparison feature. It adds selection checkmark beside each product in the category list and
+                            Compare button at the top and bottom of the page. Turned on by default.</p>
+
+                        <p><strong>Advanced search</strong> allows you to set up additional search options based on the
+                            extra characteristics of goods contained in the category. Once you click on Available values
+                            link, you will see a list of all product parameters defined in the store and be able to
+                            choose those relevant for the category. Each parameter can be allowed to be entered manually
+                            or selected from the list of predefined values. Turned off by default.</p>
+
+                        <p><strong>Allow advanced product selection within this category</strong> turns on settings made
+                            in the above parameter and shows additional search form on the category page according to
+                            the settings. Turned on by default.</p>
+
+                        <p><strong>Always show subcategory products among this category products</strong> turns on and
+                            off output of products contained in the subcategories upon entry of to the parent category.
+                            This is useful if your categories contain only a few products. Turned on by default.</p>
+
+                        <p>Category properties text fields can be entered in all languages available in the store. TO
+                            add translation you need to make other languages fields visible by clicking on a little two
+                            down pointing arrows icon at the bottom right of the field. It will expand and other
+                            language versions will be available for editing. </p>
+
+                        <p>To change settings of the existing category you need to choose it form the category tree on
+                            the left of the page and click Edit category link at the top of the right side of the page.
+                            You will se all parameters described above with their values. To delete a category, click on
+                            the respective link at the top of the page. Product records from deleted category will not
+                            be removed from the database, they will be moved to the ROOT category instead. If necessary,
+                            you can find the there and assign to another category or delete completely.</p></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td height=0><a name="Products"></a></td>
+    </tr>
+    <tr>
+        <td align=center>
+            <table border="0" cellspacing="0" cellpadding="0" width="98%">
+                <tr>
+                    <td><h3>Products</h3>
+
+                        <p>In products-&gt;Products and categories section of the administrative backend you see a
+                            category tree in the left side of the page and list of products selected category contains
+                            in the right side of it. </p>
+
+                        <p>There is an Add category button at the top of the right side. Once clicked it presents you
+                            with following product properties pages divided in three tabs. Basic details, Other detail
+                            and Custom parameters. </p>
+
+                        <p>Basic details tab is shown first - </p>
+
+                        <p>&nbsp;<img src="images/Snap7.gif"/> <br/></p>
+
+                        <p><strong>Product name</strong> is an obvious parameter. Besides from being shown in the pages
+                            it is also used to create TITLE tag of the product page. If you plan to upload your products
+                            definitions in bulk from CSV files, it can be used as their unique identifier. If your
+                            product names are not unique, you would have to use product codes for identifying them.
+                            Maximum length of this field is 255 symbols.</p>
+
+                        <p><strong>Price</strong> is set in default currency. Price value in other currencies is
+                            calculated automatically according to exchange rates set. It can have from 6 to 10
+                            significant digits, depending on your server configuration. The dot is used as a decimal
+                            part separator.</p>
+
+                        <p><strong>In stock</strong> parameter keeps number of product units available for sale. This
+                            field is presented only if you have stock control parameter turned on in general settings.
+                            This fields value is automatically adjusted upon sale.</p>
+
+                        <p><strong>Category</strong> this product belongs to. Category set here is the main parent
+                            category for the product. By default, this field has a value of the category selected on
+                            previous page, before Add product button was clicked. If you set it to ROOT, your product
+                            will not be visible in storefront, yet record of it remains in the database and later can be
+                            moved to another category. To change products category, click select and choose another one
+                            from the list in the pop up window.</p>
+
+                        <p><strong>Description</strong> is text that will be presented on the detailed product info
+                            page. You can use built-in editor to enter the text and apply formatting to it (bold,
+                            italic, justification and so on). If you need extra formatting not present in the editor
+                            features, you can switch to HTML source code editing and enter it there directly. Maximum
+                            length of this field is 64 kilobytes.</p>
+
+                        <p><strong>Brief description</strong> is a short version of the above description text that will
+                            be presented when product is viewed inside category list. You can apply formatting to it as
+                            well. Maximum length of this field is 64 kilobytes too.</p>
+
+                        <p><strong>Tags</strong> (use commas to separate) should not be confused with meta tags that
+                            follow. In this field you can enter words and phrases you want to have your product
+                            associated with when accessed through tag cloud at the store front. This is useful for
+                            creating another non hierarchical classification of your goods. For example baby clothing
+                            shop can have manufacturer and age categories, while tags used for styles (funky, classic,
+                            country etc. ).</p>
+
+                        <p><strong>Meta: Page title</strong> is placed inside product page HTML title tag and can be
+                            seen at the top of the browser window of you visitors. Value of this field is very important
+                            from search engine's pint of view. Words entered here will be considered as most relevant
+                            and important for the page. If you leave this field empty, Shop-Script will automatically
+                            place product name plus store’s name into page's title tag. </p>
+
+                        <p><strong>Keywords</strong> were used by search engines to determine what page is about before,
+                            but due to the massive abuse of its setting it lost its importance. Still it does not hurt
+                            to enter words that you feel are most important for this product. Maximum length of this
+                            field is 255 symbols.</p>
+
+                        <p><strong>Description</strong> is often used as a page excerpt shown in search engines output
+                            underneath the link to a page. Make it concise and attention grabbing. Maximum length is
+                            also 255 symbols. </p>
+
+                        <p><strong>Product images</strong> section of the page allows you to upload pictures of your
+                            goods. You just need to upload original image of your product here and its small and medium
+                            resized versions will be automatically created according to dimensions set in Settings-&gt;Products
+                            section's Product thumbnail and Product picture default size parameters. You can upload
+                            several images. Image at the top of the list is the default one. Its small copy is shown in
+                            category view and medium sized version at the top of available images in product detailed
+                            view. Click and drag images to reorder them. You can upload .gif, .jpg or .png image
+                            formats. Maximum file name length is 255 symbols. You should avoid uploading of files which
+                            names contain spaces or special symbols, as they are not correctly handled by some browsers.
+                        </p>
+
+                        <p>Instead of uploading an image you can also enter it URL and it will be copied into
+                            Shop-Script, resized and stored. </p>
+
+                        <p>Second tab Other details has these parameters listed - </p>
+
+                        <p><img src="images/Snap8.gif"/>&nbsp;</p>
+
+                        <p><strong>Product code (SKU)</strong> field can store unique identifier (barcode value, stock
+                            keeping unit) of the product. It is not shown in storefront. Value of this field can be used
+                            as key in bulk products upload from CSV files. </p>
+
+                        <p><strong>Page ID (part of page URL; utilized in links to product page)</strong> if left empty,
+                            will be is automatically generated from product name. If needed it can be edited to be more
+                            descriptive. It will be used as a part of the product details page link. Make sure not to
+                            set identical values for different products. </p>
+
+                        <p><strong>Invisible </strong>toggle allows you to temporary hide product from storefront. All
+                            of the info will be kept intact, but the product will not be shown in categories and
+                            available for ordering. </p>
+
+                        <p><strong>Available for ordering </strong>toggle is another way to limit ordering of the
+                            product. It can be used for new products before their arrival to the store. You will have
+                            the benefit of informed customers and indexed pages at the time it is finally available.
+                        </p>
+
+                        <p><strong>Tax type</strong> is a rate that is applied to this particular product. By default
+                            all new products are set with the rate defined in Settings-&gt;Product-&gt;Default tax class
+                            parameter. If you have more than one tax rate created in the store, you can set appropriate
+                            one here. </p>
+
+                        <p><strong>Regular price</strong> can be used to store previous price when current one goes
+                            down. It shows price dynamics to your customers. If entered, it will be shown beside product
+                            with the phrase &quot;You save&quot; and savings percentage calculated. </p>
+
+                        <p><strong>Handling charge</strong> is a per product cost of shipping preparation. It will be
+                            multiplied by the number of units ordered and added to the total shipping cost. Below Free
+                            shipping toggle has no affect on this cost. </p>
+
+                        <p><strong>Weigh</strong>t set in units defined in Settings-&gt;Products-&gt;Weight unit
+                            parameter. It is used to calculate shipping charge. If this value has a decimal part, use
+                            dot as a separator. </p>
+
+                        <p><strong>Free shipping</strong> toggle will exclude this product from the automatic shipping
+                            cost calculation. It will not affect handling charge set in one of the parameters above. Off
+                            by default.</p>
+
+                        <p><strong>Minimum order quantity</strong> will force your customer to order at least number of
+                            units set here to be able to proceed with the order. If lesser quantity is placed in the
+                            cart, customer will see a message asking him to increase it. It will not be possible to
+                            place such order without either adjusting number of units ordered or deleting them from the
+                            cart. Please note, in situation when you have stock control turned on and number of units in
+                            stock left is less than minimal order quantity, it will not be possible to add remaining
+                            units to the cart. </p>
+
+                        <p><strong>Sort order</strong> parameter can change default alphabetical sorting of products
+                            within category. This field can be set to positive and negative integer values. For example,
+                            if you want certain product to be on top of the category list set it to -1000. </p>
+
+                        <p><strong>See also</strong> lets you select an unlimited number of other products related to
+                            the current one. It will result in showing their thumbnail images and price with direct
+                            links to full details at the bottom of the current page. This saves your visitors time and
+                            encourages them to buy other items. </p>
+
+                        <p><strong>Product extra categories</strong> allows to include this product in categories other
+                            than main parent one. It is helpful when you need to have several hierarchies in the
+                            catalog. For example you sell car parts and they can be grouped by manufacturer (Ford,
+                            Toyota etc.) or car system (fuel system, suspension etc.). You can create two main
+                            categorizations and respective subcategories inside them placing same product item into
+                            several places. It is also useful for temporary categories like New and Discounted that you
+                            can add products from other categories to. </p>
+
+                        <p><strong>This product is downloadable</strong> toggle allows to mark it as a digital
+                            downloadable product and upload respective file. You can set such properties of it as number
+                            of days link is available and number of attempts to download. Once you have selected file
+                            with the Browse button and clicked Save it will be uploaded to your site. Please note, most
+                            hosting have 2 megabyte limit on uploaded file size, if you need to upload larger files,
+                            contact your hosting beforehand.</p>
+
+                        <p>Maximum length of the uploaded file name is 255 symbols, avoid using spaces and percentage
+                            sign in the name, as such file names are not properly handled by some browsers. </p>
+
+                        <p>Last tab named Custom parameters lets you link extra product parameters defined beforehand to
+                            current product. You can switch to custom parameters section of the administrative backend
+                            by clicking Manage custom options link at the bottom of the page. Please note that if you do
+                            so, you need to save product information entered in other tabs, otherwise it will be
+                            lost. </p>
+
+                        <p><img src="images/Snap9.gif"/><br/></p>
+
+                        <p>This page shows you the entire list of defined parameters. Initially all of them are &quot;Not
+                            defined&quot;. Which means that characteristic is not linked to the product and not
+                            presented on its page. You can mark those related to current product and either enter
+                            necessary value into the Custom field or make it selectable from a list of predefined
+                            values. In the second case you can additionally set markup or discount on original product
+                            price depending on the option selected.</p></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td height=0><a name="Manual-entry"></a></td>
+    </tr>
+    <tr>
+        <td align=center>
+            <table border="0" cellspacing="0" cellpadding="0" width="98%">
+                <tr>
+                    <td><h3>Manual product entry</h3>
+
+                        <p>Products-&gt;Products and categories section of the administrative backend allows you to edit
+                            properties of the existing products or add new ones. Once you click on the category in the
+                            left side of the page, its content appears in the main area as a table. You can edit price,
+                            in stock value and sort order right inside this table. Here you can delete products by
+                            clicking on a red cross in the rightmost column individually. If you need to delete or move
+                            to another category several product records at once, checkmark them and click respective
+                            button at the bottom of the list. If you edited price/in stock/sort order values inside this
+                            table, make sure to click on Update button at the right bottom corner to store changes.
+                            Clicking on the column headings will result in products being sorted by that field. Second
+                            click reverses direction of the sorting.
+
+                        <h3></h3>There are two links to manage current category at the top of the products table. You
+                        can either change its characteristics or completely deled it by clicking on the respective link.
+                        In the second case all of the products previously contained in the deleted category will be
+                        moved to the ROOT.<h3></h3>You can also upload your goods catalog from prepared CSV file, all at
+                        once. CSV files can be created in spreadsheet software such as Microsoft Excel, OpenOffice and
+                        others.</p></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td height=0><a name="Bulk-import-export-operations"></a></td>
+    </tr>
+    <tr>
+        <td align=center>
+            <table border="0" cellspacing="0" cellpadding="0" width="98%">
+                <tr>
+                    <td><h3>Bulk products import from CSV file <br/></h3>
+
+                        <p>
+                            Instead of manuall entering each product and its details in the administrative backend you
+                            can prepare this info in a spreadsheet software and import it all at once. You need to
+                            create a CSV format file in any spreadsheet with the structure described below.</p>
+
+                        <p>
+                            Fusrt line of the file should contain field names, one in each cell.</p>
+                        <table cellspacing="0" cellpadding="5" border="1">
+                            <tbody>
+                            <tr>
+                                <td align="center" rowspan="2">Filed name</td>
+                                <td align="center" colspan="2">Value example</td>
+                                <td align="center" rowspan="2">Note</td>
+                            </tr>
+                            <tr>
+                                <td align="center">for a product</td>
+                                <td align="center">for a category</td>
+                            </tr>
+                            <tr>
+                                <td align="right">Product code (SKU)</td>
+                                <td>СЕ-2121341</td>
+                                <td>Empty</td>
+                                <td>SKU, or some other unique product code. This field can be used as unique product
+                                    identifier when uploading CSV file
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="right">Product name</td>
+                                <td>Samsung SGH-L350</td>
+                                <td>Cell phones</td>
+                                <td>Name of the category or a product. If product names are unique they can also be used
+                                    as unique key in CSV import procedure.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="right">Page ID (part of page URL; utilized in links to product page)</td>
+                                <td>samsung-sgh-l350</td>
+                                <td>cell-phones</td>
+                                <td>"Tail"of the category or product page link. It can be set arbitrarily, or it will be
+                                    generated automatically based on the name of the product or category.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="right">Price</td>
+                                <td>6800.00</td>
+                                <td>Empty</td>
+                                <td>Product price set in default currency. Decimal part is always separated with a dot
+                                    ".". If value in this field is present all info in the line considered to be a
+                                    product, if empty - a category.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="right">Invisible</td>
+                                <td>Empty, 0, or 1</td>
+                                <td>Empty</td>
+                                <td>This field can be used to remove a product from the storefront temporarily without
+                                    deleting its record from the catalog and database. To do so set its value to 1. When
+                                    a product needs to be returned leave it empty or set to 0. This toggle has no effect
+                                    on categories.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="right">Available for ordering</td>
+                                <td>0, or 1</td>
+                                <td>Empty</td>
+                                <td>To prevent customers from ordering a product (without setting it as out of stock or
+                                    hiding from storefront), set this field's value to 1. Produtc will still be seen in
+                                    the storefront with all its information and without Add to cart button. This toggle
+                                    has no effect on categories.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="right">Regular price</td>
+                                <td>7400.00</td>
+                                <td>Empty</td>
+                                <td>"Old price" of the product set in default currency. Decimal separator is dot ".".
+                                    Can be used to actually show previous higher price or to make an impression that you
+                                    are having a sale. If present, it will be shown on the product page as striken out
+                                    number and savings percentage in relation to Price field value.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="right">In stock</td>
+                                <td>42</td>
+                                <td>Empty</td>
+                                <td>Number of product units in stock. Any integer positive value can be used. It affects
+                                    ability to order product in casу you have turned on – <strong>Stock level
+                                        control</strong> parameter in settings.When products are sold this value is
+                                    decreased.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="right">Sold</td>
+                                <td>26</td>
+                                <td>Empty</td>
+                                <td>Any positive integer value or 0. Once next unit of the product is sold this value in
+                                    the store's database is increased. This information is used in some of the store's
+                                    sales reports.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="right">Description</td>
+                                <td>
+                                    <p>New, <strong>very impressive phone</strong> for ladies. You will feel yourself
+                                        unique and in tune thanks to built-in MP3 player. Loud ringer will make sure
+                                        that you are not missing calls while in heavy traffic or a noisy club. Unique
+                                        flower ornament will accentuate your caring nature.</p>
+
+                                    <div><strong><strong>&nbsp;</strong></strong></div>
+                                </td>
+                                <td>GSM standard phones</td>
+                                <td> Text description of the product or a category. It can be formatted using simple
+                                    built-in WYSIWYG editor or include HTML formatting tags when imported via CSV file.
+                                    It is presented on the detailed products page.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="right">Brief description</td>
+                                <td>New budget model from Korean manufacturer.</td>
+                                <td>Empty</td>
+                                <td>Short version of the description. It can be formatted using simple built-in WYSIWYG
+                                    editor or include HTML formatting tags when imported via CSV file. It is presented
+                                    on the category list page.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="right">Sort order</td>
+                                <td>-15</td>
+                                <td>4</td>
+                                <td>When products are presented in a list (category, search results view etc.) it
+                                    defines placing of a particular product or a category.By default sorting is
+                                    performed alphabetically, if this value is set it preceeds default sorting. This
+                                    field can take any positive or negative integer value.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="right">Page title</td>
+                                <td>Buy Samsung SGH-L350</td>
+                                <td>Buy cell phones in our online store</td>
+                                <td>This text will be placed inside Title HTML tag of the product or a category page. It
+                                    is very important from SEO point of vies. It should be concise and have necessary
+                                    keywords in it.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="right">META keywords</td>
+                                <td>buy, cell phone, Samsung, sgh-l350,</td>
+                                <td>phones cell cellular buy online delivery</td>
+                                <td>This text will be placed inside Meta keywords tag of the resulting product or a
+                                    category page. You can list keywords in it separated with commas or spaes.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="right">META description</td>
+                                <td>Samsung sgh-l350. Technical characteristics and description</td>
+                                <td>Budget cell phones, with free delivery</td>
+                                <td>This text will be placed inside Meta tag Description tag of the page. Search engines
+                                    often use it as a page brief shown beneath the link to the page in the search
+                                    results output.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="right">Handling charge</td>
+                                <td>12.00</td>
+                                <td>Empty</td>
+                                <td>Additional shipping and handling charge for a specific product. Will be added to
+                                    each unit ordered.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="right">Weight</td>
+                                <td>4.250</td>
+                                <td>Empty</td>
+                                <td>Weight of the product in units set in the settings parameter <strong>Weight
+                                        unit.</strong> If it has a decimal part, separate it with a dot.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="right">Free shipping</td>
+                                <td>Empty, 0, или 1</td>
+                                <td>Empty</td>
+                                <td>Products marked with this flag will not be taken intto account for shipping
+                                    calculation. Does not affect handling charge, which will be added regardless of this
+                                    parameter setting.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="right">Minimum order quantity</td>
+                                <td>2</td>
+                                <td>Empty</td>
+                                <td>Custmoers will not be able to process an order if the have added lesser number of
+                                    product units than set here. Equals 1 by default.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="right">Filename</td>
+                                <td>best_ringtone.mp3</td>
+                                <td>Empty</td>
+                                <td>Name of the product file for downloadable products. Maximum length is 255
+                                    characters.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="right">Download is available for (days)</td>
+                                <td>1</td>
+                                <td>Empty</td>
+                                <td>Life length of the download link for this product.</td>
+                            </tr>
+                            <tr>
+                                <td align="right">Maximum number of downloads (leave blank if unlimited)</td>
+                                <td>5</td>
+                                <td>Empty</td>
+                                <td>Number of download attempts for this downloadable products regardles of whether they
+                                    were successful or not.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="right">Picture</td>
+                                <td>C342.jpg,C342_thm.jpg, C342_enl.jpg</td>
+                                <td>сellph_cat.jpg, cellph_cat _thm.jpg, cellph_cat _enl.jpg</td>
+                                <td>Image file names listed in following order: medium size, thumbnail, enlarged.</td>
+                            </tr>
+                            <tr>
+                                <td align="right">Picture</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>You can have an unlimited number of Picture columns, one for each set of three
+                                    images.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="right">Bluetooth</td>
+                                <td>{present,not present}</td>
+                                <td>Empty</td>
+                                <td>Products extra parameters settings. Before you can add their values from CSV file,
+                                    you need to define them in the administrative backend inside <em>Products – Extra
+                                        parameters.</em></td>
+                            </tr>
+                            <tr>
+                                <td align="right">Size</td>
+                                <td>{S, M=5,L=10,XL=25}</td>
+                                <td>Empty</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td align="right">Color</td>
+                                <td>{Белый,Золото=5}</td>
+                                <td>Empty</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <p>All products listed inside CSV table should be preceedeв by appropriate category definitions
+                            they belong to. Each product group shoud start with the line containing their category name
+                            and description. Top level category category names are entered as is. To designate category
+                            as a subcategory of the one previously described in the list above place an exclamation sign
+                            before its name. Categories on deeper levels should have an extra exclamation sign for each
+                            nesting level.</p>
+
+                        <p>For example a file you prepared looks like this –</p>
+                        <table cellspacing="0" cellpadding="0" border="1">
+                            <tbody>
+                            <tr>
+                                <td width="347">Product name</td>
+                                <td width="347">Price</td>
+                            </tr>
+                            <tr>
+                                <td>First top level category</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td>First product of the first top level category</td>
+                                <td>50</td>
+                            </tr>
+                            <tr>
+                                <td>Second product of the first top level category</td>
+                                <td>70</td>
+                            </tr>
+                            <tr>
+                                <td>!First second level category</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td>First product of the second level category</td>
+                                <td>80</td>
+                            </tr>
+                            <tr>
+                                <td>Second top level category</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td>First product of the second top level category</td>
+                                <td>80</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <p>As a result you will have following catalog of products and categories.</p>
+                        <ul>
+                            <li><strong>1.First top level category</strong></li>
+                            <ul>
+                                <li>a.First product of the first top level category</li>
+                                <li>b.Second product of the first top level category</li>
+                                <li><strong>c.First category of the second level</strong></li>
+                                <ul>
+                                    <li>i.First product of the second level category</li>
+                                </ul>
+                            </ul>
+                            <li><strong>2.Second category of the top level</strong></li>
+                            <ul>
+                                <li>a.First product of the second top level category</li>
+                                <ul>
+                                </ul>
+                            </ul>
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td height=0><a name="Payment-methods"></a></td>
+    </tr>
+    <tr>
+        <td align=center>
+            <table border="0" cellspacing="0" cellpadding="0" width="98%">
+                <tr>
+                    <td><h3>Payment methods<br/></h3>
+
+                        <p>
+                            Following paymet systems are integrated into the store —
+                        </p>
+
+                        <p><strong>For credit card payments:</strong></p>
+                        <ul>
+
+                            <li>Manual credit card processing</li>
+
+                            <li>2checkout</li>
+                            <li>Assist</li>
+                            <li>Authorize.Net AIM</li>
+                            <li>Authorize.Net SIM</li>
+                            <li>Chronopay (gateway)</li>
+                            <li>Chronopay (payment page)</li>
+                            <li>Cyberplat</li>
+                            <li>NetRegistry</li>
+                            <li>PSiGate HTML Posting</li>
+                            <li>PayPal Payflow Pro</li>
+                            <li>Protx</li>
+                            <li>VeriSign</li>
+                            <li>WorldPay</li>
+                            <li>YourPay Connect</li>
+                        </ul>
+                        <p>Manual credit card processing is possible if you have a merchant account established with one
+                            of the processing paroviders or your bank. In this case your store's clients will enter
+                            their credit card information at your site and it will be stored in th database in an
+                            encrypted format for further off-line processing. Only store's administrator can see credit
+                            card details in the order details of the administrative back end. To increase level of
+                            securitty, it is strongly advisable to have SSL certificate in your store. </p>
+
+                        <p>Other payment methods require registration with their providers and issuance of keys, account
+                            numbers etc, that need to be entered in the respective module settings at the store's
+                            administrative backend.</p>
+
+                        <strong>Online electronic payment systems :</strong>
+                        <ul>
+                            <li>E-Gold</li>
+                            <li>Moneybookers</li>
+                            <li>NOCHEX</li>
+                            <li>PayPal</li>
+                            <li>RBK Money</li>
+                            <li>ROBOXchange</li>
+                            <li>WebMoney</li>
+                            <li>Yandex.Money</li>
+                        </ul>
+                        <p>All of this systems require registration at the providers web site and creation of the
+                            account with them. Funds are transferred between such accounts of the store owner and
+                            client. Some of the system require additional verification for sellers. </p>
+
+                        <p><strong>Manual payment processing:</strong></p>
+                        <ul>
+                            <li>Invoice</li>
+                            <li>Custom payment method</li>
+                        </ul>
+                        <p>These methods allow you to collect cudtomers info and based on it contact him or produce
+                            invice and provide it to the customer.</p>
+
+                        <p>Detailed descriptions of each payment method and its settings can be found at Support –
+                            WebAsyst Shop-Script section of our site
+                            http://www.webasyst.ru/support/help/webasyst-shop-script.html.</p></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td height=0><a name="Shipping-cost-calculations"></a></td>
+    </tr>
+    <tr>
+        <td align=center>
+            <table border="0" cellspacing="0" cellpadding="0" width="98%">
+                <tr>
+                    <td><h3>Shipping calculation <br/></h3>
+
+                        <p>
+                            To set up shipping methods you need to access <strong>Settings –&gt; Shipping</strong>
+                            section of the administrative back end. Here you can edit/delete already present methods or
+                            add a new one.</p>
+
+                        <p>Using click-and-drag present methods can be reordered, and will be presented in this manner
+                            to customers. <strong><span class="ssylko"><u>Edit</u></span></strong> link allows you
+                            tochange settings of the respective method, while clicking on a red cross beside it deletes
+                            such option completely.</p>
+
+                        <p>New payment method is created in two steps. First you need to decide which algorith will be
+                            used for calculation. The following choices are available —</p>
+
+                        <p><strong>No shipping rate calculation</strong>&nbsp;- is a «dummy» method for those cases that
+                            do not require any payment from customer (e.g. in-store pick-up). This method does not add
+                            any additional cost to the order.</p>
+
+                        <p><strong>DHL, FedEx, InterShipper, UPS, USPS</strong>&nbsp;- methods allow you to use real
+                            shipping quote calculations provided by the respective system. TO use these quotes you need
+                            to have an account with the provider and enter registration and account info in the settings
+                            of the method.</p>
+                        <blockquote>Please, note!!! All of these providers work mostly with the continental US locations
+                            and their service availability for other origination locations has to be checked
+                            individually.
+                        </blockquote>
+                        <p> When one of these methods is chosen, store send a request to providers server with you
+                            origination address, customer's location, orders total weight and chosen shipping options.
+                            Cost received in return will be added to the order total. Some services allow to chose type
+                            of delivery and packaging.</p>
+
+                        <p>Following nethods are purely algorithmical and calculations are done based on their settings
+                            inside the store.</p>
+
+                        <p>List of methods - <strong>By countries/states module (fixed rates) </strong>and <strong>By
+                                countries/states module (percent of order amount) </strong>allow you to set shipping
+                            cost for the countries and their regions listed in the store's settings as a fixed amount in
+                            aeach case or a percentage of the order total.</p>
+
+                        <p>Following two, <strong>Ground shipping </strong>and <strong>Ground shipping (by
+                                weight) </strong>allow you to set cost based on the customers address. It can be fixed
+                            or based on the total weight of the order. Every country and its region can have a separate
+                            cost calculation schedule assigned. Four methods described above will be offered to
+                            customers for whose countries/regions they have been defined.</p>
+
+                        <p><strong>Maximum of a fixed shipping rate and percent of order total </strong>is a combination
+                            of thetwo options with calculating both of them and choosing maximum of the two to add to
+                            the order's total.</p>
+
+                        <p><strong>Fixed shipping rate + percent </strong>is a combination of the fixed amount for all
+                            orders and percentage of the order total.</p></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td height=0><a name="Order-processing"></a></td>
+    </tr>
+    <tr>
+        <td align=center>
+            <table border="0" cellspacing="0" cellpadding="0" width="98%">
+                <tr>
+                    <td><h3>Order processing</h3>
+
+                        <p>When new order is placed in your store, you as administrator receive a notification by email
+                            or SMS. It contains order number and amount. To receive email order notifications you need
+                            to specify address you want to receive them at in Settings-&gt;Settings-&gt;General-&gt;Email
+                            address for order notifications parameter. After that place a test order and check if you
+                            received a notification. If not, check you email account spam filters and adjust their
+                            settings to let through emails from your store's domain name and address specified as
+                            General email address of your store in the same section of the settings. Email notification
+                            contains full details of the order such as customer's name, address, type of payment and
+                            shipping selected, goods purchased, taxes and discount applied.
+
+                        <p/>
+
+                        <p>To process new order you should login to administrative backend's Orders-&gt;Orders section.
+                            There you can see a list of the new orders, order search form, order list filter by status
+                            and CSV export function.
+
+                        <p/>
+
+                        <p>After initial installation you have several predefined order statuses. Order can be placed,
+                            paid, shipped, delivered, canceled etc. Each processing stage can have its own status.
+
+                        <p/>
+
+                        <p>Predefined statuses are Cancelled, New, Processing, Credit card has been charged, Paid and
+                            delivered, Shipped, On hold. At first every order receives a New status. If you do not have
+                            several processing stages you can use Processing for the entire time order is being
+                            prepared. Every time you change order status you can notify your customer with an email, by
+                            checking the respective box in the form. Sales reports and total order amount discount
+                            calculation take into account only successful completely processed orders with Paid and
+                            delivered status.
+
+                        <p/>
+
+                        <p>At the top of the Orders-&gt;Orders section of the administrative backend you will see Create
+                            order button. It allows you to enter orders manually by yourself. This is convenient for
+                            processing phone orders. Once you click on the button you need to specify whether order is
+                            for a new or existing customer. Existing customer's details can be looked up by his name,
+                            login or email address. Just enter first letters of one these parameters to see a list of
+                            possible matches. Choose the one you were looking for and continue. Order for a new customer
+                            requires all of his information (name, address etc.) to be entered. In the next step you
+                            need to choose products (they can be looked up by their names), define their quantities,
+                            leave a comment and choose shipping and payment options. Customer will receive an email
+                            notification to the specified address.
+
+                        <p/>
+
+                        <p>The orders list is presented according to the status filters. All defined statuses are shown
+                            with checkboxes besides them. By toggling on and off respective statuses you will see a list
+                            with only orders of the statuses checked. If you know order's number, you can look up its
+                            details by entering number in the search form.
+
+                        <p/>
+
+                        <p>List of the orders can be sorted by clicking on the column headings. Second click changes
+                            direction of the sorting to the opposite.
+
+                        <p/>
+
+                        <p>When order information has to be processed outside WebAsyst Shop-script, it can be exported
+                            to CSV format file. Please note that it will contain only orders included in the list
+                            according to status filter settings.
+
+                        <p/>
+
+                        <p>Order's detail page, that opens once order in the list is clicked, contains several buttons.
+                            First - Print invoice outputs a printer friendly page with order details. Other buttons
+                            allow you to change order's status, some of them have own buttons, while others can be
+                            chosen by clicking on Change status to custom. Custom order statuses can be used to assign
+                            certain orders for processing by your staff members or specific situations.
+
+                        <p/>
+
+                        <p>Custom statuses are created in Orders-&gt;Order statuses. There you can define their names,
+                            sorting order and color they are presented in.</p></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td height=0><a name="Clients-info-management"></a></td>
+    </tr>
+    <tr>
+        <td align=center>
+            <table border="0" cellspacing="0" cellpadding="0" width="98%">
+                <tr>
+                    <td><h3>Clients' info management</h3>
+                        <ol>
+                            <li><a href="#Customers-list">Customers list</a> <br/></li>
+                            <li><a href="#Customers-groups">Customers groups</a> <br/></li>
+                            <li><a href="#Affiliate-program">Affiliate program</a>&nbsp;</li>
+                            <li><a href="#News-letter-subscribers">News letter subscribers</a> <br/></li>
+                        </ol>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td height=0><a name="Customers-list"></a></td>
+    </tr>
+    <tr>
+        <td align=center>
+            <table border="0" cellspacing="0" cellpadding="0" width="98%">
+                <tr>
+                    <td><h3>Customers list</h3>
+
+                        <p>List of your store's customers can be found in Customers-&gt;Customers section of the
+                            administrative backend. Here you will see entire list of them paginated by default by 20
+                            records. Number of records on page can be changed. You can search individual customers by
+                            their data as well. Enter it in one of the fields (login. name. group, status etc.) and
+                            click Find button to see resulting list. Activation status has a meaning if you have set
+                            Require email verification using Activation Key in Settings-&gt;Settings-&gt;Customers
+                            section.
+
+                        <p/>
+
+                        <p>By default the list is sorted by login value field, with unregistered customers at the top of
+                            it. If you want to sort list in some other fashion, click on the column name. Second click
+                            reverses sorting. Last column has delete customer record icon.
+
+                        <p/>
+
+                        <p>When you click on a record inside the list, you will be taken to the customer details editing
+                            page. There you can update registration fields values. All of the customer's data is broken
+                            into several tabs. They are Contact info, Address book, Order history and Affiliate program.
+
+                        <p/>
+
+                        <p>Contact info contains data entered in the first portion of the registration form^ name,
+                            surname, login, email, and optional fields added to the form by administrator. Click on Edit
+                            link to change their values. Here you can activate user's registration record, if for some
+                            reason he was not able to do so himself. You can move customer to a certain group or include
+                            into subscribers of news/blog articles.
+
+                        <p/>
+
+                        <p>Address book allows management of customer's shipping and billing addresses. Address can be
+                            updated or looked up in Google maps if you activated this feature. Add address link at the
+                            bottom of the list allows creation of an additional address record for the customer.
+
+                        <p/>
+
+                        <p>Order history shows all orders placed by the customer and their statuses and details. You can
+                            sort them and switch to their detail by clicking on column headings or order record itself.
+                            At the bottom of the list you can see total amount of all orders broken by their statuses.
+                            Totals are shown in default currency of the store.
+
+                        <p/></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td height=0><a name="Customers-groups"></a></td>
+    </tr>
+    <tr>
+        <td align=center>
+            <table border="0" cellspacing="0" cellpadding="0" width="98%">
+                <tr>
+                    <td><h3>Customer groups</h3>
+
+                        <p>
+                            In this section you can create groups for your registered customers. Each group can be
+                            assigned a specific discount. Discount is defined as a percentage that will be applied to
+                            order total. Group discount calculation is performed on the last step of the checkout and
+                            can depend on other discounts' settings in <strong> Orders –&gt; Discounts</strong>. The
+                            group can be named in all languages available in the store. Section <strong>Settings –&gt;
+                                Settings –&gt; Customers</strong> has a <strong>Default customer group</strong>
+                            parameter. All newly registered customers will be assigned to the group set here. You can
+                            offer your customers a discount to motivate them for registering and increase chances they
+                            return. Customers can be assigned to groups other than default by store's administrator in
+                            <strong>Customers –&gt; Customers –&gt; Contact info tab.</strong></p></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td height=0><a name="Affiliate-program"></a></td>
+    </tr>
+    <tr>
+        <td align=center>
+            <table border="0" cellspacing="0" cellpadding="0" width="98%">
+                <tr>
+                    <td><h3>Affiliate program</h3>
+
+                        <p>Attract new customers by offering a commission to your existing clients that bring in new
+                            ones. Affiliate program settings can be accessed in Customers-&gt;Affiliate program section.
+                            First you have to enable it. Registered customers will see info on participating in their
+                            account details at the storefront upon login.</p>
+
+                        <p>For the sale to be accounted towards commission for the affiliate partner one of the two
+                            conditions should be fulfilled. New referred customer either specify affiliate's login
+                            during checkout, or comes into your store via specially created link with the affiliate's ID
+                            in it. ID can be looked up in My account section of the main menu of the store front
+                            available to registered customers.</p>
+
+                        <p>For example affiliate partner is registered with the &quot;partner&quot; login and goes to
+                            check his My account section of the storefront. Depending on whether Friendly URLs are
+                            turned on he will see one of the two links: http://your-store.com/referral/5/ or
+                            http://your-store.com/shop/index.php?refid=5. He can publish this link as it is on his own
+                            website, mail it to his friends or post it in the blog. As a result, any purchase made by a
+                            visitor that came using this link will be accounted towards commissions for the affiliate
+                            partner. Links can be made not only to the home page, but to any product or category page as
+                            well. For example, a link to some category in your store looks like
+                            http://your-store.com/category/some/. If you add referral/5/ to it where 5 is the partner's
+                            id it will have same result as in the above automatically generated link description. If
+                            friendly URLs are off, then you category link will look like
+                            http://your-store.com/shop/index.php?categoryID=556 and making it an affiliate referral link
+                            requires extra ?refid=5 at the end of it. Same is true regarding individual product
+                            pages.</p>
+
+                        <p>If referred customer came through such link and registered, all of his future purchases will
+                            also be considered as a source of commission for the affiliate. It will be so until store
+                            administrator deletes this relationship by editing affiliates account info in Affiliate
+                            program tab accessible in Customers-&gt;Customers-&gt;Affiliate's customer record. Same tab
+                            can be accessed in Affiliate program section of the administration by clicking on the
+                            affiliates login in a list generated upon commission calculation.</p>
+
+                        <p>Commissions are calculated per administrator's request. In Customers-&gt;Affiliate program
+                            section administrator needs to specify rate, set affiliates notification options. Beneath
+                            them you need to specify date range and click View button to check database for
+                            commissionable sales within it. After that you will see a list of affiliates with the
+                            amounts they are owed. You can edit amount calculated and currency or completely delete
+                            certain calculations. If necessary, commissions can be added manually by filling respective
+                            fields below the list.</p>
+
+                        <p>Once commissions are calculated, you need to pay them out by generating notification to
+                            affiliates and specifying amounts within calculated limits. Resulting balance (commissions
+                            less payments for the period) is shown as balance outstanding. It can be both positive
+                            (store owes to an affiliate partner) and negative (when partner was overpaid).</p>
+
+                        <p>One of the convenient ways to process payouts is to create one time use discount coupons for
+                            you affiliates in the amount owed to them.</p></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td height=0><a name="News-letter-subscribers"></a></td>
+    </tr>
+    <tr>
+        <td align=center>
+            <table border="0" cellspacing="0" cellpadding="0" width="98%">
+                <tr>
+                    <td><h3>News letter subscribers</h3>
+
+                        <p>Shop-Script has three types of reports: sales, products statistics and category views.</p>
+
+                        <p>Sales report can be accessed in Reports-&gt;Sales reports section. Here you can see monthly
+                            sales totals, compare two consecutive weeks/months/years, see monthly totals for entire time
+                            of the store's existence.</p>
+
+                        <p>Product reports available allows you to see individual products sales, page views, ratings,
+                            votes and number of times they were added to carts. Data is presented as table with
+                            clickable column headings that allow sorting in both directions. If product record is
+                            clicked you will see its details as in Edit product section. Out of stock items are
+                            conveniently colored with red.</p>
+
+                        <p>Number of times certain category was viewed can be seen in Category reports section.</p>
+
+                        <p>If you need more detailed reporting, you can use Google Analytics free service. You need to
+                            sign up for it at http://www.google.com/analytics/. Once registered, you will receive a
+                            tracking code (don't mind the JavaScript source code just remember your account ID that
+                            starts with &quot;UA-&quot;) and enter it in Tools Tools-&gt;Google Analytics section of the
+                            administrative backend. After you enable it statistics will start collecting.</p></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td height=0><a name="Sales-and-page-view-reports"></a></td>
+    </tr>
+    <tr>
+        <td align=center>
+            <table border="0" cellspacing="0" cellpadding="0" width="98%">
+                <tr>
+                    <td><h3>Sales and page view reports</h3>
+
+                        <p>Shop-Script has three types of reports: sales, products statistics and category views.</p>
+
+                        <p>Sales report can be accessed in Reports-&gt;Sales reports section. Here you can see monthly
+                            sales totals, compare two consecutive weeks/months/years, see monthly totals for entire time
+                            of the store's existence.</p>
+
+                        <p>Product reports available allows you to see individual products sales, page views, ratings,
+                            votes and number of times they were added to carts. Data is presented as table with
+                            clickable column headings that allow sorting in both directions. If product record is
+                            clicked you will see its details as in Edit product section. Out of stock items are
+                            conveniently colored with red.</p>
+
+                        <p>Number of times certain category was viewed can be seen in Category reports section.</p>
+
+                        <p>If you need more detailed reporting, you an use Google Analytics free service. You need to
+                            sign up for it at http://www.google.com/analytics/. Once registered, you will receive a
+                            tracking code (don't mind the JavaScript source code just remember your account ID that
+                            starts with &quot;UA-&quot;) and enter it in Tools Tools-&gt;Google Analytics section of the
+                            administrative backend. After you enable it statistics will start collecting.</p></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td height=0><a name="Extra-tools"></a></td>
+    </tr>
+    <tr>
+        <td align=center>
+            <table border="0" cellspacing="0" cellpadding="0" width="98%">
+                <tr>
+                    <td><p>
+
+                        <h3>Extra tools</h3></p>
+                        <ol>
+                            <li><a href="#Widgets">Widgets</a></li>
+                            <li><a href="#Info-pages">Info pages</a></li>
+                            <li><a href="#Blog-news">Blog/news</a></li>
+                            <li><a href="#Survey">Survey</a></li>
+                            <li><a href="#Link-exchange">Link exchange</a></li>
+                        </ol>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td height=0><a name="Widgets"></a></td>
+    </tr>
+    <tr>
+        <td align=center>
+            <table border="0" cellspacing="0" cellpadding="0" width="98%">
+                <tr>
+                    <td><h2>Widgets <br/></h2>
+
+                        <p>
+                            Litle snippets of embeddable HTML code that can be built into any web page and present some
+                            usefull information from another source are called widgets. WebAsyst Shop-Script has three
+                            types of them. With their help you can place &quot;live&quot; information about your
+                            products and store practically anywhere on the Internet. Widgets placed on other web pages
+                            will work only if you have functional store they were created in..
+                        </p>
+
+                        <p><strong>&quot;Product info&quot; widget</strong> shows particular product information (name,
+                            description, price, picture) and Add to cart button that allows its ordering.</p>
+
+                        <p>If you already have product information on a widget target page, and there is no need to
+                            duplicate it, use <strong>&quot;Add to cart&quot; widget</strong> instead. Place it near
+                            product info and you site/blog/page visitors will be able to order product without visiting
+                            your storefront.</p>
+
+                        <p>In some cases, when you already have popular, well indexed site and plan to enhance it with a
+                            shopping cart functionality, in addition to the above described widgets, use <strong>&quot;View
+                                cart / Checkout&quot; widget.</strong> It will display visitors cart state. Independent
+                            use of this widget has no meaning, as it does not provide any ordering capabilities, only
+                            checkout of the already filled cart. </p>
+
+                        <p>Widgets are created in administrative backend <strong>Tools –&gt; Widgets</strong> section.
+                            All three types are avilable in one place. To create Add to cart and Product info widgets,
+                            you need to look up product they will be linked to first. Enter part of the product name to
+                            perform search and click Find a product button. Search results will be shown as a list.
+                            Click on the product needed to see its widget HTML code. Copy code and paste it into the
+                            target page HTML source code. Save it and check result in a browser.</p>
+
+                        <p>Widgets can be adjusted for use along with the Affiliate program. This will require manual
+                            editing of the link included in widget and adding affiliate's id into it. </p>
+                        <blockquote>Please note!!! Current version of WebAsyst Shop-Script widgets may work incorrectly
+                            with products that have selectable extra parameters. In some cases, widgets do not transfer
+                            selected options correctly. The only solution would be to contact customer and confirm his
+                            preferences.
+                        </blockquote>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td height=0><a name="Info-pages"></a></td>
+    </tr>
+    <tr>
+        <td align=center>
+            <table border="0" cellspacing="0" cellpadding="0" width="98%">
+                <tr>
+                    <td><h3>Info pages</h3>
+
+                        <p>This tool lets you add any number of additional non-product information pages with static
+                            content. By default two of them, About and Shipping, are created during initial
+                            installation. They can be edited to include information relevant to your store, or deleted
+                            if not needed. Links to these pages can be added to the storefront into a separate block
+                            appearing on all pages automatically, or into any other part of the storefront or inside
+                            another info page. List of the existing pages is available in Tools-&gt;Info pages section
+                            of the backend. Click Edit link beside page name to edit its contents and options.</p>
+
+                        <p>Visible in storefront toggle turns on and off page availability and its link in storefront.
+                            When it is off, page will not be accessible by any means.</p>
+
+                        <p>Page title can be entered in all of the languages present in the store. and will be placed
+                            inside HTML Title tag of the page. </p>
+
+                        <p>Page ID (part of page URL; utilized in links to info page) allows you to set an individual
+                            meaningful link name. By default pages are numbered. When this parameter is set, page link
+                            will include your store's domain name, plus /auxpage_, plus link name entered. Spaces in
+                            this field will be changed to dashes.</p>
+
+                        <p>Page text field contains actual page text. It can be entered using built in HTML editor or
+                            pasted as raw HTML code from another source. Built in editor has text formatting
+                            capabilities. Page text can be defined separately for each language in the store. </p>
+
+                        <p>Meta tag fields will define content of them inside pages HTML code header. </p>
+
+                        <p>If you need a page that is accessed from another info page, you need to leave it &quot;Visible&quot;,
+                            and delete a link to it from the storefront using Design editor. </p></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td height=0><a name="Blog-news"></a></td>
+    </tr>
+    <tr>
+        <td align=center>
+            <table border="0" cellspacing="0" cellpadding="0" width="98%">
+                <tr>
+                    <td><h3>Blog/news</h3>
+
+                        <p>Any visitor of your site can subscribe to your news. Registered users can change theur
+                            subscription settings in the account details. Buyers are offered to include their emails in
+                            subscribers list at the checkout. All of the emails are stored ins the database and used to
+                            send out copy of the news published in Tools-&gt;Blog/news. Besides from email subscription
+                            visitors can use RSS feed readers to follwo your news publications. Link to RSS is available
+                            in the storefront.
+
+                        <p/>
+
+                        <p>You can manage list of your subscribers in Customers-Newsletter subscribers section. Left
+                            side of it contains entire list of them, each record can be deleted individually or all of
+                            the at once by choosing respective option in the right half of the page.Here you can also
+                            export emails of your subscribers to a csv file to be used outside of the store.</p></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td height=0><a name="Survey"></a></td>
+    </tr>
+    <tr>
+        <td align=center>
+            <table border="0" cellspacing="0" cellpadding="0" width="98%">
+                <tr>
+                    <td><h3>Survey <br/></h3>
+
+                        <p>
+                            Here you can create a poll for your site's visitors. Enter text of the
+                            <strong>question</strong> and <strong>a list of answer choices</strong> for it. List them in
+                            <strong>Answer options</strong> field, one on each line and save it. Result will appear in
+                            the storefront and each vistor will be able to vote once during a single session. Votes
+                            statistics shown as a percentage of all votes for each option will be shown to every voter.
+                            Statistics with the absolute number of votes is available in the administrative backend
+                            only. Please note, that by creating new survey you will delete all of the previous poll
+                            results and settings.</p></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td height=0><a name="Link-exchange"></a></td>
+    </tr>
+    <tr>
+        <td align=center>
+            <table border="0" cellspacing="0" cellpadding="0" width="98%">
+                <tr>
+                    <td><h3>Link exchange <br/></h3>
+
+                        <p>
+                            When enabled, this tool lets you and your site visitors to post links they want to exchange
+                            with you.
+                        </p>
+
+                        <p>List of the links is presented as a tree structure based on theirr section grouping. Every
+                            link added will be shown twice, in its section and inside entire list of the links.</p>
+
+                        <p>Visitors that want to add a link, have to fill out a form. Store's administrator can check
+                            which links have been requested to add and approve, decline or delete such requests.</p>
+
+                        <p>Click <span class="knopka">Add new category</span> button in the left part of the page to add
+                            new category and name it. To move existing links to a certain category, check mark them,
+                            choose destination category from a drop down list at the bottom of the links table and click
+                            <span class="knopka">Move to ...</span> button</p></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td height=0><a name="Stores-design"></a></td>
+    </tr>
+    <tr>
+        <td align=center>
+            <table border="0" cellspacing="0" cellpadding="0" width="98%">
+                <tr>
+                    <td><h3>&nbsp;Store's Design<br/></h3>
+                        <ol>
+                            <li><a href="#Design-editor">Design editor</a>&nbsp;</li>
+                            <li><a href="#Languages-and-translation">Languages and translation</a>&nbsp;</li>
+                            <li><a href="#Image-uploader">Image uploader</a> <br/></li>
+                        </ol>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td height=0><a name="Design-editor"></a></td>
+    </tr>
+    <tr>
+        <td align=center>
+            <table border="0" cellspacing="0" cellpadding="0" width="98%">
+                <tr>
+                    <td><h3>Design editor</h3>
+
+                        <p>Once you enter this section you will be presented with all available design templates. The
+                            one currently used is at the top of the list. Besides each template you can see links for
+                            previewing it enlarged, editing and setting as current.</p>
+
+                        <p>
+                        </p>
+
+                        <p>Take a look at templates and choose the one you like. If none satisfy your needs and you plan
+                            to create one of your own, choose as default that template which is the closest in design
+                            and element layout to your own template. Click on <strong><span
+                                        class="ssylko"><u>Edit</u></span></strong> link. As a result you will see a page
+                            similar to this –</p>
+
+                        <p class="poseredine"><img src="images/Snap10.gif"/><br/></p>
+
+                        <p>Click on <span class="knopka">Full screen</span> button to make more room for editor. To the
+                            right of this button you can see <strong><span class="ssylko"><u>Theme
+                                        preview</u></span></strong> and <strong><span class="ssylko"><u>Reset theme</u></span></strong>
+                            links. First allows you to see results of your changes in live mode in storefront, second
+                            will return chosen template to its original unedited state.</p>
+
+                        <p>There are five major sections represented by tabs. On the left <span class="zakladka">
+General layout</span>, <span class="zakladka">
+Home page</span> and <span class="zakladka">
+Product info</span> allow you to to switch between different parts of the store page.</p>
+
+                        <p>General layout presents entire page as seen by visitors and contains all of the sections
+                            presented on store pages. Tab titled <span class="zakladka">
+Home page</span> contains central part of the page your visitors see when accessing home page of the store. Finally ,
+                            tab <span class="zakladka">
+Product info</span> lets you edit central part of the page when product is chosen with all of its information and
+                            details. These parts can be edited in WYSIWYG editor, reorder sections using drag and drop,
+                            or calling up their properties by double clicking on them. If you need to enter some HTML
+                            code, use Advanced mode HTML link underneath tabs.</p>
+
+                        <p>Two tabs on the right — <span class="zakladka">
+CSS</span> and <span class="zakladka">
+Head</span>
+                            — allow you to edit CSS styles applied to page elements and its HTML HEAD section. Both are
+                            not seen in browser, but play major role in page presentation</p>
+
+                        <p>Most of the page is taken by the WYSIWYG editor. Each block is bordered with red dashes.
+                            Blocks can be moved around columns, top and bottom containers. If some of the blocks are not
+                            necessary, they can be dragged to <strong>Recycle bin</strong> area on the right side of the
+                            editor. Double click on the block brings up a menu of its properties.</p>
+
+                        <p>Button at the top of the editor's right column <span class="knopka">Save template</span>
+                            stores results of your editing. If you try to leave editor without saving changes made you
+                            will be presented with the warning.</p>
+
+                        <p>Right column contains a list of elements that can be used in a page. List items are clickable
+                            and allow you to set respective block properties and embed respective block into the page by
+                            clicking <span class="knopka">Embed in template</span> button. New block will appear
+                            floating inside WYSIWYG editor and can be placed into the appropriate location.</p>
+
+                        <p>Each block's style can changed by double clicking on it and checking <strong>Override default
+                                CSS styles</strong>. A list of attributes will appear —</p>
+
+                        <p><strong>Background color</strong> can be chosen from a palette or entered directly as hex
+                            numerical value. Please note that for blocks using images for background, results may be
+                            different from expected, and require editing in CSS tab of the editor.</p>
+
+                        <p><strong>Border color</strong> can be defined in same fashion. Border decreases internal block
+                            space as it &quot;grows inward&quot;. Width of the border is defined by the next parameter.
+                        </p>
+
+                        <p><strong>Border width(px)</strong> of the block set in pixels. By default it is 0, therefore
+                            to see results of border color editing you need to increase it to some value other than
+                            zero.</p>
+
+                        <p><strong>Text color </strong>applies to static inactive text. It is set in the same way.</p>
+
+                        <p><strong>Text alignment </strong>inside the block, left, right or centered. By default — left.
+                        </p>
+
+                        <p><strong>Links color </strong>will be applied to links contained inside the block (e.g. main
+                            menu items, category links etc.).</p>
+
+                        <p><strong>Padding (px) </strong>of the block sets &quot;margin of whitespace around it. It is
+                            defined in pixels</p>
+
+                        <p>At the bottom of the blocks list you see Recycle bin for dropping unnecessary elements</p>
+
+                        <p>This were general properties of all blocks. Some of the have other unique settings.</p>
+
+                        <p><strong>Info pages </strong>allows you to choose which info pages can be accessed by direct
+                            links from storefront. Once clicked you will see a drop down list allowing you to show links
+                            to all pages or only those selected. Finally you can choose between vertical and horizontal
+                            placement of the links inside the block.</p>
+
+                        <p><strong>Main navigation</strong> is a list of main menu items not related to the products and
+                            categories. It lists : Home, Create account, Login, Price list, Feedback, Link exchange,
+                            Blog/News, and Order status links. You can select which ones will be available for your
+                            visitors. Alignment of the links (vertical or horizontal)can be set as well.</p>
+
+                        <p><strong>Product list </strong>shows arbitrarily chosen sets of products created in <strong>Products
+                                –&gt; Lists</strong> section of the backend. If you need to add several lists to the
+                            page repeat procedure for each one of them.</p>
+
+                        <p><strong>Custom HTML-code </strong> can contain any static HTML (customer greeting, current
+                            promotions info etc.). It can also be used to embed Flash banners and widgets from other
+                            sites. Create this block and enter its contents into the field that will appear below.<span
+                                    class="knopka"> Embed in template</span> button wil place it floating in to the
+                            editor on the left.</p>
+
+                        <p><strong>Category tree </strong>shown on all pages of the store.</p>
+
+                        <p><strong>Main content — </strong> is a central part of all store pages. Product description,
+                            category contents and all of the other info is shown inside it depending on the visitor's
+                            actions.</p>
+
+                        <p><strong>Shopping cart summary </strong>shows number of products added to the cart and their
+                            total. Click on the link inside it allows your customers to proceed to checkout or see
+                            details of the products chosen.</p>
+
+                        <p><strong>Blog/News </strong>section shows a short list of the most recent posts, email entry
+                            field for subscribing and RSS icon. Here yoг can also set how many news this list contains.
+                        </p>
+
+                        <p><strong>Survey </strong> section shows active survey created in your backend and its results
+                            upon voting.</p>
+
+                        <p><strong>Logo </strong> item allows you to replace template's standard logo with your own.
+                            Click on it to upload your version. It is preferable to prepare your logo image to be of the
+                            same width as one in place. Gif, jpg or png files can be used.</p>
+
+                        <p><strong>Product search </strong>shows standard search field.</p>
+
+                        <p><strong>Currency toggle </strong>presents a dropdown list of available currencies set up by
+                            administrator. If you have only one currency set up, it can be deleted.</p>
+
+                        <p><strong>Language toggle </strong>allows your visitors to choose their language from a list of
+                            those set up and maintained by the administrator. You can choose its presentation form
+                            between text links or flag icons. In the latter case, you need to upload appropriate flag
+                            images for non default languages.</p>
+
+                        <p><strong>Tag cloud </strong>shows a list of tags assigned to the products in their Tag
+                            property. All of the words shown are links. Their font size depends on frequency of their
+                            usage.</p>
+
+                        <p><span class="zakladka">
+Home page</span> tab contains central part of the entrance page of your store. Some of the blocks described above are
+                            available: <strong>Product lists, Custom HTML, Category tree, Blog/news,
+                                Survey, Product search, Currency toggle, Language toggle, Tag cloud</strong>.
+                            You can move them from General layout to Home page if you want your visitors to see them
+                            only once they enter the store.</p>
+
+                        <p>Section <strong>Unfolded category list</strong> shows all of your product categories with
+                            their logos. You can edit its formatting by double clicking on it in the editor. You can set
+                            number of columns of the list, whether subcategories are shown, number of such subcategories
+                            (if you have more subcategories than set here, their names will be replaced by ...) and
+                            subcategories list separator symbol (comma and space by default).</p>
+
+                        <p>Last tab <span class="zakladka">
+Product</span> contains elements of the detailed product description page central part. To change appearance of certain
+                            sections, double click on them. Sections can be reordered by dragging them inside editor.
+                            They can be deleted by dragging them to Recycle bin area on the right.</p>
+
+                        <p><strong>Custom parameters (selectable)</strong> block contains a list of configurable product
+                            options represented by drop down lists for customer's selection.</p>
+
+                        <p><strong>Custom parameters (fixed).</strong></p>
+
+                        <p><strong>Related products </strong>assigned to the one chosen.</p>
+
+                        <p><strong>&quot;Add to cart&quot; button.</strong></p>
+
+                        <p><strong>Description, </strong>detailed one.</p>
+
+                        <p><strong>Reviews </strong>left by visitors.</p>
+
+                        <p><strong>User rating</strong> shown as a &quot;star scale&quot; with ability to vote.</p>
+
+                        <p><strong>Product name</strong>. It is preferable to put it at the top of this page.</p>
+
+                        <p><strong>Price.</strong></p>
+
+                        <p><strong>Request details form </strong> with the text and from fields entered by visitor.</p>
+
+                        <p><strong>Product images.</strong></p>
+
+                        <p>In cases when built-in editor is not sufficient, you can edit HTML code of the pages directly
+                            by switching to Advanced mode (HTML).</p>
+
+                        <p>Tab CSS can be used to add your own styles definition, to be used in custom HTML code or
+                            product description fields. Head tab can be used to add custom META tags into HTML code (for
+                            example Google analytics verification code).</p></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td height=0><a name="Languages-and-translation"></a></td>
+    </tr>
+    <tr>
+        <td align=center>
+            <table border="0" cellspacing="0" cellpadding="0" width="98%">
+                <tr>
+                    <td><h3>Languages and translation<br/></h3>
+
+                        <p>
+                            Her you set up additional interface languages for your store. Initially, English is set as
+                            default language. You can change this setting after translating to a new language. New
+                            visitors will see your store in a language set as default. Language settings can be changed
+                            by clicking <strong><span class="ssylko"><u>Settings</u></span></strong> link. Here you can
+                            set its two-letter ISO code, upload flag images, or disable it.
+                        </p>
+
+                        <p>A link <strong><span class="ssylko"><u>Edit translations</u></span></strong>,
+                            opens a list of text messages used throughout the store. They can be changeв for the
+                            existing language or translated for a newly added one. Messages are grouped by store's
+                            sections. Choose necessary by clicking on its tab and selecting a subsection from a drop
+                            down list. Major tabs are <span class="zakladka">
+General</span>, <span class="zakladka">
+Frontend</span>, <span class="zakladka">
+Backend</span>.</p>
+
+                        <p>When new language is added, all of its message values are copied from the default language,
+                            and need to be translated.</p>
+
+                        <p>Be careful, when ediiting messages and do not delete any without necessity. If you want some
+                            of the messages to be ommited, you can delete their text values, not the constants
+                            themselves.</p></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td height=0><a name="Image-uploader"></a></td>
+    </tr>
+    <tr>
+        <td align=center>
+            <table border="0" cellspacing="0" cellpadding="0" width="98%">
+                <tr>
+                    <td><h3>Image uploader</h3>
+
+                        <p>Upload images here to use them in your Info pages, Blog/News posts and design editor.
+                        </p></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

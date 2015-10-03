@@ -1,0 +1,96 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <? wbs_initLayout ?>
+
+    <script type="text/javascript">
+        function switchImage() {
+            var Theme = Form.getInputs(document.forms[0], 'radio', 'curTheme').find(function (button) {
+                return button.checked == true
+            }).value;
+            var Layout = Form.getInputs(document.forms[0], 'radio', 'curLayout').find(function (button) {
+                return button.checked == true
+            }).value;
+            $('Screenshot').src = "../../../MW/html/cssbased/images/" + Layout + "_" + Theme + ".gif";
+        }
+    </script>
+
+</head>
+<body onLoad="autoFocusFormControl( '<? $invalidField ?>', 'folderData' )">
+<? wbs_pageLayout toolbar="mw_toolbar.htm" ?>
+<? wbs_errorBlock ?>
+
+<? if !$fatalError ?>
+
+<table class="FormLayout">
+    <tr>
+        <td>
+            <strong><? $mwStrings.lf_seltheme_label ?></strong>
+
+            <table class="FormLayout">
+                <? foreach from=$Themes item=themeInfo key=themeId name=themeLoop ?>
+                <tr
+                <? if $smarty.foreach.themeLoop.last ?>class="SeparatedRow"<? /if ?>>
+                <td class="Indent"><input onClick="switchImage()" id="<? $themeId ?>" name="curTheme"
+                                          value="<? $themeId ?>" <? wbs_checkboxStatus val=$curTheme true_val=$themeId ?>
+                    type="radio"/>
+                </td>
+                <td><? wbs_label for=$themeId text=$themeInfo.name skipColon=true ?></td>
+                </tr>
+                <? /foreach ?>
+            </table>
+
+            <strong><? $mwStrings.lf_sellayout_label ?></strong>
+
+            <table class="FormLayout">
+                <? foreach from=$Layouts item=layoutInfo key=layoutId name=layoutLoop ?>
+                <tr
+                <? if $smarty.foreach.layoutLoop.last ?>class="SeparatedRow"<? /if ?>>
+                <td class="Indent"><input onClick="switchImage()" id="<? $layoutId ?>" name="curLayout"
+                                          value="<? $layoutId ?>" <? wbs_checkboxStatus val=$curLayout true_val=$layoutId ?>
+                    type="radio"/>
+                </td>
+                <td><? wbs_label for=$layoutId text=$layoutInfo.name skipColon=true ?></td>
+                </tr>
+                <? /foreach ?>
+            </table>
+
+
+            <strong><? $mwStrings.lf_sellogo_label ?></strong>
+
+            <table class="FormLayout">
+                <tr>
+                    <td class="Indent"><input onClick="switchImage()" id="app" name="curLogo"
+                                              value="app" <? wbs_checkboxStatus val="app" true_val=$curLogo ?>
+                        type="radio"/>
+                    </td>
+                    <td><? wbs_label for=$logoId text=$mwStrings.lf_logoapp_title skipColon=true ?></td>
+                </tr>
+                <tr class="SeparatedRow">
+                    <td class="Indent"><input onClick="switchImage()" id="custom" name="curLogo"
+                                              value="custom" <? wbs_checkboxStatus val="custom" true_val=$curLogo ?>
+                        type="radio"/>
+                    </td>
+                    <td><? wbs_label for=$logoId text=$mwStrings.lf_logocustom_title skipColon=true ?></td>
+                </tr>
+            </table>
+
+
+        </td>
+        <td>
+            <img width="419" height="231" id="Screenshot" src="../../../MW/html/cssbased/images/<? $curLayout|cat:" _"|cat:$curTheme
+            ?>.gif" style="border: 1px solid gray; margin: 1px;">
+        </td>
+    </tr>
+</table>
+
+<? wbs_buttonSet ?>
+<? wbs_buttonSetButton caption=$kernelStrings.app_ok_btn name="savebtn" ?>
+<? wbs_buttonSetButton caption=$kernelStrings.app_cancel_btn name="cancelbtn" ?>
+<? /wbs_buttonSet ?>
+
+<? /if ?>
+
+<? /wbs_pageLayout ?>
+</body>
+</html>

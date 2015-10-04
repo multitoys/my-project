@@ -15,7 +15,7 @@
  * Creates a new TextField
  * @param {Object} config Configuration options
  */
-Ext.form.TextField = Ext.extend(Ext.form.Field, {
+Ext.form.TextField = Ext.extend(Ext.form.Field,  {
     /**
      * @cfg {String} vtypeText A custom error message to display in place of the default message provided
      * for the {@link #vtype} currently set for this field (defaults to '').  Only applies if vtype is set, else ignored.
@@ -23,87 +23,87 @@ Ext.form.TextField = Ext.extend(Ext.form.Field, {
     /**
      * @cfg {Boolean} grow True if this field should automatically grow and shrink to its content
      */
-    grow: false,
+    grow : false,
     /**
      * @cfg {Number} growMin The minimum width to allow when grow = true (defaults to 30)
      */
-    growMin: 30,
+    growMin : 30,
     /**
      * @cfg {Number} growMax The maximum width to allow when grow = true (defaults to 800)
      */
-    growMax: 800,
+    growMax : 800,
     /**
      * @cfg {String} vtype A validation type name as defined in {@link Ext.form.VTypes} (defaults to null)
      */
-    vtype: null,
+    vtype : null,
     /**
      * @cfg {RegExp} maskRe An input mask regular expression that will be used to filter keystrokes that don't match
      * (defaults to null)
      */
-    maskRe: null,
+    maskRe : null,
     /**
      * @cfg {Boolean} disableKeyFilter True to disable input keystroke filtering (defaults to false)
      */
-    disableKeyFilter: false,
+    disableKeyFilter : false,
     /**
      * @cfg {Boolean} allowBlank False to validate that the value length > 0 (defaults to true)
      */
-    allowBlank: true,
+    allowBlank : true,
     /**
      * @cfg {Number} minLength Minimum input field length required (defaults to 0)
      */
-    minLength: 0,
+    minLength : 0,
     /**
      * @cfg {Number} maxLength Maximum input field length allowed (defaults to Number.MAX_VALUE)
      */
-    maxLength: Number.MAX_VALUE,
+    maxLength : Number.MAX_VALUE,
     /**
      * @cfg {String} minLengthText Error text to display if the minimum length validation fails (defaults to
      * "The minimum length for this field is {minLength}")
      */
-    minLengthText: "The minimum length for this field is {0}",
+    minLengthText : "The minimum length for this field is {0}",
     /**
      * @cfg {String} maxLengthText Error text to display if the maximum length validation fails (defaults to
      * "The maximum length for this field is {maxLength}")
      */
-    maxLengthText: "The maximum length for this field is {0}",
+    maxLengthText : "The maximum length for this field is {0}",
     /**
      * @cfg {Boolean} selectOnFocus True to automatically select any existing field text when the field receives
      * input focus (defaults to false)
      */
-    selectOnFocus: false,
+    selectOnFocus : false,
     /**
      * @cfg {String} blankText Error text to display if the allow blank validation fails (defaults to "This field is required")
      */
-    blankText: "This field is required",
+    blankText : "This field is required",
     /**
      * @cfg {Function} validator A custom validation function to be called during field validation (defaults to null).
      * If available, this function will be called only after the basic validators all return true, and will be passed the
      * current field value and expected to return boolean true if the value is valid or a string error message if invalid.
      */
-    validator: null,
+    validator : null,
     /**
      * @cfg {RegExp} regex A JavaScript RegExp object to be tested against the field value during validation (defaults to null).
      * If available, this regex will be evaluated only after the basic validators all return true, and will be passed the
      * current field value.  If the test fails, the field will be marked invalid using {@link #regexText}.
      */
-    regex: null,
+    regex : null,
     /**
      * @cfg {String} regexText The error text to display if {@link #regex} is used and the test fails during
      * validation (defaults to "")
      */
-    regexText: "",
+    regexText : "",
     /**
      * @cfg {String} emptyText The default text to display in an empty field (defaults to null).
      */
-    emptyText: null,
+    emptyText : null,
     /**
      * @cfg {String} emptyClass The CSS class to apply to an empty field to style the {@link #emptyText} (defaults to
      * 'x-form-empty-field').  This class is automatically added and removed as needed depending on the current field value.
      */
-    emptyClass: 'x-form-empty-field',
+    emptyClass : 'x-form-empty-field',
 
-    initComponent: function () {
+    initComponent : function(){
         Ext.form.TextField.superclass.initComponent.call(this);
         this.addEvents(
             /**
@@ -119,35 +119,35 @@ Ext.form.TextField = Ext.extend(Ext.form.Field, {
     },
 
     // private
-    initEvents: function () {
+    initEvents : function(){
         Ext.form.TextField.superclass.initEvents.call(this);
-        if (this.validationEvent == 'keyup') {
+        if(this.validationEvent == 'keyup'){
             this.validationTask = new Ext.util.DelayedTask(this.validate, this);
             this.el.on('keyup', this.filterValidation, this);
         }
-        else if (this.validationEvent !== false) {
+        else if(this.validationEvent !== false){
             this.el.on(this.validationEvent, this.validate, this, {buffer: this.validationDelay});
         }
-        if (this.selectOnFocus || this.emptyText) {
+        if(this.selectOnFocus || this.emptyText){
             this.on("focus", this.preFocus, this);
-            if (this.emptyText) {
+            if(this.emptyText){
                 this.on('blur', this.postBlur, this);
                 this.applyEmptyText();
             }
         }
-        if (this.maskRe || (this.vtype && this.disableKeyFilter !== true && (this.maskRe = Ext.form.VTypes[this.vtype + 'Mask']))) {
+        if(this.maskRe || (this.vtype && this.disableKeyFilter !== true && (this.maskRe = Ext.form.VTypes[this.vtype+'Mask']))){
             this.el.on("keypress", this.filterKeys, this);
         }
-        if (this.grow) {
-            this.el.on("keyup", this.onKeyUp, this, {buffer: 50});
-            this.el.on("click", this.autoSize, this);
+        if(this.grow){
+            this.el.on("keyup", this.onKeyUp,  this, {buffer:50});
+            this.el.on("click", this.autoSize,  this);
         }
     },
 
-    processValue: function (value) {
-        if (this.stripCharsRe) {
+    processValue : function(value){
+        if(this.stripCharsRe){
             var newValue = value.replace(this.stripCharsRe, '');
-            if (newValue !== value) {
+            if(newValue !== value){
                 this.setRawValue(newValue);
                 return newValue;
             }
@@ -155,15 +155,15 @@ Ext.form.TextField = Ext.extend(Ext.form.Field, {
         return value;
     },
 
-    filterValidation: function (e) {
-        if (!e.isNavKeyPress()) {
+    filterValidation : function(e){
+        if(!e.isNavKeyPress()){
             this.validationTask.delay(this.validationDelay);
         }
     },
 
     // private
-    onKeyUp: function (e) {
-        if (!e.isNavKeyPress()) {
+    onKeyUp : function(e){
+        if(!e.isNavKeyPress()){
             this.autoSize();
         }
     },
@@ -172,53 +172,53 @@ Ext.form.TextField = Ext.extend(Ext.form.Field, {
      * Resets the current field value to the originally-loaded value and clears any validation messages.
      * Also adds emptyText and emptyClass if the original value was blank.
      */
-    reset: function () {
+    reset : function(){
         Ext.form.TextField.superclass.reset.call(this);
         this.applyEmptyText();
     },
 
-    applyEmptyText: function () {
-        if (this.rendered && this.emptyText && this.getRawValue().length < 1) {
+    applyEmptyText : function(){
+        if(this.rendered && this.emptyText && this.getRawValue().length < 1){
             this.setRawValue(this.emptyText);
             this.el.addClass(this.emptyClass);
         }
     },
 
     // private
-    preFocus: function () {
-        if (this.emptyText) {
-            if (this.el.dom.value == this.emptyText) {
+    preFocus : function(){
+        if(this.emptyText){
+            if(this.el.dom.value == this.emptyText){
                 this.setRawValue('');
             }
             this.el.removeClass(this.emptyClass);
         }
-        if (this.selectOnFocus) {
+        if(this.selectOnFocus){
             this.el.dom.select();
         }
     },
 
     // private
-    postBlur: function () {
+    postBlur : function(){
         this.applyEmptyText();
     },
 
     // private
-    filterKeys: function (e) {
+    filterKeys : function(e){
         var k = e.getKey();
-        if (!Ext.isIE && (e.isNavKeyPress() || k == e.BACKSPACE || (k == e.DELETE && e.button == -1))) {
+        if(!Ext.isIE && (e.isNavKeyPress() || k == e.BACKSPACE || (k == e.DELETE && e.button == -1))){
             return;
         }
         var c = e.getCharCode(), cc = String.fromCharCode(c);
-        if (Ext.isIE && (e.isSpecialKey() || !cc)) {
+        if(Ext.isIE && (e.isSpecialKey() || !cc)){
             return;
         }
-        if (!this.maskRe.test(cc)) {
+        if(!this.maskRe.test(cc)){
             e.stopEvent();
         }
     },
 
-    setValue: function (v) {
-        if (this.emptyText && this.el && v !== undefined && v !== null && v !== '') {
+    setValue : function(v){
+        if(this.emptyText && this.el && v !== undefined && v !== null && v !== ''){
             this.el.removeClass(this.emptyClass);
         }
         Ext.form.TextField.superclass.setValue.apply(this, arguments);
@@ -232,39 +232,39 @@ Ext.form.TextField = Ext.extend(Ext.form.Field, {
      * @param {Mixed} value The value to validate
      * @return {Boolean} True if the value is valid, else false
      */
-    validateValue: function (value) {
-        if (value.length < 1 || value === this.emptyText) { // if it's blank
-            if (this.allowBlank) {
-                this.clearInvalid();
-                return true;
-            } else {
-                this.markInvalid(this.blankText);
-                return false;
-            }
+    validateValue : function(value){
+        if(value.length < 1 || value === this.emptyText){ // if it's blank
+             if(this.allowBlank){
+                 this.clearInvalid();
+                 return true;
+             }else{
+                 this.markInvalid(this.blankText);
+                 return false;
+             }
         }
-        if (value.length < this.minLength) {
+        if(value.length < this.minLength){
             this.markInvalid(String.format(this.minLengthText, this.minLength));
             return false;
         }
-        if (value.length > this.maxLength) {
+        if(value.length > this.maxLength){
             this.markInvalid(String.format(this.maxLengthText, this.maxLength));
             return false;
         }
-        if (this.vtype) {
+        if(this.vtype){
             var vt = Ext.form.VTypes;
-            if (!vt[this.vtype](value, this)) {
-                this.markInvalid(this.vtypeText || vt[this.vtype + 'Text']);
+            if(!vt[this.vtype](value, this)){
+                this.markInvalid(this.vtypeText || vt[this.vtype +'Text']);
                 return false;
             }
         }
-        if (typeof this.validator == "function") {
+        if(typeof this.validator == "function"){
             var msg = this.validator(value);
-            if (msg !== true) {
+            if(msg !== true){
                 this.markInvalid(msg);
                 return false;
             }
         }
-        if (this.regex && !this.regex.test(value)) {
+        if(this.regex && !this.regex.test(value)){
             this.markInvalid(this.regexText);
             return false;
         }
@@ -276,18 +276,18 @@ Ext.form.TextField = Ext.extend(Ext.form.Field, {
      * @param {Number} start (optional) The index where the selection should start (defaults to 0)
      * @param {Number} end (optional) The index where the selection should end (defaults to the text length)
      */
-    selectText: function (start, end) {
+    selectText : function(start, end){
         var v = this.getRawValue();
-        if (v.length > 0) {
+        if(v.length > 0){
             start = start === undefined ? 0 : start;
             end = end === undefined ? v.length : end;
             var d = this.el.dom;
-            if (d.setSelectionRange) {
+            if(d.setSelectionRange){
                 d.setSelectionRange(start, end);
-            } else if (d.createTextRange) {
+            }else if(d.createTextRange){
                 var range = d.createTextRange();
                 range.moveStart("character", start);
-                range.moveEnd("character", end - v.length);
+                range.moveEnd("character", end-v.length);
                 range.select();
             }
         }
@@ -297,11 +297,11 @@ Ext.form.TextField = Ext.extend(Ext.form.Field, {
      * Automatically grows the field to accomodate the width of the text up to the maximum field width allowed.
      * This only takes effect if grow = true, and fires the autosize event.
      */
-    autoSize: function () {
-        if (!this.grow || !this.rendered) {
+    autoSize : function(){
+        if(!this.grow || !this.rendered){
             return;
         }
-        if (!this.metrics) {
+        if(!this.metrics){
             this.metrics = Ext.util.TextMetrics.createInstance(this.el);
         }
         var el = this.el;

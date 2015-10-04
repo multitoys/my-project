@@ -44,13 +44,13 @@
  * </ul>
  * Example usage:</p>
  * <pre><code>
- // Required if showing validation messages
- Ext.QuickTips.init();
+// Required if showing validation messages
+Ext.QuickTips.init();
 
- // While you can create a basic Panel with layout:'form', practically
- // you should usually use a FormPanel to also get its form functionality
- // since it already creates a FormLayout internally.
- var form = new Ext.form.FormPanel({
+// While you can create a basic Panel with layout:'form', practically
+// you should usually use a FormPanel to also get its form functionality
+// since it already creates a FormLayout internally.
+var form = new Ext.form.FormPanel({
     labelWidth: 75,
     title: 'Form Layout',
     bodyStyle:'padding:15px',
@@ -88,7 +88,7 @@
         text: 'Cancel'
     }]
 });
- </code></pre>
+</code></pre>
  */
 Ext.layout.FormLayout = Ext.extend(Ext.layout.AnchorLayout, {
     /**
@@ -105,48 +105,48 @@ Ext.layout.FormLayout = Ext.extend(Ext.layout.AnchorLayout, {
      * separators for all fields in this layout by default specify empty string '' (if the labelSeparator value is
      * explicitly set at the field level, those will still be displayed).
      */
-    labelSeparator: ':',
+    labelSeparator : ':',
 
     // private
-    getAnchorViewSize: function (ct, target) {
+    getAnchorViewSize : function(ct, target){
         return ct.body.getStyleSize();
     },
 
     // private
-    setContainer: function (ct) {
+    setContainer : function(ct){
         Ext.layout.FormLayout.superclass.setContainer.call(this, ct);
 
-        if (ct.labelAlign) {
-            ct.addClass('x-form-label-' + ct.labelAlign);
+        if(ct.labelAlign){
+            ct.addClass('x-form-label-'+ct.labelAlign);
         }
 
-        if (ct.hideLabels) {
+        if(ct.hideLabels){
             this.labelStyle = "display:none";
             this.elementStyle = "padding-left:0;";
             this.labelAdjust = 0;
-        } else {
+        }else{
             this.labelSeparator = ct.labelSeparator || this.labelSeparator;
             ct.labelWidth = ct.labelWidth || 100;
-            if (typeof ct.labelWidth == 'number') {
+            if(typeof ct.labelWidth == 'number'){
                 var pad = (typeof ct.labelPad == 'number' ? ct.labelPad : 5);
-                this.labelAdjust = ct.labelWidth + pad;
-                this.labelStyle = "width:" + ct.labelWidth + "px;";
-                this.elementStyle = "padding-left:" + (ct.labelWidth + pad) + 'px';
+                this.labelAdjust = ct.labelWidth+pad;
+                this.labelStyle = "width:"+ct.labelWidth+"px;";
+                this.elementStyle = "padding-left:"+(ct.labelWidth+pad)+'px';
             }
-            if (ct.labelAlign == 'top') {
+            if(ct.labelAlign == 'top'){
                 this.labelStyle = "width:auto;";
                 this.labelAdjust = 0;
                 this.elementStyle = "padding-left:0;";
             }
         }
 
-        if (!this.fieldTpl) {
+        if(!this.fieldTpl){
             // the default field template used by all form layouts
             var t = new Ext.Template(
                 '<div class="x-form-item {5}" tabIndex="-1">',
-                '<label for="{0}" style="{2}" class="x-form-item-label">{1}{4}</label>',
-                '<div class="x-form-element" id="x-form-el-{0}" style="{3}">',
-                '</div><div class="{6}"></div>',
+                    '<label for="{0}" style="{2}" class="x-form-item-label">{1}{4}</label>',
+                    '<div class="x-form-element" id="x-form-el-{0}" style="{3}">',
+                    '</div><div class="{6}"></div>',
                 '</div>'
             );
             t.disableFormats = true;
@@ -156,37 +156,37 @@ Ext.layout.FormLayout = Ext.extend(Ext.layout.AnchorLayout, {
     },
 
     // private
-    renderItem: function (c, position, target) {
-        if (c && !c.rendered && c.isFormField && c.inputType != 'hidden') {
+    renderItem : function(c, position, target){
+        if(c && !c.rendered && c.isFormField && c.inputType != 'hidden'){
             var args = [
-                c.id, c.fieldLabel,
-                c.labelStyle || this.labelStyle || '',
-                this.elementStyle || '',
-                typeof c.labelSeparator == 'undefined' ? this.labelSeparator : c.labelSeparator,
-                (c.itemCls || this.container.itemCls || '') + (c.hideLabel ? ' x-hide-label' : ''),
-                c.clearCls || 'x-form-clear-left'
+                   c.id, c.fieldLabel,
+                   c.labelStyle||this.labelStyle||'',
+                   this.elementStyle||'',
+                   typeof c.labelSeparator == 'undefined' ? this.labelSeparator : c.labelSeparator,
+                   (c.itemCls||this.container.itemCls||'') + (c.hideLabel ? ' x-hide-label' : ''),
+                   c.clearCls || 'x-form-clear-left' 
             ];
-            if (typeof position == 'number') {
+            if(typeof position == 'number'){
                 position = target.dom.childNodes[position] || null;
             }
-            if (position) {
+            if(position){
                 this.fieldTpl.insertBefore(position, args);
-            } else {
+            }else{
                 this.fieldTpl.append(target, args);
             }
-            c.render('x-form-el-' + c.id);
-        } else {
+            c.render('x-form-el-'+c.id);
+        }else {
             Ext.layout.FormLayout.superclass.renderItem.apply(this, arguments);
         }
     },
 
     // private
-    adjustWidthAnchor: function (value, comp) {
+    adjustWidthAnchor : function(value, comp){
         return value - (comp.hideLabel ? 0 : this.labelAdjust);
     },
 
     // private
-    isValidParent: function (c, target) {
+    isValidParent : function(c, target){
         return true;
     }
 

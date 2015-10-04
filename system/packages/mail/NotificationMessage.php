@@ -1,8 +1,7 @@
 <?php
 
-    class NotificationMessage
-    {
-
-    }
-
+class NotificationMessage
+{
+	
+}
 ?>

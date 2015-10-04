@@ -6,14 +6,7 @@
 // Distributed under the same terms as HTMLArea itself.
 // This notice MUST stay intact for use (see license.txt).
 {
-    "Default"
-:
-    "Standard",
-        "Undefined"
-:
-    "Nicht definiert",
-        "Choose stylesheet"
-:
-    "Wählen Sie einen StyleSheet aus"
-}
-;
+  "Default": "Standard",
+  "Undefined": "Nicht definiert",
+  "Choose stylesheet": "Wählen Sie einen StyleSheet aus"
+};

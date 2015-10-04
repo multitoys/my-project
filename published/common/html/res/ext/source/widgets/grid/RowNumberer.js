@@ -14,18 +14,18 @@
  <pre><code>
  // This is a typical column config with the first column providing row numbers
  var colModel = new Ext.grid.ColumnModel([
- new Ext.grid.RowNumberer(),
- {header: "Name", width: 80, sortable: true},
- {header: "Code", width: 50, sortable: true},
- {header: "Description", width: 200, sortable: true}
+    new Ext.grid.RowNumberer(),
+    {header: "Name", width: 80, sortable: true},
+    {header: "Code", width: 50, sortable: true},
+    {header: "Description", width: 200, sortable: true}
  ]);
  </code></pre>
  * @constructor
  * @param {Object} config The configuration options
- */
-Ext.grid.RowNumberer = function (config) {
+*/
+Ext.grid.RowNumberer = function(config){
     Ext.apply(this, config);
-    if (this.rowspan) {
+    if(this.rowspan){
         this.renderer = this.renderer.createDelegate(this);
     }
 };
@@ -46,16 +46,16 @@ Ext.grid.RowNumberer.prototype = {
     sortable: false,
 
     // private
-    fixed: true,
+    fixed:true,
     dataIndex: '',
     id: 'numberer',
     rowspan: undefined,
 
     // private
-    renderer: function (v, p, record, rowIndex) {
-        if (this.rowspan) {
-            p.cellAttr = 'rowspan="' + this.rowspan + '"';
+    renderer : function(v, p, record, rowIndex){
+        if(this.rowspan){
+            p.cellAttr = 'rowspan="'+this.rowspan+'"';
         }
-        return rowIndex + 1;
+        return rowIndex+1;
     }
 };

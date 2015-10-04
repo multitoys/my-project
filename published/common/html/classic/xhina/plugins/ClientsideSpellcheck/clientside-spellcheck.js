@@ -7,56 +7,56 @@
 
 
 function ClientsideSpellcheck(editor) {
-    this.editor = editor;
+  this.editor = editor;
 
-    var cfg = editor.config;
-    var bl = ClientsideSpellcheck.btnList;
-    var self = this;
+  var cfg = editor.config;
+  var bl = ClientsideSpellcheck.btnList;
+  var self = this;
 
-    // see if we can find the mode switch button, insert this before that
-    var id = "clientsidespellcheck";
+  // see if we can find the mode switch button, insert this before that
+  var id = "clientsidespellcheck";
+  
+  
+  cfg.registerButton(id, this._lc("Spell Check using ieSpell"), editor.imgURL("clientside-spellcheck.gif", "ClientsideSpellcheck"), false,
+             function(editor, id) {
+               // dispatch button press event
+               self.buttonPress(editor, id);
+             });
 
-
-    cfg.registerButton(id, this._lc("Spell Check using ieSpell"), editor.imgURL("clientside-spellcheck.gif", "ClientsideSpellcheck"), false,
-        function (editor, id) {
-            // dispatch button press event
-            self.buttonPress(editor, id);
-        });
-
-    if (HTMLArea.is_ie) {
-        cfg.addToolbarElement("clientsidespellcheck", "print", 1);
-    }
+  if(HTMLArea.is_ie) {
+    cfg.addToolbarElement("clientsidespellcheck", "print", 1);
+}
 
 }
 
 ClientsideSpellcheck._pluginInfo = {
-    name: "ClientsideSpellcheck",
-    version: "1.0",
-    developer: "Michael Harris",
-    developer_url: "http://www.jonesinternational.edu",
-    c_owner: "Red Egg Software",
-    sponsor: "Jones International University",
-    sponsor_url: "http://www.jonesinternational.edu",
-    license: "htmlArea"
+  name          : "ClientsideSpellcheck",
+  version       : "1.0",
+  developer     : "Michael Harris",
+  developer_url : "http://www.jonesinternational.edu",
+  c_owner       : "Red Egg Software",
+  sponsor       : "Jones International University",
+  sponsor_url   : "http://www.jonesinternational.edu",
+  license       : "htmlArea"
 };
 
 
-ClientsideSpellcheck.prototype._lc = function (string) {
-    return HTMLArea._lc(string, 'ClientsideSpellcheck');
+ClientsideSpellcheck.prototype._lc = function(string) {
+  return HTMLArea._lc(string, 'ClientsideSpellcheck');
 };
 
-ClientsideSpellcheck.prototype.buttonPress = function (editor) {
+ClientsideSpellcheck.prototype.buttonPress = function(editor) {
 
-    try {
-        var tmpis = new ActiveXObject("ieSpell.ieSpellExtension");
-        tmpis.CheckAllLinkedDocuments(document);
-    }
-    catch (exception) {
-        if (exception.number == -2146827859) {
-            if (confirm(this.lc("ieSpell not detected.  Click Ok to go to download page.")))
-                window.open("http://www.iespell.com/download.php", "DownLoad");
-        } else {
-            alert(this.lc("ieSpell can only be used in Internet Explorer"));
-        }
-    }
+	try {
+		var tmpis = new ActiveXObject("ieSpell.ieSpellExtension");
+		tmpis.CheckAllLinkedDocuments(document);
+	}
+	catch(exception) {
+ 		if(exception.number==-2146827859) {
+			if (confirm(this.lc("ieSpell not detected.  Click Ok to go to download page.")))
+				window.open("http://www.iespell.com/download.php","DownLoad");
+		} else {
+			alert(this.lc("ieSpell can only be used in Internet Explorer"));
+		}
+	}
 };

@@ -14,16 +14,8 @@
 // Distributed under the same terms as HTMLArea itself.
 // This notice MUST stay intact for use (see license.txt).
 {
-    "Auto-Tidy"
-:
-    "Auto-Tidy",
-        "Don't Tidy"
-:
-    "Sem Tidy",
-        "HTML Tidy"
-:
-    "HTML Tidy",
-        "Tidy failed.  Check your HTML for syntax errors."
-:
-    "Tidy falhou. Verifique erros de sintaxe em seu HTML."
+  "Auto-Tidy": "Auto-Tidy",
+  "Don't Tidy": "Sem Tidy",
+  "HTML Tidy": "HTML Tidy",
+  "Tidy failed.  Check your HTML for syntax errors.": "Tidy falhou. Verifique erros de sintaxe em seu HTML."
 }

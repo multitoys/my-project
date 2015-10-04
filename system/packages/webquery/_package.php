@@ -1,6 +1,6 @@
 <?
-    include_once("WebQuery.php");
+	include_once("WebQuery.php");
 
-    // static initialize
-    WebQuery::initialize();
+	// static initialize
+	WebQuery::initialize();
 ?>

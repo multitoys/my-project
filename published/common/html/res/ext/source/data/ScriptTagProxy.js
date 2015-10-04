@@ -24,28 +24,28 @@
  * depending on whether the callback name was passed:
  * <p>
  * <pre><code>
- boolean scriptTag = false;
- String cb = request.getParameter("callback");
- if (cb != null) {
+boolean scriptTag = false;
+String cb = request.getParameter("callback");
+if (cb != null) {
     scriptTag = true;
     response.setContentType("text/javascript");
 } else {
     response.setContentType("application/x-json");
 }
- Writer out = response.getWriter();
- if (scriptTag) {
+Writer out = response.getWriter();
+if (scriptTag) {
     out.write(cb + "(");
 }
- out.print(dataBlock.toJsonString());
- if (scriptTag) {
+out.print(dataBlock.toJsonString());
+if (scriptTag) {
     out.write(");");
 }
- </code></pre>
+</code></pre>
  *
  * @constructor
  * @param {Object} config A configuration object.
  */
-Ext.data.ScriptTagProxy = function (config) {
+Ext.data.ScriptTagProxy = function(config){
     Ext.data.ScriptTagProxy.superclass.constructor.call(this);
     Ext.apply(this, config);
     this.head = document.getElementsByTagName("head")[0];
@@ -60,19 +60,19 @@ Ext.extend(Ext.data.ScriptTagProxy, Ext.data.DataProxy, {
     /**
      * @cfg {Number} timeout (Optional) The number of milliseconds to wait for a response. Defaults to 30 seconds.
      */
-    timeout: 30000,
+    timeout : 30000,
     /**
      * @cfg {String} callbackParam (Optional) The name of the parameter to pass to the server which tells
      * the server the name of the callback function set up by the load call to process the returned data object.
      * Defaults to "callback".<p>The server-side processing must read this parameter value, and generate
      * javascript output which calls this named function passing the data object as its only parameter.
      */
-    callbackParam: "callback",
+    callbackParam : "callback",
     /**
      *  @cfg {Boolean} nocache (Optional) Defaults to true. Disable cacheing by adding a unique parameter
      * name to the request.
      */
-    nocache: true,
+    nocache : true,
 
     /**
      * Load data from the configured URL, read the data object into
@@ -91,37 +91,37 @@ Ext.extend(Ext.data.ScriptTagProxy, Ext.data.DataProxy, {
      * @param {Object} scope The scope in which to call the callback
      * @param {Object} arg An optional argument which is passed to the callback as its second parameter.
      */
-    load: function (params, reader, callback, scope, arg) {
-        if (this.fireEvent("beforeload", this, params) !== false) {
+    load : function(params, reader, callback, scope, arg){
+        if(this.fireEvent("beforeload", this, params) !== false){
 
             var p = Ext.urlEncode(Ext.apply(params, this.extraParams));
 
             var url = this.url;
             url += (url.indexOf("?") != -1 ? "&" : "?") + p;
-            if (this.nocache) {
+            if(this.nocache){
                 url += "&_dc=" + (new Date().getTime());
             }
             var transId = ++Ext.data.ScriptTagProxy.TRANS_ID;
             var trans = {
-                id: transId,
-                cb: "stcCallback" + transId,
-                scriptId: "stcScript" + transId,
-                params: params,
-                arg: arg,
-                url: url,
-                callback: callback,
-                scope: scope,
-                reader: reader
+                id : transId,
+                cb : "stcCallback"+transId,
+                scriptId : "stcScript"+transId,
+                params : params,
+                arg : arg,
+                url : url,
+                callback : callback,
+                scope : scope,
+                reader : reader
             };
             var conn = this;
 
-            window[trans.cb] = function (o) {
+            window[trans.cb] = function(o){
                 conn.handleResponse(o, trans);
             };
 
             url += String.format("&{0}={1}", this.callbackParam, trans.cb);
 
-            if (this.autoAbort !== false) {
+            if(this.autoAbort !== false){
                 this.abort();
             }
 
@@ -134,68 +134,66 @@ Ext.extend(Ext.data.ScriptTagProxy, Ext.data.DataProxy, {
             this.head.appendChild(script);
 
             this.trans = trans;
-        } else {
-            callback.call(scope || this, null, arg, false);
+        }else{
+            callback.call(scope||this, null, arg, false);
         }
     },
 
     // private
-    isLoading: function () {
+    isLoading : function(){
         return this.trans ? true : false;
     },
 
     /**
      * Abort the current server request.
      */
-    abort: function () {
-        if (this.isLoading()) {
+    abort : function(){
+        if(this.isLoading()){
             this.destroyTrans(this.trans);
         }
     },
 
     // private
-    destroyTrans: function (trans, isLoaded) {
+    destroyTrans : function(trans, isLoaded){
         this.head.removeChild(document.getElementById(trans.scriptId));
         clearTimeout(trans.timeoutId);
-        if (isLoaded) {
+        if(isLoaded){
             window[trans.cb] = undefined;
-            try {
+            try{
                 delete window[trans.cb];
-            } catch (e) {
-            }
-        } else {
+            }catch(e){}
+        }else{
             // if hasn't been loaded, wait for load to remove it to prevent script error
-            window[trans.cb] = function () {
+            window[trans.cb] = function(){
                 window[trans.cb] = undefined;
-                try {
+                try{
                     delete window[trans.cb];
-                } catch (e) {
-                }
+                }catch(e){}
             };
         }
     },
 
     // private
-    handleResponse: function (o, trans) {
+    handleResponse : function(o, trans){
         this.trans = false;
         this.destroyTrans(trans, true);
         var result;
         try {
             result = trans.reader.readRecords(o);
-        } catch (e) {
+        }catch(e){
             this.fireEvent("loadexception", this, o, trans.arg, e);
-            trans.callback.call(trans.scope || window, null, trans.arg, false);
+            trans.callback.call(trans.scope||window, null, trans.arg, false);
             return;
         }
         this.fireEvent("load", this, o, trans.arg);
-        trans.callback.call(trans.scope || window, result, trans.arg, true);
+        trans.callback.call(trans.scope||window, result, trans.arg, true);
     },
 
     // private
-    handleFailure: function (trans) {
+    handleFailure : function(trans){
         this.trans = false;
         this.destroyTrans(trans, false);
         this.fireEvent("loadexception", this, null, trans.arg);
-        trans.callback.call(trans.scope || window, null, trans.arg, false);
+        trans.callback.call(trans.scope||window, null, trans.arg, false);
     }
 });

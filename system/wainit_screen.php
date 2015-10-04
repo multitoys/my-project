@@ -1,4 +1,4 @@
 <?php
-    include_once("wainit.php");
-    Kernel::incPackage("preproc");
+	include_once("wainit.php");
+	Kernel::incPackage("preproc");
 ?>

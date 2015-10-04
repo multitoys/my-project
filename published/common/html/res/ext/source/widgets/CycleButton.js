@@ -14,7 +14,7 @@
  * {@link #changeHandler} function, if supplied) for the active menu item. Clicking on the arrow section of the
  * button displays the dropdown menu just like a normal SplitButton.  Example usage:
  * <pre><code>
- var btn = new Ext.CycleButton({
+var btn = new Ext.CycleButton({
     showText: true,
     prependText: 'View as ',
     items: [{
@@ -29,7 +29,7 @@
         Ext.Msg.alert('Change View', item.text);
     }
 });
- </code></pre>
+</code></pre>
  * @constructor
  * Create a new split button
  * @param {Object} config The config object
@@ -54,10 +54,10 @@ Ext.CycleButton = Ext.extend(Ext.SplitButton, {
      */
 
     // private
-    getItemText: function (item) {
-        if (item && this.showText === true) {
+    getItemText : function(item){
+        if(item && this.showText === true){
             var text = '';
-            if (this.prependText) {
+            if(this.prependText){
                 text += this.prependText;
             }
             text += item.text;
@@ -71,20 +71,20 @@ Ext.CycleButton = Ext.extend(Ext.SplitButton, {
      * @param {Ext.menu.CheckItem} item The item to activate
      * @param {Boolean} suppressEvent True to prevent the button's change event from firing (defaults to false)
      */
-    setActiveItem: function (item, suppressEvent) {
-        if (item) {
-            if (!this.rendered) {
+    setActiveItem : function(item, suppressEvent){
+        if(item){
+            if(!this.rendered){
                 this.text = this.getItemText(item);
                 this.iconCls = item.iconCls;
-            } else {
+            }else{
                 var t = this.getItemText(item);
-                if (t) {
+                if(t){
                     this.setText(t);
                 }
                 this.setIconClass(item.iconCls);
             }
             this.activeItem = item;
-            if (!suppressEvent) {
+            if(!suppressEvent){
                 this.fireEvent('change', this, item);
             }
         }
@@ -94,12 +94,12 @@ Ext.CycleButton = Ext.extend(Ext.SplitButton, {
      * Gets the currently active menu item.
      * @return {Ext.menu.CheckItem} The active item
      */
-    getActiveItem: function () {
+    getActiveItem : function(){
         return this.activeItem;
     },
 
     // private
-    initComponent: function () {
+    initComponent : function(){
         this.addEvents(
             /**
              * @event change
@@ -112,16 +112,16 @@ Ext.CycleButton = Ext.extend(Ext.SplitButton, {
             "change"
         );
 
-        if (this.changeHandler) {
-            this.on('change', this.changeHandler, this.scope || this);
+        if(this.changeHandler){
+            this.on('change', this.changeHandler, this.scope||this);
             delete this.changeHandler;
         }
 
         this.itemCount = this.items.length;
 
-        this.menu = {cls: 'x-cycle-menu', items: []};
+        this.menu = {cls:'x-cycle-menu', items:[]};
         var checked;
-        for (var i = 0, len = this.itemCount; i < len; i++) {
+        for(var i = 0, len = this.itemCount; i < len; i++){
             var item = this.items[i];
             item.group = item.group || this.id;
             item.itemIndex = i;
@@ -129,7 +129,7 @@ Ext.CycleButton = Ext.extend(Ext.SplitButton, {
             item.scope = this;
             item.checked = item.checked || false;
             this.menu.items.push(item);
-            if (item.checked) {
+            if(item.checked){
                 checked = item;
             }
         }
@@ -140,8 +140,8 @@ Ext.CycleButton = Ext.extend(Ext.SplitButton, {
     },
 
     // private
-    checkHandler: function (item, pressed) {
-        if (pressed) {
+    checkHandler : function(item, pressed){
+        if(pressed){
             this.setActiveItem(item);
         }
     },
@@ -151,20 +151,20 @@ Ext.CycleButton = Ext.extend(Ext.SplitButton, {
      * active item programmatically to the next one in the menu.  If the current item is the last one in the menu
      * the active item will be set to the first item in the menu.
      */
-    toggleSelected: function () {
+    toggleSelected : function(){
         this.menu.render();
-
-        var nextIdx, checkItem;
-        for (var i = 1; i < this.itemCount; i++) {
-            nextIdx = (this.activeItem.itemIndex + i) % this.itemCount;
-            // check the potential item
-            checkItem = this.menu.items.itemAt(nextIdx);
-            // if its not disabled then check it.
-            if (!checkItem.disabled) {
-                checkItem.setChecked(true);
-                break;
-            }
-        }
+		
+		var nextIdx, checkItem;
+		for (var i = 1; i < this.itemCount; i++) {
+			nextIdx = (this.activeItem.itemIndex + i) % this.itemCount;
+			// check the potential item
+			checkItem = this.menu.items.itemAt(nextIdx);
+			// if its not disabled then check it.
+			if (!checkItem.disabled) {
+				checkItem.setChecked(true);
+				break;
+			}
+		}
     }
 });
 Ext.reg('cycle', Ext.CycleButton);

@@ -18,12 +18,12 @@
  * @param {Object} scope (optional) The default scope of that timeout
  * @param {Array} args (optional) The default Array of arguments
  */
-Ext.util.DelayedTask = function (fn, scope, args) {
+Ext.util.DelayedTask = function(fn, scope, args){
     var id = null, d, t;
 
-    var call = function () {
+    var call = function(){
         var now = new Date().getTime();
-        if (now - t >= d) {
+        if(now - t >= d){
             clearInterval(id);
             id = null;
             fn.apply(scope, args || []);
@@ -36,8 +36,8 @@ Ext.util.DelayedTask = function (fn, scope, args) {
      * @param {Object} newScope (optional) Overrides scope passed to constructor
      * @param {Array} newArgs (optional) Overrides args passed to constructor
      */
-    this.delay = function (delay, newFn, newScope, newArgs) {
-        if (id && delay != d) {
+    this.delay = function(delay, newFn, newScope, newArgs){
+        if(id && delay != d){
             this.cancel();
         }
         d = delay;
@@ -45,7 +45,7 @@ Ext.util.DelayedTask = function (fn, scope, args) {
         fn = newFn || fn;
         scope = newScope || scope;
         args = newArgs || args;
-        if (!id) {
+        if(!id){
             id = setInterval(call, d);
         }
     };
@@ -53,8 +53,8 @@ Ext.util.DelayedTask = function (fn, scope, args) {
     /**
      * Cancel the last queued timeout
      */
-    this.cancel = function () {
-        if (id) {
+    this.cancel = function(){
+        if(id){
             clearInterval(id);
             id = null;
         }

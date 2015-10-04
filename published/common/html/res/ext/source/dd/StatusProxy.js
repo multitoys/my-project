@@ -13,16 +13,16 @@
  * @constructor
  * @param {Object} config
  */
-Ext.dd.StatusProxy = function (config) {
+Ext.dd.StatusProxy = function(config){
     Ext.apply(this, config);
     this.id = this.id || Ext.id();
     this.el = new Ext.Layer({
         dh: {
-            id: this.id, tag: "div", cls: "x-dd-drag-proxy " + this.dropNotAllowed, children: [
+            id: this.id, tag: "div", cls: "x-dd-drag-proxy "+this.dropNotAllowed, children: [
                 {tag: "div", cls: "x-dd-drop-icon"},
                 {tag: "div", cls: "x-dd-drag-ghost"}
             ]
-        },
+        }, 
         shadow: !config || config.shadow !== false
     });
     this.ghost = Ext.get(this.el.dom.childNodes[1]);
@@ -34,21 +34,21 @@ Ext.dd.StatusProxy.prototype = {
      * @cfg {String} dropAllowed
      * The CSS class to apply to the status element when drop is allowed (defaults to "x-dd-drop-ok").
      */
-    dropAllowed: "x-dd-drop-ok",
+    dropAllowed : "x-dd-drop-ok",
     /**
      * @cfg {String} dropNotAllowed
      * The CSS class to apply to the status element when drop is not allowed (defaults to "x-dd-drop-nodrop").
      */
-    dropNotAllowed: "x-dd-drop-nodrop",
+    dropNotAllowed : "x-dd-drop-nodrop",
 
     /**
      * Updates the proxy's visual element to indicate the status of whether or not drop is allowed
      * over the current target element.
      * @param {String} cssClass The css class for the new drop status indicator image
      */
-    setStatus: function (cssClass) {
+    setStatus : function(cssClass){
         cssClass = cssClass || this.dropNotAllowed;
-        if (this.dropStatus != cssClass) {
+        if(this.dropStatus != cssClass){
             this.el.replaceClass(this.dropStatus, cssClass);
             this.dropStatus = cssClass;
         }
@@ -58,10 +58,10 @@ Ext.dd.StatusProxy.prototype = {
      * Resets the status indicator to the default dropNotAllowed value
      * @param {Boolean} clearGhost True to also remove all content from the ghost, false to preserve it
      */
-    reset: function (clearGhost) {
+    reset : function(clearGhost){
         this.el.dom.className = "x-dd-drag-proxy " + this.dropNotAllowed;
         this.dropStatus = this.dropNotAllowed;
-        if (clearGhost) {
+        if(clearGhost){
             this.ghost.update("");
         }
     },
@@ -70,21 +70,21 @@ Ext.dd.StatusProxy.prototype = {
      * Updates the contents of the ghost element
      * @param {String} html The html that will replace the current innerHTML of the ghost element
      */
-    update: function (html) {
-        if (typeof html == "string") {
+    update : function(html){
+        if(typeof html == "string"){
             this.ghost.update(html);
-        } else {
+        }else{
             this.ghost.update("");
             html.style.margin = "0";
             this.ghost.dom.appendChild(html);
-        }
+        }        
     },
 
     /**
      * Returns the underlying proxy {@link Ext.Layer}
      * @return {Ext.Layer} el
-     */
-    getEl: function () {
+    */
+    getEl : function(){
         return this.el;
     },
 
@@ -92,7 +92,7 @@ Ext.dd.StatusProxy.prototype = {
      * Returns the ghost element
      * @return {Ext.Element} el
      */
-    getGhost: function () {
+    getGhost : function(){
         return this.ghost;
     },
 
@@ -100,9 +100,9 @@ Ext.dd.StatusProxy.prototype = {
      * Hides the proxy
      * @param {Boolean} clear True to reset the status and clear the ghost contents, false to preserve them
      */
-    hide: function (clear) {
+    hide : function(clear){
         this.el.hide();
-        if (clear) {
+        if(clear){
             this.reset(true);
         }
     },
@@ -110,8 +110,8 @@ Ext.dd.StatusProxy.prototype = {
     /**
      * Stops the repair animation if it's currently running
      */
-    stop: function () {
-        if (this.anim && this.anim.isAnimated && this.anim.isAnimated()) {
+    stop : function(){
+        if(this.anim && this.anim.isAnimated && this.anim.isAnimated()){
             this.anim.stop();
         }
     },
@@ -119,14 +119,14 @@ Ext.dd.StatusProxy.prototype = {
     /**
      * Displays this proxy
      */
-    show: function () {
+    show : function(){
         this.el.show();
     },
 
     /**
      * Force the Layer to sync its shadow and shim positions to the element
      */
-    sync: function () {
+    sync : function(){
         this.el.sync();
     },
 
@@ -137,10 +137,10 @@ Ext.dd.StatusProxy.prototype = {
      * @param {Function} callback The function to call after the repair is complete
      * @param {Object} scope The scope in which to execute the callback
      */
-    repair: function (xy, callback, scope) {
+    repair : function(xy, callback, scope){
         this.callback = callback;
         this.scope = scope;
-        if (xy && this.animRepair !== false) {
+        if(xy && this.animRepair !== false){
             this.el.addClass("x-dd-drag-repair");
             this.el.hideUnders(true);
             this.anim = this.el.shift({
@@ -151,15 +151,15 @@ Ext.dd.StatusProxy.prototype = {
                 callback: this.afterRepair,
                 scope: this
             });
-        } else {
+        }else{
             this.afterRepair();
         }
     },
 
     // private
-    afterRepair: function () {
+    afterRepair : function(){
         this.hide(true);
-        if (typeof this.callback == "function") {
+        if(typeof this.callback == "function"){
             this.callback.call(this.scope || this);
         }
         this.callback = null;

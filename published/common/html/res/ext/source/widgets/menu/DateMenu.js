@@ -14,7 +14,7 @@
  * Creates a new DateMenu
  * @param {Object} config Configuration options
  */
-Ext.menu.DateMenu = function (config) {
+Ext.menu.DateMenu = function(config){
     Ext.menu.DateMenu.superclass.constructor.call(this, config);
     this.plain = true;
     var di = new Ext.menu.DateItem(config);
@@ -31,17 +31,17 @@ Ext.menu.DateMenu = function (config) {
      */
     this.relayEvents(di, ["select"]);
 
-    this.on('beforeshow', function () {
-        if (this.picker) {
+    this.on('beforeshow', function(){
+        if(this.picker){
             this.picker.hideMonthPicker(true);
         }
     }, this);
 };
 Ext.extend(Ext.menu.DateMenu, Ext.menu.Menu, {
-    cls: 'x-date-menu',
+    cls:'x-date-menu',
 
     // private
-    beforeDestroy: function () {
+    beforeDestroy : function() {
         this.picker.destroy();
     }
 });

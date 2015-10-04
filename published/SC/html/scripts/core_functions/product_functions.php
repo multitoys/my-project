@@ -358,7 +358,7 @@
             if (($i >= $offset && $i < $offset + $CountRowOnPage) ||
                 $navigatorParams == null
             ) {
-                $row["PriceWithUnit"] = show_price(ZCalcPrice($row["Price"], $row["SpecialPrice"], $row["skidka"]));
+                $row["PriceWithUnit"] = show_price(ZCalcPrice($row["Price"], $row["skidka"], $row["ukraine"]));
                 $row["list_priceWithUnit"] = show_price($row["list_price"]);
                 // you save (value)
                 $row["SavePrice"] = show_price($row["list_price"] - $row["Price"]);
@@ -370,7 +370,7 @@
                 _setPictures($row);
 
                 $row["product_extra"] = GetExtraParametrs($row["productID"]);
-                $row["PriceWithOutUnit"] = show_priceWithOutUnit(ZCalcPrice($row["Price"], $row["SpecialPrice"], $row["skidka"]));
+                $row["PriceWithOutUnit"] = show_priceWithOutUnit(ZCalcPrice($row["Price"], $row["skidka"], $row["ukraine"]));
                 $result[] = $row;
             }
             $i++;
@@ -415,7 +415,7 @@
                     " WHERE ".$cond);
                 while ($row = db_fetch_row($q)) {
                     LanguagesManager::ml_fillFields(PRODUCTS_TABLE, $row);
-                    $row["PriceWithUnit"] = show_price(ZCalcPrice($row["Price"], $row["SpecialPrice"], $row["skidka"]));
+                    $row["PriceWithUnit"] = show_price(ZCalcPrice($row["Price"], $row["skidka"], $row["ukraine"]));
                     $row["list_priceWithUnit"] = show_price($row["list_price"]);
                     // you save (value)
                     $row["SavePrice"] = show_price($row["list_price"] - $row["Price"]);
@@ -425,7 +425,7 @@
                         $row["SavePricePercent"] = ceil(((($row["list_price"] - $row["Price"]) / $row["list_price"]) * 100));
                     _setPictures($row);
                     $row["product_extra"] = GetExtraParametrs($row["productID"]);
-                    $row["PriceWithOutUnit"] = show_priceWithOutUnit(ZCalcPrice($row["Price"], $row["SpecialPrice"], $row["skidka"]));
+                    $row["PriceWithOutUnit"] = show_priceWithOutUnit(ZCalcPrice($row["Price"], $row["skidka"], $row["ukraine"]));
                     $data[] = $row;
                 }
             }
@@ -818,13 +818,13 @@
 
             LanguagesManager::ml_fillFields(PRODUCTS_TABLE, $_Product);
             if (!$_Product["productID"] && ($_Product[0] > 0)) $_Product["productID"] = $_Product[0];
-            $_Product['PriceWithUnit'] = show_price(ZCalcPrice($_Product["Price"], $_Product["SpecialPrice"], $_Product["skidka"]));
+            $_Product['PriceWithUnit'] = show_price(ZCalcPrice($_Product["Price"], $_Product["skidka"], $_Product["ukraine"]));
             $_Product['list_priceWithUnit'] = show_price($_Product['list_price']);
             // you save (value)
             $_Product['SavePrice'] = show_price($_Product['list_price'] - $_Product['Price']);
             // you save (%)
             if ($_Product['list_price']) $_Product['SavePricePercent'] = ceil(((($_Product['list_price'] - $_Product['Price']) / $_Product['list_price']) * 100));
-            $_Product['PriceWithOutUnit'] = show_priceWithOutUnit(ZCalcPrice($_Product["Price"], $_Product["SpecialPrice"], $_Product["skidka"]));
+            $_Product['PriceWithOutUnit'] = show_priceWithOutUnit(ZCalcPrice($_Product["Price"], $_Product["skidka"], $_Product["ukraine"]));
             if (((float)$_Product['shipping_freight']) > 0)
                 $_Product['shipping_freightUC'] = show_price($_Product['shipping_freight']);
             $ProductsIDs[$_Product['productID']] = $Counter;

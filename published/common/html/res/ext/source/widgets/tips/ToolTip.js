@@ -41,23 +41,23 @@ Ext.ToolTip = Ext.extend(Ext.Tip, {
     /**
      * @cfg {Array} mouseOffset An XY offset from the mouse position where the tooltip should be shown (defaults to [15,18]).
      */
-    mouseOffset: [15, 18],
+    mouseOffset: [15,18],
     /**
      * @cfg {Boolean} trackMouse True to have the tooltip follow the mouse as it moves over the target element (defaults to false).
      */
-    trackMouse: false,
+    trackMouse : false,
     constrainPosition: true,
 
     // private
-    initComponent: function () {
+    initComponent: function(){
         Ext.ToolTip.superclass.initComponent.call(this);
         this.lastActive = new Date();
         this.initTarget();
     },
 
     // private
-    initTarget: function () {
-        if (this.target) {
+    initTarget : function(){
+        if(this.target){
             this.target = Ext.get(this.target);
             this.target.on('mouseover', this.onTargetOver, this);
             this.target.on('mouseout', this.onTargetOut, this);
@@ -66,21 +66,21 @@ Ext.ToolTip = Ext.extend(Ext.Tip, {
     },
 
     // private
-    onMouseMove: function (e) {
+    onMouseMove : function(e){
         this.targetXY = e.getXY();
-        if (!this.hidden && this.trackMouse) {
+        if(!this.hidden && this.trackMouse){
             this.setPagePosition(this.getTargetXY());
         }
     },
 
     // private
-    getTargetXY: function () {
-        return [this.targetXY[0] + this.mouseOffset[0], this.targetXY[1] + this.mouseOffset[1]];
+    getTargetXY : function(){
+        return [this.targetXY[0]+this.mouseOffset[0], this.targetXY[1]+this.mouseOffset[1]];
     },
 
     // private
-    onTargetOver: function (e) {
-        if (this.disabled || e.within(this.target.dom, true)) {
+    onTargetOver : function(e){
+        if(this.disabled || e.within(this.target.dom, true)){
             return;
         }
         this.clearTimer('hide');
@@ -89,32 +89,32 @@ Ext.ToolTip = Ext.extend(Ext.Tip, {
     },
 
     // private
-    delayShow: function () {
-        if (this.hidden && !this.showTimer) {
-            if (this.lastActive.getElapsed() < this.quickShowInterval) {
+    delayShow : function(){
+        if(this.hidden && !this.showTimer){
+            if(this.lastActive.getElapsed() < this.quickShowInterval){
                 this.show();
-            } else {
+            }else{
                 this.showTimer = this.show.defer(this.showDelay, this);
             }
-        } else if (!this.hidden && this.autoHide !== false) {
+        }else if(!this.hidden && this.autoHide !== false){
             this.show();
         }
     },
 
     // private
-    onTargetOut: function (e) {
-        if (this.disabled || e.within(this.target.dom, true)) {
+    onTargetOut : function(e){
+        if(this.disabled || e.within(this.target.dom, true)){
             return;
         }
         this.clearTimer('show');
-        if (this.autoHide !== false) {
+        if(this.autoHide !== false){
             this.delayHide();
         }
     },
 
     // private
-    delayHide: function () {
-        if (!this.hidden && !this.hideTimer) {
+    delayHide : function(){
+        if(!this.hidden && !this.hideTimer){
             this.hideTimer = this.hide.defer(this.hideDelay, this);
         }
     },
@@ -122,7 +122,7 @@ Ext.ToolTip = Ext.extend(Ext.Tip, {
     /**
      * Hides this tooltip if visible.
      */
-    hide: function () {
+    hide: function(){
         this.clearTimer('dismiss');
         this.lastActive = new Date();
         Ext.ToolTip.superclass.hide.call(this);
@@ -131,74 +131,74 @@ Ext.ToolTip = Ext.extend(Ext.Tip, {
     /**
      * Shows this tooltip at the current event target XY position.
      */
-    show: function () {
+    show : function(){
         this.showAt(this.getTargetXY());
     },
 
     // inherit docs
-    showAt: function (xy) {
+    showAt : function(xy){
         this.lastActive = new Date();
         this.clearTimers();
         Ext.ToolTip.superclass.showAt.call(this, xy);
-        if (this.dismissDelay && this.autoHide !== false) {
+        if(this.dismissDelay && this.autoHide !== false){
             this.dismissTimer = this.hide.defer(this.dismissDelay, this);
         }
     },
 
     // private
-    clearTimer: function (name) {
+    clearTimer : function(name){
         name = name + 'Timer';
         clearTimeout(this[name]);
         delete this[name];
     },
 
     // private
-    clearTimers: function () {
+    clearTimers : function(){
         this.clearTimer('show');
         this.clearTimer('dismiss');
         this.clearTimer('hide');
     },
 
     // private
-    onShow: function () {
+    onShow : function(){
         Ext.ToolTip.superclass.onShow.call(this);
         Ext.getDoc().on('mousedown', this.onDocMouseDown, this);
     },
 
     // private
-    onHide: function () {
+    onHide : function(){
         Ext.ToolTip.superclass.onHide.call(this);
         Ext.getDoc().un('mousedown', this.onDocMouseDown, this);
     },
 
     // private
-    onDocMouseDown: function (e) {
-        if (this.autoHide !== false && !e.within(this.el.dom)) {
+    onDocMouseDown : function(e){
+        if(this.autoHide !== false && !e.within(this.el.dom)){
             this.disable();
             this.enable.defer(100, this);
         }
     },
 
     // private
-    onDisable: function () {
+    onDisable : function(){
         this.clearTimers();
         this.hide();
     },
 
     // private
-    adjustPosition: function (x, y) {
+    adjustPosition : function(x, y){
         // keep the position from being under the mouse
         var ay = this.targetXY[1], h = this.getSize().height;
-        if (this.constrainPosition && y <= ay && (y + h) >= ay) {
-            y = ay - h - 5;
+        if(this.constrainPosition && y <= ay && (y+h) >= ay){
+            y = ay-h-5;
         }
-        return {x: x, y: y};
+        return {x : x, y: y};
     },
 
     // private
-    onDestroy: function () {
+    onDestroy : function(){
         Ext.ToolTip.superclass.onDestroy.call(this);
-        if (this.target) {
+        if(this.target){
             this.target.un('mouseover', this.onTargetOver, this);
             this.target.un('mouseout', this.onTargetOut, this);
             this.target.un('mousemove', this.onMouseMove, this);

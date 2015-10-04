@@ -11,7 +11,7 @@
  * @extends Ext.util.Observable
  * Lightweight Dialog Class.  The code below shows the creation of a typical dialog using existing HTML markup:
  * <pre><code>
- var dlg = new Ext.BasicDialog("my-dlg", {
+var dlg = new Ext.BasicDialog("my-dlg", {
     height: 200,
     width: 300,
     minHeight: 100,
@@ -20,12 +20,12 @@
     proxyDrag: true,
     shadow: true
 });
- dlg.addKeyListener(27, dlg.hide, dlg); // ESC can also close the dialog
- dlg.addButton('OK', dlg.hide, dlg);    // Could call a save function instead of hiding
- dlg.addButton('Cancel', dlg.hide, dlg);
- dlg.show();
- </code></pre>
- <b>A Dialog should always be a direct child of the body element.</b>
+dlg.addKeyListener(27, dlg.hide, dlg); // ESC can also close the dialog
+dlg.addButton('OK', dlg.hide, dlg);    // Could call a save function instead of hiding
+dlg.addButton('Cancel', dlg.hide, dlg);
+dlg.show();
+</code></pre>
+  <b>A Dialog should always be a direct child of the body element.</b>
  * @cfg {Boolean/DomHelper} autoCreate True to auto create from scratch, or using a DomHelper Object (defaults to false)
  * @cfg {String} title Default text to display in the title bar (defaults to null)
  * @cfg {Number} width Width of the dialog in pixels (can also be set via CSS).  Determined by browser if unspecified.
@@ -62,19 +62,19 @@
  * @param {Mixed} el The container element or DOM node, or its id
  * @param {Object} config Configuration options
  */
-Ext.BasicDialog = function (el, config) {
+Ext.BasicDialog = function(el, config){
     this.el = Ext.get(el);
     var dh = Ext.DomHelper;
-    if (!this.el && config && config.autoCreate) {
-        if (typeof config.autoCreate == "object") {
-            if (!config.autoCreate.id) {
+    if(!this.el && config && config.autoCreate){
+        if(typeof config.autoCreate == "object"){
+            if(!config.autoCreate.id){
                 config.autoCreate.id = el;
             }
             this.el = dh.append(document.body,
-                config.autoCreate, true);
-        } else {
+                        config.autoCreate, true);
+        }else{
             this.el = dh.append(document.body,
-                {tag: "div", id: el, style: 'visibility:hidden;'}, true);
+                        {tag: "div", id: el, style:'visibility:hidden;'}, true);
         }
     }
     el = this.el;
@@ -90,16 +90,16 @@ Ext.BasicDialog = function (el, config) {
     this.proxy.setOpacity(.5);
     this.proxy.hide();
 
-    if (config.width) {
+    if(config.width){
         el.setWidth(config.width);
     }
-    if (config.height) {
+    if(config.height){
         el.setHeight(config.height);
     }
     this.size = el.getSize();
-    if (typeof config.x != "undefined" && typeof config.y != "undefined") {
-        this.xy = [config.x, config.y];
-    } else {
+    if(typeof config.x != "undefined" && typeof config.y != "undefined"){
+        this.xy = [config.x,config.y];
+    }else{
         this.xy = el.getCenterXY(true);
     }
     /** The header element @type Ext.Element */
@@ -109,66 +109,66 @@ Ext.BasicDialog = function (el, config) {
     /** The footer element @type Ext.Element */
     this.footer = el.child("> .x-dlg-ft");
 
-    if (!this.header) {
-        this.header = el.createChild({tag: "div", cls: "x-dlg-hd", html: "&#160;"}, this.body ? this.body.dom : null);
+    if(!this.header){
+        this.header = el.createChild({tag: "div", cls:"x-dlg-hd", html: "&#160;"}, this.body ? this.body.dom : null);
     }
-    if (!this.body) {
-        this.body = el.createChild({tag: "div", cls: "x-dlg-bd"});
+    if(!this.body){
+        this.body = el.createChild({tag: "div", cls:"x-dlg-bd"});
     }
 
     this.header.unselectable();
-    if (this.title) {
+    if(this.title){
         this.header.update(this.title);
     }
     // this element allows the dialog to be focused for keyboard event
-    this.focusEl = el.createChild({tag: "a", href: "#", cls: "x-dlg-focus", tabIndex: "-1"});
+    this.focusEl = el.createChild({tag: "a", href:"#", cls:"x-dlg-focus", tabIndex:"-1"});
     this.focusEl.swallowEvent("click", true);
 
-    this.header.wrap({cls: "x-dlg-hd-right"}).wrap({cls: "x-dlg-hd-left"}, true);
+    this.header.wrap({cls:"x-dlg-hd-right"}).wrap({cls:"x-dlg-hd-left"}, true);
 
     // wrap the body and footer for special rendering
-    this.bwrap = this.body.wrap({tag: "div", cls: "x-dlg-dlg-body"});
-    if (this.footer) {
+    this.bwrap = this.body.wrap({tag: "div", cls:"x-dlg-dlg-body"});
+    if(this.footer){
         this.bwrap.dom.appendChild(this.footer.dom);
     }
 
     this.bg = this.el.createChild({
-        tag: "div", cls: "x-dlg-bg",
+        tag: "div", cls:"x-dlg-bg",
         html: '<div class="x-dlg-bg-left"><div class="x-dlg-bg-right"><div class="x-dlg-bg-center">&#160;</div></div></div>'
     });
     this.centerBg = this.bg.child("div.x-dlg-bg-center");
 
 
-    if (this.autoScroll !== false && !this.autoTabs) {
+    if(this.autoScroll !== false && !this.autoTabs){
         this.body.setStyle("overflow", "auto");
     }
 
     this.toolbox = this.el.createChild({cls: "x-dlg-toolbox"});
 
-    if (this.closable !== false) {
+    if(this.closable !== false){
         this.el.addClass("x-dlg-closable");
-        this.close = this.toolbox.createChild({cls: "x-dlg-close"});
+        this.close = this.toolbox.createChild({cls:"x-dlg-close"});
         this.close.on("click", this.closeClick, this);
         this.close.addClassOnOver("x-dlg-close-over");
     }
-    if (this.collapsible !== false) {
-        this.collapseBtn = this.toolbox.createChild({cls: "x-dlg-collapse"});
+    if(this.collapsible !== false){
+        this.collapseBtn = this.toolbox.createChild({cls:"x-dlg-collapse"});
         this.collapseBtn.on("click", this.collapseClick, this);
         this.collapseBtn.addClassOnOver("x-dlg-collapse-over");
         this.header.on("dblclick", this.collapseClick, this);
     }
-    if (this.resizable !== false) {
+    if(this.resizable !== false){
         this.el.addClass("x-dlg-resizable");
         this.resizer = new Ext.Resizable(el, {
             minWidth: this.minWidth || 80,
-            minHeight: this.minHeight || 80,
+            minHeight:this.minHeight || 80,
             handles: this.resizeHandles || "all",
             pinned: true
         });
         this.resizer.on("beforeresize", this.beforeResize, this);
         this.resizer.on("resize", this.onResize, this);
     }
-    if (this.draggable !== false) {
+    if(this.draggable !== false){
         el.addClass("x-dlg-draggable");
         if (!this.proxyDrag) {
             var dd = new Ext.dd.DD(el.dom.id, "WindowDrag");
@@ -183,28 +183,28 @@ Ext.BasicDialog = function (el, config) {
         dd.scroll = false;
         this.dd = dd;
     }
-    if (this.modal) {
-        this.mask = dh.append(document.body, {tag: "div", cls: "x-dlg-mask"}, true);
+    if(this.modal){
+        this.mask = dh.append(document.body, {tag: "div", cls:"x-dlg-mask"}, true);
         this.mask.enableDisplayMode("block");
         this.mask.hide();
         this.el.addClass("x-dlg-modal");
     }
-    if (this.shadow) {
+    if(this.shadow){
         this.shadow = new Ext.Shadow({
-            mode: typeof this.shadow == "string" ? this.shadow : "sides",
-            offset: this.shadowOffset
+            mode : typeof this.shadow == "string" ? this.shadow : "sides",
+            offset : this.shadowOffset
         });
-    } else {
+    }else{
         this.shadowOffset = 0;
     }
-    if (Ext.useShims && this.shim !== false) {
+    if(Ext.useShims && this.shim !== false){
         this.shim = this.el.createShim();
         this.shim.hide = this.hideAction;
         this.shim.hide();
-    } else {
+    }else{
         this.shim = false;
     }
-    if (this.autoTabs) {
+    if(this.autoTabs){
         this.initTabs();
     }
     this.addEvents({
@@ -214,7 +214,7 @@ Ext.BasicDialog = function (el, config) {
          * @param {Ext.BasicDialog} this
          * @param {Ext.EventObject} e
          */
-        "keydown": true,
+        "keydown" : true,
         /**
          * @event move
          * Fires when this dialog is moved by the user.
@@ -222,7 +222,7 @@ Ext.BasicDialog = function (el, config) {
          * @param {Number} x The new page X
          * @param {Number} y The new page Y
          */
-        "move": true,
+        "move" : true,
         /**
          * @event resize
          * Fires when this dialog is resized by the user.
@@ -230,31 +230,31 @@ Ext.BasicDialog = function (el, config) {
          * @param {Number} width The new width
          * @param {Number} height The new height
          */
-        "resize": true,
+        "resize" : true,
         /**
          * @event beforehide
          * Fires before this dialog is hidden.
          * @param {Ext.BasicDialog} this
          */
-        "beforehide": true,
+        "beforehide" : true,
         /**
          * @event hide
          * Fires when this dialog is hidden.
          * @param {Ext.BasicDialog} this
          */
-        "hide": true,
+        "hide" : true,
         /**
          * @event beforeshow
          * Fires before this dialog is shown.
          * @param {Ext.BasicDialog} this
          */
-        "beforeshow": true,
+        "beforeshow" : true,
         /**
          * @event show
          * Fires when this dialog is shown.
          * @param {Ext.BasicDialog} this
          */
-        "show": true
+        "show" : true
     });
     el.on("keydown", this.onKeyDown, this);
     el.on("mousedown", this.toFront, this);
@@ -279,18 +279,18 @@ Ext.extend(Ext.BasicDialog, Ext.util.Observable, {
      * @param {String} text The title text to display
      * @return {Ext.BasicDialog} this
      */
-    setTitle: function (text) {
+    setTitle : function(text){
         this.header.update(text);
         return this;
     },
 
     // private
-    closeClick: function () {
+    closeClick : function(){
         this.hide();
     },
 
     // private
-    collapseClick: function () {
+    collapseClick : function(){
         this[this.collapsed ? "expand" : "collapse"]();
     },
 
@@ -298,8 +298,8 @@ Ext.extend(Ext.BasicDialog, Ext.util.Observable, {
      * Collapses the dialog to its minimized state (only the title bar is visible).
      * Equivalent to the user clicking the collapse dialog button.
      */
-    collapse: function () {
-        if (!this.collapsed) {
+    collapse : function(){
+        if(!this.collapsed){
             this.collapsed = true;
             this.el.addClass("x-dlg-collapsed");
             this.restoreHeight = this.el.getHeight();
@@ -311,8 +311,8 @@ Ext.extend(Ext.BasicDialog, Ext.util.Observable, {
      * Expands a collapsed dialog back to its normal state.  Equivalent to the user
      * clicking the expand dialog button.
      */
-    expand: function () {
-        if (this.collapsed) {
+    expand : function(){
+        if(this.collapsed){
             this.collapsed = false;
             this.el.removeClass("x-dlg-collapsed");
             this.resizeTo(this.el.getWidth(), this.restoreHeight);
@@ -323,12 +323,12 @@ Ext.extend(Ext.BasicDialog, Ext.util.Observable, {
      * Reinitializes the tabs component, clearing out old tabs and finding new ones.
      * @return {Ext.TabPanel} The tabs component
      */
-    initTabs: function () {
+    initTabs : function(){
         var tabs = this.getTabs();
-        while (tabs.getTab(0)) {
+        while(tabs.getTab(0)){
             tabs.removeTab(0);
         }
-        this.el.select(this.tabTag + '.x-dlg-tab').each(function (el) {
+        this.el.select(this.tabTag+'.x-dlg-tab').each(function(el){
             var dom = el.dom;
             tabs.addTab(Ext.id(dom), dom.title);
             dom.title = "";
@@ -338,12 +338,12 @@ Ext.extend(Ext.BasicDialog, Ext.util.Observable, {
     },
 
     // private
-    beforeResize: function () {
-        this.resizer.minHeight = Math.max(this.minHeight, this.getHeaderFooterHeight(true) + 40);
+    beforeResize : function(){
+        this.resizer.minHeight = Math.max(this.minHeight, this.getHeaderFooterHeight(true)+40);
     },
 
     // private
-    onResize: function () {
+    onResize : function(){
         this.refreshSize();
         this.syncBodyHeight();
         this.adjustAssets();
@@ -352,8 +352,8 @@ Ext.extend(Ext.BasicDialog, Ext.util.Observable, {
     },
 
     // private
-    onKeyDown: function (e) {
-        if (this.isVisible()) {
+    onKeyDown : function(e){
+        if(this.isVisible()){
             this.fireEvent("keydown", this, e);
         }
     },
@@ -364,14 +364,14 @@ Ext.extend(Ext.BasicDialog, Ext.util.Observable, {
      * @param {Number} height
      * @return {Ext.BasicDialog} this
      */
-    resizeTo: function (width, height) {
+    resizeTo : function(width, height){
         this.el.setSize(width, height);
         this.size = {width: width, height: height};
         this.syncBodyHeight();
-        if (this.fixedcenter) {
+        if(this.fixedcenter){
             this.center();
         }
-        if (this.isVisible()) {
+        if(this.isVisible()){
             this.constrainXY();
             this.adjustAssets();
         }
@@ -386,14 +386,14 @@ Ext.extend(Ext.BasicDialog, Ext.util.Observable, {
      * @param {Number} height
      * @return {Ext.BasicDialog} this
      */
-    setContentSize: function (w, h) {
+    setContentSize : function(w, h){
         h += this.getHeaderFooterHeight() + this.body.getMargins("tb");
         w += this.body.getMargins("lr") + this.bwrap.getMargins("lr") + this.centerBg.getPadding("lr");
         //if(!this.el.isBorderBox()){
-        h += this.body.getPadding("tb") + this.bwrap.getBorderWidth("tb") + this.body.getBorderWidth("tb") + this.el.getBorderWidth("tb");
-        w += this.body.getPadding("lr") + this.bwrap.getBorderWidth("lr") + this.body.getBorderWidth("lr") + this.bwrap.getPadding("lr") + this.el.getBorderWidth("lr");
+            h +=  this.body.getPadding("tb") + this.bwrap.getBorderWidth("tb") + this.body.getBorderWidth("tb") + this.el.getBorderWidth("tb");
+            w += this.body.getPadding("lr") + this.bwrap.getBorderWidth("lr") + this.body.getBorderWidth("lr") + this.bwrap.getPadding("lr") + this.el.getBorderWidth("lr");
         //}
-        if (this.tabs) {
+        if(this.tabs){
             h += this.tabs.stripWrap.getHeight() + this.tabs.bodyEl.getMargins("tb") + this.tabs.bodyEl.getPadding("tb");
             w += this.tabs.bodyEl.getMargins("lr") + this.tabs.bodyEl.getPadding("lr");
         }
@@ -410,28 +410,28 @@ Ext.extend(Ext.BasicDialog, Ext.util.Observable, {
      * @param {Object} scope (optional) The scope of the function
      * @return {Ext.BasicDialog} this
      */
-    addKeyListener: function (key, fn, scope) {
+    addKeyListener : function(key, fn, scope){
         var keyCode, shift, ctrl, alt;
-        if (typeof key == "object" && !(key instanceof Array)) {
+        if(typeof key == "object" && !(key instanceof Array)){
             keyCode = key["key"];
             shift = key["shift"];
             ctrl = key["ctrl"];
             alt = key["alt"];
-        } else {
+        }else{
             keyCode = key;
         }
-        var handler = function (dlg, e) {
-            if ((!shift || e.shiftKey) && (!ctrl || e.ctrlKey) && (!alt || e.altKey)) {
+        var handler = function(dlg, e){
+            if((!shift || e.shiftKey) && (!ctrl || e.ctrlKey) &&  (!alt || e.altKey)){
                 var k = e.getKey();
-                if (keyCode instanceof Array) {
-                    for (var i = 0, len = keyCode.length; i < len; i++) {
-                        if (keyCode[i] == k) {
-                            fn.call(scope || window, dlg, k, e);
-                            return;
+                if(keyCode instanceof Array){
+                    for(var i = 0, len = keyCode.length; i < len; i++){
+                        if(keyCode[i] == k){
+                          fn.call(scope || window, dlg, k, e);
+                          return;
                         }
                     }
-                } else {
-                    if (k == keyCode) {
+                }else{
+                    if(k == keyCode){
                         fn.call(scope || window, dlg, k, e);
                     }
                 }
@@ -447,8 +447,8 @@ Ext.extend(Ext.BasicDialog, Ext.util.Observable, {
      * check for a null 'tabs' property.
      * @return {Ext.TabPanel} The tabs component
      */
-    getTabs: function () {
-        if (!this.tabs) {
+    getTabs : function(){
+        if(!this.tabs){
             this.el.addClass("x-dlg-auto-tabs");
             this.body.addClass(this.tabPosition == "bottom" ? "x-tabs-bottom" : "x-tabs-top");
             this.tabs = new Ext.TabPanel(this.body.dom, this.tabPosition == "bottom");
@@ -464,16 +464,16 @@ Ext.extend(Ext.BasicDialog, Ext.util.Observable, {
      * @param {Object} scope (optional) The scope of the handler function
      * @return {Ext.Button} The new button
      */
-    addButton: function (config, handler, scope) {
+    addButton : function(config, handler, scope){
         var dh = Ext.DomHelper;
-        if (!this.footer) {
-            this.footer = dh.append(this.bwrap, {tag: "div", cls: "x-dlg-ft"}, true);
+        if(!this.footer){
+            this.footer = dh.append(this.bwrap, {tag: "div", cls:"x-dlg-ft"}, true);
         }
-        if (!this.btnContainer) {
+        if(!this.btnContainer){
             var tb = this.footer.createChild({
 
-                cls: "x-dlg-btns x-dlg-btns-" + this.buttonAlign,
-                html: '<table cellspacing="0"><tbody><tr></tr></tbody></table><div class="x-clear"></div>'
+                cls:"x-dlg-btns x-dlg-btns-"+this.buttonAlign,
+                html:'<table cellspacing="0"><tbody><tr></tr></tbody></table><div class="x-clear"></div>'
             }, null, true);
             this.btnContainer = tb.firstChild.firstChild.firstChild;
         }
@@ -481,14 +481,14 @@ Ext.extend(Ext.BasicDialog, Ext.util.Observable, {
             handler: handler,
             scope: scope,
             minWidth: this.minButtonWidth,
-            hideParent: true
+            hideParent:true
         };
-        if (typeof config == "string") {
+        if(typeof config == "string"){
             bconfig.text = config;
-        } else {
-            if (config.tag) {
+        }else{
+            if(config.tag){
                 bconfig.dhconfig = config;
-            } else {
+            }else{
                 Ext.apply(bconfig, config);
             }
         }
@@ -497,7 +497,7 @@ Ext.extend(Ext.BasicDialog, Ext.util.Observable, {
         );
         btn.render(this.btnContainer.appendChild(document.createElement("td")));
         this.syncBodyHeight();
-        if (!this.buttons) {
+        if(!this.buttons){
             /**
              * Array of all the buttons that have been added to this dialog via addButton
              * @type Array
@@ -513,41 +513,41 @@ Ext.extend(Ext.BasicDialog, Ext.util.Observable, {
      * @param {Ext.BasicDialog.Button} btn The button object returned by {@link #addButton}
      * @return {Ext.BasicDialog} this
      */
-    setDefaultButton: function (btn) {
+    setDefaultButton : function(btn){
         this.defaultButton = btn;
         return this;
     },
 
     // private
-    getHeaderFooterHeight: function (safe) {
+    getHeaderFooterHeight : function(safe){
         var height = 0;
-        if (this.header) {
-            height += this.header.getHeight();
+        if(this.header){
+           height += this.header.getHeight();
         }
-        if (this.footer) {
-            var fm = this.footer.getMargins();
-            height += (this.footer.getHeight() + fm.top + fm.bottom);
+        if(this.footer){
+           var fm = this.footer.getMargins();
+            height += (this.footer.getHeight()+fm.top+fm.bottom);
         }
-        height += this.bwrap.getPadding("tb") + this.bwrap.getBorderWidth("tb");
+        height += this.bwrap.getPadding("tb")+this.bwrap.getBorderWidth("tb");
         height += this.centerBg.getPadding("tb");
         return height;
     },
 
     // private
-    syncBodyHeight: function () {
+    syncBodyHeight : function(){
         var bd = this.body, cb = this.centerBg, bw = this.bwrap;
         var height = this.size.height - this.getHeaderFooterHeight(false);
-        bd.setHeight(height - bd.getMargins("tb"));
+        bd.setHeight(height-bd.getMargins("tb"));
         var hh = this.header.getHeight();
-        var h = this.size.height - hh;
+        var h = this.size.height-hh;
         cb.setHeight(h);
-        bw.setLeftTop(cb.getPadding("l"), hh + cb.getPadding("t"));
-        bw.setHeight(h - cb.getPadding("tb"));
-        bw.setWidth(this.el.getWidth(true) - cb.getPadding("lr"));
+        bw.setLeftTop(cb.getPadding("l"), hh+cb.getPadding("t"));
+        bw.setHeight(h-cb.getPadding("tb"));
+        bw.setWidth(this.el.getWidth(true)-cb.getPadding("lr"));
         bd.setWidth(bw.getWidth(true));
-        if (this.tabs) {
+        if(this.tabs){
             this.tabs.syncHeight();
-            if (Ext.isIE) {
+            if(Ext.isIE){
                 this.tabs.el.repaint();
             }
         }
@@ -557,9 +557,9 @@ Ext.extend(Ext.BasicDialog, Ext.util.Observable, {
      * Restores the previous state of the dialog if Ext.state is configured.
      * @return {Ext.BasicDialog} this
      */
-    restoreState: function () {
+    restoreState : function(){
         var box = Ext.state.Manager.get(this.stateId || (this.el.id + "-state"));
-        if (box && box.width) {
+        if(box && box.width){
             this.xy = [box.x, box.y];
             this.resizeTo(box.width, box.height);
         }
@@ -567,12 +567,12 @@ Ext.extend(Ext.BasicDialog, Ext.util.Observable, {
     },
 
     // private
-    beforeShow: function () {
+    beforeShow : function(){
         this.expand();
-        if (this.fixedcenter) {
+        if(this.fixedcenter){
             this.xy = this.el.getCenterXY(true);
         }
-        if (this.modal) {
+        if(this.modal){
             Ext.getBody().addClass("x-body-masked");
             this.mask.setSize(Ext.lib.Dom.getViewWidth(true), Ext.lib.Dom.getViewHeight(true));
             this.mask.show();
@@ -581,13 +581,13 @@ Ext.extend(Ext.BasicDialog, Ext.util.Observable, {
     },
 
     // private
-    animShow: function () {
+    animShow : function(){
         var b = Ext.get(this.animateTarget, true).getBox();
         this.proxy.setSize(b.width, b.height);
         this.proxy.setLocation(b.x, b.y);
         this.proxy.show();
         this.proxy.setBounds(this.xy[0], this.xy[1], this.size.width, this.size.height,
-            true, .35, this.showEl.createDelegate(this));
+                    true, .35, this.showEl.createDelegate(this));
     },
 
     /**
@@ -595,22 +595,22 @@ Ext.extend(Ext.BasicDialog, Ext.util.Observable, {
      * @param {Mixed} animateTarget (optional) Reset the animation target
      * @return {Ext.BasicDialog} this
      */
-    show: function (animateTarget) {
-        if (this.fireEvent("beforeshow", this) === false) {
+    show : function(animateTarget){
+        if (this.fireEvent("beforeshow", this) === false){
             return;
         }
-        if (this.syncHeightBeforeShow) {
+        if(this.syncHeightBeforeShow){
             this.syncBodyHeight();
-        } else if (this.firstShow) {
+        }else if(this.firstShow){
             this.firstShow = false;
             this.syncBodyHeight(); // sync the height on the first show instead of in the constructor
         }
         this.animateTarget = animateTarget || this.animateTarget;
-        if (!this.el.isVisible()) {
+        if(!this.el.isVisible()){
             this.beforeShow();
-            if (this.animateTarget) {
+            if(this.animateTarget){
                 this.animShow();
-            } else {
+            }else{
                 this.showEl();
             }
         }
@@ -618,7 +618,7 @@ Ext.extend(Ext.BasicDialog, Ext.util.Observable, {
     },
 
     // private
-    showEl: function () {
+    showEl : function(){
         this.proxy.hide();
         this.el.setXY(this.xy);
         this.el.show();
@@ -626,7 +626,7 @@ Ext.extend(Ext.BasicDialog, Ext.util.Observable, {
         this.toFront();
         this.focus();
         // IE peekaboo bug - fix found by Dave Fenwick
-        if (Ext.isIE) {
+        if(Ext.isIE){
             this.el.repaint();
         }
         this.fireEvent("show", this);
@@ -636,26 +636,26 @@ Ext.extend(Ext.BasicDialog, Ext.util.Observable, {
      * Focuses the dialog.  If a defaultButton is set, it will receive focus, otherwise the
      * dialog itself will receive focus.
      */
-    focus: function () {
-        if (this.defaultButton) {
+    focus : function(){
+        if(this.defaultButton){
             this.defaultButton.focus();
-        } else {
+        }else{
             this.focusEl.focus();
         }
     },
 
     // private
-    constrainXY: function () {
-        if (this.constraintoviewport !== false) {
-            if (!this.viewSize) {
-                if (this.container) {
+    constrainXY : function(){
+        if(this.constraintoviewport !== false){
+            if(!this.viewSize){
+                if(this.container){
                     var s = this.container.getSize();
                     this.viewSize = [s.width, s.height];
-                } else {
-                    this.viewSize = [Ext.lib.Dom.getViewWidth(), Ext.lib.Dom.getViewHeight()];
+                }else{
+                    this.viewSize = [Ext.lib.Dom.getViewWidth(),Ext.lib.Dom.getViewHeight()];
                 }
             }
-            var s = Ext.get(this.container || document).getScroll();
+            var s = Ext.get(this.container||document).getScroll();
 
             var x = this.xy[0], y = this.xy[1];
             var w = this.size.width, h = this.size.height;
@@ -663,27 +663,27 @@ Ext.extend(Ext.BasicDialog, Ext.util.Observable, {
             // only move it if it needs it
             var moved = false;
             // first validate right/bottom
-            if (x + w > vw + s.left) {
+            if(x + w > vw+s.left){
                 x = vw - w;
                 moved = true;
             }
-            if (y + h > vh + s.top) {
+            if(y + h > vh+s.top){
                 y = vh - h;
                 moved = true;
             }
             // then make sure top/left isn't negative
-            if (x < s.left) {
+            if(x < s.left){
                 x = s.left;
                 moved = true;
             }
-            if (y < s.top) {
+            if(y < s.top){
                 y = s.top;
                 moved = true;
             }
-            if (moved) {
+            if(moved){
                 // cache xy
                 this.xy = [x, y];
-                if (this.isVisible()) {
+                if(this.isVisible()){
                     this.el.setLocation(x, y);
                     this.adjustAssets();
                 }
@@ -692,46 +692,46 @@ Ext.extend(Ext.BasicDialog, Ext.util.Observable, {
     },
 
     // private
-    onDrag: function () {
-        if (!this.proxyDrag) {
+    onDrag : function(){
+        if(!this.proxyDrag){
             this.xy = this.el.getXY();
             this.adjustAssets();
         }
     },
 
     // private
-    adjustAssets: function (doShow) {
+    adjustAssets : function(doShow){
         var x = this.xy[0], y = this.xy[1];
         var w = this.size.width, h = this.size.height;
-        if (doShow === true) {
-            if (this.shadow) {
+        if(doShow === true){
+            if(this.shadow){
                 this.shadow.show(this.el);
             }
-            if (this.shim) {
+            if(this.shim){
                 this.shim.show();
             }
         }
-        if (this.shadow && this.shadow.isVisible()) {
+        if(this.shadow && this.shadow.isVisible()){
             this.shadow.show(this.el);
         }
-        if (this.shim && this.shim.isVisible()) {
+        if(this.shim && this.shim.isVisible()){
             this.shim.setBounds(x, y, w, h);
         }
     },
 
     // private
-    adjustViewport: function (w, h) {
-        if (!w || !h) {
+    adjustViewport : function(w, h){
+        if(!w || !h){
             w = Ext.lib.Dom.getViewWidth();
             h = Ext.lib.Dom.getViewHeight();
         }
         // cache the size
         this.viewSize = [w, h];
-        if (this.modal && this.mask.isVisible()) {
+        if(this.modal && this.mask.isVisible()){
             this.mask.setSize(w, h); // first make sure the mask isn't causing overflow
             this.mask.setSize(Ext.lib.Dom.getViewWidth(true), Ext.lib.Dom.getViewHeight(true));
         }
-        if (this.isVisible()) {
+        if(this.isVisible()){
             this.constrainXY();
         }
     },
@@ -741,32 +741,32 @@ Ext.extend(Ext.BasicDialog, Ext.util.Observable, {
      * shadow, proxy, mask, etc.)  Also removes all event listeners.
      * @param {Boolean} removeEl (optional) true to remove the element from the DOM
      */
-    destroy: function (removeEl) {
-        if (this.isVisible()) {
+    destroy : function(removeEl){
+        if(this.isVisible()){
             this.animateTarget = null;
             this.hide();
         }
         Ext.EventManager.removeResizeListener(this.adjustViewport, this);
-        if (this.tabs) {
+        if(this.tabs){
             this.tabs.destroy(removeEl);
         }
         Ext.destroy(
-            this.shim,
-            this.proxy,
-            this.resizer,
-            this.close,
-            this.mask
+             this.shim,
+             this.proxy,
+             this.resizer,
+             this.close,
+             this.mask
         );
-        if (this.dd) {
+        if(this.dd){
             this.dd.unreg();
         }
-        if (this.buttons) {
-            for (var i = 0, len = this.buttons.length; i < len; i++) {
-                this.buttons[i].destroy();
-            }
+        if(this.buttons){
+           for(var i = 0, len = this.buttons.length; i < len; i++){
+               this.buttons[i].destroy();
+           }
         }
         this.el.removeAllListeners();
-        if (removeEl === true) {
+        if(removeEl === true){
             this.el.update("");
             this.el.remove();
         }
@@ -774,20 +774,20 @@ Ext.extend(Ext.BasicDialog, Ext.util.Observable, {
     },
 
     // private
-    startMove: function () {
-        if (this.proxyDrag) {
+    startMove : function(){
+        if(this.proxyDrag){
             this.proxy.show();
         }
-        if (this.constraintoviewport !== false) {
+        if(this.constraintoviewport !== false){
             this.dd.constrainTo(document.body, {right: this.shadowOffset, bottom: this.shadowOffset});
         }
     },
 
     // private
-    endMove: function () {
-        if (!this.proxyDrag) {
+    endMove : function(){
+        if(!this.proxyDrag){
             Ext.dd.DD.prototype.endDrag.apply(this.dd, arguments);
-        } else {
+        }else{
             Ext.dd.DDProxy.prototype.endDrag.apply(this.dd, arguments);
             this.proxy.hide();
         }
@@ -801,7 +801,7 @@ Ext.extend(Ext.BasicDialog, Ext.util.Observable, {
      * Brings this dialog to the front of any other visible dialogs
      * @return {Ext.BasicDialog} this
      */
-    toFront: function () {
+    toFront : function(){
         Ext.DialogManager.bringToFront(this);
         return this;
     },
@@ -810,7 +810,7 @@ Ext.extend(Ext.BasicDialog, Ext.util.Observable, {
      * Sends this dialog to the back (under) of any other visible dialogs
      * @return {Ext.BasicDialog} this
      */
-    toBack: function () {
+    toBack : function(){
         Ext.DialogManager.sendToBack(this);
         return this;
     },
@@ -819,7 +819,7 @@ Ext.extend(Ext.BasicDialog, Ext.util.Observable, {
      * Centers this dialog in the viewport
      * @return {Ext.BasicDialog} this
      */
-    center: function () {
+    center : function(){
         var xy = this.el.getCenterXY(true);
         this.moveTo(xy[0], xy[1]);
         return this;
@@ -831,9 +831,9 @@ Ext.extend(Ext.BasicDialog, Ext.util.Observable, {
      * @param {Number} y
      * @return {Ext.BasicDialog} this
      */
-    moveTo: function (x, y) {
-        this.xy = [x, y];
-        if (this.isVisible()) {
+    moveTo : function(x, y){
+        this.xy = [x,y];
+        if(this.isVisible()){
             this.el.setXY(this.xy);
             this.adjustAssets();
         }
@@ -847,9 +847,9 @@ Ext.extend(Ext.BasicDialog, Ext.util.Observable, {
      * @param {Array} offsets (optional) Offset the positioning by [x, y]
      * @return {Ext.BasicDialog} this
      */
-    alignTo: function (element, position, offsets) {
+    alignTo : function(element, position, offsets){
         this.xy = this.el.getAlignToXY(element, position, offsets);
-        if (this.isVisible()) {
+        if(this.isVisible()){
             this.el.setXY(this.xy);
             this.adjustAssets();
         }
@@ -865,13 +865,13 @@ Ext.extend(Ext.BasicDialog, Ext.util.Observable, {
      * is a number, it is used as the buffer delay (defaults to 50ms).
      * @return {Ext.BasicDialog} this
      */
-    anchorTo: function (el, alignment, offsets, monitorScroll) {
-        var action = function () {
+    anchorTo : function(el, alignment, offsets, monitorScroll){
+        var action = function(){
             this.alignTo(el, alignment, offsets);
         };
         Ext.EventManager.onWindowResize(action, this);
         var tm = typeof monitorScroll;
-        if (tm != 'undefined') {
+        if(tm != 'undefined'){
             Ext.EventManager.on(window, 'scroll', action, this,
                 {buffer: tm == 'number' ? monitorScroll : 50});
         }
@@ -883,18 +883,18 @@ Ext.extend(Ext.BasicDialog, Ext.util.Observable, {
      * Returns true if the dialog is visible
      * @return {Boolean}
      */
-    isVisible: function () {
+    isVisible : function(){
         return this.el.isVisible();
     },
 
     // private
-    animHide: function (callback) {
+    animHide : function(callback){
         var b = Ext.get(this.animateTarget).getBox();
         this.proxy.show();
         this.proxy.setBounds(this.xy[0], this.xy[1], this.size.width, this.size.height);
         this.el.hide();
         this.proxy.setBounds(b.x, b.y, b.width, b.height, true, .35,
-            this.hideEl.createDelegate(this, [callback]));
+                    this.hideEl.createDelegate(this, [callback]));
     },
 
     /**
@@ -902,19 +902,19 @@ Ext.extend(Ext.BasicDialog, Ext.util.Observable, {
      * @param {Function} callback (optional) Function to call when the dialog is hidden
      * @return {Ext.BasicDialog} this
      */
-    hide: function (callback) {
-        if (this.fireEvent("beforehide", this) === false) {
+    hide : function(callback){
+        if (this.fireEvent("beforehide", this) === false){
             return;
         }
-        if (this.shadow) {
+        if(this.shadow){
             this.shadow.hide();
         }
-        if (this.shim) {
-            this.shim.hide();
+        if(this.shim) {
+          this.shim.hide();
         }
-        if (this.animateTarget) {
-            this.animHide(callback);
-        } else {
+        if(this.animateTarget){
+           this.animHide(callback);
+        }else{
             this.el.hide();
             this.hideEl(callback);
         }
@@ -922,27 +922,27 @@ Ext.extend(Ext.BasicDialog, Ext.util.Observable, {
     },
 
     // private
-    hideEl: function (callback) {
+    hideEl : function(callback){
         this.proxy.hide();
-        if (this.modal) {
+        if(this.modal){
             this.mask.hide();
             Ext.getBody().removeClass("x-body-masked");
         }
         this.fireEvent("hide", this);
-        if (typeof callback == "function") {
+        if(typeof callback == "function"){
             callback();
         }
     },
 
     // private
-    hideAction: function () {
+    hideAction : function(){
         this.setLeft("-10000px");
         this.setTop("-10000px");
         this.setStyle("visibility", "hidden");
     },
 
     // private
-    refreshSize: function () {
+    refreshSize : function(){
         this.size = this.el.getSize();
         this.xy = this.el.getXY();
         Ext.state.Manager.set(this.stateId || this.el.id + "-state", this.el.getBox());
@@ -950,21 +950,21 @@ Ext.extend(Ext.BasicDialog, Ext.util.Observable, {
 
     // private
     // z-index is managed by the DialogManager and may be overwritten at any time
-    setZIndex: function (index) {
-        if (this.modal) {
+    setZIndex : function(index){
+        if(this.modal){
             this.mask.setStyle("z-index", index);
         }
-        if (this.shim) {
+        if(this.shim){
             this.shim.setStyle("z-index", ++index);
         }
-        if (this.shadow) {
+        if(this.shadow){
             this.shadow.setZIndex(++index);
         }
         this.el.setStyle("z-index", ++index);
-        if (this.proxy) {
+        if(this.proxy){
             this.proxy.setStyle("z-index", ++index);
         }
-        if (this.resizer) {
+        if(this.resizer){
             this.resizer.proxy.setStyle("z-index", ++index);
         }
 
@@ -975,7 +975,7 @@ Ext.extend(Ext.BasicDialog, Ext.util.Observable, {
      * Returns the element for this dialog
      * @return {Ext.Element} The underlying dialog Element
      */
-    getEl: function () {
+    getEl : function(){
         return this.el;
     }
 });
@@ -985,24 +985,24 @@ Ext.extend(Ext.BasicDialog, Ext.util.Observable, {
  * Provides global access to BasicDialogs that have been created and
  * support for z-indexing (layering) multiple open dialogs.
  */
-Ext.DialogManager = function () {
+Ext.DialogManager = function(){
     var list = {};
     var accessList = [];
     var front = null;
 
     // private
-    var sortDialogs = function (d1, d2) {
+    var sortDialogs = function(d1, d2){
         return (!d1._lastAccess || d1._lastAccess < d2._lastAccess) ? -1 : 1;
     };
 
     // private
-    var orderDialogs = function () {
+    var orderDialogs = function(){
         accessList.sort(sortDialogs);
         var seed = Ext.DialogManager.zseed;
-        for (var i = 0, len = accessList.length; i < len; i++) {
+        for(var i = 0, len = accessList.length; i < len; i++){
             var dlg = accessList[i];
-            if (dlg) {
-                dlg.setZIndex(seed + (i * 10));
+            if(dlg){
+                dlg.setZIndex(seed + (i*10));
             }
         }
     };
@@ -1012,27 +1012,27 @@ Ext.DialogManager = function () {
          * The starting z-index for BasicDialogs (defaults to 9000)
          * @type Number The z-index value
          */
-        zseed: 9000,
+        zseed : 9000,
 
         // private
-        register: function (dlg) {
+        register : function(dlg){
             list[dlg.id] = dlg;
             accessList.push(dlg);
         },
 
         // private
-        unregister: function (dlg) {
+        unregister : function(dlg){
             delete list[dlg.id];
-            if (!accessList.indexOf) {
-                for (var i = 0, len = accessList.length; i < len; i++) {
-                    if (accessList[i] == dlg) {
+            if(!accessList.indexOf){
+                for(var i = 0, len = accessList.length; i < len; i++){
+                    if(accessList[i] == dlg){
                         accessList.splice(i, 1);
                         return;
                     }
                 }
-            } else {
+            }else{
                 var i = accessList.indexOf(dlg);
-                if (i != -1) {
+                if(i != -1){
                     accessList.splice(i, 1);
                 }
             }
@@ -1043,7 +1043,7 @@ Ext.DialogManager = function () {
          * @param {String/Object} id The id of the dialog or a dialog
          * @return {Ext.BasicDialog} this
          */
-        get: function (id) {
+        get : function(id){
             return typeof id == "object" ? id : list[id];
         },
 
@@ -1052,9 +1052,9 @@ Ext.DialogManager = function () {
          * @param {String/Object} dlg The id of the dialog or a dialog
          * @return {Ext.BasicDialog} this
          */
-        bringToFront: function (dlg) {
+        bringToFront : function(dlg){
             dlg = this.get(dlg);
-            if (dlg != front) {
+            if(dlg != front){
                 front = dlg;
                 dlg._lastAccess = new Date().getTime();
                 orderDialogs();
@@ -1067,7 +1067,7 @@ Ext.DialogManager = function () {
          * @param {String/Object} dlg The id of the dialog or a dialog
          * @return {Ext.BasicDialog} this
          */
-        sendToBack: function (dlg) {
+        sendToBack : function(dlg){
             dlg = this.get(dlg);
             dlg._lastAccess = -(new Date().getTime());
             orderDialogs();
@@ -1077,9 +1077,9 @@ Ext.DialogManager = function () {
         /**
          * Hides all dialogs
          */
-        hideAll: function () {
-            for (var id in list) {
-                if (list[id] && typeof list[id] != "function" && list[id].isVisible()) {
+        hideAll : function(){
+            for(var id in list){
+                if(list[id] && typeof list[id] != "function" && list[id].isVisible()){
                     list[id].hide();
                 }
             }
@@ -1094,7 +1094,7 @@ Ext.DialogManager = function () {
  * Add your necessary layout config options to the dialog's config.<br>
  * Example usage (including a nested layout):
  * <pre><code>
- if(!dialog){
+if(!dialog){
     dialog = new Ext.LayoutDialog("download-dlg", {
         modal: true,
         width:600,
@@ -1139,15 +1139,15 @@ Ext.DialogManager = function () {
     layout.getRegion("center").showPanel(sp);
     layout.endUpdate();
 }
- </code></pre>
- * @constructor
- * @param {Mixed} el The id of or container element
- * @param {Object} config configuration options
- */
-Ext.LayoutDialog = function (el, config) {
+</code></pre>
+    * @constructor
+    * @param {Mixed} el The id of or container element
+    * @param {Object} config configuration options
+  */
+Ext.LayoutDialog = function(el, config){
     config.autoTabs = false;
     Ext.LayoutDialog.superclass.constructor.call(this, el, config);
-    this.body.setStyle({overflow: "hidden", position: "relative"});
+    this.body.setStyle({overflow:"hidden", position:"relative"});
     this.layout = new Ext.BorderLayout(this.body.dom, config);
     this.layout.monitorWindowResize = false;
     this.el.addClass("x-dlg-auto-layout");
@@ -1160,7 +1160,7 @@ Ext.extend(Ext.LayoutDialog, Ext.BasicDialog, {
      * Ends update of the layout <strike>and resets display to none</strike>. Use standard beginUpdate/endUpdate on the layout.
      * @deprecated
      */
-    endUpdate: function () {
+    endUpdate : function(){
         this.layout.endUpdate();
     },
 
@@ -1168,7 +1168,7 @@ Ext.extend(Ext.LayoutDialog, Ext.BasicDialog, {
      * Begins an update of the layout <strike>and sets display to block and visibility to hidden</strike>. Use standard beginUpdate/endUpdate on the layout.
      *  @deprecated
      */
-    beginUpdate: function () {
+    beginUpdate : function(){
         this.layout.beginUpdate();
     },
 
@@ -1176,23 +1176,21 @@ Ext.extend(Ext.LayoutDialog, Ext.BasicDialog, {
      * Get the BorderLayout for this dialog
      * @return {Ext.BorderLayout}
      */
-    getLayout: function () {
+    getLayout : function(){
         return this.layout;
     },
 
-    showEl: function () {
+    showEl : function(){
         Ext.LayoutDialog.superclass.showEl.apply(this, arguments);
-        if (Ext.isIE7) {
+        if(Ext.isIE7){
             this.layout.layout();
         }
     },
 
     // private
     // Use the syncHeightBeforeShow config option to control this automatically
-    syncBodyHeight: function () {
+    syncBodyHeight : function(){
         Ext.LayoutDialog.superclass.syncBodyHeight.call(this);
-        if (this.layout) {
-            this.layout.layout();
-        }
+        if(this.layout){this.layout.layout();}
     }
 });

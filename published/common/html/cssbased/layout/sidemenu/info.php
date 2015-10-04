@@ -1,5 +1,5 @@
 <?php
 
-    $layoutInfo = array('name' => 'lf_layoutleftsidemenu_title');
+	$layoutInfo = array( 'name'=>'lf_layoutleftsidemenu_title' );
 
 ?>

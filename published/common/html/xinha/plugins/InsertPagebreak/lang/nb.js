@@ -2,8 +2,5 @@
 // LANG: "nb", ENCODING: UTF-8
 // translated: Kim Steinhaug, http://www.steinhaug.com/, kim@steinhaug.com
 {
-    "Page break"
-:
-    "Sett inn sideskift"
-}
-;
+  "Page break": "Sett inn sideskift"
+};

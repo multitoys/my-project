@@ -1,5 +1,5 @@
 <?php
 
-    $themeInfo = array('name' => 'lf_themeultramarine_title', "color" => "#f2ebef");
+	$themeInfo = array( 'name'=>'lf_themeultramarine_title', "color" => "#f2ebef" );
 
 ?>

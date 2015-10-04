@@ -10,7 +10,7 @@
  * @class Ext.grid.EditorGridPanel
  * @extends Ext.grid.GridPanel
  * Class for creating and editable grid.
-
+ 
  * @constructor
  * @param {Object} config The config object
  */
@@ -22,33 +22,33 @@ Ext.grid.EditorGridPanel = Ext.extend(Ext.grid.GridPanel, {
     clicksToEdit: 2,
 
     // private
-    isEditor: true,
+    isEditor : true,
     // private
     detectEdit: false,
 
-    /**
-     * @cfg {Boolean} autoEncode
-     * True to automatically HTML encode and decode values pre and post edit (defaults to false)
-     */
-    autoEncode: false,
+	/**
+	 * @cfg {Boolean} autoEncode
+	 * True to automatically HTML encode and decode values pre and post edit (defaults to false)
+	 */
+	autoEncode : false,
 
-    /**
-     * @cfg {Boolean} trackMouseOver @hide
-     */
+	/**
+	 * @cfg {Boolean} trackMouseOver @hide
+	 */
     // private
     trackMouseOver: false, // causes very odd FF errors
-
+    
     // private
-    initComponent: function () {
+    initComponent : function(){
         Ext.grid.EditorGridPanel.superclass.initComponent.call(this);
 
-        if (!this.selModel) {
+        if(!this.selModel){
             this.selModel = new Ext.grid.CellSelectionModel();
         }
 
         this.activeEditor = null;
 
-        this.addEvents(
+	    this.addEvents(
             /**
              * @event beforeedit
              * Fires before cell editing is triggered. The edit event object has the following properties <br />
@@ -100,15 +100,15 @@ Ext.grid.EditorGridPanel = Ext.extend(Ext.grid.GridPanel, {
     },
 
     // private
-    initEvents: function () {
+    initEvents : function(){
         Ext.grid.EditorGridPanel.superclass.initEvents.call(this);
-
+        
         this.on("bodyscroll", this.stopEditing, this);
 
-        if (this.clicksToEdit == 1) {
+        if(this.clicksToEdit == 1){
             this.on("cellclick", this.onCellDblClick, this);
-        } else {
-            if (this.clicksToEdit == 'auto' && this.view.mainBody) {
+        }else {
+            if(this.clicksToEdit == 'auto' && this.view.mainBody){
                 this.view.mainBody.on("mousedown", this.onAutoEditClick, this);
             }
             this.on("celldblclick", this.onCellDblClick, this);
@@ -117,37 +117,37 @@ Ext.grid.EditorGridPanel = Ext.extend(Ext.grid.GridPanel, {
     },
 
     // private
-    onCellDblClick: function (g, row, col) {
+    onCellDblClick : function(g, row, col){
         this.startEditing(row, col);
     },
 
     // private
-    onAutoEditClick: function (e, t) {
+    onAutoEditClick : function(e, t){
         var row = this.view.findRowIndex(t);
         var col = this.view.findCellIndex(t);
-        if (row !== false && col !== false) {
-            if (this.selModel.getSelectedCell) { // cell sm
-                var sc = this.selModel.getSelectedCell();
-                if (sc && sc.cell[0] === row && sc.cell[1] === col) {
-                    this.startEditing(row, col);
-                }
-            } else {
-                if (this.selModel.isSelected(row)) {
-                    this.startEditing(row, col);
-                }
+        if(row !== false && col !== false){
+        if(this.selModel.getSelectedCell){ // cell sm
+            var sc = this.selModel.getSelectedCell();
+            if(sc && sc.cell[0] === row && sc.cell[1] === col){
+                this.startEditing(row, col);
             }
+        }else{
+            if(this.selModel.isSelected(row)){
+                this.startEditing(row, col);
+            }
+        }
         }
     },
 
     // private
-    onEditComplete: function (ed, value, startValue) {
+    onEditComplete : function(ed, value, startValue){
         this.editing = false;
         this.activeEditor = null;
         ed.un("specialkey", this.selModel.onEditorKey, this.selModel);
-        var r = ed.record;
+		var r = ed.record;
         var field = this.colModel.getDataIndex(ed.col);
         value = this.postEditValue(value, startValue, r, field);
-        if (String(value) !== String(startValue)) {
+        if(String(value) !== String(startValue)){
             var e = {
                 grid: this,
                 record: r,
@@ -156,9 +156,9 @@ Ext.grid.EditorGridPanel = Ext.extend(Ext.grid.GridPanel, {
                 value: value,
                 row: ed.row,
                 column: ed.col,
-                cancel: false
+                cancel:false
             };
-            if (this.fireEvent("validateedit", e) !== false && !e.cancel) {
+            if(this.fireEvent("validateedit", e) !== false && !e.cancel){
                 r.set(field, e.value);
                 delete e.cancel;
                 this.fireEvent("afteredit", e);
@@ -172,9 +172,9 @@ Ext.grid.EditorGridPanel = Ext.extend(Ext.grid.GridPanel, {
      * @param {Number} rowIndex
      * @param {Number} colIndex
      */
-    startEditing: function (row, col) {
+    startEditing : function(row, col){
         this.stopEditing();
-        if (this.colModel.isCellEditable(col, row)) {
+        if(this.colModel.isCellEditable(col, row)){
             this.view.ensureVisible(row, col, true);
             var r = this.store.getAt(row);
             var field = this.colModel.getDataIndex(col);
@@ -185,15 +185,15 @@ Ext.grid.EditorGridPanel = Ext.extend(Ext.grid.GridPanel, {
                 value: r.data[field],
                 row: row,
                 column: col,
-                cancel: false
+                cancel:false
             };
-            if (this.fireEvent("beforeedit", e) !== false && !e.cancel) {
+            if(this.fireEvent("beforeedit", e) !== false && !e.cancel){
                 this.editing = true;
                 var ed = this.colModel.getCellEditor(col, row);
-                if (!ed.rendered) {
+                if(!ed.rendered){
                     ed.render(this.view.getEditorParent(ed));
                 }
-                (function () { // complex but required for focus issues in safari, ie and opera
+                (function(){ // complex but required for focus issues in safari, ie and opera
                     ed.row = row;
                     ed.col = col;
                     ed.record = r;
@@ -206,20 +206,20 @@ Ext.grid.EditorGridPanel = Ext.extend(Ext.grid.GridPanel, {
             }
         }
     },
-
-    preEditValue: function (r, field) {
-        return this.autoEncode ? Ext.util.Format.htmlDecode(r.data[field]) : r.data[field];
-    },
-
-    postEditValue: function (value, originalValue, r, field) {
-        return this.autoEncode ? Ext.util.Format.htmlEncode(value) : value;
-    },
-
+    
+	preEditValue : function(r, field){
+		return this.autoEncode ? Ext.util.Format.htmlDecode(r.data[field]) : r.data[field];
+	},
+	
+	postEditValue : function(value, originalValue, r, field){
+		return this.autoEncode ? Ext.util.Format.htmlEncode(value) : value;
+	},
+	    
     /**
      * Stops any active editing
      */
-    stopEditing: function () {
-        if (this.activeEditor) {
+    stopEditing : function(){
+        if(this.activeEditor){
             this.activeEditor.completeEdit();
         }
         this.activeEditor = null;

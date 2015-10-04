@@ -15,7 +15,7 @@
  * @param {Mixed} el The container element
  * @param {Object} config
  */
-Ext.dd.DropZone = function (el, config) {
+Ext.dd.DropZone = function(el, config){
     Ext.dd.DropZone.superclass.constructor.call(this, el, config);
 };
 
@@ -27,7 +27,7 @@ Ext.extend(Ext.dd.DropZone, Ext.dd.DropTarget, {
      * @param {Event} e The event
      * @return {Object} data The custom data
      */
-    getTargetFromEvent: function (e) {
+    getTargetFromEvent : function(e){
         return Ext.dd.Registry.getTargetFromEvent(e);
     },
 
@@ -35,14 +35,14 @@ Ext.extend(Ext.dd.DropZone, Ext.dd.DropTarget, {
      * Called internally when the DropZone determines that a {@link Ext.dd.DragSource} has entered a drop node
      * that it has registered.  This method has no default implementation and should be overridden to provide
      * node-specific processing if necessary.
-     * @param {Object} nodeData The custom data associated with the drop node (this is the same value returned from
+     * @param {Object} nodeData The custom data associated with the drop node (this is the same value returned from 
      * {@link #getTargetFromEvent} for this node)
      * @param {Ext.dd.DragSource} source The drag source that was dragged over this drop zone
      * @param {Event} e The event
      * @param {Object} data An object containing arbitrary data supplied by the drag source
      */
-    onNodeEnter: function (n, dd, e, data) {
-
+    onNodeEnter : function(n, dd, e, data){
+        
     },
 
     /**
@@ -57,7 +57,7 @@ Ext.extend(Ext.dd.DropZone, Ext.dd.DropTarget, {
      * @return {String} status The CSS class that communicates the drop status back to the source so that the
      * underlying {@link Ext.dd.StatusProxy} can be updated
      */
-    onNodeOver: function (n, dd, e, data) {
+    onNodeOver : function(n, dd, e, data){
         return this.dropAllowed;
     },
 
@@ -71,8 +71,8 @@ Ext.extend(Ext.dd.DropZone, Ext.dd.DropTarget, {
      * @param {Event} e The event
      * @param {Object} data An object containing arbitrary data supplied by the drag source
      */
-    onNodeOut: function (n, dd, e, data) {
-
+    onNodeOut : function(n, dd, e, data){
+        
     },
 
     /**
@@ -86,7 +86,7 @@ Ext.extend(Ext.dd.DropZone, Ext.dd.DropTarget, {
      * @param {Object} data An object containing arbitrary data supplied by the drag source
      * @return {Boolean} True if the drop was valid, else false
      */
-    onNodeDrop: function (n, dd, e, data) {
+    onNodeDrop : function(n, dd, e, data){
         return false;
     },
 
@@ -100,7 +100,7 @@ Ext.extend(Ext.dd.DropZone, Ext.dd.DropTarget, {
      * @return {String} status The CSS class that communicates the drop status back to the source so that the
      * underlying {@link Ext.dd.StatusProxy} can be updated
      */
-    onContainerOver: function (dd, e, data) {
+    onContainerOver : function(dd, e, data){
         return this.dropNotAllowed;
     },
 
@@ -114,7 +114,7 @@ Ext.extend(Ext.dd.DropZone, Ext.dd.DropTarget, {
      * @param {Object} data An object containing arbitrary data supplied by the drag source
      * @return {Boolean} True if the drop was valid, else false
      */
-    onContainerDrop: function (dd, e, data) {
+    onContainerDrop : function(dd, e, data){
         return false;
     },
 
@@ -129,7 +129,7 @@ Ext.extend(Ext.dd.DropZone, Ext.dd.DropTarget, {
      * @return {String} status The CSS class that communicates the drop status back to the source so that the
      * underlying {@link Ext.dd.StatusProxy} can be updated
      */
-    notifyEnter: function (dd, e, data) {
+    notifyEnter : function(dd, e, data){
         return this.dropNotAllowed;
     },
 
@@ -146,17 +146,17 @@ Ext.extend(Ext.dd.DropZone, Ext.dd.DropTarget, {
      * @return {String} status The CSS class that communicates the drop status back to the source so that the
      * underlying {@link Ext.dd.StatusProxy} can be updated
      */
-    notifyOver: function (dd, e, data) {
+    notifyOver : function(dd, e, data){
         var n = this.getTargetFromEvent(e);
-        if (!n) { // not over valid drop target
-            if (this.lastOverNode) {
+        if(!n){ // not over valid drop target
+            if(this.lastOverNode){
                 this.onNodeOut(this.lastOverNode, dd, e, data);
                 this.lastOverNode = null;
             }
             return this.onContainerOver(dd, e, data);
         }
-        if (this.lastOverNode != n) {
-            if (this.lastOverNode) {
+        if(this.lastOverNode != n){
+            if(this.lastOverNode){
                 this.onNodeOut(this.lastOverNode, dd, e, data);
             }
             this.onNodeEnter(n, dd, e, data);
@@ -173,8 +173,8 @@ Ext.extend(Ext.dd.DropZone, Ext.dd.DropTarget, {
      * @param {Event} e The event
      * @param {Object} data An object containing arbitrary data supplied by the drag zone
      */
-    notifyOut: function (dd, e, data) {
-        if (this.lastOverNode) {
+    notifyOut : function(dd, e, data){
+        if(this.lastOverNode){
             this.onNodeOut(this.lastOverNode, dd, e, data);
             this.lastOverNode = null;
         }
@@ -190,8 +190,8 @@ Ext.extend(Ext.dd.DropZone, Ext.dd.DropTarget, {
      * @param {Object} data An object containing arbitrary data supplied by the drag source
      * @return {Boolean} True if the drop was valid, else false
      */
-    notifyDrop: function (dd, e, data) {
-        if (this.lastOverNode) {
+    notifyDrop : function(dd, e, data){
+        if(this.lastOverNode){
             this.onNodeOut(this.lastOverNode, dd, e, data);
             this.lastOverNode = null;
         }
@@ -202,7 +202,7 @@ Ext.extend(Ext.dd.DropZone, Ext.dd.DropTarget, {
     },
 
     // private
-    triggerCacheRefresh: function () {
+    triggerCacheRefresh : function(){
         Ext.dd.DDM.refreshCache(this.groups);
-    }
+    }  
 });

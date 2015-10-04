@@ -14,13 +14,13 @@
  * Creates a new DateItem
  * @param {Object} config Configuration options
  */
-Ext.menu.DateItem = function (config) {
+Ext.menu.DateItem = function(config){
     Ext.menu.DateItem.superclass.constructor.call(this, new Ext.DatePicker(config), config);
     /** The Ext.DatePicker object @type Ext.DatePicker */
     this.picker = this.component;
     this.addEvents('select');
-
-    this.picker.on("render", function (picker) {
+    
+    this.picker.on("render", function(picker){
         picker.getEl().swallowEvent("click");
         picker.container.addClass("x-menu-date-item");
     });
@@ -30,7 +30,7 @@ Ext.menu.DateItem = function (config) {
 
 Ext.extend(Ext.menu.DateItem, Ext.menu.Adapter, {
     // private
-    onSelect: function (picker, date) {
+    onSelect : function(picker, date){
         this.fireEvent("select", this, date, picker);
         Ext.menu.DateItem.superclass.handleClick.call(this);
     }

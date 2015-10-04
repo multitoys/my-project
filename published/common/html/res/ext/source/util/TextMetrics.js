@@ -12,7 +12,7 @@
  * wide, in pixels, a given block of text will be.
  * @singleton
  */
-Ext.util.TextMetrics = function () {
+Ext.util.TextMetrics = function(){
     var shared;
     return {
         /**
@@ -24,8 +24,8 @@ Ext.util.TextMetrics = function () {
          * in order to accurately measure the text height
          * @return {Object} An object containing the text's size {width: (width), height: (height)}
          */
-        measure: function (el, text, fixedWidth) {
-            if (!shared) {
+        measure : function(el, text, fixedWidth){
+            if(!shared){
                 shared = Ext.util.TextMetrics.Instance(el, fixedWidth);
             }
             shared.bind(el);
@@ -41,20 +41,20 @@ Ext.util.TextMetrics = function () {
          * in order to accurately measure the text height
          * @return {Ext.util.TextMetrics.Instance} instance The new instance
          */
-        createInstance: function (el, fixedWidth) {
+        createInstance : function(el, fixedWidth){
             return Ext.util.TextMetrics.Instance(el, fixedWidth);
         }
     };
 }();
 
-Ext.util.TextMetrics.Instance = function (bindTo, fixedWidth) {
+Ext.util.TextMetrics.Instance = function(bindTo, fixedWidth){
     var ml = new Ext.Element(document.createElement('div'));
     document.body.appendChild(ml.dom);
     ml.position('absolute');
     ml.setLeftTop(-1000, -1000);
     ml.hide();
 
-    if (fixedWidth) {
+    if(fixedWidth){
         ml.setWidth(fixedWidth);
     }
 
@@ -64,7 +64,7 @@ Ext.util.TextMetrics.Instance = function (bindTo, fixedWidth) {
          * @param {String} text The text to measure
          * @return {Object} An object containing the text's size {width: (width), height: (height)}
          */
-        getSize: function (text) {
+        getSize : function(text){
             ml.update(text);
             var s = ml.getSize();
             ml.update('');
@@ -76,9 +76,9 @@ Ext.util.TextMetrics.Instance = function (bindTo, fixedWidth) {
          * that can affect the size of the rendered text
          * @param {String/HTMLElement} el The element, dom node or id
          */
-        bind: function (el) {
+        bind : function(el){
             ml.setStyle(
-                Ext.fly(el).getStyles('font-size', 'font-style', 'font-weight', 'font-family', 'line-height')
+                Ext.fly(el).getStyles('font-size','font-style', 'font-weight', 'font-family','line-height')
             );
         },
 
@@ -87,7 +87,7 @@ Ext.util.TextMetrics.Instance = function (bindTo, fixedWidth) {
          * to set a fixed width in order to accurately measure the text height.
          * @param {Number} width The width to set on the element
          */
-        setFixedWidth: function (width) {
+        setFixedWidth : function(width){
             ml.setWidth(width);
         },
 
@@ -96,7 +96,7 @@ Ext.util.TextMetrics.Instance = function (bindTo, fixedWidth) {
          * @param {String} text The text to measure
          * @return {Number} width The width in pixels
          */
-        getWidth: function (text) {
+        getWidth : function(text){
             ml.dom.style.width = 'auto';
             return this.getSize(text).width;
         },
@@ -107,7 +107,7 @@ Ext.util.TextMetrics.Instance = function (bindTo, fixedWidth) {
          * @param {String} text The text to measure
          * @return {Number} height The height in pixels
          */
-        getHeight: function (text) {
+        getHeight : function(text){
             return this.getSize(text).height;
         }
     };

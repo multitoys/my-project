@@ -42,6 +42,18 @@
         $ids = implode(',', $ids);
         $query = "UPDATE SC_akcia SET sending=1 where akciaID in (".$ids.")";
         mysql_query($query) or die(mysql_error()."<br>$query");
+        $query
+                        = "
+							UPDATE SC_products
+							SET 
+								Price = list_price,
+								list_price = 0.00,
+								akcia = 0,
+								akcia_skidka = 0
+							WHERE
+								akcia = 1
+						";
+                    $res = mysql_query($query) or exit(1);
         mail($addr, $subject, $body, $headers);
     }
   

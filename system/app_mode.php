@@ -1,3 +1,3 @@
-<?php
-    define("USE_LOCALIZATION", true);
+<?php 
+	define("USE_LOCALIZATION", true);
 ?>

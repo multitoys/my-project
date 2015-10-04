@@ -1,87 +1,88 @@
 <?php
 
-    require_once("../../../common/html/includes/httpinit.php");
+	require_once( "../../../common/html/includes/httpinit.php" );
 
-    //
-    // Authorization
-    //
+	//
+	// Authorization
+	//
 
-    $fatalError = false;
-    $errorStr = null;
-    $SCR_ID = "UNG";
+	$fatalError = false;
+	$errorStr = null;
+	$SCR_ID = "UNG";
 
-    pageUserAuthorization($SCR_ID, $AA_APP_ID, false);
+	pageUserAuthorization( $SCR_ID, $AA_APP_ID, false );
 
-    //
-    // Page variables setup
-    //
+	// 
+	// Page variables setup
+	//
 
-    $kernelStrings = $loc_str[$language];
-    $invalidField = null;
+	$kernelStrings = $loc_str[$language];
+	$invalidField = null;
 
-    if (!isset($searchString))
-        $searchString = null;
+	if ( !isset($searchString) )
+		$searchString = null;
 
-    $btnIndex = getButtonIndex(array(BTN_CANCEL), $_POST);
+	$btnIndex = getButtonIndex( array( BTN_CANCEL ), $_POST );
 
-    switch ($btnIndex) {
-        case 0 :
-            redirectBrowser(PAGE_USERSANDGROUPS, array());
-    }
+	switch ($btnIndex) {
+		case 0 :
+				redirectBrowser( PAGE_USERSANDGROUPS, array() );
+	}
 
-    switch (true) {
-        case true :
-            $contacts = unserialize(base64_decode($contactlist));
 
-            $typeDesc = getContactTypeDescription(CONTACT_BASIC_TYPE, $language, $kernelStrings, false);
-            if (PEAR::isError($typeDesc)) {
-                $fatalError = true;
-                $errorStr = $typeDesc->getMessage();
+	switch (true) {
+		case true :
+					$contacts = unserialize( base64_decode($contactlist) );
 
-                break;
-            }
+					$typeDesc = getContactTypeDescription( CONTACT_BASIC_TYPE, $language, $kernelStrings, false );
+					if ( PEAR::isError($typeDesc) ) {
+						$fatalError = true;
+						$errorStr = $typeDesc->getMessage();
 
-            $fieldsPlainDesc = getContactTypeFieldsSummary($typeDesc, $kernelStrings, true);
+						break;
+					}
 
-            $result = array();
+					$fieldsPlainDesc = getContactTypeFieldsSummary( $typeDesc, $kernelStrings, true );
 
-            foreach ($contacts as $C_ID) {
-                $Contact = new Contact($kernelStrings, $language, $typeDesc, $fieldsPlainDesc);
+					$result = array();
 
-                $res = $Contact->loadEntry($C_ID, $kernelStrings);
-                if (PEAR::isError($res)) {
-                    $errorStr = $res->getMessage();
+					foreach ( $contacts as $C_ID ) {
+						$Contact = new Contact( $kernelStrings, $language, $typeDesc, $fieldsPlainDesc );
 
-                    break;
-                }
+						$res = $Contact->loadEntry( $C_ID, $kernelStrings );
+						if ( PEAR::isError($res) ) {
+							$errorStr = $res->getMessage();
 
-                $contactName = sprintf("%s (%s)", getArrUserName((array)$Contact, true), $Contact->U_ID);
+							break;
+						}
 
-                $res = $Contact->revokeUserPrivileges($C_ID, $kernelStrings, $currentUser);
-                if (PEAR::isError($res))
-                    $result[$contactName] = $res->getMessage();
-                else
-                    $result[$contactName] = $kernelStrings['rup_success_message'];
-            }
-    }
+						$contactName = sprintf( "%s (%s)", getArrUserName( (array)$Contact, true ), $Contact->U_ID );
 
-    //
-    // Page implementation
-    //
+						$res = $Contact->revokeUserPrivileges( $C_ID, $kernelStrings, $currentUser );
+						if ( PEAR::isError($res) )
+							$result[$contactName] = $res->getMessage();
+						else
+							$result[$contactName] = $kernelStrings['rup_success_message'];
+					}
+	}
 
-    $preproc = new php_preprocessor($templateName, $kernelStrings, $language, $AA_APP_ID);
+	//
+	// Page implementation
+	//
 
-    $preproc->assign(PAGE_TITLE, $kernelStrings['rup_page_title']);
-    $preproc->assign(FORM_LINK, PAGE_REVOKEUSERPRIVS);
-    $preproc->assign(INVALID_FIELD, $invalidField);
-    $preproc->assign(ERROR_STR, $errorStr);
-    $preproc->assign(FATAL_ERROR, $fatalError);
-    $preproc->assign("kernelStrings", $kernelStrings);
+	$preproc = new php_preprocessor( $templateName, $kernelStrings, $language, $AA_APP_ID );
 
-    if (!$fatalError) {
-        $preproc->assign("contactlist", $contactlist);
-        $preproc->assign("result", $result);
-    }
+	$preproc->assign( PAGE_TITLE, $kernelStrings['rup_page_title'] );
+	$preproc->assign( FORM_LINK, PAGE_REVOKEUSERPRIVS );
+	$preproc->assign( INVALID_FIELD, $invalidField );
+	$preproc->assign( ERROR_STR, $errorStr );
+	$preproc->assign( FATAL_ERROR, $fatalError );
+	$preproc->assign( "kernelStrings", $kernelStrings );
 
-    $preproc->display("revokeprivs.htm");
+	if ( !$fatalError ) {
+		$preproc->assign( "contactlist", $contactlist );
+		$preproc->assign( "result", $result );
+	}
+
+	$preproc->display( "revokeprivs.htm" );
 ?>

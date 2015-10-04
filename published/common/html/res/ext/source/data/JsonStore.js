@@ -10,22 +10,22 @@
  * @class Ext.data.JsonStore
  * @extends Ext.data.Store
  * Small helper class to make creating Stores for JSON data easier. <br/>
- <pre><code>
- var store = new Ext.data.JsonStore({
+<pre><code>
+var store = new Ext.data.JsonStore({
     url: 'get-images.php',
     root: 'images',
     fields: ['name', 'url', {name:'size', type: 'float'}, {name:'lastmod', type:'date'}]
 });
- </code></pre>
+</code></pre>
  * This would consume a returned object of the form:
- <pre><code>
- {
-     images: [
-         {name: 'Image one', url:'/GetImage.php?id=1', size:46.5, lastmod: new Date(2007, 10, 29)},
-         {name: 'Image Two', url:'/GetImage.php?id=2', size:43.2, lastmod: new Date(2007, 10, 30)}
-     ]
- }
- </code></pre>
+<pre><code>
+{
+    images: [
+        {name: 'Image one', url:'/GetImage.php?id=1', size:46.5, lastmod: new Date(2007, 10, 29)},
+        {name: 'Image Two', url:'/GetImage.php?id=2', size:43.2, lastmod: new Date(2007, 10, 30)}
+    ]
+}
+</code></pre>
  * An object literal of this form could also be used as the {@link #data} config option.
  * <b>Note: Although they are not listed, this class inherits all of the config options of Store,
  * JsonReader.</b>
@@ -38,7 +38,7 @@
  * @constructor
  * @param {Object} config
  */
-Ext.data.JsonStore = function (c) {
+Ext.data.JsonStore = function(c){
     Ext.data.JsonStore.superclass.constructor.call(this, Ext.apply(c, {
         proxy: !c.data ? new Ext.data.HttpProxy({url: c.url}) : undefined,
         reader: new Ext.data.JsonReader(c, c.fields)

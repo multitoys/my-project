@@ -1,67 +1,68 @@
 <?php
 
-    require_once("../../../common/html/includes/httpinit.php");
+	require_once( "../../../common/html/includes/httpinit.php" );
 
-    //
-    // Authorization
-    //
+	//
+	// Authorization
+	//
 
-    $errorStr = null;
-    $fatalError = false;
+	$errorStr = null;
+	$fatalError = false;
 
-    pageUserAuthorization(null, $AA_APP_ID, true);
-    redirectBrowser(PAGE_BLANK, array());
+	pageUserAuthorization( null, $AA_APP_ID, true );
+	redirectBrowser( PAGE_BLANK, array() );
 
-    //
-    // Page variables setup
-    //
+	//
+	// Page variables setup
+	//
 
-    $kernelStrings = $loc_str[$language];
+	$kernelStrings = $loc_str[$language];
 
-    switch (true) {
-        case true :
-            if (isset($edited)) {
-                if (!isset($showTtOnStartUp) || !$showTtOnStartUp) {
-                    $res = writeUserCommonSetting($currentUser, START_PAGE, USE_BLANK, $kernelStrings);
+	switch ( true ) {
+		case true :
+				if ( isset($edited) ) {
+					if ( !isset($showTtOnStartUp) || !$showTtOnStartUp ) {
+						$res = writeUserCommonSetting( $currentUser, START_PAGE, USE_BLANK, $kernelStrings );
 
-                    redirectBrowser(PAGE_BLANK, array());
-                } else
-                    $res = writeUserCommonSetting($currentUser, START_PAGE, USE_TIPSANDTRICKS, $kernelStrings);
-            }
+						redirectBrowser( PAGE_BLANK, array() );
+					} else
+						$res = writeUserCommonSetting( $currentUser, START_PAGE, USE_TIPSANDTRICKS, $kernelStrings );
+				}
 
-            $showTtOnStartUp = 0;
+				$showTtOnStartUp = 0;
 
-            $quckStartSeen = readUserCommonSetting($currentUser, WBS_TT_QUICKSTART_SEEN);
-            if (!strlen($quckStartSeen) || !$quckStartSeen)
-                $showQuickStart = 1;
-            else
-                $showQuickStart = 0;
+				$quckStartSeen = readUserCommonSetting( $currentUser, WBS_TT_QUICKSTART_SEEN );
+				if ( !strlen($quckStartSeen) || !$quckStartSeen )
+					$showQuickStart = 1;
+				else
+					$showQuickStart = 0;
 
-            writeUserCommonSetting($currentUser, WBS_TT_QUICKSTART_SEEN, 1, $kernelStrings);
+				writeUserCommonSetting( $currentUser, WBS_TT_QUICKSTART_SEEN, 1, $kernelStrings );
 
-            if (readUserCommonSetting($currentUser, START_PAGE) == USE_TIPSANDTRICKS)
-                $showTtOnStartUp = 1;
+				if ( readUserCommonSetting( $currentUser, START_PAGE ) == USE_TIPSANDTRICKS )
+					$showTtOnStartUp = 1;
 
-            $tmp = explode('/', $_SERVER['SERVER_PROTOCOL']);
-            $protocol = strtolower(array_shift($tmp));
 
-            if (isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) == 'on')
-                $protocol = "https";
-    }
+				$tmp = explode('/', $_SERVER['SERVER_PROTOCOL']);
+				$protocol = strtolower(array_shift($tmp));
 
-    //
-    // Page implementation
-    //
-    $preproc = new php_preprocessor($templateName, $kernelStrings, $language, $AA_APP_ID);
+				if ( isset( $_SERVER['HTTPS'] ) && strtolower( $_SERVER['HTTPS'] ) == 'on' )
+					$protocol = "https";
+	}
 
-    $preproc->assign(PAGE_TITLE, $kernelStrings['app_pagewelcome_title']);
-    $preproc->assign(ERROR_STR, $errorStr);
-    $preproc->assign(FATAL_ERROR, $fatalError);
-    $preproc->assign(FORM_LINK, "tipsandtricks.php");
+	//
+	// Page implementation
+	//
+	$preproc = new php_preprocessor( $templateName, $kernelStrings, $language, $AA_APP_ID );
 
-    $preproc->assign("protocol", $protocol);
-    $preproc->assign("showTtOnStartUp", $showTtOnStartUp);
-    $preproc->assign("showQuickStart", $showQuickStart);
+	$preproc->assign( PAGE_TITLE, $kernelStrings['app_pagewelcome_title'] );
+	$preproc->assign( ERROR_STR, $errorStr );
+	$preproc->assign( FATAL_ERROR, $fatalError );
+	$preproc->assign( FORM_LINK, "tipsandtricks.php" );
 
-    $preproc->display("tipsandtricks.htm");
+	$preproc->assign( "protocol", $protocol );
+	$preproc->assign( "showTtOnStartUp", $showTtOnStartUp );
+	$preproc->assign( "showQuickStart", $showQuickStart );
+
+	$preproc->display( "tipsandtricks.htm" );
 ?>

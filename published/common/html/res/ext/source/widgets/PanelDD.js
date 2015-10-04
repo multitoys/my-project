@@ -14,31 +14,31 @@
  * @param panel The {@link Ext.Panel} to proxy for
  * @param config Configuration options
  */
-Ext.dd.PanelProxy = function (panel, config) {
+Ext.dd.PanelProxy = function(panel, config){
     this.panel = panel;
-    this.id = this.panel.id + '-ddproxy';
+    this.id = this.panel.id +'-ddproxy';
     Ext.apply(this, config);
 };
 
 Ext.dd.PanelProxy.prototype = {
     /**
      * @cfg {Boolean} insertProxy True to insert a placeholder proxy element while dragging the panel,
-     * false to drag with no proxy (defaults to true).
+      * false to drag with no proxy (defaults to true).
      */
-    insertProxy: true,
+    insertProxy : true,
 
     // private overrides
-    setStatus: Ext.emptyFn,
-    reset: Ext.emptyFn,
-    update: Ext.emptyFn,
-    stop: Ext.emptyFn,
+    setStatus : Ext.emptyFn,
+    reset : Ext.emptyFn,
+    update : Ext.emptyFn,
+    stop : Ext.emptyFn,
     sync: Ext.emptyFn,
 
     /**
      * Gets the proxy's element
      * @return {Element} The proxy's element
      */
-    getEl: function () {
+    getEl : function(){
         return this.ghost;
     },
 
@@ -46,7 +46,7 @@ Ext.dd.PanelProxy.prototype = {
      * Gets the proxy's ghost element
      * @return {Element} The proxy's ghost element
      */
-    getGhost: function () {
+    getGhost : function(){
         return this.ghost;
     },
 
@@ -54,16 +54,16 @@ Ext.dd.PanelProxy.prototype = {
      * Gets the proxy's element
      * @return {Element} The proxy's element
      */
-    getProxy: function () {
+    getProxy : function(){
         return this.proxy;
     },
 
     /**
      * Hides the proxy
      */
-    hide: function () {
-        if (this.ghost) {
-            if (this.proxy) {
+    hide : function(){
+        if(this.ghost){
+            if(this.proxy){
                 this.proxy.remove();
                 delete this.proxy;
             }
@@ -76,12 +76,12 @@ Ext.dd.PanelProxy.prototype = {
     /**
      * Shows the proxy
      */
-    show: function () {
-        if (!this.ghost) {
+    show : function(){
+        if(!this.ghost){
             this.ghost = this.panel.createGhost(undefined, undefined, Ext.getBody());
             this.ghost.setXY(this.panel.el.getXY())
-            if (this.insertProxy) {
-                this.proxy = this.panel.el.insertSibling({cls: 'x-panel-dd-spacer'});
+            if(this.insertProxy){
+                this.proxy = this.panel.el.insertSibling({cls:'x-panel-dd-spacer'});
                 this.proxy.setSize(this.panel.getSize());
             }
             this.panel.el.dom.style.display = 'none';
@@ -89,9 +89,9 @@ Ext.dd.PanelProxy.prototype = {
     },
 
     // private
-    repair: function (xy, callback, scope) {
+    repair : function(xy, callback, scope){
         this.hide();
-        if (typeof callback == "function") {
+        if(typeof callback == "function"){
             callback.call(scope || this);
         }
     },
@@ -103,15 +103,15 @@ Ext.dd.PanelProxy.prototype = {
      * @param {HTMLElement} before (optional) The sibling node before which the proxy should be inserted (defaults
      * to the parent's last child if not specified)
      */
-    moveProxy: function (parentNode, before) {
-        if (this.proxy) {
+    moveProxy : function(parentNode, before){
+        if(this.proxy){
             parentNode.insertBefore(this.proxy.dom, before);
         }
     }
 };
 
 // private - DD implementation for Panels
-Ext.Panel.DD = function (panel, cfg) {
+Ext.Panel.DD = function(panel, cfg){
     this.panel = panel;
     this.dragData = {panel: panel};
     this.proxy = new Ext.dd.PanelProxy(panel, cfg);
@@ -124,28 +124,28 @@ Ext.Panel.DD = function (panel, cfg) {
 Ext.extend(Ext.Panel.DD, Ext.dd.DragSource, {
     showFrame: Ext.emptyFn,
     startDrag: Ext.emptyFn,
-    b4StartDrag: function (x, y) {
+    b4StartDrag: function(x, y) {
         this.proxy.show();
     },
-    b4MouseDown: function (e) {
+    b4MouseDown: function(e) {
         var x = e.getPageX();
         var y = e.getPageY();
         this.autoOffset(x, y);
     },
-    onInitDrag: function (x, y) {
+    onInitDrag : function(x, y){
         this.onStartDrag(x, y);
         return true;
     },
-    createFrame: Ext.emptyFn,
-    getDragEl: function (e) {
+    createFrame : Ext.emptyFn,
+    getDragEl : function(e){
         return this.proxy.ghost.dom;
     },
-    endDrag: function (e) {
+    endDrag : function(e){
         this.proxy.hide();
         this.panel.saveState();
     },
 
-    autoOffset: function (x, y) {
+    autoOffset : function(x, y) {
         x -= this.startPageX;
         y -= this.startPageY;
         this.setDelta(x, y);

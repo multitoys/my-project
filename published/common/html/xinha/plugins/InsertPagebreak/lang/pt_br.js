@@ -14,8 +14,5 @@
 // Distributed under the same terms as HTMLArea itself.
 // This notice MUST stay intact for use (see license.txt).
 {
-    "Page break"
-:
-    "Quebra de página"
-}
-;
+  "Page break": "Quebra de página"
+};

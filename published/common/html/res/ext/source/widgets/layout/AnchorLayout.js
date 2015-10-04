@@ -39,46 +39,46 @@
  */
 Ext.layout.AnchorLayout = Ext.extend(Ext.layout.ContainerLayout, {
     // private
-    monitorResize: true,
+    monitorResize:true,
 
     // private
-    getAnchorViewSize: function (ct, target) {
+    getAnchorViewSize : function(ct, target){
         return target.dom == document.body ?
-            target.getViewSize() : target.getStyleSize();
+                   target.getViewSize() : target.getStyleSize();
     },
 
     // private
-    onLayout: function (ct, target) {
+    onLayout : function(ct, target){
         Ext.layout.AnchorLayout.superclass.onLayout.call(this, ct, target);
 
         var size = this.getAnchorViewSize(ct, target);
 
         var w = size.width, h = size.height;
 
-        if (w < 20 || h < 20) {
+        if(w < 20 || h < 20){
             return;
         }
 
         // find the container anchoring size
         var aw, ah;
-        if (ct.anchorSize) {
-            if (typeof ct.anchorSize == 'number') {
+        if(ct.anchorSize){
+            if(typeof ct.anchorSize == 'number'){
                 aw = ct.anchorSize;
-            } else {
+            }else{
                 aw = ct.anchorSize.width;
                 ah = ct.anchorSize.height;
             }
-        } else {
+        }else{
             aw = ct.initialConfig.width;
             ah = ct.initialConfig.height;
         }
 
         var cs = ct.items.items, len = cs.length, i, c, a, cw, ch;
-        for (i = 0; i < len; i++) {
+        for(i = 0; i < len; i++){
             c = cs[i];
-            if (c.anchor) {
+            if(c.anchor){
                 a = c.anchorSpec;
-                if (!a) { // cache all anchor values
+                if(!a){ // cache all anchor values
                     var vs = c.anchor.split(' ');
                     c.anchorSpec = a = {
                         right: this.parseAnchor(vs[0], c.initialConfig.width, aw),
@@ -88,7 +88,7 @@ Ext.layout.AnchorLayout = Ext.extend(Ext.layout.ContainerLayout, {
                 cw = a.right ? this.adjustWidthAnchor(a.right(w), c) : undefined;
                 ch = a.bottom ? this.adjustHeightAnchor(a.bottom(h), c) : undefined;
 
-                if (cw || ch) {
+                if(cw || ch){
                     c.setSize(cw || undefined, ch || undefined);
                 }
             }
@@ -96,30 +96,30 @@ Ext.layout.AnchorLayout = Ext.extend(Ext.layout.ContainerLayout, {
     },
 
     // private
-    parseAnchor: function (a, start, cstart) {
-        if (a && a != 'none') {
+    parseAnchor : function(a, start, cstart){
+        if(a && a != 'none'){
             var last;
-            if (/^(r|right|b|bottom)$/i.test(a)) {   // standard anchor
+            if(/^(r|right|b|bottom)$/i.test(a)){   // standard anchor
                 var diff = cstart - start;
-                return function (v) {
-                    if (v !== last) {
+                return function(v){
+                    if(v !== last){
                         last = v;
                         return v - diff;
                     }
                 }
-            } else if (a.indexOf('%') != -1) {
-                var ratio = parseFloat(a.replace('%', '')) * .01;   // percentage
-                return function (v) {
-                    if (v !== last) {
+            }else if(a.indexOf('%') != -1){
+                var ratio = parseFloat(a.replace('%', ''))*.01;   // percentage
+                return function(v){
+                    if(v !== last){
                         last = v;
-                        return Math.floor(v * ratio);
+                        return Math.floor(v*ratio);
                     }
                 }
-            } else {
+            }else{
                 a = parseInt(a, 10);
-                if (!isNaN(a)) {                            // simple offset adjustment
-                    return function (v) {
-                        if (v !== last) {
+                if(!isNaN(a)){                            // simple offset adjustment
+                    return function(v){
+                        if(v !== last){
                             last = v;
                             return v + a;
                         }
@@ -131,15 +131,15 @@ Ext.layout.AnchorLayout = Ext.extend(Ext.layout.ContainerLayout, {
     },
 
     // private
-    adjustWidthAnchor: function (value, comp) {
+    adjustWidthAnchor : function(value, comp){
         return value;
     },
 
     // private
-    adjustHeightAnchor: function (value, comp) {
+    adjustHeightAnchor : function(value, comp){
         return value;
     }
-
+    
     /**
      * @property activeItem
      * @hide

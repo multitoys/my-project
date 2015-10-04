@@ -17,63 +17,63 @@
  * @constructor
  * @param {Object} config
  */
-Ext.grid.GridView = function (config) {
+Ext.grid.GridView = function(config){
     Ext.apply(this, config);
     // These events are only used internally by the grid components
     this.addEvents(
-        /**
+      /**
          * @event beforerowremoved
          * Internal UI Event. Fired before a row is removed.
          * @param {Ext.grid.GridView} view
          * @param {Number} rowIndex The index of the row to be removed.
          * @param {Ext.data.Record} record The Record to be removed
-         */
-        "beforerowremoved",
-        /**
+       */
+      "beforerowremoved",
+      /**
          * @event beforerowsinserted
          * Internal UI Event. Fired before rows are inserted.
          * @param {Ext.grid.GridView} view
          * @param {Number} firstRow The index of the first row to be inserted.
          * @param {Number} lastRow The index of the last row to be inserted.
-         */
-        "beforerowsinserted",
-        /**
+       */
+      "beforerowsinserted",
+      /**
          * @event beforerefresh
          * Internal UI Event. Fired before the view is refreshed.
          * @param {Ext.grid.GridView} view
-         */
-        "beforerefresh",
-        /**
+       */
+      "beforerefresh",
+      /**
          * @event rowremoved
          * Internal UI Event. Fired after a row is removed.
          * @param {Ext.grid.GridView} view
          * @param {Number} rowIndex The index of the row that was removed.
          * @param {Ext.data.Record} record The Record that was removed
-         */
-        "rowremoved",
-        /**
+       */
+      "rowremoved",
+      /**
          * @event rowsinserted
          * Internal UI Event. Fired after rows are inserted.
          * @param {Ext.grid.GridView} view
          * @param {Number} firstRow The index of the first inserted.
          * @param {Number} lastRow The index of the last row inserted.
-         */
-        "rowsinserted",
-        /**
+       */
+      "rowsinserted",
+      /**
          * @event rowupdated
          * Internal UI Event. Fired after a row has been updated.
          * @param {Ext.grid.GridView} view
          * @param {Number} firstRow The index of the row updated.
          * @param {Ext.data.record} record The Record backing the row updated.
-         */
-        "rowupdated",
-        /**
+       */
+      "rowupdated",
+      /**
          * @event refresh
          * Internal UI Event. Fired after the GridView's body has been refreshed.
          * @param {Ext.grid.GridView} view
-         */
-        "refresh"
-    );
+       */
+      "refresh"
+  );
     Ext.grid.GridView.superclass.constructor.call(this);
 };
 
@@ -122,22 +122,22 @@ Ext.extend(Ext.grid.GridView, Ext.util.Observable, {
      * The CSS classes applied to a header when it is sorted. (defaults to ["sort-asc", "sort-desc"])
      * @type Array
      */
-    sortClasses: ["sort-asc", "sort-desc"],
+    sortClasses : ["sort-asc", "sort-desc"],
     /**
      * The text displayed in the "Sort Ascending" menu item
      * @type String
      */
-    sortAscText: "Sort Ascending",
+    sortAscText : "Sort Ascending",
     /**
      * The text displayed in the "Sort Descending" menu item
      * @type String
      */
-    sortDescText: "Sort Descending",
+    sortDescText : "Sort Descending",
     /**
      * The text displayed in the "Columns" menu item
      * @type String
      */
-    columnsText: "Columns",
+    columnsText : "Columns",
 
     // private
     borderWidth: 2,
@@ -145,61 +145,61 @@ Ext.extend(Ext.grid.GridView, Ext.util.Observable, {
     /* -------------------------------- UI Specific ----------------------------- */
 
     // private
-    initTemplates: function () {
+    initTemplates : function(){
         var ts = this.templates || {};
-        if (!ts.master) {
+        if(!ts.master){
             ts.master = new Ext.Template(
-                '<div class="x-grid3" hidefocus="true">',
-                '<div class="x-grid3-viewport">',
-                '<div class="x-grid3-header"><div class="x-grid3-header-inner"><div class="x-grid3-header-offset">{header}</div></div><div class="x-clear"></div></div>',
-                '<div class="x-grid3-scroller"><div class="x-grid3-body">{body}</div><a href="#" class="x-grid3-focus" tabIndex="-1"></a></div>',
-                "</div>",
-                '<div class="x-grid3-resize-marker">&#160;</div>',
-                '<div class="x-grid3-resize-proxy">&#160;</div>',
-                "</div>"
-            );
+                    '<div class="x-grid3" hidefocus="true">',
+                        '<div class="x-grid3-viewport">',
+                            '<div class="x-grid3-header"><div class="x-grid3-header-inner"><div class="x-grid3-header-offset">{header}</div></div><div class="x-clear"></div></div>',
+                            '<div class="x-grid3-scroller"><div class="x-grid3-body">{body}</div><a href="#" class="x-grid3-focus" tabIndex="-1"></a></div>',
+                        "</div>",
+                        '<div class="x-grid3-resize-marker">&#160;</div>',
+                        '<div class="x-grid3-resize-proxy">&#160;</div>',
+                    "</div>"
+                    );
         }
 
-        if (!ts.header) {
+        if(!ts.header){
             ts.header = new Ext.Template(
-                '<table border="0" cellspacing="0" cellpadding="0" style="{tstyle}">',
-                '<thead><tr class="x-grid3-hd-row">{cells}</tr></thead>',
-                "</table>"
-            );
+                    '<table border="0" cellspacing="0" cellpadding="0" style="{tstyle}">',
+                    '<thead><tr class="x-grid3-hd-row">{cells}</tr></thead>',
+                    "</table>"
+                    );
         }
 
-        if (!ts.hcell) {
+        if(!ts.hcell){
             ts.hcell = new Ext.Template(
-                '<td class="x-grid3-hd x-grid3-cell x-grid3-td-{id}" style="{style}"><div {tooltip} {attr} class="x-grid3-hd-inner x-grid3-hd-{id}" unselectable="on" style="{istyle}">', this.grid.enableHdMenu ? '<a class="x-grid3-hd-btn" href="#"></a>' : '',
-                '{value}<img class="x-grid3-sort-icon" src="', Ext.BLANK_IMAGE_URL, '" />',
-                "</div></td>"
-            );
+                    '<td class="x-grid3-hd x-grid3-cell x-grid3-td-{id}" style="{style}"><div {tooltip} {attr} class="x-grid3-hd-inner x-grid3-hd-{id}" unselectable="on" style="{istyle}">', this.grid.enableHdMenu ? '<a class="x-grid3-hd-btn" href="#"></a>' : '',
+                    '{value}<img class="x-grid3-sort-icon" src="', Ext.BLANK_IMAGE_URL, '" />',
+                    "</div></td>"
+                    );
         }
 
-        if (!ts.body) {
+        if(!ts.body){
             ts.body = new Ext.Template('{rows}');
         }
 
-        if (!ts.row) {
+        if(!ts.row){
             ts.row = new Ext.Template(
-                '<div class="x-grid3-row {alt}" style="{tstyle}"><table class="x-grid3-row-table" border="0" cellspacing="0" cellpadding="0" style="{tstyle}">',
-                '<tbody><tr>{cells}</tr>',
-                (this.enableRowBody ? '<tr class="x-grid3-row-body-tr" style="{bodyStyle}"><td colspan="{cols}" class="x-grid3-body-cell" tabIndex="0" hidefocus="on"><div class="x-grid3-row-body">{body}</div></td></tr>' : ''),
-                '</tbody></table></div>'
-            );
+                    '<div class="x-grid3-row {alt}" style="{tstyle}"><table class="x-grid3-row-table" border="0" cellspacing="0" cellpadding="0" style="{tstyle}">',
+                    '<tbody><tr>{cells}</tr>',
+                    (this.enableRowBody ? '<tr class="x-grid3-row-body-tr" style="{bodyStyle}"><td colspan="{cols}" class="x-grid3-body-cell" tabIndex="0" hidefocus="on"><div class="x-grid3-row-body">{body}</div></td></tr>' : ''),
+                    '</tbody></table></div>'
+                    );
         }
 
-        if (!ts.cell) {
+        if(!ts.cell){
             ts.cell = new Ext.Template(
-                '<td class="x-grid3-col x-grid3-cell x-grid3-td-{id} {css}" style="{style}" tabIndex="0" {cellAttr}>',
-                '<div class="x-grid3-cell-inner x-grid3-col-{id}" unselectable="on" {attr}>{value}</div>',
-                "</td>"
-            );
+                    '<td class="x-grid3-col x-grid3-cell x-grid3-td-{id} {css}" style="{style}" tabIndex="0" {cellAttr}>',
+                    '<div class="x-grid3-cell-inner x-grid3-col-{id}" unselectable="on" {attr}>{value}</div>',
+                    "</td>"
+                    );
         }
 
-        for (var k in ts) {
+        for(var k in ts){
             var t = ts[k];
-            if (t && typeof t.compile == 'function' && !t.compiled) {
+            if(t && typeof t.compile == 'function' && !t.compiled){
                 t.disableFormats = true;
                 t.compile();
             }
@@ -215,8 +215,8 @@ Ext.extend(Ext.grid.GridView, Ext.util.Observable, {
     },
 
     // private
-    fly: function (el) {
-        if (!this._flyweight) {
+    fly : function(el){
+        if(!this._flyweight){
             this._flyweight = new Ext.Element.Flyweight(document.body);
         }
         this._flyweight.dom = el;
@@ -224,12 +224,12 @@ Ext.extend(Ext.grid.GridView, Ext.util.Observable, {
     },
 
     // private
-    getEditorParent: function (ed) {
+    getEditorParent : function(ed){
         return this.scroller.dom;
     },
 
     // private
-    initElements: function () {
+    initElements : function(){
         var E = Ext.Element;
 
         var el = this.grid.getGridEl().dom.firstChild;
@@ -241,7 +241,7 @@ Ext.extend(Ext.grid.GridView, Ext.util.Observable, {
         this.mainHd = new E(this.mainWrap.dom.firstChild);
         this.innerHd = this.mainHd.dom.firstChild;
         this.scroller = new E(this.mainWrap.dom.childNodes[1]);
-        if (this.forceFit) {
+        if(this.forceFit){
             this.scroller.setStyle('overflow-x', 'hidden');
         }
         this.mainBody = new E(this.scroller.dom.firstChild);
@@ -254,34 +254,34 @@ Ext.extend(Ext.grid.GridView, Ext.util.Observable, {
     },
 
     // private
-    getRows: function () {
+    getRows : function(){
         return this.hasRows() ? this.mainBody.dom.childNodes : [];
     },
 
     // finder methods, used with delegation
 
     // private
-    findCell: function (el) {
-        if (!el) {
+    findCell : function(el){
+        if(!el){
             return false;
         }
         return this.fly(el).findParent(this.cellSelector, 3);
     },
 
     // private
-    findCellIndex: function (el, requiredCls) {
+    findCellIndex : function(el, requiredCls){
         var cell = this.findCell(el);
-        if (cell && (!requiredCls || this.fly(cell).hasClass(requiredCls))) {
+        if(cell && (!requiredCls || this.fly(cell).hasClass(requiredCls))){
             return this.getCellIndex(cell);
         }
         return false;
     },
 
     // private
-    getCellIndex: function (el) {
-        if (el) {
+    getCellIndex : function(el){
+        if(el){
             var m = el.className.match(this.colRe);
-            if (m && m[1]) {
+            if(m && m[1]){
                 return this.cm.getIndexById(m[1]);
             }
         }
@@ -289,87 +289,87 @@ Ext.extend(Ext.grid.GridView, Ext.util.Observable, {
     },
 
     // private
-    findHeaderCell: function (el) {
+    findHeaderCell : function(el){
         var cell = this.findCell(el);
         return cell && this.fly(cell).hasClass(this.hdCls) ? cell : null;
     },
 
     // private
-    findHeaderIndex: function (el) {
+    findHeaderIndex : function(el){
         return this.findCellIndex(el, this.hdCls);
     },
 
     // private
-    findRow: function (el) {
-        if (!el) {
+    findRow : function(el){
+        if(!el){
             return false;
         }
         return this.fly(el).findParent(this.rowSelector, 10);
     },
 
     // private
-    findRowIndex: function (el) {
+    findRowIndex : function(el){
         var r = this.findRow(el);
         return r ? r.rowIndex : false;
     },
 
     // getter methods for fetching elements dynamically in the grid
 
-    /**
-     * Return the &lt;TR> HtmlElement which represents a Grid row for the specified index.
-     * @param {Number} index The row index
-     * @return {HtmlElement} The &lt;TR> element.
-     */
-    getRow: function (row) {
+/**
+ * Return the &lt;TR> HtmlElement which represents a Grid row for the specified index.
+ * @param {Number} index The row index
+ * @return {HtmlElement} The &lt;TR> element.
+ */
+    getRow : function(row){
         return this.getRows()[row];
     },
 
-    /**
-     * Returns the grid's &lt;TD> HtmlElement at the specified coordinates.
-     * @param {Number} row The row index in which to find the cell.
-     * @param {Number} col The column index of the cell.
-     * @return {HtmlElement} The &lt;TD> at the specified coordinates.
-     */
-    getCell: function (row, col) {
+/**
+ * Returns the grid's &lt;TD> HtmlElement at the specified coordinates.
+ * @param {Number} row The row index in which to find the cell.
+ * @param {Number} col The column index of the cell.
+ * @return {HtmlElement} The &lt;TD> at the specified coordinates.
+ */
+    getCell : function(row, col){
         return this.getRow(row).getElementsByTagName('td')[col];
     },
 
-    /**
-     * Return the &lt;TD> HtmlElement which represents the Grid's header cell for the specified column index.
-     * @param {Number} index The column index
-     * @return {HtmlElement} The &lt;TD> element.
-     */
-    getHeaderCell: function (index) {
-        return this.mainHd.dom.getElementsByTagName('td')[index];
+/**
+ * Return the &lt;TD> HtmlElement which represents the Grid's header cell for the specified column index.
+ * @param {Number} index The column index
+ * @return {HtmlElement} The &lt;TD> element.
+ */
+    getHeaderCell : function(index){
+      return this.mainHd.dom.getElementsByTagName('td')[index];
     },
 
     // manipulating elements
 
     // private - use getRowClass to apply custom row classes
-    addRowClass: function (row, cls) {
+    addRowClass : function(row, cls){
         var r = this.getRow(row);
-        if (r) {
+        if(r){
             this.fly(r).addClass(cls);
         }
     },
 
     // private
-    removeRowClass: function (row, cls) {
+    removeRowClass : function(row, cls){
         var r = this.getRow(row);
-        if (r) {
+        if(r){
             this.fly(r).removeClass(cls);
         }
     },
 
     // private
-    removeRow: function (row) {
+    removeRow : function(row){
         Ext.removeNode(this.getRow(row));
     },
 
     // private
-    removeRows: function (firstRow, lastRow) {
+    removeRows : function(firstRow, lastRow){
         var bd = this.mainBody.dom;
-        for (var rowIndex = firstRow; rowIndex <= lastRow; rowIndex++) {
+        for(var rowIndex = firstRow; rowIndex <= lastRow; rowIndex++){
             Ext.removeNode(bd.childNodes[firstRow]);
         }
     },
@@ -377,13 +377,13 @@ Ext.extend(Ext.grid.GridView, Ext.util.Observable, {
     // scrolling stuff
 
     // private
-    getScrollState: function () {
+    getScrollState : function(){
         var sb = this.scroller.dom;
         return {left: sb.scrollLeft, top: sb.scrollTop};
     },
 
     // private
-    restoreScroll: function (state) {
+    restoreScroll : function(state){
         var sb = this.scroller.dom;
         sb.scrollLeft = state.left;
         sb.scrollTop = state.top;
@@ -392,54 +392,54 @@ Ext.extend(Ext.grid.GridView, Ext.util.Observable, {
     /**
      * Scrolls the grid to the top
      */
-    scrollToTop: function () {
+    scrollToTop : function(){
         this.scroller.dom.scrollTop = 0;
         this.scroller.dom.scrollLeft = 0;
     },
 
     // private
-    syncScroll: function () {
-        this.syncHeaderScroll();
-        var mb = this.scroller.dom;
+    syncScroll : function(){
+      this.syncHeaderScroll();
+      var mb = this.scroller.dom;
         this.grid.fireEvent("bodyscroll", mb.scrollLeft, mb.scrollTop);
     },
 
     // private
-    syncHeaderScroll: function () {
+    syncHeaderScroll : function(){
         var mb = this.scroller.dom;
         this.innerHd.scrollLeft = mb.scrollLeft;
         this.innerHd.scrollLeft = mb.scrollLeft; // second time for IE (1/2 time first fails, other browsers ignore)
     },
 
     // private
-    updateSortIcon: function (col, dir) {
+    updateSortIcon : function(col, dir){
         var sc = this.sortClasses;
         var hds = this.mainHd.select('td').removeClass(sc);
         hds.item(col).addClass(sc[dir == "DESC" ? 1 : 0]);
     },
 
     // private
-    updateAllColumnWidths: function () {
+    updateAllColumnWidths : function(){
         var tw = this.getTotalWidth();
         var clen = this.cm.getColumnCount();
         var ws = [];
-        for (var i = 0; i < clen; i++) {
+        for(var i = 0; i < clen; i++){
             ws[i] = this.getColumnWidth(i);
         }
 
         this.innerHd.firstChild.firstChild.style.width = tw;
 
-        for (var i = 0; i < clen; i++) {
+        for(var i = 0; i < clen; i++){
             var hd = this.getHeaderCell(i);
             hd.style.width = ws[i];
         }
 
         var ns = this.getRows();
-        for (var i = 0, len = ns.length; i < len; i++) {
+        for(var i = 0, len = ns.length; i < len; i++){
             ns[i].style.width = tw;
             ns[i].firstChild.style.width = tw;
             var row = ns[i].firstChild.rows[0];
-            for (var j = 0; j < clen; j++) {
+            for(var j = 0; j < clen; j++){
                 row.childNodes[j].style.width = ws[j];
             }
         }
@@ -448,7 +448,7 @@ Ext.extend(Ext.grid.GridView, Ext.util.Observable, {
     },
 
     // private
-    updateColumnWidth: function (col, width) {
+    updateColumnWidth : function(col, width){
         var w = this.getColumnWidth(col);
         var tw = this.getTotalWidth();
 
@@ -457,7 +457,7 @@ Ext.extend(Ext.grid.GridView, Ext.util.Observable, {
         hd.style.width = w;
 
         var ns = this.getRows();
-        for (var i = 0, len = ns.length; i < len; i++) {
+        for(var i = 0, len = ns.length; i < len; i++){
             ns[i].style.width = tw;
             ns[i].firstChild.style.width = tw;
             ns[i].firstChild.rows[0].childNodes[col].style.width = w;
@@ -467,7 +467,7 @@ Ext.extend(Ext.grid.GridView, Ext.util.Observable, {
     },
 
     // private
-    updateColumnHidden: function (col, hidden) {
+    updateColumnHidden : function(col, hidden){
         var tw = this.getTotalWidth();
 
         this.innerHd.firstChild.firstChild.style.width = tw;
@@ -478,7 +478,7 @@ Ext.extend(Ext.grid.GridView, Ext.util.Observable, {
         hd.style.display = display;
 
         var ns = this.getRows();
-        for (var i = 0, len = ns.length; i < len; i++) {
+        for(var i = 0, len = ns.length; i < len; i++){
             ns[i].style.width = tw;
             ns[i].firstChild.style.width = tw;
             ns[i].firstChild.rows[0].childNodes[col].style.display = display;
@@ -491,67 +491,66 @@ Ext.extend(Ext.grid.GridView, Ext.util.Observable, {
     },
 
     // private
-    doRender: function (cs, rs, ds, startRow, colCount, stripe) {
-        var ts = this.templates, ct = ts.cell, rt = ts.row, last = colCount - 1;
-        var tstyle = 'width:' + this.getTotalWidth() + ';';
+    doRender : function(cs, rs, ds, startRow, colCount, stripe){
+        var ts = this.templates, ct = ts.cell, rt = ts.row, last = colCount-1;
+        var tstyle = 'width:'+this.getTotalWidth()+';';
         // buffers
         var buf = [], cb, c, p = {}, rp = {tstyle: tstyle}, r;
-        for (var j = 0, len = rs.length; j < len; j++) {
-            r = rs[j];
-            cb = [];
-            var rowIndex = (j + startRow);
-            for (var i = 0; i < colCount; i++) {
+        for(var j = 0, len = rs.length; j < len; j++){
+            r = rs[j]; cb = [];
+            var rowIndex = (j+startRow);
+            for(var i = 0; i < colCount; i++){
                 c = cs[i];
                 p.id = c.id;
                 p.css = i == 0 ? 'x-grid3-cell-first ' : (i == last ? 'x-grid3-cell-last ' : '');
                 p.attr = p.cellAttr = "";
                 p.value = c.renderer(r.data[c.name], p, r, rowIndex, i, ds);
                 p.style = c.style;
-                if (p.value == undefined || p.value === "") p.value = "&#160;";
-                if (r.dirty && typeof r.modified[c.name] !== 'undefined') {
+                if(p.value == undefined || p.value === "") p.value = "&#160;";
+                if(r.dirty && typeof r.modified[c.name] !== 'undefined'){
                     p.css += ' x-grid3-dirty-cell';
                 }
                 cb[cb.length] = ct.apply(p);
             }
             var alt = [];
-            if (stripe && ((rowIndex + 1) % 2 == 0)) {
+            if(stripe && ((rowIndex+1) % 2 == 0)){
                 alt[0] = "x-grid3-row-alt";
             }
-            if (r.dirty) {
+            if(r.dirty){
                 alt[1] = " x-grid3-dirty-row";
             }
             rp.cols = colCount;
-            if (this.getRowClass) {
+            if(this.getRowClass){
                 alt[2] = this.getRowClass(r, rowIndex, rp, ds);
             }
             rp.alt = alt.join(" ");
             rp.cells = cb.join("");
-            buf[buf.length] = rt.apply(rp);
+            buf[buf.length] =  rt.apply(rp);
         }
         return buf.join("");
     },
 
     // private
-    processRows: function (startRow, skipStripe) {
-        if (this.ds.getCount() < 1) {
+    processRows : function(startRow, skipStripe){
+        if(this.ds.getCount() < 1){
             return;
         }
         skipStripe = skipStripe || !this.grid.stripeRows;
         startRow = startRow || 0;
         var rows = this.getRows();
         var cls = ' x-grid3-row-alt ';
-        for (var i = startRow, len = rows.length; i < len; i++) {
+        for(var i = startRow, len = rows.length; i < len; i++){
             var row = rows[i];
             row.rowIndex = i;
-            if (!skipStripe) {
-                var isAlt = ((i + 1) % 2 == 0);
-                var hasAlt = (' ' + row.className + ' ').indexOf(cls) != -1;
-                if (isAlt == hasAlt) {
+            if(!skipStripe){
+                var isAlt = ((i+1) % 2 == 0);
+                var hasAlt = (' '+row.className + ' ').indexOf(cls) != -1;
+                if(isAlt == hasAlt){
                     continue;
                 }
-                if (isAlt) {
+                if(isAlt){
                     row.className += " x-grid3-row-alt";
-                } else {
+                }else{
                     row.className = row.className.replace("x-grid3-row-alt", "");
                 }
             }
@@ -559,10 +558,10 @@ Ext.extend(Ext.grid.GridView, Ext.util.Observable, {
     },
 
     // private
-    renderUI: function () {
+    renderUI : function(){
 
         var header = this.renderHeaders();
-        var body = this.templates.body.apply({rows: ''});
+        var body = this.templates.body.apply({rows:''});
 
 
         var html = this.templates.master.apply({
@@ -587,30 +586,30 @@ Ext.extend(Ext.grid.GridView, Ext.util.Observable, {
         this.mainHd.on("mouseout", this.handleHdOut, this);
         this.mainHd.on("mousemove", this.handleHdMove, this);
 
-        this.scroller.on('scroll', this.syncScroll, this);
-        if (g.enableColumnResize !== false) {
+        this.scroller.on('scroll', this.syncScroll,  this);
+        if(g.enableColumnResize !== false){
             this.splitone = new Ext.grid.GridView.SplitDragZone(g, this.mainHd.dom);
         }
 
-        if (g.enableColumnMove) {
+        if(g.enableColumnMove){
             this.columnDrag = new Ext.grid.GridView.ColumnDragZone(g, this.innerHd);
             this.columnDrop = new Ext.grid.HeaderDropZone(g, this.mainHd.dom);
         }
 
-        if (g.enableHdMenu !== false) {
-            if (g.enableColumnHide !== false) {
-                this.colMenu = new Ext.menu.Menu({id: g.id + "-hcols-menu"});
+        if(g.enableHdMenu !== false){
+            if(g.enableColumnHide !== false){
+                this.colMenu = new Ext.menu.Menu({id:g.id + "-hcols-menu"});
                 this.colMenu.on("beforeshow", this.beforeColMenuShow, this);
                 this.colMenu.on("itemclick", this.handleHdMenuClick, this);
             }
             this.hmenu = new Ext.menu.Menu({id: g.id + "-hctx"});
             this.hmenu.add(
-                {id: "asc", text: this.sortAscText, cls: "xg-hmenu-sort-asc"},
-                {id: "desc", text: this.sortDescText, cls: "xg-hmenu-sort-desc"}
+                {id:"asc", text: this.sortAscText, cls: "xg-hmenu-sort-asc"},
+                {id:"desc", text: this.sortDescText, cls: "xg-hmenu-sort-desc"}
             );
-            if (g.enableColumnHide !== false) {
+            if(g.enableColumnHide !== false){
                 this.hmenu.add('-',
-                    {id: "columns", text: this.columnsText, menu: this.colMenu, iconCls: 'x-cols-icon'}
+                    {id:"columns", text: this.columnsText, menu: this.colMenu, iconCls: 'x-cols-icon'}
                 );
             }
             this.hmenu.on("itemclick", this.handleHdMenuClick, this);
@@ -618,9 +617,9 @@ Ext.extend(Ext.grid.GridView, Ext.util.Observable, {
             //g.on("headercontextmenu", this.handleHdCtx, this);
         }
 
-        if (g.enableDragDrop || g.enableDrag) {
+        if(g.enableDragDrop || g.enableDrag){
             var dd = new Ext.grid.GridDragZone(g, {
-                ddGroup: g.ddGroup || 'GridDD'
+                ddGroup : g.ddGroup || 'GridDD'
             });
         }
 
@@ -629,41 +628,41 @@ Ext.extend(Ext.grid.GridView, Ext.util.Observable, {
     },
 
     // private
-    layout: function () {
-        if (!this.mainBody) {
+    layout : function(){
+        if(!this.mainBody){
             return; // not rendered
         }
         var g = this.grid;
         var c = g.getGridEl(), cm = this.cm,
-            expandCol = g.autoExpandColumn,
-            gv = this;
+                expandCol = g.autoExpandColumn,
+                gv = this;
 
         var csize = c.getSize(true);
         var vw = csize.width;
 
-        if (vw < 20 || csize.height < 20) { // display: none?
+        if(vw < 20 || csize.height < 20){ // display: none?
             return;
         }
 
-        if (g.autoHeight) {
+        if(g.autoHeight){
             this.scroller.dom.style.overflow = 'visible';
-        } else {
+        }else{
             this.el.setSize(csize.width, csize.height);
 
             var hdHeight = this.mainHd.getHeight();
             var vh = csize.height - (hdHeight);
 
             this.scroller.setSize(vw, vh);
-            if (this.innerHd) {
-                this.innerHd.style.width = (vw) + 'px';
+            if(this.innerHd){
+                this.innerHd.style.width = (vw)+'px';
             }
         }
-        if (this.forceFit) {
-            if (this.lastViewWidth != vw) {
+        if(this.forceFit){
+            if(this.lastViewWidth != vw){
                 this.fitColumns(false, false);
                 this.lastViewWidth = vw;
             }
-        } else {
+        }else {
             this.autoExpand();
             this.syncHeaderScroll();
         }
@@ -672,33 +671,33 @@ Ext.extend(Ext.grid.GridView, Ext.util.Observable, {
 
     // template functions for subclasses and plugins
     // these functions include precalculated values
-    onLayout: function (vw, vh) {
+    onLayout : function(vw, vh){
         // do nothing
     },
 
-    onColumnWidthUpdated: function (col, w, tw) {
+    onColumnWidthUpdated : function(col, w, tw){
         // template method
     },
 
-    onAllColumnWidthsUpdated: function (ws, tw) {
+    onAllColumnWidthsUpdated : function(ws, tw){
         // template method
     },
 
-    onColumnHiddenUpdated: function (col, hidden, tw) {
+    onColumnHiddenUpdated : function(col, hidden, tw){
         // template method
     },
 
-    updateColumnText: function (col, text) {
+    updateColumnText : function(col, text){
         // template method
     },
 
-    afterMove: function (colIndex) {
+    afterMove : function(colIndex){
         // template method
     },
 
     /* ----------------------------------- Core Specific -------------------------------------------*/
     // private
-    init: function (grid) {
+    init: function(grid){
         this.grid = grid;
 
         this.initTemplates();
@@ -707,52 +706,52 @@ Ext.extend(Ext.grid.GridView, Ext.util.Observable, {
     },
 
     // private
-    getColumnId: function (index) {
-        return this.cm.getColumnId(index);
+    getColumnId : function(index){
+      return this.cm.getColumnId(index);
     },
 
     // private
-    renderHeaders: function () {
+    renderHeaders : function(){
         var cm = this.cm, ts = this.templates;
         var ct = ts.hcell;
 
         var cb = [], sb = [], p = {};
 
-        for (var i = 0, len = cm.getColumnCount(); i < len; i++) {
+        for(var i = 0, len = cm.getColumnCount(); i < len; i++){
             p.id = cm.getColumnId(i);
             p.value = cm.getColumnHeader(i) || "";
             p.style = this.getColumnStyle(i, true);
             p.tooltip = this.getColumnTooltip(i);
-            if (cm.config[i].align == 'right') {
+            if(cm.config[i].align == 'right'){
                 p.istyle = 'padding-right:16px';
             } else {
                 delete p.istyle;
             }
             cb[cb.length] = ct.apply(p);
         }
-        return ts.header.apply({cells: cb.join(""), tstyle: 'width:' + this.getTotalWidth() + ';'});
+        return ts.header.apply({cells: cb.join(""), tstyle:'width:'+this.getTotalWidth()+';'});
     },
 
     // private
-    getColumnTooltip: function (i) {
+    getColumnTooltip : function(i){
         var tt = this.cm.getColumnTooltip(i);
-        if (tt) {
-            if (Ext.QuickTips.isEnabled()) {
-                return 'ext:qtip="' + tt + '"';
-            } else {
-                return 'title="' + tt + '"';
+        if(tt){
+            if(Ext.QuickTips.isEnabled()){
+                return 'ext:qtip="'+tt+'"';
+            }else{
+                return 'title="'+tt+'"';
             }
         }
         return "";
     },
 
     // private
-    beforeUpdate: function () {
+    beforeUpdate : function(){
         this.grid.stopEditing();
     },
 
     // private
-    updateHeaders: function () {
+    updateHeaders : function(){
         this.innerHd.firstChild.innerHTML = this.renderHeaders();
     },
 
@@ -760,7 +759,7 @@ Ext.extend(Ext.grid.GridView, Ext.util.Observable, {
      * Focuses the specified row.
      * @param {Number} row The row index
      */
-    focusRow: function (row) {
+    focusRow : function(row){
         this.focusCell(row, 0, false);
     },
 
@@ -769,37 +768,37 @@ Ext.extend(Ext.grid.GridView, Ext.util.Observable, {
      * @param {Number} row The row index
      * @param {Number} col The column index
      */
-    focusCell: function (row, col, hscroll) {
+    focusCell : function(row, col, hscroll){
         var xy = this.ensureVisible(row, col, hscroll);
         this.focusEl.setXY(xy);
-        if (Ext.isGecko) {
+        if(Ext.isGecko){
             this.focusEl.focus();
-        } else {
+        }else{
             this.focusEl.focus.defer(1, this.focusEl);
         }
     },
 
     // private
-    ensureVisible: function (row, col, hscroll) {
-        if (typeof row != "number") {
+    ensureVisible : function(row, col, hscroll){
+        if(typeof row != "number"){
             row = row.rowIndex;
         }
-        if (!this.ds) {
+        if(!this.ds){
             return;
         }
-        if (row < 0 || row >= this.ds.getCount()) {
+        if(row < 0 || row >= this.ds.getCount()){
             return;
         }
         col = (col !== undefined ? col : 0);
 
         var rowEl = this.getRow(row), cellEl;
-        if (!(hscroll === false && col === 0)) {
-            while (this.cm.isHidden(col)) {
+        if(!(hscroll === false && col === 0)){
+            while(this.cm.isHidden(col)){
                 col++;
             }
             cellEl = this.getCell(row, col);
         }
-        if (!rowEl) {
+        if(!rowEl){
             return;
         }
 
@@ -807,7 +806,7 @@ Ext.extend(Ext.grid.GridView, Ext.util.Observable, {
 
         var ctop = 0;
         var p = rowEl, stop = this.el.dom;
-        while (p && p != stop) {
+        while(p && p != stop){
             ctop += p.offsetTop;
             p = p.offsetParent;
         }
@@ -819,43 +818,43 @@ Ext.extend(Ext.grid.GridView, Ext.util.Observable, {
         var stop = parseInt(c.scrollTop, 10);
         var sbot = stop + ch;
 
-        if (ctop < stop) {
-            c.scrollTop = ctop;
-        } else if (cbot > sbot) {
-            c.scrollTop = cbot - ch;
+        if(ctop < stop){
+          c.scrollTop = ctop;
+        }else if(cbot > sbot){
+            c.scrollTop = cbot-ch;
         }
 
-        if (hscroll !== false) {
+        if(hscroll !== false){
             var cleft = parseInt(cellEl.offsetLeft, 10);
             var cright = cleft + cellEl.offsetWidth;
 
             var sleft = parseInt(c.scrollLeft, 10);
             var sright = sleft + c.clientWidth;
-            if (cleft < sleft) {
+            if(cleft < sleft){
                 c.scrollLeft = cleft;
-            } else if (cright > sright) {
-                c.scrollLeft = cright - c.clientWidth;
+            }else if(cright > sright){
+                c.scrollLeft = cright-c.clientWidth;
             }
         }
         return cellEl ? Ext.fly(cellEl).getXY() : [c.scrollLeft, Ext.fly(rowEl).getY()];
     },
 
     // private
-    insertRows: function (dm, firstRow, lastRow, isUpdate) {
-        if (firstRow === 0 && lastRow == dm.getCount() - 1) {
+    insertRows : function(dm, firstRow, lastRow, isUpdate){
+        if(firstRow === 0 && lastRow == dm.getCount()-1){
             this.refresh();
-        } else {
-            if (!isUpdate) {
+        }else{
+            if(!isUpdate){
                 this.fireEvent("beforerowsinserted", this, firstRow, lastRow);
             }
             var html = this.renderRows(firstRow, lastRow);
             var before = this.getRow(firstRow);
-            if (before) {
+            if(before){
                 Ext.DomHelper.insertHtml('beforeBegin', before, html);
-            } else {
+            }else{
                 Ext.DomHelper.insertHtml('beforeEnd', this.mainBody.dom, html);
             }
-            if (!isUpdate) {
+            if(!isUpdate){
                 this.fireEvent("rowsinserted", this, firstRow, lastRow);
                 this.processRows(firstRow);
             }
@@ -863,10 +862,10 @@ Ext.extend(Ext.grid.GridView, Ext.util.Observable, {
     },
 
     // private
-    deleteRows: function (dm, firstRow, lastRow) {
-        if (dm.getRowCount() < 1) {
+    deleteRows : function(dm, firstRow, lastRow){
+        if(dm.getRowCount()<1){
             this.refresh();
-        } else {
+        }else{
             this.fireEvent("beforerowsdeleted", this, firstRow, lastRow);
 
             this.removeRows(firstRow, lastRow);
@@ -877,51 +876,51 @@ Ext.extend(Ext.grid.GridView, Ext.util.Observable, {
     },
 
     // private
-    getColumnStyle: function (col, isHeader) {
+    getColumnStyle : function(col, isHeader){
         var style = !isHeader ? (this.cm.config[col].css || '') : '';
-        style += 'width:' + this.getColumnWidth(col) + ';';
-        if (this.cm.isHidden(col)) {
+        style += 'width:'+this.getColumnWidth(col)+';';
+        if(this.cm.isHidden(col)){
             style += 'display:none;';
         }
         var align = this.cm.config[col].align;
-        if (align) {
-            style += 'text-align:' + align + ';';
+        if(align){
+            style += 'text-align:'+align+';';
         }
         return style;
     },
 
     // private
-    getColumnWidth: function (col) {
+    getColumnWidth : function(col){
         var w = this.cm.getColumnWidth(col);
-        if (typeof w == 'number') {
-            return (Ext.isBorderBox ? w : (w - this.borderWidth > 0 ? w - this.borderWidth : 0)) + 'px';
+        if(typeof w == 'number'){
+            return (Ext.isBorderBox ? w : (w-this.borderWidth > 0 ? w-this.borderWidth:0)) + 'px';
         }
         return w;
     },
 
     // private
-    getTotalWidth: function () {
-        return this.cm.getTotalWidth() + 'px';
+    getTotalWidth : function(){
+        return this.cm.getTotalWidth()+'px';
     },
 
     // private
-    fitColumns: function (preventRefresh, onlyExpand, omitColumn) {
+    fitColumns : function(preventRefresh, onlyExpand, omitColumn){
         var cm = this.cm, leftOver, dist, i;
         var tw = cm.getTotalWidth(false);
-        var aw = this.grid.getGridEl().getWidth(true) - this.scrollOffset;
+        var aw = this.grid.getGridEl().getWidth(true)-this.scrollOffset;
 
-        if (aw < 20) { // not initialized, so don't screw up the default widths
+        if(aw < 20){ // not initialized, so don't screw up the default widths
             return;
         }
         var extra = aw - tw;
 
-        if (extra === 0) {
+        if(extra === 0){
             return false;
         }
 
         var vc = cm.getColumnCount(true);
-        var ac = vc - (typeof omitColumn == 'number' ? 1 : 0);
-        if (ac === 0) {
+        var ac = vc-(typeof omitColumn == 'number' ? 1 : 0);
+        if(ac === 0){
             ac = 1;
             omitColumn = undefined;
         }
@@ -930,8 +929,8 @@ Ext.extend(Ext.grid.GridView, Ext.util.Observable, {
         var extraCol = 0;
         var width = 0;
         var w;
-        for (i = 0; i < colCount; i++) {
-            if (!cm.isHidden(i) && !cm.isFixed(i) && i !== omitColumn) {
+        for (i = 0; i < colCount; i++){
+            if(!cm.isHidden(i) && !cm.isFixed(i) && i !== omitColumn){
                 w = cm.getColumnWidth(i);
                 cols.push(i);
                 extraCol = i;
@@ -939,20 +938,20 @@ Ext.extend(Ext.grid.GridView, Ext.util.Observable, {
                 width += w;
             }
         }
-        var frac = (aw - cm.getTotalWidth()) / width;
-        while (cols.length) {
+        var frac = (aw - cm.getTotalWidth())/width;
+        while (cols.length){
             w = cols.pop();
             i = cols.pop();
-            cm.setColumnWidth(i, Math.max(this.grid.minColumnWidth, Math.floor(w + w * frac)), true);
+            cm.setColumnWidth(i, Math.max(this.grid.minColumnWidth, Math.floor(w + w*frac)), true);
         }
 
-        if ((tw = cm.getTotalWidth(false)) > aw) {
+        if((tw = cm.getTotalWidth(false)) > aw){
             var adjustCol = ac != vc ? omitColumn : extraCol;
-            cm.setColumnWidth(adjustCol, Math.max(1,
-                cm.getColumnWidth(adjustCol) - (tw - aw)), true);
+             cm.setColumnWidth(adjustCol, Math.max(1,
+                     cm.getColumnWidth(adjustCol)- (tw-aw)), true);
         }
 
-        if (preventRefresh !== true) {
+        if(preventRefresh !== true){
             this.updateAllColumnWidths();
         }
 
@@ -961,18 +960,18 @@ Ext.extend(Ext.grid.GridView, Ext.util.Observable, {
     },
 
     // private
-    autoExpand: function (preventUpdate) {
+    autoExpand : function(preventUpdate){
         var g = this.grid, cm = this.cm;
-        if (!this.userResized && g.autoExpandColumn) {
+        if(!this.userResized && g.autoExpandColumn){
             var tw = cm.getTotalWidth(false);
-            var aw = this.grid.getGridEl().getWidth(true) - this.scrollOffset;
-            if (tw != aw) {
+            var aw = this.grid.getGridEl().getWidth(true)-this.scrollOffset;
+            if(tw != aw){
                 var ci = cm.getIndexById(g.autoExpandColumn);
                 var currentWidth = cm.getColumnWidth(ci);
-                var cw = Math.min(Math.max(((aw - tw) + currentWidth), g.autoExpandMin), g.autoExpandMax);
-                if (cw != currentWidth) {
+                var cw = Math.min(Math.max(((aw-tw)+currentWidth), g.autoExpandMin), g.autoExpandMax);
+                if(cw != currentWidth){
                     cm.setColumnWidth(ci, cw, true);
-                    if (preventUpdate !== true) {
+                    if(preventUpdate !== true){
                         this.updateColumnWidth(ci, cw);
                     }
                 }
@@ -981,35 +980,35 @@ Ext.extend(Ext.grid.GridView, Ext.util.Observable, {
     },
 
     // private
-    getColumnData: function () {
+    getColumnData : function(){
         // build a map for all the columns
         var cs = [], cm = this.cm, colCount = cm.getColumnCount();
-        for (var i = 0; i < colCount; i++) {
+        for(var i = 0; i < colCount; i++){
             var name = cm.getDataIndex(i);
             cs[i] = {
-                name: (typeof name == 'undefined' ? this.ds.fields.get(i).name : name),
-                renderer: cm.getRenderer(i),
-                id: cm.getColumnId(i),
-                style: this.getColumnStyle(i)
+                name : (typeof name == 'undefined' ? this.ds.fields.get(i).name : name),
+                renderer : cm.getRenderer(i),
+                id : cm.getColumnId(i),
+                style : this.getColumnStyle(i)
             };
         }
         return cs;
     },
 
     // private
-    renderRows: function (startRow, endRow) {
+    renderRows : function(startRow, endRow){
         // pull in all the crap needed to render rows
         var g = this.grid, cm = g.colModel, ds = g.store, stripe = g.stripeRows;
         var colCount = cm.getColumnCount();
 
-        if (ds.getCount() < 1) {
+        if(ds.getCount() < 1){
             return "";
         }
 
         var cs = this.getColumnData();
 
         startRow = startRow || 0;
-        endRow = typeof endRow == "undefined" ? ds.getCount() - 1 : endRow;
+        endRow = typeof endRow == "undefined"? ds.getCount()-1 : endRow;
 
         // records to render
         var rs = ds.getRange(startRow, endRow);
@@ -1018,24 +1017,24 @@ Ext.extend(Ext.grid.GridView, Ext.util.Observable, {
     },
 
     // private
-    renderBody: function () {
+    renderBody : function(){
         var markup = this.renderRows();
         return this.templates.body.apply({rows: markup});
     },
 
     // private
-    refreshRow: function (record) {
+    refreshRow : function(record){
         var ds = this.ds, index;
-        if (typeof record == 'number') {
+        if(typeof record == 'number'){
             index = record;
             record = ds.getAt(index);
-        } else {
+        }else{
             index = ds.indexOf(record);
         }
         var cls = [];
         this.insertRows(ds, index, index, true);
         this.getRow(index).rowIndex = index;
-        this.onRemove(ds, record, index + 1, true);
+        this.onRemove(ds, record, index+1, true);
         this.fireEvent("rowupdated", this, index, record);
     },
 
@@ -1043,14 +1042,14 @@ Ext.extend(Ext.grid.GridView, Ext.util.Observable, {
      * Refreshs the grid UI
      * @param {Boolean} headersToo (optional) True to also refresh the headers
      */
-    refresh: function (headersToo) {
+    refresh : function(headersToo){
         this.fireEvent("beforerefresh", this);
         this.grid.stopEditing();
 
         var result = this.renderBody();
         this.mainBody.update(result);
 
-        if (headersToo === true) {
+        if(headersToo === true){
             this.updateHeaders();
             this.updateHeaderSortState();
         }
@@ -1061,57 +1060,57 @@ Ext.extend(Ext.grid.GridView, Ext.util.Observable, {
     },
 
     // private
-    applyEmptyText: function () {
-        if (this.emptyText && !this.hasRows()) {
+    applyEmptyText : function(){
+        if(this.emptyText && !this.hasRows()){
             this.mainBody.update('<div class="x-grid-empty">' + this.emptyText + '</div>');
         }
     },
 
     // private
-    updateHeaderSortState: function () {
+    updateHeaderSortState : function(){
         var state = this.ds.getSortState();
-        if (!state) {
+        if(!state){
             return;
         }
-        if (!this.sortState || (this.sortState.field != state.field || this.sortState.direction != state.direction)) {
+        if(!this.sortState || (this.sortState.field != state.field || this.sortState.direction != state.direction)){
             this.grid.fireEvent('sortchange', this.grid, state);
         }
         this.sortState = state;
         var sortColumn = this.cm.findColumnIndex(state.field);
-        if (sortColumn != -1) {
+        if(sortColumn != -1){
             var sortDir = state.direction;
             this.updateSortIcon(sortColumn, sortDir);
         }
     },
 
     // private
-    destroy: function () {
-        if (this.colMenu) {
+    destroy : function(){
+        if(this.colMenu){
             this.colMenu.removeAll();
             Ext.menu.MenuMgr.unregister(this.colMenu);
             this.colMenu.getEl().remove();
             delete this.colMenu;
         }
-        if (this.hmenu) {
+        if(this.hmenu){
             this.hmenu.removeAll();
             Ext.menu.MenuMgr.unregister(this.hmenu);
             this.hmenu.getEl().remove();
             delete this.hmenu;
         }
-        if (this.grid.enableColumnMove) {
+        if(this.grid.enableColumnMove){
             var dds = Ext.dd.DDM.ids['gridHeader' + this.grid.getGridEl().id];
-            if (dds) {
-                for (var dd in dds) {
-                    if (!dds[dd].config.isTarget && dds[dd].dragElId) {
+            if(dds){
+                for(var dd in dds){
+                    if(!dds[dd].config.isTarget && dds[dd].dragElId){
                         var elid = dds[dd].dragElId;
                         dds[dd].unreg();
                         Ext.get(elid).remove();
-                    } else if (dds[dd].config.isTarget) {
+                    } else if(dds[dd].config.isTarget){
                         dds[dd].proxyTop.remove();
                         dds[dd].proxyBottom.remove();
                         dds[dd].unreg();
                     }
-                    if (Ext.dd.DDM.locationCache[dd]) {
+                    if(Ext.dd.DDM.locationCache[dd]){
                         delete Ext.dd.DDM.locationCache[dd];
                     }
                 }
@@ -1126,25 +1125,25 @@ Ext.extend(Ext.grid.GridView, Ext.util.Observable, {
     },
 
     // private
-    onDenyColumnHide: function () {
+    onDenyColumnHide : function(){
 
     },
 
     // private
-    render: function () {
+    render : function(){
 
         var cm = this.cm;
         var colCount = cm.getColumnCount();
 
-        if (this.grid.monitorWindowResize === true) {
+        if(this.grid.monitorWindowResize === true){
             Ext.EventManager.onWindowResize(this.onWindowResize, this, true);
         }
 
-        if (this.autoFill) {
+        if(this.autoFill){
             this.fitColumns(true, true);
-        } else if (this.forceFit) {
+        }else if(this.forceFit){
             this.fitColumns(true, false);
-        } else if (this.grid.autoExpandColumn) {
+        }else if(this.grid.autoExpandColumn){
             this.autoExpand(true);
         }
 
@@ -1154,8 +1153,8 @@ Ext.extend(Ext.grid.GridView, Ext.util.Observable, {
     },
 
     // private
-    onWindowResize: function () {
-        if (!this.grid.monitorWindowResize || this.grid.autoHeight) {
+    onWindowResize : function(){
+        if(!this.grid.monitorWindowResize || this.grid.autoHeight){
             return;
         }
         this.layout();
@@ -1163,8 +1162,8 @@ Ext.extend(Ext.grid.GridView, Ext.util.Observable, {
 
     /* --------------------------------- Model Events and Handlers --------------------------------*/
     // private
-    initData: function (ds, cm) {
-        if (this.ds) {
+    initData : function(ds, cm){
+        if(this.ds){
             this.ds.un("load", this.onLoad, this);
             this.ds.un("datachanged", this.onDataChange, this);
             this.ds.un("add", this.onAdd, this);
@@ -1172,7 +1171,7 @@ Ext.extend(Ext.grid.GridView, Ext.util.Observable, {
             this.ds.un("update", this.onUpdate, this);
             this.ds.un("clear", this.onClear, this);
         }
-        if (ds) {
+        if(ds){
             ds.on("load", this.onLoad, this);
             ds.on("datachanged", this.onDataChange, this);
             ds.on("add", this.onAdd, this);
@@ -1182,7 +1181,7 @@ Ext.extend(Ext.grid.GridView, Ext.util.Observable, {
         }
         this.ds = ds;
 
-        if (this.cm) {
+        if(this.cm){
             this.cm.un("configchange", this.onColConfigChange, this);
             this.cm.un("widthchange", this.onColWidthChange, this);
             this.cm.un("headerchange", this.onHeaderChange, this);
@@ -1190,7 +1189,7 @@ Ext.extend(Ext.grid.GridView, Ext.util.Observable, {
             this.cm.un("columnmoved", this.onColumnMove, this);
             this.cm.un("columnlockchange", this.onColumnLock, this);
         }
-        if (cm) {
+        if(cm){
             cm.on("configchange", this.onColConfigChange, this);
             cm.on("widthchange", this.onColWidthChange, this);
             cm.on("headerchange", this.onHeaderChange, this);
@@ -1202,33 +1201,33 @@ Ext.extend(Ext.grid.GridView, Ext.util.Observable, {
     },
 
     // private
-    onDataChange: function () {
+    onDataChange : function(){
         this.refresh();
         this.updateHeaderSortState();
     },
 
     // private
-    onClear: function () {
+    onClear : function(){
         this.refresh();
     },
 
     // private
-    onUpdate: function (ds, record) {
+    onUpdate : function(ds, record){
         this.refreshRow(record);
     },
 
     // private
-    onAdd: function (ds, records, index) {
-        this.insertRows(ds, index, index + (records.length - 1));
+    onAdd : function(ds, records, index){
+        this.insertRows(ds, index, index + (records.length-1));
     },
 
     // private
-    onRemove: function (ds, record, index, isUpdate) {
-        if (isUpdate !== true) {
+    onRemove : function(ds, record, index, isUpdate){
+        if(isUpdate !== true){
             this.fireEvent("beforerowremoved", this, index, record);
         }
         this.removeRow(index);
-        if (isUpdate !== true) {
+        if(isUpdate !== true){
             this.processRows(index);
             this.applyEmptyText();
             this.fireEvent("rowremoved", this, index, record);
@@ -1236,27 +1235,27 @@ Ext.extend(Ext.grid.GridView, Ext.util.Observable, {
     },
 
     // private
-    onLoad: function () {
+    onLoad : function(){
         this.scrollToTop();
     },
 
     // private
-    onColWidthChange: function (cm, col, width) {
+    onColWidthChange : function(cm, col, width){
         this.updateColumnWidth(col, width);
     },
 
     // private
-    onHeaderChange: function (cm, col, text) {
+    onHeaderChange : function(cm, col, text){
         this.updateHeaders();
     },
 
     // private
-    onHiddenChange: function (cm, col, hidden) {
+    onHiddenChange : function(cm, col, hidden){
         this.updateColumnHidden(col, hidden);
     },
 
     // private
-    onColumnMove: function (cm, oldIndex, newIndex) {
+    onColumnMove : function(cm, oldIndex, newIndex){
         this.indexMap = null;
         var s = this.getScrollState();
         this.refresh(true);
@@ -1265,7 +1264,7 @@ Ext.extend(Ext.grid.GridView, Ext.util.Observable, {
     },
 
     // private
-    onColConfigChange: function () {
+    onColConfigChange : function(){
         delete this.lastViewWidth;
         this.indexMap = null;
         this.refresh(true);
@@ -1273,86 +1272,86 @@ Ext.extend(Ext.grid.GridView, Ext.util.Observable, {
 
     /* -------------------- UI Events and Handlers ------------------------------ */
     // private
-    initUI: function (grid) {
+    initUI : function(grid){
         grid.on("headerclick", this.onHeaderClick, this);
 
-        if (grid.trackMouseOver) {
+        if(grid.trackMouseOver){
             grid.on("mouseover", this.onRowOver, this);
-            grid.on("mouseout", this.onRowOut, this);
-        }
+          grid.on("mouseout", this.onRowOut, this);
+      }
     },
 
     // private
-    initEvents: function () {
+    initEvents : function(){
 
     },
 
     // private
-    onHeaderClick: function (g, index) {
-        if (this.headersDisabled || !this.cm.isSortable(index)) {
+    onHeaderClick : function(g, index){
+        if(this.headersDisabled || !this.cm.isSortable(index)){
             return;
         }
-        g.stopEditing();
+      g.stopEditing();
         g.store.sort(this.cm.getDataIndex(index));
     },
 
     // private
-    onRowOver: function (e, t) {
+    onRowOver : function(e, t){
         var row;
-        if ((row = this.findRowIndex(t)) !== false) {
+        if((row = this.findRowIndex(t)) !== false){
             this.addRowClass(row, "x-grid3-row-over");
         }
     },
 
     // private
-    onRowOut: function (e, t) {
+    onRowOut : function(e, t){
         var row;
-        if ((row = this.findRowIndex(t)) !== false && row !== this.findRowIndex(e.getRelatedTarget())) {
+        if((row = this.findRowIndex(t)) !== false && row !== this.findRowIndex(e.getRelatedTarget())){
             this.removeRowClass(row, "x-grid3-row-over");
         }
     },
 
     // private
-    handleWheel: function (e) {
+    handleWheel : function(e){
         e.stopPropagation();
     },
 
     // private
-    onRowSelect: function (row) {
+    onRowSelect : function(row){
         this.addRowClass(row, "x-grid3-row-selected");
     },
 
     // private
-    onRowDeselect: function (row) {
+    onRowDeselect : function(row){
         this.removeRowClass(row, "x-grid3-row-selected");
     },
 
     // private
-    onCellSelect: function (row, col) {
+    onCellSelect : function(row, col){
         var cell = this.getCell(row, col);
-        if (cell) {
+        if(cell){
             this.fly(cell).addClass("x-grid3-cell-selected");
         }
     },
 
     // private
-    onCellDeselect: function (row, col) {
+    onCellDeselect : function(row, col){
         var cell = this.getCell(row, col);
-        if (cell) {
+        if(cell){
             this.fly(cell).removeClass("x-grid3-cell-selected");
         }
     },
 
     // private
-    onColumnSplitterMoved: function (i, w) {
+    onColumnSplitterMoved : function(i, w){
         this.userResized = true;
         var cm = this.grid.colModel;
         cm.setColumnWidth(i, w, true);
 
-        if (this.forceFit) {
+        if(this.forceFit){
             this.fitColumns(true, false, i);
             this.updateAllColumnWidths();
-        } else {
+        }else{
             this.updateColumnWidth(i, w);
         }
 
@@ -1360,10 +1359,10 @@ Ext.extend(Ext.grid.GridView, Ext.util.Observable, {
     },
 
     // private
-    handleHdMenuClick: function (item) {
+    handleHdMenuClick : function(item){
         var index = this.hdCtxIndex;
         var cm = this.cm, ds = this.ds;
-        switch (item.id) {
+        switch(item.id){
             case "asc":
                 ds.sort(cm.getDataIndex(index), "ASC");
                 break;
@@ -1372,8 +1371,8 @@ Ext.extend(Ext.grid.GridView, Ext.util.Observable, {
                 break;
             default:
                 index = cm.getIndexById(item.id.substr(4));
-                if (index != -1) {
-                    if (item.checked && cm.getColumnsBy(this.isHideableColumn, this).length <= 1) {
+                if(index != -1){
+                    if(item.checked && cm.getColumnsBy(this.isHideableColumn, this).length <= 1){
                         this.onDenyColumnHide();
                         return false;
                     }
@@ -1384,21 +1383,21 @@ Ext.extend(Ext.grid.GridView, Ext.util.Observable, {
     },
 
     // private
-    isHideableColumn: function (c) {
+    isHideableColumn : function(c){
         return !c.hidden && !c.fixed;
     },
 
     // private
-    beforeColMenuShow: function () {
-        var cm = this.cm, colCount = cm.getColumnCount();
+    beforeColMenuShow : function(){
+        var cm = this.cm,  colCount = cm.getColumnCount();
         this.colMenu.removeAll();
-        for (var i = 0; i < colCount; i++) {
-            if (cm.config[i].fixed !== true && cm.config[i].hideable !== false) {
+        for(var i = 0; i < colCount; i++){
+            if(cm.config[i].fixed !== true && cm.config[i].hideable !== false){
                 this.colMenu.add(new Ext.menu.CheckItem({
-                    id: "col-" + cm.getColumnId(i),
+                    id: "col-"+cm.getColumnId(i),
                     text: cm.getColumnHeader(i),
                     checked: !cm.isHidden(i),
-                    hideOnClick: false,
+                    hideOnClick:false,
                     disabled: cm.config[i].hideable === false
                 }));
             }
@@ -1406,8 +1405,8 @@ Ext.extend(Ext.grid.GridView, Ext.util.Observable, {
     },
 
     // private
-    handleHdDown: function (e, t) {
-        if (Ext.fly(t).hasClass('x-grid3-hd-btn')) {
+    handleHdDown : function(e, t){
+        if(Ext.fly(t).hasClass('x-grid3-hd-btn')){
             e.stopEvent();
             var hd = this.findHeaderCell(t);
             Ext.fly(hd).addClass('x-grid3-hd-menu-open');
@@ -1416,60 +1415,60 @@ Ext.extend(Ext.grid.GridView, Ext.util.Observable, {
             var ms = this.hmenu.items, cm = this.cm;
             ms.get("asc").setDisabled(!cm.isSortable(index));
             ms.get("desc").setDisabled(!cm.isSortable(index));
-            this.hmenu.on("hide", function () {
+            this.hmenu.on("hide", function(){
                 Ext.fly(hd).removeClass('x-grid3-hd-menu-open');
-            }, this, {single: true});
+            }, this, {single:true});
             this.hmenu.show(t, "tl-bl?");
         }
     },
 
     // private
-    handleHdOver: function (e, t) {
+    handleHdOver : function(e, t){
         var hd = this.findHeaderCell(t);
-        if (hd && !this.headersDisabled) {
+        if(hd && !this.headersDisabled){
             this.activeHd = hd;
             this.activeHdIndex = this.getCellIndex(hd);
             var fly = this.fly(hd);
             this.activeHdRegion = fly.getRegion();
-            if (this.cm.isSortable(this.activeHdIndex) && !this.cm.isFixed(this.activeHdIndex)) {
+            if(this.cm.isSortable(this.activeHdIndex) && !this.cm.isFixed(this.activeHdIndex)){
                 fly.addClass("x-grid3-hd-over");
                 this.activeHdBtn = fly.child('.x-grid3-hd-btn');
-                if (this.activeHdBtn) {
-                    this.activeHdBtn.dom.style.height = (hd.firstChild.offsetHeight - 1) + 'px';
+                if(this.activeHdBtn){
+                    this.activeHdBtn.dom.style.height = (hd.firstChild.offsetHeight-1)+'px';
                 }
             }
         }
     },
 
     // private
-    handleHdMove: function (e, t) {
-        if (this.activeHd && !this.headersDisabled) {
+    handleHdMove : function(e, t){
+        if(this.activeHd && !this.headersDisabled){
             var hw = this.splitHandleWidth || 5;
             var r = this.activeHdRegion;
             var x = e.getPageX();
             var ss = this.activeHd.style;
-            if (x - r.left <= hw && this.cm.isResizable(this.activeHdIndex - 1)) {
-                if (Ext.isSafari) {
+            if(x - r.left <= hw && this.cm.isResizable(this.activeHdIndex-1)){
+                if(Ext.isSafari){
                     ss.cursor = 'e-resize';// col-resize not always supported
-                } else {
+                }else{
                     ss.cursor = 'col-resize';
                 }
-            } else if (r.right - x <= (!this.activeHdBtn ? hw : 2) && this.cm.isResizable(this.activeHdIndex)) {
-                if (Ext.isSafari) {
+            }else if(r.right - x <= (!this.activeHdBtn ? hw : 2) && this.cm.isResizable(this.activeHdIndex)){
+                if(Ext.isSafari){
                     ss.cursor = 'w-resize'; // col-resize not always supported
-                } else {
+                }else{
                     ss.cursor = 'col-resize';
                 }
-            } else {
+            }else{
                 ss.cursor = '';
             }
         }
     },
 
     // private
-    handleHdOut: function (e, t) {
+    handleHdOut : function(e, t){
         var hd = this.findHeaderCell(t);
-        if (hd && (!Ext.isIE || !e.within(hd, true))) {
+        if(hd && (!Ext.isIE || !e.within(hd, true))){
             this.activeHd = null;
             this.fly(hd).removeClass("x-grid3-hd-over");
             hd.style.cursor = '';
@@ -1477,13 +1476,13 @@ Ext.extend(Ext.grid.GridView, Ext.util.Observable, {
     },
 
     // private
-    hasRows: function () {
+    hasRows : function(){
         var fc = this.mainBody.dom.firstChild;
         return fc && fc.className != 'x-grid-empty';
     },
 
     // back compat
-    bind: function (d, c) {
+    bind : function(d, c){
         this.initData(d, c);
     }
 });
@@ -1491,21 +1490,21 @@ Ext.extend(Ext.grid.GridView, Ext.util.Observable, {
 
 // private
 // This is a support class used internally by the Grid components
-Ext.grid.GridView.SplitDragZone = function (grid, hd) {
+Ext.grid.GridView.SplitDragZone = function(grid, hd){
     this.grid = grid;
     this.view = grid.getView();
     this.marker = this.view.resizeMarker;
     this.proxy = this.view.resizeProxy;
     Ext.grid.GridView.SplitDragZone.superclass.constructor.call(this, hd,
         "gridSplitters" + this.grid.getGridEl().id, {
-            dragElId: Ext.id(this.proxy.dom), resizeFrame: false
-        });
+        dragElId : Ext.id(this.proxy.dom), resizeFrame:false
+    });
     this.scroll = false;
     this.hw = this.view.splitHandleWidth || 5;
 };
 Ext.extend(Ext.grid.GridView.SplitDragZone, Ext.dd.DDProxy, {
 
-    b4StartDrag: function (x, y) {
+    b4StartDrag : function(x, y){
         this.view.headersDisabled = true;
         var h = this.view.mainWrap.getHeight();
         this.marker.setHeight(h);
@@ -1513,7 +1512,7 @@ Ext.extend(Ext.grid.GridView.SplitDragZone, Ext.dd.DDProxy, {
         this.marker.alignTo(this.view.getHeaderCell(this.cellIndex), 'tl-tl', [-2, 0]);
         this.proxy.setHeight(h);
         var w = this.cm.getColumnWidth(this.cellIndex);
-        var minw = Math.max(w - this.grid.minColumnWidth, 0);
+        var minw = Math.max(w-this.grid.minColumnWidth, 0);
         this.resetConstraints();
         this.setXConstraint(minw, 1000);
         this.setYConstraint(0, 0);
@@ -1524,54 +1523,54 @@ Ext.extend(Ext.grid.GridView.SplitDragZone, Ext.dd.DDProxy, {
     },
 
 
-    handleMouseDown: function (e) {
+    handleMouseDown : function(e){
         var t = this.view.findHeaderCell(e.getTarget());
-        if (t) {
+        if(t){
             var xy = this.view.fly(t).getXY(), x = xy[0], y = xy[1];
             var exy = e.getXY(), ex = exy[0], ey = exy[1];
             var w = t.offsetWidth, adjust = false;
-            if ((ex - x) <= this.hw) {
+            if((ex - x) <= this.hw){
                 adjust = -1;
-            } else if ((x + w) - ex <= this.hw) {
+            }else if((x+w) - ex <= this.hw){
                 adjust = 0;
             }
-            if (adjust !== false) {
+            if(adjust !== false){
                 this.cm = this.grid.colModel;
                 var ci = this.view.getCellIndex(t);
-                if (adjust == -1) {
-                    if (ci + adjust < 0) {
-                        return;
-                    }
-                    while (this.cm.isHidden(ci + adjust)) {
+                if(adjust == -1){
+                  if (ci + adjust < 0) {
+                    return;
+                  }
+                    while(this.cm.isHidden(ci+adjust)){
                         --adjust;
-                        if (ci + adjust < 0) {
+                        if(ci+adjust < 0){
                             return;
                         }
                     }
                 }
-                this.cellIndex = ci + adjust;
+                this.cellIndex = ci+adjust;
                 this.split = t.dom;
-                if (this.cm.isResizable(this.cellIndex) && !this.cm.isFixed(this.cellIndex)) {
+                if(this.cm.isResizable(this.cellIndex) && !this.cm.isFixed(this.cellIndex)){
                     Ext.grid.GridView.SplitDragZone.superclass.handleMouseDown.apply(this, arguments);
                 }
-            } else if (this.view.columnDrag) {
+            }else if(this.view.columnDrag){
                 this.view.columnDrag.callHandleMouseDown(e);
             }
         }
     },
 
-    endDrag: function (e) {
+    endDrag : function(e){
         this.marker.hide();
         var v = this.view;
         var endX = Math.max(this.minX, e.getPageX());
         var diff = endX - this.startPos;
-        v.onColumnSplitterMoved(this.cellIndex, this.cm.getColumnWidth(this.cellIndex) + diff);
-        setTimeout(function () {
+        v.onColumnSplitterMoved(this.cellIndex, this.cm.getColumnWidth(this.cellIndex)+diff);
+        setTimeout(function(){
             v.headersDisabled = false;
         }, 50);
     },
 
-    autoOffset: function () {
-        this.setDelta(0, 0);
+    autoOffset : function(){
+        this.setDelta(0,0);
     }
 });

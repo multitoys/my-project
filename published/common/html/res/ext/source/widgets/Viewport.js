@@ -18,7 +18,7 @@
  * <p>The Viewport does not provide scrolling, so child Panels within the Viewport should provide
  * for scrolling if needed using the {@link #autoScroll} config.</p>
  * Example showing a classic application border layout :<pre><code>
- new Ext.Viewport({
+new Ext.Viewport({
     layout: 'border',
     defaults: {
         activeItem: 0
@@ -74,51 +74,51 @@
         minHeight: 100
     }]
 });
- </code></pre>
+</code></pre>
  * @constructor
  * Create a new Viewport
  * @param {Object} config The config object
  */
 Ext.Viewport = Ext.extend(Ext.Container, {
-    /*
-     * Privatize config options which, if used, would interfere with the
-     * correct operation of the Viewport as the sole manager of the
-     * layout of the document body.
-     */
+	/*
+	 * Privatize config options which, if used, would interfere with the
+	 * correct operation of the Viewport as the sole manager of the
+	 * layout of the document body.
+	 */
     /**
      * @cfg {Mixed} applyTo @hide
-     */
+	 */
     /**
      * @cfg {Boolean} allowDomMove @hide
-     */
+	 */
     /**
      * @cfg {Boolean} hideParent @hide
-     */
+	 */
     /**
      * @cfg {Mixed} renderTo @hide
-     */
+	 */
     /**
      * @cfg {Boolean} hideParent @hide
-     */
+	 */
     /**
      * @cfg {Number} height @hide
-     */
+	 */
     /**
      * @cfg {Number} width @hide
-     */
+	 */
     /**
      * @cfg {Boolean} autoHeight @hide
-     */
+	 */
     /**
      * @cfg {Boolean} autoWidth @hide
-     */
+	 */
     /**
      * @cfg {Boolean} deferHeight @hide
-     */
+	 */
     /**
      * @cfg {Boolean} monitorResize @hide
-     */
-    initComponent: function () {
+	 */
+    initComponent : function() {
         Ext.Viewport.superclass.initComponent.call(this);
         document.getElementsByTagName('html')[0].className += ' x-viewport';
         this.el = Ext.getBody();
@@ -133,7 +133,7 @@ Ext.Viewport = Ext.extend(Ext.Container, {
         this.renderTo = this.el;
     },
 
-    fireResize: function (w, h) {
+    fireResize : function(w, h){
         this.fireEvent('resize', this, w, h, w, h);
     }
 });

@@ -1,108 +1,118 @@
 <?php
 
-    require_once("../../../common/html/includes/httpinit.php");
+	require_once( "../../../common/html/includes/httpinit.php" );
 
-    //
-    // Authorization
-    //
+	//
+	// Authorization
+	//
 
-    $errorStr = null;
-    $fatalError = false;
-    $SCR_ID = "CP";
+	$errorStr = null;
+	$fatalError = false;
+	$SCR_ID = "CP";
 
-    pageUserAuthorization($SCR_ID, $AA_APP_ID, false);
+	pageUserAuthorization( $SCR_ID, $AA_APP_ID, false );
 
-    //
-    // Page variables setup
-    //
+	//
+	// Page variables setup
+	//
 
-    $kernelStrings = $loc_str[$language];
-    $currencyList = array();
+	$kernelStrings = $loc_str[$language];
+	$currencyList = array();
 
-    $btnIndex = getButtonIndex(array("savebtn", "cancelbtn"), $_POST);
+	$btnIndex = getButtonIndex( array( "savebtn", "cancelbtn" ), $_POST );
 
-    $users = unserialize(base64_decode($USERS_ID));
+	$users = unserialize( base64_decode( $USERS_ID ) );
 
-    switch ($btnIndex) {
-        case 0 :
+	switch ( $btnIndex ) {
+		case 0 :
 
-            foreach ($credit as $key => $value) {
-                $value = trim($value);
+			foreach( $credit as $key=>$value )
+			{
+				$value = trim($value);
 
-                if ($value != '' && (!isIntStr($value) || intval($value) < 0)) {
-                    $errorStr = $kernelStrings["sms_err_balance_not_valid"];
-                    break 2;
-                }
+				if ( $value != '' && ( !isIntStr( $value ) || intval( $value ) < 0 ) )
+				{
+					$errorStr = $kernelStrings["sms_err_balance_not_valid"];
+					break 2;
+				}
 
-                $credit[$key] = ($value != '') ? $value : null;
-            }
+				$credit[$key] = ( $value != '' ) ? $value : null;
+			}
 
-            foreach ($credit as $key => $value) {
-                if (PEAR::isError($ret = addsetSMSBalance("SET", $value, $currentUser, $key))) {
-                    $errorStr = $kernelStrings["sms_err_balance_update"];
-                    break;
-                }
-            }
+			foreach( $credit as $key=>$value )
+			{
+				if ( PEAR::isError( $ret = addsetSMSBalance( "SET", $value, $currentUser, $key ) ) )
+				{
+					$errorStr = $kernelStrings["sms_err_balance_update"];
+					break;
+				}
+			}
 
-        case 1:
+		case 1:
 
-            redirectBrowser(PAGE_SMS_UA, array());
-            break;
-    }
+			redirectBrowser( PAGE_SMS_UA, array() );
+			break;
+	}
 
-    switch (true) {
-        case true:
+	switch( true ) {
+			case true:
 
-            $usersBalance = getSMSUsersBalance($kernelStrings);
-            if (PEAR::isError($usersBalance)) {
-                $errorStr = $balance->getMessage();
-                break;
-            }
+				$usersBalance = getSMSUsersBalance( $kernelStrings );
+				if (PEAR::isError( $usersBalance ) )
+				{
+					$errorStr = $balance->getMessage();
+					break;
+				}
 
-            foreach ($usersBalance as $key => $value) {
-                if (!isset($users[$key])) {
-                    unset($usersBalance[$key]);
-                    continue;
-                }
+				foreach( $usersBalance as $key=>$value )
+				{
+					if ( !isset( $users[$key] ) )
+					{
+						unset( $usersBalance[$key] );
+						continue;
+					}
 
-                if (!isset($edited)) {
-                    if (is_null($value["SMS_BALANCE"]))
-                        $value["VALUE"] = '';
-                    else
-                        $value["VALUE"] = sprintf("%.0d", $value["SMS_BALANCE"]);
+					if ( !isset( $edited ) )
+					{
+						if ( is_null( $value["SMS_BALANCE"] ) )
+							$value["VALUE"] = '';
+						else
+							$value["VALUE"] = sprintf( "%.0d", $value["SMS_BALANCE"] );
 
-                    $value["ACTION"] = 0;
-                } else {
-                    $value["VALUE"] = $credit[$key];
-                    $value["ACTION"] = $action[$key];
-                }
+						$value["ACTION"] = 0;
+					}
+					else
+					{
+						$value["VALUE"] = $credit[$key];
+						$value["ACTION"] = $action[$key];
+					}
 
-                $usersBalance[$key] = $value;
-            }
+					$usersBalance[$key] = $value;
+				}
 
-    }
+	}
 
-    //
-    // Page implementation
-    //
+	//
+	// Page implementation
+	//
 
-    $preproc = new php_preprocessor($templateName, $kernelStrings, $language, $AA_APP_ID);
+	$preproc = new php_preprocessor( $templateName, $kernelStrings, $language, $AA_APP_ID );
 
-    $preproc->assign(PAGE_TITLE, $kernelStrings['sms_update_balance_screen']);
-    $preproc->assign(FORM_LINK, PAGE_SMS_BALANCE);
-    $preproc->assign(ERROR_STR, $errorStr);
-    $preproc->assign(FATAL_ERROR, $fatalError);
-    $preproc->assign(HELP_TOPIC, "");
+	$preproc->assign( PAGE_TITLE, $kernelStrings['sms_update_balance_screen'] );
+	$preproc->assign( FORM_LINK, PAGE_SMS_BALANCE );
+	$preproc->assign( ERROR_STR, $errorStr );
+	$preproc->assign( FATAL_ERROR, $fatalError );
+	$preproc->assign( HELP_TOPIC, "");
 
-    $preproc->assign("USERS_ID", $USERS_ID);
+	$preproc->assign( "USERS_ID", $USERS_ID );
 
-    if (!$fatalError) {
-        if (isset($balance))
-            $preproc->assign('systemBalance', $balance);
+	if ( !$fatalError ) {
+		if ( isset($balance) )
+			$preproc->assign( 'systemBalance', $balance );
 
-        $preproc->assign('usersBalance', $usersBalance);
-        $preproc->assign('usersCount', count($usersBalance));
-    }
+		$preproc->assign( 'usersBalance', $usersBalance );
+		$preproc->assign( 'usersCount', count($usersBalance) );
+	}
 
-    $preproc->display("smsbalance.htm");
+	$preproc->display("smsbalance.htm" );
 ?>

@@ -32,15 +32,15 @@ Ext.form.FieldSet = Ext.extend(Ext.Panel, {
     /**
      * @cfg {String} baseCls The base CSS class applied to the fieldset (defaults to 'x-fieldset').
      */
-    baseCls: 'x-fieldset',
+    baseCls:'x-fieldset',
     /**
      * @cfg {String} layout The {@link Ext.Container#layout} to use inside the fieldset (defaults to 'form').
      */
     layout: 'form',
 
     // private
-    onRender: function (ct, position) {
-        if (!this.el) {
+    onRender : function(ct, position){
+        if(!this.el){
             this.el = document.createElement('fieldset');
             this.el.id = this.id;
             this.el.appendChild(document.createElement('legend')).className = 'x-fieldset-header';
@@ -48,10 +48,10 @@ Ext.form.FieldSet = Ext.extend(Ext.Panel, {
 
         Ext.form.FieldSet.superclass.onRender.call(this, ct, position);
 
-        if (this.checkboxToggle) {
+        if(this.checkboxToggle){
             var o = typeof this.checkboxToggle == 'object' ?
-                this.checkboxToggle :
-            {tag: 'input', type: 'checkbox', name: this.checkboxName || this.id + '-checkbox'};
+                    this.checkboxToggle :
+                    {tag: 'input', type: 'checkbox', name: this.checkboxName || this.id+'-checkbox'};
             this.checkbox = this.header.insertFirst(o);
             this.checkbox.dom.checked = !this.collapsed;
             this.checkbox.on('click', this.onCheckClick, this);
@@ -59,8 +59,8 @@ Ext.form.FieldSet = Ext.extend(Ext.Panel, {
     },
 
     // private
-    onCollapse: function (doAnim, animArg) {
-        if (this.checkbox) {
+    onCollapse : function(doAnim, animArg){
+        if(this.checkbox){
             this.checkbox.dom.checked = false;
         }
         this.afterCollapse();
@@ -68,8 +68,8 @@ Ext.form.FieldSet = Ext.extend(Ext.Panel, {
     },
 
     // private
-    onExpand: function (doAnim, animArg) {
-        if (this.checkbox) {
+    onExpand : function(doAnim, animArg){
+        if(this.checkbox){
             this.checkbox.dom.checked = true;
         }
         this.afterExpand();
@@ -80,7 +80,7 @@ Ext.form.FieldSet = Ext.extend(Ext.Panel, {
      * checkboxToggle = true).  This method should never be called externally, but can be
      * overridden to provide custom behavior when the checkbox is toggled if needed.
      */
-    onCheckClick: function () {
+    onCheckClick : function(){
         this[this.checkbox.dom.checked ? 'expand' : 'collapse']();
     }
 

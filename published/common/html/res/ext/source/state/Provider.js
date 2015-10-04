@@ -9,10 +9,10 @@
 /**
  * @class Ext.state.Provider
  * Abstract base class for state provider implementations. This class provides methods
- * for encoding and decoding <b>typed</b> variables including dates and defines the
+ * for encoding and decoding <b>typed</b> variables including dates and defines the 
  * Provider interface.
  */
-Ext.state.Provider = function () {
+Ext.state.Provider = function(){
     /**
      * @event statechange
      * Fires when a state change occurs.
@@ -31,43 +31,43 @@ Ext.extend(Ext.state.Provider, Ext.util.Observable, {
      * @param {Mixed} defaultValue A default value to return if the key's value is not found
      * @return {Mixed} The state data
      */
-    get: function (name, defaultValue) {
+    get : function(name, defaultValue){
         return typeof this.state[name] == "undefined" ?
             defaultValue : this.state[name];
     },
-
+    
     /**
      * Clears a value from the state
      * @param {String} name The key name
      */
-    clear: function (name) {
+    clear : function(name){
         delete this.state[name];
         this.fireEvent("statechange", this, name, null);
     },
-
+    
     /**
      * Sets the value for a key
      * @param {String} name The key name
      * @param {Mixed} value The value to set
      */
-    set: function (name, value) {
+    set : function(name, value){
         this.state[name] = value;
         //console.log(value);
         this.fireEvent("statechange", this, name, value);
     },
-
+    
     /**
      * Decodes a string previously encoded with {@link #encodeValue}.
      * @param {String} value The value to decode
      * @return {Mixed} The decoded value
      */
-    decodeValue: function (cookie) {
+    decodeValue : function(cookie){
         var re = /^(a|n|d|b|s|o)\:(.*)$/;
         var matches = re.exec(unescape(cookie));
-        if (!matches || !matches[1]) return; // non state cookie
+        if(!matches || !matches[1]) return; // non state cookie
         var type = matches[1];
         var v = matches[2];
-        switch (type) {
+        switch(type){
             case "n":
                 return parseFloat(v);
             case "d":
@@ -77,54 +77,54 @@ Ext.extend(Ext.state.Provider, Ext.util.Observable, {
             case "a":
                 var all = [];
                 var values = v.split("^");
-                for (var i = 0, len = values.length; i < len; i++) {
+                for(var i = 0, len = values.length; i < len; i++){
                     all.push(this.decodeValue(values[i]));
                 }
                 return all;
-            case "o":
+           case "o":
                 var all = {};
                 var values = v.split("^");
-                for (var i = 0, len = values.length; i < len; i++) {
+                for(var i = 0, len = values.length; i < len; i++){
                     var kv = values[i].split("=");
                     all[kv[0]] = this.decodeValue(kv[1]);
                 }
                 return all;
-            default:
+           default:
                 return v;
         }
     },
-
+    
     /**
      * Encodes a value including type information.  Decode with {@link #decodeValue}.
      * @param {Mixed} value The value to encode
      * @return {String} The encoded value
      */
-    encodeValue: function (v) {
+    encodeValue : function(v){
         var enc;
-        if (typeof v == "number") {
+        if(typeof v == "number"){
             enc = "n:" + v;
-        } else if (typeof v == "boolean") {
+        }else if(typeof v == "boolean"){
             enc = "b:" + (v ? "1" : "0");
-        } else if (v instanceof Date) {
+        }else if(v instanceof Date){
             enc = "d:" + v.toGMTString();
-        } else if (v instanceof Array) {
+        }else if(v instanceof Array){
             var flat = "";
-            for (var i = 0, len = v.length; i < len; i++) {
+            for(var i = 0, len = v.length; i < len; i++){
                 flat += this.encodeValue(v[i]);
-                if (i != len - 1) flat += "^";
+                if(i != len-1) flat += "^";
             }
             enc = "a:" + flat;
-        } else if (typeof v == "object") {
+        }else if(typeof v == "object"){
             var flat = "";
-            for (var key in v) {
-                if (typeof v[key] != "function" && v[key] !== undefined) {
+            for(var key in v){
+                if(typeof v[key] != "function" && v[key] !== undefined){
                     flat += key + "=" + this.encodeValue(v[key]) + "^";
                 }
             }
-            enc = "o:" + flat.substring(0, flat.length - 1);
-        } else {
+            enc = "o:" + flat.substring(0, flat.length-1);
+        }else{
             enc = "s:" + v;
         }
-        return escape(enc);
+        return escape(enc);        
     }
 });

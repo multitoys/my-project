@@ -14,7 +14,7 @@
  * By default, Ext Forms are submitted through Ajax, using {@link Ext.form.Action}.
  * To enable normal browser submission of an Ext Form, override the Form's onSubmit,
  * and submit methods:<br><br><pre><code>
- var myForm = new Ext.form.BasicForm("form-el-id", {
+    var myForm = new Ext.form.BasicForm("form-el-id", {
         onSubmit: Ext.emptyFn,
         submit: function() {
             this.getEl().dom.submit();
@@ -24,13 +24,13 @@
  * @param {Mixed} el The form element or its id
  * @param {Object} config Configuration options
  */
-Ext.form.BasicForm = function (el, config) {
+Ext.form.BasicForm = function(el, config){
     Ext.apply(this, config);
     /*
      * The Ext.form.Field items in this form.
      * @type MixedCollection
      */
-    this.items = new Ext.util.MixedCollection(false, function (o) {
+    this.items = new Ext.util.MixedCollection(false, function(o){
         return o.id || (o.id = Ext.id());
     });
     this.addEvents(
@@ -56,8 +56,8 @@ Ext.form.BasicForm = function (el, config) {
          */
         'actioncomplete'
     );
-
-    if (el) {
+    
+    if(el){
         this.initEl(el);
     }
     Ext.form.BasicForm.superclass.constructor.call(this);
@@ -96,13 +96,13 @@ Ext.extend(Ext.form.BasicForm, Ext.util.Observable, {
     timeout: 30,
 
     // private
-    activeAction: null,
+    activeAction : null,
 
     /**
      * @cfg {Boolean} trackResetOnLoad If set to true, form.reset() resets to the last loaded
      * or setValues() data instead of when the form was first created.
      */
-    trackResetOnLoad: false,
+    trackResetOnLoad : false,
 
     /**
      * By default wait messages are displayed with Ext.MessageBox.wait. You can target a specific
@@ -110,9 +110,9 @@ Ext.extend(Ext.form.BasicForm, Ext.util.Observable, {
      * @type Mixed
      * @property waitMsgTarget
      */
-
+    
     // private
-    initEl: function (el) {
+    initEl : function(el){
         this.el = Ext.get(el);
         this.id = this.el.id || Ext.id();
         this.el.on('submit', this.onSubmit, this);
@@ -123,37 +123,37 @@ Ext.extend(Ext.form.BasicForm, Ext.util.Observable, {
      * Get the HTML form Element
      * @return Ext.Element
      */
-    getEl: function () {
+    getEl: function(){
         return this.el;
     },
 
     // private
-    onSubmit: function (e) {
+    onSubmit : function(e){
         e.stopEvent();
     },
-
+    
     // private
-    destroy: function () {
-        this.items.each(function (f) {
+	destroy: function() {
+        this.items.each(function(f){
             Ext.destroy(f);
         });
-        if (this.el) {
-            this.el.removeAllListeners();
-            this.el.remove();
+        if(this.el){
+			this.el.removeAllListeners();
+			this.el.remove();
         }
-        this.purgeListeners();
-    },
+		this.purgeListeners();
+	},
 
     /**
      * Returns true if client-side validation on the form is successful.
      * @return Boolean
      */
-    isValid: function () {
+    isValid : function(){
         var valid = true;
-        this.items.each(function (f) {
-            if (!f.validate()) {
-                valid = false;
-            }
+        this.items.each(function(f){
+           if(!f.validate()){
+               valid = false;
+           }
         });
         return valid;
     },
@@ -162,24 +162,24 @@ Ext.extend(Ext.form.BasicForm, Ext.util.Observable, {
      * Returns true if any fields in this form have changed since their original load.
      * @return Boolean
      */
-    isDirty: function () {
+    isDirty : function(){
         var dirty = false;
-        this.items.each(function (f) {
-            if (f.isDirty()) {
-                dirty = true;
-                return false;
-            }
+        this.items.each(function(f){
+           if(f.isDirty()){
+               dirty = true;
+               return false;
+           }
         });
         return dirty;
     },
 
     /**
      * Performs a predefined action ({@link Ext.form.Action.Submit} or
-     * {@link Ext.form.Action.Load}) or a custom extension of {@link Ext.form.Action}
+     * {@link Ext.form.Action.Load}) or a custom extension of {@link Ext.form.Action} 
      * to perform application-specific processing.
      * @param {String/Object} actionName The name of the predefined action type,
      * or instance of {@link Ext.form.Action} to perform.
-     * @param {Object} options (optional) The options to pass to the {@link Ext.form.Action}.
+     * @param {Object} options (optional) The options to pass to the {@link Ext.form.Action}. 
      * All of the config options listed below are supported by both the submit
      * and load actions unless otherwise noted (custom actions could also accept
      * other config options):<ul>
@@ -214,11 +214,11 @@ Ext.extend(Ext.form.BasicForm, Ext.util.Observable, {
      * to prevent this. If undefined, pre-submission field validation is performed.</p></li></ul>
      * @return {BasicForm} this
      */
-    doAction: function (action, options) {
-        if (typeof action == 'string') {
+    doAction : function(action, options){
+        if(typeof action == 'string'){
             action = new Ext.form.Action.ACTION_TYPES[action](this, options);
         }
-        if (this.fireEvent('beforeaction', this, action) !== false) {
+        if(this.fireEvent('beforeaction', this, action) !== false){
             this.beforeAction(action);
             action.run.defer(100, action);
         }
@@ -230,7 +230,7 @@ Ext.extend(Ext.form.BasicForm, Ext.util.Observable, {
      * @param {Object} options The options to pass to the action (see {@link #doAction} for details)
      * @return {BasicForm} this
      */
-    submit: function (options) {
+    submit : function(options){
         this.doAction('submit', options);
         return this;
     },
@@ -240,7 +240,7 @@ Ext.extend(Ext.form.BasicForm, Ext.util.Observable, {
      * @param {Object} options The options to pass to the action (see {@link #doAction} for details)
      * @return {BasicForm} this
      */
-    load: function (options) {
+    load : function(options){
         this.doAction('load', options);
         return this;
     },
@@ -250,12 +250,12 @@ Ext.extend(Ext.form.BasicForm, Ext.util.Observable, {
      * @param {Record} record The record to edit
      * @return {BasicForm} this
      */
-    updateRecord: function (record) {
+    updateRecord : function(record){
         record.beginEdit();
         var fs = record.fields;
-        fs.each(function (f) {
+        fs.each(function(f){
             var field = this.findField(f.name);
-            if (field) {
+            if(field){
                 record.set(f.name, field.getValue());
             }
         }, this);
@@ -268,47 +268,47 @@ Ext.extend(Ext.form.BasicForm, Ext.util.Observable, {
      * @param {Record} record The record to load
      * @return {BasicForm} this
      */
-    loadRecord: function (record) {
+    loadRecord : function(record){
         this.setValues(record.data);
         return this;
     },
 
     // private
-    beforeAction: function (action) {
+    beforeAction : function(action){
         var o = action.options;
-        if (o.waitMsg) {
-            if (this.waitMsgTarget === true) {
+        if(o.waitMsg){
+            if(this.waitMsgTarget === true){
                 this.el.mask(o.waitMsg, 'x-mask-loading');
-            } else if (this.waitMsgTarget) {
+            }else if(this.waitMsgTarget){
                 this.waitMsgTarget = Ext.get(this.waitMsgTarget);
                 this.waitMsgTarget.mask(o.waitMsg, 'x-mask-loading');
-            } else {
+            }else{
                 Ext.MessageBox.wait(o.waitMsg, o.waitTitle || this.waitTitle || 'Please Wait...');
             }
         }
     },
 
     // private
-    afterAction: function (action, success) {
+    afterAction : function(action, success){
         this.activeAction = null;
         var o = action.options;
-        if (o.waitMsg) {
-            if (this.waitMsgTarget === true) {
+        if(o.waitMsg){
+            if(this.waitMsgTarget === true){
                 this.el.unmask();
-            } else if (this.waitMsgTarget) {
+            }else if(this.waitMsgTarget){
                 this.waitMsgTarget.unmask();
-            } else {
+            }else{
                 Ext.MessageBox.updateProgress(1);
                 Ext.MessageBox.hide();
             }
         }
-        if (success) {
-            if (o.reset) {
+        if(success){
+            if(o.reset){
                 this.reset();
             }
             Ext.callback(o.success, o.scope, [this, action]);
             this.fireEvent('actioncomplete', this, action);
-        } else {
+        }else{
             Ext.callback(o.failure, o.scope, [this, action]);
             this.fireEvent('actionfailed', this, action);
         }
@@ -319,11 +319,11 @@ Ext.extend(Ext.form.BasicForm, Ext.util.Observable, {
      * @param {String} id The value to search for
      * @return Field
      */
-    findField: function (id) {
+    findField : function(id){
         var field = this.items.get(id);
-        if (!field) {
-            this.items.each(function (f) {
-                if (f.isFormField && (f.dataIndex == id || f.id == id || f.getName() == id)) {
+        if(!field){
+            this.items.each(function(f){
+                if(f.isFormField && (f.dataIndex == id || f.id == id || f.getName() == id)){
                     field = f;
                     return false;
                 }
@@ -338,19 +338,19 @@ Ext.extend(Ext.form.BasicForm, Ext.util.Observable, {
      * @param {Array/Object} errors Either an array in the form [{id:'fieldId', msg:'The message'},...] or an object hash of {id: msg, id2: msg2}
      * @return {BasicForm} this
      */
-    markInvalid: function (errors) {
-        if (errors instanceof Array) {
-            for (var i = 0, len = errors.length; i < len; i++) {
+    markInvalid : function(errors){
+        if(errors instanceof Array){
+            for(var i = 0, len = errors.length; i < len; i++){
                 var fieldError = errors[i];
                 var f = this.findField(fieldError.id);
-                if (f) {
+                if(f){
                     f.markInvalid(fieldError.msg);
                 }
             }
-        } else {
+        }else{
             var field, id;
-            for (id in errors) {
-                if (typeof errors[id] != 'function' && (field = this.findField(id))) {
+            for(id in errors){
+                if(typeof errors[id] != 'function' && (field = this.findField(id))){
                     field.markInvalid(errors[id]);
                 }
             }
@@ -361,35 +361,35 @@ Ext.extend(Ext.form.BasicForm, Ext.util.Observable, {
     /**
      * Set values for fields in this form in bulk.
      * @param {Array/Object} values Either an array in the form:<br><br><code><pre>
-     [{id:'clientName', value:'Fred. Olsen Lines'},
-     {id:'portOfLoading', value:'FXT'},
-     {id:'portOfDischarge', value:'OSL'} ]</pre></code><br><br>
+[{id:'clientName', value:'Fred. Olsen Lines'},
+ {id:'portOfLoading', value:'FXT'},
+ {id:'portOfDischarge', value:'OSL'} ]</pre></code><br><br>
      * or an object hash of the form:<br><br><code><pre>
-     {
-         clientName: 'Fred. Olsen Lines',
-         portOfLoading: 'FXT',
-         portOfDischarge: 'OSL'
-     }</pre></code><br>
+{
+    clientName: 'Fred. Olsen Lines',
+    portOfLoading: 'FXT',
+    portOfDischarge: 'OSL'
+}</pre></code><br>
      * @return {BasicForm} this
      */
-    setValues: function (values) {
-        if (values instanceof Array) { // array of objects
-            for (var i = 0, len = values.length; i < len; i++) {
+    setValues : function(values){
+        if(values instanceof Array){ // array of objects
+            for(var i = 0, len = values.length; i < len; i++){
                 var v = values[i];
                 var f = this.findField(v.id);
-                if (f) {
+                if(f){
                     f.setValue(v.value);
-                    if (this.trackResetOnLoad) {
+                    if(this.trackResetOnLoad){
                         f.originalValue = f.getValue();
                     }
                 }
             }
-        } else { // object hash
+        }else{ // object hash
             var field, id;
-            for (id in values) {
-                if (typeof values[id] != 'function' && (field = this.findField(id))) {
+            for(id in values){
+                if(typeof values[id] != 'function' && (field = this.findField(id))){
                     field.setValue(values[id]);
-                    if (this.trackResetOnLoad) {
+                    if(this.trackResetOnLoad){
                         field.originalValue = field.getValue();
                     }
                 }
@@ -404,9 +404,9 @@ Ext.extend(Ext.form.BasicForm, Ext.util.Observable, {
      * @param {Boolean} asString (optional) false to return the the values as an object (defaults to returning as a string)
      * @return {String/Object}
      */
-    getValues: function (asString) {
+    getValues : function(asString){
         var fs = Ext.lib.Ajax.serializeForm(this.el.dom);
-        if (asString === true) {
+        if(asString === true){
             return fs;
         }
         return Ext.urlDecode(fs);
@@ -416,9 +416,9 @@ Ext.extend(Ext.form.BasicForm, Ext.util.Observable, {
      * Clears all invalid messages in this form.
      * @return {BasicForm} this
      */
-    clearInvalid: function () {
-        this.items.each(function (f) {
-            f.clearInvalid();
+    clearInvalid : function(){
+        this.items.each(function(f){
+           f.clearInvalid();
         });
         return this;
     },
@@ -427,8 +427,8 @@ Ext.extend(Ext.form.BasicForm, Ext.util.Observable, {
      * Resets this form.
      * @return {BasicForm} this
      */
-    reset: function () {
-        this.items.each(function (f) {
+    reset : function(){
+        this.items.each(function(f){
             f.reset();
         });
         return this;
@@ -441,7 +441,7 @@ Ext.extend(Ext.form.BasicForm, Ext.util.Observable, {
      * @param {Field} etc (optional)
      * @return {BasicForm} this
      */
-    add: function () {
+    add : function(){
         this.items.addAll(Array.prototype.slice.call(arguments, 0));
         return this;
     },
@@ -452,7 +452,7 @@ Ext.extend(Ext.form.BasicForm, Ext.util.Observable, {
      * @param {Field} field
      * @return {BasicForm} this
      */
-    remove: function (field) {
+    remove : function(field){
         this.items.remove(field);
         return this;
     },
@@ -462,9 +462,9 @@ Ext.extend(Ext.form.BasicForm, Ext.util.Observable, {
      * and calls applyTo on the existing dom element with that id.
      * @return {BasicForm} this
      */
-    render: function () {
-        this.items.each(function (f) {
-            if (f.isFormField && !f.rendered && document.getElementById(f.id)) { // if the element exists
+    render : function(){
+        this.items.each(function(f){
+            if(f.isFormField && !f.rendered && document.getElementById(f.id)){ // if the element exists
                 f.applyToMarkup(f.id);
             }
         });
@@ -476,9 +476,9 @@ Ext.extend(Ext.form.BasicForm, Ext.util.Observable, {
      * @param {Object} values
      * @return {BasicForm} this
      */
-    applyToFields: function (o) {
-        this.items.each(function (f) {
-            Ext.apply(f, o);
+    applyToFields : function(o){
+        this.items.each(function(f){
+           Ext.apply(f, o);
         });
         return this;
     },
@@ -488,9 +488,9 @@ Ext.extend(Ext.form.BasicForm, Ext.util.Observable, {
      * @param {Object} values
      * @return {BasicForm} this
      */
-    applyIfToFields: function (o) {
-        this.items.each(function (f) {
-            Ext.applyIf(f, o);
+    applyIfToFields : function(o){
+        this.items.each(function(f){
+           Ext.applyIf(f, o);
         });
         return this;
     }

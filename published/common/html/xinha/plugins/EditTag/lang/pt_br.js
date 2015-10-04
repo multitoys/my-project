@@ -14,19 +14,9 @@
 // Distributed under the same terms as HTMLArea itself.
 // This notice MUST stay intact for use (see license.txt).
 {
-    "Cancel"
-:
-    "Cancelar",
-        "Edit HTML for selected text"
-:
-    "Editar HTML para texto selecionado",
-        "Edit Tag By Peg"
-:
-    "Editar Tag por Peg",
-        "OK"
-:
-    "OK",
-        "Tag Editor"
-:
-    "Editor de Tag"
+  "Cancel": "Cancelar",
+  "Edit HTML for selected text": "Editar HTML para texto selecionado",
+  "Edit Tag By Peg": "Editar Tag por Peg",
+  "OK": "OK",
+  "Tag Editor": "Editor de Tag"
 }

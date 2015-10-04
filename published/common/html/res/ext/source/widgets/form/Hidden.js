@@ -16,25 +16,25 @@
  */
 Ext.form.Hidden = Ext.extend(Ext.form.Field, {
     // private
-    inputType: 'hidden',
+    inputType : 'hidden',
 
     // private
-    onRender: function () {
+    onRender : function(){
         Ext.form.Hidden.superclass.onRender.apply(this, arguments);
     },
 
     // private
-    initEvents: function () {
+    initEvents : function(){
         this.originalValue = this.getValue();
     },
 
     // These are all private overrides
-    setSize: Ext.emptyFn,
-    setWidth: Ext.emptyFn,
-    setHeight: Ext.emptyFn,
-    setPosition: Ext.emptyFn,
-    setPagePosition: Ext.emptyFn,
-    markInvalid: Ext.emptyFn,
-    clearInvalid: Ext.emptyFn
+    setSize : Ext.emptyFn,
+    setWidth : Ext.emptyFn,
+    setHeight : Ext.emptyFn,
+    setPosition : Ext.emptyFn,
+    setPagePosition : Ext.emptyFn,
+    markInvalid : Ext.emptyFn,
+    clearInvalid : Ext.emptyFn
 });
 Ext.reg('hidden', Ext.form.Hidden);

@@ -14,26 +14,11 @@
 // Distributed under the same terms as HTMLArea itself.
 // This notice MUST stay intact for use (see license.txt).
 {
-    "Decimal numbers"
-:
-    "Números decimais",
-        "Lower roman numbers"
-:
-    "Números romanos inferiores",
-        "Upper roman numbers"
-:
-    "Números romanos superiores",
-        "Lower latin letters"
-:
-    "Letras latinas inferiores",
-        "Upper latin letters"
-:
-    "Letras latinas superiores",
-        "Lower greek letters"
-:
-    "Letras gregas inferiores",
-        "Choose list style type (for ordered lists)"
-:
-    "Escolha um tipo de lista (para lista ordenada)"
-}
-;
+  "Decimal numbers": "Números decimais",
+  "Lower roman numbers": "Números romanos inferiores",
+  "Upper roman numbers": "Números romanos superiores",
+  "Lower latin letters": "Letras latinas inferiores",
+  "Upper latin letters": "Letras latinas superiores",
+  "Lower greek letters": "Letras gregas inferiores",
+  "Choose list style type (for ordered lists)": "Escolha um tipo de lista (para lista ordenada)"
+};

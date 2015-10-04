@@ -19,7 +19,7 @@
  * By default, Ext Forms are submitted through Ajax, using {@link Ext.form.Action}.
  * To enable normal browser submission of the Ext Form contained in this FormPanel,
  * override the Form's onSubmit, and submit methods:<br><br><pre><code>
- var myForm = new Ext.form.FormPanel({
+    var myForm = new Ext.form.FormPanel({
         onSubmit: Ext.emptyFn,
         submit: function() {
             this.getForm().getEl().dom.submit();
@@ -29,9 +29,9 @@
  * @param {Object} config Configuration options
  */
 Ext.FormPanel = Ext.extend(Ext.Panel, {
-    /**
-     * @cfg {String} formId (optional) The id of the FORM tag (defaults to an auto-generated id).
-     */
+	/**
+	 * @cfg {String} formId (optional) The id of the FORM tag (defaults to an auto-generated id).
+	 */
     /**
      * @cfg {Number} labelWidth The width of labels. This property cascades to child containers.
      */
@@ -41,30 +41,30 @@ Ext.FormPanel = Ext.extend(Ext.Panel, {
     /**
      * @cfg {String} buttonAlign Valid values are "left," "center" and "right" (defaults to "center")
      */
-    buttonAlign: 'center',
+    buttonAlign:'center',
 
     /**
      * @cfg {Number} minButtonWidth Minimum width of all buttons in pixels (defaults to 75)
      */
-    minButtonWidth: 75,
+    minButtonWidth:75,
 
     /**
      * @cfg {String} labelAlign Valid values are "left," "top" and "right" (defaults to "left").
      * This property cascades to child containers if not set.
      */
-    labelAlign: 'left',
+    labelAlign:'left',
 
     /**
      * @cfg {Boolean} monitorValid If true the form monitors its valid state <b>client-side</b> and
      * fires a looping event with that state. This is required to bind buttons to the valid
      * state using the config value formBind:true on the button.
      */
-    monitorValid: false,
+    monitorValid : false,
 
     /**
      * @cfg {Number} monitorPoll The milliseconds to poll valid state, ignored if monitorValid is not true (defaults to 200)
      */
-    monitorPoll: 200,
+    monitorPoll : 200,
 
     /**
      * @cfg {String} layout @hide
@@ -72,9 +72,9 @@ Ext.FormPanel = Ext.extend(Ext.Panel, {
     layout: 'form',
 
     // private
-    initComponent: function () {
+    initComponent :function(){
         this.form = this.createForm();
-
+        
         Ext.FormPanel.superclass.initComponent.call(this);
 
         this.addEvents(
@@ -91,26 +91,26 @@ Ext.FormPanel = Ext.extend(Ext.Panel, {
     },
 
     // private
-    createForm: function () {
+    createForm: function(){
         delete this.initialConfig.listeners;
         return new Ext.form.BasicForm(null, this.initialConfig);
     },
 
     // private
-    initFields: function () {
+    initFields : function(){
         var f = this.form;
         var formPanel = this;
-        var fn = function (c) {
-            if (c.doLayout && c != formPanel) {
+        var fn = function(c){
+            if(c.doLayout && c != formPanel){
                 Ext.applyIf(c, {
                     labelAlign: c.ownerCt.labelAlign,
                     labelWidth: c.ownerCt.labelWidth,
                     itemCls: c.ownerCt.itemCls
                 });
-                if (c.items) {
+                if(c.items){
                     c.items.each(fn);
                 }
-            } else if (c.isFormField) {
+            }else if(c.isFormField){
                 f.add(c);
             }
         }
@@ -118,7 +118,7 @@ Ext.FormPanel = Ext.extend(Ext.Panel, {
     },
 
     // private
-    getLayoutTarget: function () {
+    getLayoutTarget : function(){
         return this.form.el;
     },
 
@@ -126,67 +126,67 @@ Ext.FormPanel = Ext.extend(Ext.Panel, {
      * Provides access to the {@link Ext.form.BasicForm Form} which this Panel contains.
      * @return {Ext.form.BasicForm} The {@link Ext.form.BasicForm Form} which this Panel contains.
      */
-    getForm: function () {
+    getForm : function(){
         return this.form;
     },
 
     // private
-    onRender: function (ct, position) {
+    onRender : function(ct, position){
         this.initFields();
 
         Ext.FormPanel.superclass.onRender.call(this, ct, position);
         var o = {
             tag: 'form',
-            method: this.method || 'POST',
-            id: this.formId || Ext.id()
+            method : this.method || 'POST',
+            id : this.formId || Ext.id()
         };
-        if (this.fileUpload) {
+        if(this.fileUpload) {
             o.enctype = 'multipart/form-data';
         }
         this.form.initEl(this.body.createChild(o));
     },
-
+    
     // private
-    beforeDestroy: function () {
+    beforeDestroy: function(){
         Ext.FormPanel.superclass.beforeDestroy.call(this);
         Ext.destroy(this.form);
     },
 
     // private
-    initEvents: function () {
+    initEvents : function(){
         Ext.FormPanel.superclass.initEvents.call(this);
-        this.items.on('remove', this.onRemove, this);
-        this.items.on('add', this.onAdd, this);
-        if (this.monitorValid) { // initialize after render
+		this.items.on('remove', this.onRemove, this);
+		this.items.on('add', this.onAdd, this);
+        if(this.monitorValid){ // initialize after render
             this.startMonitoring();
         }
     },
-
+    
     // private
-    onAdd: function (ct, c) {
-        if (c.isFormField) {
-            this.form.add(c);
-        }
-    },
-
-    // private
-    onRemove: function (c) {
-        if (c.isFormField) {
-            Ext.destroy(c.container.up('.x-form-item'));
-            this.form.remove(c);
-        }
-    },
+	onAdd : function(ct, c) {
+		if (c.isFormField) {
+			this.form.add(c);
+		}
+	},
+	
+	// private
+	onRemove : function(c) {
+		if (c.isFormField) {
+			Ext.destroy(c.container.up('.x-form-item'));
+			this.form.remove(c);
+		}
+	},
 
     /**
      * Starts monitoring of the valid state of this form. Usually this is done by passing the config
      * option "monitorValid"
      */
-    startMonitoring: function () {
-        if (!this.bound) {
+    startMonitoring : function(){
+        if(!this.bound){
             this.bound = true;
             Ext.TaskMgr.start({
-                run: this.bindHandler,
-                interval: this.monitorPoll || 200,
+                run : this.bindHandler,
+                interval : this.monitorPoll || 200,
                 scope: this
             });
         }
@@ -195,7 +195,7 @@ Ext.FormPanel = Ext.extend(Ext.Panel, {
     /**
      * Stops monitoring of the valid state of this form
      */
-    stopMonitoring: function () {
+    stopMonitoring : function(){
         this.bound = false;
     },
 
@@ -203,46 +203,46 @@ Ext.FormPanel = Ext.extend(Ext.Panel, {
      * This is a proxy for the underlying BasicForm's {@link Ext.form.BasicForm#load} call.
      * @param {Object} options The options to pass to the action (see {@link Ext.form.BasicForm#doAction} for details)
      */
-    load: function () {
-        this.form.load.apply(this.form, arguments);
+    load : function(){
+        this.form.load.apply(this.form, arguments);  
     },
 
     // private
-    onDisable: function () {
+    onDisable : function(){
         Ext.FormPanel.superclass.onDisable.call(this);
-        if (this.form) {
-            this.form.items.each(function () {
-                this.disable();
+        if(this.form){
+            this.form.items.each(function(){
+                 this.disable();
             });
         }
     },
 
     // private
-    onEnable: function () {
+    onEnable : function(){
         Ext.FormPanel.superclass.onEnable.call(this);
-        if (this.form) {
-            this.form.items.each(function () {
-                this.enable();
+        if(this.form){
+            this.form.items.each(function(){
+                 this.enable();
             });
         }
     },
 
     // private
-    bindHandler: function () {
-        if (!this.bound) {
+    bindHandler : function(){
+        if(!this.bound){
             return false; // stops binding
         }
         var valid = true;
-        this.form.items.each(function (f) {
-            if (!f.isValid(true)) {
+        this.form.items.each(function(f){
+            if(!f.isValid(true)){
                 valid = false;
                 return false;
             }
         });
-        if (this.buttons) {
-            for (var i = 0, len = this.buttons.length; i < len; i++) {
+        if(this.buttons){
+            for(var i = 0, len = this.buttons.length; i < len; i++){
                 var btn = this.buttons[i];
-                if (btn.formBind === true && btn.disabled === valid) {
+                if(btn.formBind === true && btn.disabled === valid){
                     btn.setDisabled(!valid);
                 }
             }

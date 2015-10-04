@@ -15,17 +15,17 @@
  * @param {Mixed} el The container element
  * @param {Object} config
  */
-Ext.dd.DropTarget = function (el, config) {
+Ext.dd.DropTarget = function(el, config){
     this.el = Ext.get(el);
-
+    
     Ext.apply(this, config);
-
-    if (this.containerScroll) {
+    
+    if(this.containerScroll){
         Ext.dd.ScrollManager.register(this.el);
     }
-
-    Ext.dd.DropTarget.superclass.constructor.call(this, this.el.dom, this.ddGroup || this.group,
-        {isTarget: true});
+    
+    Ext.dd.DropTarget.superclass.constructor.call(this, this.el.dom, this.ddGroup || this.group, 
+          {isTarget: true});
 
 };
 
@@ -43,18 +43,18 @@ Ext.extend(Ext.dd.DropTarget, Ext.dd.DDTarget, {
      * @cfg {String} dropAllowed
      * The CSS class returned to the drag source when drop is allowed (defaults to "x-dd-drop-ok").
      */
-    dropAllowed: "x-dd-drop-ok",
+    dropAllowed : "x-dd-drop-ok",
     /**
      * @cfg {String} dropNotAllowed
      * The CSS class returned to the drag source when drop is not allowed (defaults to "x-dd-drop-nodrop").
      */
-    dropNotAllowed: "x-dd-drop-nodrop",
+    dropNotAllowed : "x-dd-drop-nodrop",
 
     // private
-    isTarget: true,
+    isTarget : true,
 
     // private
-    isNotifyTarget: true,
+    isNotifyTarget : true,
 
     /**
      * The function a {@link Ext.dd.DragSource} calls once to notify this drop target that the source is now over the
@@ -66,8 +66,8 @@ Ext.extend(Ext.dd.DropTarget, Ext.dd.DDTarget, {
      * @return {String} status The CSS class that communicates the drop status back to the source so that the
      * underlying {@link Ext.dd.StatusProxy} can be updated
      */
-    notifyEnter: function (dd, e, data) {
-        if (this.overClass) {
+    notifyEnter : function(dd, e, data){
+        if(this.overClass){
             this.el.addClass(this.overClass);
         }
         return this.dropAllowed;
@@ -83,7 +83,7 @@ Ext.extend(Ext.dd.DropTarget, Ext.dd.DDTarget, {
      * @return {String} status The CSS class that communicates the drop status back to the source so that the
      * underlying {@link Ext.dd.StatusProxy} can be updated
      */
-    notifyOver: function (dd, e, data) {
+    notifyOver : function(dd, e, data){
         return this.dropAllowed;
     },
 
@@ -95,8 +95,8 @@ Ext.extend(Ext.dd.DropTarget, Ext.dd.DDTarget, {
      * @param {Event} e The event
      * @param {Object} data An object containing arbitrary data supplied by the drag source
      */
-    notifyOut: function (dd, e, data) {
-        if (this.overClass) {
+    notifyOut : function(dd, e, data){
+        if(this.overClass){
             this.el.removeClass(this.overClass);
         }
     },
@@ -111,7 +111,7 @@ Ext.extend(Ext.dd.DropTarget, Ext.dd.DDTarget, {
      * @param {Object} data An object containing arbitrary data supplied by the drag source
      * @return {Boolean} True if the drop was valid, else false
      */
-    notifyDrop: function (dd, e, data) {
+    notifyDrop : function(dd, e, data){
         return false;
     }
 });

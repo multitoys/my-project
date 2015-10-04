@@ -14,29 +14,12 @@
 // Distributed under the same terms as HTMLArea itself.
 // This notice MUST stay intact for use (see license.txt).
 {
-    "Cancel"
-:
-    "Cancelar",
-        "Delete"
-:
-    "Apagar",
-        "ID/Name:"
-:
-    "ID/Nome:",
-        "OK"
-:
-    "OK",
-        "Set ID/Name"
-:
-    "Definir ID/Nome",
-        "Set Id and Name"
-:
-    "Definir Id e Nome",
-        "Set Id/Name"
-:
-    "Definir Id/Nome",
-        "Name/Id"
-:
-    "Nome/Id"
-}
-;
+  "Cancel": "Cancelar",
+  "Delete": "Apagar",
+  "ID/Name:": "ID/Nome:",
+  "OK": "OK",
+  "Set ID/Name": "Definir ID/Nome",
+  "Set Id and Name": "Definir Id e Nome",
+  "Set Id/Name": "Definir Id/Nome",
+  "Name/Id": "Nome/Id"
+};

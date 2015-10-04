@@ -24,7 +24,7 @@
  * completely different implementation.  For serious implementations, a better approach would be to extend
  * CardLayout to provide the custom functionality needed.  Example usage:</p>
  * <pre><code>
- var navHandler = function(direction){
+var navHandler = function(direction){
     // This routine could contain business logic required to manage the navigation steps.
     // It would call setActiveItem as needed, manage navigation button state, handle any
     // branching logic that might be required, handle alternate actions like cancellation
@@ -33,7 +33,7 @@
     // done as a subclass of CardLayout in a real-world implementation.
 };
 
- var card = new Ext.Panel({
+var card = new Ext.Panel({
     title: 'Example Wizard',
     layout:'card',
     activeItem: 0, // make sure the active item is set on the container config!
@@ -69,7 +69,7 @@
         html: '&lt;h1&gt;Congratulations!&lt;/h1&gt;&lt;p&gt;Step 3 of 3 - Complete&lt;/p&gt;'
     }]
 });
- </code></pre>
+</code></pre>
  */
 Ext.layout.CardLayout = Ext.extend(Ext.layout.FitLayout, {
     /**
@@ -79,19 +79,19 @@ Ext.layout.CardLayout = Ext.extend(Ext.layout.FitLayout, {
      * a lot of heavy controls being rendered into panels that are not displayed by default, setting this to
      * true might improve performance.
      */
-    deferredRender: false,
+    deferredRender : false,
 
     // private
-    renderHidden: true,
+    renderHidden : true,
 
     /**
      * Sets the active (visible) item in the layout.
      * @param {String/Number} item The string component id or numeric index of the item to activate
      */
-    setActiveItem: function (item) {
+    setActiveItem : function(item){
         item = this.container.getComponent(item);
-        if (this.activeItem != item) {
-            if (this.activeItem) {
+        if(this.activeItem != item){
+            if(this.activeItem){
                 this.activeItem.hide();
             }
             this.activeItem = item;
@@ -101,10 +101,10 @@ Ext.layout.CardLayout = Ext.extend(Ext.layout.FitLayout, {
     },
 
     // private
-    renderAll: function (ct, target) {
-        if (this.deferredRender) {
+    renderAll : function(ct, target){
+        if(this.deferredRender){
             this.renderItem(this.activeItem, undefined, target);
-        } else {
+        }else{
             Ext.layout.CardLayout.superclass.renderAll.call(this, ct, target);
         }
     }

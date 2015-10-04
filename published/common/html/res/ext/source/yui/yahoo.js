@@ -7,11 +7,11 @@
  */
 
 /*
- Copyright (c) 2007, Yahoo! Inc. All rights reserved.
- Code licensed under the BSD License:
- http://developer.yahoo.net/yui/license.txt
- version: 2.2.0
- */
+Copyright (c) 2007, Yahoo! Inc. All rights reserved.
+Code licensed under the BSD License:
+http://developer.yahoo.net/yui/license.txt
+version: 2.2.0
+*/
 /**
  * The YAHOO object is the single global object used by YUI Library.  It
  * contains utility function for setting up namespaces, inheritance, and
@@ -67,19 +67,19 @@ if (typeof YAHOO == "undefined") {
  *
  * @method namespace
  * @static
- * @param  {String*} arguments 1-n namespaces to create
+ * @param  {String*} arguments 1-n namespaces to create 
  * @return {Object}  A reference to the last namespace object created
  */
-YAHOO.namespace = function () {
-    var a = arguments, o = null, i, j, d;
-    for (i = 0; i < a.length; i = i + 1) {
-        d = a[i].split(".");
-        o = YAHOO;
+YAHOO.namespace = function() {
+    var a=arguments, o=null, i, j, d;
+    for (i=0; i<a.length; i=i+1) {
+        d=a[i].split(".");
+        o=YAHOO;
 
         // YAHOO is implied, so it is ignored if it is included
-        for (j = (d[0] == "YAHOO") ? 1 : 0; j < d.length; j = j + 1) {
-            o[d[j]] = o[d[j]] || {};
-            o = o[d[j]];
+        for (j=(d[0] == "YAHOO") ? 1 : 0; j<d.length; j=j+1) {
+            o[d[j]]=o[d[j]] || {};
+            o=o[d[j]];
         }
     }
 
@@ -99,9 +99,9 @@ YAHOO.namespace = function () {
  * @param  {String}  src  The source of the the message (opt)
  * @return {Boolean}      True if the log operation was successful.
  */
-YAHOO.log = function (msg, cat, src) {
-    var l = YAHOO.widget.Logger;
-    if (l && l.log) {
+YAHOO.log = function(msg, cat, src) {
+    var l=YAHOO.widget.Logger;
+    if(l && l.log) {
         return l.log(msg, cat, src);
     } else {
         return false;
@@ -115,17 +115,17 @@ YAHOO.log = function (msg, cat, src) {
  * @method init
  * @static
  */
-YAHOO.init = function () {
+YAHOO.init = function() {
     this.namespace("util", "widget", "example");
     if (typeof YAHOO_config != "undefined") {
-        var l = YAHOO_config.listener, ls = YAHOO.env.listeners, unique = true, i;
+        var l=YAHOO_config.listener,ls=YAHOO.env.listeners,unique=true,i;
         if (l) {
             // if YAHOO is loaded multiple times we need to check to see if
             // this is a new config object.  If it is, add the new component
             // load listener to the stack
-            for (i = 0; i < ls.length; i = i + 1) {
-                if (ls[i] == l) {
-                    unique = false;
+            for (i=0;i<ls.length;i=i+1) {
+                if (ls[i]==l) {
+                    unique=false;
                     break;
                 }
             }
@@ -150,12 +150,12 @@ YAHOO.init = function () {
  *                             is expected to contain a "version" property
  *                             and a "build" property at minimum.
  */
-YAHOO.register = function (name, mainClass, data) {
+YAHOO.register = function(name, mainClass, data) {
     var mods = YAHOO.env.modules;
     if (!mods[name]) {
-        mods[name] = {versions: [], builds: []};
+        mods[name] = { versions:[], builds:[] };
     }
-    var m = mods[name], v = data.version, b = data.build, ls = YAHOO.env.listeners;
+    var m=mods[name],v=data.version,b=data.build,ls=YAHOO.env.listeners;
     m.name = name;
     m.version = v;
     m.build = b;
@@ -163,7 +163,7 @@ YAHOO.register = function (name, mainClass, data) {
     m.builds.push(b);
     m.mainClass = mainClass;
     // fire the module load listeners
-    for (var i = 0; i < ls.length; i = i + 1) {
+    for (var i=0;i<ls.length;i=i+1) {
         ls[i](m);
     }
     // label the main class
@@ -183,45 +183,45 @@ YAHOO.register = function (name, mainClass, data) {
  * @static
  */
 YAHOO.env = YAHOO.env || {
-        /**
-         * Keeps the version info for all YUI modules that have reported themselves
-         * @property modules
-         * @type Object[]
-         */
-        modules: [],
-
-        /**
-         * List of functions that should be executed every time a YUI module
-         * reports itself.
-         * @property listeners
-         * @type Function[]
-         */
-        listeners: [],
-
-        /**
-         * Returns the version data for the specified module:
-         *      <dl>
-         *      <dt>name:</dt>      <dd>The name of the module</dd>
-         *      <dt>version:</dt>   <dd>The version in use</dd>
-         *      <dt>build:</dt>     <dd>The build number in use</dd>
-         *      <dt>versions:</dt>  <dd>All versions that were registered</dd>
-         *      <dt>builds:</dt>    <dd>All builds that were registered.</dd>
-         *      <dt>mainClass:</dt> <dd>An object that was was stamped with the
-         *                 current version and build. If
-         *                 mainClass.VERSION != version or mainClass.BUILD != build,
-         *                 multiple versions of pieces of the library have been
-         *                 loaded, potentially causing issues.</dd>
-         *       </dl>
-         *
-         * @method getVersion
-         * @static
-         * @param {String}  name the name of the module (event, slider, etc)
-         * @return {Object} The version info
-         */
-        getVersion: function (name) {
-            return YAHOO.env.modules[name] || null;
-        }
-    };
+    /**
+     * Keeps the version info for all YUI modules that have reported themselves
+     * @property modules
+     * @type Object[]
+     */
+    modules: [],
+    
+    /**
+     * List of functions that should be executed every time a YUI module
+     * reports itself.
+     * @property listeners
+     * @type Function[]
+     */
+    listeners: [],
+    
+    /**
+     * Returns the version data for the specified module:
+     *      <dl>
+     *      <dt>name:</dt>      <dd>The name of the module</dd>
+     *      <dt>version:</dt>   <dd>The version in use</dd>
+     *      <dt>build:</dt>     <dd>The build number in use</dd>
+     *      <dt>versions:</dt>  <dd>All versions that were registered</dd>
+     *      <dt>builds:</dt>    <dd>All builds that were registered.</dd>
+     *      <dt>mainClass:</dt> <dd>An object that was was stamped with the
+     *                 current version and build. If 
+     *                 mainClass.VERSION != version or mainClass.BUILD != build,
+     *                 multiple versions of pieces of the library have been
+     *                 loaded, potentially causing issues.</dd>
+     *       </dl>
+     *
+     * @method getVersion
+     * @static
+     * @param {String}  name the name of the module (event, slider, etc)
+     * @return {Object} The version info
+     */
+    getVersion: function(name) {
+        return YAHOO.env.modules[name] || null;
+    }
+};
 
 /**
  * Provides the language utilites and extensions used by the library
@@ -234,7 +234,7 @@ YAHOO.lang = {
      * @param {any} obj The object being testing
      * @return Boolean
      */
-    isArray: function (obj) { // frames lose type, so test constructor string
+    isArray: function(obj) { // frames lose type, so test constructor string
         if (obj.constructor && obj.constructor.toString().indexOf('Array') > -1) {
             return true;
         } else {
@@ -248,71 +248,71 @@ YAHOO.lang = {
      * @param {any} obj The object being testing
      * @return Boolean
      */
-    isBoolean: function (obj) {
+    isBoolean: function(obj) {
         return typeof obj == 'boolean';
     },
-
+    
     /**
      * Determines whether or not the provided object is a function
      * @method isFunction
      * @param {any} obj The object being testing
      * @return Boolean
      */
-    isFunction: function (obj) {
+    isFunction: function(obj) {
         return typeof obj == 'function';
     },
-
+        
     /**
      * Determines whether or not the provided object is null
      * @method isNull
      * @param {any} obj The object being testing
      * @return Boolean
      */
-    isNull: function (obj) {
+    isNull: function(obj) {
         return obj === null;
     },
-
+        
     /**
      * Determines whether or not the provided object is a legal number
      * @method isNumber
      * @param {any} obj The object being testing
      * @return Boolean
      */
-    isNumber: function (obj) {
+    isNumber: function(obj) {
         return typeof obj == 'number' && isFinite(obj);
     },
-
+      
     /**
      * Determines whether or not the provided object is of type object
      * or function
      * @method isObject
      * @param {any} obj The object being testing
      * @return Boolean
-     */
-    isObject: function (obj) {
+     */  
+    isObject: function(obj) {
         return typeof obj == 'object' || YAHOO.lang.isFunction(obj);
     },
-
+        
     /**
      * Determines whether or not the provided object is a string
      * @method isString
      * @param {any} obj The object being testing
      * @return Boolean
      */
-    isString: function (obj) {
+    isString: function(obj) {
         return typeof obj == 'string';
     },
-
+        
     /**
      * Determines whether or not the provided object is undefined
      * @method isUndefined
      * @param {any} obj The object being testing
      * @return Boolean
      */
-    isUndefined: function (obj) {
+    isUndefined: function(obj) {
         return typeof obj == 'undefined';
     },
-
+    
     /**
      * Determines whether or not the property was added
      * to the object instance.  Returns false if the property is not present
@@ -333,15 +333,15 @@ YAHOO.lang = {
      * @param {any} obj The object being testing
      * @return Boolean
      */
-    hasOwnProperty: function (obj, prop) {
+    hasOwnProperty: function(obj, prop) {
         if (Object.prototype.hasOwnProperty) {
             return obj.hasOwnProperty(prop);
         }
-
-        return !YAHOO.lang.isUndefined(obj[prop]) &&
-            obj.constructor.prototype[prop] !== obj[prop];
+        
+        return !YAHOO.lang.isUndefined(obj[prop]) && 
+                obj.constructor.prototype[prop] !== obj[prop];
     },
-
+        
     /**
      * Utility to set up the prototype, constructor and superclass properties to
      * support an inheritance strategy that can chain constructors and methods.
@@ -352,27 +352,26 @@ YAHOO.lang = {
      * @param {Function} superc the object to inherit
      * @param {Object} overrides  additional properties/methods to add to the
      *                              subclass prototype.  These will override the
-     *                              matching items obtained from the superclass
+     *                              matching items obtained from the superclass 
      *                              if present.
      */
-    extend: function (subc, superc, overrides) {
-        var F = function () {
-        };
-        F.prototype = superc.prototype;
-        subc.prototype = new F();
-        subc.prototype.constructor = subc;
-        subc.superclass = superc.prototype;
+    extend: function(subc, superc, overrides) {
+        var F = function() {};
+        F.prototype=superc.prototype;
+        subc.prototype=new F();
+        subc.prototype.constructor=subc;
+        subc.superclass=superc.prototype;
         if (superc.prototype.constructor == Object.prototype.constructor) {
-            superc.prototype.constructor = superc;
+            superc.prototype.constructor=superc;
         }
-
+    
         if (overrides) {
             for (var i in overrides) {
-                subc.prototype[i] = overrides[i];
+                subc.prototype[i]=overrides[i];
             }
         }
     },
-
+    
     /**
      * Applies all prototype properties in the supplier to the receiver if the
      * receiver does not have these properties yet.  Optionally, one or more
@@ -388,14 +387,14 @@ YAHOO.lang = {
      *                             in the supplier will be used unless it would
      *                             overwrite an existing property in the receiver
      */
-    augment: function (r, s) {
-        var rp = r.prototype, sp = s.prototype, a = arguments, i, p;
+    augment: function(r, s) {
+        var rp=r.prototype, sp=s.prototype, a=arguments, i, p;
         if (a[2]) {
-            for (i = 2; i < a.length; i = i + 1) {
+            for (i=2; i<a.length; i=i+1) {
                 rp[a[i]] = sp[a[i]];
             }
         } else {
-            for (p in sp) {
+            for (p in sp) { 
                 if (!rp[p]) {
                     rp[p] = sp[p];
                 }
@@ -425,7 +424,7 @@ YAHOO.util.Lang = YAHOO.lang;
  *                             overwrite an existing property in the receiver
  */
 YAHOO.augment = YAHOO.lang.augment;
-
+       
 /**
  * An alias for <a href="YAHOO.lang.html#extend">YAHOO.lang.extend</a>
  * @method extend
@@ -434,7 +433,7 @@ YAHOO.augment = YAHOO.lang.augment;
  * @param {Function} superc the object to inherit
  * @param {Object} overrides  additional properties/methods to add to the
  *                              subclass prototype.  These will override the
- *                              matching items obtained from the superclass
+ *                              matching items obtained from the superclass 
  *                              if present.
  */
 YAHOO.extend = YAHOO.lang.extend;

@@ -13,7 +13,7 @@
  * base logic required for a Container to function as a layout.  This class is intended to be extended and should
  * generally not need to be created directly via the new keyword.
  */
-Ext.layout.ContainerLayout = function (config) {
+Ext.layout.ContainerLayout = function(config){
     Ext.apply(this, config);
 };
 
@@ -38,55 +38,55 @@ Ext.layout.ContainerLayout.prototype = {
      */
 
     // private
-    monitorResize: false,
+    monitorResize:false,
     // private
-    activeItem: null,
+    activeItem : null,
 
     // private
-    layout: function () {
+    layout : function(){
         var target = this.container.getLayoutTarget();
         this.onLayout(this.container, target);
         this.container.fireEvent('afterlayout', this.container, this);
     },
 
     // private
-    onLayout: function (ct, target) {
+    onLayout : function(ct, target){
         this.renderAll(ct, target);
     },
 
     // private
-    isValidParent: function (c, target) {
-        var el = c.getPositionEl ? c.getPositionEl() : c.getEl();
-        return el.dom.parentNode == target.dom;
+    isValidParent : function(c, target){
+		var el = c.getPositionEl ? c.getPositionEl() : c.getEl();
+		return el.dom.parentNode == target.dom;
     },
 
     // private
-    renderAll: function (ct, target) {
+    renderAll : function(ct, target){
         var items = ct.items.items;
-        for (var i = 0, len = items.length; i < len; i++) {
+        for(var i = 0, len = items.length; i < len; i++) {
             var c = items[i];
-            if (c && (!c.rendered || !this.isValidParent(c, target))) {
+            if(c && (!c.rendered || !this.isValidParent(c, target))){
                 this.renderItem(c, i, target);
             }
         }
     },
 
     // private
-    renderItem: function (c, position, target) {
-        if (c && !c.rendered) {
+    renderItem : function(c, position, target){
+        if(c && !c.rendered){
             c.render(target, position);
-            if (this.extraCls) {
-                var t = c.getPositionEl ? c.getPositionEl() : c;
-                t.addClass(this.extraCls);
+            if(this.extraCls){
+            	var t = c.getPositionEl ? c.getPositionEl() : c;
+            	t.addClass(this.extraCls);
             }
             if (this.renderHidden && c != this.activeItem) {
                 c.hide();
             }
-        } else if (c && !this.isValidParent(c, target)) {
-            if (this.extraCls) {
+        }else if(c && !this.isValidParent(c, target)){
+            if(this.extraCls){
                 c.addClass(this.extraCls);
             }
-            if (typeof position == 'number') {
+            if(typeof position == 'number'){
                 position = target.dom.childNodes[position];
             }
             target.dom.insertBefore(c.getEl().dom, position || null);
@@ -97,29 +97,29 @@ Ext.layout.ContainerLayout.prototype = {
     },
 
     // private
-    onResize: function () {
-        if (this.container.collapsed) {
+    onResize: function(){
+        if(this.container.collapsed){
             return;
         }
         var b = this.container.bufferResize;
-        if (b) {
-            if (!this.resizeTask) {
+        if(b){
+            if(!this.resizeTask){
                 this.resizeTask = new Ext.util.DelayedTask(this.layout, this);
                 this.resizeBuffer = typeof b == 'number' ? b : 100;
             }
             this.resizeTask.delay(this.resizeBuffer);
-        } else {
+        }else{
             this.layout();
         }
     },
 
     // private
-    setContainer: function (ct) {
-        if (this.monitorResize && ct != this.container) {
-            if (this.container) {
+    setContainer : function(ct){
+        if(this.monitorResize && ct != this.container){
+            if(this.container){
                 this.container.un('resize', this.onResize, this);
             }
-            if (ct) {
+            if(ct){
                 ct.on('resize', this.onResize, this);
             }
         }
@@ -127,23 +127,23 @@ Ext.layout.ContainerLayout.prototype = {
     },
 
     // private
-    parseMargins: function (v) {
+    parseMargins : function(v){
         var ms = v.split(' ');
         var len = ms.length;
-        if (len == 1) {
+        if(len == 1){
             ms[1] = ms[0];
             ms[2] = ms[0];
             ms[3] = ms[0];
         }
-        if (len == 2) {
+        if(len == 2){
             ms[2] = ms[0];
             ms[3] = ms[1];
         }
         return {
-            top: parseInt(ms[0], 10) || 0,
-            right: parseInt(ms[1], 10) || 0,
-            bottom: parseInt(ms[2], 10) || 0,
-            left: parseInt(ms[3], 10) || 0
+            top:parseInt(ms[0], 10) || 0,
+            right:parseInt(ms[1], 10) || 0,
+            bottom:parseInt(ms[2], 10) || 0,
+            left:parseInt(ms[3], 10) || 0
         };
     }
 };

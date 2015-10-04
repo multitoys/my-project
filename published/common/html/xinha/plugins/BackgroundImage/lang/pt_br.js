@@ -14,16 +14,8 @@
 // Distributed under the same terms as HTMLArea itself.
 // This notice MUST stay intact for use (see license.txt).
 {
-    "Cancel"
-:
-    "Cancelar",
-        "Remove Current Background"
-:
-    "Remover fundo atual",
-        "Set Page Background Image"
-:
-    "Definir Imagem de Fundo",
-        "Set page background image"
-:
-    "Definir imagem de fundo"
+  "Cancel": "Cancelar",
+  "Remove Current Background": "Remover fundo atual",
+  "Set Page Background Image": "Definir Imagem de Fundo",
+  "Set page background image": "Definir imagem de fundo"
 }

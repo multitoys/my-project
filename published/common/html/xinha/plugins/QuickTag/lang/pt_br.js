@@ -15,40 +15,16 @@
 // This notice MUST stay intact for use (see license.txt)
 
 {
-    "Quick Tag Editor"
-:
-    "Editor Rápido",
-        "Enter the TAG you want to insert"
-:
-    "Entre com a TAG que deseja inserir",
-        "You have to select some text"
-:
-    "É preciso selecionar algum texto",
-        "No CSS class avaiable"
-:
-    "Não há classes CSS disponível",
-        "There are some unclosed quote"
-:
-    "Há uma ou mais aspas sem fechamento",
-        "This attribute already exists in the TAG"
-:
-    "Esse atributo já existe na TAG",
-        "OPTIONS"
-:
-    "OPÇÕES",
-        "ATTRIBUTES"
-:
-    "ATRIBUTOS",
-        "TAGs"
-:
-    "TAGs",
-        "Colors"
-:
-    "Cores",
-        "Ok"
-:
-    "Ok",
-        "Cancel"
-:
-    "Cancelar"
+  "Quick Tag Editor": "Editor Rápido",
+  "Enter the TAG you want to insert": "Entre com a TAG que deseja inserir",
+  "You have to select some text": "É preciso selecionar algum texto",
+  "No CSS class avaiable": "Não há classes CSS disponível",
+  "There are some unclosed quote": "Há uma ou mais aspas sem fechamento",
+  "This attribute already exists in the TAG": "Esse atributo já existe na TAG",
+  "OPTIONS": "OPÇÕES",
+  "ATTRIBUTES": "ATRIBUTOS",
+  "TAGs": "TAGs",
+  "Colors": "Cores",
+  "Ok": "Ok",
+  "Cancel": "Cancelar"
 }

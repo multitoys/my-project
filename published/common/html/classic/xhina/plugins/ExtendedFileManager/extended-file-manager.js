@@ -30,51 +30,51 @@
  * point that to the php script.
  */
 
-function ExtendedFileManager(editor) {
+function ExtendedFileManager(editor)
+{
 
     this.editor = editor;
 
     var cfg = editor.config;
     var toolbar = cfg.toolbar;
     var self = this;
-
+    
     if (cfg.ExtendedFileManager.use_linker) {
         cfg.registerButton({
-            id: "linkfile",
-            tooltip: HTMLArea._lc("Insert File Link", 'ExtendedFileManager'),
-            image: _editor_url + 'plugins/ExtendedFileManager/img/ed_linkfile.gif',
-            textMode: false,
-            action: function (editor) {
-                editor._linkFile();
-            }
-        });
+            id        : "linkfile",
+            tooltip   : HTMLArea._lc("Insert File Link",'ExtendedFileManager'),
+            image     : _editor_url + 'plugins/ExtendedFileManager/img/ed_linkfile.gif',
+            textMode  : false,
+            action    : function(editor) {
+                    editor._linkFile();
+                  }
+            });
         cfg.addToolbarElement("linkfile", "createlink", 1);
+        };
     }
-    ;
-}
 
 ExtendedFileManager._pluginInfo = {
-    name: "ExtendedFileManager",
-    version: "1.1.1",
-    developer: "Afru, Krzysztof Kotowicz",
-    developer_url: "http://www.afrusoft.com/htmlarea/",
-    license: "htmlArea"
+    name          : "ExtendedFileManager",
+    version       : "1.1.1",
+    developer     : "Afru, Krzysztof Kotowicz",
+    developer_url : "http://www.afrusoft.com/htmlarea/",
+    license       : "htmlArea"
 };
 
 HTMLArea.Config.prototype.ExtendedFileManager =
 {
-    'use_linker': true,
-    'backend': _editor_url + 'plugins/ExtendedFileManager/backend.php?__plugin=ExtendedFileManager&',
-    'backend_data': null,
-    // deprecated keys, use passing data through e.g. xinha_pass_to_php_backend()
-    'backend_config': null,
-    'backend_config_hash': null,
-    'backend_config_secret_key_location': 'Xinha:ImageManager'
+  'use_linker': true,
+  'backend'    : _editor_url + 'plugins/ExtendedFileManager/backend.php?__plugin=ExtendedFileManager&',
+  'backend_data' : null,
+  // deprecated keys, use passing data through e.g. xinha_pass_to_php_backend()
+  'backend_config'     : null,
+  'backend_config_hash': null,
+  'backend_config_secret_key_location': 'Xinha:ImageManager'
 };
 
 // Over ride the _insertImage function in htmlarea.js.
 // Open up the ExtendedFileManger script instead.
-HTMLArea.prototype._insertImage = function (image) {
+HTMLArea.prototype._insertImage = function(image) {
 
     var editor = this;  // for nested functions
     var outparam = null;
@@ -86,15 +86,15 @@ HTMLArea.prototype._insertImage = function (image) {
 
     if (image) {
         outparam = {
-            f_url: HTMLArea.is_ie ? image.src : image.getAttribute("src"),
-            f_alt: image.alt,
-            f_title: image.title,
-            f_border: image.style.borderWidth ? image.style.borderWidth : image.border,
-            f_align: image.align,
-            f_width: image.width,
-            f_height: image.height,
+            f_url    : HTMLArea.is_ie ? image.src : image.getAttribute("src"),
+            f_alt    : image.alt,
+            f_title  : image.title,
+            f_border : image.style.borderWidth ? image.style.borderWidth : image.border,
+            f_align  : image.align,
+            f_width  : image.width,
+            f_height  : image.height,
             f_padding: image.style.padding,
-            f_margin: image.style.margin,
+            f_margin : image.style.margin,
             f_backgroundColor: image.style.backgroundColor,
             f_borderColor: image.style.borderColor,
             baseHref: editor.config.baseHref
@@ -112,23 +112,27 @@ HTMLArea.prototype._insertImage = function (image) {
     }
 
     var manager = editor.config.ExtendedFileManager.backend + '__function=manager';
-    if (editor.config.ExtendedFileManager.backend_config != null) {
-        manager += '&backend_config='
-            + encodeURIComponent(editor.config.ExtendedFileManager.backend_config);
-        manager += '&backend_config_hash='
-            + encodeURIComponent(editor.config.ExtendedFileManager.backend_config_hash);
-        manager += '&backend_config_secret_key_location='
-            + encodeURIComponent(editor.config.ExtendedFileManager.backend_config_secret_key_location);
+    if(editor.config.ExtendedFileManager.backend_config != null)
+    {
+      manager += '&backend_config='
+        + encodeURIComponent(editor.config.ExtendedFileManager.backend_config);
+      manager += '&backend_config_hash='
+        + encodeURIComponent(editor.config.ExtendedFileManager.backend_config_hash);
+      manager += '&backend_config_secret_key_location='
+        + encodeURIComponent(editor.config.ExtendedFileManager.backend_config_secret_key_location);
     }
 
-    if (editor.config.ExtendedFileManager.backend_data != null) {
-        for (var i in editor.config.ExtendedFileManager.backend_data) {
+    if(editor.config.ExtendedFileManager.backend_data != null)
+    {
+        for ( var i in editor.config.ExtendedFileManager.backend_data )
+        {
             manager += '&' + i + '=' + encodeURIComponent(editor.config.ExtendedFileManager.backend_data[i]);
         }
     }
 
-    Dialog(manager, function (param) {
-        if (!param) {   // user must have pressed Cancel
+    Dialog(manager, function(param){
+        if (!param)
+        {   // user must have pressed Cancel
             return false;
         }
 
@@ -155,48 +159,34 @@ HTMLArea.prototype._insertImage = function (image) {
         }
 
         img.alt = img.alt ? img.alt : '';
-
-        for (field in param) {
+        
+        for (field in param)
+        {
             var value = param[field];
-            switch (field) {
-                case "f_alt"    :
-                    img.alt = value;
-                    break;
-                case "f_title"  :
-                    img.title = value;
-                    break;
+            switch (field)
+            {
+                case "f_alt"    : img.alt    = value; break;
+                case "f_title"  : img.title = value; break;
                 case "f_border" :
-                    img.style.borderWidth = /[^0-9]/.test(value) ? value : (value != '') ? (parseInt(value) + 'px') : '';
-                    if (img.style.borderWidth && !img.style.borderStyle) {
+                    img.style.borderWidth = /[^0-9]/.test(value) ? value : (value != '') ? (parseInt(value) + 'px') :'';
+                    if(img.style.borderWidth && !img.style.borderStyle)
+                    {
                         img.style.borderStyle = 'solid';
                     }
-                    else if (!img.style.borderWidth) {
-                        img.style.border = '';
+                    else if (!img.style.borderWidth)
+                    {
+                    	img.style.border = '';
                     }
                     break;
-                case "f_borderColor":
-                    img.style.borderColor = value;
-                    break;
-                case "f_backgroundColor":
-                    img.style.backgroundColor = value;
-                    break;
-                case "f_align"  :
-                    img.align = value;
-                    break;
-                case "f_width"  :
-                    img.width = parseInt(value || "0");
-                    break;
-                case "f_height"  :
-                    img.height = parseInt(value || "0");
-                    break;
-                case "f_padding":
-                    img.style.padding =
-                        /[^0-9]/.test(value) ? value : (value != '') ? (parseInt(value) + 'px') : '';
-                    break;
-                case "f_margin":
-                    img.style.margin =
-                        /[^0-9]/.test(value) ? value : (value != '') ? (parseInt(value) + 'px') : '';
-                    break;
+                case "f_borderColor": img.style.borderColor = value; break;
+                case "f_backgroundColor": img.style.backgroundColor = value; break;
+                case "f_align"  : img.align  = value; break;
+                case "f_width"  : img.width = parseInt(value || "0"); break;
+                case "f_height"  : img.height = parseInt(value || "0"); break;
+                case "f_padding": img.style.padding =
+                                          /[^0-9]/.test(value) ? value : (value != '') ? (parseInt(value) + 'px') :''; break;
+                case "f_margin": img.style.margin =
+                                          /[^0-9]/.test(value) ? value : (value != '') ? (parseInt(value) + 'px') :''; break;
             }
         }
 
@@ -204,7 +194,7 @@ HTMLArea.prototype._insertImage = function (image) {
 
 };
 
-HTMLArea.prototype._linkFile = function (link) {
+HTMLArea.prototype._linkFile = function(link) {
 
     var editor = this;
     var outparam = null;
@@ -222,7 +212,7 @@ HTMLArea.prototype._linkFile = function (link) {
         var range = editor._createRange(sel);
         var compare = 0;
         if (HTMLArea.is_ie) {
-            if (sel.type == "Control")
+            if ( sel.type == "Control" )
                 compare = range.length;
             else
                 compare = range.compareEndPoints("StartToEnd", range);
@@ -234,39 +224,42 @@ HTMLArea.prototype._linkFile = function (link) {
             return;
         }
         outparam = {
-            f_href: '',
-            f_title: '',
-            f_target: '',
-            f_usetarget: editor.config.makeLinkShowsTarget,
+            f_href : '',
+            f_title : '',
+            f_target : '',
+            f_usetarget : editor.config.makeLinkShowsTarget,
             baseHref: editor.config.baseHref
         };
     } else
         outparam = {
-            f_href: HTMLArea.is_ie ? link.href : link.getAttribute("href"),
-            f_title: link.title,
-            f_target: link.target,
-            f_usetarget: editor.config.makeLinkShowsTarget,
+            f_href   : HTMLArea.is_ie ? link.href : link.getAttribute("href"),
+            f_title  : link.title,
+            f_target : link.target,
+            f_usetarget : editor.config.makeLinkShowsTarget,
             baseHref: editor.config.baseHref
         };
 
     var manager = _editor_url + 'plugins/ExtendedFileManager/manager.php?mode=link';
-    if (editor.config.ExtendedFileManager.backend_config != null) {
-        manager += '&backend_config='
-            + encodeURIComponent(editor.config.ExtendedFileManager.backend_config);
-        manager += '&backend_config_hash='
-            + encodeURIComponent(editor.config.ExtendedFileManager.backend_config_hash);
-        manager += '&backend_config_secret_key_location='
-            + encodeURIComponent(editor.config.ExtendedFileManager.backend_config_secret_key_location);
+    if(editor.config.ExtendedFileManager.backend_config != null)
+    {
+       manager += '&backend_config='
+               + encodeURIComponent(editor.config.ExtendedFileManager.backend_config);
+       manager += '&backend_config_hash='
+               + encodeURIComponent(editor.config.ExtendedFileManager.backend_config_hash);
+       manager += '&backend_config_secret_key_location='
+               + encodeURIComponent(editor.config.ExtendedFileManager.backend_config_secret_key_location);
     }
 
-    if (editor.config.ExtendedFileManager.backend_data != null) {
-        for (var i in editor.config.ExtendedFileManager.backend_data) {
+    if(editor.config.ExtendedFileManager.backend_data != null)
+    {
+        for ( var i in editor.config.ExtendedFileManager.backend_data )
+        {
             manager += '&' + i + '=' + encodeURIComponent(editor.config.ExtendedFileManager.backend_data[i]);
         }
     }
 
 
-    Dialog(manager, function (param) {
+    Dialog(manager, function(param){
         if (!param)
             return false;
         var a = link;
@@ -283,8 +276,7 @@ HTMLArea.prototype._linkFile = function (link) {
                         a = range.startContainer.parentNode;
                 }
             }
-        } catch (e) {
-        }
+        } catch(e) {}
         else {
             var href = param.f_href.trim();
             editor.selectNodeContents(a);
@@ -307,17 +299,21 @@ HTMLArea.prototype._linkFile = function (link) {
 
 };
 
-function shortSize(cssSize) {
-    if (/ /.test(cssSize)) {
+function shortSize(cssSize)
+{
+    if(/ /.test(cssSize))
+    {
         var sizes = cssSize.split(' ');
         var useFirstSize = true;
-        for (var i = 1; i < sizes.length; i++) {
-            if (sizes[0] != sizes[i]) {
+        for(var i = 1; i < sizes.length; i++)
+        {
+            if(sizes[0] != sizes[i])
+            {
                 useFirstSize = false;
                 break;
             }
         }
-        if (useFirstSize) cssSize = sizes[0];
+        if(useFirstSize) cssSize = sizes[0];
     }
 
     return cssSize;

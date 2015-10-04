@@ -19,7 +19,7 @@
  * Custom implementations must implement the load method as described in
  * {@link Ext.data.HttpProxy#load}.
  */
-Ext.data.DataProxy = function () {
+Ext.data.DataProxy = function(){
     this.addEvents(
         /**
          * @event beforeload

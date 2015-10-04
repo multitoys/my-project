@@ -6,19 +6,4 @@
  * http://extjs.com/license
  */
 
-Ext.grid.AbstractSelectionModel = function () {
-    this.locked = false;
-    Ext.grid.AbstractSelectionModel.superclass.constructor.call(this)
-};
-Ext.extend(Ext.grid.AbstractSelectionModel, Ext.util.Observable, {
-    init: function (A) {
-        this.grid = A;
-        this.initEvents()
-    }, lock: function () {
-        this.locked = true
-    }, unlock: function () {
-        this.locked = false
-    }, isLocked: function () {
-        return this.locked
-    }
-});
+Ext.grid.AbstractSelectionModel=function(){this.locked=false;Ext.grid.AbstractSelectionModel.superclass.constructor.call(this)};Ext.extend(Ext.grid.AbstractSelectionModel,Ext.util.Observable,{init:function(A){this.grid=A;this.initEvents()},lock:function(){this.locked=true},unlock:function(){this.locked=false},isLocked:function(){return this.locked}});

@@ -9,14 +9,14 @@
 /**
  * @class Ext.Resizable
  * @extends Ext.util.Observable
- * <p>Applies drag handles to an element to make it resizable. The drag handles are inserted into the element
+ * <p>Applies drag handles to an element to make it resizable. The drag handles are inserted into the element 
  * and positioned absolute. Some elements, such as a textarea or image, don't support this. To overcome that, you can wrap
  * the textarea in a div and set "resizeChild" to true (or to the id of the element), <b>or</b> set wrap:true in your config and
  * the element will be wrapped for you automatically.</p>
  * <p>Here is the list of valid resize handles:</p>
  * <pre>
- Value   Description
- ------  -------------------
+Value   Description
+------  -------------------
  'n'     north
  's'     south
  'e'     east
@@ -26,10 +26,10 @@
  'se'    southeast
  'ne'    northeast
  'all'   all
- </pre>
+</pre>
  * <p>Here's an example showing the creation of a typical Resizable:</p>
  * <pre><code>
- var resizer = new Ext.Resizable("element-id", {
+var resizer = new Ext.Resizable("element-id", {
     handles: 'all',
     minWidth: 200,
     minHeight: 100,
@@ -37,8 +37,8 @@
     maxHeight: 400,
     pinned: true
 });
- resizer.on("resize", myHandler);
- </code></pre>
+resizer.on("resize", myHandler);
+</code></pre>
  * <p>To hide a particular handle, set its display to none in CSS, or through script:<br>
  * resizer.east.setDisplayed(false);</p>
  * @cfg {Boolean/String/Element} resizeChild True to resize the first child, or id/element to resize (defaults to false)
@@ -73,22 +73,22 @@
  * Create a new resizable component
  * @param {Mixed} el The id or element to resize
  * @param {Object} config configuration options
- */
-Ext.Resizable = function (el, config) {
+  */
+Ext.Resizable = function(el, config){
     this.el = Ext.get(el);
-
-    if (config && config.wrap) {
+    
+    if(config && config.wrap){
         config.resizeChild = this.el;
-        this.el = this.el.wrap(typeof config.wrap == "object" ? config.wrap : {cls: "xresizable-wrap"});
+        this.el = this.el.wrap(typeof config.wrap == "object" ? config.wrap : {cls:"xresizable-wrap"});
         this.el.id = this.el.dom.id = config.resizeChild.id + "-rzwrap";
         this.el.setStyle("overflow", "hidden");
         this.el.setPositioning(config.resizeChild.getPositioning());
         config.resizeChild.clearPositioning();
-        if (!config.width || !config.height) {
+        if(!config.width || !config.height){
             var csize = config.resizeChild.getSize();
             this.el.setSize(csize.width, csize.height);
         }
-        if (config.pinned && !config.adjustments) {
+        if(config.pinned && !config.adjustments){
             config.adjustments = "auto";
         }
     }
@@ -98,157 +98,153 @@ Ext.Resizable = function (el, config) {
     this.proxy.enableDisplayMode('block');
 
     Ext.apply(this, config);
-
-    if (this.pinned) {
+    
+    if(this.pinned){
         this.disableTrackOver = true;
         this.el.addClass("x-resizable-pinned");
     }
     // if the element isn't positioned, make it relative
     var position = this.el.getStyle("position");
-    if (position != "absolute" && position != "fixed") {
+    if(position != "absolute" && position != "fixed"){
         this.el.setStyle("position", "relative");
     }
-    if (!this.handles) { // no handles passed, must be legacy style
+    if(!this.handles){ // no handles passed, must be legacy style
         this.handles = 's,e,se';
-        if (this.multiDirectional) {
+        if(this.multiDirectional){
             this.handles += ',n,w';
         }
     }
-    if (this.handles == "all") {
+    if(this.handles == "all"){
         this.handles = "n s e w ne nw se sw";
     }
     var hs = this.handles.split(/\s*?[,;]\s*?| /);
     var ps = Ext.Resizable.positions;
-    for (var i = 0, len = hs.length; i < len; i++) {
-        if (hs[i] && ps[hs[i]]) {
+    for(var i = 0, len = hs.length; i < len; i++){
+        if(hs[i] && ps[hs[i]]){
             var pos = ps[hs[i]];
             this[pos] = new Ext.Resizable.Handle(this, pos, this.disableTrackOver, this.transparent);
         }
     }
     // legacy
     this.corner = this.southeast;
-
-    if (this.handles.indexOf("n") != -1 || this.handles.indexOf("w") != -1) {
+    
+    if(this.handles.indexOf("n") != -1 || this.handles.indexOf("w") != -1){
         this.updateBox = true;
-    }
-
+    }   
+   
     this.activeHandle = null;
-
-    if (this.resizeChild) {
-        if (typeof this.resizeChild == "boolean") {
+    
+    if(this.resizeChild){
+        if(typeof this.resizeChild == "boolean"){
             this.resizeChild = Ext.get(this.el.dom.firstChild, true);
-        } else {
+        }else{
             this.resizeChild = Ext.get(this.resizeChild, true);
         }
     }
-
-    if (this.adjustments == "auto") {
+    
+    if(this.adjustments == "auto"){
         var rc = this.resizeChild;
         var hw = this.west, he = this.east, hn = this.north, hs = this.south;
-        if (rc && (hw || hn)) {
+        if(rc && (hw || hn)){
             rc.position("relative");
             rc.setLeft(hw ? hw.el.getWidth() : 0);
             rc.setTop(hn ? hn.el.getHeight() : 0);
         }
         this.adjustments = [
             (he ? -he.el.getWidth() : 0) + (hw ? -hw.el.getWidth() : 0),
-            (hn ? -hn.el.getHeight() : 0) + (hs ? -hs.el.getHeight() : 0) - 1
+            (hn ? -hn.el.getHeight() : 0) + (hs ? -hs.el.getHeight() : 0) -1 
         ];
     }
-
-    if (this.draggable) {
-        this.dd = this.dynamic ?
+    
+    if(this.draggable){
+        this.dd = this.dynamic ? 
             this.el.initDD(null) : this.el.initDDProxy(null, {dragElId: this.proxy.id});
         this.dd.setHandleElId(this.resizeChild ? this.resizeChild.id : this.el.id);
     }
-
+    
     // public events
     this.addEvents(
         "beforeresize",
         "resize"
     );
-
-    if (this.width !== null && this.height !== null) {
+    
+    if(this.width !== null && this.height !== null){
         this.resizeTo(this.width, this.height);
-    } else {
+    }else{
         this.updateChildSize();
     }
-    if (Ext.isIE) {
+    if(Ext.isIE){
         this.el.dom.style.zoom = 1;
     }
     Ext.Resizable.superclass.constructor.call(this);
 };
 
 Ext.extend(Ext.Resizable, Ext.util.Observable, {
-    resizeChild: false,
-    adjustments: [0, 0],
-    minWidth: 5,
-    minHeight: 5,
-    maxWidth: 10000,
-    maxHeight: 10000,
-    enabled: true,
-    animate: false,
-    duration: .35,
-    dynamic: false,
-    handles: false,
-    multiDirectional: false,
-    disableTrackOver: false,
-    easing: 'easeOutStrong',
-    widthIncrement: 0,
-    heightIncrement: 0,
-    pinned: false,
-    width: null,
-    height: null,
-    preserveRatio: false,
-    transparent: false,
-    minX: 0,
-    minY: 0,
-    draggable: false,
+        resizeChild : false,
+        adjustments : [0, 0],
+        minWidth : 5,
+        minHeight : 5,
+        maxWidth : 10000,
+        maxHeight : 10000,
+        enabled : true,
+        animate : false,
+        duration : .35,
+        dynamic : false,
+        handles : false,
+        multiDirectional : false,
+        disableTrackOver : false,
+        easing : 'easeOutStrong',
+        widthIncrement : 0,
+        heightIncrement : 0,
+        pinned : false,
+        width : null,
+        height : null,
+        preserveRatio : false,
+        transparent: false,
+        minX: 0,
+        minY: 0,
+        draggable: false,
 
-    /**
-     * @cfg {Mixed} constrainTo Constrain the resize to a particular element
-     */
-    /**
-     * @cfg {Ext.lib.Region} resizeRegion Constrain the resize to a particular region
-     */
+        /**
+         * @cfg {Mixed} constrainTo Constrain the resize to a particular element
+         */
+        /**
+         * @cfg {Ext.lib.Region} resizeRegion Constrain the resize to a particular region
+         */
 
-    /**
-     * @event beforeresize
-     * Fired before resize is allowed. Set enabled to false to cancel resize.
-     * @param {Ext.Resizable} this
-     * @param {Ext.EventObject} e The mousedown event
-     */
-    /**
-     * @event resize
-     * Fired after a resize.
-     * @param {Ext.Resizable} this
-     * @param {Number} width The new width
-     * @param {Number} height The new height
-     * @param {Ext.EventObject} e The mouseup event
-     */
-
+        /**
+         * @event beforeresize
+         * Fired before resize is allowed. Set enabled to false to cancel resize.
+         * @param {Ext.Resizable} this
+         * @param {Ext.EventObject} e The mousedown event
+         */
+        /**
+         * @event resize
+         * Fired after a resize.
+         * @param {Ext.Resizable} this
+         * @param {Number} width The new width
+         * @param {Number} height The new height
+         * @param {Ext.EventObject} e The mouseup event
+         */
+    
     /**
      * Perform a manual resize
      * @param {Number} width
      * @param {Number} height
      */
-    resizeTo: function (width, height) {
+    resizeTo : function(width, height){
         this.el.setSize(width, height);
         this.updateChildSize();
         this.fireEvent("resize", this, width, height, null);
     },
 
     // private
-    startSizing: function (e, handle) {
+    startSizing : function(e, handle){
         this.fireEvent("beforeresize", this, e);
-        if (this.enabled) { // 2nd enabled check in case disabled before beforeresize handler
+        if(this.enabled){ // 2nd enabled check in case disabled before beforeresize handler
 
-            if (!this.overlay) {
-                this.overlay = this.el.createProxy({
-                    tag: "div",
-                    cls: "x-resizable-overlay",
-                    html: "&#160;"
-                }, Ext.getBody());
+            if(!this.overlay){
+                this.overlay = this.el.createProxy({tag: "div", cls: "x-resizable-overlay", html: "&#160;"}, Ext.getBody());
                 this.overlay.unselectable();
                 this.overlay.enableDisplayMode("block");
                 this.overlay.on("mousemove", this.onMouseMove, this);
@@ -260,12 +256,12 @@ Ext.extend(Ext.Resizable, Ext.util.Observable, {
             this.startBox = this.el.getBox();
             this.startPoint = e.getXY();
             this.offsets = [(this.startBox.x + this.startBox.width) - this.startPoint[0],
-                (this.startBox.y + this.startBox.height) - this.startPoint[1]];
+                            (this.startBox.y + this.startBox.height) - this.startPoint[1]];
 
             this.overlay.setSize(Ext.lib.Dom.getViewWidth(true), Ext.lib.Dom.getViewHeight(true));
             this.overlay.show();
 
-            if (this.constrainTo) {
+            if(this.constrainTo) {
                 var ct = Ext.get(this.constrainTo);
                 this.resizeRegion = ct.getRegion().adjust(
                     ct.getFrameWidth('t'),
@@ -278,23 +274,23 @@ Ext.extend(Ext.Resizable, Ext.util.Observable, {
             this.proxy.setStyle('visibility', 'hidden'); // workaround display none
             this.proxy.show();
             this.proxy.setBox(this.startBox);
-            if (!this.dynamic) {
+            if(!this.dynamic){
                 this.proxy.setStyle('visibility', 'visible');
             }
         }
     },
 
     // private
-    onMouseDown: function (handle, e) {
-        if (this.enabled) {
+    onMouseDown : function(handle, e){
+        if(this.enabled){
             e.stopEvent();
             this.activeHandle = handle;
             this.startSizing(e, handle);
-        }
+        }          
     },
 
     // private
-    onMouseUp: function (e) {
+    onMouseUp : function(e){
         var size = this.resizeElement();
         this.resizing = false;
         this.handleOut();
@@ -304,24 +300,24 @@ Ext.extend(Ext.Resizable, Ext.util.Observable, {
     },
 
     // private
-    updateChildSize: function () {
-        if (this.resizeChild) {
+    updateChildSize : function(){
+        if(this.resizeChild){
             var el = this.el;
             var child = this.resizeChild;
             var adj = this.adjustments;
-            if (el.dom.offsetWidth) {
+            if(el.dom.offsetWidth){
                 var b = el.getSize(true);
-                child.setSize(b.width + adj[0], b.height + adj[1]);
+                child.setSize(b.width+adj[0], b.height+adj[1]);
             }
             // Second call here for IE
             // The first call enables instant resizing and
             // the second call corrects scroll bars if they
             // exist
-            if (Ext.isIE) {
-                setTimeout(function () {
-                    if (el.dom.offsetWidth) {
+            if(Ext.isIE){
+                setTimeout(function(){
+                    if(el.dom.offsetWidth){
                         var b = el.getSize(true);
-                        child.setSize(b.width + adj[0], b.height + adj[1]);
+                        child.setSize(b.width+adj[0], b.height+adj[1]);
                     }
                 }, 10);
             }
@@ -329,14 +325,14 @@ Ext.extend(Ext.Resizable, Ext.util.Observable, {
     },
 
     // private
-    snap: function (value, inc, min) {
-        if (!inc || !value) return value;
+    snap : function(value, inc, min){
+        if(!inc || !value) return value;
         var newValue = value;
         var m = value % inc;
-        if (m > 0) {
-            if (m > (inc / 2)) {
-                newValue = value + (inc - m);
-            } else {
+        if(m > 0){
+            if(m > (inc/2)){
+                newValue = value + (inc-m);
+            }else{
                 newValue = value - m;
             }
         }
@@ -344,253 +340,252 @@ Ext.extend(Ext.Resizable, Ext.util.Observable, {
     },
 
     // private
-    resizeElement: function () {
+    resizeElement : function(){
         var box = this.proxy.getBox();
-        if (this.updateBox) {
+        if(this.updateBox){
             this.el.setBox(box, false, this.animate, this.duration, null, this.easing);
-        } else {
+        }else{
             this.el.setSize(box.width, box.height, this.animate, this.duration, null, this.easing);
         }
         this.updateChildSize();
-        if (!this.dynamic) {
+        if(!this.dynamic){
             this.proxy.hide();
         }
         return box;
     },
 
     // private
-    constrain: function (v, diff, m, mx) {
-        if (v - diff < m) {
-            diff = v - m;
-        } else if (v - diff > mx) {
-            diff = mx - v;
+    constrain : function(v, diff, m, mx){
+        if(v - diff < m){
+            diff = v - m;    
+        }else if(v - diff > mx){
+            diff = mx - v; 
         }
-        return diff;
+        return diff;                
     },
 
     // private
-    onMouseMove: function (e) {
-        if (this.enabled) {
-            try {// try catch so if something goes wrong the user doesn't get hung
+    onMouseMove : function(e){
+        if(this.enabled){
+            try{// try catch so if something goes wrong the user doesn't get hung
 
-                if (this.resizeRegion && !this.resizeRegion.contains(e.getPoint())) {
-                    return;
-                }
+            if(this.resizeRegion && !this.resizeRegion.contains(e.getPoint())) {
+            	return;
+            }
 
-                //var curXY = this.startPoint;
-                var curSize = this.curSize || this.startBox;
-                var x = this.startBox.x, y = this.startBox.y;
-                var ox = x, oy = y;
-                var w = curSize.width, h = curSize.height;
-                var ow = w, oh = h;
-                var mw = this.minWidth, mh = this.minHeight;
-                var mxw = this.maxWidth, mxh = this.maxHeight;
-                var wi = this.widthIncrement;
-                var hi = this.heightIncrement;
-
-                var eventXY = e.getXY();
-                var diffX = -(this.startPoint[0] - Math.max(this.minX, eventXY[0]));
-                var diffY = -(this.startPoint[1] - Math.max(this.minY, eventXY[1]));
-
-                var pos = this.activeHandle.position;
-
-                switch (pos) {
-                    case "east":
-                        w += diffX;
-                        w = Math.min(Math.max(mw, w), mxw);
-                        break;
-                    case "south":
-                        h += diffY;
-                        h = Math.min(Math.max(mh, h), mxh);
-                        break;
-                    case "southeast":
-                        w += diffX;
-                        h += diffY;
-                        w = Math.min(Math.max(mw, w), mxw);
-                        h = Math.min(Math.max(mh, h), mxh);
-                        break;
-                    case "north":
-                        diffY = this.constrain(h, diffY, mh, mxh);
-                        y += diffY;
-                        h -= diffY;
-                        break;
-                    case "west":
-                        diffX = this.constrain(w, diffX, mw, mxw);
-                        x += diffX;
-                        w -= diffX;
-                        break;
+            //var curXY = this.startPoint;
+            var curSize = this.curSize || this.startBox;
+            var x = this.startBox.x, y = this.startBox.y;
+            var ox = x, oy = y;
+            var w = curSize.width, h = curSize.height;
+            var ow = w, oh = h;
+            var mw = this.minWidth, mh = this.minHeight;
+            var mxw = this.maxWidth, mxh = this.maxHeight;
+            var wi = this.widthIncrement;
+            var hi = this.heightIncrement;
+            
+            var eventXY = e.getXY();
+            var diffX = -(this.startPoint[0] - Math.max(this.minX, eventXY[0]));
+            var diffY = -(this.startPoint[1] - Math.max(this.minY, eventXY[1]));
+            
+            var pos = this.activeHandle.position;
+            
+            switch(pos){
+                case "east":
+                    w += diffX; 
+                    w = Math.min(Math.max(mw, w), mxw);
+                    break;
+                case "south":
+                    h += diffY;
+                    h = Math.min(Math.max(mh, h), mxh);
+                    break;
+                case "southeast":
+                    w += diffX; 
+                    h += diffY;
+                    w = Math.min(Math.max(mw, w), mxw);
+                    h = Math.min(Math.max(mh, h), mxh);
+                    break;
+                case "north":
+                    diffY = this.constrain(h, diffY, mh, mxh);
+                    y += diffY;
+                    h -= diffY;
+                    break;
+                case "west":
+                    diffX = this.constrain(w, diffX, mw, mxw);
+                    x += diffX;
+                    w -= diffX;
+                    break;
+                case "northeast":
+                    w += diffX; 
+                    w = Math.min(Math.max(mw, w), mxw);
+                    diffY = this.constrain(h, diffY, mh, mxh);
+                    y += diffY;
+                    h -= diffY;
+                    break;
+                case "northwest":
+                    diffX = this.constrain(w, diffX, mw, mxw);
+                    diffY = this.constrain(h, diffY, mh, mxh);
+                    y += diffY;
+                    h -= diffY;
+                    x += diffX;
+                    w -= diffX;
+                    break;
+               case "southwest":
+                    diffX = this.constrain(w, diffX, mw, mxw);
+                    h += diffY;
+                    h = Math.min(Math.max(mh, h), mxh);
+                    x += diffX;
+                    w -= diffX;
+                    break;
+            }
+            
+            var sw = this.snap(w, wi, mw);
+            var sh = this.snap(h, hi, mh);
+            if(sw != w || sh != h){
+                switch(pos){
                     case "northeast":
-                        w += diffX;
-                        w = Math.min(Math.max(mw, w), mxw);
-                        diffY = this.constrain(h, diffY, mh, mxh);
-                        y += diffY;
-                        h -= diffY;
-                        break;
-                    case "northwest":
-                        diffX = this.constrain(w, diffX, mw, mxw);
-                        diffY = this.constrain(h, diffY, mh, mxh);
-                        y += diffY;
-                        h -= diffY;
-                        x += diffX;
-                        w -= diffX;
+                        y -= sh - h;
+                    break;
+                    case "north":
+                        y -= sh - h;
                         break;
                     case "southwest":
-                        diffX = this.constrain(w, diffX, mw, mxw);
-                        h += diffY;
-                        h = Math.min(Math.max(mh, h), mxh);
-                        x += diffX;
-                        w -= diffX;
+                        x -= sw - w;
+                    break;
+                    case "west":
+                        x -= sw - w;
                         break;
+                    case "northwest":
+                        x -= sw - w;
+                        y -= sh - h;
+                    break;
                 }
-
-                var sw = this.snap(w, wi, mw);
-                var sh = this.snap(h, hi, mh);
-                if (sw != w || sh != h) {
-                    switch (pos) {
-                        case "northeast":
-                            y -= sh - h;
-                            break;
-                        case "north":
-                            y -= sh - h;
-                            break;
-                        case "southwest":
-                            x -= sw - w;
-                            break;
-                        case "west":
-                            x -= sw - w;
-                            break;
-                        case "northwest":
-                            x -= sw - w;
-                            y -= sh - h;
-                            break;
-                    }
-                    w = sw;
-                    h = sh;
-                }
-
-                if (this.preserveRatio) {
-                    switch (pos) {
-                        case "southeast":
-                        case "east":
-                            h = oh * (w / ow);
-                            h = Math.min(Math.max(mh, h), mxh);
-                            w = ow * (h / oh);
-                            break;
-                        case "south":
-                            w = ow * (h / oh);
-                            w = Math.min(Math.max(mw, w), mxw);
-                            h = oh * (w / ow);
-                            break;
-                        case "northeast":
-                            w = ow * (h / oh);
-                            w = Math.min(Math.max(mw, w), mxw);
-                            h = oh * (w / ow);
-                            break;
-                        case "north":
-                            var tw = w;
-                            w = ow * (h / oh);
-                            w = Math.min(Math.max(mw, w), mxw);
-                            h = oh * (w / ow);
-                            x += (tw - w) / 2;
-                            break;
-                        case "southwest":
-                            h = oh * (w / ow);
-                            h = Math.min(Math.max(mh, h), mxh);
-                            var tw = w;
-                            w = ow * (h / oh);
-                            x += tw - w;
-                            break;
-                        case "west":
-                            var th = h;
-                            h = oh * (w / ow);
-                            h = Math.min(Math.max(mh, h), mxh);
-                            y += (th - h) / 2;
-                            var tw = w;
-                            w = ow * (h / oh);
-                            x += tw - w;
-                            break;
-                        case "northwest":
-                            var tw = w;
-                            var th = h;
-                            h = oh * (w / ow);
-                            h = Math.min(Math.max(mh, h), mxh);
-                            w = ow * (h / oh);
-                            y += th - h;
-                            x += tw - w;
-                            break;
-
-                    }
-                }
-                this.proxy.setBounds(x, y, w, h);
-                if (this.dynamic) {
-                    this.resizeElement();
-                }
-            } catch (e) {
+                w = sw;
+                h = sh;
             }
+            
+            if(this.preserveRatio){
+                switch(pos){
+                    case "southeast":
+                    case "east":
+                        h = oh * (w/ow);
+                        h = Math.min(Math.max(mh, h), mxh);
+                        w = ow * (h/oh);
+                       break;
+                    case "south":
+                        w = ow * (h/oh);
+                        w = Math.min(Math.max(mw, w), mxw);
+                        h = oh * (w/ow);
+                        break;
+                    case "northeast":
+                        w = ow * (h/oh);
+                        w = Math.min(Math.max(mw, w), mxw);
+                        h = oh * (w/ow);
+                    break;
+                    case "north":
+                        var tw = w;
+                        w = ow * (h/oh);
+                        w = Math.min(Math.max(mw, w), mxw);
+                        h = oh * (w/ow);
+                        x += (tw - w) / 2;
+                        break;
+                    case "southwest":
+                        h = oh * (w/ow);
+                        h = Math.min(Math.max(mh, h), mxh);
+                        var tw = w;
+                        w = ow * (h/oh);
+                        x += tw - w;
+                        break;
+                    case "west":
+                        var th = h;
+                        h = oh * (w/ow);
+                        h = Math.min(Math.max(mh, h), mxh);
+                        y += (th - h) / 2;
+                        var tw = w;
+                        w = ow * (h/oh);
+                        x += tw - w;
+                       break;
+                    case "northwest":
+                        var tw = w;
+                        var th = h;
+                        h = oh * (w/ow);
+                        h = Math.min(Math.max(mh, h), mxh);
+                        w = ow * (h/oh);
+                        y += th - h;
+                         x += tw - w;
+                       break;
+                        
+                }
+            }
+            this.proxy.setBounds(x, y, w, h);
+            if(this.dynamic){
+                this.resizeElement();
+            }
+            }catch(e){}
         }
     },
 
     // private
-    handleOver: function () {
-        if (this.enabled) {
+    handleOver : function(){
+        if(this.enabled){
             this.el.addClass("x-resizable-over");
         }
     },
 
     // private
-    handleOut: function () {
-        if (!this.resizing) {
+    handleOut : function(){
+        if(!this.resizing){
             this.el.removeClass("x-resizable-over");
         }
     },
-
+    
     /**
      * Returns the element this component is bound to.
      * @return {Ext.Element}
      */
-    getEl: function () {
+    getEl : function(){
         return this.el;
     },
-
+    
     /**
      * Returns the resizeChild element (or null).
      * @return {Ext.Element}
      */
-    getResizeChild: function () {
+    getResizeChild : function(){
         return this.resizeChild;
     },
-
+    
     /**
-     * Destroys this resizable. If the element was wrapped and
+     * Destroys this resizable. If the element was wrapped and 
      * removeEl is not true then the element remains.
      * @param {Boolean} removeEl (optional) true to remove the element from the DOM
      */
-    destroy: function (removeEl) {
+    destroy : function(removeEl){
         this.proxy.remove();
-        if (this.overlay) {
+        if(this.overlay){
             this.overlay.removeAllListeners();
             this.overlay.remove();
         }
         var ps = Ext.Resizable.positions;
-        for (var k in ps) {
-            if (typeof ps[k] != "function" && this[ps[k]]) {
+        for(var k in ps){
+            if(typeof ps[k] != "function" && this[ps[k]]){
                 var h = this[ps[k]];
                 h.el.removeAllListeners();
                 h.el.remove();
             }
         }
-        if (removeEl) {
+        if(removeEl){
             this.el.update("");
             this.el.remove();
         }
     },
 
-    syncHandleHeight: function () {
+    syncHandleHeight : function(){
         var h = this.el.getHeight(true);
-        if (this.west) {
+        if(this.west){
             this.west.el.setHeight(h);
         }
-        if (this.east) {
+        if(this.east){
             this.east.el.setHeight(h);
         }
     }
@@ -603,8 +598,8 @@ Ext.Resizable.positions = {
 };
 
 // private
-Ext.Resizable.Handle = function (rz, pos, disableTrackOver, transparent) {
-    if (!this.tpl) {
+Ext.Resizable.Handle = function(rz, pos, disableTrackOver, transparent){
+    if(!this.tpl){
         // only initialize the template if resizable is used
         var tpl = Ext.DomHelper.createTemplate(
             {tag: "div", cls: "x-resizable-handle x-resizable-handle-{0}"}
@@ -616,11 +611,11 @@ Ext.Resizable.Handle = function (rz, pos, disableTrackOver, transparent) {
     this.rz = rz;
     this.el = this.tpl.append(rz.el.dom, [this.position], true);
     this.el.unselectable();
-    if (transparent) {
+    if(transparent){
         this.el.setOpacity(0);
     }
     this.el.on("mousedown", this.onMouseDown, this);
-    if (!disableTrackOver) {
+    if(!disableTrackOver){
         this.el.on("mouseover", this.onMouseOver, this);
         this.el.on("mouseout", this.onMouseOut, this);
     }
@@ -628,21 +623,21 @@ Ext.Resizable.Handle = function (rz, pos, disableTrackOver, transparent) {
 
 // private
 Ext.Resizable.Handle.prototype = {
-    afterResize: function (rz) {
+    afterResize : function(rz){
         // do nothing    
     },
     // private
-    onMouseDown: function (e) {
+    onMouseDown : function(e){
         this.rz.onMouseDown(this, e);
     },
     // private
-    onMouseOver: function (e) {
+    onMouseOver : function(e){
         this.rz.handleOver(this, e);
     },
     // private
-    onMouseOut: function (e) {
+    onMouseOut : function(e){
         this.rz.handleOut(this, e);
-    }
+    }  
 };
 
 

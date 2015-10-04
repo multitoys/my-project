@@ -14,10 +14,6 @@
 // Distributed under the same terms as HTMLArea itself.
 // This notice MUST stay intact for use (see license.txt).
 {
-    "Cancel"
-:
-    "Cancelar",
-        "Insert special character"
-:
-    "Inserir caracter especial"
+  "Cancel": "Cancelar",
+  "Insert special character": "Inserir caracter especial"
 }

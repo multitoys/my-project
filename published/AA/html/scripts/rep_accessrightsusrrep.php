@@ -1,50 +1,51 @@
 <?php
 
-    require_once("../../../common/html/includes/httpinit.php");
+	require_once( "../../../common/html/includes/httpinit.php" );
 
-    //
-    // Authorization
-    //
+	//
+	// Authorization
+	//
 
-    $fatalError = false;
-    $errorStr = null;
-    $SCR_ID = "ARD";
+	$fatalError = false;
+	$errorStr = null;
+	$SCR_ID = "ARD";
 
-    pageUserAuthorization($SCR_ID, $AA_APP_ID, false);
+	pageUserAuthorization( $SCR_ID, $AA_APP_ID, false );
 
-    //
-    // Page variables setup
-    //
+	// 
+	// Page variables setup
+	//
 
-    $kernelStrings = $loc_str[$language];
-    $invalidField = null;
+	$kernelStrings = $loc_str[$language];
+	$invalidField = null;
 
-    switch (true) {
-        case true :
+	switch ( true ) {
+		case true :
 
-            $users = implode(",", $included_users);
-            $data = array(UR_PATH => '/ROOT', UR_ACTION => UR_ACTION_VIEWUSER, UR_ID => $users, UR_FIELD => "data");
+				$users = implode( ",", $included_users );
+				$data = array( UR_PATH=>'/ROOT', UR_ACTION=>UR_ACTION_VIEWUSER, UR_ID=>$users, UR_FIELD=>"data" );
 
-            $ret = $UR_Manager->RenderPath($data);
-    }
+				$ret = $UR_Manager->RenderPath( $data );
+	}
 
-    //
-    // Page implementation
-    //
 
-    $preproc = new php_preprocessor($templateName, $kernelStrings, $language, $AA_APP_ID);
+	//
+	// Page implementation
+	//
 
-    $preproc->assign(PAGE_TITLE, $kernelStrings['rp_accessrightsusers_title']);
-    $preproc->assign(FORM_LINK, PAGE_ACCESSRIGHTS_REP_USERS);
-    $preproc->assign(INVALID_FIELD, $invalidField);
-    $preproc->assign(ERROR_STR, $errorStr);
-    $preproc->assign(FATAL_ERROR, $fatalError);
-    $preproc->assign("kernelStrings", $kernelStrings);
+	$preproc = new php_preprocessor( $templateName, $kernelStrings, $language, $AA_APP_ID );
 
-    if (!$fatalError) {
-        $preproc->assign("renderData", $ret);
+	$preproc->assign( PAGE_TITLE, $kernelStrings['rp_accessrightsusers_title'] );
+	$preproc->assign( FORM_LINK, PAGE_ACCESSRIGHTS_REP_USERS );
+	$preproc->assign( INVALID_FIELD, $invalidField );
+	$preproc->assign( ERROR_STR, $errorStr );
+	$preproc->assign( FATAL_ERROR, $fatalError );
+	$preproc->assign( "kernelStrings", $kernelStrings );
 
-    }
+	if ( !$fatalError ) {
+		$preproc->assign( "renderData", $ret );
 
-    $preproc->display("rep_accessrightsusrrep.htm");
+	}
+
+	$preproc->display( "rep_accessrightsusrrep.htm" );
 ?>

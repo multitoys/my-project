@@ -22,22 +22,22 @@ Ext.QuickTip = Ext.extend(Ext.ToolTip, {
     /**
      * @cfg {Boolean} interceptTitles True to automatically use the element's DOM title value if available (defaults to false).
      */
-    interceptTitles: false,
+    interceptTitles : false,
 
     // private
-    tagConfig: {
-        namespace: "ext",
-        attribute: "qtip",
-        width: "qwidth",
-        target: "target",
-        title: "qtitle",
-        hide: "hide",
-        cls: "qclass",
-        align: "qalign"
+    tagConfig : {
+        namespace : "ext",
+        attribute : "qtip",
+        width : "qwidth",
+        target : "target",
+        title : "qtitle",
+        hide : "hide",
+        cls : "qclass",
+        align : "qalign"
     },
 
     // private
-    initComponent: function () {
+    initComponent : function(){
         this.target = this.target || Ext.getDoc();
         this.targets = this.targets || {};
         Ext.QuickTip.superclass.initComponent.call(this);
@@ -56,17 +56,17 @@ Ext.QuickTip = Ext.extend(Ext.ToolTip, {
      * <li>width</li></ul></div>
      * @param {Object} config The config object
      */
-    register: function (config) {
+    register : function(config){
         var cs = config instanceof Array ? config : arguments;
-        for (var i = 0, len = cs.length; i < len; i++) {
+        for(var i = 0, len = cs.length; i < len; i++){
             var c = cs[i];
             var target = c.target;
-            if (target) {
-                if (target instanceof Array) {
-                    for (var j = 0, jlen = target.length; j < jlen; j++) {
+            if(target){
+                if(target instanceof Array){
+                    for(var j = 0, jlen = target.length; j < jlen; j++){
                         this.targets[Ext.id(target[j])] = c;
                     }
-                } else {
+                } else{
                     this.targets[Ext.id(target)] = c;
                 }
             }
@@ -77,26 +77,26 @@ Ext.QuickTip = Ext.extend(Ext.ToolTip, {
      * Removes this quick tip from its element and destroys it.
      * @param {String/HTMLElement/Element} el The element from which the quick tip is to be removed.
      */
-    unregister: function (el) {
+    unregister : function(el){
         delete this.targets[Ext.id(el)];
     },
 
     // private
-    onTargetOver: function (e) {
-        if (this.disabled) {
+    onTargetOver : function(e){
+        if(this.disabled){
             return;
         }
         this.targetXY = e.getXY();
         var t = e.getTarget();
-        if (!t || t.nodeType !== 1 || t == document || t == document.body) {
+        if(!t || t.nodeType !== 1 || t == document || t == document.body){
             return;
         }
-        if (this.activeTarget && t == this.activeTarget.el) {
+        if(this.activeTarget && t == this.activeTarget.el){
             this.clearTimer('hide');
             this.show();
             return;
         }
-        if (t && this.targets[t.id]) {
+        if(t && this.targets[t.id]){
             this.activeTarget = this.targets[t.id];
             this.activeTarget.el = t;
             this.delayShow();
@@ -104,15 +104,15 @@ Ext.QuickTip = Ext.extend(Ext.ToolTip, {
         }
         var ttp, et = Ext.fly(t), cfg = this.tagConfig;
         var ns = cfg.namespace;
-        if (this.interceptTitles && t.title) {
+        if(this.interceptTitles && t.title){
             ttp = t.title;
             t.qtip = ttp;
             t.removeAttribute("title");
             e.preventDefault();
-        } else {
+        } else{
             ttp = t.qtip || et.getAttributeNS(ns, cfg.attribute);
         }
-        if (ttp) {
+        if(ttp){
             var autoHide = et.getAttributeNS(ns, cfg.hide);
             this.activeTarget = {
                 el: t,
@@ -128,44 +128,44 @@ Ext.QuickTip = Ext.extend(Ext.ToolTip, {
     },
 
     // private
-    onTargetOut: function (e) {
+    onTargetOut : function(e){
         this.clearTimer('show');
-        if (this.autoHide !== false) {
+        if(this.autoHide !== false){
             this.delayHide();
         }
     },
 
     // inherit docs
-    showAt: function (xy) {
+    showAt : function(xy){
         var t = this.activeTarget;
-        if (t) {
-            if (!this.rendered) {
+        if(t){
+            if(!this.rendered){
                 this.render(Ext.getBody());
                 this.activeTarget = t;
             }
-            if (t.width) {
+            if(t.width){
                 this.setWidth(t.width);
                 this.body.setWidth(this.adjustBodyWidth(t.width - this.getFrameWidth()));
                 this.measureWidth = false;
-            } else {
+            } else{
                 this.measureWidth = true;
             }
             this.setTitle(t.title || '');
             this.body.update(t.text);
             this.autoHide = t.autoHide;
             this.dismissDelay = t.dismissDelay || this.dismissDelay;
-            if (this.lastCls) {
+            if(this.lastCls){
                 this.el.removeClass(this.lastCls);
                 delete this.lastCls;
             }
-            if (t.cls) {
+            if(t.cls){
                 this.el.addClass(t.cls);
                 this.lastCls = t.cls;
             }
-            if (t.align) { // TODO: this doesn't seem to work consistently
+            if(t.align){ // TODO: this doesn't seem to work consistently
                 xy = this.el.getAlignToXY(t.el, t.align);
                 this.constrainPosition = false;
-            } else {
+            } else{
                 this.constrainPosition = true;
             }
         }
@@ -173,7 +173,7 @@ Ext.QuickTip = Ext.extend(Ext.ToolTip, {
     },
 
     // inherit docs
-    hide: function () {
+    hide: function(){
         delete this.activeTarget;
         Ext.QuickTip.superclass.hide.call(this);
     }

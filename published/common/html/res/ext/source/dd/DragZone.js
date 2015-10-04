@@ -15,9 +15,9 @@
  * @param {Mixed} el The container element
  * @param {Object} config
  */
-Ext.dd.DragZone = function (el, config) {
+Ext.dd.DragZone = function(el, config){
     Ext.dd.DragZone.superclass.constructor.call(this, el, config);
-    if (this.containerScroll) {
+    if(this.containerScroll){
         Ext.dd.ScrollManager.register(this.el);
     }
 };
@@ -40,10 +40,10 @@ Ext.extend(Ext.dd.DragZone, Ext.dd.DragSource, {
      * @param {EventObject} e The mouse down event
      * @return {Object} The dragData
      */
-    getDragData: function (e) {
+    getDragData : function(e){
         return Ext.dd.Registry.getHandleFromEvent(e);
     },
-
+    
     /**
      * Called once drag threshold has been reached to initialize the proxy element. By default, it clones the
      * this.dragData.ddel
@@ -51,17 +51,17 @@ Ext.extend(Ext.dd.DragZone, Ext.dd.DragSource, {
      * @param {Number} y The y position of the click on the dragged object
      * @return {Boolean} true to continue the drag, false to cancel
      */
-    onInitDrag: function (x, y) {
+    onInitDrag : function(x, y){
         this.proxy.update(this.dragData.ddel.cloneNode(true));
         this.onStartDrag(x, y);
         return true;
     },
-
+    
     /**
-     * Called after a repair of an invalid drop. By default, highlights this.dragData.ddel
+     * Called after a repair of an invalid drop. By default, highlights this.dragData.ddel 
      */
-    afterRepair: function () {
-        if (Ext.enableFx) {
+    afterRepair : function(){
+        if(Ext.enableFx){
             Ext.Element.fly(this.dragData.ddel).highlight(this.hlColor || "c3daf9");
         }
         this.dragging = false;
@@ -73,7 +73,7 @@ Ext.extend(Ext.dd.DragZone, Ext.dd.DragSource, {
      * @param {EventObject} e The mouse up event
      * @return {Array} The xy location (e.g. [100, 200])
      */
-    getRepairXY: function (e) {
-        return Ext.Element.fly(this.dragData.ddel).getXY();
+    getRepairXY : function(e){
+        return Ext.Element.fly(this.dragData.ddel).getXY();  
     }
 });

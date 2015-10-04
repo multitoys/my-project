@@ -1,3 +1,3 @@
 <?
-    //define ("CURRENT_APP", "AA");
+	//define ("CURRENT_APP", "AA");	
 ?>

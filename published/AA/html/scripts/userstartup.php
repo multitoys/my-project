@@ -1,24 +1,25 @@
 <?php
 
-    require_once("../../../common/html/includes/httpinit.php");
+	require_once( "../../../common/html/includes/httpinit.php" );
 
-    //
-    // Authorization
-    //
+	//	
+	// Authorization
+	//
 
-    $SCR_ID = null;
+	$SCR_ID = null;
+	
+	pageUserAuthorization( $SCR_ID, $AA_APP_ID, true );
 
-    pageUserAuthorization($SCR_ID, $AA_APP_ID, true);
 
-    // Page variables setup
-    //
-    $kernelStrings = $loc_str[$language];
+	// Page variables setup
+	//
+	$kernelStrings = $loc_str[$language];
 
-    //
-    // Page implementation
-    //
-    $preproc = new php_preprocessor($templateName, $kernelStrings, $language, $AA_APP_ID);
+	//
+	// Page implementation
+	//
+	$preproc = new php_preprocessor( $templateName, $kernelStrings, $language, $AA_APP_ID  );
 
-    $preproc->assign(PAGE_TITLE, $kernelStrings['app_pagewelcome_title']);
-    $preproc->display("userstartup.htm");
+	$preproc->assign( PAGE_TITLE, $kernelStrings['app_pagewelcome_title'] );
+	$preproc->display( "userstartup.htm" );
 ?>

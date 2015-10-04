@@ -15,9 +15,9 @@
  * Creates a new Menu
  * @param {Object} config Configuration options
  */
-Ext.menu.Menu = function (config) {
-    if (config instanceof Array) {
-        config = {items: config};
+Ext.menu.Menu = function(config){
+    if(config instanceof Array){
+        config = {items:config};
     }
     Ext.apply(this, config);
     this.id = this.id || Ext.id();
@@ -82,7 +82,7 @@ Ext.menu.Menu = function (config) {
     Ext.menu.Menu.superclass.constructor.call(this);
     var mis = this.items;
     this.items = new Ext.util.MixedCollection();
-    if (mis) {
+    if(mis){
         this.add.apply(this, mis);
     }
 };
@@ -102,63 +102,63 @@ Ext.extend(Ext.menu.Menu, Ext.util.Observable, {
     /**
      * @cfg {Number} minWidth The minimum width of the menu in pixels (defaults to 120)
      */
-    minWidth: 120,
+    minWidth : 120,
     /**
      * @cfg {Boolean/String} shadow True or "sides" for the default effect, "frame" for 4-way shadow, and "drop"
      * for bottom-right shadow (defaults to "sides")
      */
-    shadow: "sides",
+    shadow : "sides",
     /**
      * @cfg {String} subMenuAlign The {@link Ext.Element#alignTo} anchor position value to use for submenus of
      * this menu (defaults to "tl-tr?")
      */
-    subMenuAlign: "tl-tr?",
+    subMenuAlign : "tl-tr?",
     /**
      * @cfg {String} defaultAlign The default {@link Ext.Element#alignTo) anchor position value for this menu
      * relative to its element of origin (defaults to "tl-bl?")
      */
-    defaultAlign: "tl-bl?",
+    defaultAlign : "tl-bl?",
     /**
      * @cfg {Boolean} allowOtherMenus True to allow multiple menus to be displayed at the same time (defaults to false)
      */
-    allowOtherMenus: false,
+    allowOtherMenus : false,
 
-    hidden: true,
+    hidden:true,
 
-    createEl: function () {
+    createEl : function(){
         return new Ext.Layer({
             cls: "x-menu",
-            shadow: this.shadow,
+            shadow:this.shadow,
             constrain: false,
             parentEl: this.parentEl || document.body,
-            zindex: 15000
+            zindex:15000
         });
     },
 
     // private
-    render: function () {
-        if (this.el) {
+    render : function(){
+        if(this.el){
             return;
         }
         var el = this.el = this.createEl();
 
         this.keyNav = new Ext.menu.MenuNav(this);
 
-        if (this.plain) {
+        if(this.plain){
             el.addClass("x-menu-plain");
         }
-        if (this.cls) {
+        if(this.cls){
             el.addClass(this.cls);
         }
         // generic focus element
         this.focusEl = el.createChild({
-            tag: "a", cls: "x-menu-focus", href: "#", onclick: "return false;", tabIndex: "-1"
+            tag: "a", cls: "x-menu-focus", href: "#", onclick: "return false;", tabIndex:"-1"
         });
         var ul = el.createChild({tag: "ul", cls: "x-menu-list"});
         ul.on("click", this.onClick, this);
         ul.on("mouseover", this.onMouseOver, this);
         ul.on("mouseout", this.onMouseOut, this);
-        this.items.each(function (item) {
+        this.items.each(function(item){
             var li = document.createElement("li");
             li.className = "x-menu-list-item";
             ul.dom.appendChild(li);
@@ -169,25 +169,25 @@ Ext.extend(Ext.menu.Menu, Ext.util.Observable, {
     },
 
     // private
-    autoWidth: function () {
+    autoWidth : function(){
         var el = this.el, ul = this.ul;
-        if (!el) {
+        if(!el){
             return;
         }
         var w = this.width;
-        if (w) {
+        if(w){
             el.setWidth(w);
-        } else if (Ext.isIE) {
+        }else if(Ext.isIE){
             el.setWidth(this.minWidth);
             var t = el.dom.offsetWidth; // force recalc
-            el.setWidth(ul.getWidth() + el.getFrameWidth("lr"));
+            el.setWidth(ul.getWidth()+el.getFrameWidth("lr"));
         }
     },
 
     // private
-    delayAutoWidth: function () {
-        if (this.el) {
-            if (!this.awTask) {
+    delayAutoWidth : function(){
+        if(this.el){
+            if(!this.awTask){
                 this.awTask = new Ext.util.DelayedTask(this.autoWidth, this);
             }
             this.awTask.delay(20);
@@ -195,41 +195,41 @@ Ext.extend(Ext.menu.Menu, Ext.util.Observable, {
     },
 
     // private
-    findTargetItem: function (e) {
-        var t = e.getTarget(".x-menu-list-item", this.ul, true);
-        if (t && t.menuItemId) {
+    findTargetItem : function(e){
+        var t = e.getTarget(".x-menu-list-item", this.ul,  true);
+        if(t && t.menuItemId){
             return this.items.get(t.menuItemId);
         }
     },
 
     // private
-    onClick: function (e) {
+    onClick : function(e){
         var t;
-        if (t = this.findTargetItem(e)) {
+        if(t = this.findTargetItem(e)){
             t.onClick(e);
             this.fireEvent("click", this, t, e);
         }
     },
 
     // private
-    setActiveItem: function (item, autoExpand) {
-        if (item != this.activeItem) {
-            if (this.activeItem) {
+    setActiveItem : function(item, autoExpand){
+        if(item != this.activeItem){
+            if(this.activeItem){
                 this.activeItem.deactivate();
             }
             this.activeItem = item;
             item.activate(autoExpand);
-        } else if (autoExpand) {
+        }else if(autoExpand){
             item.expandMenu();
         }
     },
 
     // private
-    tryActivate: function (start, step) {
+    tryActivate : function(start, step){
         var items = this.items;
-        for (var i = start, len = items.length; i >= 0 && i < len; i += step) {
+        for(var i = start, len = items.length; i >= 0 && i < len; i+= step){
             var item = items.get(i);
-            if (!item.disabled && item.canActivate) {
+            if(!item.disabled && item.canActivate){
                 this.setActiveItem(item, false);
                 return item;
             }
@@ -238,10 +238,10 @@ Ext.extend(Ext.menu.Menu, Ext.util.Observable, {
     },
 
     // private
-    onMouseOver: function (e) {
+    onMouseOver : function(e){
         var t;
-        if (t = this.findTargetItem(e)) {
-            if (t.canActivate && !t.disabled) {
+        if(t = this.findTargetItem(e)){
+            if(t.canActivate && !t.disabled){
                 this.setActiveItem(t, true);
             }
         }
@@ -249,10 +249,10 @@ Ext.extend(Ext.menu.Menu, Ext.util.Observable, {
     },
 
     // private
-    onMouseOut: function (e) {
+    onMouseOut : function(e){
         var t;
-        if (t = this.findTargetItem(e)) {
-            if (t == this.activeItem && t.shouldDeactivate(e)) {
+        if(t = this.findTargetItem(e)){
+            if(t == this.activeItem && t.shouldDeactivate(e)){
                 this.activeItem.deactivate();
                 delete this.activeItem;
             }
@@ -264,7 +264,7 @@ Ext.extend(Ext.menu.Menu, Ext.util.Observable, {
      * Read-only.  Returns true if the menu is currently displayed, else false.
      * @type Boolean
      */
-    isVisible: function () {
+    isVisible : function(){
         return this.el && !this.hidden;
     },
 
@@ -275,9 +275,9 @@ Ext.extend(Ext.menu.Menu, Ext.util.Observable, {
      * the element (defaults to this.defaultAlign)
      * @param {Ext.menu.Menu} parentMenu (optional) This menu's parent menu, if applicable (defaults to undefined)
      */
-    show: function (el, pos, parentMenu) {
+    show : function(el, pos, parentMenu){
         this.parentMenu = parentMenu;
-        if (!this.el) {
+        if(!this.el){
             this.render();
         }
         this.fireEvent("beforeshow", this);
@@ -289,12 +289,12 @@ Ext.extend(Ext.menu.Menu, Ext.util.Observable, {
      * @param {Array} xyPosition Contains X & Y [x, y] values for the position at which to show the menu (coordinates are page-based)
      * @param {Ext.menu.Menu} parentMenu (optional) This menu's parent menu, if applicable (defaults to undefined)
      */
-    showAt: function (xy, parentMenu, /* private: */_e) {
+    showAt : function(xy, parentMenu, /* private: */_e){
         this.parentMenu = parentMenu;
-        if (!this.el) {
+        if(!this.el){
             this.render();
         }
-        if (_e !== false) {
+        if(_e !== false){
             this.fireEvent("beforeshow", this);
             xy = this.el.adjustForConstraints(xy);
         }
@@ -305,15 +305,16 @@ Ext.extend(Ext.menu.Menu, Ext.util.Observable, {
         this.fireEvent("show", this);
     },
 
+    
 
-    focus: function () {
-        if (!this.hidden) {
+    focus : function(){
+        if(!this.hidden){
             this.doFocus.defer(50, this);
         }
     },
 
-    doFocus: function () {
-        if (!this.hidden) {
+    doFocus : function(){
+        if(!this.hidden){
             this.focusEl.focus();
         }
     },
@@ -322,10 +323,10 @@ Ext.extend(Ext.menu.Menu, Ext.util.Observable, {
      * Hides this menu and optionally all parent menus
      * @param {Boolean} deep (optional) True to hide all parent menus recursively, if any (defaults to false)
      */
-    hide: function (deep) {
-        if (this.el && this.isVisible()) {
+    hide : function(deep){
+        if(this.el && this.isVisible()){
             this.fireEvent("beforehide", this);
-            if (this.activeItem) {
+            if(this.activeItem){
                 this.activeItem.deactivate();
                 this.activeItem = null;
             }
@@ -333,7 +334,7 @@ Ext.extend(Ext.menu.Menu, Ext.util.Observable, {
             this.hidden = true;
             this.fireEvent("hide", this);
         }
-        if (deep === true && this.parentMenu) {
+        if(deep === true && this.parentMenu){
             this.parentMenu.hide(true);
         }
     },
@@ -350,39 +351,39 @@ Ext.extend(Ext.menu.Menu, Ext.util.Observable, {
      * </ul>
      * Usage:
      * <pre><code>
-     // Create the menu
-     var menu = new Ext.menu.Menu();
+// Create the menu
+var menu = new Ext.menu.Menu();
 
-     // Create a menu item to add by reference
-     var menuItem = new Ext.menu.Item({ text: 'New Item!' });
+// Create a menu item to add by reference
+var menuItem = new Ext.menu.Item({ text: 'New Item!' });
 
-     // Add a bunch of items at once using different methods.
-     // Only the last item added will be returned.
-     var item = menu.add(
-     menuItem,                // add existing item by ref
-     'Dynamic Item',          // new TextItem
-     '-',                     // new separator
-     { text: 'Config Item' }  // new item by config
-     );
-     </code></pre>
+// Add a bunch of items at once using different methods.
+// Only the last item added will be returned.
+var item = menu.add(
+    menuItem,                // add existing item by ref
+    'Dynamic Item',          // new TextItem
+    '-',                     // new separator
+    { text: 'Config Item' }  // new item by config
+);
+</code></pre>
      * @param {Mixed} args One or more menu items, menu item configs or other objects that can be converted to menu items
      * @return {Ext.menu.Item} The menu item that was added, or the last one if multiple items were added
      */
-    add: function () {
+    add : function(){
         var a = arguments, l = a.length, item;
-        for (var i = 0; i < l; i++) {
+        for(var i = 0; i < l; i++){
             var el = a[i];
-            if (el.render) { // some kind of Item
+            if(el.render){ // some kind of Item
                 item = this.addItem(el);
-            } else if (typeof el == "string") { // string
-                if (el == "separator" || el == "-") {
+            }else if(typeof el == "string"){ // string
+                if(el == "separator" || el == "-"){
                     item = this.addSeparator();
-                } else {
+                }else{
                     item = this.addText(el);
                 }
-            } else if (el.tagName || el.el) { // element
+            }else if(el.tagName || el.el){ // element
                 item = this.addElement(el);
-            } else if (typeof el == "object") { // must be menu item config?
+            }else if(typeof el == "object"){ // must be menu item config?
                 Ext.applyIf(el, this.defaults);
                 item = this.addMenuItem(el);
             }
@@ -394,8 +395,8 @@ Ext.extend(Ext.menu.Menu, Ext.util.Observable, {
      * Returns this menu's underlying {@link Ext.Element} object
      * @return {Ext.Element} The element
      */
-    getEl: function () {
-        if (!this.el) {
+    getEl : function(){
+        if(!this.el){
             this.render();
         }
         return this.el;
@@ -405,7 +406,7 @@ Ext.extend(Ext.menu.Menu, Ext.util.Observable, {
      * Adds a separator bar to the menu
      * @return {Ext.menu.Item} The menu item that was added
      */
-    addSeparator: function () {
+    addSeparator : function(){
         return this.addItem(new Ext.menu.Separator());
     },
 
@@ -414,7 +415,7 @@ Ext.extend(Ext.menu.Menu, Ext.util.Observable, {
      * @param {Mixed} el The element or DOM node to add, or its id
      * @return {Ext.menu.Item} The menu item that was added
      */
-    addElement: function (el) {
+    addElement : function(el){
         return this.addItem(new Ext.menu.BaseItem(el));
     },
 
@@ -423,9 +424,9 @@ Ext.extend(Ext.menu.Menu, Ext.util.Observable, {
      * @param {Ext.menu.Item} item The menu item to add
      * @return {Ext.menu.Item} The menu item that was added
      */
-    addItem: function (item) {
+    addItem : function(item){
         this.items.add(item);
-        if (this.ul) {
+        if(this.ul){
             var li = document.createElement("li");
             li.className = "x-menu-list-item";
             this.ul.dom.appendChild(li);
@@ -440,11 +441,11 @@ Ext.extend(Ext.menu.Menu, Ext.util.Observable, {
      * @param {Object} config A MenuItem config object
      * @return {Ext.menu.Item} The menu item that was added
      */
-    addMenuItem: function (config) {
-        if (!(config instanceof Ext.menu.Item)) {
-            if (typeof config.checked == "boolean") { // must be check menu item config?
+    addMenuItem : function(config){
+        if(!(config instanceof Ext.menu.Item)){
+            if(typeof config.checked == "boolean"){ // must be check menu item config?
                 config = new Ext.menu.CheckItem(config);
-            } else {
+            }else{
                 config = new Ext.menu.Item(config);
             }
         }
@@ -456,7 +457,7 @@ Ext.extend(Ext.menu.Menu, Ext.util.Observable, {
      * @param {String} text The text to display in the menu item
      * @return {Ext.menu.Item} The menu item that was added
      */
-    addText: function (text) {
+    addText : function(text){
         return this.addItem(new Ext.menu.TextItem(text));
     },
 
@@ -466,9 +467,9 @@ Ext.extend(Ext.menu.Menu, Ext.util.Observable, {
      * @param {Ext.menu.Item} item The menu item to add
      * @return {Ext.menu.Item} The menu item that was added
      */
-    insert: function (index, item) {
+    insert : function(index, item){
         this.items.insert(index, item);
-        if (this.ul) {
+        if(this.ul){
             var li = document.createElement("li");
             li.className = "x-menu-list-item";
             this.ul.dom.insertBefore(li, this.ul.dom.childNodes[index]);
@@ -482,7 +483,7 @@ Ext.extend(Ext.menu.Menu, Ext.util.Observable, {
      * Removes an {@link Ext.menu.Item} from the menu and destroys the object
      * @param {Ext.menu.Item} item The menu item to remove
      */
-    remove: function (item) {
+    remove : function(item){
         this.items.removeKey(item.id);
         item.destroy();
     },
@@ -490,9 +491,9 @@ Ext.extend(Ext.menu.Menu, Ext.util.Observable, {
     /**
      * Removes and destroys all items in the menu
      */
-    removeAll: function () {
+    removeAll : function(){
         var f;
-        while (f = this.items.first()) {
+        while(f = this.items.first()){
             this.remove(f);
         }
     },
@@ -501,69 +502,69 @@ Ext.extend(Ext.menu.Menu, Ext.util.Observable, {
      * Destroys the menu by  unregistering it from {@link Ext.menu.MenuMgr}, purging event listeners,
      * removing all of the menus items, then destroying the underlying {@link Ext.Element}
      */
-    destroy: function () {
+    destroy : function(){
         this.beforeDestroy();
         Ext.menu.MenuMgr.unregister(this);
         if (this.keyNav) {
-            this.keyNav.disable();
+        	this.keyNav.disable();	
         }
         this.removeAll();
         if (this.ul) {
-            this.ul.removeAllListeners();
+        	this.ul.removeAllListeners();	
         }
         if (this.el) {
-            this.el.destroy();
+        	this.el.destroy();	
         }
     },
 
-    // private
-    beforeDestroy: Ext.emptyFn
+	// private
+    beforeDestroy : Ext.emptyFn
 
 });
 
 // MenuNav is a private utility class used internally by the Menu
-Ext.menu.MenuNav = function (menu) {
+Ext.menu.MenuNav = function(menu){
     Ext.menu.MenuNav.superclass.constructor.call(this, menu.el);
     this.scope = this.menu = menu;
 };
 
 Ext.extend(Ext.menu.MenuNav, Ext.KeyNav, {
-    doRelay: function (e, h) {
+    doRelay : function(e, h){
         var k = e.getKey();
-        if (!this.menu.activeItem && e.isNavKeyPress() && k != e.SPACE && k != e.RETURN) {
+        if(!this.menu.activeItem && e.isNavKeyPress() && k != e.SPACE && k != e.RETURN){
             this.menu.tryActivate(0, 1);
             return false;
         }
         return h.call(this.scope || this, e, this.menu);
     },
 
-    up: function (e, m) {
-        if (!m.tryActivate(m.items.indexOf(m.activeItem) - 1, -1)) {
-            m.tryActivate(m.items.length - 1, -1);
+    up : function(e, m){
+        if(!m.tryActivate(m.items.indexOf(m.activeItem)-1, -1)){
+            m.tryActivate(m.items.length-1, -1);
         }
     },
 
-    down: function (e, m) {
-        if (!m.tryActivate(m.items.indexOf(m.activeItem) + 1, 1)) {
+    down : function(e, m){
+        if(!m.tryActivate(m.items.indexOf(m.activeItem)+1, 1)){
             m.tryActivate(0, 1);
         }
     },
 
-    right: function (e, m) {
-        if (m.activeItem) {
+    right : function(e, m){
+        if(m.activeItem){
             m.activeItem.expandMenu(true);
         }
     },
 
-    left: function (e, m) {
+    left : function(e, m){
         m.hide();
-        if (m.parentMenu && m.parentMenu.activeItem) {
+        if(m.parentMenu && m.parentMenu.activeItem){
             m.parentMenu.activeItem.activate();
         }
     },
 
-    enter: function (e, m) {
-        if (m.activeItem) {
+    enter : function(e, m){
+        if(m.activeItem){
             e.stopPropagation();
             m.activeItem.onClick(e);
             m.fireEvent("click", this, m.activeItem);

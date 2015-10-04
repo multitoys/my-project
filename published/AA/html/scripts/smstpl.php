@@ -1,53 +1,55 @@
 <?php
 
-    require_once("../../../common/html/includes/httpinit.php");
+	require_once( "../../../common/html/includes/httpinit.php" );
 
-    //
-    // Authorization
-    //
+	//
+	// Authorization
+	//
 
-    $errorStr = null;
-    $fatalError = false;
-    $SCR_ID = "CP";
+	$errorStr = null;
+	$fatalError = false;
+	$SCR_ID = "CP";
 
-    pageUserAuthorization($SCR_ID, $AA_APP_ID, false);
+	pageUserAuthorization( $SCR_ID, $AA_APP_ID, false );
 
-    //
-    // Page variables setup
-    //
+	//
+	// Page variables setup
+	//
 
-    $kernelStrings = $loc_str[$language];
-    $currencyList = array();
+	$kernelStrings = $loc_str[$language];
+	$currencyList = array();
 
-    $btnIndex = getButtonIndex(array("savebtn"), $_POST);
+	$btnIndex = getButtonIndex( array( "savebtn" ), $_POST );
 
-    switch ($btnIndex) {
-        case 0 : {
+	switch ( $btnIndex ) {
+		case 0 : {
 
-            break;
-        }
-    }
+			break;
+		}
+	}
 
-    switch (true) {
-        case true: {
+	switch( true ) {
+			case true: {
 
-        }
-    }
 
-    //
-    // Page implementation
-    //
+			}
+	}
 
-    $preproc = new php_preprocessor($templateName, $kernelStrings, $language, $AA_APP_ID);
+	//
+	// Page implementation
+	//
 
-    $preproc->assign(PAGE_TITLE, $kernelStrings['sms_screen_long_name']);
-    $preproc->assign(FORM_LINK, PAGE_MODULES);
-    $preproc->assign(ERROR_STR, $errorStr);
-    $preproc->assign(FATAL_ERROR, $fatalError);
-    $preproc->assign(HELP_TOPIC, "");
+	$preproc = new php_preprocessor( $templateName, $kernelStrings, $language, $AA_APP_ID );
 
-    if (!$fatalError) {
-    }
+	$preproc->assign( PAGE_TITLE, $kernelStrings['sms_screen_long_name'] );
+	$preproc->assign( FORM_LINK, PAGE_MODULES );
+	$preproc->assign( ERROR_STR, $errorStr );
+	$preproc->assign( FATAL_ERROR, $fatalError );
+	$preproc->assign( HELP_TOPIC, "");
 
-    $preproc->display("sms.htm");
+
+	if ( !$fatalError ) {
+	}
+
+	$preproc->display("sms.htm" );
 ?>

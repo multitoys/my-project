@@ -22,35 +22,35 @@ Ext.form.Radio = Ext.extend(Ext.form.Checkbox, {
      * Overridden and disabled. The editor element does not support standard valid/invalid marking. @hide
      * @method
      */
-    markInvalid: Ext.emptyFn,
+    markInvalid : Ext.emptyFn,
     /**
      * Overridden and disabled. The editor element does not support standard valid/invalid marking. @hide
      * @method
      */
-    clearInvalid: Ext.emptyFn,
+    clearInvalid : Ext.emptyFn,
 
     /**
      * If this radio is part of a group, it will return the selected value
      * @return {String}
      */
-    getGroupValue: function () {
-        var p = this.el.up('form') || Ext.getBody();
-        return p.child('input[name=' + this.el.dom.name + ']:checked', true).value;
+    getGroupValue : function(){
+    	var p = this.el.up('form') || Ext.getBody();
+        return p.child('input[name='+this.el.dom.name+']:checked', true).value;
     },
-
+    
     // private
-    onClick: function () {
-        if (this.el.dom.checked != this.checked) {
-            var p = this.el.up('form') || Ext.getBody();
-            var els = p.select('input[name=' + this.el.dom.name + ']');
-            els.each(function (el) {
-                if (el.dom.id == this.id) {
-                    this.setValue(true);
-                } else {
-                    Ext.getCmp(el.dom.id).setValue(false);
-                }
-            }, this);
-        }
+    onClick : function(){
+    	if(this.el.dom.checked != this.checked){
+    		var p = this.el.up('form') || Ext.getBody();
+			var els = p.select('input[name='+this.el.dom.name+']');
+			els.each(function(el){
+				if(el.dom.id == this.id){
+					this.setValue(true);
+				}else{
+					Ext.getCmp(el.dom.id).setValue(false);
+				}
+			}, this);
+		}
     }
 });
 Ext.reg('radio', Ext.form.Radio);

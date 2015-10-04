@@ -15,25 +15,21 @@
 // it's just namespace for protecting global symbols.
 
 function Dialog(url, action, init) {
-    if (typeof init == "undefined") {
-        init = window;	// pass this window object by default
-    }
-    Dialog._geckoOpenModal(url, action, init);
+	if (typeof init == "undefined") {
+		init = window;	// pass this window object by default
+	}
+	Dialog._geckoOpenModal(url, action, init);
 }
 
-Dialog._parentEvent = function (ev) {
-    setTimeout(function () {
-        if (Dialog._modal && !Dialog._modal.closed) {
-            Dialog._modal.focus()
-        }
-    }, 50);
-    try {
-        if (Dialog._modal && !Dialog._modal.closed) {
-            HTMLArea._stopEvent(ev);
-        }
-    } catch (e) {
-        //after closing the popup in IE the events are not released and trying to access Dialog._modal.closed causes an error
-    }
+Dialog._parentEvent = function(ev) {
+	setTimeout( function() { if (Dialog._modal && !Dialog._modal.closed) { Dialog._modal.focus() } }, 50);
+	try {
+		if (Dialog._modal && !Dialog._modal.closed) {
+			HTMLArea._stopEvent(ev);
+		} 
+	} catch (e) {
+		//after closing the popup in IE the events are not released and trying to access Dialog._modal.closed causes an error
+	}
 };
 
 
@@ -46,53 +42,39 @@ Dialog._modal = null;
 // the dialog will read it's args from this variable
 Dialog._arguments = null;
 
-Dialog._geckoOpenModal = function (url, action, init) {
-    var dlg = window.open(url, "hadialog",
-        "toolbar=no,menubar=no,personalbar=no,width=10,height=10," +
-        "scrollbars=no,resizable=yes,modal=yes,dependable=yes");
-    Dialog._modal = dlg;
-    Dialog._arguments = init;
+Dialog._geckoOpenModal = function(url, action, init) {
+	var dlg = window.open(url, "hadialog",
+			      "toolbar=no,menubar=no,personalbar=no,width=10,height=10," +
+			      "scrollbars=no,resizable=yes,modal=yes,dependable=yes");
+	Dialog._modal = dlg;
+	Dialog._arguments = init;
 
-    // capture some window's events
-    function capwin(w) {
-        HTMLArea._addEvent(w, "click", Dialog._parentEvent);
-        HTMLArea._addEvent(w, "mousedown", Dialog._parentEvent);
-        HTMLArea._addEvent(w, "focus", Dialog._parentEvent);
-    }
-
-    // release the captured events
-    function relwin(w) {
-        HTMLArea._removeEvent(w, "click", Dialog._parentEvent);
-        HTMLArea._removeEvent(w, "mousedown", Dialog._parentEvent);
-        HTMLArea._removeEvent(w, "focus", Dialog._parentEvent);
-    }
-
-    capwin(window);
-    // capture other frames, note the exception trapping, this is because
-    // we are not permitted to add events to frames outside of the current
-    // window's domain.
-    for (var i = 0; i < window.frames.length; i++) {
-        try {
-            capwin(window.frames[i]);
-        } catch (e) {
-        }
-    }
-    ;
-    // make up a function to be called when the Dialog ends.
-    Dialog._return = function (val) {
-        if (val && action) {
-            action(val);
-        }
-        relwin(window);
-        // capture other frames
-        for (var i = 0; i < window.frames.length; i++) {
-            try {
-                relwin(window.frames[i]);
-            } catch (e) {
-            }
-        }
-        ;
-        Dialog._modal = null;
-    };
-    Dialog._modal.focus();
+	// capture some window's events
+	function capwin(w) {
+		HTMLArea._addEvent(w, "click", Dialog._parentEvent);
+		HTMLArea._addEvent(w, "mousedown", Dialog._parentEvent);
+		HTMLArea._addEvent(w, "focus", Dialog._parentEvent);
+	}
+	// release the captured events
+	function relwin(w) {
+		HTMLArea._removeEvent(w, "click", Dialog._parentEvent);
+		HTMLArea._removeEvent(w, "mousedown", Dialog._parentEvent);
+		HTMLArea._removeEvent(w, "focus", Dialog._parentEvent);
+	}
+	capwin(window);
+	// capture other frames, note the exception trapping, this is because
+  // we are not permitted to add events to frames outside of the current
+  // window's domain.
+	for (var i = 0; i < window.frames.length; i++) {try { capwin(window.frames[i]); } catch(e) { } };
+	// make up a function to be called when the Dialog ends.
+	Dialog._return = function (val) {
+		if (val && action) {
+			action(val);
+		}
+		relwin(window);
+		// capture other frames
+		for (var i = 0; i < window.frames.length; i++) { try { relwin(window.frames[i]); } catch(e) { } };
+		Dialog._modal = null;
+	};
+  Dialog._modal.focus();
 };

@@ -1,7 +1,7 @@
 <? if $noWidgetsList ?>
-<? assign var=caption value=$wgStrings.wg_what_is_page_header ?>
+	<? assign var=caption value=$wgStrings.wg_what_is_page_header ?>
 <? else ?>
-<? assign var=caption value=$wgStrings.wg_page_header ?>
+	<? assign var=caption value=$wgStrings.wg_page_header ?>
 <? /if ?>
 
 <? wbs_splitterPanelHeader
@@ -12,48 +12,48 @@
 
 <? wbs_splitterScrollableArea width=$treePanelWidth ?>
 
-<? if $fatalError ?>
-<? wbs_errorBlock ?>
-<? else ?>
-<? wbs_errorBlock ?>
+	<? if $fatalError ?>
+		<? wbs_errorBlock ?>
+	<? else ?>
+		<? wbs_errorBlock ?>
 
-<div style='padding: 10px; width: 600px'>
-    <? $wgStrings.wg_page_text ?>
-    <BR><BR>
+		<div style='padding: 10px; width: 600px'>
+			<? $wgStrings.wg_page_text ?>
+			<BR><BR>
+			
+			<? assign var="wglabel" value="wg_types_text_"|cat:$appId|lower ?>
+			
+			<? $wgStrings.$wglabel ?>:
+			<BR>	
 
-    <? assign var="wglabel" value="wg_types_text_"|cat:$appId|lower ?>
+			<div style='padding-left: 30px'>
+				<? foreach from=$widgetsSubtypes item=cSubtype ?>
+					<BR>
+					<b><? $cSubtype->name ?></b>
+					<BR>
+					<? $cSubtype->desc ?>
+					<BR>
+				<? foreachelse ?>
+					<? $kernelStrings.app_nowidgetsavailable_message ?>
+				<? /foreach ?>
+			</div>
+			<BR>
+			
+			<? $wgStrings.wg_create_text ?>
+			
+			<BR><BR>
+			
+			<? if $widgets && !$noWidgetsList ?>
+				<? wbs_formCaption text=$wgStrings[$wglabel] ?>
+				
+				<div style='padding-left: 20px'>
+					<? foreach from=$widgets item=widget ?>
+						<a href='javascript:void(0)' onClick='foldersTree.selectWidget("<? $widget.WG_ID ?>")'><? $widget.WG_DESC ?></a><BR>
+					<? /foreach ?>
+				</div>
+			<? /if ?>
 
-    <? $wgStrings.$wglabel ?>:
-    <BR>
-
-    <div style='padding-left: 30px'>
-        <? foreach from=$widgetsSubtypes item=cSubtype ?>
-        <BR>
-        <b><? $cSubtype->name ?></b>
-        <BR>
-        <? $cSubtype->desc ?>
-        <BR>
-        <? foreachelse ?>
-        <? $kernelStrings.app_nowidgetsavailable_message ?>
-        <? /foreach ?>
-    </div>
-    <BR>
-
-    <? $wgStrings.wg_create_text ?>
-
-    <BR><BR>
-
-    <? if $widgets && !$noWidgetsList ?>
-    <? wbs_formCaption text=$wgStrings[$wglabel] ?>
-
-    <div style='padding-left: 20px'>
-        <? foreach from=$widgets item=widget ?>
-        <a href='javascript:void(0)' onClick='foldersTree.selectWidget("<? $widget.WG_ID ?>")'><? $widget.WG_DESC ?></a><BR>
-        <? /foreach ?>
-    </div>
-    <? /if ?>
-
-</div>
-<? /if ?>
+		</div>
+	<? /if ?>
 
 <? /wbs_splitterScrollableArea ?>

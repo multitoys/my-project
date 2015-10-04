@@ -1,155 +1,157 @@
 <?php
 
-    require_once("../../../common/html/includes/httpinit.php");
+	require_once( "../../../common/html/includes/httpinit.php" );
 
-    //
-    // Authorization
-    //
+	//	
+	// Authorization
+	//
 
-    $errorStr = null;
-    $fatalError = false;
-    $SCR_ID = "LF";
+	$errorStr = null;
+	$fatalError = false;
+	$SCR_ID = "LF";
+	
+	pageUserAuthorization( $SCR_ID, $MW_APP_ID, true );
 
-    pageUserAuthorization($SCR_ID, $MW_APP_ID, true);
+	// 
+	// Page variables setup
+	//
+	$kernelStrings = $loc_str[$language];
+	$mw_locStrings = $mw_loc_str[$language];
+	$invalidField = null;
 
-    //
-    // Page variables setup
-    //
-    $kernelStrings = $loc_str[$language];
-    $mw_locStrings = $mw_loc_str[$language];
-    $invalidField = null;
+	//
+	// Functions
+	//
 
-    //
-    // Functions
-    //
+	function listLayouts()
+	{
+		global $mw_locStrings;
+		$Layouts = array();
 
-    function listLayouts()
-    {
-        global $mw_locStrings;
-        $Layouts = array();
+		$path = WBS_DIR."published/common/html/cssbased/layout";
 
-        $path = WBS_DIR."published/common/html/cssbased/layout";
+		if ( !($handle = @opendir($path)) )
+			return null;
 
-        if (!($handle = @opendir($path)))
-            return null;
+		while ( false !== ($file = readdir($handle)) )
+		{
+			if ( $file != "." && $file != ".." ) {
+				$filename = $path.'/'.$file;
 
-        while (false !== ($file = readdir($handle))) {
-            if ($file != "." && $file != "..") {
-                $filename = $path.'/'.$file;
+				if ( is_dir($filename) ) {
+					$layout_info = $filename.'/info.php';
 
-                if (is_dir($filename)) {
-                    $layout_info = $filename.'/info.php';
+					if ( file_exists($layout_info) ) {
+						include($layout_info);
+						$Layouts[$file] = $layoutInfo;
+						$Layouts[$file]['name'] = $mw_locStrings[$layoutInfo['name']];
+					}
+				}
+			}
+		}
 
-                    if (file_exists($layout_info)) {
-                        include($layout_info);
-                        $Layouts[$file] = $layoutInfo;
-                        $Layouts[$file]['name'] = $mw_locStrings[$layoutInfo['name']];
-                    }
-                }
-            }
-        }
+		closedir( $handle );
+		return $Layouts;
+	}
 
-        closedir($handle);
+	function mw_sortThemes( $a, $b )
+	{
+		return strcmp( $a['name'], $b['name'] );
+	}
 
-        return $Layouts;
-    }
+	function listThemes()
+	{
+		global $mw_locStrings;
+		$Themes = array();
 
-    function mw_sortThemes($a, $b)
-    {
-        return strcmp($a['name'], $b['name']);
-    }
+		$path = WBS_DIR."published/common/html/cssbased/themes";
 
-    function listThemes()
-    {
-        global $mw_locStrings;
-        $Themes = array();
+		if ( !($handle = @opendir($path)) )
+			return null;
 
-        $path = WBS_DIR."published/common/html/cssbased/themes";
+		while ( false !== ($file = readdir($handle)) )
+		{
+			if ( $file != "." && $file != ".." ) {
+				$filename = $path.'/'.$file;
 
-        if (!($handle = @opendir($path)))
-            return null;
+				if ( is_dir($filename) ) {
+					$theme_info = $filename.'/info.php';
 
-        while (false !== ($file = readdir($handle))) {
-            if ($file != "." && $file != "..") {
-                $filename = $path.'/'.$file;
+					if ( file_exists($theme_info) ) {
+						include($theme_info);
+						$Themes[$file] = $themeInfo;
+						$Themes[$file]['name'] = $mw_locStrings[$themeInfo['name']];
+					}
+				}
+			}
+		}
 
-                if (is_dir($filename)) {
-                    $theme_info = $filename.'/info.php';
+		uasort($Themes, 'mw_sortThemes');
 
-                    if (file_exists($theme_info)) {
-                        include($theme_info);
-                        $Themes[$file] = $themeInfo;
-                        $Themes[$file]['name'] = $mw_locStrings[$themeInfo['name']];
-                    }
-                }
-            }
-        }
+		closedir( $handle );
+		return $Themes;
+	}
 
-        uasort($Themes, 'mw_sortThemes');
+	//
+	// Form handling
+	//
+	$btnIndex = getButtonIndex( array(BTN_SAVE, BTN_CANCEL), $_POST );
 
-        closedir($handle);
+	switch ( $btnIndex ) {
+		case 0 :
+				writeUserCommonSetting( $currentUser, SCREEN_LAYOUT, $curLayout, $kernelStrings );
+				writeUserCommonSetting( $currentUser, SCREEN_THEME, $curTheme, $kernelStrings );
+				writeUserCommonSetting( $currentUser, SCREEN_LOGO, $curLogo, $kernelStrings );
 
-        return $Themes;
-    }
+				$params = array( INFO_STR=>urlencode(base64_encode($mw_locStrings['lf_changeaccepted_message'])) );
 
-    //
-    // Form handling
-    //
-    $btnIndex = getButtonIndex(array(BTN_SAVE, BTN_CANCEL), $_POST);
+				redirectBrowser( PAGE_SIMPLEREPORT, $params );
+		case 1 : 
+				redirectBrowser( PAGE_SIMPLEREPORT, array( INFO_STR=>urlencode(base64_encode($mw_locStrings['lf_changecanceled_message'])), "reportType"=>2 ) );
+	}
 
-    switch ($btnIndex) {
-        case 0 :
-            writeUserCommonSetting($currentUser, SCREEN_LAYOUT, $curLayout, $kernelStrings);
-            writeUserCommonSetting($currentUser, SCREEN_THEME, $curTheme, $kernelStrings);
-            writeUserCommonSetting($currentUser, SCREEN_LOGO, $curLogo, $kernelStrings);
+	switch (true)
+	{
+		case true: 
+			$Themes = listThemes();
+			$Layouts = listLayouts();
 
-            $params = array(INFO_STR => urlencode(base64_encode($mw_locStrings['lf_changeaccepted_message'])));
+			if ( !isset($edited) ) {
+				$curTheme = readUserCommonSetting( $currentUser, SCREEN_THEME );
+				if ( !strlen($curTheme) )
+					$curTheme = strlen($styleSet) ? $styleSet : HTML_DEFAULT_STYLESET;
 
-            redirectBrowser(PAGE_SIMPLEREPORT, $params);
-        case 1 :
-            redirectBrowser(PAGE_SIMPLEREPORT, array(INFO_STR => urlencode(base64_encode($mw_locStrings['lf_changecanceled_message'])), "reportType" => 2));
-    }
+				$curLayout = readUserCommonSetting( $currentUser, SCREEN_LAYOUT );
+				if ( !strlen($curLayout) )
+					$curLayout = "topmenu";
+				
+				$curLogo = readUserCommonSetting( $currentUser, SCREEN_LOGO);
+				if ( !strlen($curLogo) )
+					$curLogo = "app";
+			}
+	}
 
-    switch (true) {
-        case true:
-            $Themes = listThemes();
-            $Layouts = listLayouts();
+	//
+	// Page implementation
+	//
+	$preproc = new php_preprocessor( $templateName, $kernelStrings, $language, $MW_APP_ID  );
 
-            if (!isset($edited)) {
-                $curTheme = readUserCommonSetting($currentUser, SCREEN_THEME);
-                if (!strlen($curTheme))
-                    $curTheme = strlen($styleSet) ? $styleSet : HTML_DEFAULT_STYLESET;
+	$preproc->assign( PAGE_TITLE, $mw_locStrings['lf_screen_long_name'] );
+	$preproc->assign( FORM_LINK, PAGE_LOOKANDFEEL );
+	$preproc->assign( INVALID_FIELD, $invalidField );
+	$preproc->assign( ERROR_STR, $errorStr );
+	$preproc->assign( FATAL_ERROR, $fatalError );
+	$preproc->assign( HELP_TOPIC, "preferences.htm");
+	$preproc->assign( "mwStrings", $mw_locStrings );
 
-                $curLayout = readUserCommonSetting($currentUser, SCREEN_LAYOUT);
-                if (!strlen($curLayout))
-                    $curLayout = "topmenu";
+	if ( !$fatalError )
+	{
+		$preproc->assign( "Themes", $Themes );
+		$preproc->assign( "Layouts", $Layouts );
+		$preproc->assign( "curTheme", $curTheme );
+		$preproc->assign( "curLayout", $curLayout );
+		$preproc->assign( "curLogo", $curLogo );
+	}
 
-                $curLogo = readUserCommonSetting($currentUser, SCREEN_LOGO);
-                if (!strlen($curLogo))
-                    $curLogo = "app";
-            }
-    }
-
-    //
-    // Page implementation
-    //
-    $preproc = new php_preprocessor($templateName, $kernelStrings, $language, $MW_APP_ID);
-
-    $preproc->assign(PAGE_TITLE, $mw_locStrings['lf_screen_long_name']);
-    $preproc->assign(FORM_LINK, PAGE_LOOKANDFEEL);
-    $preproc->assign(INVALID_FIELD, $invalidField);
-    $preproc->assign(ERROR_STR, $errorStr);
-    $preproc->assign(FATAL_ERROR, $fatalError);
-    $preproc->assign(HELP_TOPIC, "preferences.htm");
-    $preproc->assign("mwStrings", $mw_locStrings);
-
-    if (!$fatalError) {
-        $preproc->assign("Themes", $Themes);
-        $preproc->assign("Layouts", $Layouts);
-        $preproc->assign("curTheme", $curTheme);
-        $preproc->assign("curLayout", $curLayout);
-        $preproc->assign("curLogo", $curLogo);
-    }
-
-    $preproc->display("lookandfeel.htm");
+	$preproc->display("lookandfeel.htm");
 ?>

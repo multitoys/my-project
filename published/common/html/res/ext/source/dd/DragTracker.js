@@ -6,7 +6,7 @@
  * http://extjs.com/license
  */
 
-Ext.dd.DragTracker = function (config) {
+Ext.dd.DragTracker = function(config){
     Ext.apply(this, config);
     this.addEvents(
         'mousedown',
@@ -17,30 +17,30 @@ Ext.dd.DragTracker = function (config) {
         'drag'
     );
 
-    this.dragRegion = new Ext.lib.Region(0, 0, 0, 0);
+    this.dragRegion = new Ext.lib.Region(0,0,0,0);
 
-    if (this.el) {
+    if(this.el){
         this.initEl(this.el);
     }
 }
 
-Ext.extend(Ext.dd.DragTracker, Ext.util.Observable, {
+Ext.extend(Ext.dd.DragTracker, Ext.util.Observable,  {
     active: false,
     tolerance: 5,
     autoStart: false,
 
-    initEl: function (el) {
+    initEl: function(el){
         this.el = Ext.get(el);
         el.on('mousedown', this.onMouseDown, this,
-            this.delegate ? {delegate: this.delegate} : undefined);
+                this.delegate ? {delegate: this.delegate} : undefined);
     },
 
-    destroy: function () {
+    destroy : function(){
         this.el.un('mousedown', this.onMouseDown, this);
     },
 
-    onMouseDown: function (e, target) {
-        if (this.fireEvent('mousedown', this, e) !== false && this.onBeforeStart(e) !== false) {
+    onMouseDown: function(e, target){
+        if(this.fireEvent('mousedown', this, e) !== false && this.onBeforeStart(e) !== false){
             this.startXY = this.lastXY = e.getXY();
             this.dragTarget = this.delegate ? target : this.el.dom;
             e.preventDefault();
@@ -48,20 +48,20 @@ Ext.extend(Ext.dd.DragTracker, Ext.util.Observable, {
             doc.on('mouseup', this.onMouseUp, this);
             doc.on('mousemove', this.onMouseMove, this);
             doc.on('selectstart', this.stopSelect, this);
-            if (this.autoStart) {
+            if(this.autoStart){
                 this.timer = this.triggerStart.defer(this.autoStart === true ? 1000 : this.autoStart, this);
             }
         }
     },
 
-    onMouseMove: function (e, target) {
+    onMouseMove: function(e, target){
         e.preventDefault();
         var xy = e.getXY(), s = this.startXY;
         this.lastXY = xy;
-        if (!this.active) {
-            if (Math.abs(s[0] - xy[0]) > this.tolerance || Math.abs(s[1] - xy[1]) > this.tolerance) {
+        if(!this.active){
+            if(Math.abs(s[0]-xy[0]) > this.tolerance || Math.abs(s[1]-xy[1]) > this.tolerance){
                 this.triggerStart();
-            } else {
+            }else{
                 return;
             }
         }
@@ -70,7 +70,7 @@ Ext.extend(Ext.dd.DragTracker, Ext.util.Observable, {
         this.fireEvent('drag', this, e);
     },
 
-    onMouseUp: function (e) {
+    onMouseUp: function(e){
         var doc = Ext.getDoc();
         doc.un('mousemove', this.onMouseMove, this);
         doc.un('mouseup', this.onMouseUp, this);
@@ -84,64 +84,64 @@ Ext.extend(Ext.dd.DragTracker, Ext.util.Observable, {
         this.fireEvent('dragend', this, e);
     },
 
-    triggerStart: function (isTimer) {
+    triggerStart: function(isTimer){
         this.clearStart();
         this.active = true;
         this.onStart(this.startXY);
         this.fireEvent('dragstart', this, this.startXY);
     },
 
-    clearStart: function () {
-        if (this.timer) {
+    clearStart : function(){
+        if(this.timer){
             clearTimeout(this.timer);
             delete this.timer;
         }
     },
 
-    stopSelect: function (e) {
+    stopSelect : function(e){
         e.stopEvent();
         return false;
     },
 
-    onBeforeStart: function (e) {
+    onBeforeStart : function(e){
 
     },
 
-    onStart: function (xy) {
+    onStart : function(xy){
 
     },
 
-    onDrag: function (e) {
+    onDrag : function(e){
 
     },
 
-    onEnd: function (e) {
+    onEnd : function(e){
 
     },
 
-    getDragTarget: function () {
+    getDragTarget : function(){
         return this.dragTarget;
     },
 
-    getDragCt: function () {
+    getDragCt : function(){
         return this.el;
     },
 
-    getXY: function (constrain) {
+    getXY : function(constrain){
         return constrain ?
-            this.constrainModes[constrain].call(this, this.lastXY) : this.lastXY;
+               this.constrainModes[constrain].call(this, this.lastXY) : this.lastXY;
     },
 
-    getOffset: function (constrain) {
+    getOffset : function(constrain){
         var xy = this.getXY(constrain);
         var s = this.startXY;
-        return [s[0] - xy[0], s[1] - xy[1]];
+        return [s[0]-xy[0], s[1]-xy[1]];
     },
 
     constrainModes: {
-        'point': function (xy) {
+        'point' : function(xy){
 
-            if (!this.elRegion) {
+            if(!this.elRegion){
                 this.elRegion = this.getDragCt().getRegion();
             }
 

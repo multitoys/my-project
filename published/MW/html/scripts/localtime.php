@@ -1,55 +1,59 @@
 <?php
 
-    require_once("../../../common/html/includes/httpinit.php");
 
-    //
-    // Authorization
-    //
+	require_once( "../../../common/html/includes/httpinit.php" );
 
-    $errorStr = null;
-    $fatalError = false;
-    $SCR_ID = "PF";
+	//
+	// Authorization
+	//
 
-    pageUserAuthorization($SCR_ID, $MW_APP_ID, true);
-    $kernelStrings = $loc_str[$language];
+	$errorStr = null;
+	$fatalError = false;
+	$SCR_ID = "PF";
 
-    require_once("../../../common/html/includes/modules/JsHttpRequest/config.php");
-    require_once("../../../common/html/includes/modules/JsHttpRequest/Php.php");
+	pageUserAuthorization( $SCR_ID, $MW_APP_ID, true );
+	$kernelStrings = $loc_str[$language];
 
-    $JsHttpRequest =& new Subsys_JsHttpRequest_Php('windows-1251');
 
-    $TIMEZONE = $_POST['TIMEZONE'];
-    $DST = $_POST['DST'];
+	require_once( "../../../common/html/includes/modules/JsHttpRequest/config.php" );
+	require_once( "../../../common/html/includes/modules/JsHttpRequest/Php.php" );
 
-    function displayDateTimeLocal($timestamp)
-    {
-        global $kernelStrings;
-        global $monthShortNames;
+	$JsHttpRequest =& new Subsys_JsHttpRequest_Php('windows-1251');
 
-        $month = $monthShortNames[date("n", $timestamp) - 1];
+	$TIMEZONE = $_POST['TIMEZONE'];
+	$DST = $_POST['DST'];
 
-        return sprintf("<b>%s</b> (%s'%s)", date("H:i", $timestamp), $kernelStrings[$month], date("d Y", $timestamp));
-    }
+	function displayDateTimeLocal( $timestamp )
+	{
+		global $kernelStrings;
+		global $monthShortNames;
 
-    function convertTimestamp2Local2($timestamp, $TIMEZONE, $DST)
-    {
-        if (SERVER_TZ) {
-            $dt = new Date();
+		$month = $monthShortNames[date( "n", $timestamp ) - 1];
 
-            $dt->setTZ(new Date_TimeZone(SERVER_TIME_ZONE_ID, SERVER_TIME_ZONE_DST));
-            $dt->setDate($timestamp);
+		return sprintf( "<b>%s</b> (%s'%s)", date( "H:i", $timestamp ), $kernelStrings[$month], date( "d Y", $timestamp ) );
+	}
 
-            $dt->convertTZ(new Date_TimeZone($TIMEZONE, $DST));
-            $timestamp = $dt->getDate(DATE_FORMAT_UNIXTIME);
-        }
+	function convertTimestamp2Local2( $timestamp, $TIMEZONE, $DST )
+	{
+		if ( SERVER_TZ )
+		{
+			$dt = new Date();
 
-        return $timestamp;
-    }
+			$dt->setTZ( new Date_TimeZone( SERVER_TIME_ZONE_ID, SERVER_TIME_ZONE_DST ) );
+			$dt->setDate($timestamp);
 
-    switch (true) {
-        case true:
+			$dt->convertTZ( new Date_TimeZone( $TIMEZONE, $DST ) );
+			$timestamp = $dt->getDate(DATE_FORMAT_UNIXTIME);
+		}
 
-            $_RESULT = array("state" => 'OK', "error" => '', 'timestamp' => displayDateTimeLocal(convertTimestamp2Local2(time(), $TIMEZONE, $DST)));
-    }
+		return $timestamp;
+	}
+
+	switch( true )
+	{
+		case true:
+
+			$_RESULT = array( "state"=>'OK', "error"=>'', 'timestamp'=> displayDateTimeLocal( convertTimestamp2Local2( time(), $TIMEZONE, $DST ) ) );
+	}
 
 ?>

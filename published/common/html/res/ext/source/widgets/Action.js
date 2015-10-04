@@ -17,9 +17,9 @@
  * setDisabled(boolean), setVisible(boolean) and setHandler(function).</p>
  * Example usage:<br>
  * <pre><code>
- // Define the shared action.  Each component below will have the same
- // display text and icon, and will display the same message on click.
- var action = new Ext.Action({
+// Define the shared action.  Each component below will have the same
+// display text and icon, and will display the same message on click.
+var action = new Ext.Action({
     text: 'Do something',
     handler: function(){
         Ext.Msg.alert('Click', 'You did something.');
@@ -27,7 +27,7 @@
     iconCls: 'do-something'
 });
 
- var panel = new Ext.Panel({
+var panel = new Ext.Panel({
     title: 'Actions',
     width:500,
     height:300,
@@ -46,13 +46,13 @@
     renderTo: Ext.getBody()
 });
 
- // Change the text for all components using the action
- action.setText('Something else');
- </code></pre>
+// Change the text for all components using the action
+action.setText('Something else');
+</code></pre>
  * @constructor
  * @param {Object} config The configuration options
  */
-Ext.Action = function (config) {
+Ext.Action = function(config){
     this.initialConfig = config;
     this.items = [];
 }
@@ -80,13 +80,13 @@ Ext.Action.prototype = {
      */
 
     // private
-    isAction: true,
+    isAction : true,
 
     /**
      * Sets the text to be displayed by all components using this action.
      * @param {String} text The text to display
      */
-    setText: function (text) {
+    setText : function(text){
         this.initialConfig.text = text;
         this.callEach('setText', [text]);
     },
@@ -94,7 +94,7 @@ Ext.Action.prototype = {
     /**
      * Gets the text currently displayed by all components using this action.
      */
-    getText: function () {
+    getText : function(){
         return this.initialConfig.text;
     },
 
@@ -103,7 +103,7 @@ Ext.Action.prototype = {
      * a background image that will be used as the icon image.
      * @param {String} cls The CSS class supplying the icon image
      */
-    setIconClass: function (cls) {
+    setIconClass : function(cls){
         this.initialConfig.iconCls = cls;
         this.callEach('setIconClass', [cls]);
     },
@@ -111,7 +111,7 @@ Ext.Action.prototype = {
     /**
      * Gets the icon CSS class currently used by all components using this action.
      */
-    getIconClass: function () {
+    getIconClass : function(){
         return this.initialConfig.iconCls;
     },
 
@@ -120,7 +120,7 @@ Ext.Action.prototype = {
      * for {@link #enable} and {@link #disable}.
      * @param {Boolean} disabled True to disable the component, false to enable it
      */
-    setDisabled: function (v) {
+    setDisabled : function(v){
         this.initialConfig.disabled = v;
         this.callEach('setDisabled', [v]);
     },
@@ -128,14 +128,14 @@ Ext.Action.prototype = {
     /**
      * Enables all components using this action.
      */
-    enable: function () {
+    enable : function(){
         this.setDisabled(false);
     },
 
     /**
      * Disables all components using this action.
      */
-    disable: function () {
+    disable : function(){
         this.setDisabled(true);
     },
 
@@ -143,7 +143,7 @@ Ext.Action.prototype = {
      * Returns true if the components using this action are currently disabled, else returns false.  Read-only.
      * @property
      */
-    isDisabled: function () {
+    isDisabled : function(){
         return this.initialConfig.disabled;
     },
 
@@ -152,7 +152,7 @@ Ext.Action.prototype = {
      * for {@link #hide} and {@link #show}.
      * @param {Boolean} hidden True to hide the component, false to show it
      */
-    setHidden: function (v) {
+    setHidden : function(v){
         this.initialConfig.hidden = v;
         this.callEach('setVisible', [!v]);
     },
@@ -160,14 +160,14 @@ Ext.Action.prototype = {
     /**
      * Shows all components using this action.
      */
-    show: function () {
+    show : function(){
         this.setHidden(false);
     },
 
     /**
      * Hides all components using this action.
      */
-    hide: function () {
+    hide : function(){
         this.setHidden(true);
     },
 
@@ -175,7 +175,7 @@ Ext.Action.prototype = {
      * Returns true if the components using this action are currently hidden, else returns false.  Read-only.
      * @property
      */
-    isHidden: function () {
+    isHidden : function(){
         return this.initialConfig.hidden;
     },
 
@@ -185,7 +185,7 @@ Ext.Action.prototype = {
      * will be called with no arguments.
      * @param {Object} scope The scope in which the function will execute
      */
-    setHandler: function (fn, scope) {
+    setHandler : function(fn, scope){
         this.initialConfig.handler = fn;
         this.initialConfig.scope = scope;
         this.callEach('setHandler', [fn, scope]);
@@ -197,26 +197,26 @@ Ext.Action.prototype = {
      * @param {Function} fn The function to execute for each component
      * @param {Object} scope The scope in which the function will execute
      */
-    each: function (fn, scope) {
+    each : function(fn, scope){
         Ext.each(this.items, fn, scope);
     },
 
     // private
-    callEach: function (fnName, args) {
+    callEach : function(fnName, args){
         var cs = this.items;
-        for (var i = 0, len = cs.length; i < len; i++) {
+        for(var i = 0, len = cs.length; i < len; i++){
             cs[i][fnName].apply(cs[i], args);
         }
     },
 
     // private
-    addComponent: function (comp) {
+    addComponent : function(comp){
         this.items.push(comp);
         comp.on('destroy', this.removeComponent, this);
     },
 
     // private
-    removeComponent: function (comp) {
+    removeComponent : function(comp){
         this.items.remove(comp);
     }
 };

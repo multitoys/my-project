@@ -303,7 +303,7 @@ function GetPriceProductWithOption($variants, $productID)
 	// echo($customer->skidka.'<br>');
 	// echo($r["skidka"].'<br>');
 
-	$full_price = ZCalcPrice($customer->is_special_price, $customer->ignore_skidka, $r["SpecialPrice"], $r["Price"], $customer->skidka, $r["skidka"]);
+	$full_price = ZCalcPrice($customer->is_special_price, $r["SpecialPrice"], $customer->ignore_skidka, , $r["Price"], $customer->skidka, $r["skidka"]);
 	$full_price = number_format($full_price, 2);
 	/*foreach($variants as $var)
 

@@ -6,14 +6,7 @@
 // Distributed under the same terms as HTMLArea itself.
 // This notice MUST stay intact for use (see license.txt).
 {
-    "Default"
-:
-    "Default",
-        "Undefined"
-:
-    "Ungedefinieerd",
-        "Choose stylesheet"
-:
-    "Kies stylesheet"
-}
-;
+  "Default": "Default",
+  "Undefined": "Ungedefinieerd",
+  "Choose stylesheet": "Kies stylesheet"
+};

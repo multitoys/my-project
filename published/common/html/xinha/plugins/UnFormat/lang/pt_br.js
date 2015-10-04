@@ -14,34 +14,14 @@
 // Distributed under the same terms as HTMLArea itself.
 // This notice MUST stay intact for use (see license.txt).
 {
-    "All"
-:
-    "Tudo",
-        "All HTML:"
-:
-    "Todo HTML:",
-        "Cancel"
-:
-    "Cancelar",
-        "Cleaning Area"
-:
-    "Limpando Área",
-        "Cleaning options"
-:
-    "Opções de limpesa",
-        "Formatting:"
-:
-    "Formatação:",
-        "OK"
-:
-    "OK",
-        "Page Cleaner"
-:
-    "Limpesa de página",
-        "Select which types of formatting you would like to remove."
-:
-    "Selecione o tipo de formatação que deseja remover.",
-        "Selection"
-:
-    "Seleção"
+  "All": "Tudo",
+  "All HTML:": "Todo HTML:",
+  "Cancel": "Cancelar",
+  "Cleaning Area": "Limpando Área",
+  "Cleaning options": "Opções de limpesa",
+  "Formatting:": "Formatação:",
+  "OK": "OK",
+  "Page Cleaner": "Limpesa de página",
+  "Select which types of formatting you would like to remove.": "Selecione o tipo de formatação que deseja remover.",
+  "Selection": "Seleção"
 }

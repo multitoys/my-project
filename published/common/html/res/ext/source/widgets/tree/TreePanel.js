@@ -39,201 +39,202 @@
  * @param {Object} config
  */
 Ext.tree.TreePanel = Ext.extend(Ext.Panel, {
-    rootVisible: true,
+    rootVisible : true,
     animate: Ext.enableFx,
-    lines: true,
-    enableDD: false,
-    hlDrop: Ext.enableFx,
+    lines : true,
+    enableDD : false,
+    hlDrop : Ext.enableFx,
     pathSeparator: "/",
 
-    initComponent: function () {
+    initComponent : function(){
         Ext.tree.TreePanel.superclass.initComponent.call(this);
 
-        if (!this.eventModel) {
+        if(!this.eventModel){
             this.eventModel = new Ext.tree.TreeEventModel(this);
         }
-
+        
         this.nodeHash = {};
 
         /**
-         * The root node of this tree.
-         * @type Ext.tree.TreeNode
-         * @property root
-         */
-        if (this.root) {
-            this.setRootNode(this.root);
+        * The root node of this tree.
+        * @type Ext.tree.TreeNode
+        * @property root
+        */
+        if(this.root){
+           this.setRootNode(this.root);
         }
 
         this.addEvents(
+
             /**
-             * @event append
-             * Fires when a new child node is appended to a node in this tree.
-             * @param {Tree} tree The owner tree
-             * @param {Node} parent The parent node
-             * @param {Node} node The newly appended node
-             * @param {Number} index The index of the newly appended node
-             */
-            "append",
-            /**
-             * @event remove
-             * Fires when a child node is removed from a node in this tree.
-             * @param {Tree} tree The owner tree
-             * @param {Node} parent The parent node
-             * @param {Node} node The child node removed
-             */
-            "remove",
-            /**
-             * @event movenode
-             * Fires when a node is moved to a new location in the tree
-             * @param {Tree} tree The owner tree
-             * @param {Node} node The node moved
-             * @param {Node} oldParent The old parent of this node
-             * @param {Node} newParent The new parent of this node
-             * @param {Number} index The index it was moved to
-             */
-            "movenode",
-            /**
-             * @event insert
-             * Fires when a new child node is inserted in a node in this tree.
-             * @param {Tree} tree The owner tree
-             * @param {Node} parent The parent node
-             * @param {Node} node The child node inserted
-             * @param {Node} refNode The child node the node was inserted before
-             */
-            "insert",
-            /**
-             * @event beforeappend
-             * Fires before a new child is appended to a node in this tree, return false to cancel the append.
-             * @param {Tree} tree The owner tree
-             * @param {Node} parent The parent node
-             * @param {Node} node The child node to be appended
-             */
-            "beforeappend",
-            /**
-             * @event beforeremove
-             * Fires before a child is removed from a node in this tree, return false to cancel the remove.
-             * @param {Tree} tree The owner tree
-             * @param {Node} parent The parent node
-             * @param {Node} node The child node to be removed
-             */
-            "beforeremove",
-            /**
-             * @event beforemovenode
-             * Fires before a node is moved to a new location in the tree. Return false to cancel the move.
-             * @param {Tree} tree The owner tree
-             * @param {Node} node The node being moved
-             * @param {Node} oldParent The parent of the node
-             * @param {Node} newParent The new parent the node is moving to
-             * @param {Number} index The index it is being moved to
-             */
-            "beforemovenode",
-            /**
-             * @event beforeinsert
-             * Fires before a new child is inserted in a node in this tree, return false to cancel the insert.
-             * @param {Tree} tree The owner tree
-             * @param {Node} parent The parent node
-             * @param {Node} node The child node to be inserted
-             * @param {Node} refNode The child node the node is being inserted before
-             */
+            * @event append
+            * Fires when a new child node is appended to a node in this tree.
+            * @param {Tree} tree The owner tree
+            * @param {Node} parent The parent node
+            * @param {Node} node The newly appended node
+            * @param {Number} index The index of the newly appended node
+            */
+           "append",
+           /**
+            * @event remove
+            * Fires when a child node is removed from a node in this tree.
+            * @param {Tree} tree The owner tree
+            * @param {Node} parent The parent node
+            * @param {Node} node The child node removed
+            */
+           "remove",
+           /**
+            * @event movenode
+            * Fires when a node is moved to a new location in the tree
+            * @param {Tree} tree The owner tree
+            * @param {Node} node The node moved
+            * @param {Node} oldParent The old parent of this node
+            * @param {Node} newParent The new parent of this node
+            * @param {Number} index The index it was moved to
+            */
+           "movenode",
+           /**
+            * @event insert
+            * Fires when a new child node is inserted in a node in this tree.
+            * @param {Tree} tree The owner tree
+            * @param {Node} parent The parent node
+            * @param {Node} node The child node inserted
+            * @param {Node} refNode The child node the node was inserted before
+            */
+           "insert",
+           /**
+            * @event beforeappend
+            * Fires before a new child is appended to a node in this tree, return false to cancel the append.
+            * @param {Tree} tree The owner tree
+            * @param {Node} parent The parent node
+            * @param {Node} node The child node to be appended
+            */
+           "beforeappend",
+           /**
+            * @event beforeremove
+            * Fires before a child is removed from a node in this tree, return false to cancel the remove.
+            * @param {Tree} tree The owner tree
+            * @param {Node} parent The parent node
+            * @param {Node} node The child node to be removed
+            */
+           "beforeremove",
+           /**
+            * @event beforemovenode
+            * Fires before a node is moved to a new location in the tree. Return false to cancel the move.
+            * @param {Tree} tree The owner tree
+            * @param {Node} node The node being moved
+            * @param {Node} oldParent The parent of the node
+            * @param {Node} newParent The new parent the node is moving to
+            * @param {Number} index The index it is being moved to
+            */
+           "beforemovenode",
+           /**
+            * @event beforeinsert
+            * Fires before a new child is inserted in a node in this tree, return false to cancel the insert.
+            * @param {Tree} tree The owner tree
+            * @param {Node} parent The parent node
+            * @param {Node} node The child node to be inserted
+            * @param {Node} refNode The child node the node is being inserted before
+            */
             "beforeinsert",
 
             /**
-             * @event beforeload
-             * Fires before a node is loaded, return false to cancel
-             * @param {Node} node The node being loaded
-             */
+            * @event beforeload
+            * Fires before a node is loaded, return false to cancel
+            * @param {Node} node The node being loaded
+            */
             "beforeload",
             /**
-             * @event load
-             * Fires when a node is loaded
-             * @param {Node} node The node that was loaded
-             */
+            * @event load
+            * Fires when a node is loaded
+            * @param {Node} node The node that was loaded
+            */
             "load",
             /**
-             * @event textchange
-             * Fires when the text for a node is changed
-             * @param {Node} node The node
-             * @param {String} text The new text
-             * @param {String} oldText The old text
-             */
+            * @event textchange
+            * Fires when the text for a node is changed
+            * @param {Node} node The node
+            * @param {String} text The new text
+            * @param {String} oldText The old text
+            */
             "textchange",
             /**
-             * @event beforeexpandnode
-             * Fires before a node is expanded, return false to cancel.
-             * @param {Node} node The node
-             * @param {Boolean} deep
-             * @param {Boolean} anim
-             */
+            * @event beforeexpandnode
+            * Fires before a node is expanded, return false to cancel.
+            * @param {Node} node The node
+            * @param {Boolean} deep
+            * @param {Boolean} anim
+            */
             "beforeexpandnode",
             /**
-             * @event beforecollapsenode
-             * Fires before a node is collapsed, return false to cancel.
-             * @param {Node} node The node
-             * @param {Boolean} deep
-             * @param {Boolean} anim
-             */
+            * @event beforecollapsenode
+            * Fires before a node is collapsed, return false to cancel.
+            * @param {Node} node The node
+            * @param {Boolean} deep
+            * @param {Boolean} anim
+            */
             "beforecollapsenode",
             /**
-             * @event expandnode
-             * Fires when a node is expanded
-             * @param {Node} node The node
-             */
+            * @event expandnode
+            * Fires when a node is expanded
+            * @param {Node} node The node
+            */
             "expandnode",
             /**
-             * @event disabledchange
-             * Fires when the disabled status of a node changes
-             * @param {Node} node The node
-             * @param {Boolean} disabled
-             */
+            * @event disabledchange
+            * Fires when the disabled status of a node changes
+            * @param {Node} node The node
+            * @param {Boolean} disabled
+            */
             "disabledchange",
             /**
-             * @event collapsenode
-             * Fires when a node is collapsed
-             * @param {Node} node The node
-             */
+            * @event collapsenode
+            * Fires when a node is collapsed
+            * @param {Node} node The node
+            */
             "collapsenode",
             /**
-             * @event beforeclick
-             * Fires before click processing on a node. Return false to cancel the default action.
-             * @param {Node} node The node
-             * @param {Ext.EventObject} e The event object
-             */
+            * @event beforeclick
+            * Fires before click processing on a node. Return false to cancel the default action.
+            * @param {Node} node The node
+            * @param {Ext.EventObject} e The event object
+            */
             "beforeclick",
             /**
-             * @event click
-             * Fires when a node is clicked
-             * @param {Node} node The node
-             * @param {Ext.EventObject} e The event object
-             */
+            * @event click
+            * Fires when a node is clicked
+            * @param {Node} node The node
+            * @param {Ext.EventObject} e The event object
+            */
             "click",
             /**
-             * @event checkchange
-             * Fires when a node with a checkbox's checked property changes
-             * @param {Node} this This node
-             * @param {Boolean} checked
-             */
+            * @event checkchange
+            * Fires when a node with a checkbox's checked property changes
+            * @param {Node} this This node
+            * @param {Boolean} checked
+            */
             "checkchange",
             /**
-             * @event dblclick
-             * Fires when a node is double clicked
-             * @param {Node} node The node
-             * @param {Ext.EventObject} e The event object
-             */
+            * @event dblclick
+            * Fires when a node is double clicked
+            * @param {Node} node The node
+            * @param {Ext.EventObject} e The event object
+            */
             "dblclick",
             /**
-             * @event contextmenu
-             * Fires when a node is right clicked
-             * @param {Node} node The node
-             * @param {Ext.EventObject} e The event object
-             */
+            * @event contextmenu
+            * Fires when a node is right clicked
+            * @param {Node} node The node
+            * @param {Ext.EventObject} e The event object
+            */
             "contextmenu",
             /**
-             * @event beforechildrenrendered
-             * Fires right before the child nodes for a node are rendered
-             * @param {Node} node The node
-             */
+            * @event beforechildrenrendered
+            * Fires right before the child nodes for a node are rendered
+            * @param {Node} node The node
+            */
             "beforechildrenrendered",
-            /**
+           /**
              * @event startdrag
              * Fires when a node starts being dragged
              * @param {Ext.tree.TreePanel} this
@@ -292,7 +293,7 @@ Ext.tree.TreePanel = Ext.extend(Ext.Panel, {
              * @param {Object} dropEvent
              */
             "nodedrop",
-            /**
+             /**
              * @event nodedragover
              * Fires when a tree node is being targeted for a drag drop, return false to signal drop not allowed. The dragOverEvent
              * passed to handlers has the following properties:<br />
@@ -310,15 +311,15 @@ Ext.tree.TreePanel = Ext.extend(Ext.Panel, {
              */
             "nodedragover"
         );
-        if (this.singleExpand) {
+        if(this.singleExpand){
             this.on("beforeexpandnode", this.restrictExpand, this);
         }
     },
 
     // private
-    proxyNodeEvent: function (ename, a1, a2, a3, a4, a5, a6) {
-        if (ename == 'collapse' || ename == 'expand' || ename == 'beforecollapse' || ename == 'beforeexpand' || ename == 'move' || ename == 'beforemove') {
-            ename = ename + 'node';
+    proxyNodeEvent : function(ename, a1, a2, a3, a4, a5, a6){
+        if(ename == 'collapse' || ename == 'expand' || ename == 'beforecollapse' || ename == 'beforeexpand' || ename == 'move' || ename == 'beforemove'){
+            ename = ename+'node';
         }
         // args inline for performance while bubbling events
         return this.fireEvent(ename, a1, a2, a3, a4, a5, a6);
@@ -329,23 +330,23 @@ Ext.tree.TreePanel = Ext.extend(Ext.Panel, {
      * Returns this root node for this tree
      * @return {Node}
      */
-    getRootNode: function () {
+    getRootNode : function(){
         return this.root;
     },
 
     /**
-     * Sets the root node for this tree during initialization.
+     * Sets the root node for this tree during initialization. 
      * @param {Node} node
      * @return {Node}
      */
-    setRootNode: function (node) {
+    setRootNode : function(node){
         this.root = node;
         node.ownerTree = this;
         node.isRoot = true;
         this.registerNode(node);
-        if (!this.rootVisible) {
-            var uiP = node.attributes.uiProvider;
-            node.ui = uiP ? new uiP(node) : new Ext.tree.RootTreeNodeUI(node);
+        if(!this.rootVisible){
+        	var uiP = node.attributes.uiProvider;
+        	node.ui = uiP ? new uiP(node) : new Ext.tree.RootTreeNodeUI(node); 
         }
         return node;
     },
@@ -355,30 +356,30 @@ Ext.tree.TreePanel = Ext.extend(Ext.Panel, {
      * @param {String} id
      * @return {Node}
      */
-    getNodeById: function (id) {
+    getNodeById : function(id){
         return this.nodeHash[id];
     },
 
     // private
-    registerNode: function (node) {
+    registerNode : function(node){
         this.nodeHash[node.id] = node;
     },
 
     // private
-    unregisterNode: function (node) {
+    unregisterNode : function(node){
         delete this.nodeHash[node.id];
     },
 
     // private
-    toString: function () {
-        return "[Tree" + (this.id ? " " + this.id : "") + "]";
+    toString : function(){
+        return "[Tree"+(this.id?" "+this.id:"")+"]";
     },
 
     // private
-    restrictExpand: function (node) {
+    restrictExpand : function(node){
         var p = node.parentNode;
-        if (p) {
-            if (p.expandedChild && p.expandedChild.parentNode == p) {
+        if(p){
+            if(p.expandedChild && p.expandedChild.parentNode == p){
                 p.expandedChild.collapse();
             }
             p.expandedChild = node;
@@ -391,11 +392,11 @@ Ext.tree.TreePanel = Ext.extend(Ext.Panel, {
      * @param {TreeNode} startNode (optional) The node to start from, defaults to the root
      * @return {Array}
      */
-    getChecked: function (a, startNode) {
+    getChecked : function(a, startNode){
         startNode = startNode || this.root;
         var r = [];
-        var f = function () {
-            if (this.attributes.checked) {
+        var f = function(){
+            if(this.attributes.checked){
                 r.push(!a ? this : (a == 'id' ? this.id : this.attributes[a]));
             }
         }
@@ -407,7 +408,7 @@ Ext.tree.TreePanel = Ext.extend(Ext.Panel, {
      * Returns the container element for this TreePanel.
      * @return {Element} The container element for this TreePanel.
      */
-    getEl: function () {
+    getEl : function(){
         return this.el;
     },
 
@@ -415,21 +416,21 @@ Ext.tree.TreePanel = Ext.extend(Ext.Panel, {
      * Returns the default {@link Ext.tree.TreeLoader} for this TreePanel.
      * @return {Ext.tree.TreeLoader} The TreeLoader for this TreePanel.
      */
-    getLoader: function () {
+    getLoader : function(){
         return this.loader;
     },
 
     /**
      * Expand all nodes
      */
-    expandAll: function () {
+    expandAll : function(){
         this.root.expand(true);
     },
 
     /**
      * Collapse all nodes
      */
-    collapseAll: function () {
+    collapseAll : function(){
         this.root.collapse(true);
     },
 
@@ -437,8 +438,8 @@ Ext.tree.TreePanel = Ext.extend(Ext.Panel, {
      * Returns the selection model used by this TreePanel.
      * @return {TreeSelectionModel} The selection model used by this TreePanel
      */
-    getSelectionModel: function () {
-        if (!this.selModel) {
+    getSelectionModel : function(){
+        if(!this.selModel){
             this.selModel = new Ext.tree.DefaultSelectionModel();
         }
         return this.selModel;
@@ -451,27 +452,27 @@ Ext.tree.TreePanel = Ext.extend(Ext.Panel, {
      * @param {Function} callback (optional) The callback to call when the expand is complete. The callback will be called with
      * (bSuccess, oLastNode) where bSuccess is if the expand was successful and oLastNode is the last node that was expanded.
      */
-    expandPath: function (path, attr, callback) {
+    expandPath : function(path, attr, callback){
         attr = attr || "id";
         var keys = path.split(this.pathSeparator);
         var curNode = this.root;
-        if (curNode.attributes[attr] != keys[1]) { // invalid root
-            if (callback) {
+        if(curNode.attributes[attr] != keys[1]){ // invalid root
+            if(callback){
                 callback(false, null);
             }
             return;
         }
         var index = 1;
-        var f = function () {
-            if (++index == keys.length) {
-                if (callback) {
+        var f = function(){
+            if(++index == keys.length){
+                if(callback){
                     callback(true, curNode);
                 }
                 return;
             }
             var c = curNode.findChild(attr, keys[index]);
-            if (!c) {
-                if (callback) {
+            if(!c){
+                if(callback){
                     callback(false, curNode);
                 }
                 return;
@@ -489,32 +490,32 @@ Ext.tree.TreePanel = Ext.extend(Ext.Panel, {
      * @param {Function} callback (optional) The callback to call when the selection is complete. The callback will be called with
      * (bSuccess, oSelNode) where bSuccess is if the selection was successful and oSelNode is the selected node.
      */
-    selectPath: function (path, attr, callback) {
+    selectPath : function(path, attr, callback){
         attr = attr || "id";
         var keys = path.split(this.pathSeparator);
         var v = keys.pop();
-        if (keys.length > 0) {
-            var f = function (success, node) {
-                if (success && node) {
+        if(keys.length > 0){
+            var f = function(success, node){
+                if(success && node){
                     var n = node.findChild(attr, v);
-                    if (n) {
+                    if(n){
                         n.select();
-                        if (callback) {
+                        if(callback){
                             callback(true, n);
                         }
-                    } else if (callback) {
+                    }else if(callback){
                         callback(false, n);
                     }
-                } else {
-                    if (callback) {
+                }else{
+                    if(callback){
                         callback(false, n);
                     }
                 }
             };
             this.expandPath(keys.join(this.pathSeparator), attr, f);
-        } else {
+        }else{
             this.root.select();
-            if (callback) {
+            if(callback){
                 callback(true, this.root);
             }
         }
@@ -524,198 +525,196 @@ Ext.tree.TreePanel = Ext.extend(Ext.Panel, {
      * Returns the underlying Element for this tree
      * @return {Ext.Element} The Element
      */
-    getTreeEl: function () {
+    getTreeEl : function(){
         return this.body;
     },
 
     // private
-    onRender: function (ct, position) {
+    onRender : function(ct, position){
         Ext.tree.TreePanel.superclass.onRender.call(this, ct, position);
         this.el.addClass('x-tree');
-        this.innerCt = this.body.createChild({
-            tag: "ul",
-            cls: "x-tree-root-ct " +
-            (this.lines ? "x-tree-lines" : "x-tree-no-lines")
-        });
+        this.innerCt = this.body.createChild({tag:"ul",
+               cls:"x-tree-root-ct " +
+               (this.lines ? "x-tree-lines" : "x-tree-no-lines")});
     },
 
     // private
-    initEvents: function () {
+    initEvents : function(){
         Ext.tree.TreePanel.superclass.initEvents.call(this);
 
-        if (this.containerScroll) {
+        if(this.containerScroll){
             Ext.dd.ScrollManager.register(this.body);
         }
-        if ((this.enableDD || this.enableDrop) && !this.dropZone) {
-            /**
-             * The dropZone used by this tree if drop is enabled
-             * @type Ext.tree.TreeDropZone
-             */
-            this.dropZone = new Ext.tree.TreeDropZone(this, this.dropConfig || {
-                    ddGroup: this.ddGroup || "TreeDD", appendOnly: this.ddAppendOnly === true
-                });
+        if((this.enableDD || this.enableDrop) && !this.dropZone){
+           /**
+            * The dropZone used by this tree if drop is enabled
+            * @type Ext.tree.TreeDropZone
+            */
+             this.dropZone = new Ext.tree.TreeDropZone(this, this.dropConfig || {
+               ddGroup: this.ddGroup || "TreeDD", appendOnly: this.ddAppendOnly === true
+           });
         }
-        if ((this.enableDD || this.enableDrag) && !this.dragZone) {
-            /**
-             * The dragZone used by this tree if drag is enabled
-             * @type Ext.tree.TreeDragZone
-             */
+        if((this.enableDD || this.enableDrag) && !this.dragZone){
+           /**
+            * The dragZone used by this tree if drag is enabled
+            * @type Ext.tree.TreeDragZone
+            */
             this.dragZone = new Ext.tree.TreeDragZone(this, this.dragConfig || {
-                    ddGroup: this.ddGroup || "TreeDD",
-                    scroll: this.ddScroll
-                });
+               ddGroup: this.ddGroup || "TreeDD",
+               scroll: this.ddScroll
+           });
         }
         this.getSelectionModel().init(this);
     },
 
     // private
-    afterRender: function () {
+    afterRender : function(){
         Ext.tree.TreePanel.superclass.afterRender.call(this);
         this.root.render();
-        if (!this.rootVisible) {
+        if(!this.rootVisible){
             this.root.renderChildren();
         }
     },
 
-    onDestroy: function () {
-        if (this.rendered) {
+    onDestroy : function(){
+        if(this.rendered){
             this.body.removeAllListeners();
             Ext.dd.ScrollManager.unregister(this.body);
-            if (this.dropZone) {
+            if(this.dropZone){
                 this.dropZone.unreg();
             }
-            if (this.dragZone) {
-                this.dragZone.unreg();
+            if(this.dragZone){
+               this.dragZone.unreg();
             }
         }
         this.root.destroy();
         this.nodeHash = null;
         Ext.tree.TreePanel.superclass.onDestroy.call(this);
     }
-
-    /**
-     * @cfg {String/Number} activeItem
-     * @hide
+    
+    /** 
+     * @cfg {String/Number} activeItem 
+     * @hide 
      */
-    /**
-     * @cfg {Boolean} autoDestroy
-     * @hide
+    /** 
+     * @cfg {Boolean} autoDestroy 
+     * @hide 
      */
-    /**
-     * @cfg {Object/String/Function} autoLoad
-     * @hide
+    /** 
+     * @cfg {Object/String/Function} autoLoad 
+     * @hide 
      */
-    /**
-     * @cfg {Boolean} autoWidth
-     * @hide
+    /** 
+     * @cfg {Boolean} autoWidth 
+     * @hide 
      */
-    /**
-     * @cfg {Boolean/Number} bufferResize
-     * @hide
+    /** 
+     * @cfg {Boolean/Number} bufferResize 
+     * @hide 
      */
-    /**
-     * @cfg {String} defaultType
-     * @hide
+    /** 
+     * @cfg {String} defaultType 
+     * @hide 
      */
-    /**
-     * @cfg {Object} defaults
-     * @hide
+    /** 
+     * @cfg {Object} defaults 
+     * @hide 
      */
-    /**
-     * @cfg {Boolean} hideBorders
-     * @hide
+    /** 
+     * @cfg {Boolean} hideBorders 
+     * @hide 
      */
-    /**
-     * @cfg {Mixed} items
-     * @hide
+    /** 
+     * @cfg {Mixed} items 
+     * @hide 
      */
-    /**
-     * @cfg {String} layout
-     * @hide
+    /** 
+     * @cfg {String} layout 
+     * @hide 
      */
-    /**
-     * @cfg {Object} layoutConfig
-     * @hide
+    /** 
+     * @cfg {Object} layoutConfig 
+     * @hide 
      */
-    /**
-     * @cfg {Boolean} monitorResize
-     * @hide
+    /** 
+     * @cfg {Boolean} monitorResize 
+     * @hide 
      */
-    /**
-     * @property items
-     * @hide
+    /** 
+     * @property items 
+     * @hide 
      */
-    /**
-     * @method add
-     * @hide
+    /** 
+     * @method add 
+     * @hide 
      */
-    /**
-     * @method cascade
-     * @hide
+    /** 
+     * @method cascade 
+     * @hide 
      */
-    /**
-     * @method doLayout
-     * @hide
+    /** 
+     * @method doLayout 
+     * @hide 
      */
-    /**
-     * @method find
-     * @hide
+    /** 
+     * @method find 
+     * @hide 
      */
-    /**
-     * @method findBy
-     * @hide
+    /** 
+     * @method findBy 
+     * @hide 
      */
-    /**
-     * @method findById
-     * @hide
+    /** 
+     * @method findById 
+     * @hide 
      */
-    /**
-     * @method findByType
-     * @hide
+    /** 
+     * @method findByType 
+     * @hide 
      */
-    /**
-     * @method getComponent
-     * @hide
+    /** 
+     * @method getComponent 
+     * @hide 
      */
-    /**
-     * @method getLayout
-     * @hide
+    /** 
+     * @method getLayout 
+     * @hide 
      */
-    /**
-     * @method getUpdater
-     * @hide
+    /** 
+     * @method getUpdater 
+     * @hide 
      */
-    /**
-     * @method insert
-     * @hide
+    /** 
+     * @method insert 
+     * @hide 
      */
-    /**
-     * @method load
-     * @hide
+    /** 
+     * @method load 
+     * @hide 
      */
-    /**
-     * @method remove
-     * @hide
+    /** 
+     * @method remove 
+     * @hide 
      */
-    /**
-     * @event add
-     * @hide
+    /** 
+     * @event add 
+     * @hide 
      */
-    /**
-     * @event afterLayout
-     * @hide
+    /** 
+     * @event afterLayout 
+     * @hide 
      */
-    /**
-     * @event beforeadd
-     * @hide
+    /** 
+     * @event beforeadd 
+     * @hide 
      */
-    /**
-     * @event beforeremove
-     * @hide
+    /** 
+     * @event beforeremove 
+     * @hide 
      */
-    /**
-     * @event remove
-     * @hide
+    /** 
+     * @event remove 
+     * @hide 
      */
 });
 Ext.reg('treepanel', Ext.tree.TreePanel);

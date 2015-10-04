@@ -16,26 +16,26 @@
  * A KeyMap can also handle a string representation of keys.<br />
  * Usage:
  <pre><code>
- // map one key by key code
- var map = new Ext.KeyMap("my-element", {
+// map one key by key code
+var map = new Ext.KeyMap("my-element", {
     key: 13, // or Ext.EventObject.ENTER
     fn: myHandler,
     scope: myObject
 });
 
- // map multiple keys to one action by string
- var map = new Ext.KeyMap("my-element", {
+// map multiple keys to one action by string
+var map = new Ext.KeyMap("my-element", {
     key: "a\r\n\t",
     fn: myHandler,
     scope: myObject
 });
 
- // map multiple keys to multiple actions by strings and array of codes
- var map = new Ext.KeyMap("my-element", [
- {
-     key: [10,13],
-     fn: function(){ alert("Return was pressed"); }
- }, {
+// map multiple keys to multiple actions by strings and array of codes
+var map = new Ext.KeyMap("my-element", [
+    {
+        key: [10,13],
+        fn: function(){ alert("Return was pressed"); }
+    }, {
         key: "abc",
         fn: function(){ alert('a, b or c was pressed'); }
     }, {
@@ -44,19 +44,19 @@
         shift:true,
         fn: function(){ alert('Control + shift + tab was pressed.'); }
     }
- ]);
- </code></pre>
+]);
+</code></pre>
  * <b>Note: A KeyMap starts enabled</b>
  * @constructor
  * @param {Mixed} el The element to bind to
  * @param {Object} config The config (see {@link #addBinding})
  * @param {String} eventName (optional) The event to bind to (defaults to "keydown")
  */
-Ext.KeyMap = function (el, config, eventName) {
-    this.el = Ext.get(el);
+Ext.KeyMap = function(el, config, eventName){
+    this.el  = Ext.get(el);
     this.eventName = eventName || "keydown";
     this.bindings = [];
-    if (config) {
+    if(config){
         this.addBinding(config);
     }
     this.enable();
@@ -68,44 +68,44 @@ Ext.KeyMap.prototype = {
      * key was handled by the KeyMap (defaults to false)
      * @type Boolean
      */
-    stopEvent: false,
+    stopEvent : false,
 
     /**
      * Add a new binding to this KeyMap. The following config object properties are supported:
      * <pre>
-     Property    Type             Description
-     ----------  ---------------  ----------------------------------------------------------------------
-     key         String/Array     A single keycode or an array of keycodes to handle
-     shift       Boolean          True to handle key only when shift is pressed (defaults to false)
-     ctrl        Boolean          True to handle key only when ctrl is pressed (defaults to false)
-     alt         Boolean          True to handle key only when alt is pressed (defaults to false)
-     handler     Function         The function to call when KeyMap finds the expected key combination
-     fn          Function         Alias of handler (for backwards-compatibility)
-     scope       Object           The scope of the callback function
-     </pre>
+Property    Type             Description
+----------  ---------------  ----------------------------------------------------------------------
+key         String/Array     A single keycode or an array of keycodes to handle
+shift       Boolean          True to handle key only when shift is pressed (defaults to false)
+ctrl        Boolean          True to handle key only when ctrl is pressed (defaults to false)
+alt         Boolean          True to handle key only when alt is pressed (defaults to false)
+handler     Function         The function to call when KeyMap finds the expected key combination
+fn          Function         Alias of handler (for backwards-compatibility)
+scope       Object           The scope of the callback function
+</pre>
      *
      * Usage:
      * <pre><code>
-     // Create a KeyMap
-     var map = new Ext.KeyMap(document, {
+// Create a KeyMap
+var map = new Ext.KeyMap(document, {
     key: Ext.EventObject.ENTER,
     fn: handleKey,
     scope: this
 });
 
-     //Add a new binding to the existing KeyMap later
-     map.addBinding({
+//Add a new binding to the existing KeyMap later
+map.addBinding({
     key: 'abc',
     shift: true,
     fn: handleKey,
     scope: this
 });
-     </code></pre>
+</code></pre>
      * @param {Object/Array} config A single KeyMap config or an array of configs
      */
-    addBinding: function (config) {
-        if (config instanceof Array) {
-            for (var i = 0, len = config.length; i < len; i++) {
+	addBinding : function(config){
+        if(config instanceof Array){
+            for(var i = 0, len = config.length; i < len; i++){
                 this.addBinding(config[i]);
             }
             return;
@@ -117,33 +117,33 @@ Ext.KeyMap.prototype = {
             fn = config.fn || config.handler,
             scope = config.scope;
 
-        if (typeof keyCode == "string") {
+        if(typeof keyCode == "string"){
             var ks = [];
             var keyString = keyCode.toUpperCase();
-            for (var j = 0, len = keyString.length; j < len; j++) {
+            for(var j = 0, len = keyString.length; j < len; j++){
                 ks.push(keyString.charCodeAt(j));
             }
             keyCode = ks;
         }
         var keyArray = keyCode instanceof Array;
-
-        var handler = function (e) {
-            if ((!shift || e.shiftKey) && (!ctrl || e.ctrlKey) && (!alt || e.altKey)) {
+        
+        var handler = function(e){
+            if((!shift || e.shiftKey) && (!ctrl || e.ctrlKey) &&  (!alt || e.altKey)){
                 var k = e.getKey();
-                if (keyArray) {
-                    for (var i = 0, len = keyCode.length; i < len; i++) {
-                        if (keyCode[i] == k) {
-                            if (this.stopEvent) {
-                                e.stopEvent();
-                            }
-                            fn.call(scope || window, k, e);
-                            return;
+                if(keyArray){
+                    for(var i = 0, len = keyCode.length; i < len; i++){
+                        if(keyCode[i] == k){
+                          if(this.stopEvent){
+                              e.stopEvent();
+                          }
+                          fn.call(scope || window, k, e);
+                          return;
                         }
                     }
-                } else {
-                    if (k == keyCode) {
-                        if (this.stopEvent) {
-                            e.stopEvent();
+                }else{
+                    if(k == keyCode){
+                        if(this.stopEvent){
+                           e.stopEvent();
                         }
                         fn.call(scope || window, k, e);
                     }
@@ -151,7 +151,7 @@ Ext.KeyMap.prototype = {
             }
         };
         this.bindings.push(handler);
-    },
+	},
 
     /**
      * Shorthand for adding a single key listener
@@ -161,14 +161,14 @@ Ext.KeyMap.prototype = {
      * @param {Function} fn The function to call
      * @param {Object} scope (optional) The scope of the function
      */
-    on: function (key, fn, scope) {
+    on : function(key, fn, scope){
         var keyCode, shift, ctrl, alt;
-        if (typeof key == "object" && !(key instanceof Array)) {
+        if(typeof key == "object" && !(key instanceof Array)){
             keyCode = key.key;
             shift = key.shift;
             ctrl = key.ctrl;
             alt = key.alt;
-        } else {
+        }else{
             keyCode = key;
         }
         this.addBinding({
@@ -182,40 +182,40 @@ Ext.KeyMap.prototype = {
     },
 
     // private
-    handleKeyDown: function (e) {
-        if (this.enabled) { //just in case
-            var b = this.bindings;
-            for (var i = 0, len = b.length; i < len; i++) {
-                b[i].call(this, e);
-            }
-        }
-    },
+    handleKeyDown : function(e){
+	    if(this.enabled){ //just in case
+    	    var b = this.bindings;
+    	    for(var i = 0, len = b.length; i < len; i++){
+    	        b[i].call(this, e);
+    	    }
+	    }
+	},
 
-    /**
-     * Returns true if this KeyMap is enabled
-     * @return {Boolean}
-     */
-    isEnabled: function () {
-        return this.enabled;
-    },
+	/**
+	 * Returns true if this KeyMap is enabled
+	 * @return {Boolean}
+	 */
+	isEnabled : function(){
+	    return this.enabled;
+	},
 
-    /**
-     * Enables this KeyMap
-     */
-    enable: function () {
-        if (!this.enabled) {
-            this.el.on(this.eventName, this.handleKeyDown, this);
-            this.enabled = true;
-        }
-    },
+	/**
+	 * Enables this KeyMap
+	 */
+	enable: function(){
+		if(!this.enabled){
+		    this.el.on(this.eventName, this.handleKeyDown, this);
+		    this.enabled = true;
+		}
+	},
 
-    /**
-     * Disable this KeyMap
-     */
-    disable: function () {
-        if (this.enabled) {
-            this.el.removeListener(this.eventName, this.handleKeyDown, this);
-            this.enabled = false;
-        }
-    }
+	/**
+	 * Disable this KeyMap
+	 */
+	disable: function(){
+		if(this.enabled){
+		    this.el.removeListener(this.eventName, this.handleKeyDown, this);
+		    this.enabled = false;
+		}
+	}
 };

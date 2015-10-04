@@ -14,55 +14,21 @@
 // Distributed under the same terms as HTMLArea itself.
 // This notice MUST stay intact for use (see license.txt).
 {
-    "Alignment:"
-:
-    "Alinhamento:",
-        "Cancel"
-:
-    "Cancelar",
-        "Center"
-:
-    "Centralizar",
-        "Color:"
-:
-    "Côr:",
-        "Height:"
-:
-    "Alturar:",
-        "Horizontal Rule"
-:
-    "Linha Horizontal",
-        "Insert/Edit Horizontal Rule"
-:
-    "Inserir/Editar Linha Horizontal",
-        "Insert/edit horizontal rule"
-:
-    "Inserir/editar linha horizontal",
-        "Layout"
-:
-    "Esquema",
-        "Left"
-:
-    "Esquerda",
-        "No shading"
-:
-    "Sem sombra",
-        "OK"
-:
-    "OK",
-        "Right"
-:
-    "Direita",
-        "Style"
-:
-    "Estilo",
-        "Width:"
-:
-    "Largura:",
-        "percent"
-:
-    "porcentagem",
-        "pixels"
-:
-    "pixels"
+  "Alignment:": "Alinhamento:",
+  "Cancel": "Cancelar",
+  "Center": "Centralizar",
+  "Color:": "Côr:",
+  "Height:": "Alturar:",
+  "Horizontal Rule": "Linha Horizontal",
+  "Insert/Edit Horizontal Rule": "Inserir/Editar Linha Horizontal",
+  "Insert/edit horizontal rule": "Inserir/editar linha horizontal",
+  "Layout": "Esquema",
+  "Left": "Esquerda",
+  "No shading": "Sem sombra",
+  "OK": "OK",
+  "Right": "Direita",
+  "Style": "Estilo",
+  "Width:": "Largura:",
+  "percent": "porcentagem",
+  "pixels": "pixels"
 }

@@ -28,65 +28,65 @@ var r_ra = topDoc.getElementById('ra');
 
 var pattern = "img/2x2.gif";
 
-function doSubmit(action) {
-    if (action == 'crop') {
-        var url = _backend_url + "__function=editorFrame&img=" + currentImageFile + "&action=crop&params=" + parseInt(t_cx.value) + ',' + parseInt(t_cy.value) + ',' + parseInt(t_cw.value) + ',' + parseInt(t_ch.value);
+function doSubmit(action)
+{
+    if (action == 'crop')
+    {
+        var url = _backend_url + "__function=editorFrame&img="+currentImageFile+"&action=crop&params="+parseInt(t_cx.value)+','+parseInt(t_cy.value)+','+ parseInt(t_cw.value)+','+parseInt(t_ch.value);
 
         //alert(url);
         location.href = url;
 
         //location.reload();
     }
-    else if (action == 'scale') {
-        var url = _backend_url + "__function=editorFrame&img=" + currentImageFile + "&action=scale&params=" + parseInt(s_sw.value) + ',' + parseInt(s_sh.value);
+    else if (action == 'scale')
+    {
+        var url = _backend_url + "__function=editorFrame&img="+currentImageFile+"&action=scale&params="+parseInt(s_sw.value)+','+parseInt(s_sh.value);
         //alert(url);
         location.href = url;
 
     }
-    else if (action == 'rotate') {
+    else if (action == 'rotate')
+    {
         var flip = topDoc.getElementById('flip');
 
-        if (flip.value == 'hoz' || flip.value == 'ver')
-            location.href = _backend_url + "__function=editorFrame&img=" + currentImageFile + "&action=flip&params=" + flip.value;
-        else if (isNaN(parseFloat(r_ra.value)) == false)
-            location.href = _backend_url + "__function=editorFrame&img=" + currentImageFile + "&action=rotate&params=" + parseFloat(r_ra.value);
+        if(flip.value == 'hoz' || flip.value == 'ver')
+            location.href = _backend_url + "__function=editorFrame&img="+currentImageFile+"&action=flip&params="+flip.value;
+        else if (isNaN(parseFloat(r_ra.value))==false)
+            location.href = _backend_url + "__function=editorFrame&img="+currentImageFile+"&action=rotate&params="+parseFloat(r_ra.value);
     }
-    else if (action == 'save') {
+    else if(action == 'save') {
         var s_file = topDoc.getElementById('save_filename');
         var s_format = topDoc.getElementById('save_format');
         var s_quality = topDoc.getElementById('quality');
 
         var format = s_format.value.split(",");
-        if (s_file.value.length <= 0) {
+        if(s_file.value.length <= 0)
+        {
             alert(i18n('Please enter a filename to save.'));
         }
-        else {
+        else
+        {
             var filename = encodeURI(s_file.value);
             var quality = parseInt(s_quality.value);
-            var url = _backend_url + "__function=editorFrame&img=" + currentImageFile + "&action=save&params=" + format[0] + "," + quality + "&file=" + filename;
+            var url = _backend_url + "__function=editorFrame&img="+currentImageFile+"&action=save&params="+format[0]+","+quality+"&file="+filename;
             //alert(url);
             location.href = url;
         }
     }
 }
 
-function addEvent(obj, evType, fn) {
-    if (obj.addEventListener) {
-        obj.addEventListener(evType, fn, true);
-        return true;
-    }
-    else if (obj.attachEvent) {
-        var r = obj.attachEvent("on" + evType, fn);
-        return r;
-    }
-    else {
-        return false;
-    }
+function addEvent(obj, evType, fn)
+{
+    if (obj.addEventListener) { obj.addEventListener(evType, fn, true); return true; }
+    else if (obj.attachEvent) {  var r = obj.attachEvent("on"+evType, fn);  return r;  }
+    else {  return false; }
 }
 
 var jg_doc;
 
-init = function () {
+init = function()
+{
     jg_doc = new jsGraphics("imgCanvas"); // draw directly into document
     jg_doc.setColor("#000000"); // black
 

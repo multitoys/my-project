@@ -19,15 +19,17 @@
  * in {@link Ext.data.Record#create}, or an {@link Ext.data.Record} object created
  * using {@link Ext.data.Record#create}.
  */
-Ext.data.DataReader = function (meta, recordType) {
+Ext.data.DataReader = function(meta, recordType){
     /**
      * This DataReader's configured metadata as passed to the constructor.
      * @type Mixed
      * @property meta
      */
     this.meta = meta;
-    this.recordType = recordType instanceof Array ?
+    this.recordType = recordType instanceof Array ? 
         Ext.data.Record.create(recordType) : recordType;
 };
 
-Ext.data.DataReader.prototype = {};
+Ext.data.DataReader.prototype = {
+    
+};

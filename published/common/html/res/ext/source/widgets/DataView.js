@@ -18,7 +18,7 @@
  *
  * <p>The example below binds a DataView to a {@link Ext.data.Store} and renders it into an {@link Ext.Panel}.</p>
  * <pre><code>
- var store = new Ext.data.JsonStore({
+var store = new Ext.data.JsonStore({
     url: 'get-images.php',
     root: 'images',
     fields: [
@@ -27,18 +27,18 @@
         {name:'lastmod', type:'date', dateFormat:'timestamp'}
     ]
 });
- store.load();
+store.load();
 
- var tpl = new Ext.XTemplate(
- '&lt;tpl for="."&gt;',
- '&lt;div class="thumb-wrap" id="{name}"&gt;',
- '&lt;div class="thumb"&gt;&lt;img src="{url}" title="{name}"&gt;&lt;/div&gt;',
- '&lt;span class="x-editable"&gt;{shortName}&lt;/span&gt;&lt;/div&gt;',
- '&lt;/tpl&gt;',
- '&lt;div class="x-clear"&gt;&lt;/div&gt;'
- );
+var tpl = new Ext.XTemplate(
+    '&lt;tpl for="."&gt;',
+        '&lt;div class="thumb-wrap" id="{name}"&gt;',
+        '&lt;div class="thumb"&gt;&lt;img src="{url}" title="{name}"&gt;&lt;/div&gt;',
+        '&lt;span class="x-editable"&gt;{shortName}&lt;/span&gt;&lt;/div&gt;',
+    '&lt;/tpl&gt;',
+    '&lt;div class="x-clear"&gt;&lt;/div&gt;'
+);
 
- var panel = new Ext.Panel({
+var panel = new Ext.Panel({
     id:'images-view',
     frame:true,
     width:535,
@@ -57,8 +57,8 @@
         emptyText: 'No images to display'
     })
 });
- panel.render(document.body);
- </code></pre>
+panel.render(document.body);
+</code></pre>
  * @constructor
  * Create a new DataView
  * @param {Object} config The config object
@@ -75,7 +75,7 @@ Ext.DataView = Ext.extend(Ext.BoxComponent, {
      */
     /**
      * @cfg {String} itemSelector
-     * <b>This is a required setting</b>. A simple CSS selector (e.g. div.some-class or span:first-child) that will be
+     * <b>This is a required setting</b>. A simple CSS selector (e.g. div.some-class or span:first-child) that will be 
      * used to determine what nodes this DataView will be working with.
      */
     /**
@@ -107,20 +107,20 @@ Ext.DataView = Ext.extend(Ext.BoxComponent, {
      * @cfg {String} selectedClass
      * A CSS class to apply to each selected item in the view (defaults to 'x-view-selected').
      */
-    selectedClass: "x-view-selected",
+    selectedClass : "x-view-selected",
     /**
      * @cfg {String} emptyText
      * The text to display in the view when there is no data to display (defaults to '').
      */
-    emptyText: "",
+    emptyText : "",
 
     //private
     last: false,
 
     // private
-    initComponent: function () {
+    initComponent : function(){
         Ext.DataView.superclass.initComponent.call(this);
-        if (typeof this.tpl == "string") {
+        if(typeof this.tpl == "string"){
             this.tpl = new Ext.XTemplate(this.tpl);
         }
 
@@ -191,33 +191,33 @@ Ext.DataView = Ext.extend(Ext.BoxComponent, {
     },
 
     // private
-    onRender: function () {
-        if (!this.el) {
+    onRender : function(){
+        if(!this.el){
             this.el = document.createElement('div');
         }
         Ext.DataView.superclass.onRender.apply(this, arguments);
     },
 
     // private
-    afterRender: function () {
+    afterRender : function(){
         Ext.DataView.superclass.afterRender.call(this);
 
         this.el.on({
             "click": this.onClick,
             "dblclick": this.onDblClick,
             "contextmenu": this.onContextMenu,
-            scope: this
+            scope:this
         });
 
-        if (this.overClass) {
+        if(this.overClass){
             this.el.on({
                 "mouseover": this.onMouseOver,
                 "mouseout": this.onMouseOut,
-                scope: this
+                scope:this
             });
         }
 
-        if (this.store) {
+        if(this.store){
             this.setStore(this.store, true);
         }
     },
@@ -225,12 +225,12 @@ Ext.DataView = Ext.extend(Ext.BoxComponent, {
     /**
      * Refreshes the view by reloading the data from the store and re-rendering the template.
      */
-    refresh: function () {
+    refresh : function(){
         this.clearSelections(false, true);
         this.el.update("");
         var html = [];
         var records = this.store.getRange();
-        if (records.length < 1) {
+        if(records.length < 1){
             this.el.update(this.emptyText);
             this.all.clear();
             return;
@@ -245,35 +245,35 @@ Ext.DataView = Ext.extend(Ext.BoxComponent, {
      * @param {Array/Object} data The raw data (array of colData for a data model bound view or
      * a JSON object for an Updater bound view).
      */
-    prepareData: function (data) {
+    prepareData : function(data){
         return data;
     },
 
     // private
-    collectData: function (records, startIndex) {
+    collectData : function(records, startIndex){
         var r = [];
-        for (var i = 0, len = records.length; i < len; i++) {
-            r[r.length] = this.prepareData(records[i].data, startIndex + i, records[i]);
+        for(var i = 0, len = records.length; i < len; i++){
+            r[r.length] = this.prepareData(records[i].data, startIndex+i, records[i]);
         }
         return r;
     },
 
     // private
-    bufferRender: function (records) {
+    bufferRender : function(records){
         var div = document.createElement('div');
         this.tpl.overwrite(div, this.collectData(records));
         return Ext.query(this.itemSelector, div);
     },
 
     // private
-    onUpdate: function (ds, record) {
+    onUpdate : function(ds, record){
         var index = this.store.indexOf(record);
         var sel = this.isSelected(index);
         var original = this.all.elements[index];
         var node = this.bufferRender([record], index)[0];
 
         this.all.replaceElement(index, node, true);
-        if (sel) {
+        if(sel){
             this.selected.replaceElement(original, node);
             this.all.item(index).addClass(this.selectedClass);
         }
@@ -281,16 +281,16 @@ Ext.DataView = Ext.extend(Ext.BoxComponent, {
     },
 
     // private
-    onAdd: function (ds, records, index) {
-        if (this.all.getCount() == 0) {
+    onAdd : function(ds, records, index){
+        if(this.all.getCount() == 0){
             this.refresh();
             return;
         }
         var nodes = this.bufferRender(records, index), n;
-        if (index < this.all.getCount()) {
+        if(index < this.all.getCount()){
             n = this.all.item(index).insertSibling(nodes, 'before', true);
             this.all.elements.splice(index, 0, n);
-        } else {
+        }else{
             n = this.all.last().insertSibling(nodes, 'after', true);
             this.all.elements.push(n);
         }
@@ -298,7 +298,7 @@ Ext.DataView = Ext.extend(Ext.BoxComponent, {
     },
 
     // private
-    onRemove: function (ds, record, index) {
+    onRemove : function(ds, record, index){
         this.deselect(index);
         this.all.removeElement(index, true);
         this.updateIndexes(index);
@@ -308,16 +308,16 @@ Ext.DataView = Ext.extend(Ext.BoxComponent, {
      * Refreshes an individual node's data from the store.
      * @param {Number} index The item's data index in the store
      */
-    refreshNode: function (index) {
+    refreshNode : function(index){
         this.onUpdate(this.store, this.store.getAt(index));
     },
 
     // private
-    updateIndexes: function (startIndex, endIndex) {
+    updateIndexes : function(startIndex, endIndex){
         var ns = this.all.elements;
         startIndex = startIndex || 0;
         endIndex = endIndex || ((endIndex === 0) ? 0 : (ns.length - 1));
-        for (var i = startIndex; i <= endIndex; i++) {
+        for(var i = startIndex; i <= endIndex; i++){
             ns[i].viewIndex = i;
         }
     },
@@ -326,8 +326,8 @@ Ext.DataView = Ext.extend(Ext.BoxComponent, {
      * Changes the data store bound to this view and refreshes it.
      * @param {Store} store The store to bind to this view
      */
-    setStore: function (store, initial) {
-        if (!initial && this.store) {
+    setStore : function(store, initial){
+        if(!initial && this.store){
             this.store.un("beforeload", this.onBeforeLoad, this);
             this.store.un("datachanged", this.refresh, this);
             this.store.un("add", this.onAdd, this);
@@ -335,7 +335,7 @@ Ext.DataView = Ext.extend(Ext.BoxComponent, {
             this.store.un("update", this.onUpdate, this);
             this.store.un("clear", this.refresh, this);
         }
-        if (store) {
+        if(store){
             store = Ext.StoreMgr.lookup(store);
             store.on("beforeload", this.onBeforeLoad, this);
             store.on("datachanged", this.refresh, this);
@@ -345,7 +345,7 @@ Ext.DataView = Ext.extend(Ext.BoxComponent, {
             store.on("clear", this.refresh, this);
         }
         this.store = store;
-        if (store) {
+        if(store){
             this.refresh();
         }
     },
@@ -355,54 +355,54 @@ Ext.DataView = Ext.extend(Ext.BoxComponent, {
      * @param {HTMLElement} node
      * @return {HTMLElement} The template node
      */
-    findItemFromChild: function (node) {
+    findItemFromChild : function(node){
         return Ext.fly(node).findParent(this.itemSelector, this.el);
     },
 
     // private
-    onClick: function (e) {
+    onClick : function(e){
         var item = e.getTarget(this.itemSelector, this.el);
-        if (item) {
+        if(item){
             var index = this.indexOf(item);
-            if (this.onItemClick(item, index, e) !== false) {
+            if(this.onItemClick(item, index, e) !== false){
                 this.fireEvent("click", this, index, item, e);
             }
-        } else {
-            if (this.fireEvent("containerclick", this, e) !== false) {
+        }else{
+            if(this.fireEvent("containerclick", this, e) !== false){
                 this.clearSelections();
             }
         }
     },
 
     // private
-    onContextMenu: function (e) {
+    onContextMenu : function(e){
         var item = e.getTarget(this.itemSelector, this.el);
-        if (item) {
+        if(item){
             this.fireEvent("contextmenu", this, this.indexOf(item), item, e);
         }
     },
 
     // private
-    onDblClick: function (e) {
+    onDblClick : function(e){
         var item = e.getTarget(this.itemSelector, this.el);
-        if (item) {
+        if(item){
             this.fireEvent("dblclick", this, this.indexOf(item), item, e);
         }
     },
 
     // private
-    onMouseOver: function (e) {
+    onMouseOver : function(e){
         var item = e.getTarget(this.itemSelector, this.el);
-        if (item && item !== this.lastItem) {
+        if(item && item !== this.lastItem){
             this.lastItem = item;
             Ext.fly(item).addClass(this.overClass);
         }
     },
 
     // private
-    onMouseOut: function (e) {
-        if (this.lastItem) {
-            if (!e.within(this.lastItem, true)) {
+    onMouseOut : function(e){
+        if(this.lastItem){
+            if(!e.within(this.lastItem, true)){
                 Ext.fly(this.lastItem).removeClass(this.overClass);
                 delete this.lastItem;
             }
@@ -410,14 +410,14 @@ Ext.DataView = Ext.extend(Ext.BoxComponent, {
     },
 
     // private
-    onItemClick: function (item, index, e) {
-        if (this.fireEvent("beforeclick", this, index, item, e) === false) {
+    onItemClick : function(item, index, e){
+        if(this.fireEvent("beforeclick", this, index, item, e) === false){
             return false;
         }
-        if (this.multiSelect) {
+        if(this.multiSelect){
             this.doMultiSelection(item, index, e);
             e.preventDefault();
-        } else if (this.singleSelect) {
+        }else if(this.singleSelect){
             this.doSingleSelection(item, index, e);
             e.preventDefault();
         }
@@ -425,24 +425,24 @@ Ext.DataView = Ext.extend(Ext.BoxComponent, {
     },
 
     // private
-    doSingleSelection: function (item, index, e) {
-        if (e.ctrlKey && this.isSelected(index)) {
+    doSingleSelection : function(item, index, e){
+        if(e.ctrlKey && this.isSelected(index)){
             this.deselect(index);
-        } else {
+        }else{
             this.select(index, false);
         }
     },
 
     // private
-    doMultiSelection: function (item, index, e) {
-        if (e.shiftKey && this.last !== false) {
+    doMultiSelection : function(item, index, e){
+        if(e.shiftKey && this.last !== false){
             var last = this.last;
             this.selectRange(last, index, e.ctrlKey);
             this.last = last; // reset the last
-        } else {
-            if ((e.ctrlKey || this.simpleSelect) && this.isSelected(index)) {
+        }else{
+            if((e.ctrlKey||this.simpleSelect) && this.isSelected(index)){
                 this.deselect(index);
-            } else {
+            }else{
                 this.select(index, e.ctrlKey || e.shiftKey || this.simpleSelect);
             }
         }
@@ -452,7 +452,7 @@ Ext.DataView = Ext.extend(Ext.BoxComponent, {
      * Gets the number of selected nodes.
      * @return {Number} The node count
      */
-    getSelectionCount: function () {
+    getSelectionCount : function(){
         return this.selected.getCount()
     },
 
@@ -460,7 +460,7 @@ Ext.DataView = Ext.extend(Ext.BoxComponent, {
      * Gets the currently selected nodes.
      * @return {Array} An array of HTMLElements
      */
-    getSelectedNodes: function () {
+    getSelectedNodes : function(){
         return this.selected.elements;
     },
 
@@ -468,9 +468,9 @@ Ext.DataView = Ext.extend(Ext.BoxComponent, {
      * Gets the indexes of the selected nodes.
      * @return {Array} An array of numeric indexes
      */
-    getSelectedIndexes: function () {
+    getSelectedIndexes : function(){
         var indexes = [], s = this.selected.elements;
-        for (var i = 0, len = s.length; i < len; i++) {
+        for(var i = 0, len = s.length; i < len; i++){
             indexes.push(s[i].viewIndex);
         }
         return indexes;
@@ -480,9 +480,9 @@ Ext.DataView = Ext.extend(Ext.BoxComponent, {
      * Gets an array of the selected records
      * @return {Array} An array of {@link Ext.data.Record} objects
      */
-    getSelectedRecords: function () {
+    getSelectedRecords : function(){
         var r = [], s = this.selected.elements;
-        for (var i = 0, len = s.length; i < len; i++) {
+        for(var i = 0, len = s.length; i < len; i++){
             r[r.length] = this.store.getAt(s[i].viewIndex);
         }
         return r;
@@ -493,9 +493,9 @@ Ext.DataView = Ext.extend(Ext.BoxComponent, {
      * @param {Array} nodes The nodes to evaluate
      * @return {Array} records The {@link Ext.data.Record} objects
      */
-    getRecords: function (nodes) {
+    getRecords : function(nodes){
         var r = [], s = nodes;
-        for (var i = 0, len = s.length; i < len; i++) {
+        for(var i = 0, len = s.length; i < len; i++){
             r[r.length] = this.store.getAt(s[i].viewIndex);
         }
         return r;
@@ -506,7 +506,7 @@ Ext.DataView = Ext.extend(Ext.BoxComponent, {
      * @param {HTMLElement} node The node to evaluate
      * @return {Record} record The {@link Ext.data.Record} object
      */
-    getRecord: function (node) {
+    getRecord : function(node){
         return this.store.getAt(node.viewIndex);
     },
 
@@ -514,14 +514,14 @@ Ext.DataView = Ext.extend(Ext.BoxComponent, {
      * Clears all selections.
      * @param {Boolean} suppressEvent (optional) True to skip firing of the selectionchange event
      */
-    clearSelections: function (suppressEvent, skipUpdate) {
-        if (this.multiSelect || this.singleSelect) {
-            if (!skipUpdate) {
+    clearSelections : function(suppressEvent, skipUpdate){
+        if(this.multiSelect || this.singleSelect){
+            if(!skipUpdate){
                 this.selected.removeClass(this.selectedClass);
             }
             this.selected.clear();
             this.last = false;
-            if (!suppressEvent) {
+            if(!suppressEvent){
                 this.fireEvent("selectionchange", this, this.selected.elements);
             }
         }
@@ -532,7 +532,7 @@ Ext.DataView = Ext.extend(Ext.BoxComponent, {
      * @param {HTMLElement/Number} node The node or node index to check
      * @return {Boolean} True if selected, else false
      */
-    isSelected: function (node) {
+    isSelected : function(node){
         return this.selected.contains(this.getNode(node));
     },
 
@@ -540,11 +540,11 @@ Ext.DataView = Ext.extend(Ext.BoxComponent, {
      * Deselects a node.
      * @param {HTMLElement/Number} node The node to deselect
      */
-    deselect: function (node) {
-        if (this.isSelected(node)) {
+    deselect : function(node){
+        if(this.isSelected(node)){
             var node = this.getNode(node);
             this.selected.removeElement(node);
-            if (this.last == node.viewIndex) {
+            if(this.last == node.viewIndex){
                 this.last = false;
             }
             Ext.fly(node).removeClass(this.selectedClass);
@@ -559,25 +559,25 @@ Ext.DataView = Ext.extend(Ext.BoxComponent, {
      * @param {Boolean} keepExisting (optional) true to keep existing selections
      * @param {Boolean} suppressEvent (optional) true to skip firing of the selectionchange vent
      */
-    select: function (nodeInfo, keepExisting, suppressEvent) {
-        if (nodeInfo instanceof Array) {
-            if (!keepExisting) {
+    select : function(nodeInfo, keepExisting, suppressEvent){
+        if(nodeInfo instanceof Array){
+            if(!keepExisting){
                 this.clearSelections(true);
             }
-            for (var i = 0, len = nodeInfo.length; i < len; i++) {
+            for(var i = 0, len = nodeInfo.length; i < len; i++){
                 this.select(nodeInfo[i], true, true);
             }
-        } else {
+        } else{
             var node = this.getNode(nodeInfo);
-            if (!keepExisting) {
+            if(!keepExisting){
                 this.clearSelections(true);
             }
-            if (node && !this.isSelected(node)) {
-                if (this.fireEvent("beforeselect", this, node, this.selected.elements) !== false) {
+            if(node && !this.isSelected(node)){
+                if(this.fireEvent("beforeselect", this, node, this.selected.elements) !== false){
                     Ext.fly(node).addClass(this.selectedClass);
                     this.selected.add(node);
                     this.last = node.viewIndex;
-                    if (!suppressEvent) {
+                    if(!suppressEvent){
                         this.fireEvent("selectionchange", this, this.selected.elements);
                     }
                 }
@@ -591,8 +591,8 @@ Ext.DataView = Ext.extend(Ext.BoxComponent, {
      * @param {Number} end The index of the last node in the range
      * @param {Boolean} keepExisting (optional) True to retain existing selections
      */
-    selectRange: function (start, end, keepExisting) {
-        if (!keepExisting) {
+    selectRange : function(start, end, keepExisting){
+        if(!keepExisting){
             this.clearSelections(true);
         }
         this.select(this.getNodes(start, end), true);
@@ -603,10 +603,10 @@ Ext.DataView = Ext.extend(Ext.BoxComponent, {
      * @param {HTMLElement/String/Number} nodeInfo An HTMLElement template node, index of a template node or the id of a template node
      * @return {HTMLElement} The node or null if it wasn't found
      */
-    getNode: function (nodeInfo) {
-        if (typeof nodeInfo == "string") {
+    getNode : function(nodeInfo){
+        if(typeof nodeInfo == "string"){
             return document.getElementById(nodeInfo);
-        } else if (typeof nodeInfo == "number") {
+        }else if(typeof nodeInfo == "number"){
             return this.all.elements[nodeInfo];
         }
         return nodeInfo;
@@ -618,17 +618,17 @@ Ext.DataView = Ext.extend(Ext.BoxComponent, {
      * @param {Number} end The index of the last node in the range
      * @return {Array} An array of nodes
      */
-    getNodes: function (start, end) {
+    getNodes : function(start, end){
         var ns = this.all.elements;
         start = start || 0;
         end = typeof end == "undefined" ? ns.length - 1 : end;
         var nodes = [], i;
-        if (start <= end) {
-            for (i = start; i <= end; i++) {
+        if(start <= end){
+            for(i = start; i <= end; i++){
                 nodes.push(ns[i]);
             }
-        } else {
-            for (i = start; i >= end; i--) {
+        } else{
+            for(i = start; i >= end; i--){
                 nodes.push(ns[i]);
             }
         }
@@ -640,19 +640,19 @@ Ext.DataView = Ext.extend(Ext.BoxComponent, {
      * @param {HTMLElement/String/Number} nodeInfo An HTMLElement template node, index of a template node or the id of a template node
      * @return {Number} The index of the node or -1
      */
-    indexOf: function (node) {
+    indexOf : function(node){
         node = this.getNode(node);
-        if (typeof node.viewIndex == "number") {
+        if(typeof node.viewIndex == "number"){
             return node.viewIndex;
         }
         return this.all.indexOf(node);
     },
 
     // private
-    onBeforeLoad: function () {
-        if (this.loadingText) {
+    onBeforeLoad : function(){
+        if(this.loadingText){
             this.clearSelections(false, true);
-            this.el.update('<div class="loading-indicator">' + this.loadingText + '</div>');
+            this.el.update('<div class="loading-indicator">'+this.loadingText+'</div>');
             this.all.clear();
         }
     }

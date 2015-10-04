@@ -19,7 +19,7 @@ function smarty_modifier_withSkidka($productID)
   $query = "SELECT * FROM SC_products WHERE productID = $productID";
   $Product = mysql_fetch_object(mysql_query($query));
 
-  $price = ZCalcPrice($Product->Price, $Product->SpecialPrice, $Product->skidka);
+  $price = ZCalcPrice($Product->Price, $Product->skidka, $Product->SpecialPrice,);
 
   $price = number_format($price, 2);
 

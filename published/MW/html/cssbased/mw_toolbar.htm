@@ -1,6 +1,6 @@
 <? foreach from=$currentAppData.PAGES item=item ?>
-<? wbs_toolbarItem?>
-<? wbs_buttonSetButton caption=$item.UI_NAME link=$item.PAGE ?>
-<? /wbs_toolbarItem ?>
-
+	<? wbs_toolbarItem?>
+		<? wbs_buttonSetButton caption=$item.UI_NAME link=$item.PAGE ?>
+	<? /wbs_toolbarItem ?>
+	
 <? /foreach ?>

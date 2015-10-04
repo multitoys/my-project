@@ -15,7 +15,7 @@
  * Creates a new BaseItem
  * @param {Object} config Configuration options
  */
-Ext.menu.BaseItem = function (config) {
+Ext.menu.BaseItem = function(config){
     Ext.menu.BaseItem.superclass.constructor.call(this, config);
 
     this.addEvents(
@@ -40,7 +40,7 @@ Ext.menu.BaseItem = function (config) {
         'deactivate'
     );
 
-    if (this.handler) {
+    if(this.handler){
         this.on("click", this.handler, this.scope);
     }
 };
@@ -57,35 +57,35 @@ Ext.extend(Ext.menu.BaseItem, Ext.Component, {
     /**
      * @cfg {Boolean} canActivate True if this item can be visually activated (defaults to false)
      */
-    canActivate: false,
+    canActivate : false,
     /**
      * @cfg {String} activeClass The CSS class to use when the item becomes activated (defaults to "x-menu-item-active")
      */
-    activeClass: "x-menu-item-active",
+    activeClass : "x-menu-item-active",
     /**
      * @cfg {Boolean} hideOnClick True to hide the containing menu after this item is clicked (defaults to true)
      */
-    hideOnClick: true,
+    hideOnClick : true,
     /**
      * @cfg {Number} hideDelay Length of time in milliseconds to wait before hiding after a click (defaults to 100)
      */
-    hideDelay: 100,
+    hideDelay : 100,
 
     // private
     ctype: "Ext.menu.BaseItem",
 
     // private
-    actionMode: "container",
+    actionMode : "container",
 
     // private
-    render: function (container, parentMenu) {
+    render : function(container, parentMenu){
         this.parentMenu = parentMenu;
         Ext.menu.BaseItem.superclass.render.call(this, container);
         this.container.menuItemId = this.id;
     },
 
     // private
-    onRender: function (container, position) {
+    onRender : function(container, position){
         this.el = Ext.get(this.el);
         container.dom.appendChild(this.el.dom);
     },
@@ -96,26 +96,26 @@ Ext.extend(Ext.menu.BaseItem, Ext.Component, {
      * @param {Function} handler The function that should be called on click
      * @param {Object} scope The scope that should be passed to the handler
      */
-    setHandler: function (handler, scope) {
-        if (this.handler) {
+    setHandler : function(handler, scope){
+        if(this.handler){
             this.un("click", this.handler, this.scope);
         }
         this.on("click", this.handler = handler, this.scope = scope);
     },
 
     // private
-    onClick: function (e) {
-        if (!this.disabled && this.fireEvent("click", this, e) !== false
-            && this.parentMenu.fireEvent("itemclick", this, e) !== false) {
+    onClick : function(e){
+        if(!this.disabled && this.fireEvent("click", this, e) !== false
+                && this.parentMenu.fireEvent("itemclick", this, e) !== false){
             this.handleClick(e);
-        } else {
+        }else{
             e.stopEvent();
         }
     },
 
     // private
-    activate: function () {
-        if (this.disabled) {
+    activate : function(){
+        if(this.disabled){
             return false;
         }
         var li = this.container;
@@ -126,30 +126,30 @@ Ext.extend(Ext.menu.BaseItem, Ext.Component, {
     },
 
     // private
-    deactivate: function () {
+    deactivate : function(){
         this.container.removeClass(this.activeClass);
         this.fireEvent("deactivate", this);
     },
 
     // private
-    shouldDeactivate: function (e) {
+    shouldDeactivate : function(e){
         return !this.region || !this.region.contains(e.getPoint());
     },
 
     // private
-    handleClick: function (e) {
-        if (this.hideOnClick) {
+    handleClick : function(e){
+        if(this.hideOnClick){
             this.parentMenu.hide.defer(this.hideDelay, this.parentMenu, [true]);
         }
     },
 
     // private
-    expandMenu: function (autoActivate) {
+    expandMenu : function(autoActivate){
         // do nothing
     },
 
     // private
-    hideMenu: function () {
+    hideMenu : function(){
         // do nothing
     }
 });

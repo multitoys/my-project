@@ -1,8 +1,8 @@
 <?php
 
-    class MySQLException extends Exception
-    {
-
-    }
+class MySQLException extends Exception
+{
+	
+} 
 
 ?>

@@ -16,19 +16,19 @@
  * <p>
  * Example code:.
  * <pre><code>
- var Employee = Ext.data.Record.create([
- {name: 'name', mapping: 1},         // "mapping" only needed if an "id" field is present which
- {name: 'occupation', mapping: 2}    // precludes using the ordinal position as the index.
- ]);
- var myReader = new Ext.data.ArrayReader({
+var Employee = Ext.data.Record.create([
+    {name: 'name', mapping: 1},         // "mapping" only needed if an "id" field is present which
+    {name: 'occupation', mapping: 2}    // precludes using the ordinal position as the index.
+]);
+var myReader = new Ext.data.ArrayReader({
     id: 0                     // The subscript within row Array that provides an ID for the Record (optional)
 }, Employee);
- </code></pre>
+</code></pre>
  * <p>
  * This would consume an Array like this:
  * <pre><code>
- [ [1, 'Bill', 'Gardener'], [2, 'Ben', 'Horticulturalist'] ]
- </code></pre>
+[ [1, 'Bill', 'Gardener'], [2, 'Ben', 'Horticulturalist'] ]
+  </code></pre>
  * @cfg {String} id (optional) The subscript within row Array that provides an ID for the Record
  * @constructor
  * Create a new ArrayReader
@@ -45,29 +45,29 @@ Ext.data.ArrayReader = Ext.extend(Ext.data.JsonReader, {
      * @return {Object} data A data block which is used by an Ext.data.Store object as
      * a cache of Ext.data.Records.
      */
-    readRecords: function (o) {
+    readRecords : function(o){
         var sid = this.meta ? this.meta.id : null;
-        var recordType = this.recordType, fields = recordType.prototype.fields;
-        var records = [];
-        var root = o;
-        for (var i = 0; i < root.length; i++) {
-            var n = root[i];
-            var values = {};
-            var id = ((sid || sid === 0) && n[sid] !== undefined && n[sid] !== "" ? n[sid] : null);
-            for (var j = 0, jlen = fields.length; j < jlen; j++) {
+    	var recordType = this.recordType, fields = recordType.prototype.fields;
+    	var records = [];
+    	var root = o;
+	    for(var i = 0; i < root.length; i++){
+		    var n = root[i];
+	        var values = {};
+	        var id = ((sid || sid === 0) && n[sid] !== undefined && n[sid] !== "" ? n[sid] : null);
+	        for(var j = 0, jlen = fields.length; j < jlen; j++){
                 var f = fields.items[j];
                 var k = f.mapping !== undefined && f.mapping !== null ? f.mapping : j;
                 var v = n[k] !== undefined ? n[k] : f.defaultValue;
                 v = f.convert(v);
                 values[f.name] = v;
             }
-            var record = new recordType(values, id);
-            record.json = n;
-            records[records.length] = record;
-        }
-        return {
-            records: records,
-            totalRecords: records.length
-        };
+	        var record = new recordType(values, id);
+	        record.json = n;
+	        records[records.length] = record;
+	    }
+	    return {
+	        records : records,
+	        totalRecords : records.length
+	    };
     }
 });

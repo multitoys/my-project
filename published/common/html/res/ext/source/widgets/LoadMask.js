@@ -17,15 +17,15 @@
  * @param {Mixed} el The element or DOM node, or its id
  * @param {Object} config The config object
  */
-Ext.LoadMask = function (el, config) {
+Ext.LoadMask = function(el, config){
     this.el = Ext.get(el);
     Ext.apply(this, config);
-    if (this.store) {
+    if(this.store){
         this.store.on('beforeload', this.onBeforeLoad, this);
         this.store.on('load', this.onLoad, this);
         this.store.on('loadexception', this.onLoad, this);
         this.removeMask = Ext.value(this.removeMask, false);
-    } else {
+    }else{
         var um = this.el.getUpdater();
         um.showLoadIndicator = false; // disable the default indicator
         um.on('beforeupdate', this.onBeforeLoad, this);
@@ -45,12 +45,12 @@ Ext.LoadMask.prototype = {
      * @cfg {String} msg
      * The text to display in a centered loading message box (defaults to 'Loading...')
      */
-    msg: 'Loading...',
+    msg : 'Loading...',
     /**
      * @cfg {String} msgCls
      * The CSS class to apply to the loading message element (defaults to "x-mask-loading")
      */
-    msgCls: 'x-mask-loading',
+    msgCls : 'x-mask-loading',
 
     /**
      * Read-only. True if the mask is currently disabled so that it will not be displayed (defaults to false)
@@ -61,44 +61,44 @@ Ext.LoadMask.prototype = {
     /**
      * Disables the mask to prevent it from being displayed
      */
-    disable: function () {
-        this.disabled = true;
+    disable : function(){
+       this.disabled = true;
     },
 
     /**
      * Enables the mask so that it can be displayed
      */
-    enable: function () {
+    enable : function(){
         this.disabled = false;
     },
 
     // private
-    onLoad: function () {
+    onLoad : function(){
         this.el.unmask(this.removeMask);
     },
 
     // private
-    onBeforeLoad: function () {
-        if (!this.disabled) {
+    onBeforeLoad : function(){
+        if(!this.disabled){
             this.el.mask(this.msg, this.msgCls);
         }
     },
 
-    show: function () {
+    show: function(){
         this.onBeforeLoad();
     },
 
-    hide: function () {
-        this.onLoad();
+    hide: function(){
+        this.onLoad();    
     },
 
     // private
-    destroy: function () {
-        if (this.store) {
+    destroy : function(){
+        if(this.store){
             this.store.un('beforeload', this.onBeforeLoad, this);
             this.store.un('load', this.onLoad, this);
             this.store.un('loadexception', this.onLoad, this);
-        } else {
+        }else{
             var um = this.el.getUpdater();
             um.un('beforeupdate', this.onBeforeLoad, this);
             um.un('update', this.onLoad, this);

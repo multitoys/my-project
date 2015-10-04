@@ -1,8 +1,10 @@
 <?php
 
-    class RightsView
-    {
+class RightsView 
+{
+	
+}
 
-    }
+
 
 ?>

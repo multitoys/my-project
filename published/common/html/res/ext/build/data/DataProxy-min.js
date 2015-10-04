@@ -6,8 +6,4 @@
  * http://extjs.com/license
  */
 
-Ext.data.DataProxy = function () {
-    this.addEvents("beforeload", "load", "loadexception");
-    Ext.data.DataProxy.superclass.constructor.call(this)
-};
-Ext.extend(Ext.data.DataProxy, Ext.util.Observable);
+Ext.data.DataProxy=function(){this.addEvents("beforeload","load","loadexception");Ext.data.DataProxy.superclass.constructor.call(this)};Ext.extend(Ext.data.DataProxy,Ext.util.Observable);

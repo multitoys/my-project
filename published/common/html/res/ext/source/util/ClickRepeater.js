@@ -22,78 +22,79 @@
  @cfg {Number} interval The interval between firings of the "click" event. Default 20 ms.
  @cfg {String} pressClass A CSS class name to be applied to the element while pressed.
  @cfg {Boolean} accelerate True if autorepeating should start slowly and accelerate.
- "interval" and "delay" are ignored.
+           "interval" and "delay" are ignored.
  @cfg {Boolean} preventDefault True to prevent the default click event
  @cfg {Boolean} stopDefault True to stop the default click event
 
  @history
- 2007-02-02 jvs Original code contributed by Nige "Animal" White
- 2007-02-02 jvs Renamed to ClickRepeater
- 2007-02-03 jvs Modifications for FF Mac and Safari
+    2007-02-02 jvs Original code contributed by Nige "Animal" White
+    2007-02-02 jvs Renamed to ClickRepeater
+    2007-02-03 jvs Modifications for FF Mac and Safari
 
  @constructor
  @param {Mixed} el The element to listen on
  @param {Object} config
  */
-Ext.util.ClickRepeater = function (el, config) {
+Ext.util.ClickRepeater = function(el, config)
+{
     this.el = Ext.get(el);
     this.el.unselectable();
 
     Ext.apply(this, config);
 
     this.addEvents(
-        /**
-         * @event mousedown
-         * Fires when the mouse button is depressed.
-         * @param {Ext.util.ClickRepeater} this
-         */
+    /**
+     * @event mousedown
+     * Fires when the mouse button is depressed.
+     * @param {Ext.util.ClickRepeater} this
+     */
         "mousedown",
-        /**
-         * @event click
-         * Fires on a specified interval during the time the element is pressed.
-         * @param {Ext.util.ClickRepeater} this
-         */
+    /**
+     * @event click
+     * Fires on a specified interval during the time the element is pressed.
+     * @param {Ext.util.ClickRepeater} this
+     */
         "click",
-        /**
-         * @event mouseup
-         * Fires when the mouse key is released.
-         * @param {Ext.util.ClickRepeater} this
-         */
+    /**
+     * @event mouseup
+     * Fires when the mouse key is released.
+     * @param {Ext.util.ClickRepeater} this
+     */
         "mouseup"
     );
 
     this.el.on("mousedown", this.handleMouseDown, this);
-    if (this.preventDefault || this.stopDefault) {
-        this.el.on("click", function (e) {
-            if (this.preventDefault) {
+    if(this.preventDefault || this.stopDefault){
+        this.el.on("click", function(e){
+            if(this.preventDefault){
                 e.preventDefault();
             }
-            if (this.stopDefault) {
+            if(this.stopDefault){
                 e.stopEvent();
             }
         }, this);
     }
 
     // allow inline handler
-    if (this.handler) {
-        this.on("click", this.handler, this.scope || this);
+    if(this.handler){
+        this.on("click", this.handler,  this.scope || this);
     }
 
     Ext.util.ClickRepeater.superclass.constructor.call(this);
 };
 
 Ext.extend(Ext.util.ClickRepeater, Ext.util.Observable, {
-    interval: 20,
+    interval : 20,
     delay: 250,
-    preventDefault: true,
-    stopDefault: false,
-    timer: 0,
+    preventDefault : true,
+    stopDefault : false,
+    timer : 0,
 
     // private
-    handleMouseDown: function () {
+    handleMouseDown : function(){
         clearTimeout(this.timer);
         this.el.blur();
-        if (this.pressClass) {
+        if(this.pressClass){
             this.el.addClass(this.pressClass);
         }
         this.mousedownTime = new Date();
@@ -107,12 +108,12 @@ Ext.extend(Ext.util.ClickRepeater, Ext.util.Observable, {
 //      Do not honor delay or interval if acceleration wanted.
         if (this.accelerate) {
             this.delay = 400;
-        }
+	    }
         this.timer = this.click.defer(this.delay || this.interval, this);
     },
 
     // private
-    click: function () {
+    click : function(){
         this.fireEvent("click", this);
         this.timer = this.click.defer(this.accelerate ?
             this.easeOutExpo(this.mousedownTime.getElapsed(),
@@ -122,30 +123,30 @@ Ext.extend(Ext.util.ClickRepeater, Ext.util.Observable, {
             this.interval, this);
     },
 
-    easeOutExpo: function (t, b, c, d) {
-        return (t == d) ? b + c : c * (-Math.pow(2, -10 * t / d) + 1) + b;
+    easeOutExpo : function (t, b, c, d) {
+        return (t==d) ? b+c : c * (-Math.pow(2, -10 * t/d) + 1) + b;
     },
 
     // private
-    handleMouseOut: function () {
+    handleMouseOut : function(){
         clearTimeout(this.timer);
-        if (this.pressClass) {
+        if(this.pressClass){
             this.el.removeClass(this.pressClass);
         }
         this.el.on("mouseover", this.handleMouseReturn, this);
     },
 
     // private
-    handleMouseReturn: function () {
+    handleMouseReturn : function(){
         this.el.un("mouseover", this.handleMouseReturn);
-        if (this.pressClass) {
+        if(this.pressClass){
             this.el.addClass(this.pressClass);
         }
         this.click();
     },
 
     // private
-    handleMouseUp: function () {
+    handleMouseUp : function(){
         clearTimeout(this.timer);
         this.el.un("mouseover", this.handleMouseReturn);
         this.el.un("mouseout", this.handleMouseOut);

@@ -37,26 +37,26 @@
  * <li>width</li></ul></div>
  * <p>Here is an example showing how some of these config options could be used:</p>
  * <pre><code>
- // Init the singleton.  Any tag-based quick tips will start working.
- Ext.QuickTips.init();
+// Init the singleton.  Any tag-based quick tips will start working.
+Ext.QuickTips.init();
 
- // Apply a set of config properties to the singleton
- Ext.apply(Ext.QuickTips.getQuickTip(), {
+// Apply a set of config properties to the singleton
+Ext.apply(Ext.QuickTips.getQuickTip(), {
     maxWidth: 200,
     minWidth: 100,
     showDelay: 50,
     trackMouse: true
 });
 
- // Manually register a quick tip for a specific element
- q.register({
+// Manually register a quick tip for a specific element
+q.register({
     target: 'my-div',
     title: 'My Tooltip',
     text: 'This tooltip was added in code',
     width: 100,
     dismissDelay: 20
 });
- </code></pre>
+</code></pre>
  * <p>To register a quick tip in markup, you simply add one or more of the valid QuickTip attributes prefixed with
  * the <b>ext:</b> namespace.  The HTML element itself is automatically set as the quick tip target. Here is the summary
  * of supported attributes (optional unless otherwise noted):</p>
@@ -68,31 +68,31 @@
  * <li><b>qwidth</b>: The quick tip width (equivalent to the 'width' target element config).</li></ul>
  * <p>Here is an example of configuring an HTML element to display a tooltip from markup:</p>
  * <pre><code>
- // Add a quick tip to an HTML button
- &lt;input type="button" value="OK" ext:qtitle="OK Button" ext:qwidth="100"
- ext:qtip="This is a quick tip from markup!">&lt;/input>
- </code></pre>
+// Add a quick tip to an HTML button
+&lt;input type="button" value="OK" ext:qtitle="OK Button" ext:qwidth="100"
+     ext:qtip="This is a quick tip from markup!">&lt;/input>
+</code></pre>
  * @singleton
  */
-Ext.QuickTips = function () {
+Ext.QuickTips = function(){
     var tip, locks = [];
     return {
         /**
          * Initialize the global QuickTips instance and prepare any quick tips.
          */
-        init: function () {
-            if (!tip) {
-                tip = new Ext.QuickTip({elements: 'header,body'});
+        init : function(){
+            if(!tip){
+                tip = new Ext.QuickTip({elements:'header,body'});
             }
         },
 
         /**
          * Enable quick tips globally.
          */
-        enable: function () {
-            if (tip) {
+        enable : function(){
+            if(tip){
                 locks.pop();
-                if (locks.length < 1) {
+                if(locks.length < 1){
                     tip.enable();
                 }
             }
@@ -101,8 +101,8 @@ Ext.QuickTips = function () {
         /**
          * Disable quick tips globally.
          */
-        disable: function () {
-            if (tip) {
+        disable : function(){
+            if(tip){
                 tip.disable();
             }
             locks.push(1);
@@ -112,14 +112,14 @@ Ext.QuickTips = function () {
          * Returns true if quick tips are enabled, else false.
          * @return {Boolean}
          */
-        isEnabled: function () {
+        isEnabled : function(){
             return tip && !tip.disabled;
         },
 
         /**
          * Gets the global QuickTips instance.
          */
-        getQuickTip: function () {
+        getQuickTip : function(){
             return tip;
         },
 
@@ -128,7 +128,7 @@ Ext.QuickTips = function () {
          * {@link Ext.QuickTip#register} for details.
          * @param {Object} config The config object
          */
-        register: function () {
+        register : function(){
             tip.register.apply(tip, arguments);
         },
 
@@ -136,7 +136,7 @@ Ext.QuickTips = function () {
          * Removes any registered quick tip from the target element and destroys it.
          * @param {String/HTMLElement/Element} el The element from which the quick tip is to be removed.
          */
-        unregister: function () {
+        unregister : function(){
             tip.unregister.apply(tip, arguments);
         },
 
@@ -144,7 +144,7 @@ Ext.QuickTips = function () {
          * Alias of {@link #register}.
          * @param {Object} config The config object
          */
-        tips: function () {
+        tips :function(){
             tip.register.apply(tip, arguments);
         }
     }

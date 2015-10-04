@@ -2,17 +2,17 @@
 <body>
 
 <table cellspacing=0 cellpadding=0>
-    <tr valign='top'>
-        <? if $imageUrl ?>
-        <td width="280">
-            <a href='<? $widgetLink ?>'><img src='<? $imageUrl ?>'></a>
-        </td>
-        <? /if ?>
-        <td>
-            <h1><? $widgetData.WG_DESC ?></h1>
-            <? if $sendData.message ?><? $sendData.message|htmlsafe ?><? /if ?>
-        </td>
-    </tr>
+<tr valign='top'>
+	<? if $imageUrl ?>
+		<td width="280">
+			<a href='<? $widgetLink ?>'><img src='<? $imageUrl ?>'></a>
+		</td>
+	<? /if ?>
+	<td>
+		<h1><? $widgetData.WG_DESC ?></h1>
+		<? if $sendData.message ?><? $sendData.message|htmlsafe ?><? /if ?>
+	</td>
+</tr>
 </table>
 
 <BR><BR>
@@ -22,7 +22,7 @@
 
 
 <hr>
-<? $widgetStrings.wbs_block ?>
+<? $widgetStrings.wbs_block ?>	
 
 </body>
 </html>

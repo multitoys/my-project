@@ -14,23 +14,10 @@
 // Distributed under the same terms as HTMLArea itself.
 // This notice MUST stay intact for use (see license.txt).
 {
-    "language select"
-:
-    "Selecionar idioma",
-        "&mdash; language &mdash;"
-:
-    "&mdash; Idioma &mdash;",
-        "Greek"
-:
-    "Grego",
-        "English"
-:
-    "Inglês",
-        "French"
-:
-    "Francês",
-        "Latin"
-:
-    "Latim"
-}
-;
+  "language select": "Selecionar idioma",
+  "&mdash; language &mdash;":	"&mdash; Idioma &mdash;",
+  "Greek": "Grego",
+  "English": "Inglês",
+  "French": "Francês",
+  "Latin": "Latim"
+};

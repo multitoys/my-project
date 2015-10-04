@@ -23,9 +23,9 @@
  * @param {Object} config A config object containing the objects needed for the Store to access data,
  * and read the data into Records.
  */
-Ext.data.Store = function (config) {
+Ext.data.Store = function(config){
     this.data = new Ext.util.MixedCollection(false);
-    this.data.getKey = function (o) {
+    this.data.getKey = function(o){
         return o.id;
     };
     /**
@@ -35,33 +35,33 @@ Ext.data.Store = function (config) {
     this.baseParams = {};
     // private
     this.paramNames = {
-        "start": "start",
-        "limit": "limit",
-        "sort": "sort",
-        "dir": "dir"
+        "start" : "start",
+        "limit" : "limit",
+        "sort" : "sort",
+        "dir" : "dir"
     };
 
-    if (config && config.data) {
+    if(config && config.data){
         this.inlineData = config.data;
         delete config.data;
     }
 
     Ext.apply(this, config);
 
-    if (this.url && !this.proxy) {
+    if(this.url && !this.proxy){
         this.proxy = new Ext.data.HttpProxy({url: this.url});
     }
 
-    if (this.reader) { // reader passed
-        if (!this.recordType) {
+    if(this.reader){ // reader passed
+        if(!this.recordType){
             this.recordType = this.reader.recordType;
         }
-        if (this.reader.onMetaChange) {
+        if(this.reader.onMetaChange){
             this.reader.onMetaChange = this.onMetaChange.createDelegate(this);
         }
     }
 
-    if (this.recordType) {
+    if(this.recordType){
         this.fields = this.recordType.prototype.fields;
     }
     this.modified = [];
@@ -104,9 +104,9 @@ Ext.data.Store = function (config) {
          * @param {Ext.data.Record} record The Record that was updated
          * @param {String} operation The update operation being performed.  Value may be one of:
          * <pre><code>
-         Ext.data.Record.EDIT
-         Ext.data.Record.REJECT
-         Ext.data.Record.COMMIT
+ Ext.data.Record.EDIT
+ Ext.data.Record.REJECT
+ Ext.data.Record.COMMIT
          * </code></pre>
          */
         'update',
@@ -140,24 +140,24 @@ Ext.data.Store = function (config) {
         'loadexception'
     );
 
-    if (this.proxy) {
-        this.relayEvents(this.proxy, ["loadexception"]);
+    if(this.proxy){
+        this.relayEvents(this.proxy,  ["loadexception"]);
     }
-
+    
     this.sortToggle = {};
-    if (this.sortInfo) {
-        this.setDefaultSort(this.sortInfo.field, this.sortInfo.direction);
-    }
-
+	if(this.sortInfo){
+		this.setDefaultSort(this.sortInfo.field, this.sortInfo.direction);
+	}
+	
     Ext.data.Store.superclass.constructor.call(this);
 
-    if (this.storeId || this.id) {
+    if(this.storeId || this.id){
         Ext.StoreMgr.register(this);
     }
-    if (this.inlineData) {
+    if(this.inlineData){
         this.loadData(this.inlineData);
         delete this.inlineData;
-    } else if (this.autoLoad) {
+    }else if(this.autoLoad){
         this.load.defer(10, this, [
             typeof this.autoLoad == 'object' ?
                 this.autoLoad : undefined]);
@@ -165,52 +165,52 @@ Ext.data.Store = function (config) {
 };
 Ext.extend(Ext.data.Store, Ext.util.Observable, {
     /**
-     * @cfg {String} storeId If passed, the id to use to register with the StoreMgr
-     */
+    * @cfg {String} storeId If passed, the id to use to register with the StoreMgr
+    */
     /**
-     * @cfg {String} url If passed, an HttpProxy is created for the passed URL
-     */
+    * @cfg {String} url If passed, an HttpProxy is created for the passed URL
+    */
     /**
-     * @cfg {Boolean/Object} autoLoad If passed, this store's load method is automatically called after creation with the autoLoad object
-     */
+    * @cfg {Boolean/Object} autoLoad If passed, this store's load method is automatically called after creation with the autoLoad object
+    */
     /**
-     * @cfg {Ext.data.DataProxy} proxy The Proxy object which provides access to a data object.
-     */
+    * @cfg {Ext.data.DataProxy} proxy The Proxy object which provides access to a data object.
+    */
     /**
-     * @cfg {Array} data Inline data to be loaded when the store is initialized.
-     */
+    * @cfg {Array} data Inline data to be loaded when the store is initialized.
+    */
     /**
-     * @cfg {Ext.data.DataReader} reader The DataReader object which processes the data object and returns
-     * an Array of Ext.data.Record objects which are cached keyed by their <em>id</em> property.
-     */
+    * @cfg {Ext.data.DataReader} reader The DataReader object which processes the data object and returns
+    * an Array of Ext.data.Record objects which are cached keyed by their <em>id</em> property.
+    */
     /**
-     * @cfg {Object} baseParams An object containing properties which are to be sent as parameters
-     * on any HTTP request
-     */
+    * @cfg {Object} baseParams An object containing properties which are to be sent as parameters
+    * on any HTTP request
+    */
     /**
-     * @cfg {Object} sortInfo A config object in the format: {field: "fieldName", direction: "ASC|DESC"}.  The direction
-     * property is case-sensitive.
-     */
+    * @cfg {Object} sortInfo A config object in the format: {field: "fieldName", direction: "ASC|DESC"}.  The direction
+    * property is case-sensitive.
+    */
     /**
-     * @cfg {boolean} remoteSort True if sorting is to be handled by requesting the
-     * Proxy to provide a refreshed version of the data object in sorted order, as
-     * opposed to sorting the Record cache in place (defaults to false).
-     * <p>If remote sorting is specified, then clicking on a column header causes the
-     * current page to be requested from the server with the addition of the following
-     * two parameters:
-     * <div class="mdetail-params"><ul>
-     * <li><b>sort</b> : String<p class="sub-desc">The name (as specified in
-     * the Record's Field definition) of the field to sort on.</p></li>
-     * <li><b>dir</b> : String<p class="sub-desc">The direction of the sort, "ASC" or "DESC" (case-sensitive).</p></li>
-     * </ul></div></p>
-     */
-    remoteSort: false,
+    * @cfg {boolean} remoteSort True if sorting is to be handled by requesting the
+    * Proxy to provide a refreshed version of the data object in sorted order, as
+    * opposed to sorting the Record cache in place (defaults to false).
+    * <p>If remote sorting is specified, then clicking on a column header causes the
+    * current page to be requested from the server with the addition of the following
+    * two parameters:
+    * <div class="mdetail-params"><ul>
+    * <li><b>sort</b> : String<p class="sub-desc">The name (as specified in
+    * the Record's Field definition) of the field to sort on.</p></li>
+    * <li><b>dir</b> : String<p class="sub-desc">The direction of the sort, "ASC" or "DESC" (case-sensitive).</p></li>
+    * </ul></div></p>
+    */
+    remoteSort : false,
 
     /**
-     * @cfg {boolean} pruneModifiedRecords True to clear all modified record information each time the store is
+    * @cfg {boolean} pruneModifiedRecords True to clear all modified record information each time the store is
      * loaded or when a record is removed. (defaults to false).
-     */
-    pruneModifiedRecords: false,
+    */
+    pruneModifiedRecords : false,
 
     /**
      * Contains the last options object used as the parameter to the load method. See {@link #load}
@@ -218,10 +218,10 @@ Ext.extend(Ext.data.Store, Ext.util.Observable, {
      * were used to load the current Record cache.
      * @property
      */
-    lastOptions: null,
+   lastOptions : null,
 
-    destroy: function () {
-        if (this.id) {
+    destroy : function(){
+        if(this.id){
             Ext.StoreMgr.unregister(this);
         }
         this.data = null;
@@ -232,17 +232,17 @@ Ext.extend(Ext.data.Store, Ext.util.Observable, {
      * Add Records to the Store and fires the add event.
      * @param {Ext.data.Record[]} records An Array of Ext.data.Record objects to add to the cache.
      */
-    add: function (records) {
+    add : function(records){
         records = [].concat(records);
-        if (records.length < 1) {
+        if(records.length < 1){
             return;
         }
-        for (var i = 0, len = records.length; i < len; i++) {
+        for(var i = 0, len = records.length; i < len; i++){
             records[i].join(this);
         }
         var index = this.data.length;
         this.data.addAll(records);
-        if (this.snapshot) {
+        if(this.snapshot){
             this.snapshot.addAll(records);
         }
         this.fireEvent("add", this, records, index);
@@ -253,7 +253,7 @@ Ext.extend(Ext.data.Store, Ext.util.Observable, {
      * should go based on the current sort information
      * @param {Ext.data.Record} record
      */
-    addSorted: function (record) {
+    addSorted : function(record){
         var index = this.findInsertIndex(record);
         this.insert(index, record);
     },
@@ -262,13 +262,13 @@ Ext.extend(Ext.data.Store, Ext.util.Observable, {
      * Remove a Record from the Store and fires the remove event.
      * @param {Ext.data.Record} record Th Ext.data.Record object to remove from the cache.
      */
-    remove: function (record) {
+    remove : function(record){
         var index = this.data.indexOf(record);
         this.data.removeAt(index);
-        if (this.pruneModifiedRecords) {
+        if(this.pruneModifiedRecords){
             this.modified.remove(record);
         }
-        if (this.snapshot) {
+        if(this.snapshot){
             this.snapshot.remove(record);
         }
         this.fireEvent("remove", this, record, index);
@@ -277,12 +277,12 @@ Ext.extend(Ext.data.Store, Ext.util.Observable, {
     /**
      * Remove all Records from the Store and fires the clear event.
      */
-    removeAll: function () {
+    removeAll : function(){
         this.data.clear();
-        if (this.snapshot) {
+        if(this.snapshot){
             this.snapshot.clear();
         }
-        if (this.pruneModifiedRecords) {
+        if(this.pruneModifiedRecords){
             this.modified = [];
         }
         this.fireEvent("clear", this);
@@ -293,9 +293,9 @@ Ext.extend(Ext.data.Store, Ext.util.Observable, {
      * @param {Number} index The start index at which to insert the passed Records.
      * @param {Ext.data.Record[]} records An Array of Ext.data.Record objects to add to the cache.
      */
-    insert: function (index, records) {
+    insert : function(index, records){
         records = [].concat(records);
-        for (var i = 0, len = records.length; i < len; i++) {
+        for(var i = 0, len = records.length; i < len; i++){
             this.data.insert(index, records[i]);
             records[i].join(this);
         }
@@ -307,7 +307,7 @@ Ext.extend(Ext.data.Store, Ext.util.Observable, {
      * @param {Ext.data.Record} record The Ext.data.Record object to to find.
      * @return {Number} The index of the passed Record. Returns -1 if not found.
      */
-    indexOf: function (record) {
+    indexOf : function(record){
         return this.data.indexOf(record);
     },
 
@@ -316,7 +316,7 @@ Ext.extend(Ext.data.Store, Ext.util.Observable, {
      * @param {String} id The id of the Record to find.
      * @return {Number} The index of the Record. Returns -1 if not found.
      */
-    indexOfId: function (id) {
+    indexOfId : function(id){
         return this.data.indexOfKey(id);
     },
 
@@ -325,7 +325,7 @@ Ext.extend(Ext.data.Store, Ext.util.Observable, {
      * @param {String} id The id of the Record to find.
      * @return {Ext.data.Record} The Record with the passed id. Returns undefined if not found.
      */
-    getById: function (id) {
+    getById : function(id){
         return this.data.key(id);
     },
 
@@ -334,7 +334,7 @@ Ext.extend(Ext.data.Store, Ext.util.Observable, {
      * @param {Number} index The index of the Record to find.
      * @return {Ext.data.Record} The Record at the passed index. Returns undefined if not found.
      */
-    getAt: function (index) {
+    getAt : function(index){
         return this.data.itemAt(index);
     },
 
@@ -344,12 +344,12 @@ Ext.extend(Ext.data.Store, Ext.util.Observable, {
      * @param {Number} endIndex (optional) The ending index (defaults to the last Record in the Store)
      * @return {Ext.data.Record[]} An array of Records
      */
-    getRange: function (start, end) {
+    getRange : function(start, end){
         return this.data.getRange(start, end);
     },
 
     // private
-    storeOptions: function (o) {
+    storeOptions : function(o){
         o = Ext.apply({}, o);
         delete o.callback;
         delete o.scope;
@@ -376,12 +376,12 @@ Ext.extend(Ext.data.Store, Ext.util.Observable, {
      * </ul>
      * @return {Boolean} Whether the load fired (if beforeload failed).
      */
-    load: function (options) {
+    load : function(options){
         options = options || {};
-        if (this.fireEvent("beforeload", this, options) !== false) {
+        if(this.fireEvent("beforeload", this, options) !== false){
             this.storeOptions(options);
             var p = Ext.apply(options.params || {}, this.baseParams);
-            if (this.sortInfo && this.remoteSort) {
+            if(this.sortInfo && this.remoteSort){
                 var pn = this.paramNames;
                 p[pn["sort"]] = this.sortInfo.field;
                 p[pn["dir"]] = this.sortInfo.direction;
@@ -389,7 +389,7 @@ Ext.extend(Ext.data.Store, Ext.util.Observable, {
             this.proxy.load(p, this.reader, this.loadRecords, this, options);
             return true;
         } else {
-            return false;
+          return false;
         }
     },
 
@@ -400,31 +400,31 @@ Ext.extend(Ext.data.Store, Ext.util.Observable, {
      * used in the last load operation. See {@link #load} for details (defaults to null, in which case
      * the most recently used options are reused).
      */
-    reload: function (options) {
-        this.load(Ext.applyIf(options || {}, this.lastOptions));
+    reload : function(options){
+        this.load(Ext.applyIf(options||{}, this.lastOptions));
     },
 
     // private
     // Called as a callback by the Reader during a load operation.
-    loadRecords: function (o, options, success) {
-        if (!o || success === false) {
-            if (success !== false) {
+    loadRecords : function(o, options, success){
+        if(!o || success === false){
+            if(success !== false){
                 this.fireEvent("load", this, [], options);
             }
-            if (options.callback) {
+            if(options.callback){
                 options.callback.call(options.scope || this, [], options, false);
             }
             return;
         }
         var r = o.records, t = o.totalRecords || r.length;
-        if (!options || options.add !== true) {
-            if (this.pruneModifiedRecords) {
+        if(!options || options.add !== true){
+            if(this.pruneModifiedRecords){
                 this.modified = [];
             }
-            for (var i = 0, len = r.length; i < len; i++) {
+            for(var i = 0, len = r.length; i < len; i++){
                 r[i].join(this);
             }
-            if (this.snapshot) {
+            if(this.snapshot){
                 this.data = this.snapshot;
                 delete this.snapshot;
             }
@@ -433,12 +433,12 @@ Ext.extend(Ext.data.Store, Ext.util.Observable, {
             this.totalLength = t;
             this.applySort();
             this.fireEvent("datachanged", this);
-        } else {
-            this.totalLength = Math.max(t, this.data.length + r.length);
+        }else{
+            this.totalLength = Math.max(t, this.data.length+r.length);
             this.add(r);
         }
         this.fireEvent("load", this, r, options);
-        if (options.callback) {
+        if(options.callback){
             options.callback.call(options.scope || this, r, options, true);
         }
     },
@@ -450,7 +450,7 @@ Ext.extend(Ext.data.Store, Ext.util.Observable, {
      * is dependent on the type of Reader that is configured and should correspond to that Reader's readRecords parameter.
      * @param {Boolean} append (Optional) True to append the new Records rather than replace the existing cache.
      */
-    loadData: function (o, append) {
+    loadData : function(o, append){
         var r = this.reader.readRecords(o);
         this.loadRecords(r, {add: append}, true);
     },
@@ -462,7 +462,7 @@ Ext.extend(Ext.data.Store, Ext.util.Observable, {
      * the dataset size.</p>
      * @return {Number} The number of Records in the Store's cache.
      */
-    getCount: function () {
+    getCount : function(){
         return this.data.length || 0;
     },
 
@@ -474,7 +474,7 @@ Ext.extend(Ext.data.Store, Ext.util.Observable, {
      * by the Proxy
      * <p><b>This value is not updated when changing the contents of the Store locally.</b></p>
      */
-    getTotalCount: function () {
+    getTotalCount : function(){
         return this.totalLength || 0;
     },
 
@@ -485,28 +485,28 @@ Ext.extend(Ext.data.Store, Ext.util.Observable, {
      * <li><b>direction : String<p class="sub-desc">The sort order, "ASC" or "DESC" (case-sensitive).</p></li>
      * </ul>
      */
-    getSortState: function () {
+    getSortState : function(){
         return this.sortInfo;
     },
 
     // private
-    applySort: function () {
-        if (this.sortInfo && !this.remoteSort) {
+    applySort : function(){
+        if(this.sortInfo && !this.remoteSort){
             var s = this.sortInfo, f = s.field;
             this.sortData(f, s.direction);
         }
     },
 
     // private
-    sortData: function (f, direction) {
+    sortData : function(f, direction){
         direction = direction || 'ASC';
         var st = this.fields.get(f).sortType;
-        var fn = function (r1, r2) {
+        var fn = function(r1, r2){
             var v1 = st(r1.data[f]), v2 = st(r2.data[f]);
             return v1 > v2 ? 1 : (v1 < v2 ? -1 : 0);
         };
         this.data.sort(direction, fn);
-        if (this.snapshot && this.snapshot != this.data) {
+        if(this.snapshot && this.snapshot != this.data){
             this.snapshot.sort(direction, fn);
         }
     },
@@ -516,7 +516,7 @@ Ext.extend(Ext.data.Store, Ext.util.Observable, {
      * @param {String} fieldName The name of the field to sort by.
      * @param {String} dir (optional) The sort order, "ASC" or "DESC" (case-sensitive, defaults to "ASC")
      */
-    setDefaultSort: function (field, dir) {
+    setDefaultSort : function(field, dir){
         dir = dir ? dir.toUpperCase() : "ASC";
         this.sortInfo = {field: field, direction: dir};
         this.sortToggle[field] = dir;
@@ -529,27 +529,27 @@ Ext.extend(Ext.data.Store, Ext.util.Observable, {
      * @param {String} fieldName The name of the field to sort by.
      * @param {String} dir (optional) The sort order, "ASC" or "DESC" (case-sensitive, defaults to "ASC")
      */
-    sort: function (fieldName, dir) {
+    sort : function(fieldName, dir){
         var f = this.fields.get(fieldName);
-        if (!f) {
+        if(!f){
             return false;
         }
-        if (!dir) {
-            if (this.sortInfo && this.sortInfo.field == f.name) { // toggle sort dir
+        if(!dir){
+            if(this.sortInfo && this.sortInfo.field == f.name){ // toggle sort dir
                 dir = (this.sortToggle[f.name] || "ASC").toggle("ASC", "DESC");
-            } else {
+            }else{
                 dir = f.sortDir;
             }
         }
         var st = (this.sortToggle) ? this.sortToggle[f.name] : null;
         var si = (this.sortInfo) ? this.sortInfo : null;
-
+        
         this.sortToggle[f.name] = dir;
         this.sortInfo = {field: f.name, direction: dir};
-        if (!this.remoteSort) {
+        if(!this.remoteSort){
             this.applySort();
             this.fireEvent("datachanged", this);
-        } else {
+        }else{
             if (!this.load(this.lastOptions)) {
                 if (st) {
                     this.sortToggle[f.name] = st;
@@ -567,7 +567,7 @@ Ext.extend(Ext.data.Store, Ext.util.Observable, {
      * Returning <tt>false</tt> aborts and exits the iteration.
      * @param {Object} scope (optional) The scope in which to call the function (defaults to the Record).
      */
-    each: function (fn, scope) {
+    each : function(fn, scope){
         this.data.each(fn, scope);
     },
 
@@ -576,17 +576,17 @@ Ext.extend(Ext.data.Store, Ext.util.Observable, {
      * (e.g., during paging).
      * @return {Ext.data.Record[]} An array of Records containing outstanding modifications.
      */
-    getModifiedRecords: function () {
+    getModifiedRecords : function(){
         return this.modified;
     },
 
     // private
-    createFilterFn: function (property, value, anyMatch, caseSensitive) {
-        if (Ext.isEmpty(value, false)) {
+    createFilterFn : function(property, value, anyMatch, caseSensitive){
+        if(Ext.isEmpty(value, false)){
             return false;
         }
         value = this.data.createValueMatcher(value, anyMatch, caseSensitive);
-        return function (r) {
+        return function(r){
             return value.test(r.data[property]);
         };
     },
@@ -598,12 +598,12 @@ Ext.extend(Ext.data.Store, Ext.util.Observable, {
      * @param {Number} end The last record index to include (defaults to length - 1)
      * @return {Number} The sum
      */
-    sum: function (property, start, end) {
+    sum : function(property, start, end){
         var rs = this.data.items, v = 0;
         start = start || 0;
-        end = (end || end === 0) ? end : rs.length - 1;
+        end = (end || end === 0) ? end : rs.length-1;
 
-        for (var i = start; i <= end; i++) {
+        for(var i = start; i <= end; i++){
             v += (rs[i].data[property] || 0);
         }
         return v;
@@ -617,7 +617,7 @@ Ext.extend(Ext.data.Store, Ext.util.Observable, {
      * @param {Boolean} anyMatch (optional) True to match any part not just the beginning
      * @param {Boolean} caseSensitive (optional) True for case sensitive comparison
      */
-    filter: function (property, value, anyMatch, caseSensitive) {
+    filter : function(property, value, anyMatch, caseSensitive){
         var fn = this.createFilterFn(property, value, anyMatch, caseSensitive);
         return fn ? this.filterBy(fn) : this.clearFilter();
     },
@@ -633,9 +633,9 @@ Ext.extend(Ext.data.Store, Ext.util.Observable, {
      * </ul>
      * @param {Object} scope (optional) The scope of the function (defaults to this)
      */
-    filterBy: function (fn, scope) {
+    filterBy : function(fn, scope){
         this.snapshot = this.snapshot || this.data;
-        this.data = this.queryBy(fn, scope || this);
+        this.data = this.queryBy(fn, scope||this);
         this.fireEvent("datachanged", this);
     },
 
@@ -648,7 +648,7 @@ Ext.extend(Ext.data.Store, Ext.util.Observable, {
      * @param {Boolean} caseSensitive (optional) True for case sensitive comparison
      * @return {MixedCollection} Returns an Ext.util.MixedCollection of the matched records
      */
-    query: function (property, value, anyMatch, caseSensitive) {
+    query : function(property, value, anyMatch, caseSensitive){
         var fn = this.createFilterFn(property, value, anyMatch, caseSensitive);
         return fn ? this.queryBy(fn) : this.data.clone();
     },
@@ -665,9 +665,9 @@ Ext.extend(Ext.data.Store, Ext.util.Observable, {
      * @param {Object} scope (optional) The scope of the function (defaults to this)
      * @return {MixedCollection} Returns an Ext.util.MixedCollection of the matched records
      **/
-    queryBy: function (fn, scope) {
+    queryBy : function(fn, scope){
         var data = this.snapshot || this.data;
-        return data.filterBy(fn, scope || this);
+        return data.filterBy(fn, scope||this);
     },
 
     /**
@@ -680,7 +680,7 @@ Ext.extend(Ext.data.Store, Ext.util.Observable, {
      * @param {Boolean} caseSensitive (optional) True for case sensitive comparison
      * @return {Number} The matched index or -1
      */
-    find: function (property, value, start, anyMatch, caseSensitive) {
+    find : function(property, value, start, anyMatch, caseSensitive){
         var fn = this.createFilterFn(property, value, anyMatch, caseSensitive);
         return fn ? this.data.findIndexBy(fn, null, start) : -1;
     },
@@ -697,7 +697,7 @@ Ext.extend(Ext.data.Store, Ext.util.Observable, {
      * @param {Number} startIndex (optional) The index to start searching at
      * @return {Number} The matched index or -1
      */
-    findBy: function (fn, scope, start) {
+    findBy : function(fn, scope, start){
         return this.data.findIndexBy(fn, scope, start);
     },
 
@@ -708,14 +708,14 @@ Ext.extend(Ext.data.Store, Ext.util.Observable, {
      * @param {Boolean} bypassFilter (optional) Pass true to collect from all records, even ones which are filtered
      * @return {Array} An array of the unique values
      **/
-    collect: function (dataIndex, allowNull, bypassFilter) {
+    collect : function(dataIndex, allowNull, bypassFilter){
         var d = (bypassFilter === true && this.snapshot) ?
-            this.snapshot.items : this.data.items;
+                this.snapshot.items : this.data.items;
         var v, sv, r = [], l = {};
-        for (var i = 0, len = d.length; i < len; i++) {
+        for(var i = 0, len = d.length; i < len; i++){
             v = d[i].data[dataIndex];
             sv = String(v);
-            if ((allowNull || !Ext.isEmpty(v)) && !l[sv]) {
+            if((allowNull || !Ext.isEmpty(v)) && !l[sv]){
                 l[sv] = true;
                 r[r.length] = v;
             }
@@ -727,11 +727,11 @@ Ext.extend(Ext.data.Store, Ext.util.Observable, {
      * Revert to a view of the Record cache with no filtering applied.
      * @param {Boolean} suppressEvent If true the filter is cleared silently without notifying listeners
      */
-    clearFilter: function (suppressEvent) {
-        if (this.isFiltered()) {
+    clearFilter : function(suppressEvent){
+        if(this.isFiltered()){
             this.data = this.snapshot;
             delete this.snapshot;
-            if (suppressEvent !== true) {
+            if(suppressEvent !== true){
                 this.fireEvent("datachanged", this);
             }
         }
@@ -741,26 +741,26 @@ Ext.extend(Ext.data.Store, Ext.util.Observable, {
      * Returns true if this store is currently filtered
      * @return {Boolean}
      */
-    isFiltered: function () {
+    isFiltered : function(){
         return this.snapshot && this.snapshot != this.data;
     },
 
     // private
-    afterEdit: function (record) {
-        if (this.modified.indexOf(record) == -1) {
+    afterEdit : function(record){
+        if(this.modified.indexOf(record) == -1){
             this.modified.push(record);
         }
         this.fireEvent("update", this, record, Ext.data.Record.EDIT);
     },
 
     // private
-    afterReject: function (record) {
+    afterReject : function(record){
         this.modified.remove(record);
         this.fireEvent("update", this, record, Ext.data.Record.REJECT);
     },
 
     // private
-    afterCommit: function (record) {
+    afterCommit : function(record){
         this.modified.remove(record);
         this.fireEvent("update", this, record, Ext.data.Record.COMMIT);
     },
@@ -769,10 +769,10 @@ Ext.extend(Ext.data.Store, Ext.util.Observable, {
      * Commit all Records with outstanding changes. To handle updates for changes, subscribe to the
      * Store's "update" event, and perform updating when the third parameter is Ext.data.Record.COMMIT.
      */
-    commitChanges: function () {
+    commitChanges : function(){
         var m = this.modified.slice(0);
         this.modified = [];
-        for (var i = 0, len = m.length; i < len; i++) {
+        for(var i = 0, len = m.length; i < len; i++){
             m[i].commit();
         }
     },
@@ -780,16 +780,16 @@ Ext.extend(Ext.data.Store, Ext.util.Observable, {
     /**
      * Cancel outstanding changes on all changed records.
      */
-    rejectChanges: function () {
+    rejectChanges : function(){
         var m = this.modified.slice(0);
         this.modified = [];
-        for (var i = 0, len = m.length; i < len; i++) {
+        for(var i = 0, len = m.length; i < len; i++){
             m[i].reject();
         }
     },
 
     // private
-    onMetaChange: function (meta, rtype, o) {
+    onMetaChange : function(meta, rtype, o){
         this.recordType = rtype;
         this.fields = rtype.prototype.fields;
         delete this.snapshot;
@@ -799,7 +799,7 @@ Ext.extend(Ext.data.Store, Ext.util.Observable, {
     },
 
     // private
-    findInsertIndex: function (record) {
+    findInsertIndex : function(record){
         this.suspendEvents();
         var data = this.data.clone();
         this.data.add(record);

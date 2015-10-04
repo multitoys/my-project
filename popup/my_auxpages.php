@@ -262,7 +262,7 @@ function transform_auxpage($name, $text)
                 }
             }
 /**********************************************************************************************************************/
-            $price = show_price(ZCalcPrice($Product->Price, $Product->SpecialPrice, $Product->skidka));
+            $price = show_price(ZCalcPrice($Product->Price, $Product->skidka,));
             // $oldprice = $Product->list_price;
             // $akcia = $Product->akcia;
             // $akcia_skidka = $Product->akcia_skidka;

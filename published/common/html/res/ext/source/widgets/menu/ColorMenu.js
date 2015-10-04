@@ -14,7 +14,7 @@
  * Creates a new ColorMenu
  * @param {Object} config Configuration options
  */
-Ext.menu.ColorMenu = function (config) {
+Ext.menu.ColorMenu = function(config){
     Ext.menu.ColorMenu.superclass.constructor.call(this, config);
     this.plain = true;
     var ci = new Ext.menu.ColorItem(config);

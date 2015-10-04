@@ -7,7 +7,7 @@
  */
 
 /**
- * @class Ext.data.Record
+* @class Ext.data.Record
  * Instances of this class encapsulate both record <em>definition</em> information, and record
  * <em>value</em> information for use in {@link Ext.data.Store} objects, or any code which needs
  * to access Records cached in an {@link Ext.data.Store} object.<br>
@@ -25,7 +25,7 @@
  * {@link Ext.data.Store} object which owns the Record to index its collection of Records. If
  * not specified an integer id is generated.
  */
-Ext.data.Record = function (data, id) {
+Ext.data.Record = function(data, id){
     this.id = (id || id === 0) ? id : ++Ext.data.Record.AUTO_ID;
     this.data = data;
 };
@@ -60,16 +60,16 @@ Ext.data.Record = function (data, id) {
  * <li><b>dateFormat</b> : String<p style="margin-left:1em">(Optional) A format String for the Date.parseDate function.</p></li>
  * </ul>
  * <br>usage:<br><pre><code>
- var TopicRecord = Ext.data.Record.create([
- {name: 'title', mapping: 'topic_title'},
- {name: 'author', mapping: 'username'},
- {name: 'totalPosts', mapping: 'topic_replies', type: 'int'},
- {name: 'lastPost', mapping: 'post_time', type: 'date'},
- {name: 'lastPoster', mapping: 'user2'},
- {name: 'excerpt', mapping: 'post_text'}
- ]);
+var TopicRecord = Ext.data.Record.create([
+    {name: 'title', mapping: 'topic_title'},
+    {name: 'author', mapping: 'username'},
+    {name: 'totalPosts', mapping: 'topic_replies', type: 'int'},
+    {name: 'lastPost', mapping: 'post_time', type: 'date'},
+    {name: 'lastPoster', mapping: 'user2'},
+    {name: 'excerpt', mapping: 'post_text'}
+]);
 
- var myNewRecord = new TopicRecord({
+var myNewRecord = new TopicRecord({
     title: 'Do my job please',
     author: 'noobie',
     totalPosts: 1,
@@ -77,8 +77,8 @@ Ext.data.Record = function (data, id) {
     lastPoster: 'Animal',
     excerpt: 'No way dude!'
 });
- myStore.add(myNewRecord);
- </code></pre>
+myStore.add(myNewRecord);
+</code></pre>
  * <p>In the simplest case, if no properties other than <tt>name</tt> are required, a field definition
  * may consist of just a field name string.</p>
  * @method create
@@ -86,16 +86,16 @@ Ext.data.Record = function (data, id) {
  * to the definition.
  * @static
  */
-Ext.data.Record.create = function (o) {
+Ext.data.Record.create = function(o){
     var f = Ext.extend(Ext.data.Record, {});
     var p = f.prototype;
-    p.fields = new Ext.util.MixedCollection(false, function (field) {
+    p.fields = new Ext.util.MixedCollection(false, function(field){
         return field.name;
     });
-    for (var i = 0, len = o.length; i < len; i++) {
+    for(var i = 0, len = o.length; i < len; i++){
         p.fields.add(new Ext.data.Field(o[i]));
     }
-    f.getField = function (name) {
+    f.getField = function(name){
         return p.fields.get(name);
     };
     return f;
@@ -107,32 +107,32 @@ Ext.data.Record.REJECT = 'reject';
 Ext.data.Record.COMMIT = 'commit';
 
 Ext.data.Record.prototype = {
+	/**
+	 * The data for this record an object hash.
+	 * @property data
+	 * @type {Object}
+	 */
     /**
-     * The data for this record an object hash.
-     * @property data
-     * @type {Object}
-     */
-    /**
-     * The unique ID of the record as specified at construction time.
-     * @property id
-     * @type {Object}
-     */
+	 * The unique ID of the record as specified at construction time.
+	 * @property id
+	 * @type {Object}
+	 */
     /**
      * Readonly flag - true if this record has been modified.
      * @type Boolean
      */
-    dirty: false,
-    editing: false,
+    dirty : false,
+    editing : false,
     error: null,
     /**
-     * This object contains a key and value storing the original values of all modified fields or is null if no fields have been modified.
-     * @property modified
-     * @type {Object}
-     */
+	 * This object contains a key and value storing the original values of all modified fields or is null if no fields have been modified.
+	 * @property modified
+	 * @type {Object}
+	 */
     modified: null,
 
     // private
-    join: function (store) {
+    join : function(store){
         this.store = store;
     },
 
@@ -141,19 +141,19 @@ Ext.data.Record.prototype = {
      * @param {String} name The name of the field to set.
      * @param {Object} value The value to set the field to.
      */
-    set: function (name, value) {
-        if (String(this.data[name]) == String(value)) {
+    set : function(name, value){
+        if(String(this.data[name]) == String(value)){
             return;
         }
         this.dirty = true;
-        if (!this.modified) {
+        if(!this.modified){
             this.modified = {};
         }
-        if (typeof this.modified[name] == 'undefined') {
+        if(typeof this.modified[name] == 'undefined'){
             this.modified[name] = this.data[name];
         }
         this.data[name] = value;
-        if (!this.editing && this.store) {
+        if(!this.editing && this.store){
             this.store.afterEdit(this);
         }
     },
@@ -163,14 +163,14 @@ Ext.data.Record.prototype = {
      * @param {String} name The name of the field to get the value of.
      * @return {Object} The value of the field.
      */
-    get: function (name) {
+    get : function(name){
         return this.data[name];
     },
 
     /**
      * Begin an edit. While in edit mode, no events are relayed to the containing store.
      */
-    beginEdit: function () {
+    beginEdit : function(){
         this.editing = true;
         this.modified = {};
     },
@@ -178,7 +178,7 @@ Ext.data.Record.prototype = {
     /**
      * Cancels all changes made in the current edit operation.
      */
-    cancelEdit: function () {
+    cancelEdit : function(){
         this.editing = false;
         delete this.modified;
     },
@@ -186,9 +186,9 @@ Ext.data.Record.prototype = {
     /**
      * End an edit. If any data was modified, the containing store is notified.
      */
-    endEdit: function () {
+    endEdit : function(){
         this.editing = false;
-        if (this.dirty && this.store) {
+        if(this.dirty && this.store){
             this.store.afterEdit(this);
         }
     },
@@ -202,17 +202,17 @@ Ext.data.Record.prototype = {
      * of reject operations.
      * @param {Boolean} silent (optional) True to skip notification of the owning store of the change (defaults to false)
      */
-    reject: function (silent) {
+    reject : function(silent){
         var m = this.modified;
-        for (var n in m) {
-            if (typeof m[n] != "function") {
+        for(var n in m){
+            if(typeof m[n] != "function"){
                 this.data[n] = m[n];
             }
         }
         this.dirty = false;
         delete this.modified;
         this.editing = false;
-        if (this.store && silent !== true) {
+        if(this.store && silent !== true){
             this.store.afterReject(this);
         }
     },
@@ -225,11 +225,11 @@ Ext.data.Record.prototype = {
      * of commit operations.
      * @param {Boolean} silent (optional) True to skip notification of the owning store of the change (defaults to false)
      */
-    commit: function (silent) {
+    commit : function(silent){
         this.dirty = false;
         delete this.modified;
         this.editing = false;
-        if (this.store && silent !== true) {
+        if(this.store && silent !== true){
             this.store.afterCommit(this);
         }
     },
@@ -238,10 +238,10 @@ Ext.data.Record.prototype = {
      * Gets a hash of only the fields that have been modified since this record was created or commited.
      * @return Object
      */
-    getChanges: function () {
+    getChanges : function(){
         var m = this.modified, cs = {};
-        for (var n in m) {
-            if (m.hasOwnProperty(n)) {
+        for(var n in m){
+            if(m.hasOwnProperty(n)){
                 cs[n] = this.data[n];
             }
         }
@@ -249,12 +249,12 @@ Ext.data.Record.prototype = {
     },
 
     // private
-    hasError: function () {
+    hasError : function(){
         return this.error != null;
     },
 
     // private
-    clearError: function () {
+    clearError : function(){
         this.error = null;
     },
 
@@ -263,7 +263,7 @@ Ext.data.Record.prototype = {
      * @param {String} id (optional) A new record id if you don't want to use this record's id
      * @return {Record}
      */
-    copy: function (newId) {
+    copy : function(newId) {
         return new this.constructor(Ext.apply({}, this.data), newId || this.id);
     }
 };

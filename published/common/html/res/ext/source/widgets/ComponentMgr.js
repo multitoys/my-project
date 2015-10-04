@@ -22,7 +22,7 @@
  * <p>For a list of all available xtypes, see {@link Ext.Component}.</p>
  * @singleton
  */
-Ext.ComponentMgr = function () {
+Ext.ComponentMgr = function(){
     var all = new Ext.util.MixedCollection();
     var types = {};
 
@@ -31,7 +31,7 @@ Ext.ComponentMgr = function () {
          * Registers a component.
          * @param {Ext.Component} c The component
          */
-        register: function (c) {
+        register : function(c){
             all.add(c);
         },
 
@@ -39,7 +39,7 @@ Ext.ComponentMgr = function () {
          * Unregisters a component.
          * @param {Ext.Component} c The component
          */
-        unregister: function (c) {
+        unregister : function(c){
             all.remove(c);
         },
 
@@ -48,7 +48,7 @@ Ext.ComponentMgr = function () {
          * @param {String} id The component id
          * @return Ext.Component
          */
-        get: function (id) {
+        get : function(id){
             return all.get(id);
         },
 
@@ -58,9 +58,9 @@ Ext.ComponentMgr = function () {
          * @param {Function} fn The callback function
          * @param {Object} scope The scope of the callback
          */
-        onAvailable: function (id, fn, scope) {
-            all.on("add", function (index, o) {
-                if (o.id == id) {
+        onAvailable : function(id, fn, scope){
+            all.on("add", function(index, o){
+                if(o.id == id){
                     fn.call(scope || o, o);
                     all.un("add", fn, scope);
                 }
@@ -72,7 +72,7 @@ Ext.ComponentMgr = function () {
          * events on the MixedCollection to monitor addition or removal.  Read-only.
          * @type {MixedCollection}
          */
-        all: all,
+        all : all,
 
         /**
          * Registers a new Component constructor, keyed by a new
@@ -84,13 +84,13 @@ Ext.ComponentMgr = function () {
          * may be looked up.
          * @param {Constructor} cls The new Component class.
          */
-        registerType: function (xtype, cls) {
+        registerType : function(xtype, cls){
             types[xtype] = cls;
             cls.xtype = xtype;
         },
 
         // private
-        create: function (config, defaultType) {
+        create : function(config, defaultType){
             return new types[config.xtype || defaultType](config);
         }
     };

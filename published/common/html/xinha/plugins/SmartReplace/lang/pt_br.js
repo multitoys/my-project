@@ -15,22 +15,10 @@
 // This notice MUST stay intact for use (see license.txt).
 
 {
-    "Cancel"
-:
-    "Cancelar",
-        "Convert all quotes and dashes in the current document"
-:
-    "Converter todas as citações e hífens no documento atual",
-        "Enable automatic replacements"
-:
-    "Ativar substituições automáticas",
-        "OK"
-:
-    "OK",
-        "SmartReplace"
-:
-    "Substituição Rápida",
-        "SmartReplace Settings"
-:
-    "Configurações da Substituição Rápida"
+  "Cancel": "Cancelar",
+  "Convert all quotes and dashes in the current document": "Converter todas as citações e hífens no documento atual",
+  "Enable automatic replacements": "Ativar substituições automáticas",
+  "OK": "OK",
+  "SmartReplace": "Substituição Rápida",
+  "SmartReplace Settings": "Configurações da Substituição Rápida"
 }

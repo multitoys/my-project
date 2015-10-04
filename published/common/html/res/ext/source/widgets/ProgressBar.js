@@ -24,17 +24,17 @@
  * @cfg {String} id The progress bar element's id (defaults to an auto-generated id)
  */
 Ext.ProgressBar = Ext.extend(Ext.BoxComponent, {
-    /**
-     * @cfg {String} baseCls
-     * The base CSS class to apply to the progress bar's wrapper element (defaults to 'x-progress')
-     */
-    baseCls: 'x-progress',
+   /**
+    * @cfg {String} baseCls
+    * The base CSS class to apply to the progress bar's wrapper element (defaults to 'x-progress')
+    */
+    baseCls : 'x-progress',
 
     // private
-    waitTimer: null,
+    waitTimer : null,
 
     // private
-    initComponent: function () {
+    initComponent : function(){
         Ext.ProgressBar.superclass.initComponent.call(this);
         this.addEvents(
             /**
@@ -49,40 +49,40 @@ Ext.ProgressBar = Ext.extend(Ext.BoxComponent, {
     },
 
     // private
-    onRender: function (ct, position) {
+    onRender : function(ct, position){
         Ext.ProgressBar.superclass.onRender.call(this, ct, position);
 
         var tpl = new Ext.Template(
             '<div class="{cls}-wrap">',
-            '<div class="{cls}-inner">',
-            '<div class="{cls}-bar">',
-            '<div class="{cls}-text">',
-            '<div>&#160;</div>',
-            '</div>',
-            '</div>',
-            '<div class="{cls}-text {cls}-text-back">',
-            '<div>&#160;</div>',
-            '</div>',
-            '</div>',
+                '<div class="{cls}-inner">',
+                    '<div class="{cls}-bar">',
+                        '<div class="{cls}-text">',
+                            '<div>&#160;</div>',
+                        '</div>',
+                    '</div>',
+                    '<div class="{cls}-text {cls}-text-back">',
+                        '<div>&#160;</div>',
+                    '</div>',
+                '</div>',
             '</div>'
         );
 
-        if (position) {
+        if(position){
             this.el = tpl.insertBefore(position, {cls: this.baseCls}, true);
-        } else {
+        }else{
             this.el = tpl.append(ct, {cls: this.baseCls}, true);
         }
-        if (this.id) {
+        if(this.id){
             this.el.dom.id = this.id;
         }
         var inner = this.el.dom.firstChild;
         this.progressBar = Ext.get(inner.firstChild);
 
-        if (this.textEl) {
+        if(this.textEl){
             //use an external text el
             this.textEl = Ext.get(this.textEl);
             delete this.textTopEl;
-        } else {
+        }else{
             //setup our internal layered text els
             this.textTopEl = Ext.get(this.progressBar.dom.firstChild);
             var textBackEl = Ext.get(inner.childNodes[1]);
@@ -90,9 +90,9 @@ Ext.ProgressBar = Ext.extend(Ext.BoxComponent, {
             this.textEl = new Ext.CompositeElement([this.textTopEl.dom.firstChild, textBackEl.dom.firstChild]);
             this.textEl.setWidth(inner.offsetWidth);
         }
-        if (this.value) {
+        if(this.value){
             this.updateProgress(this.value, this.text);
-        } else {
+        }else{
             this.updateText(this.text);
         }
         this.setSize(this.width || 'auto', 'auto');
@@ -108,14 +108,14 @@ Ext.ProgressBar = Ext.extend(Ext.BoxComponent, {
      * @param {String} text (optional) The string to display in the progress text element (defaults to '')
      * @return {Ext.ProgressBar} this
      */
-    updateProgress: function (value, text) {
+    updateProgress : function(value, text){
         this.value = value || 0;
-        if (text) {
+        if(text){
             this.updateText(text);
         }
-        var w = Math.floor(value * this.el.dom.firstChild.offsetWidth);
+        var w = Math.floor(value*this.el.dom.firstChild.offsetWidth);
         this.progressBar.setWidth(w);
-        if (this.textTopEl) {
+        if(this.textTopEl){
             //textTopEl should be the same width as the bar so overflow will clip as the bar moves
             this.textTopEl.removeClass('x-hidden').setWidth(w);
         }
@@ -130,33 +130,33 @@ Ext.ProgressBar = Ext.extend(Ext.BoxComponent, {
      * be manually cleared by calling {@link #reset}.  The wait method accepts a config object with
      * the following properties:
      * <pre>
-     Property   Type          Description
-     ---------- ------------  ----------------------------------------------------------------------
-     duration   Number        The length of time in milliseconds that the progress bar should
-     run before resetting itself (defaults to undefined, in which case it
-     will run indefinitely until reset is called)
-     interval   Number        The length of time in milliseconds between each progress update
-     (defaults to 1000 ms)
-     increment  Number        The number of progress update segments to display within the progress
-     bar (defaults to 10).  If the bar reaches the end and is still
-     updating, it will automatically wrap back to the beginning.
-     fn         Function      A callback function to execute after the progress bar finishes auto-
-     updating.  The function will be called with no arguments.  This function
-     will be ignored if duration is not specified since in that case the
-     progress bar can only be stopped programmatically, so any required function
-     should be called by the same code after it resets the progress bar.
-     scope      Object        The scope that is passed to the callback function (only applies when
-     duration and fn are both passed).
-     </pre>
-     *
-     * Example usage:
-     * <pre><code>
-     var p = new Ext.ProgressBar({
+Property   Type          Description
+---------- ------------  ----------------------------------------------------------------------
+duration   Number        The length of time in milliseconds that the progress bar should
+                         run before resetting itself (defaults to undefined, in which case it
+                         will run indefinitely until reset is called)
+interval   Number        The length of time in milliseconds between each progress update
+                         (defaults to 1000 ms)
+increment  Number        The number of progress update segments to display within the progress
+                         bar (defaults to 10).  If the bar reaches the end and is still
+                         updating, it will automatically wrap back to the beginning.
+fn         Function      A callback function to execute after the progress bar finishes auto-
+                         updating.  The function will be called with no arguments.  This function
+                         will be ignored if duration is not specified since in that case the
+                         progress bar can only be stopped programmatically, so any required function
+                         should be called by the same code after it resets the progress bar.
+scope      Object        The scope that is passed to the callback function (only applies when
+                         duration and fn are both passed).
+</pre>
+         *
+         * Example usage:
+         * <pre><code>
+var p = new Ext.ProgressBar({
    renderTo: 'my-el'
 });
 
-     //Wait for 5 seconds, then update the status el (progress bar will auto-reset)
-     p.wait({
+//Wait for 5 seconds, then update the status el (progress bar will auto-reset)
+p.wait({
    interval: 100, //bar will move fast!
    duration: 5000,
    increment: 15,
@@ -166,29 +166,29 @@ Ext.ProgressBar = Ext.extend(Ext.BoxComponent, {
    }
 });
 
-     //Or update indefinitely until some async action completes, then reset manually
-     p.wait();
-     myAction.on('complete', function(){
+//Or update indefinitely until some async action completes, then reset manually
+p.wait();
+myAction.on('complete', function(){
     p.reset();
     Ext.fly('status').update('Done!');
 });
-     </code></pre>
+</code></pre>
      * @param {Object} config (optional) Configuration options
      * @return {Ext.ProgressBar} this
      */
-    wait: function (o) {
-        if (!this.waitTimer) {
+    wait : function(o){
+        if(!this.waitTimer){
             var scope = this;
             o = o || {};
             this.waitTimer = Ext.TaskMgr.start({
-                run: function (i) {
+                run: function(i){
                     var inc = o.increment || 10;
-                    this.updateProgress(((((i + inc) % inc) + 1) * (100 / inc)) * .01);
+                    this.updateProgress(((((i+inc)%inc)+1)*(100/inc))*.01);
                 },
                 interval: o.interval || 1000,
                 duration: o.duration,
-                onStop: function () {
-                    if (o.fn) {
+                onStop: function(){
+                    if(o.fn){
                         o.fn.apply(o.scope || this);
                     }
                     this.reset();
@@ -203,7 +203,7 @@ Ext.ProgressBar = Ext.extend(Ext.BoxComponent, {
      * Returns true if the progress bar is currently in a {@link #wait} operation
      * @return {Boolean} True if waiting, else false
      */
-    isWaiting: function () {
+    isWaiting : function(){
         return this.waitTimer != null;
     },
 
@@ -213,7 +213,7 @@ Ext.ProgressBar = Ext.extend(Ext.BoxComponent, {
      * @param {String} text (optional) The string to display in the progress text element (defaults to '')
      * @return {Ext.ProgressBar} this
      */
-    updateText: function (text) {
+    updateText : function(text){
         this.text = text || '&#160;';
         this.textEl.update(this.text);
         return this;
@@ -225,9 +225,9 @@ Ext.ProgressBar = Ext.extend(Ext.BoxComponent, {
      * @param {Number} height The new height in pixels
      * @return {Ext.ProgressBar} this
      */
-    setSize: function (w, h) {
+    setSize : function(w, h){
         Ext.ProgressBar.superclass.setSize.call(this, w, h);
-        if (this.textTopEl) {
+        if(this.textTopEl){
             var inner = this.el.dom.firstChild;
             this.textEl.setSize(inner.offsetWidth, inner.offsetHeight);
         }
@@ -240,17 +240,17 @@ Ext.ProgressBar = Ext.extend(Ext.BoxComponent, {
      * @param {Boolean} hide (optional) True to hide the progress bar (defaults to false)
      * @return {Ext.ProgressBar} this
      */
-    reset: function (hide) {
+    reset : function(hide){
         this.updateProgress(0);
-        if (this.textTopEl) {
+        if(this.textTopEl){
             this.textTopEl.addClass('x-hidden');
         }
-        if (this.waitTimer) {
+        if(this.waitTimer){
             this.waitTimer.onStop = null; //prevent recursion
             Ext.TaskMgr.stop(this.waitTimer);
             this.waitTimer = null;
         }
-        if (hide === true) {
+        if(hide === true){
             this.hide();
         }
         return this;

@@ -35,59 +35,59 @@ Ext.Window = Ext.extend(Ext.Panel, {
      * A reference to the WindowGroup that should manage this window (defaults to {@link Ext.WindowMgr}).
      */
     /**
-     * @cfg {String/Number/Button} defaultButton
-     * The id / index of a button or a button instance to focus when this window received the focus.
-     */
+    * @cfg {String/Number/Button} defaultButton
+    * The id / index of a button or a button instance to focus when this window received the focus.
+    */
     /**
-     * @cfg {Function} onEsc
-     * Allows override of the built-in processing for the escape key. Default action
-     * is to close the Window (performing whatever action is specified in {@link #closeAction}.
-     * To prevent the Window closing when the escape key is pressed, specify this as
-     * Ext.emptyFn (See {@link Ext#emptyFn}).
-     */
+    * @cfg {Function} onEsc
+    * Allows override of the built-in processing for the escape key. Default action
+    * is to close the Window (performing whatever action is specified in {@link #closeAction}.
+    * To prevent the Window closing when the escape key is pressed, specify this as 
+    * Ext.emptyFn (See {@link Ext#emptyFn}).
+    */
     /**
-     * @cfg {String} baseCls
-     * The base CSS class to apply to this panel's element (defaults to 'x-window').
-     */
-    baseCls: 'x-window',
+    * @cfg {String} baseCls
+    * The base CSS class to apply to this panel's element (defaults to 'x-window').
+    */
+    baseCls : 'x-window',
     /**
      * @cfg {Boolean} resizable
      * True to allow user resizing at each edge and corner of the window, false to disable resizing (defaults to true).
      */
-    resizable: true,
+    resizable:true,
     /**
      * @cfg {Boolean} draggable
      * True to allow the window to be dragged by the header bar, false to disable dragging (defaults to true).  Note
      * that by default the window will be centered in the viewport, so if dragging is disabled the window may need
      * to be positioned programmatically after render (e.g., myWindow.setPosition(100, 100);).
      */
-    draggable: true,
+    draggable:true,
     /**
      * @cfg {Boolean} closable
      * True to display the 'close' tool button and allow the user to close the window, false to hide the button and
      * disallow closing the window (default to true).
      */
-    closable: true,
+    closable : true,
     /**
      * @cfg {Boolean} constrain
      * True to constrain the window to the viewport, false to allow it to fall outside of the viewport
      * (defaults to false).  Optionally the header only can be constrained using {@link #constrainHeader}.
      */
-    constrain: false,
+    constrain:false,
     /**
      * @cfg {Boolean} constrainHeader
      * True to constrain the window header to the viewport, allowing the window body to fall outside of the viewport,
      * false to allow the header to fall outside the viewport (defaults to false).  Optionally the entire window
      * can be constrained using {@link #constrain}.
      */
-    constrainHeader: false,
+    constrainHeader:false,
     /**
      * @cfg {Boolean} plain
      * True to render the window body with a transparent background so that it will blend into the framing
      * elements, false to add a lighter background color to visually highlight the body element and separate it
      * more distinctly from the surrounding frame (defaults to false).
      */
-    plain: false,
+    plain:false,
     /**
      * @cfg {Boolean} minimizable
      * True to display the 'minimize' tool button and allow the user to minimize the window, false to hide the button
@@ -95,7 +95,7 @@ Ext.Window = Ext.extend(Ext.Panel, {
      * the behavior of minimizing a window is implementation-specific, so the minimize event must be handled and a
      * custom minimize behavior implemented for this option to be useful.
      */
-    minimizable: false,
+    minimizable : false,
     /**
      * @cfg {Boolean} maximizable
      * True to display the 'maximize' tool button and allow the user to maximize the window, false to hide the button
@@ -103,7 +103,7 @@ Ext.Window = Ext.extend(Ext.Panel, {
      * will automatically change to a 'restore' button with the appropriate behavior already built-in that will
      * restore the window to its previous size.
      */
-    maximizable: false,
+    maximizable : false,
     /**
      * @cfg {Number} minHeight
      * The minimum height in pixels allowed for this window (defaults to 100).  Only applies when resizable = true.
@@ -130,15 +130,15 @@ Ext.Window = Ext.extend(Ext.Panel, {
     closeAction: 'close',
 
     // inherited docs, same default
-    collapsible: false,
+    collapsible:false,
 
     // private
-    initHidden: true,
+    initHidden : true,
     /**
-     * @cfg {Boolean} monitorResize @hide
-     * This is automatically managed based on the value of constrain and constrainToHeader
-     */
-    monitorResize: true,
+    * @cfg {Boolean} monitorResize @hide
+    * This is automatically managed based on the value of constrain and constrainToHeader
+    */
+    monitorResize : true,
 
     // The following configs are set to provide the basic functionality of a window.
     // Changing them would require additional code to handle correctly and should
@@ -147,12 +147,12 @@ Ext.Window = Ext.extend(Ext.Panel, {
     /** @cfg {String} elements @hide */
     elements: 'header,body',
     /** @cfg {Boolean} frame @hide */
-    frame: true,
+    frame:true,
     /** @cfg {Boolean} floating @hide */
-    floating: true,
+    floating:true,
 
     // private
-    initComponent: function () {
+    initComponent : function(){
         Ext.Window.superclass.initComponent.call(this);
         this.addEvents(
             /**
@@ -195,55 +195,54 @@ Ext.Window = Ext.extend(Ext.Panel, {
     },
 
     // private
-    getState: function () {
+    getState : function(){
         return Ext.apply(Ext.Window.superclass.getState.call(this) || {}, this.getBox());
     },
 
     // private
-    onRender: function (ct, position) {
+    onRender : function(ct, position){
         Ext.Window.superclass.onRender.call(this, ct, position);
 
-        if (this.plain) {
+        if(this.plain){
             this.el.addClass('x-window-plain');
         }
 
         // this element allows the Window to be focused for keyboard events
         this.focusEl = this.el.createChild({
-            tag: "a", href: "#", cls: "x-dlg-focus",
-            tabIndex: "-1", html: "&#160;"
-        });
+                    tag: "a", href:"#", cls:"x-dlg-focus",
+                    tabIndex:"-1", html: "&#160;"});
         this.focusEl.swallowEvent('click', true);
 
         this.proxy = this.el.createProxy("x-window-proxy");
         this.proxy.enableDisplayMode('block');
 
-        if (this.modal) {
-            this.mask = this.container.createChild({cls: "ext-el-mask"}, this.el.dom);
+        if(this.modal){
+            this.mask = this.container.createChild({cls:"ext-el-mask"}, this.el.dom);
             this.mask.enableDisplayMode("block");
             this.mask.hide();
         }
     },
 
     // private
-    initEvents: function () {
+    initEvents : function(){
         Ext.Window.superclass.initEvents.call(this);
-        if (this.animateTarget) {
+        if(this.animateTarget){
             this.setAnimateTarget(this.animateTarget);
         }
 
-        if (this.resizable) {
+        if(this.resizable){
             this.resizer = new Ext.Resizable(this.el, {
                 minWidth: this.minWidth,
-                minHeight: this.minHeight,
+                minHeight:this.minHeight,
                 handles: this.resizeHandles || "all",
                 pinned: true,
-                resizeElement: this.resizerAction
+                resizeElement : this.resizerAction
             });
             this.resizer.window = this;
             this.resizer.on("beforeresize", this.beforeResize, this);
         }
 
-        if (this.draggable) {
+        if(this.draggable){
             this.header.addClass("x-window-draggable");
         }
         this.initTools();
@@ -252,28 +251,28 @@ Ext.Window = Ext.extend(Ext.Panel, {
         this.manager = this.manager || Ext.WindowMgr;
         this.manager.register(this);
         this.hidden = true;
-        if (this.maximized) {
+        if(this.maximized){
             this.maximized = false;
             this.maximize();
         }
-        if (this.closable) {
+        if(this.closable){
             var km = this.getKeyMap();
             km.on(27, this.onEsc, this);
             km.disable();
         }
     },
 
-    initDraggable: function () {
-        this.dd = new Ext.Window.DD(this);
+    initDraggable : function(){
+        this.dd = new Ext.Window.DD(this);  
+    },
+
+   // private
+    onEsc : function(){
+        this[this.closeAction]();  
     },
 
     // private
-    onEsc: function () {
-        this[this.closeAction]();
-    },
-
-    // private
-    beforeDestroy: function () {
+    beforeDestroy : function(){
         Ext.destroy(
             this.resizer,
             this.dd,
@@ -282,24 +281,24 @@ Ext.Window = Ext.extend(Ext.Panel, {
         );
         Ext.Window.superclass.beforeDestroy.call(this);
     },
-
+    
     // private
-    onDestroy: function () {
-        if (this.manager) {
+    onDestroy : function(){
+        if(this.manager){
             this.manager.unregister(this);
         }
         Ext.Window.superclass.onDestroy.call(this);
     },
 
     // private
-    initTools: function () {
-        if (this.minimizable) {
+    initTools : function(){
+        if(this.minimizable){
             this.addTool({
                 id: 'minimize',
                 handler: this.minimize.createDelegate(this, [])
             });
         }
-        if (this.maximizable) {
+        if(this.maximizable){
             this.addTool({
                 id: 'maximize',
                 handler: this.maximize.createDelegate(this, [])
@@ -307,11 +306,11 @@ Ext.Window = Ext.extend(Ext.Panel, {
             this.addTool({
                 id: 'restore',
                 handler: this.restore.createDelegate(this, []),
-                hidden: true
+                hidden:true
             });
             this.header.on('dblclick', this.toggleMaximize, this);
         }
-        if (this.closable) {
+        if(this.closable){
             this.addTool({
                 id: 'close',
                 handler: this[this.closeAction].createDelegate(this, [])
@@ -320,7 +319,7 @@ Ext.Window = Ext.extend(Ext.Panel, {
     },
 
     // private
-    resizerAction: function () {
+    resizerAction : function(){
         var box = this.proxy.getBox();
         this.proxy.hide();
         this.window.handleResize(box);
@@ -328,26 +327,26 @@ Ext.Window = Ext.extend(Ext.Panel, {
     },
 
     // private
-    beforeResize: function () {
+    beforeResize : function(){
         this.resizer.minHeight = Math.max(this.minHeight, this.getFrameHeight() + 40); // 40 is a magic minimum content size?
         this.resizer.minWidth = Math.max(this.minWidth, this.getFrameWidth() + 40);
         this.resizeBox = this.el.getBox();
     },
 
     // private
-    updateHandles: function () {
-        if (Ext.isIE && this.resizer) {
+    updateHandles : function(){
+        if(Ext.isIE && this.resizer){
             this.resizer.syncHandleHeight();
             this.el.repaint();
         }
     },
 
     // private
-    handleResize: function (box) {
+    handleResize : function(box){
         var rz = this.resizeBox;
-        if (rz.x != box.x || rz.y != box.y) {
+        if(rz.x != box.x || rz.y != box.y){
             this.updateBox(box);
-        } else {
+        }else{
             this.setSize(box);
         }
         this.focus();
@@ -360,14 +359,14 @@ Ext.Window = Ext.extend(Ext.Panel, {
      * Focuses the window.  If a defaultButton is set, it will receive focus, otherwise the
      * window itself will receive focus.
      */
-    focus: function () {
+    focus : function(){
         var f = this.focusEl, db = this.defaultButton, t = typeof db;
-        if (t != 'undefined') {
-            if (t == 'number') {
+        if(t != 'undefined'){
+            if(t == 'number'){
                 f = this.buttons[db];
-            } else if (t == 'string') {
+            }else if(t == 'string'){
                 f = Ext.getCmp(db);
-            } else {
+            }else{
                 f = db;
             }
         }
@@ -378,28 +377,28 @@ Ext.Window = Ext.extend(Ext.Panel, {
      * Sets the target element from which the window should animate while opening.
      * @param {String/Element} el The target element or id
      */
-    setAnimateTarget: function (el) {
+    setAnimateTarget : function(el){
         el = Ext.get(el);
         this.animateTarget = el;
     },
 
     // private
-    beforeShow: function () {
+    beforeShow : function(){
         delete this.el.lastXY;
         delete this.el.lastLT;
-        if (this.x === undefined || this.y === undefined) {
+        if(this.x === undefined || this.y === undefined){
             var xy = this.el.getAlignToXY(this.container, 'c-c');
             var pos = this.el.translatePoints(xy[0], xy[1]);
-            this.x = this.x === undefined ? pos.left : this.x;
-            this.y = this.y === undefined ? pos.top : this.y;
+            this.x = this.x === undefined? pos.left : this.x;
+            this.y = this.y === undefined? pos.top : this.y;
         }
         this.el.setLeftTop(this.x, this.y);
 
-        if (this.expandOnShow) {
+        if(this.expandOnShow){
             this.expand(false);
         }
 
-        if (this.modal) {
+        if(this.modal){
             Ext.getBody().addClass("x-body-masked");
             this.mask.setSize(Ext.lib.Dom.getViewWidth(true), Ext.lib.Dom.getViewHeight(true));
             this.mask.show();
@@ -413,52 +412,52 @@ Ext.Window = Ext.extend(Ext.Panel, {
      * @param {Function} callback (optional) A callback function to call after the window is displayed
      * @param {Object} scope (optional) The scope in which to execute the callback
      */
-    show: function (animateTarget, cb, scope) {
-        if (!this.rendered) {
+    show : function(animateTarget, cb, scope){
+        if(!this.rendered){
             this.render(Ext.getBody());
         }
-        if (this.hidden === false) {
+        if(this.hidden === false){
             this.toFront();
             return;
         }
-        if (this.fireEvent("beforeshow", this) === false) {
+        if(this.fireEvent("beforeshow", this) === false){
             return;
         }
-        if (cb) {
-            this.on('show', cb, scope, {single: true});
+        if(cb){
+            this.on('show', cb, scope, {single:true});
         }
         this.hidden = false;
-        if (animateTarget !== undefined) {
+        if(animateTarget !== undefined){
             this.setAnimateTarget(animateTarget);
         }
         this.beforeShow();
-        if (this.animateTarget) {
+        if(this.animateTarget){
             this.animShow();
-        } else {
+        }else{
             this.afterShow();
         }
     },
 
     // private
-    afterShow: function () {
+    afterShow : function(){
         this.proxy.hide();
         this.el.setStyle('display', 'block');
         this.el.show();
-        if (this.maximized) {
+        if(this.maximized){
             this.fitContainer();
         }
-        if (Ext.isMac && Ext.isGecko) { // work around stupid FF 2.0/Mac scroll bar bug
-            this.cascade(this.setAutoScroll);
+        if(Ext.isMac && Ext.isGecko){ // work around stupid FF 2.0/Mac scroll bar bug
+        	this.cascade(this.setAutoScroll);
         }
 
-        if (this.monitorResize || this.modal || this.constrain || this.constrainHeader) {
+        if(this.monitorResize || this.modal || this.constrain || this.constrainHeader){
             Ext.EventManager.onWindowResize(this.onWindowResize, this);
         }
         this.doConstrain();
-        if (this.layout) {
+        if(this.layout){
             this.doLayout();
         }
-        if (this.keyMap) {
+        if(this.keyMap){
             this.keyMap.enable();
         }
         this.toFront();
@@ -467,7 +466,7 @@ Ext.Window = Ext.extend(Ext.Panel, {
     },
 
     // private
-    animShow: function () {
+    animShow : function(){
         this.proxy.show();
         this.proxy.setBox(this.animateTarget.getBox());
         this.proxy.setOpacity(0);
@@ -489,43 +488,43 @@ Ext.Window = Ext.extend(Ext.Panel, {
      * @param {Function} callback (optional) A callback function to call after the window is hidden
      * @param {Object} scope (optional) The scope in which to execute the callback
      */
-    hide: function (animateTarget, cb, scope) {
-        if (this.hidden || this.fireEvent("beforehide", this) === false) {
+    hide : function(animateTarget, cb, scope){
+        if(this.hidden || this.fireEvent("beforehide", this) === false){
             return;
         }
-        if (cb) {
-            this.on('hide', cb, scope, {single: true});
+        if(cb){
+            this.on('hide', cb, scope, {single:true});
         }
         this.hidden = true;
-        if (animateTarget !== undefined) {
+        if(animateTarget !== undefined){
             this.setAnimateTarget(animateTarget);
         }
-        if (this.animateTarget) {
+        if(this.animateTarget){
             this.animHide();
-        } else {
+        }else{
             this.el.hide();
             this.afterHide();
         }
     },
 
     // private
-    afterHide: function () {
+    afterHide : function(){
         this.proxy.hide();
-        if (this.monitorResize || this.modal || this.constrain || this.constrainHeader) {
+        if(this.monitorResize || this.modal || this.constrain || this.constrainHeader){
             Ext.EventManager.removeResizeListener(this.onWindowResize, this);
         }
-        if (this.modal) {
+        if(this.modal){
             this.mask.hide();
             Ext.getBody().removeClass("x-body-masked");
         }
-        if (this.keyMap) {
+        if(this.keyMap){
             this.keyMap.disable();
         }
         this.fireEvent("hide", this);
     },
 
     // private
-    animHide: function () {
+    animHide : function(){
         this.proxy.setOpacity(.5);
         this.proxy.show();
         var tb = this.getBox(false);
@@ -542,11 +541,11 @@ Ext.Window = Ext.extend(Ext.Panel, {
     },
 
     // private
-    onWindowResize: function () {
-        if (this.maximized) {
+    onWindowResize : function(){
+        if(this.maximized){
             this.fitContainer();
         }
-        if (this.modal) {
+        if(this.modal){
             this.mask.setSize('100%', '100%');
             var force = this.mask.dom.offsetHeight;
             this.mask.setSize(Ext.lib.Dom.getViewWidth(true), Ext.lib.Dom.getViewHeight(true));
@@ -555,32 +554,32 @@ Ext.Window = Ext.extend(Ext.Panel, {
     },
 
     // private
-    doConstrain: function () {
-        if (this.constrain || this.constrainHeader) {
+    doConstrain : function(){
+        if(this.constrain || this.constrainHeader){
             var offsets;
-            if (this.constrain) {
+            if(this.constrain){
                 offsets = {
-                    right: this.el.shadowOffset,
-                    left: this.el.shadowOffset,
-                    bottom: this.el.shadowOffset
+                    right:this.el.shadowOffset,
+                    left:this.el.shadowOffset,
+                    bottom:this.el.shadowOffset
                 };
-            } else {
+            }else {
                 var s = this.getSize();
                 offsets = {
-                    right: -(s.width - 100),
-                    bottom: -(s.height - 25)
+                    right:-(s.width - 100),
+                    bottom:-(s.height - 25)
                 };
             }
 
             var xy = this.el.getConstrainToXY(this.container, true, offsets);
-            if (xy) {
+            if(xy){
                 this.setPosition(xy[0], xy[1]);
             }
         }
     },
 
     // private - used for dragging
-    ghost: function (cls) {
+    ghost : function(cls){
         var ghost = this.createGhost(cls);
         var box = this.getBox(true);
         ghost.setLeftTop(box.x, box.y);
@@ -591,15 +590,15 @@ Ext.Window = Ext.extend(Ext.Panel, {
     },
 
     // private
-    unghost: function (show, matchPosition) {
-        if (show !== false) {
+    unghost : function(show, matchPosition){
+        if(show !== false){
             this.el.show();
             this.focus();
-            if (Ext.isMac && Ext.isGecko) { // work around stupid FF 2.0/Mac scroll bar bug
-                this.cascade(this.setAutoScroll);
-            }
+	        if(Ext.isMac && Ext.isGecko){ // work around stupid FF 2.0/Mac scroll bar bug
+	        	this.cascade(this.setAutoScroll);
+	        }
         }
-        if (matchPosition !== false) {
+        if(matchPosition !== false){
             this.setPosition(this.activeGhost.getLeft(true), this.activeGhost.getTop(true));
         }
         this.activeGhost.hide();
@@ -612,7 +611,7 @@ Ext.Window = Ext.extend(Ext.Panel, {
      * since the behavior of minimizing a window is application-specific.  To implement custom minimize behavior,
      * either the minimize event can be handled or this method can be overridden.
      */
-    minimize: function () {
+    minimize : function(){
         this.fireEvent('minimize', this);
     },
 
@@ -620,9 +619,9 @@ Ext.Window = Ext.extend(Ext.Panel, {
      * Closes the window, removes it from the DOM and destroys the window object.  The beforeclose event is fired
      * before the close happens and will cancel the close action if it returns false.
      */
-    close: function () {
-        if (this.fireEvent("beforeclose", this) !== false) {
-            this.hide(null, function () {
+    close : function(){
+        if(this.fireEvent("beforeclose", this) !== false){
+            this.hide(null, function(){
                 this.fireEvent('close', this);
                 this.destroy();
             }, this);
@@ -633,8 +632,8 @@ Ext.Window = Ext.extend(Ext.Panel, {
      * Fits the window within its current container and automatically replaces the 'maximize' tool button with
      * the 'restore' tool button.
      */
-    maximize: function () {
-        if (!this.maximized) {
+    maximize : function(){
+        if(!this.maximized){
             this.expand(false);
             this.restoreSize = this.getSize();
             this.restorePos = this.getPosition(true);
@@ -643,10 +642,10 @@ Ext.Window = Ext.extend(Ext.Panel, {
             this.maximized = true;
             this.el.disableShadow();
 
-            if (this.dd) {
+            if(this.dd){
                 this.dd.lock();
             }
-            if (this.collapsible) {
+            if(this.collapsible){
                 this.tools.toggle.hide();
             }
             this.el.addClass('x-window-maximized');
@@ -662,8 +661,8 @@ Ext.Window = Ext.extend(Ext.Panel, {
      * Restores a maximized window back to its original size and position prior to being maximized and also replaces
      * the 'restore' tool button with the 'maximize' tool button.
      */
-    restore: function () {
-        if (this.maximized) {
+    restore : function(){
+        if(this.maximized){
             this.el.removeClass('x-window-maximized');
             this.tools.restore.hide();
             this.tools.maximize.show();
@@ -674,10 +673,10 @@ Ext.Window = Ext.extend(Ext.Panel, {
             this.maximized = false;
             this.el.enableShadow(true);
 
-            if (this.dd) {
+            if(this.dd){
                 this.dd.unlock();
             }
-            if (this.collapsible) {
+            if(this.collapsible){
                 this.tools.toggle.show();
             }
             this.container.removeClass('x-window-maximized-ct');
@@ -691,26 +690,26 @@ Ext.Window = Ext.extend(Ext.Panel, {
      * A shortcut method for toggling between {@link #maximize} and {@link #restore} based on the current maximized
      * state of the window.
      */
-    toggleMaximize: function () {
+    toggleMaximize : function(){
         this[this.maximized ? 'restore' : 'maximize']();
     },
 
     // private
-    fitContainer: function () {
+    fitContainer : function(){
         var vs = this.container.getViewSize();
         this.setSize(vs.width, vs.height);
     },
 
     // private
     // z-index is managed by the WindowManager and may be overwritten at any time
-    setZIndex: function (index) {
-        if (this.modal) {
+    setZIndex : function(index){
+        if(this.modal){
             this.mask.setStyle("z-index", index);
         }
         this.el.setZIndex(++index);
         index += 5;
 
-        if (this.resizer) {
+        if(this.resizer){
             this.resizer.proxy.setStyle("z-index", ++index);
         }
 
@@ -724,7 +723,7 @@ Ext.Window = Ext.extend(Ext.Panel, {
      * @param {Array} offsets (optional) Offset the positioning by [x, y]
      * @return {Ext.Window} this
      */
-    alignTo: function (element, position, offsets) {
+    alignTo : function(element, position, offsets){
         var xy = this.el.getAlignToXY(element, position, offsets);
         this.setPagePosition(xy[0], xy[1]);
         return this;
@@ -739,13 +738,13 @@ Ext.Window = Ext.extend(Ext.Panel, {
      * is a number, it is used as the buffer delay (defaults to 50ms).
      * @return {Ext.Window} this
      */
-    anchorTo: function (el, alignment, offsets, monitorScroll, _pname) {
-        var action = function () {
+    anchorTo : function(el, alignment, offsets, monitorScroll, _pname){
+        var action = function(){
             this.alignTo(el, alignment, offsets);
         };
         Ext.EventManager.onWindowResize(action, this);
         var tm = typeof monitorScroll;
-        if (tm != 'undefined') {
+        if(tm != 'undefined'){
             Ext.EventManager.on(window, 'scroll', action, this,
                 {buffer: tm == 'number' ? monitorScroll : 50});
         }
@@ -758,8 +757,8 @@ Ext.Window = Ext.extend(Ext.Panel, {
      * Brings this window to the front of any other visible windows
      * @return {Ext.Window} this
      */
-    toFront: function () {
-        if (this.manager.bringToFront(this)) {
+    toFront : function(){
+        if(this.manager.bringToFront(this)){
             this.focus();
         }
         return this;
@@ -770,13 +769,13 @@ Ext.Window = Ext.extend(Ext.Panel, {
      * fires the activate or deactivate event depending on which action occurred.
      * @param {Boolean} active True to activate the window, false to deactivate it (defaults to false)
      */
-    setActive: function (active) {
-        if (active) {
-            if (!this.maximized) {
+    setActive : function(active){
+        if(active){
+            if(!this.maximized){
                 this.el.enableShadow(true);
             }
             this.fireEvent('activate', this);
-        } else {
+        }else{
             this.el.disableShadow();
             this.fireEvent('deactivate', this);
         }
@@ -786,7 +785,7 @@ Ext.Window = Ext.extend(Ext.Panel, {
      * Sends this window to the back of (lower z-index than) any other visible windows
      * @return {Ext.Window} this
      */
-    toBack: function () {
+    toBack : function(){
         this.manager.sendToBack(this);
         return this;
     },
@@ -795,7 +794,7 @@ Ext.Window = Ext.extend(Ext.Panel, {
      * Centers this window in the viewport
      * @return {Ext.Window} this
      */
-    center: function () {
+    center : function(){
         var xy = this.el.getAlignToXY(this.container, 'c-c');
         this.setPagePosition(xy[0], xy[1]);
         return this;
@@ -804,37 +803,34 @@ Ext.Window = Ext.extend(Ext.Panel, {
 Ext.reg('window', Ext.Window);
 
 // private - custom Window DD implementation
-Ext.Window.DD = function (win) {
+Ext.Window.DD = function(win){
     this.win = win;
-    Ext.Window.DD.superclass.constructor.call(this, win.el.id, 'WindowDD-' + win.id);
+    Ext.Window.DD.superclass.constructor.call(this, win.el.id, 'WindowDD-'+win.id);
     this.setHandleElId(win.header.id);
     this.scroll = false;
 };
 
 Ext.extend(Ext.Window.DD, Ext.dd.DD, {
-    moveOnly: true,
-    headerOffsets: [100, 25],
-    startDrag: function () {
+    moveOnly:true,
+    headerOffsets:[100, 25],
+    startDrag : function(){
         var w = this.win;
         this.proxy = w.ghost();
-        if (w.constrain !== false) {
+        if(w.constrain !== false){
             var so = w.el.shadowOffset;
             this.constrainTo(w.container, {right: so, left: so, bottom: so});
-        } else if (w.constrainHeader !== false) {
+        }else if(w.constrainHeader !== false){
             var s = this.proxy.getSize();
-            this.constrainTo(w.container, {
-                right: -(s.width - this.headerOffsets[0]),
-                bottom: -(s.height - this.headerOffsets[1])
-            });
+            this.constrainTo(w.container, {right: -(s.width-this.headerOffsets[0]), bottom: -(s.height-this.headerOffsets[1])});
         }
     },
-    b4Drag: Ext.emptyFn,
+    b4Drag : Ext.emptyFn,
 
-    onDrag: function (e) {
+    onDrag : function(e){
         this.alignElWithMouse(this.proxy, e.getPageX(), e.getPageY());
     },
 
-    endDrag: function (e) {
+    endDrag : function(e){
         this.win.unghost();
         this.win.saveState();
     }

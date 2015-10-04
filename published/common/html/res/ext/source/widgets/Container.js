@@ -92,7 +92,7 @@ Ext.Container = Ext.extend(Ext.BoxComponent, {
     defaultType: 'panel',
 
     // private
-    initComponent: function () {
+    initComponent : function(){
         Ext.Container.superclass.initComponent.call(this);
 
         this.addEvents(
@@ -143,27 +143,27 @@ Ext.Container = Ext.extend(Ext.BoxComponent, {
          * @property items
          */
         var items = this.items;
-        if (items) {
+        if(items){
             delete this.items;
-            if (items instanceof Array) {
+            if(items instanceof Array){
                 this.add.apply(this, items);
-            } else {
+            }else{
                 this.add(items);
             }
         }
     },
 
     // private
-    initItems: function () {
-        if (!this.items) {
+    initItems : function(){
+        if(!this.items){
             this.items = new Ext.util.MixedCollection(false, this.getComponentId);
             this.getLayout(); // initialize the layout
         }
     },
 
     // private
-    setLayout: function (layout) {
-        if (this.layout && this.layout != layout) {
+    setLayout : function(layout){
+        if(this.layout && this.layout != layout){
             this.layout.setContainer(null);
         }
         this.initItems();
@@ -172,36 +172,36 @@ Ext.Container = Ext.extend(Ext.BoxComponent, {
     },
 
     // private
-    render: function () {
+    render : function(){
         Ext.Container.superclass.render.apply(this, arguments);
-        if (this.layout) {
-            if (typeof this.layout == 'string') {
+        if(this.layout){
+            if(typeof this.layout == 'string'){
                 this.layout = new Ext.Container.LAYOUTS[this.layout.toLowerCase()](this.layoutConfig);
             }
             this.setLayout(this.layout);
 
-            if (this.activeItem !== undefined) {
+            if(this.activeItem !== undefined){
                 var item = this.activeItem;
                 delete this.activeItem;
                 this.layout.setActiveItem(item);
                 return;
             }
         }
-        if (!this.ownerCt) {
+        if(!this.ownerCt){
             this.doLayout();
         }
-        if (this.monitorResize === true) {
+        if(this.monitorResize === true){
             Ext.EventManager.onWindowResize(this.doLayout, this);
         }
     },
 
     // protected - should only be called by layouts
-    getLayoutTarget: function () {
+    getLayoutTarget : function(){
         return this.el;
     },
 
     // private - used as the key lookup function for the items collection
-    getComponentId: function (comp) {
+    getComponentId : function(comp){
         return comp.itemId || comp.id;
     },
 
@@ -223,20 +223,20 @@ Ext.Container = Ext.extend(Ext.BoxComponent, {
      * @return {Ext.Component} component The Component (or config object) that was
      * added with the Container's default config values applied.
      */
-    add: function (comp) {
-        if (!this.items) {
+    add : function(comp){
+        if(!this.items){
             this.initItems();
         }
         var a = arguments, len = a.length;
-        if (len > 1) {
-            for (var i = 0; i < len; i++) {
+        if(len > 1){
+            for(var i = 0; i < len; i++) {
                 this.add(a[i]);
             }
             return;
         }
         var c = this.lookupComponent(this.applyDefaults(comp));
         var pos = this.items.length;
-        if (this.fireEvent('beforeadd', this, c, pos) !== false && this.onBeforeAdd(c) !== false) {
+        if(this.fireEvent('beforeadd', this, c, pos) !== false && this.onBeforeAdd(c) !== false){
             this.items.add(c);
             c.ownerCt = this;
             this.fireEvent('add', this, c, pos);
@@ -262,24 +262,24 @@ Ext.Container = Ext.extend(Ext.BoxComponent, {
      * @return {Ext.Component} component The Component (or config object) that was
      * inserted with the Container's default config values applied.
      */
-    insert: function (index, comp) {
-        if (!this.items) {
+    insert : function(index, comp){
+        if(!this.items){
             this.initItems();
         }
         var a = arguments, len = a.length;
-        if (len > 2) {
-            for (var i = len - 1; i >= 1; --i) {
+        if(len > 2){
+            for(var i = len-1; i >= 1; --i) {
                 this.insert(index, a[i]);
             }
             return;
         }
         var c = this.lookupComponent(this.applyDefaults(comp));
 
-        if (c.ownerCt == this && this.items.indexOf(c) < index) {
+        if(c.ownerCt == this && this.items.indexOf(c) < index){
             --index;
         }
 
-        if (this.fireEvent('beforeadd', this, c, index) !== false && this.onBeforeAdd(c) !== false) {
+        if(this.fireEvent('beforeadd', this, c, index) !== false && this.onBeforeAdd(c) !== false){
             this.items.insert(index, c);
             c.ownerCt = this;
             this.fireEvent('add', this, c, index);
@@ -288,14 +288,14 @@ Ext.Container = Ext.extend(Ext.BoxComponent, {
     },
 
     // private
-    applyDefaults: function (c) {
-        if (this.defaults) {
-            if (typeof c == 'string') {
+    applyDefaults : function(c){
+        if(this.defaults){
+            if(typeof c == 'string'){
                 c = Ext.ComponentMgr.get(c);
                 Ext.apply(c, this.defaults);
-            } else if (!c.events) {
+            }else if(!c.events){
                 Ext.applyIf(c, this.defaults);
-            } else {
+            }else{
                 Ext.apply(c, this.defaults);
             }
         }
@@ -303,11 +303,11 @@ Ext.Container = Ext.extend(Ext.BoxComponent, {
     },
 
     // private
-    onBeforeAdd: function (item) {
-        if (item.ownerCt) {
+    onBeforeAdd : function(item){
+        if(item.ownerCt){
             item.ownerCt.remove(item, false);
         }
-        if (this.hideBorders === true) {
+        if(this.hideBorders === true){
             item.border = (item.border === true);
         }
     },
@@ -318,15 +318,15 @@ Ext.Container = Ext.extend(Ext.BoxComponent, {
      * @param {Component/String} component The component reference or id to remove
      * @param {Boolean} autoDestroy (optional) True to automatically invoke the component's {@link Ext.Component#destroy} function
      */
-    remove: function (comp, autoDestroy) {
+    remove : function(comp, autoDestroy){
         var c = this.getComponent(comp);
-        if (c && this.fireEvent('beforeremove', this, c) !== false) {
+        if(c && this.fireEvent('beforeremove', this, c) !== false){
             this.items.remove(c);
             delete c.ownerCt;
-            if (autoDestroy === true || (autoDestroy !== false && this.autoDestroy)) {
+            if(autoDestroy === true || (autoDestroy !== false && this.autoDestroy)){
                 c.destroy();
             }
-            if (this.layout && this.layout.activeItem == c) {
+            if(this.layout && this.layout.activeItem == c){
                 delete this.layout.activeItem;
             }
             this.fireEvent('remove', this, c);
@@ -339,25 +339,25 @@ Ext.Container = Ext.extend(Ext.BoxComponent, {
      * @param {String/Number} id or index of child Component to return.
      * @return Ext.Component
      */
-    getComponent: function (comp) {
-        if (typeof comp == 'object') {
+    getComponent : function(comp){
+        if(typeof comp == 'object'){
             return comp;
         }
         return this.items.get(comp);
     },
 
     // private
-    lookupComponent: function (comp) {
-        if (typeof comp == 'string') {
+    lookupComponent : function(comp){
+        if(typeof comp == 'string'){
             return Ext.ComponentMgr.get(comp);
-        } else if (!comp.events) {
+        }else if(!comp.events){
             return this.createComponent(comp);
         }
         return comp;
     },
 
     // private
-    createComponent: function (config) {
+    createComponent : function(config){
         return Ext.ComponentMgr.create(config, this.defaultType);
     },
 
@@ -365,15 +365,15 @@ Ext.Container = Ext.extend(Ext.BoxComponent, {
      * Force this container's layout to be recalculated. A call to this function is required after adding a new component
      * to an already rendered container, or possibly after changing sizing/position properties of child components.
      */
-    doLayout: function () {
-        if (this.rendered && this.layout) {
+    doLayout : function(){
+        if(this.rendered && this.layout){
             this.layout.layout();
         }
-        if (this.items) {
+        if(this.items){
             var cs = this.items.items;
-            for (var i = 0, len = cs.length; i < len; i++) {
-                var c = cs[i];
-                if (c.doLayout) {
+            for(var i = 0, len = cs.length; i < len; i++) {
+                var c  = cs[i];
+                if(c.doLayout){
                     c.doLayout();
                 }
             }
@@ -385,8 +385,8 @@ Ext.Container = Ext.extend(Ext.BoxComponent, {
      * set, a default {@link Ext.layout.ContainerLayout} will be created and set as the container's layout.
      * @return {ContainerLayout} layout The container's layout
      */
-    getLayout: function () {
-        if (!this.layout) {
+    getLayout : function(){
+        if(!this.layout){
             var layout = new Ext.layout.ContainerLayout(this.layoutConfig);
             this.setLayout(layout);
         }
@@ -394,14 +394,14 @@ Ext.Container = Ext.extend(Ext.BoxComponent, {
     },
 
     // private
-    onDestroy: function () {
-        if (this.items) {
+    onDestroy : function(){
+        if(this.items){
             var cs = this.items.items;
-            for (var i = 0, len = cs.length; i < len; i++) {
+            for(var i = 0, len = cs.length; i < len; i++) {
                 Ext.destroy(cs[i]);
             }
         }
-        if (this.monitorResize) {
+        if(this.monitorResize){
             Ext.EventManager.removeResizeListener(this.doLayout, this);
         }
         Ext.Container.superclass.onDestroy.call(this);
@@ -416,10 +416,10 @@ Ext.Container = Ext.extend(Ext.BoxComponent, {
      * @param {Object} scope (optional) The scope of the function (defaults to current node)
      * @param {Array} args (optional) The args to call the function with (default to passing the current component)
      */
-    bubble: function (fn, scope, args) {
+    bubble : function(fn, scope, args){
         var p = this;
-        while (p) {
-            if (fn.apply(scope || p, args || [p]) === false) {
+        while(p){
+            if(fn.apply(scope || p, args || [p]) === false){
                 break;
             }
             p = p.ownerCt;
@@ -436,14 +436,14 @@ Ext.Container = Ext.extend(Ext.BoxComponent, {
      * @param {Object} scope (optional) The scope of the function (defaults to current component)
      * @param {Array} args (optional) The args to call the function with (defaults to passing the current component)
      */
-    cascade: function (fn, scope, args) {
-        if (fn.apply(scope || this, args || [this]) !== false) {
-            if (this.items) {
+    cascade : function(fn, scope, args){
+        if(fn.apply(scope || this, args || [this]) !== false){
+            if(this.items){
                 var cs = this.items.items;
-                for (var i = 0, len = cs.length; i < len; i++) {
-                    if (cs[i].cascade) {
+                for(var i = 0, len = cs.length; i < len; i++){
+                    if(cs[i].cascade){
                         cs[i].cascade(fn, scope, args);
-                    } else {
+                    }else{
                         fn.apply(scope || this, args || [cs[i]]);
                     }
                 }
@@ -456,10 +456,10 @@ Ext.Container = Ext.extend(Ext.BoxComponent, {
      * @param {String} id
      * @return Ext.Component
      */
-    findById: function (id) {
+    findById : function(id){
         var m, ct = this;
-        this.cascade(function (c) {
-            if (ct != c && c.id === id) {
+        this.cascade(function(c){
+            if(ct != c && c.id === id){
                 m = c;
                 return false;
             }
@@ -472,12 +472,12 @@ Ext.Container = Ext.extend(Ext.BoxComponent, {
      * @param {String/Class} xtype The xtype string for a component, or the class of the component directly
      * @return {Array} Array of Ext.Components
      */
-    findByType: function (xtype) {
+    findByType : function(xtype){
         return typeof xtype == 'function' ?
-            this.findBy(function (c) {
+            this.findBy(function(c){
                 return c.constructor === xtype;
             }) :
-            this.findBy(function (c) {
+            this.findBy(function(c){
                 return c.constructor.xtype === xtype;
             });
     },
@@ -488,8 +488,8 @@ Ext.Container = Ext.extend(Ext.BoxComponent, {
      * @param {String} value
      * @return {Array} Array of Ext.Components
      */
-    find: function (prop, value) {
-        return this.findBy(function (c) {
+    find : function(prop, value){
+        return this.findBy(function(c){
             return c[prop] === value;
         });
     },
@@ -501,10 +501,10 @@ Ext.Container = Ext.extend(Ext.BoxComponent, {
      * @param {Object} scope (optional)
      * @return {Array} Array of Ext.Components
      */
-    findBy: function (fn, scope) {
+    findBy : function(fn, scope){
         var m = [], ct = this;
-        this.cascade(function (c) {
-            if (ct != c && fn.call(scope || c, c, ct) === true) {
+        this.cascade(function(c){
+            if(ct != c && fn.call(scope || c, c, ct) === true){
                 m.push(c);
             }
         });

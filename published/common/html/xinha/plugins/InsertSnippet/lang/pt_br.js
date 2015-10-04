@@ -14,28 +14,12 @@
 // Distributed under the same terms as HTMLArea itself.
 // This notice MUST stay intact for use (see license.txt).
 {
-    "Cancel"
-:
-    "Cancelar",
-        "Hide preview"
-:
-    "Esconder Visualização",
-        "Insert Snippet"
-:
-    "Inserir Fragmento de Código",
-        "Insert as"
-:
-    "Inserir como",
-        "InsertSnippet for Xinha"
-:
-    "Fragmento de Códigos para o Xinha",
-        "Show preview"
-:
-    "Mostrar Visualização",
-        "This is an information about something"
-:
-    "Isto é uma informação sobre alguma coisa",
-        "Variable"
-:
-    "Variável"
+  "Cancel": "Cancelar",
+  "Hide preview": "Esconder Visualização",
+  "Insert Snippet": "Inserir Fragmento de Código",
+  "Insert as": "Inserir como",
+  "InsertSnippet for Xinha": "Fragmento de Códigos para o Xinha",
+  "Show preview": "Mostrar Visualização",
+  "This is an information about something": "Isto é uma informação sobre alguma coisa",
+  "Variable": "Variável"
 }

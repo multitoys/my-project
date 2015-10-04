@@ -12,7 +12,7 @@
  */
 
 jQuery.fn._height = jQuery.fn.height;
-jQuery.fn._width = jQuery.fn.width;
+jQuery.fn._width  = jQuery.fn.width;
 
 /**
  * If used on document, returns the document's height (innerHeight)
@@ -32,16 +32,16 @@ jQuery.fn._width = jQuery.fn.width;
  * @type Object
  * @cat Plugins/Dimensions
  */
-jQuery.fn.height = function () {
-    if (this[0] == window)
-        return self.innerHeight ||
-            jQuery.boxModel && document.documentElement.clientHeight ||
-            document.body.clientHeight;
+jQuery.fn.height = function() {
+	if ( this[0] == window )
+		return self.innerHeight ||
+			jQuery.boxModel && document.documentElement.clientHeight ||
+			document.body.clientHeight;
 
-    if (this[0] == document)
-        return Math.max(document.body.scrollHeight, document.body.offsetHeight);
+	if ( this[0] == document )
+		return Math.max( document.body.scrollHeight, document.body.offsetHeight );
 
-    return this._height(arguments[0]);
+	return this._height(arguments[0]);
 };
 
 /**
@@ -62,16 +62,16 @@ jQuery.fn.height = function () {
  * @type Object
  * @cat Plugins/Dimensions
  */
-jQuery.fn.width = function () {
-    if (this[0] == window)
-        return self.innerWidth ||
-            jQuery.boxModel && document.documentElement.clientWidth ||
-            document.body.clientWidth;
+jQuery.fn.width = function() {
+	if ( this[0] == window )
+		return self.innerWidth ||
+			jQuery.boxModel && document.documentElement.clientWidth ||
+			document.body.clientWidth;
 
-    if (this[0] == document)
-        return Math.max(document.body.scrollWidth, document.body.offsetWidth);
+	if ( this[0] == document )
+		return Math.max( document.body.scrollWidth, document.body.offsetWidth );
 
-    return this._width(arguments[0]);
+	return this._width(arguments[0]);
 };
 
 /**
@@ -86,12 +86,12 @@ jQuery.fn.width = function () {
  * @type Number
  * @cat Plugins/Dimensions
  */
-jQuery.fn.innerHeight = function () {
-    return this[0] == window || this[0] == document ?
-        this.height() :
-        this.css('display') != 'none' ?
-        this[0].offsetHeight - (parseInt(this.css("borderTopWidth")) || 0) - (parseInt(this.css("borderBottomWidth")) || 0) :
-        this.height() + (parseInt(this.css("paddingTop")) || 0) + (parseInt(this.css("paddingBottom")) || 0);
+jQuery.fn.innerHeight = function() {
+	return this[0] == window || this[0] == document ?
+		this.height() :
+		this.css('display') != 'none' ?
+		 	this[0].offsetHeight - (parseInt(this.css("borderTopWidth")) || 0) - (parseInt(this.css("borderBottomWidth")) || 0) :
+			this.height() + (parseInt(this.css("paddingTop")) || 0) + (parseInt(this.css("paddingBottom")) || 0);
 };
 
 /**
@@ -106,12 +106,12 @@ jQuery.fn.innerHeight = function () {
  * @type Number
  * @cat Plugins/Dimensions
  */
-jQuery.fn.innerWidth = function () {
-    return this[0] == window || this[0] == document ?
-        this.width() :
-        this.css('display') != 'none' ?
-        this[0].offsetWidth - (parseInt(this.css("borderLeftWidth")) || 0) - (parseInt(this.css("borderRightWidth")) || 0) :
-        this.height() + (parseInt(this.css("paddingLeft")) || 0) + (parseInt(this.css("paddingRight")) || 0);
+jQuery.fn.innerWidth = function() {
+	return this[0] == window || this[0] == document ?
+		this.width() :
+		this.css('display') != 'none' ?
+			this[0].offsetWidth - (parseInt(this.css("borderLeftWidth")) || 0) - (parseInt(this.css("borderRightWidth")) || 0) :
+			this.height() + (parseInt(this.css("paddingLeft")) || 0) + (parseInt(this.css("paddingRight")) || 0);
 };
 
 /**
@@ -125,13 +125,13 @@ jQuery.fn.innerWidth = function () {
  * @type Number
  * @cat Plugins/Dimensions
  */
-jQuery.fn.outerHeight = function () {
-    return this[0] == window || this[0] == document ?
-        this.height() :
-        this.css('display') != 'none' ?
-            this[0].offsetHeight :
-        this.height() + (parseInt(this.css("borderTopWidth")) || 0) + (parseInt(this.css("borderBottomWidth")) || 0)
-        + (parseInt(this.css("paddingTop")) || 0) + (parseInt(this.css("paddingBottom")) || 0);
+jQuery.fn.outerHeight = function() {
+	return this[0] == window || this[0] == document ?
+		this.height() :
+		this.css('display') != 'none' ?
+			this[0].offsetHeight :
+			this.height() + (parseInt(this.css("borderTopWidth")) || 0) + (parseInt(this.css("borderBottomWidth")) || 0)
+				+ (parseInt(this.css("paddingTop")) || 0) + (parseInt(this.css("paddingBottom")) || 0);
 };
 
 /**
@@ -145,13 +145,13 @@ jQuery.fn.outerHeight = function () {
  * @type Number
  * @cat Plugins/Dimensions
  */
-jQuery.fn.outerWidth = function () {
-    return this[0] == window || this[0] == document ?
-        this.width() :
-        this.css('display') != 'none' ?
-            this[0].offsetWidth :
-        this.height() + (parseInt(this.css("borderLeftWidth")) || 0) + (parseInt(this.css("borderRightWidth")) || 0)
-        + (parseInt(this.css("paddingLeft")) || 0) + (parseInt(this.css("paddingRight")) || 0);
+jQuery.fn.outerWidth = function() {
+	return this[0] == window || this[0] == document ?
+		this.width() :
+		this.css('display') != 'none' ?
+			this[0].offsetWidth :
+			this.height() + (parseInt(this.css("borderLeftWidth")) || 0) + (parseInt(this.css("borderRightWidth")) || 0)
+				+ (parseInt(this.css("paddingLeft")) || 0) + (parseInt(this.css("paddingRight")) || 0);
 };
 
 /**
@@ -165,13 +165,13 @@ jQuery.fn.outerWidth = function () {
  * @type Number
  * @cat Plugins/Dimensions
  */
-jQuery.fn.scrollLeft = function () {
-    if (this[0] == window || this[0] == document)
-        return self.pageXOffset ||
-            jQuery.boxModel && document.documentElement.scrollLeft ||
-            document.body.scrollLeft;
+jQuery.fn.scrollLeft = function() {
+	if ( this[0] == window || this[0] == document )
+		return self.pageXOffset ||
+			jQuery.boxModel && document.documentElement.scrollLeft ||
+			document.body.scrollLeft;
 
-    return this[0].scrollLeft;
+	return this[0].scrollLeft;
 };
 
 /**
@@ -185,13 +185,13 @@ jQuery.fn.scrollLeft = function () {
  * @type Number
  * @cat Plugins/Dimensions
  */
-jQuery.fn.scrollTop = function () {
-    if (this[0] == window || this[0] == document)
-        return self.pageYOffset ||
-            jQuery.boxModel && document.documentElement.scrollTop ||
-            document.body.scrollTop;
+jQuery.fn.scrollTop = function() {
+	if ( this[0] == window || this[0] == document )
+		return self.pageYOffset ||
+			jQuery.boxModel && document.documentElement.scrollTop ||
+			document.body.scrollTop;
 
-    return this[0].scrollTop;
+	return this[0].scrollTop;
 };
 
 /**
@@ -229,101 +229,92 @@ jQuery.fn.scrollTop = function () {
  * @cat Plugins/Dimensions
  * @author Brandon Aaron (brandon.aaron@gmail.com || http://brandonaaron.net)
  */
-jQuery.fn.offset = function (options, returnObject) {
-    var x = 0, y = 0, elem = this[0], parent = this[0], sl = 0, st = 0, options = jQuery.extend({
-        margin: true,
-        border: true,
-        padding: false,
-        scroll: true
-    }, options || {});
-    do {
-        x += parent.offsetLeft || 0;
-        y += parent.offsetTop || 0;
+jQuery.fn.offset = function(options, returnObject) {
+	var x = 0, y = 0, elem = this[0], parent = this[0], sl = 0, st = 0, options = jQuery.extend({ margin: true, border: true, padding: false, scroll: true }, options || {});
+	do {
+		x += parent.offsetLeft || 0;
+		y += parent.offsetTop  || 0;
 
-        // Mozilla and IE do not add the border
-        if (jQuery.browser.mozilla || jQuery.browser.msie) {
-            // get borders
-            var bt = parseInt(jQuery.css(parent, 'borderTopWidth')) || 0;
-            var bl = parseInt(jQuery.css(parent, 'borderLeftWidth')) || 0;
+		// Mozilla and IE do not add the border
+		if (jQuery.browser.mozilla || jQuery.browser.msie) {
+			// get borders
+			var bt = parseInt(jQuery.css(parent, 'borderTopWidth')) || 0;
+			var bl = parseInt(jQuery.css(parent, 'borderLeftWidth')) || 0;
 
-            // add borders to offset
-            x += bl;
-            y += bt;
+			// add borders to offset
+			x += bl;
+			y += bt;
 
-            // Mozilla removes the border if the parent has overflow property other than visible
-            if (jQuery.browser.mozilla && parent != elem && jQuery.css(parent, 'overflow') != 'visible') {
-                x += bl;
-                y += bt;
-            }
-        }
+			// Mozilla removes the border if the parent has overflow property other than visible
+			if (jQuery.browser.mozilla && parent != elem && jQuery.css(parent, 'overflow') != 'visible') {
+				x += bl;
+				y += bt;
+			}
+		}
 
-        var op = parent.offsetParent;
-        if (op && (op.tagName == 'BODY' || op.tagName == 'HTML')) {
-            // Safari doesn't add the body margin for elments positioned with static or relative
-            if (jQuery.browser.safari && jQuery.css(parent, 'position') != 'absolute') {
-                x += parseInt(jQuery.css(op, 'marginLeft')) || 0;
-                y += parseInt(jQuery.css(op, 'marginTop')) || 0;
-            }
+		var op = parent.offsetParent;
+		if (op && (op.tagName == 'BODY' || op.tagName == 'HTML')) {
+			// Safari doesn't add the body margin for elments positioned with static or relative
+			if (jQuery.browser.safari && jQuery.css(parent, 'position') != 'absolute') {
+				x += parseInt(jQuery.css(op, 'marginLeft')) || 0;
+				y += parseInt(jQuery.css(op, 'marginTop'))  || 0;
+			}
 
-            // Exit the loop
-            break;
-        }
+			// Exit the loop
+			break;
+		}
 
-        if (options.scroll) {
-            // Need to get scroll offsets in-between offsetParents
-            do {
-                sl += parent.scrollLeft || 0;
-                st += parent.scrollTop || 0;
+		if (options.scroll) {
+			// Need to get scroll offsets in-between offsetParents
+			do {
+				sl += parent.scrollLeft || 0;
+				st += parent.scrollTop  || 0;
 
-                parent = parent.parentNode;
+				parent = parent.parentNode;
 
-                // Mozilla removes the border if the parent has overflow property other than visible
-                if (jQuery.browser.mozilla && parent != elem && parent != op && parent.style && jQuery.css(parent, 'overflow') != 'visible') {
-                    y += parseInt(jQuery.css(parent, 'borderTopWidth')) || 0;
-                    x += parseInt(jQuery.css(parent, 'borderLeftWidth')) || 0;
-                }
-            } while (parent != op);
-        } else {
-            parent = parent.offsetParent;
-        }
-    } while (parent);
+				// Mozilla removes the border if the parent has overflow property other than visible
+				if (jQuery.browser.mozilla && parent != elem && parent != op && parent.style && jQuery.css(parent, 'overflow') != 'visible') {
+					y += parseInt(jQuery.css(parent, 'borderTopWidth')) || 0;
+					x += parseInt(jQuery.css(parent, 'borderLeftWidth')) || 0;
+				}
+			} while (parent != op);
+		} else {
+			parent = parent.offsetParent;
+		}
+	} while (parent);
 
-    if (!options.margin) {
-        x -= parseInt(jQuery.css(elem, 'marginLeft')) || 0;
-        y -= parseInt(jQuery.css(elem, 'marginTop')) || 0;
-    }
+	if ( !options.margin) {
+		x -= parseInt(jQuery.css(elem, 'marginLeft')) || 0;
+		y -= parseInt(jQuery.css(elem, 'marginTop'))  || 0;
+	}
 
-    // Safari and Opera do not add the border for the element
-    if (options.border && (jQuery.browser.safari || jQuery.browser.opera)) {
-        x += parseInt(jQuery.css(elem, 'borderLeftWidth')) || 0;
-        y += parseInt(jQuery.css(elem, 'borderTopWidth')) || 0;
-    } else if (!options.border && !(jQuery.browser.safari || jQuery.browser.opera)) {
-        x -= parseInt(jQuery.css(elem, 'borderLeftWidth')) || 0;
-        y -= parseInt(jQuery.css(elem, 'borderTopWidth')) || 0;
-    }
+	// Safari and Opera do not add the border for the element
+	if ( options.border && (jQuery.browser.safari || jQuery.browser.opera) ) {
+		x += parseInt(jQuery.css(elem, 'borderLeftWidth')) || 0;
+		y += parseInt(jQuery.css(elem, 'borderTopWidth'))  || 0;
+	} else if ( !options.border && !(jQuery.browser.safari || jQuery.browser.opera) ) {
+		x -= parseInt(jQuery.css(elem, 'borderLeftWidth')) || 0;
+		y -= parseInt(jQuery.css(elem, 'borderTopWidth'))  || 0;
+	}
 
-    if (options.padding) {
-        x += parseInt(jQuery.css(elem, 'paddingLeft')) || 0;
-        y += parseInt(jQuery.css(elem, 'paddingTop')) || 0;
-    }
+	if ( options.padding ) {
+		x += parseInt(jQuery.css(elem, 'paddingLeft')) || 0;
+		y += parseInt(jQuery.css(elem, 'paddingTop'))  || 0;
+	}
 
-    // Opera thinks offset is scroll offset for display: inline elements
-    if (options.scroll && jQuery.browser.opera && jQuery.css(elem, 'display') == 'inline') {
-        sl -= elem.scrollLeft || 0;
-        st -= elem.scrollTop || 0;
-    }
+	// Opera thinks offset is scroll offset for display: inline elements
+	if (options.scroll && jQuery.browser.opera && jQuery.css(elem, 'display') == 'inline') {
+		sl -= elem.scrollLeft || 0;
+		st -= elem.scrollTop  || 0;
+	}
 
-    var returnValue = options.scroll ? {top: y - st, left: x - sl, scrollTop: st, scrollLeft: sl}
-        : {top: y, left: x};
+	var returnValue = options.scroll ? { top: y - st, left: x - sl, scrollTop:  st, scrollLeft: sl }
+									: { top: y, left: x };
 
-    if (returnObject) {
-        jQuery.extend(returnObject, returnValue);
-        return this;
-    }
-    else {
-        return returnValue;
-    }
+	if (returnObject) { jQuery.extend(returnObject, returnValue); return this; }
+	else              { return returnValue; }
 };
+
 
 
 // FORM PLUGIN
@@ -510,12 +501,12 @@ jQuery.fn.offset = function (options, returnObject) {
  * @see $.ajax
  * @author jQuery Community
  */
-jQuery.fn.ajaxSubmit = function (options) {
+jQuery.fn.ajaxSubmit = function(options) {
     if (typeof options == 'function')
-        options = {success: options};
+        options = { success: options };
 
     options = jQuery.extend({
-        url: this.attr('action') || '',
+        url:    this.attr('action') || '',
         method: this.attr('method') || 'GET'
     }, options || {});
 
@@ -540,26 +531,21 @@ jQuery.fn.ajaxSubmit = function (options) {
         options.data = q; // data is the query string for 'post'
 
     var $form = this, callbacks = [];
-    if (options.resetForm) callbacks.push(function () {
-        $form.resetForm();
-    });
-    if (options.clearForm) callbacks.push(function () {
-        $form.clearForm();
-    });
+    if (options.resetForm) callbacks.push(function() { $form.resetForm(); });
+    if (options.clearForm) callbacks.push(function() { $form.clearForm(); });
 
     // perform a load on the target only if dataType is not provided
     if (!options.dataType && options.target) {
-        var oldSuccess = options.success || function () {
-            };
-        callbacks.push(function (data, status) {
+        var oldSuccess = options.success || function(){};
+        callbacks.push(function(data, status) {
             jQuery(options.target).attr("innerHTML", data).evalScripts().each(oldSuccess, [data, status]);
         });
     }
     else if (options.success)
         callbacks.push(options.success);
 
-    options.success = function (data, status) {
-        for (var i = 0, max = callbacks.length; i < max; i++)
+    options.success = function(data, status) {
+        for (var i=0, max=callbacks.length; i < max; i++)
             callbacks[i](data, status);
     };
 
@@ -627,9 +613,9 @@ jQuery.fn.ajaxSubmit = function (options) {
  * @see    ajaxSubmit
  * @author jQuery Community
  */
-jQuery.fn.ajaxForm = function (options) {
-    return this.each(function () {
-        jQuery("input:submit,input:image,button:submit", this).click(function (ev) {
+jQuery.fn.ajaxForm = function(options) {
+    return this.each(function() {
+        jQuery("input:submit,input:image,button:submit", this).click(function(ev) {
             var $form = this.form;
             $form.clk = this;
             if (this.type == 'image') {
@@ -646,11 +632,11 @@ jQuery.fn.ajaxForm = function (options) {
                 }
             }
             // clear form vars
-            setTimeout(function () {
+            setTimeout(function() {
                 $form.clk = $form.clk_x = $form.clk_y = null;
-            }, 10);
+                }, 10);
         })
-    }).submit(function (e) {
+    }).submit(function(e) {
         jQuery(this).ajaxSubmit(options);
         return false;
     });
@@ -686,28 +672,28 @@ jQuery.fn.ajaxForm = function (options) {
  * @see ajaxSubmit
  * @author jQuery Community
  */
-jQuery.fn.formToArray = function (semantic) {
+jQuery.fn.formToArray = function(semantic) {
     var a = [];
     if (this.length == 0) return a;
 
     var form = this[0];
     var els = semantic ? form.getElementsByTagName('*') : form.elements;
     if (!els) return a;
-    for (var i = 0, max = els.length; i < max; i++) {
+    for(var i=0, max=els.length; i < max; i++) {
         var el = els[i];
         var n = el.name;
         if (!n) continue;
 
         if (semantic && form.clk && el.type == "image") {
             // handle image inputs on the fly when semantic == true
-            if (!el.disabled && form.clk == el)
-                a.push({name: n + '.x', value: form.clk_x}, {name: n + '.y', value: form.clk_y});
+            if(!el.disabled && form.clk == el)
+                a.push({name: n+'.x', value: form.clk_x}, {name: n+'.y', value: form.clk_y});
             continue;
         }
         var v = jQuery.fieldValue(el, true);
         if (v === null) continue;
         if (v.constructor == Array) {
-            for (var j = 0, jmax = v.length; j < jmax; j++)
+            for(var j=0, jmax=v.length; j < jmax; j++)
                 a.push({name: n, value: v[j]});
         }
         else
@@ -717,11 +703,11 @@ jQuery.fn.formToArray = function (semantic) {
     if (!semantic && form.clk) {
         // input type=='image' are not found in elements array! handle them here
         var inputs = form.getElementsByTagName("input");
-        for (var i = 0, max = inputs.length; i < max; i++) {
+        for(var i=0, max=inputs.length; i < max; i++) {
             var input = inputs[i];
             var n = input.name;
-            if (n && !input.disabled && input.type == "image" && form.clk == input)
-                a.push({name: n + '.x', value: form.clk_x}, {name: n + '.y', value: form.clk_y});
+            if(n && !input.disabled && input.type == "image" && form.clk == input)
+                a.push({name: n+'.x', value: form.clk_x}, {name: n+'.y', value: form.clk_y});
         }
     }
     return a;
@@ -748,7 +734,7 @@ jQuery.fn.formToArray = function (semantic) {
  * @see formToArray
  * @author jQuery Community
  */
-jQuery.fn.formSerialize = function (semantic) {
+jQuery.fn.formSerialize = function(semantic) {
     //hand off to jQuery.param for proper encoding
     return jQuery.param(this.formToArray(semantic));
 };
@@ -782,14 +768,14 @@ jQuery.fn.formSerialize = function (semantic) {
  * @type String
  * @cat Plugins/Form
  */
-jQuery.fn.fieldSerialize = function (successful) {
+jQuery.fn.fieldSerialize = function(successful) {
     var a = [];
-    this.each(function () {
+    this.each(function() {
         var n = this.name;
         if (!n) return;
         var v = jQuery.fieldValue(this, successful);
         if (v && v.constructor == Array) {
-            for (var i = 0, max = v.length; i < max; i++)
+            for (var i=0,max=v.length; i < max; i++)
                 a.push({name: n, value: v[i]});
         }
         else if (v !== null && typeof v != 'undefined')
@@ -835,11 +821,11 @@ jQuery.fn.fieldSerialize = function (successful) {
  * @type String or Array<String>
  * @cat Plugins/Form
  */
-jQuery.fn.fieldValue = function (successful) {
+jQuery.fn.fieldValue = function(successful) {
     var cbVal, cbName;
 
     // loop until we find a value
-    for (var i = 0, max = this.length; i < max; i++) {
+    for (var i=0, max=this.length; i < max; i++) {
         var el = this[i];
         var v = jQuery.fieldValue(el, successful);
         if (v === null || typeof v == 'undefined' || (v.constructor == Array && !v.length))
@@ -876,7 +862,7 @@ jQuery.fn.fieldValue = function (successful) {
  * @type String or Array<String>
  * @cat Plugins/Form
  */
-jQuery.fieldValue = function (el, successful) {
+jQuery.fieldValue = function(el, successful) {
     var n = el.name, t = el.type, tag = el.tagName.toLowerCase();
     if (typeof successful == 'undefined') successful = true;
 
@@ -884,15 +870,15 @@ jQuery.fieldValue = function (el, successful) {
         (t == 'checkbox' || t == 'radio') && !el.checked ||
         (t == 'submit' || t == 'image') && el.form && el.form.clk != el ||
         tag == 'select' && el.selectedIndex == -1))
-        return null;
+            return null;
 
     if (tag == 'select') {
         var index = el.selectedIndex;
         if (index < 0) return null;
         var a = [], ops = el.options;
         var one = (t == 'select-one');
-        var max = (one ? index + 1 : ops.length);
-        for (var i = (one ? index : 0); i < max; i++) {
+        var max = (one ? index+1 : ops.length);
+        for(var i=(one ? index : 0); i < max; i++) {
             var op = ops[i];
             if (op.selected) {
                 // extra pain for IE...
@@ -923,8 +909,8 @@ jQuery.fieldValue = function (el, successful) {
  * @cat Plugins/Form
  * @see resetForm
  */
-jQuery.fn.clearForm = function () {
-    return this.each(function () {
+jQuery.fn.clearForm = function() {
+    return this.each(function() {
         jQuery('input,select,textarea', this).clearFields();
     });
 };
@@ -945,8 +931,8 @@ jQuery.fn.clearForm = function () {
  * @cat Plugins/Form
  * @see clearForm
  */
-jQuery.fn.clearFields = jQuery.fn.clearInputs = function () {
-    return this.each(function () {
+jQuery.fn.clearFields = jQuery.fn.clearInputs = function() {
+    return this.each(function() {
         var t = this.type, tag = this.tagName.toLowerCase();
         if (t == 'text' || t == 'password' || tag == 'textarea')
             this.value = '';
@@ -969,8 +955,8 @@ jQuery.fn.clearFields = jQuery.fn.clearInputs = function () {
  * @cat Plugins/Form
  * @see clearForm
  */
-jQuery.fn.resetForm = function () {
-    return this.each(function () {
+jQuery.fn.resetForm = function() {
+    return this.each(function() {
         // guard against an input with the name of 'reset'
         // note that IE reports the reset function as an 'object'
         if (typeof this.reset == 'function' || (typeof this.reset == 'object' && !this.reset.nodeType))

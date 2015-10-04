@@ -14,13 +14,7 @@
 // Distributed under the same terms as HTMLArea itself.
 // This notice MUST stay intact for use (see license.txt).
 {
-    "definition list"
-:
-    "Lista de definição",
-        "definition term"
-:
-    "Termo de definição",
-        "definition description"
-:
-    "Descrição de definição"
+  "definition list": "Lista de definição",
+  "definition term": "Termo de definição",
+  "definition description": "Descrição de definição"
 }

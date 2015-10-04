@@ -1,81 +1,60 @@
 <script type="text/javascript">
-    function switchImage() {
-        var Theme = Form.getInputs(document.forms[0], 'radio', 'curTheme').find(function (button) {
-            return button.checked == true
-        }).value;
-        var Layout = Form.getInputs(document.forms[0], 'radio', 'curLayout').find(function (button) {
-            return button.checked == true
-        }).value;
-        var Corners = Form.getInputs(document.forms[0], 'radio', 'curCorners').find(function (button) {
-            return button.checked == true
-        }).value;
-        $('Screenshot').src = "../../../UG/html/scripts/preview.php?layout=" + Layout + "&theme=" + Theme + "&corners=" + Corners;
-    }
+function switchImage()
+{
+var Theme = Form.getInputs( document.forms[0], 'radio', 'curTheme' ).find( function(button) {return button.checked == true} ).value;
+var Layout = Form.getInputs( document.forms[0], 'radio', 'curLayout' ).find( function(button) {return button.checked == true} ).value;
+var Corners = Form.getInputs( document.forms[0], 'radio', 'curCorners' ).find( function(button) {return button.checked == true} ).value;
+$('Screenshot').src = "../../../UG/html/scripts/preview.php?layout="+Layout+"&theme="+Theme+"&corners=" + Corners;
+}
 </script>
 
 
 <table class="FormLayout">
-    <tr>
-        <td>
-            <strong><? $kernelStrings.lf_seltheme_label ?></strong>
+	<tr>
+		<td>
+			<strong><? $kernelStrings.lf_seltheme_label ?></strong>
 
-            <table class="FormLayout">
-                <? foreach from=$Themes item=themeInfo key=themeId name=themeLoop ?>
-                <tr
-                <? if $smarty.foreach.themeLoop.last ?>class="SeparatedRow"<? /if ?>>
-                <td class="Indent"><input onClick="switchImage()" id="<? $themeId ?>" name="curTheme"
-                                          value="<? $themeId ?>" <? wbs_checkboxStatus val=$curTheme true_val=$themeId ?>
-                    type="radio"/>
-                </td>
-                <td><? wbs_label for=$themeId text=$themeInfo.name skipColon=true ?></td>
-                </tr>
-                <? /foreach ?>
-            </table>
+			<table class="FormLayout">
+				<? foreach from=$Themes item=themeInfo key=themeId name=themeLoop ?>
+					<tr <? if $smarty.foreach.themeLoop.last ?>class="SeparatedRow"<? /if ?>>
+						<td class="Indent"><input onClick="switchImage()" id="<? $themeId ?>" name="curTheme" value="<? $themeId ?>" <? wbs_checkboxStatus val=$curTheme true_val=$themeId ?> type="radio"/></td>
+						<td><? wbs_label for=$themeId text=$themeInfo.name skipColon=true ?></td>
+					</tr>
+				<? /foreach ?>
+			</table>
 
-            <strong><? $kernelStrings.lf_sellayout_label ?></strong>
+			<strong><? $kernelStrings.lf_sellayout_label ?></strong>
 
-            <table class="FormLayout">
-                <? foreach from=$Layouts item=layoutInfo key=layoutId name=layoutLoop ?>
-                <tr
-                <? if $smarty.foreach.layoutLoop.last ?>class="SeparatedRow"<? /if ?>>
-                <td class="Indent"><input onClick="switchImage()" id="<? $layoutId ?>" name="curLayout"
-                                          value="<? $layoutId ?>" <? wbs_checkboxStatus val=$curLayout true_val=$layoutId ?>
-                    type="radio"/>
-                </td>
-                <td><? wbs_label for=$layoutId text=$layoutInfo.name skipColon=true ?></td>
-                </tr>
-                <? /foreach ?>
-            </table>
-
-            <strong><? $kernelStrings.lf_selcorners_label ?></strong>
-
-            <table class="FormLayout">
-                <tr>
-                    <td class="Indent"><input onClick="switchImage()" id="<? $layoutId ?>" name="curCorners"
-                                              value="rounded" <? wbs_checkboxStatus val=$curCorners true_val="rounded" ?>
-                        type="radio"/>
-                    </td>
-                    <td><? $kernelStrings.lf_cornersrounded_title ?></td>
-                </tr>
-                <tr>
-                    <td class="Indent"><input onClick="switchImage()" id="<? $layoutId ?>" name="curCorners"
-                                              value="straight" <? wbs_checkboxStatus val=$curCorners true_val="straight" ?>
-                        type="radio"/>
-                    </td>
-                    <td><? $kernelStrings.lf_cornersstraight_title ?></td>
-                </tr>
-            </table>
-
-
-        </td>
-        <td>
-            <iframe frameborder=0 scrolling=no width="419" height="231" id="Screenshot"
-                    src='../../../UG/html/scripts/preview.php?layout=<? $curLayout ?>&theme=<? $curTheme ?>&corners=<? $curCorners ?>"'
-                    style="border: 1px solid gray; "></iframe>
-        </td>
-    </tr>
+			<table class="FormLayout">
+				<? foreach from=$Layouts item=layoutInfo key=layoutId name=layoutLoop ?>
+					<tr <? if $smarty.foreach.layoutLoop.last ?>class="SeparatedRow"<? /if ?>>
+						<td class="Indent"><input onClick="switchImage()" id="<? $layoutId ?>" name="curLayout" value="<? $layoutId ?>" <? wbs_checkboxStatus val=$curLayout true_val=$layoutId ?> type="radio"/></td>
+						<td><? wbs_label for=$layoutId text=$layoutInfo.name skipColon=true ?></td>
+					</tr>
+				<? /foreach ?>
+			</table>
+			
+			<strong><? $kernelStrings.lf_selcorners_label ?></strong>
+			
+			<table class="FormLayout">
+				<tr>
+					<td class="Indent"><input onClick="switchImage()" id="<? $layoutId ?>" name="curCorners" value="rounded" <? wbs_checkboxStatus val=$curCorners true_val="rounded" ?> type="radio"/></td>
+					<td><? $kernelStrings.lf_cornersrounded_title ?></td>
+				</tr>
+				<tr>
+					<td class="Indent"><input onClick="switchImage()" id="<? $layoutId ?>" name="curCorners" value="straight" <? wbs_checkboxStatus val=$curCorners true_val="straight" ?> type="radio"/></td>
+					<td><? $kernelStrings.lf_cornersstraight_title ?></td>
+				</tr>
+			</table>
+			
+			
+		</td>
+		<td>
+			<iframe frameborder=0 scrolling=no width="419" height="231" id="Screenshot" src='../../../UG/html/scripts/preview.php?layout=<? $curLayout ?>&theme=<? $curTheme ?>&corners=<? $curCorners ?>"' style="border: 1px solid gray; "></iframe>
+		</td>
+	</tr>
 </table>
 <input type='hidden' name='save_lf' value='1'>
 <script>
-    //switchImage();
+	//switchImage();
 </script>

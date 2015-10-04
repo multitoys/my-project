@@ -16,7 +16,7 @@
  * using FitLayout, simply set layout:'fit' on the container and add a single panel to it.  If the container has
  * multiple panels, only the first one will be displayed.  Example usage:</p>
  * <pre><code>
- var p = new Ext.Panel({
+var p = new Ext.Panel({
     title: 'Fit Layout',
     layout:'fit',
     items: {
@@ -25,23 +25,23 @@
         border: false
     }
 });
- </code></pre>
+</code></pre>
  */
 Ext.layout.FitLayout = Ext.extend(Ext.layout.ContainerLayout, {
     // private
-    monitorResize: true,
+    monitorResize:true,
 
     // private
-    onLayout: function (ct, target) {
+    onLayout : function(ct, target){
         Ext.layout.FitLayout.superclass.onLayout.call(this, ct, target);
-        if (!this.container.collapsed) {
+        if(!this.container.collapsed){
             this.setItemSize(this.activeItem || ct.items.itemAt(0), target.getStyleSize());
         }
     },
 
     // private
-    setItemSize: function (item, size) {
-        if (item && size.height > 0) { // display none?
+    setItemSize : function(item, size){
+        if(item && size.height > 0){ // display none?
             item.setSize(size);
         }
     }

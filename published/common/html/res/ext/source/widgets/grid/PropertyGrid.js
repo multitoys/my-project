@@ -14,19 +14,19 @@
  * config property or by calling {@link Ext.grid.PropertyGrid#setSource}.  However, if the need arises, these records
  * can also be created explicitly as shwon below.  Example usage:
  * <pre><code>
- var rec = new Ext.grid.PropertyRecord({
+var rec = new Ext.grid.PropertyRecord({
     name: 'Birthday',
     value: new Date(Date.parse('05/26/1972'))
 });
- // Add record to an already populated grid
- grid.store.addSorted(rec);
- </code></pre>
+// Add record to an already populated grid
+grid.store.addSorted(rec);
+</code></pre>
  * @constructor
  * @param {Object} config A data object in the format: {name: [name], value: [value]}.  The specified value's type
  * will be read automatically by the grid to determine the type of editor to use when displaying it.
  */
 Ext.grid.PropertyRecord = Ext.data.Record.create([
-    {name: 'name', type: 'string'}, 'value'
+    {name:'name',type:'string'}, 'value'
 ]);
 
 /**
@@ -40,25 +40,25 @@ Ext.grid.PropertyRecord = Ext.data.Record.create([
  * @param {Ext.grid.Grid} grid The grid this store will be bound to
  * @param {Object} source The source data config object
  */
-Ext.grid.PropertyStore = function (grid, source) {
+Ext.grid.PropertyStore = function(grid, source){
     this.grid = grid;
     this.store = new Ext.data.Store({
-        recordType: Ext.grid.PropertyRecord
+        recordType : Ext.grid.PropertyRecord
     });
-    this.store.on('update', this.onUpdate, this);
-    if (source) {
+    this.store.on('update', this.onUpdate,  this);
+    if(source){
         this.setSource(source);
     }
     Ext.grid.PropertyStore.superclass.constructor.call(this);
 };
 Ext.extend(Ext.grid.PropertyStore, Ext.util.Observable, {
     // protected - should only be called by the grid.  Use grid.setSource instead.
-    setSource: function (o) {
+    setSource : function(o){
         this.source = o;
         this.store.removeAll();
         var data = [];
-        for (var k in o) {
-            if (this.isEditableValue(o[k])) {
+        for(var k in o){
+            if(this.isEditableValue(o[k])){
                 data.push(new Ext.grid.PropertyRecord({name: k, value: o[k]}, k));
             }
         }
@@ -66,43 +66,43 @@ Ext.extend(Ext.grid.PropertyStore, Ext.util.Observable, {
     },
 
     // private
-    onUpdate: function (ds, record, type) {
-        if (type == Ext.data.Record.EDIT) {
+    onUpdate : function(ds, record, type){
+        if(type == Ext.data.Record.EDIT){
             var v = record.data['value'];
             var oldValue = record.modified['value'];
-            if (this.grid.fireEvent('beforepropertychange', this.source, record.id, v, oldValue) !== false) {
+            if(this.grid.fireEvent('beforepropertychange', this.source, record.id, v, oldValue) !== false){
                 this.source[record.id] = v;
                 record.commit();
                 this.grid.fireEvent('propertychange', this.source, record.id, v, oldValue);
-            } else {
+            }else{
                 record.reject();
             }
         }
     },
 
     // private
-    getProperty: function (row) {
-        return this.store.getAt(row);
+    getProperty : function(row){
+       return this.store.getAt(row);
     },
 
     // private
-    isEditableValue: function (val) {
-        if (val && val instanceof Date) {
+    isEditableValue: function(val){
+        if(val && val instanceof Date){
             return true;
-        } else if (typeof val == 'object' || typeof val == 'function') {
+        }else if(typeof val == 'object' || typeof val == 'function'){
             return false;
         }
         return true;
     },
 
     // private
-    setValue: function (prop, value) {
+    setValue : function(prop, value){
         this.source[prop] = value;
         this.store.getById(prop).set('value', value);
     },
 
     // protected - should only be called by the grid.  Use grid.getSource instead.
-    getSource: function () {
+    getSource : function(){
         return this.source;
     }
 });
@@ -115,12 +115,12 @@ Ext.extend(Ext.grid.PropertyStore, Ext.util.Observable, {
  * @param {Ext.grid.Grid} grid The grid this store will be bound to
  * @param {Object} source The source data config object
  */
-Ext.grid.PropertyColumnModel = function (grid, store) {
+Ext.grid.PropertyColumnModel = function(grid, store){
     this.grid = grid;
     var g = Ext.grid;
     g.PropertyColumnModel.superclass.constructor.call(this, [
-        {header: this.nameText, width: 50, sortable: true, dataIndex: 'name', id: 'name'},
-        {header: this.valueText, width: 50, resizable: false, dataIndex: 'value', id: 'value'}
+        {header: this.nameText, width:50, sortable: true, dataIndex:'name', id: 'name'},
+        {header: this.valueText, width:50, resizable:false, dataIndex: 'value', id: 'value'}
     ]);
     this.store = store;
     this.bselect = Ext.DomHelper.append(document.body, {
@@ -132,18 +132,18 @@ Ext.grid.PropertyColumnModel = function (grid, store) {
     var f = Ext.form;
 
     var bfield = new f.Field({
-        el: this.bselect,
-        bselect: this.bselect,
+        el:this.bselect,
+        bselect : this.bselect,
         autoShow: true,
-        getValue: function () {
+        getValue : function(){
             return this.bselect.value == 'true';
         }
     });
     this.editors = {
-        'date': new g.GridEditor(new f.DateField({selectOnFocus: true})),
-        'string': new g.GridEditor(new f.TextField({selectOnFocus: true})),
-        'number': new g.GridEditor(new f.NumberField({selectOnFocus: true, style: 'text-align:left;'})),
-        'boolean': new g.GridEditor(bfield)
+        'date' : new g.GridEditor(new f.DateField({selectOnFocus:true})),
+        'string' : new g.GridEditor(new f.TextField({selectOnFocus:true})),
+        'number' : new g.GridEditor(new f.NumberField({selectOnFocus:true, style:'text-align:left;'})),
+        'boolean' : new g.GridEditor(bfield)
     };
     this.renderCellDelegate = this.renderCell.createDelegate(this);
     this.renderPropDelegate = this.renderProp.createDelegate(this);
@@ -151,67 +151,67 @@ Ext.grid.PropertyColumnModel = function (grid, store) {
 
 Ext.extend(Ext.grid.PropertyColumnModel, Ext.grid.ColumnModel, {
     // private - strings used for locale support
-    nameText: 'Name',
-    valueText: 'Value',
-    dateFormat: 'm/j/Y',
+    nameText : 'Name',
+    valueText : 'Value',
+    dateFormat : 'm/j/Y',
 
     // private
-    renderDate: function (dateVal) {
+    renderDate : function(dateVal){
         return dateVal.dateFormat(this.dateFormat);
     },
 
     // private
-    renderBool: function (bVal) {
+    renderBool : function(bVal){
         return bVal ? 'true' : 'false';
     },
 
     // private
-    isCellEditable: function (colIndex, rowIndex) {
+    isCellEditable : function(colIndex, rowIndex){
         return colIndex == 1;
     },
 
     // private
-    getRenderer: function (col) {
+    getRenderer : function(col){
         return col == 1 ?
             this.renderCellDelegate : this.renderPropDelegate;
     },
 
     // private
-    renderProp: function (v) {
+    renderProp : function(v){
         return this.getPropertyName(v);
     },
 
     // private
-    renderCell: function (val) {
+    renderCell : function(val){
         var rv = val;
-        if (val instanceof Date) {
+        if(val instanceof Date){
             rv = this.renderDate(val);
-        } else if (typeof val == 'boolean') {
+        }else if(typeof val == 'boolean'){
             rv = this.renderBool(val);
         }
         return Ext.util.Format.htmlEncode(rv);
     },
 
     // private
-    getPropertyName: function (name) {
+    getPropertyName : function(name){
         var pn = this.grid.propertyNames;
         return pn && pn[name] ? pn[name] : name;
     },
 
     // private
-    getCellEditor: function (colIndex, rowIndex) {
+    getCellEditor : function(colIndex, rowIndex){
         var p = this.store.getProperty(rowIndex);
         var n = p.data['name'], val = p.data['value'];
-        if (this.grid.customEditors[n]) {
+        if(this.grid.customEditors[n]){
             return this.grid.customEditors[n];
         }
-        if (val instanceof Date) {
+        if(val instanceof Date){
             return this.editors['date'];
-        } else if (typeof val == 'number') {
+        }else if(typeof val == 'number'){
             return this.editors['number'];
-        } else if (typeof val == 'boolean') {
+        }else if(typeof val == 'boolean'){
             return this.editors['boolean'];
-        } else {
+        }else{
             return this.editors['string'];
         }
     }
@@ -224,7 +224,7 @@ Ext.extend(Ext.grid.PropertyColumnModel, Ext.grid.ColumnModel, {
  * development IDEs.  Each row in the grid represents a property of some object, and the data is stored
  * as a set of name/value pairs in {@link Ext.grid.PropertyRecord}s.  Example usage:
  * <pre><code>
- var grid = new Ext.grid.PropertyGrid({
+var grid = new Ext.grid.PropertyGrid({
     title: 'Properties Grid',
     autoHeight: true,
     width: 300,
@@ -237,22 +237,22 @@ Ext.extend(Ext.grid.PropertyColumnModel, Ext.grid.ColumnModel, {
         "Description": "A test object"
     }
 });
- </pre></code>
+</pre></code>
  * @constructor
  * @param {Object} config The grid config object
  */
 Ext.grid.PropertyGrid = Ext.extend(Ext.grid.EditorGridPanel, {
     /**
-     * @cfg {Object} source A data object to use as the data source of the grid (see {@link #setSource} for details).
-     */
+    * @cfg {Object} source A data object to use as the data source of the grid (see {@link #setSource} for details).
+    */
     /**
-     * @cfg {Object} customEditors An object containing name/value pairs of custom editor type definitions that allow
-     * the grid to support additional types of editable fields.  By default, the grid supports strongly-typed editing
-     * of strings, dates, numbers and booleans using built-in form editors, but any custom type can be supported and
-     * associated with a custom input control by specifying a custom editor.  The name of the editor
-     * type should correspond with the name of the property that will use the editor.  Example usage:
-     * <pre><code>
-     var grid = new Ext.grid.PropertyGrid({
+    * @cfg {Object} customEditors An object containing name/value pairs of custom editor type definitions that allow
+    * the grid to support additional types of editable fields.  By default, the grid supports strongly-typed editing
+    * of strings, dates, numbers and booleans using built-in form editors, but any custom type can be supported and
+    * associated with a custom input control by specifying a custom editor.  The name of the editor
+    * type should correspond with the name of the property that will use the editor.  Example usage:
+    * <pre><code>
+var grid = new Ext.grid.PropertyGrid({
     ...
     customEditors: {
         'Start Time': new Ext.grid.GridEditor(new Ext.form.TimeField({selectOnFocus:true}))
@@ -261,21 +261,21 @@ Ext.grid.PropertyGrid = Ext.extend(Ext.grid.EditorGridPanel, {
         'Start Time': '10:00 AM'
     }
 });
-     </code></pre>
-     */
+</code></pre>
+    */
 
     // private config overrides
-    enableColumnMove: false,
-    stripeRows: false,
+    enableColumnMove:false,
+    stripeRows:false,
     trackMouseOver: false,
-    clicksToEdit: 1,
-    enableHdMenu: false,
-    viewConfig: {
-        forceFit: true
+    clicksToEdit:1,
+    enableHdMenu : false,
+    viewConfig : {
+        forceFit:true
     },
 
     // private
-    initComponent: function () {
+    initComponent : function(){
         this.customEditors = this.customEditors || {};
         this.lastEditRow = null;
         var store = new Ext.grid.PropertyStore(this);
@@ -309,8 +309,8 @@ Ext.grid.PropertyGrid = Ext.extend(Ext.grid.EditorGridPanel, {
         this.ds = store.store;
         Ext.grid.PropertyGrid.superclass.initComponent.call(this);
 
-        this.selModel.on('beforecellselect', function (sm, rowIndex, colIndex) {
-            if (colIndex === 0) {
+        this.selModel.on('beforecellselect', function(sm, rowIndex, colIndex){
+            if(colIndex === 0){
                 this.startEditing.defer(200, this, [rowIndex, 1]);
                 return false;
             }
@@ -318,16 +318,16 @@ Ext.grid.PropertyGrid = Ext.extend(Ext.grid.EditorGridPanel, {
     },
 
     // private
-    onRender: function () {
+    onRender : function(){
         Ext.grid.PropertyGrid.superclass.onRender.apply(this, arguments);
 
         this.getGridEl().addClass('x-props-grid');
     },
 
     // private
-    afterRender: function () {
+    afterRender: function(){
         Ext.grid.PropertyGrid.superclass.afterRender.apply(this, arguments);
-        if (this.source) {
+        if(this.source){
             this.setSource(this.source);
         }
     },
@@ -339,17 +339,17 @@ Ext.grid.PropertyGrid = Ext.extend(Ext.grid.EditorGridPanel, {
      * otherwise string type will be assumed.  If the grid already contains data, this method will replace any
      * existing data.  See also the {@link #source} config value.  Example usage:
      * <pre><code>
-     grid.setSource({
+grid.setSource({
     "(name)": "My Object",
     "Created": new Date(Date.parse('10/15/2006')),  // date type
     "Available": false,  // boolean type
     "Version": .01,      // decimal type
     "Description": "A test object"
 });
-     </code></pre>
+</code></pre>
      * @param {Object} source The data object
      */
-    setSource: function (source) {
+    setSource : function(source){
         this.propStore.setSource(source);
     },
 
@@ -358,7 +358,7 @@ Ext.grid.PropertyGrid = Ext.extend(Ext.grid.EditorGridPanel, {
      * format of the data object.
      * @return {Object} The data object
      */
-    getSource: function () {
+    getSource : function(){
         return this.propStore.getSource();
     }
 });

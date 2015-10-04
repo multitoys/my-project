@@ -1,30 +1,30 @@
-a.Button span {
-}
+a.Button span {}
 
-.MenuBlock {
-    width: 100%
-}
+.MenuBlock {width: 100%}
 
 /* Horizontal Rule */
 
-div.hr {
-    background: transparent url(menuseparator.gif) repeat-x left center !important;
+div.hr
+{
+	background: transparent url(menuseparator.gif) repeat-x left center!important;
 }
 
 /* Toolbar Separator */
 
-#Toolbar ul li a:hover table ul li.Separator div, #Toolbar ul li:hover table ul li.Separator div {
-    background: transparent url(menuseparator.gif) repeat-x left top;
+#Toolbar ul li a:hover table ul li.Separator div, #Toolbar ul li:hover table ul li.Separator div
+{
+	background: transparent url(menuseparator.gif) repeat-x left top;
 }
 
-div.SplitterPanelHeader {
-    padding-right: 5px;
+div.SplitterPanelHeader
+{
+	padding-right: 5px;
 }
 
 #Toolbar ul li a:hover table ul, #Toolbar ul li:hover table ul {
-    top: 21px;
+	top: 21px;
 }
 
 * html #Toolbar ul li a:hover table ul, * html #Toolbar ul li:hover table ul {
-    top: 23px;
+	top: 23px;
 }

@@ -62,10 +62,10 @@ Ext.grid.GridPanel = Ext.extend(Ext.Panel, {
      * @cfg {Array} columns An array of columns to auto create a ColumnModel
      */
     /**
-     * @cfg {Number} maxHeight Sets the maximum height of the grid - ignored if autoHeight is not on.
-     */
+    * @cfg {Number} maxHeight Sets the maximum height of the grid - ignored if autoHeight is not on.
+    */
     /**
-     * @cfg {Boolean} disableSelection True to disable selections in the grid (defaults to false). - ignored a SelectionModel is specified
+     * @cfg {Boolean} disableSelection True to disable selections in the grid (defaults to false). - ignored a SelectionModel is specified 
      */
     /**
      * @cfg {Boolean} enableColumnMove False to turn off column reordering via drag drop (defaults to true).
@@ -83,93 +83,93 @@ Ext.grid.GridPanel = Ext.extend(Ext.Panel, {
      * {0} is replaced with the number of selected rows.
      * @type String
      */
-    ddText: "{0} selected row{1}",
+    ddText : "{0} selected row{1}",
     /**
      * @cfg {Number} minColumnWidth The minimum width a column can be resized to. Defaults to 25.
      */
-    minColumnWidth: 25,
+    minColumnWidth : 25,
     /**
      * @cfg {Boolean} monitorWindowResize True to autoSize the grid when the window resizes. Defaults to true.
      */
-    monitorWindowResize: true,
+    monitorWindowResize : true,
     //deprecated
-    maxRowsToMeasure: 0,
+    maxRowsToMeasure : 0,
     /**
      * @cfg {Boolean} trackMouseOver True to highlight rows when the mouse is over. Default is true.
      */
-    trackMouseOver: true,
+    trackMouseOver : true,
     /**
      * @cfg {Boolean} enableDragDrop True to enable drag and drop of rows.
      */
-    enableDragDrop: false,
+    enableDragDrop : false,
     /**
      * @cfg {Boolean} enableColumnMove True to enable drag and drop reorder of columns.
      */
-    enableColumnMove: true,
+    enableColumnMove : true,
     /**
      * @cfg {Boolean} enableColumnHide True to enable hiding of columns with the header context menu.
      */
-    enableColumnHide: true,
+    enableColumnHide : true,
     /**
      * @cfg {Boolean} enableHdMenu True to enable the drop down button for menu in the headers.
      */
-    enableHdMenu: true,
+    enableHdMenu : true,
     /**
      * @cfg {Boolean} stripeRows True to stripe the rows. Default is false.
      */
-    stripeRows: false,
+    stripeRows : false,
     /**
      * @cfg {String} autoExpandColumn The id of a column in this grid that should expand to fill unused space. This id can not be 0.
      */
-    autoExpandColumn: false,
+    autoExpandColumn : false,
     /**
-     * @cfg {Number} autoExpandMin The minimum width the autoExpandColumn can have (if enabled).
-     * defaults to 50.
-     */
-    autoExpandMin: 50,
+    * @cfg {Number} autoExpandMin The minimum width the autoExpandColumn can have (if enabled).
+    * defaults to 50.
+    */
+    autoExpandMin : 50,
     /**
-     * @cfg {Number} autoExpandMax The maximum width the autoExpandColumn can have (if enabled). Defaults to 1000.
-     */
-    autoExpandMax: 1000,
+    * @cfg {Number} autoExpandMax The maximum width the autoExpandColumn can have (if enabled). Defaults to 1000.
+    */
+    autoExpandMax : 1000,
     /**
      * @cfg {Object} view The {@link Ext.grid.GridView} used by the grid. This can be set before a call to render().
      */
-    view: null,
+    view : null,
     /**
      * @cfg {Object} loadMask An {@link Ext.LoadMask} config or true to mask the grid while loading (defaults to false).
      */
-    loadMask: false,
+    loadMask : false,
 
     // private
-    rendered: false,
+    rendered : false,
     // private
     viewReady: false,
     // private
     stateEvents: ["columnmove", "columnresize", "sortchange"],
 
     // private
-    initComponent: function () {
+    initComponent : function(){
         Ext.grid.GridPanel.superclass.initComponent.call(this);
 
         // override any provided value since it isn't valid
         // and is causing too many bug reports ;)
         this.autoScroll = false;
 
-        if (this.columns && (this.columns instanceof Array)) {
+        if(this.columns && (this.columns instanceof Array)){
             this.colModel = new Ext.grid.ColumnModel(this.columns);
             delete this.columns;
         }
 
         // check and correct shorthanded configs
-        if (this.ds) {
+        if(this.ds){
             this.store = this.ds;
             delete this.ds;
         }
-        if (this.cm) {
+        if(this.cm){
             this.colModel = this.cm;
             delete this.cm;
         }
-        if (this.sm) {
+        if(this.sm){
             this.selModel = this.sm;
             delete this.sm;
         }
@@ -266,12 +266,12 @@ Ext.grid.GridPanel = Ext.extend(Ext.Panel, {
              * for this row. To access the data in the listener function use the
              * following technique:
              * <pre><code>
-             function(grid, rowIndex, columnIndex, e) {
+    function(grid, rowIndex, columnIndex, e) {
         var record = grid.getStore().getAt(rowIndex);  // Get the Record
         var fieldName = grid.getColumnModel().getDataIndex(columnIndex); // Get field name
         var data = record.get(fieldName);
     }
-             </code></pre>
+</code></pre>
              * @param {Grid} this
              * @param {Number} rowIndex
              * @param {Number} columnIndex
@@ -376,7 +376,7 @@ Ext.grid.GridPanel = Ext.extend(Ext.Panel, {
     },
 
     // private
-    onRender: function (ct, position) {
+    onRender : function(ct, position){
         Ext.grid.GridPanel.superclass.onRender.apply(this, arguments);
 
         var c = this.body;
@@ -392,69 +392,69 @@ Ext.grid.GridPanel = Ext.extend(Ext.Panel, {
         c.on("contextmenu", this.onContextMenu, this);
         c.on("keydown", this.onKeyDown, this);
 
-        this.relayEvents(c, ["mousedown", "mouseup", "mouseover", "mouseout", "keypress"]);
+        this.relayEvents(c, ["mousedown","mouseup","mouseover","mouseout","keypress"]);
 
         this.getSelectionModel().init(this);
         this.view.render();
     },
 
     // private
-    initEvents: function () {
+    initEvents : function(){
         Ext.grid.GridPanel.superclass.initEvents.call(this);
 
-        if (this.loadMask) {
+        if(this.loadMask){
             this.loadMask = new Ext.LoadMask(this.bwrap,
-                Ext.apply({store: this.store}, this.loadMask));
+                    Ext.apply({store:this.store}, this.loadMask));
         }
     },
 
-    initStateEvents: function () {
+    initStateEvents : function(){
         Ext.grid.GridPanel.superclass.initStateEvents.call(this);
         this.colModel.on('hiddenchange', this.saveState, this, {delay: 100});
     },
 
-    applyState: function (state) {
+    applyState : function(state){
         var cm = this.colModel;
         var cs = state.columns;
-        if (cs) {
-            for (var i = 0, len = cs.length; i < len; i++) {
+        if(cs){
+            for(var i = 0, len = cs.length; i < len; i++){
                 var s = cs[i];
                 var c = cm.getColumnById(s.id);
-                if (c) {
+                if(c){
                     c.hidden = s.hidden;
                     c.width = s.width;
                     var oldIndex = cm.getIndexById(s.id);
-                    if (oldIndex != i) {
+                    if(oldIndex != i){
                         cm.moveColumn(oldIndex, i);
                     }
                 }
             }
         }
-        if (state.sort) {
+        if(state.sort){
             this.store[this.store.remoteSort ? 'setDefaultSort' : 'sort'](state.sort.field, state.sort.direction);
         }
     },
 
-    getState: function () {
+    getState : function(){
         var o = {columns: []};
-        for (var i = 0, c; c = this.colModel.config[i]; i++) {
+        for(var i = 0, c; c = this.colModel.config[i]; i++){
             o.columns[i] = {
                 id: c.id,
                 width: c.width
             };
-            if (c.hidden) {
+            if(c.hidden){
                 o.columns[i].hidden = true;
             }
         }
         var ss = this.store.getSortState();
-        if (ss) {
+        if(ss){
             o.sort = ss;
         }
         return o;
     },
 
     // private
-    afterRender: function () {
+    afterRender : function(){
         Ext.grid.GridPanel.superclass.afterRender.call(this);
         this.view.layout();
         this.viewReady = true;
@@ -466,29 +466,29 @@ Ext.grid.GridPanel = Ext.extend(Ext.Panel, {
      * @param {Ext.data.Store} store The new {@link Ext.data.Store} object
      * @param {Ext.grid.ColumnModel} colModel The new {@link Ext.grid.ColumnModel} object
      */
-    reconfigure: function (store, colModel) {
-        if (this.loadMask) {
+    reconfigure : function(store, colModel){
+        if(this.loadMask){
             this.loadMask.destroy();
             this.loadMask = new Ext.LoadMask(this.bwrap,
-                Ext.apply({store: store}, this.initialConfig.loadMask));
+                    Ext.apply({store:store}, this.initialConfig.loadMask));
         }
         this.view.bind(store, colModel);
         this.store = store;
         this.colModel = colModel;
-        if (this.rendered) {
+        if(this.rendered){
             this.view.refresh(true);
         }
     },
 
     // private
-    onKeyDown: function (e) {
+    onKeyDown : function(e){
         this.fireEvent("keydown", e);
     },
 
     // private
-    onDestroy: function () {
-        if (this.rendered) {
-            if (this.loadMask) {
+    onDestroy : function(){
+        if(this.rendered){
+            if(this.loadMask){
                 this.loadMask.destroy();
             }
             var c = this.body;
@@ -501,19 +501,19 @@ Ext.grid.GridPanel = Ext.extend(Ext.Panel, {
     },
 
     // private
-    processEvent: function (name, e) {
+    processEvent : function(name, e){
         this.fireEvent(name, e);
         var t = e.getTarget();
         var v = this.view;
         var header = v.findHeaderIndex(t);
-        if (header !== false) {
+        if(header !== false){
             this.fireEvent("header" + name, this, header, e);
-        } else {
+        }else{
             var row = v.findRowIndex(t);
             var cell = v.findCellIndex(t);
-            if (row !== false) {
+            if(row !== false){
                 this.fireEvent("row" + name, this, row, e);
-                if (cell !== false) {
+                if(cell !== false){
                     this.fireEvent("cell" + name, this, row, cell, e);
                 }
             }
@@ -521,41 +521,41 @@ Ext.grid.GridPanel = Ext.extend(Ext.Panel, {
     },
 
     // private
-    onClick: function (e) {
+    onClick : function(e){
         this.processEvent("click", e);
     },
 
     // private
-    onMouseDown: function (e) {
+    onMouseDown : function(e){
         this.processEvent("mousedown", e);
     },
 
     // private
-    onContextMenu: function (e, t) {
+    onContextMenu : function(e, t){
         this.processEvent("contextmenu", e);
     },
 
     // private
-    onDblClick: function (e) {
+    onDblClick : function(e){
         this.processEvent("dblclick", e);
     },
 
     // private
-    walkCells: function (row, col, step, fn, scope) {
+    walkCells : function(row, col, step, fn, scope){
         var cm = this.colModel, clen = cm.getColumnCount();
         var ds = this.store, rlen = ds.getCount(), first = true;
-        if (step < 0) {
-            if (col < 0) {
+        if(step < 0){
+            if(col < 0){
                 row--;
                 first = false;
             }
-            while (row >= 0) {
-                if (!first) {
-                    col = clen - 1;
+            while(row >= 0){
+                if(!first){
+                    col = clen-1;
                 }
                 first = false;
-                while (col >= 0) {
-                    if (fn.call(scope || this, row, col, cm) === true) {
+                while(col >= 0){
+                    if(fn.call(scope || this, row, col, cm) === true){
                         return [row, col];
                     }
                     col--;
@@ -563,17 +563,17 @@ Ext.grid.GridPanel = Ext.extend(Ext.Panel, {
                 row--;
             }
         } else {
-            if (col >= clen) {
+            if(col >= clen){
                 row++;
                 first = false;
             }
-            while (row < rlen) {
-                if (!first) {
+            while(row < rlen){
+                if(!first){
                     col = 0;
                 }
                 first = false;
-                while (col < clen) {
-                    if (fn.call(scope || this, row, col, cm) === true) {
+                while(col < clen){
+                    if(fn.call(scope || this, row, col, cm) === true){
                         return [row, col];
                     }
                     col++;
@@ -585,14 +585,14 @@ Ext.grid.GridPanel = Ext.extend(Ext.Panel, {
     },
 
     // private
-    getSelections: function () {
+    getSelections : function(){
         return this.selModel.getSelections();
     },
 
     // private
-    onResize: function () {
+    onResize : function(){
         Ext.grid.GridPanel.superclass.onResize.apply(this, arguments);
-        if (this.viewReady) {
+        if(this.viewReady){
             this.view.layout();
         }
     },
@@ -601,22 +601,21 @@ Ext.grid.GridPanel = Ext.extend(Ext.Panel, {
      * Returns the grid's underlying element.
      * @return {Element} The element
      */
-    getGridEl: function () {
+    getGridEl : function(){
         return this.body;
     },
 
     // private for compatibility, overridden by editor grid
-    stopEditing: function () {
-    },
+    stopEditing : function(){},
 
     /**
      * Returns the grid's SelectionModel.
      * @return {SelectionModel} The selection model
      */
-    getSelectionModel: function () {
-        if (!this.selModel) {
+    getSelectionModel : function(){
+        if(!this.selModel){
             this.selModel = new Ext.grid.RowSelectionModel(
-                this.disableSelection ? {selectRow: Ext.emptyFn} : null);
+                    this.disableSelection ? {selectRow: Ext.emptyFn} : null);
         }
         return this.selModel;
     },
@@ -625,7 +624,7 @@ Ext.grid.GridPanel = Ext.extend(Ext.Panel, {
      * Returns the grid's data store.
      * @return {DataSource} The store
      */
-    getStore: function () {
+    getStore : function(){
         return this.store;
     },
 
@@ -633,7 +632,7 @@ Ext.grid.GridPanel = Ext.extend(Ext.Panel, {
      * Returns the grid's ColumnModel.
      * @return {ColumnModel} The column model
      */
-    getColumnModel: function () {
+    getColumnModel : function(){
         return this.colModel;
     },
 
@@ -641,8 +640,8 @@ Ext.grid.GridPanel = Ext.extend(Ext.Panel, {
      * Returns the grid's GridView object.
      * @return {GridView} The grid view
      */
-    getView: function () {
-        if (!this.view) {
+    getView : function(){
+        if(!this.view){
             this.view = new Ext.grid.GridView(this.viewConfig);
         }
         return this.view;
@@ -651,134 +650,134 @@ Ext.grid.GridPanel = Ext.extend(Ext.Panel, {
      * Called to get grid's drag proxy text, by default returns this.ddText.
      * @return {String} The text
      */
-    getDragDropText: function () {
+    getDragDropText : function(){
         var count = this.selModel.getCount();
         return String.format(this.ddText, count, count == 1 ? '' : 's');
     }
 
-    /**
-     * @cfg {String/Number} activeItem
-     * @hide
+    /** 
+     * @cfg {String/Number} activeItem 
+     * @hide 
      */
-    /**
-     * @cfg {Boolean} autoDestroy
-     * @hide
+    /** 
+     * @cfg {Boolean} autoDestroy 
+     * @hide 
      */
-    /**
-     * @cfg {Object/String/Function} autoLoad
-     * @hide
+    /** 
+     * @cfg {Object/String/Function} autoLoad 
+     * @hide 
      */
-    /**
-     * @cfg {Boolean} autoWidth
-     * @hide
+    /** 
+     * @cfg {Boolean} autoWidth 
+     * @hide 
      */
-    /**
-     * @cfg {Boolean/Number} bufferResize
-     * @hide
+    /** 
+     * @cfg {Boolean/Number} bufferResize 
+     * @hide 
      */
-    /**
-     * @cfg {String} defaultType
-     * @hide
+    /** 
+     * @cfg {String} defaultType 
+     * @hide 
      */
-    /**
-     * @cfg {Object} defaults
-     * @hide
+    /** 
+     * @cfg {Object} defaults 
+     * @hide 
      */
-    /**
-     * @cfg {Boolean} hideBorders
-     * @hide
+    /** 
+     * @cfg {Boolean} hideBorders 
+     * @hide 
      */
-    /**
-     * @cfg {Mixed} items
-     * @hide
+    /** 
+     * @cfg {Mixed} items 
+     * @hide 
      */
-    /**
-     * @cfg {String} layout
-     * @hide
+    /** 
+     * @cfg {String} layout 
+     * @hide 
      */
-    /**
-     * @cfg {Object} layoutConfig
-     * @hide
+    /** 
+     * @cfg {Object} layoutConfig 
+     * @hide 
      */
-    /**
-     * @cfg {Boolean} monitorResize
-     * @hide
+    /** 
+     * @cfg {Boolean} monitorResize 
+     * @hide 
      */
-    /**
-     * @property items
-     * @hide
+    /** 
+     * @property items 
+     * @hide 
      */
-    /**
-     * @method add
-     * @hide
+    /** 
+     * @method add 
+     * @hide 
      */
-    /**
-     * @method cascade
-     * @hide
+    /** 
+     * @method cascade 
+     * @hide 
      */
-    /**
-     * @method doLayout
-     * @hide
+    /** 
+     * @method doLayout 
+     * @hide 
      */
-    /**
-     * @method find
-     * @hide
+    /** 
+     * @method find 
+     * @hide 
      */
-    /**
-     * @method findBy
-     * @hide
+    /** 
+     * @method findBy 
+     * @hide 
      */
-    /**
-     * @method findById
-     * @hide
+    /** 
+     * @method findById 
+     * @hide 
      */
-    /**
-     * @method findByType
-     * @hide
+    /** 
+     * @method findByType 
+     * @hide 
      */
-    /**
-     * @method getComponent
-     * @hide
+    /** 
+     * @method getComponent 
+     * @hide 
      */
-    /**
-     * @method getLayout
-     * @hide
+    /** 
+     * @method getLayout 
+     * @hide 
      */
-    /**
-     * @method getUpdater
-     * @hide
+    /** 
+     * @method getUpdater 
+     * @hide 
      */
-    /**
-     * @method insert
-     * @hide
+    /** 
+     * @method insert 
+     * @hide 
      */
-    /**
-     * @method load
-     * @hide
+    /** 
+     * @method load 
+     * @hide 
      */
-    /**
-     * @method remove
-     * @hide
+    /** 
+     * @method remove 
+     * @hide 
      */
-    /**
-     * @event add
-     * @hide
+    /** 
+     * @event add 
+     * @hide 
      */
-    /**
-     * @event afterLayout
-     * @hide
+    /** 
+     * @event afterLayout 
+     * @hide 
      */
-    /**
-     * @event beforeadd
-     * @hide
+    /** 
+     * @event beforeadd 
+     * @hide 
      */
-    /**
-     * @event beforeremove
-     * @hide
+    /** 
+     * @event beforeremove 
+     * @hide 
      */
-    /**
-     * @event remove
-     * @hide
+    /** 
+     * @event remove 
+     * @hide 
      */
 });
 Ext.reg('grid', Ext.grid.GridPanel);

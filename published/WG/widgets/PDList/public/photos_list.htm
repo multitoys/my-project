@@ -4,62 +4,55 @@
 <? assign var=bigSize value=1024 ?>
 
 <script>
-    function loadBigImg(img) {
-        hs.expand(img);
-        return false;
-    }
-
-    function startSlideshow() {
-        document.location.href += "&viewmode=3";
-        return false;
-    }
+	function loadBigImg(img) {
+		hs.expand(img);
+		return false;
+	}
+	
+	function startSlideshow () {
+		document.location.href += "&viewmode=3";
+		return false;
+	}
 </script>
 
 <? if !$params.clear ?>
-<h2 style='margin-top: 0px; margin-bottom: 0px'><? $widgetData.WG_DESC ?></h2>
-<font style='font-size: 10pt; color: #999'><? $widgetData.WG_CREATED_BY ?> <? $widgetData.WG_CREATED_DATETIME ?></font>
-<BR>
-<a style='font-size: 1.2em' href='javascript:void(0)'
-   onClick='return startSlideshow()'><? $widgetStrings.pd_startslideshow_label ?></a>
-<BR><BR>
+	<h2 style='margin-top: 0px; margin-bottom: 0px'><? $widgetData.WG_DESC ?></h2>
+	<font style='font-size: 10pt; color: #999'><? $widgetData.WG_CREATED_BY ?> <? $widgetData.WG_CREATED_DATETIME ?></font>
+	<BR>
+	<a style='font-size: 1.2em' href='javascript:void(0)' onClick='return startSlideshow()'><? $widgetStrings.pd_startslideshow_label ?></a>
+	<BR><BR>
 <? /if ?>
 <? assign var=view value=$widgetData.params.VIEW_MODE ?>
 
 <table class='FilesTable' cellspacing=0 cellpadding=0 style='text-align: left'>
-    <? foreach item=file from=$filesList ?>
-    <? if $view == 1 ?>
-    <tr height="15">
-        <td valign='top' align='left'>
-            <a href='<? $file.url.$bigSize ?>' id='image_<? $file.PL_ID ?>' onClick='return hs.expand(this)'><img
-                    src='<? $file.url.$middleSize ?>'></a>
-        </td>
-        <td valign='top' style='padding-left: 20px'>
-            <? $file.PL_DESC|htmlsafe ?>
-
-        </td>
-    </tr>
-    <? elseif $view == 2 ?>
-    <tr>
-        <td>
-            <? if $file.PL_DESC ?><? $file.PL_DESC|htmlsafe ?><? /if ?><BR>
-            <img src='<? $file.url.$subBigSize ?>'>
-        </td>
-    </tr>
-    <? /if ?>
-    <? /foreach ?>
-
-    <? if $view == 0 ?>
-    <tr>
-        <td>
-            <? foreach item=file from=$filesList ?>
-            <div style="float: left; width: 110px; height: 140px; padding: 0 0 0 5px; text-align: center">
-                <? assign var=truncDesc value=$file.PL_DESC|htmlsafe:true:true|trunc_str:"10" ?>
-
-                <a href='<? $file.url.$bigSize ?>' id='image_<? $file.PL_ID ?>' onClick='return hs.expand(this)'><img
-                        src='<? $file.url.$smallSize ?>'></a>
-            </div>
-            <? /foreach ?>
-        </td>
-    </tr>
-    <? /if ?>
+	<? foreach item=file from=$filesList ?>
+		<? if $view == 1 ?>
+			<tr height="15" >
+				<td valign='top' align='left'>
+					<a href='<? $file.url.$bigSize ?>' id='image_<? $file.PL_ID ?>' onClick='return hs.expand(this)'><img src='<? $file.url.$middleSize ?>'></a>
+				</td>
+				<td valign='top' style='padding-left: 20px'>
+					<? $file.PL_DESC|htmlsafe ?>
+					
+				</td>
+			</tr>
+		<? elseif $view == 2 ?>
+			<tr><td>
+				<? if $file.PL_DESC ?><? $file.PL_DESC|htmlsafe ?><? /if ?><BR>
+				<img src='<? $file.url.$subBigSize ?>'>
+			</td></tr>
+		<? /if ?>
+	<? /foreach ?>
+	
+	<? if $view == 0 ?>
+		<tr><td>
+			<? foreach item=file from=$filesList ?>
+				<div style="float: left; width: 110px; height: 140px; padding: 0 0 0 5px; text-align: center">
+					<? assign var=truncDesc value=$file.PL_DESC|htmlsafe:true:true|trunc_str:"10" ?>
+						
+						<a href='<? $file.url.$bigSize ?>' id='image_<? $file.PL_ID ?>' onClick='return hs.expand(this)'><img src='<? $file.url.$smallSize ?>'></a>
+				</div>
+			<? /foreach ?>
+		</td></tr>
+	<? /if ?>
 </table>

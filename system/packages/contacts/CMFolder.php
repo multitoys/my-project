@@ -1,8 +1,5 @@
 <?php
-
-    class CMFolder extends WbsFolderNode
-    {
-
-    }
-
+	class CMFolder extends WbsFolderNode {
+		
+	}
 ?>

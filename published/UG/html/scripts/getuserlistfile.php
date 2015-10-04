@@ -1,34 +1,34 @@
 <?php
 
-    $allow_page_caching = false;
-    require_once("../../../common/html/includes/httpinit.php");
+	$allow_page_caching = false;
+	require_once( "../../../common/html/includes/httpinit.php" );
 
-    $errorStr = null;
-    $fatalError = false;
-    $SCR_ID = "UNG";
+	$errorStr = null;
+	$fatalError = false;
+	$SCR_ID = "UNG";
 
-    pageUserAuthorization($SCR_ID, UG_APP_ID, false);
+	pageUserAuthorization( $SCR_ID, UG_APP_ID, false );
 
-    $kernelStrings = $loc_str[$language];
+	$kernelStrings = $loc_str[$language];
 
-    $file = base64_decode($file);
+	$file = base64_decode($file);
 
-    if (!file_exists($file)) {
-        header("HTTP/1.0 404 Not Found");
-        die();
-    }
+	if ( !file_exists($file) ) {
+		header("HTTP/1.0 404 Not Found");
+		die();
+	}
 
-    $fileName = 'userlist.csv';
-    $fileType = 'text/plain';
+	$fileName = 'userlist.csv';
+	$fileType = 'text/plain';
 
-    $fileSize = filesize($file);
+	$fileSize = filesize($file);
 
-    header('Cache-Control: no-cache, must-revalidate');
-    header("Accept-Ranges: bytes");
-    header("Content-Length: $fileSize");
-    header('Connection: close');
-    header("Content-type: $fileType");
-    header("Content-Disposition: inline; filename=$fileName;");
+	header('Cache-Control: no-cache, must-revalidate');
+	header("Accept-Ranges: bytes");
+	header("Content-Length: $fileSize");
+	header('Connection: close');
+	header("Content-type: $fileType"); 
+	header("Content-Disposition: inline; filename=$fileName;");
 
-    @readfile($file);
+	@readfile($file);
 ?>

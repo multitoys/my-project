@@ -13,18 +13,9 @@
 //
 // Distributed under the same terms as HTMLArea itself.
 // This notice MUST stay intact for use (see license.txt)
-{
-    "Save"
-:
-    "Salvar",
-        "Saving..."
-:
-    "Gravando...",
-        "in progress"
-:
-    "em processo",
-        "Ready"
-:
-    "Pronto"
-}
-;
+{ 
+	"Save": "Salvar",
+	"Saving...": "Gravando...",
+	"in progress": "em processo",
+	"Ready": "Pronto"
+};

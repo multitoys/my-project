@@ -21,12 +21,8 @@ function Dialog(url, action, init) {
     Dialog._geckoOpenModal(url, action, init);
 }
 
-Dialog._parentEvent = function (ev) {
-    setTimeout(function () {
-        if (Dialog._modal && !Dialog._modal.closed) {
-            Dialog._modal.focus()
-        }
-    }, 50);
+Dialog._parentEvent = function(ev) {
+    setTimeout( function() { if (Dialog._modal && !Dialog._modal.closed) { Dialog._modal.focus() } }, 50);
     if (Dialog._modal && !Dialog._modal.closed) {
         Dialog._stopEvent(ev);
     }
@@ -41,14 +37,14 @@ Dialog._modal = null;
 // the dialog will read it's args from this variable
 Dialog._arguments = null;
 
-Dialog._geckoOpenModal = function (url, action, init) {
+Dialog._geckoOpenModal = function(url, action, init) {
     //var urlLink = "hadialog"+url.toString();
-    var myURL = "hadialog" + url;
+    var myURL = "hadialog"+url;
     var regObj = /\W/g;
-    myURL = myURL.replace(regObj, '_');
+    myURL = myURL.replace(regObj,'_');
     var dlg = window.open(url, myURL,
-        "toolbar=no,menubar=no,personalbar=no,width=10,height=10," +
-        "scrollbars=no,resizable=yes,modal=yes,dependable=yes");
+                  "toolbar=no,menubar=no,personalbar=no,width=10,height=10," +
+                  "scrollbars=no,resizable=yes,modal=yes,dependable=yes");
     Dialog._modal = dlg;
     Dialog._arguments = init;
 
@@ -81,7 +77,7 @@ Dialog._geckoOpenModal = function (url, action, init) {
 
 // event handling
 
-Dialog._addEvent = function (el, evname, func) {
+Dialog._addEvent = function(el, evname, func) {
     if (Dialog.is_ie) {
         el.attachEvent("on" + evname, func);
     } else {
@@ -89,7 +85,7 @@ Dialog._addEvent = function (el, evname, func) {
     }
 };
 
-Dialog._removeEvent = function (el, evname, func) {
+Dialog._removeEvent = function(el, evname, func) {
     if (Dialog.is_ie) {
         el.detachEvent("on" + evname, func);
     } else {
@@ -97,7 +93,7 @@ Dialog._removeEvent = function (el, evname, func) {
     }
 };
 
-Dialog._stopEvent = function (ev) {
+Dialog._stopEvent = function(ev) {
     if (Dialog.is_ie) {
         ev.cancelBubble = true;
         ev.returnValue = false;

@@ -28,7 +28,7 @@
  * <p>There are several methods available for creating TabPanels. The output of the following examples should be
  * exactly the same. The tabs can be created and rendered completely in code, as in this example:</p>
  * <pre><code>
- var tabs = new Ext.TabPanel({
+var tabs = new Ext.TabPanel({
     renderTo: Ext.getBody(),
     activeTab: 0,
     items: [{
@@ -39,17 +39,17 @@
         html: 'Another one'
     }]
 });
- </pre></code>
- * <p>TabPanels can also be rendered from markup in a couple of ways.  See the {@link #autoTabs} example for
- * rendering entirely from markup that is already structured correctly as a TabPanel (a container div with
- * one or more nested tab divs with class 'x-tab'). You can also render from markup that is not strictly
- * structured by simply specifying by id which elements should be the container and the tabs. Using this method,
- * tab content can be pulled from different elements within the page by id regardless of page structure.  Note
- * that the tab divs in this example contain the class 'x-hide-display' so that they can be rendered deferred
- * without displaying outside the tabs. You could alternately set {@link #deferredRender} to false to render all
- * content tabs on page load. For example:
- * <pre><code>
- var tabs = new Ext.TabPanel({
+</pre></code>
+  * <p>TabPanels can also be rendered from markup in a couple of ways.  See the {@link #autoTabs} example for
+  * rendering entirely from markup that is already structured correctly as a TabPanel (a container div with
+  * one or more nested tab divs with class 'x-tab'). You can also render from markup that is not strictly
+  * structured by simply specifying by id which elements should be the container and the tabs. Using this method,
+  * tab content can be pulled from different elements within the page by id regardless of page structure.  Note
+  * that the tab divs in this example contain the class 'x-hide-display' so that they can be rendered deferred
+  * without displaying outside the tabs. You could alternately set {@link #deferredRender} to false to render all
+  * content tabs on page load. For example:
+  * <pre><code>
+var tabs = new Ext.TabPanel({
     renderTo: 'my-tabs',
     activeTab: 0,
     items:[
@@ -58,16 +58,16 @@
     ]
 });
 
- // Note that the tabs do not have to be nested within the container (although they can be)
- &lt;div id="my-tabs">&lt;/div>
- &lt;div id="tab1" class="x-hide-display">A simple tab&lt;/div>
- &lt;div id="tab2" class="x-hide-display">Another one&lt;/div>
- </pre></code>
+// Note that the tabs do not have to be nested within the container (although they can be)
+&lt;div id="my-tabs">&lt;/div>
+&lt;div id="tab1" class="x-hide-display">A simple tab&lt;/div>
+&lt;div id="tab2" class="x-hide-display">Another one&lt;/div>
+</pre></code>
  * @extends Ext.Panel
  * @constructor
  * @param {Object} config The configuration options
  */
-Ext.TabPanel = Ext.extend(Ext.Panel, {
+Ext.TabPanel = Ext.extend(Ext.Panel,  {
     /**
      * @cfg {Boolean} layoutOnTabChange Set to true to do a layout of tab items as tabs are changed.
      */
@@ -75,13 +75,13 @@ Ext.TabPanel = Ext.extend(Ext.Panel, {
      * @cfg {Boolean} monitorResize True to automatically monitor window resize events and rerender the layout on
      * browser resize (defaults to true).
      */
-    monitorResize: true,
+    monitorResize : true,
     /**
      * @cfg {Boolean} deferredRender Internally, the TabPanel uses a {@link Ext.layout.CardLayout} to manage its tabs.
      * This property will be passed on to the layout as its {@link Ext.layout.CardLayout#deferredRender} config value,
      * determining whether or not each tab is rendered only when first accessed (defaults to true).
      */
-    deferredRender: true,
+    deferredRender : true,
     /**
      * @cfg {Number} tabWidth The initial width in pixels of each new tab (defaults to 120).
      */
@@ -95,7 +95,7 @@ Ext.TabPanel = Ext.extend(Ext.Panel, {
      * tab strip (defaults to false).  Setting this to true may cause specific widths that might be set per tab to
      * be overridden in order to fit them all into view (although {@link #minTabWidth} will always be honored).
      */
-    resizeTabs: false,
+    resizeTabs:false,
     /**
      * @cfg {Boolean} enableTabScroll True to enable scrolling to tabs that may be invisible due to overflowing the
      * overall TabPanel width. Only available with tabs on top. (defaults to false).
@@ -105,22 +105,22 @@ Ext.TabPanel = Ext.extend(Ext.Panel, {
      * @cfg {Number} scrollIncrement The number of pixels to scroll each time a tab scroll button is pressed (defaults
      * to 100, or if {@link #resizeTabs} = true, the calculated tab width).  Only applies when {@link #enableTabScroll} = true.
      */
-    scrollIncrement: 0,
+    scrollIncrement : 0,
     /**
      * @cfg {Number} scrollRepeatInterval Number of milliseconds between each scroll while a tab scroll button is
      * continuously pressed (defaults to 400).
      */
-    scrollRepeatInterval: 400,
+    scrollRepeatInterval : 400,
     /**
      * @cfg {Float} scrollDuration The number of milliseconds that each scroll animation should last (defaults to .35).
      * Only applies when {@link #animScroll} = true.
      */
-    scrollDuration: .35,
+    scrollDuration : .35,
     /**
      * @cfg {Boolean} animScroll True to animate tab scrolling so that hidden tabs slide smoothly into view (defaults
      * to true).  Only applies when {@link #enableTabScroll} = true.
      */
-    animScroll: true,
+    animScroll : true,
     /**
      * @cfg {String} tabPosition The position where the tab strip should be rendered (defaults to 'top').  The only
      * other supported value is 'bottom'.  Note that tab scrolling is only supported for position 'top'.
@@ -147,39 +147,39 @@ Ext.TabPanel = Ext.extend(Ext.Panel, {
      * is activated and will be visible outside the TabPanel.</li>
      * </ul>Example usage:</p>
      * <pre><code>
-     var tabs = new Ext.TabPanel({
+var tabs = new Ext.TabPanel({
     applyTo: 'my-tabs',
     activeTab: 0,
     deferredRender: false,
     autoTabs: true
 });
 
-     // This markup will be converted to a TabPanel from the code above
-     &lt;div id="my-tabs">
-     &lt;div class="x-tab" title="Tab 1">A simple tab&lt;/div>
-     &lt;div class="x-tab" title="Tab 2">Another one&lt;/div>
-     &lt;/div>
-     </code></pre>
+// This markup will be converted to a TabPanel from the code above
+&lt;div id="my-tabs">
+    &lt;div class="x-tab" title="Tab 1">A simple tab&lt;/div>
+    &lt;div class="x-tab" title="Tab 2">Another one&lt;/div>
+&lt;/div>
+</code></pre>
      */
-    autoTabs: false,
+    autoTabs : false,
     /**
      * @cfg {String} autoTabSelector The CSS selector used to search for tabs in existing markup when {@link #autoTabs}
      * = true (defaults to 'div.x-tab').  This can be any valid selector supported by {@link Ext.DomQuery#select}.
      * Note that the query will be executed within the scope of this tab panel only (so that multiple tab panels from
      * markup can be supported on a page).
      */
-    autoTabSelector: 'div.x-tab',
+    autoTabSelector:'div.x-tab',
     /**
      * @cfg {String/Number} activeTab A string id or the numeric index of the tab that should be initially
      * activated on render (defaults to none).
      */
-    activeTab: null,
+    activeTab : null,
     /**
      * @cfg {Number} tabMargin The number of pixels of space to calculate into the sizing and scrolling of tabs. If you
      * change the margin in CSS, you will need to update this value so calculations are correct with either resizeTabs
      * or scrolling tabs. (defaults to 2)
      */
-    tabMargin: 2,
+    tabMargin : 2,
     /**
      * @cfg {Boolean} plain True to render the tab strip without a background container image (defaults to false).
      */
@@ -187,26 +187,26 @@ Ext.TabPanel = Ext.extend(Ext.Panel, {
     /**
      * @cfg {Number} wheelIncrement For scrolling tabs, the number of pixels to increment on mouse wheel scrolling (defaults to 20).
      */
-    wheelIncrement: 20,
+    wheelIncrement : 20,
 
     /*
      * This is a protected property used when concatenating tab ids to the TabPanel id for internal uniqueness.
      * It does not generally need to be changed, but can be if external code also uses an id scheme that can
      * potentially clash with this one.
      */
-    idDelimiter: '__',
+    idDelimiter : '__',
 
     // private
-    itemCls: 'x-tab-item',
+    itemCls : 'x-tab-item',
 
     // private config overrides
     elements: 'body',
     headerAsText: false,
     frame: false,
-    hideBorders: true,
+    hideBorders:true,
 
     // private
-    initComponent: function () {
+    initComponent : function(){
         this.frame = false;
         Ext.TabPanel.superclass.initComponent.call(this);
         this.addEvents(
@@ -237,23 +237,23 @@ Ext.TabPanel = Ext.extend(Ext.Panel, {
         this.setLayout(new Ext.layout.CardLayout({
             deferredRender: this.deferredRender
         }));
-        if (this.tabPosition == 'top') {
+        if(this.tabPosition == 'top'){
             this.elements += ',header';
             this.stripTarget = 'header';
-        } else {
+        }else {
             this.elements += ',footer';
             this.stripTarget = 'footer';
         }
-        if (!this.stack) {
+        if(!this.stack){
             this.stack = Ext.TabPanel.AccessStack();
         }
         this.initItems();
     },
 
     // private
-    render: function () {
+    render : function(){
         Ext.TabPanel.superclass.render.apply(this, arguments);
-        if (this.activeTab !== undefined) {
+        if(this.activeTab !== undefined){
             var item = this.activeTab;
             delete this.activeTab;
             this.setActiveTab(item);
@@ -261,35 +261,32 @@ Ext.TabPanel = Ext.extend(Ext.Panel, {
     },
 
     // private
-    onRender: function (ct, position) {
+    onRender : function(ct, position){
         Ext.TabPanel.superclass.onRender.call(this, ct, position);
 
-        if (this.plain) {
+        if(this.plain){
             var pos = this.tabPosition == 'top' ? 'header' : 'footer';
-            this[pos].addClass('x-tab-panel-' + pos + '-plain');
+            this[pos].addClass('x-tab-panel-'+pos+'-plain');
         }
 
         var st = this[this.stripTarget];
 
-        this.stripWrap = st.createChild({
-            cls: 'x-tab-strip-wrap', cn: {
-                tag: 'ul', cls: 'x-tab-strip x-tab-strip-' + this.tabPosition
-            }
-        });
-        this.stripSpacer = st.createChild({cls: 'x-tab-strip-spacer'});
+        this.stripWrap = st.createChild({cls:'x-tab-strip-wrap', cn:{
+            tag:'ul', cls:'x-tab-strip x-tab-strip-'+this.tabPosition}});
+        this.stripSpacer = st.createChild({cls:'x-tab-strip-spacer'});
         this.strip = new Ext.Element(this.stripWrap.dom.firstChild);
 
-        this.edge = this.strip.createChild({tag: 'li', cls: 'x-tab-edge'});
-        this.strip.createChild({cls: 'x-clear'});
+        this.edge = this.strip.createChild({tag:'li', cls:'x-tab-edge'});
+        this.strip.createChild({cls:'x-clear'});
 
-        this.body.addClass('x-tab-panel-body-' + this.tabPosition);
+        this.body.addClass('x-tab-panel-body-'+this.tabPosition);
 
-        if (!this.itemTpl) {
+        if(!this.itemTpl){
             var tt = new Ext.Template(
-                '<li class="{cls}" id="{id}"><a class="x-tab-strip-close" onclick="return false;"></a>',
-                '<a class="x-tab-right" href="#" onclick="return false;"><em class="x-tab-left">',
-                '<span class="x-tab-strip-inner"><span class="x-tab-strip-text {iconCls}">{text}</span></span>',
-                '</em></a></li>'
+                 '<li class="{cls}" id="{id}"><a class="x-tab-strip-close" onclick="return false;"></a>',
+                 '<a class="x-tab-right" href="#" onclick="return false;"><em class="x-tab-left">',
+                 '<span class="x-tab-strip-inner"><span class="x-tab-strip-text {iconCls}">{text}</span></span>',
+                 '</em></a></li>'
             );
             tt.disableFormats = true;
             tt.compile();
@@ -300,15 +297,15 @@ Ext.TabPanel = Ext.extend(Ext.Panel, {
     },
 
     // private
-    afterRender: function () {
+    afterRender : function(){
         Ext.TabPanel.superclass.afterRender.call(this);
-        if (this.autoTabs) {
+        if(this.autoTabs){
             this.readTabs(false);
         }
     },
 
     // private
-    initEvents: function () {
+    initEvents : function(){
         Ext.TabPanel.superclass.initEvents.call(this);
         this.on('add', this.onAdd, this);
         this.on('remove', this.onRemove, this);
@@ -316,61 +313,61 @@ Ext.TabPanel = Ext.extend(Ext.Panel, {
         this.strip.on('mousedown', this.onStripMouseDown, this);
         this.strip.on('click', this.onStripClick, this);
         this.strip.on('contextmenu', this.onStripContextMenu, this);
-        if (this.enableTabScroll) {
+        if(this.enableTabScroll){
             this.strip.on('mousewheel', this.onWheel, this);
         }
     },
 
     // private
-    findTargets: function (e) {
+    findTargets : function(e){
         var item = null;
         var itemEl = e.getTarget('li', this.strip);
-        if (itemEl) {
+        if(itemEl){
             item = this.getComponent(itemEl.id.split(this.idDelimiter)[1]);
-            if (item.disabled) {
+            if(item.disabled){
                 return {
-                    close: null,
-                    item: null,
-                    el: null
+                    close : null,
+                    item : null,
+                    el : null
                 };
             }
         }
         return {
-            close: e.getTarget('.x-tab-strip-close', this.strip),
-            item: item,
-            el: itemEl
+            close : e.getTarget('.x-tab-strip-close', this.strip),
+            item : item,
+            el : itemEl
         };
     },
 
     // private
-    onStripMouseDown: function (e) {
+    onStripMouseDown : function(e){
         e.preventDefault();
-        if (e.button != 0) {
+        if(e.button != 0){
             return;
         }
         var t = this.findTargets(e);
-        if (t.close) {
+        if(t.close){
             this.remove(t.item);
             return;
         }
-        if (t.item && t.item != this.activeTab) {
+        if(t.item && t.item != this.activeTab){
             this.setActiveTab(t.item);
         }
     },
 
     // private
-    onStripClick: function (e) {
+    onStripClick : function(e){
         var t = this.findTargets(e);
-        if (!t.close && t.item && t.item != this.activeTab) {
+        if(!t.close && t.item && t.item != this.activeTab){
             this.setActiveTab(t.item);
         }
     },
 
     // private
-    onStripContextMenu: function (e) {
+    onStripContextMenu : function(e){
         e.preventDefault();
         var t = this.findTargets(e);
-        if (t.item) {
+        if(t.item){
             this.fireEvent('contextmenu', this, t.item, e);
         }
     },
@@ -379,14 +376,14 @@ Ext.TabPanel = Ext.extend(Ext.Panel, {
      * True to scan the markup in this tab panel for autoTabs using the autoTabSelector
      * @param {Boolean} removeExisting True to remove existing tabs
      */
-    readTabs: function (removeExisting) {
-        if (removeExisting === true) {
-            this.items.each(function (item) {
+    readTabs : function(removeExisting){
+        if(removeExisting === true){
+            this.items.each(function(item){
                 this.remove(item);
             }, this);
         }
         var tabs = this.el.query(this.autoTabSelector);
-        for (var i = 0, len = tabs.length; i < len; i++) {
+        for(var i = 0, len = tabs.length; i < len; i++){
             var tab = tabs[i];
             var title = tab.getAttribute('title');
             tab.removeAttribute('title');
@@ -398,13 +395,13 @@ Ext.TabPanel = Ext.extend(Ext.Panel, {
     },
 
     // private
-    initTab: function (item, index) {
+    initTab : function(item, index){
         var before = this.strip.dom.childNodes[index];
         var cls = item.closable ? 'x-tab-strip-closable' : '';
-        if (item.disabled) {
+        if(item.disabled){
             cls += ' x-item-disabled';
         }
-        if (item.iconCls) {
+        if(item.iconCls){
             cls += ' x-tab-with-icon';
         }
         var p = {
@@ -414,12 +411,12 @@ Ext.TabPanel = Ext.extend(Ext.Panel, {
             iconCls: item.iconCls || ''
         };
         var el = before ?
-            this.itemTpl.insertBefore(before, p) :
-            this.itemTpl.append(this.strip, p);
+                 this.itemTpl.insertBefore(before, p) :
+                 this.itemTpl.append(this.strip, p);
 
         Ext.fly(el).addClassOnOver('x-tab-strip-over');
 
-        if (item.tabTip) {
+        if(item.tabTip){
             Ext.fly(el).child('span.x-tab-strip-text', true).qtip = item.tabTip;
         }
         item.on('disable', this.onItemDisabled, this);
@@ -429,18 +426,18 @@ Ext.TabPanel = Ext.extend(Ext.Panel, {
     },
 
     // private
-    onAdd: function (tp, item, index) {
+    onAdd : function(tp, item, index){
         this.initTab(item, index);
-        if (this.items.getCount() == 1) {
+        if(this.items.getCount() == 1){
             this.syncSize();
         }
         this.delegateUpdates();
     },
 
     // private
-    onBeforeAdd: function (item) {
+    onBeforeAdd : function(item){
         var existing = item.events ? (this.items.containsKey(item.getItemId()) ? item : null) : this.items.get(item);
-        if (existing) {
+        if(existing){
             this.setActiveTab(item);
             return false;
         }
@@ -451,14 +448,14 @@ Ext.TabPanel = Ext.extend(Ext.Panel, {
     },
 
     // private
-    onRemove: function (tp, item) {
+    onRemove : function(tp, item){
         Ext.removeNode(this.getTabEl(item));
         this.stack.remove(item);
-        if (item == this.activeTab) {
+        if(item == this.activeTab){
             var next = this.stack.next();
-            if (next) {
+            if(next){
                 this.setActiveTab(next);
-            } else {
+            }else{
                 this.setActiveTab(0);
             }
         }
@@ -466,34 +463,34 @@ Ext.TabPanel = Ext.extend(Ext.Panel, {
     },
 
     // private
-    onBeforeShowItem: function (item) {
-        if (item != this.activeTab) {
+    onBeforeShowItem : function(item){
+        if(item != this.activeTab){
             this.setActiveTab(item);
             return false;
         }
     },
 
     // private
-    onItemDisabled: function (item) {
+    onItemDisabled : function(item){
         var el = this.getTabEl(item);
-        if (el) {
+        if(el){
             Ext.fly(el).addClass('x-item-disabled');
         }
         this.stack.remove(item);
     },
 
     // private
-    onItemEnabled: function (item) {
+    onItemEnabled : function(item){
         var el = this.getTabEl(item);
-        if (el) {
+        if(el){
             Ext.fly(el).removeClass('x-item-disabled');
         }
     },
 
     // private
-    onItemTitleChanged: function (item) {
+    onItemTitleChanged : function(item){
         var el = this.getTabEl(item);
-        if (el) {
+        if(el){
             Ext.fly(el).child('span.x-tab-strip-text', true).innerHTML = item.title;
         }
     },
@@ -505,13 +502,13 @@ Ext.TabPanel = Ext.extend(Ext.Panel, {
      * @param {Panel} tab The tab
      * @return {HTMLElement} The DOM node
      */
-    getTabEl: function (item) {
-        var itemId = (typeof item === 'number') ? this.items.items[item].getItemId() : item.getItemId();
-        return document.getElementById(this.id + this.idDelimiter + itemId);
+    getTabEl : function(item){
+        var itemId = (typeof item === 'number')?this.items.items[item].getItemId() : item.getItemId();
+        return document.getElementById(this.id+this.idDelimiter+itemId);
     },
 
     // private
-    onResize: function () {
+    onResize : function(){
         Ext.TabPanel.superclass.onResize.apply(this, arguments);
         this.delegateUpdates();
     },
@@ -519,14 +516,14 @@ Ext.TabPanel = Ext.extend(Ext.Panel, {
     /**
      * Suspends any internal calculations or scrolling while doing a bulk operation. See {@link #endUpdate}
      */
-    beginUpdate: function () {
+    beginUpdate : function(){
         this.suspendUpdates = true;
     },
 
     /**
      * Resumes calculations and scrolling at the end of a bulk operation. See {@link #beginUpdate}
      */
-    endUpdate: function () {
+    endUpdate : function(){
         this.suspendUpdates = false;
         this.delegateUpdates();
     },
@@ -535,10 +532,10 @@ Ext.TabPanel = Ext.extend(Ext.Panel, {
      * Hides the tab strip item for the passed tab
      * @param {Number/String/Panel} item The tab index, id or item
      */
-    hideTabStripItem: function (item) {
+    hideTabStripItem : function(item){
         item = this.getComponent(item);
         var el = this.getTabEl(item);
-        if (el) {
+        if(el){
             el.style.display = 'none';
             this.delegateUpdates();
         }
@@ -548,57 +545,57 @@ Ext.TabPanel = Ext.extend(Ext.Panel, {
      * Unhides the tab strip item for the passed tab
      * @param {Number/String/Panel} item The tab index, id or item
      */
-    unhideTabStripItem: function (item) {
+    unhideTabStripItem : function(item){
         item = this.getComponent(item);
         var el = this.getTabEl(item);
-        if (el) {
+        if(el){
             el.style.display = '';
             this.delegateUpdates();
         }
     },
 
     // private
-    delegateUpdates: function () {
-        if (this.suspendUpdates) {
+    delegateUpdates : function(){
+        if(this.suspendUpdates){
             return;
         }
-        if (this.resizeTabs && this.rendered) {
+        if(this.resizeTabs && this.rendered){
             this.autoSizeTabs();
         }
-        if (this.enableTabScroll && this.rendered) {
+        if(this.enableTabScroll && this.rendered){
             this.autoScrollTabs();
         }
     },
 
     // private
-    autoSizeTabs: function () {
+    autoSizeTabs : function(){
         var count = this.items.length;
         var ce = this.tabPosition != 'bottom' ? 'header' : 'footer';
         var ow = this[ce].dom.offsetWidth;
         var aw = this[ce].dom.clientWidth;
 
-        if (!this.resizeTabs || count < 1 || !aw) { // !aw for display:none
+        if(!this.resizeTabs || count < 1 || !aw){ // !aw for display:none
             return;
         }
 
-        var each = Math.max(Math.min(Math.floor((aw - 4) / count) - this.tabMargin, this.tabWidth), this.minTabWidth); // -4 for float errors in IE
+        var each = Math.max(Math.min(Math.floor((aw-4) / count) - this.tabMargin, this.tabWidth), this.minTabWidth); // -4 for float errors in IE
         this.lastTabWidth = each;
         var lis = this.stripWrap.dom.getElementsByTagName('li');
-        for (var i = 0, len = lis.length - 1; i < len; i++) { // -1 for the "edge" li
+        for(var i = 0, len = lis.length-1; i < len; i++) { // -1 for the "edge" li
             var li = lis[i];
             var inner = li.childNodes[1].firstChild.firstChild;
             var tw = li.offsetWidth;
             var iw = inner.offsetWidth;
-            inner.style.width = (each - (tw - iw)) + 'px';
+            inner.style.width = (each - (tw-iw)) + 'px';
         }
     },
 
     // private
-    adjustBodyWidth: function (w) {
-        if (this.header) {
+    adjustBodyWidth : function(w){
+        if(this.header){
             this.header.setWidth(w);
         }
-        if (this.footer) {
+        if(this.footer){
             this.footer.setWidth(w);
         }
         return w;
@@ -609,19 +606,19 @@ Ext.TabPanel = Ext.extend(Ext.Panel, {
      * can return false to cancel the tab change.
      * @param {String/Panel} tab The id or tab Panel to activate
      */
-    setActiveTab: function (item) {
+    setActiveTab : function(item){
         item = this.getComponent(item);
-        if (!item || this.fireEvent('beforetabchange', this, item, this.activeTab) === false) {
+        if(!item || this.fireEvent('beforetabchange', this, item, this.activeTab) === false){
             return;
         }
-        if (!this.rendered) {
+        if(!this.rendered){
             this.activeTab = item;
             return;
         }
-        if (this.activeTab != item) {
-            if (this.activeTab) {
+        if(this.activeTab != item){
+            if(this.activeTab){
                 var oldEl = this.getTabEl(this.activeTab);
-                if (oldEl) {
+                if(oldEl){
                     Ext.fly(oldEl).removeClass('x-tab-strip-active');
                 }
                 this.activeTab.fireEvent('deactivate', this.activeTab);
@@ -632,10 +629,10 @@ Ext.TabPanel = Ext.extend(Ext.Panel, {
             this.stack.add(item);
 
             this.layout.setActiveItem(item);
-            if (this.layoutOnTabChange && item.doLayout) {
+            if(this.layoutOnTabChange && item.doLayout){
                 item.doLayout();
             }
-            if (this.scrolling) {
+            if(this.scrolling){
                 this.scrollToTab(item, this.animScroll);
             }
 
@@ -648,7 +645,7 @@ Ext.TabPanel = Ext.extend(Ext.Panel, {
      * Gets the currently active tab.
      * @return {Panel} The active tab
      */
-    getActiveTab: function () {
+    getActiveTab : function(){
         return this.activeTab || null;
     },
 
@@ -657,12 +654,12 @@ Ext.TabPanel = Ext.extend(Ext.Panel, {
      * @param {String} id The tab id
      * @return {Panel} The tab
      */
-    getItem: function (item) {
+    getItem : function(item){
         return this.getComponent(item);
     },
 
     // private
-    autoScrollTabs: function () {
+    autoScrollTabs : function(){
         var count = this.items.length;
         var ow = this.header.dom.offsetWidth;
         var tw = this.header.dom.clientWidth;
@@ -672,36 +669,36 @@ Ext.TabPanel = Ext.extend(Ext.Panel, {
         var pos = this.getScrollPos();
         var l = this.edge.getOffsetsTo(this.stripWrap)[0] + pos;
 
-        if (!this.enableTabScroll || count < 1 || cw < 20) { // 20 to prevent display:none issues
+        if(!this.enableTabScroll || count < 1 || cw < 20){ // 20 to prevent display:none issues
             return;
         }
-        if (l <= tw) {
+        if(l <= tw){
             wrap.dom.scrollLeft = 0;
             wrap.setWidth(tw);
-            if (this.scrolling) {
+            if(this.scrolling){
                 this.scrolling = false;
                 this.header.removeClass('x-tab-scrolling');
                 this.scrollLeft.hide();
                 this.scrollRight.hide();
             }
-        } else {
-            if (!this.scrolling) {
+        }else{
+            if(!this.scrolling){
                 this.header.addClass('x-tab-scrolling');
             }
             tw -= wrap.getMargins('lr');
             wrap.setWidth(tw > 20 ? tw : 20);
-            if (!this.scrolling) {
-                if (!this.scrollLeft) {
+            if(!this.scrolling){
+                if(!this.scrollLeft){
                     this.createScrollers();
-                } else {
+                }else{
                     this.scrollLeft.show();
                     this.scrollRight.show();
                 }
             }
             this.scrolling = true;
-            if (pos > (l - tw)) { // ensure it stays within bounds
-                wrap.dom.scrollLeft = l - tw;
-            } else { // otherwise, make sure the active tab is still visible
+            if(pos > (l-tw)){ // ensure it stays within bounds
+                wrap.dom.scrollLeft = l-tw;
+            }else{ // otherwise, make sure the active tab is still visible
                 this.scrollToTab(this.activeTab, false);
             }
             this.updateScrollButtons();
@@ -709,17 +706,17 @@ Ext.TabPanel = Ext.extend(Ext.Panel, {
     },
 
     // private
-    createScrollers: function () {
+    createScrollers : function(){
         var h = this.stripWrap.dom.offsetHeight;
 
         // left
         var sl = this.header.insertFirst({
-            cls: 'x-tab-scroller-left'
+            cls:'x-tab-scroller-left'
         });
         sl.setHeight(h);
         sl.addClassOnOver('x-tab-scroller-left-over');
         this.leftRepeater = new Ext.util.ClickRepeater(sl, {
-            interval: this.scrollRepeatInterval,
+            interval : this.scrollRepeatInterval,
             handler: this.onScrollLeft,
             scope: this
         });
@@ -727,12 +724,12 @@ Ext.TabPanel = Ext.extend(Ext.Panel, {
 
         // right
         var sr = this.header.insertFirst({
-            cls: 'x-tab-scroller-right'
+            cls:'x-tab-scroller-right'
         });
         sr.setHeight(h);
         sr.addClassOnOver('x-tab-scroller-right-over');
         this.rightRepeater = new Ext.util.ClickRepeater(sr, {
-            interval: this.scrollRepeatInterval,
+            interval : this.scrollRepeatInterval,
             handler: this.onScrollRight,
             scope: this
         });
@@ -740,28 +737,28 @@ Ext.TabPanel = Ext.extend(Ext.Panel, {
     },
 
     // private
-    getScrollWidth: function () {
+    getScrollWidth : function(){
         return this.edge.getOffsetsTo(this.stripWrap)[0] + this.getScrollPos();
     },
 
     // private
-    getScrollPos: function () {
+    getScrollPos : function(){
         return parseInt(this.stripWrap.dom.scrollLeft, 10) || 0;
     },
 
     // private
-    getScrollArea: function () {
+    getScrollArea : function(){
         return parseInt(this.stripWrap.dom.clientWidth, 10) || 0;
     },
 
     // private
-    getScrollAnim: function () {
-        return {duration: this.scrollDuration, callback: this.updateScrollButtons, scope: this};
+    getScrollAnim : function(){
+        return {duration:this.scrollDuration, callback: this.updateScrollButtons, scope: this};
     },
 
     // private
-    getScrollIncrement: function () {
-        return this.scrollIncrement || (this.resizeTabs ? this.lastTabWidth + 2 : 100);
+    getScrollIncrement : function(){
+        return this.scrollIncrement || (this.resizeTabs ? this.lastTabWidth+2 : 100);
     },
 
     /**
@@ -770,67 +767,65 @@ Ext.TabPanel = Ext.extend(Ext.Panel, {
      * @param {Boolean} animate True to enable animations
      */
 
-    scrollToTab: function (item, animate) {
-        if (!item) {
-            return;
-        }
+    scrollToTab : function(item, animate){
+        if(!item){ return; }
         var el = this.getTabEl(item);
         var pos = this.getScrollPos(), area = this.getScrollArea();
         var left = Ext.fly(el).getOffsetsTo(this.stripWrap)[0] + pos;
         var right = left + el.offsetWidth;
-        if (left < pos) {
+        if(left < pos){
             this.scrollTo(left, animate);
-        } else if (right > (pos + area)) {
+        }else if(right > (pos + area)){
             this.scrollTo(right - area, animate);
         }
     },
 
     // private
-    scrollTo: function (pos, animate) {
+    scrollTo : function(pos, animate){
         this.stripWrap.scrollTo('left', pos, animate ? this.getScrollAnim() : false);
-        if (!animate) {
+        if(!animate){
             this.updateScrollButtons();
         }
     },
 
-    onWheel: function (e) {
-        var d = e.getWheelDelta() * this.wheelIncrement * -1;
+    onWheel : function(e){
+        var d = e.getWheelDelta()*this.wheelIncrement*-1;
         e.stopEvent();
 
         var pos = this.getScrollPos();
         var newpos = pos + d;
-        var sw = this.getScrollWidth() - this.getScrollArea();
+        var sw = this.getScrollWidth()-this.getScrollArea();
 
         var s = Math.max(0, Math.min(sw, newpos));
-        if (s != pos) {
+        if(s != pos){
             this.scrollTo(s, false);
         }
     },
 
     // private
-    onScrollRight: function () {
-        var sw = this.getScrollWidth() - this.getScrollArea();
+    onScrollRight : function(){
+        var sw = this.getScrollWidth()-this.getScrollArea();
         var pos = this.getScrollPos();
         var s = Math.min(sw, pos + this.getScrollIncrement());
-        if (s != pos) {
+        if(s != pos){
             this.scrollTo(s, this.animScroll);
         }
     },
 
     // private
-    onScrollLeft: function () {
+    onScrollLeft : function(){
         var pos = this.getScrollPos();
         var s = Math.max(0, pos - this.getScrollIncrement());
-        if (s != pos) {
+        if(s != pos){
             this.scrollTo(s, this.animScroll);
         }
     },
 
     // private
-    updateScrollButtons: function () {
+    updateScrollButtons : function(){
         var pos = this.getScrollPos();
         this.scrollLeft[pos == 0 ? 'addClass' : 'removeClass']('x-tab-scroller-left-disabled');
-        this.scrollRight[pos >= (this.getScrollWidth() - this.getScrollArea()) ? 'addClass' : 'removeClass']('x-tab-scroller-right-disabled');
+        this.scrollRight[pos >= (this.getScrollWidth()-this.getScrollArea()) ? 'addClass' : 'removeClass']('x-tab-scroller-right-disabled');
     }
 
     /**
@@ -865,27 +860,27 @@ Ext.reg('tabpanel', Ext.TabPanel);
 Ext.TabPanel.prototype.activate = Ext.TabPanel.prototype.setActiveTab;
 
 // private utility class used by TabPanel
-Ext.TabPanel.AccessStack = function () {
+Ext.TabPanel.AccessStack = function(){
     var items = [];
     return {
-        add: function (item) {
+        add : function(item){
             items.push(item);
-            if (items.length > 10) {
+            if(items.length > 10){
                 items.shift();
             }
         },
 
-        remove: function (item) {
+        remove : function(item){
             var s = [];
-            for (var i = 0, len = items.length; i < len; i++) {
-                if (items[i] != item) {
+            for(var i = 0, len = items.length; i < len; i++) {
+                if(items[i] != item){
                     s.push(items[i]);
                 }
             }
             items = s;
         },
 
-        next: function () {
+        next : function(){
             return items.pop();
         }
     };

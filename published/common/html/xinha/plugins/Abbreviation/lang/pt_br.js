@@ -14,19 +14,9 @@
 // Distributed under the same terms as HTMLArea itself.
 // This notice MUST stay intact for use (see license.txt).
 {
-    "Abbreviation"
-:
-    "Abreviação",
-        "Cancel"
-:
-    "Cancelar",
-        "Delete"
-:
-    "Apagar",
-        "Expansion:"
-:
-    "Expandir:",
-        "OK"
-:
-    "OK"
+  "Abbreviation": "Abreviação",
+  "Cancel": "Cancelar",
+  "Delete": "Apagar",
+  "Expansion:": "Expandir:",
+  "OK": "OK"
 }

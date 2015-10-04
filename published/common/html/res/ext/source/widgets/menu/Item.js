@@ -16,9 +16,9 @@
  * Creates a new Item
  * @param {Object} config Configuration options
  */
-Ext.menu.Item = function (config) {
+Ext.menu.Item = function(config){
     Ext.menu.Item.superclass.constructor.call(this, config);
-    if (this.menu) {
+    if(this.menu){
         this.menu = Ext.menu.MenuMgr.get(this.menu);
     }
 };
@@ -43,11 +43,11 @@ Ext.extend(Ext.menu.Item, Ext.menu.BaseItem, {
     /**
      * @cfg {String} itemCls The default CSS class to use for menu items (defaults to 'x-menu-item')
      */
-    itemCls: "x-menu-item",
+    itemCls : "x-menu-item",
     /**
      * @cfg {Boolean} canActivate True if this item can be visually activated (defaults to true)
      */
-    canActivate: true,
+    canActivate : true,
     /**
      * @cfg {Number} showDelay Length of time in milliseconds to wait before showing this item (defaults to 200)
      */
@@ -59,18 +59,18 @@ Ext.extend(Ext.menu.Item, Ext.menu.BaseItem, {
     ctype: "Ext.menu.Item",
 
     // private
-    onRender: function (container, position) {
+    onRender : function(container, position){
         var el = document.createElement("a");
         el.hideFocus = true;
         el.unselectable = "on";
         el.href = this.href || "#";
-        if (this.hrefTarget) {
+        if(this.hrefTarget){
             el.target = this.hrefTarget;
         }
-        el.className = this.itemCls + (this.menu ? " x-menu-item-arrow" : "") + (this.cls ? " " + this.cls : "");
+        el.className = this.itemCls + (this.menu ?  " x-menu-item-arrow" : "") + (this.cls ?  " " + this.cls : "");
         el.innerHTML = String.format(
-            '<img src="{0}" class="x-menu-item-icon {2}" />{1}',
-            this.icon || Ext.BLANK_IMAGE_URL, this.itemText || this.text, this.iconCls || '');
+                '<img src="{0}" class="x-menu-item-icon {2}" />{1}',
+                this.icon || Ext.BLANK_IMAGE_URL, this.itemText||this.text, this.iconCls || '');
         this.el = el;
         Ext.menu.Item.superclass.onRender.call(this, container, position);
     },
@@ -79,9 +79,9 @@ Ext.extend(Ext.menu.Item, Ext.menu.BaseItem, {
      * Sets the text to display in this menu item
      * @param {String} text The text to display
      */
-    setText: function (text) {
+    setText : function(text){
         this.text = text;
-        if (this.rendered) {
+        if(this.rendered){
             this.el.update(String.format(
                 '<img src="{0}" class="x-menu-item-icon {2}">{1}',
                 this.icon || Ext.BLANK_IMAGE_URL, this.text, this.iconCls || ''));
@@ -93,27 +93,27 @@ Ext.extend(Ext.menu.Item, Ext.menu.BaseItem, {
      * Sets the CSS class to apply to the item's icon element
      * @param {String} cls The CSS class to apply
      */
-    setIconClass: function (cls) {
+    setIconClass : function(cls){
         var oldCls = this.iconCls;
         this.iconCls = cls;
-        if (this.rendered) {
+        if(this.rendered){
             this.el.child('img.x-menu-item-icon').replaceClass(oldCls, this.iconCls);
         }
     },
 
     // private
-    handleClick: function (e) {
-        if (!this.href) { // if no link defined, stop the event automatically
+    handleClick : function(e){
+        if(!this.href){ // if no link defined, stop the event automatically
             e.stopEvent();
         }
         Ext.menu.Item.superclass.handleClick.apply(this, arguments);
     },
 
     // private
-    activate: function (autoExpand) {
-        if (Ext.menu.Item.superclass.activate.apply(this, arguments)) {
+    activate : function(autoExpand){
+        if(Ext.menu.Item.superclass.activate.apply(this, arguments)){
             this.focus();
-            if (autoExpand) {
+            if(autoExpand){
                 this.expandMenu();
             }
         }
@@ -121,9 +121,9 @@ Ext.extend(Ext.menu.Item, Ext.menu.BaseItem, {
     },
 
     // private
-    shouldDeactivate: function (e) {
-        if (Ext.menu.Item.superclass.shouldDeactivate.call(this, e)) {
-            if (this.menu && this.menu.isVisible()) {
+    shouldDeactivate : function(e){
+        if(Ext.menu.Item.superclass.shouldDeactivate.call(this, e)){
+            if(this.menu && this.menu.isVisible()){
                 return !this.menu.getEl().getRegion().contains(e.getPoint());
             }
             return true;
@@ -132,44 +132,44 @@ Ext.extend(Ext.menu.Item, Ext.menu.BaseItem, {
     },
 
     // private
-    deactivate: function () {
+    deactivate : function(){
         Ext.menu.Item.superclass.deactivate.apply(this, arguments);
         this.hideMenu();
     },
 
     // private
-    expandMenu: function (autoActivate) {
-        if (!this.disabled && this.menu) {
+    expandMenu : function(autoActivate){
+        if(!this.disabled && this.menu){
             clearTimeout(this.hideTimer);
             delete this.hideTimer;
-            if (!this.menu.isVisible() && !this.showTimer) {
+            if(!this.menu.isVisible() && !this.showTimer){
                 this.showTimer = this.deferExpand.defer(this.showDelay, this, [autoActivate]);
-            } else if (this.menu.isVisible() && autoActivate) {
+            }else if (this.menu.isVisible() && autoActivate){
                 this.menu.tryActivate(0, 1);
             }
         }
     },
 
     // private
-    deferExpand: function (autoActivate) {
+    deferExpand : function(autoActivate){
         delete this.showTimer;
         this.menu.show(this.container, this.parentMenu.subMenuAlign || "tl-tr?", this.parentMenu);
-        if (autoActivate) {
+        if(autoActivate){
             this.menu.tryActivate(0, 1);
         }
     },
 
     // private
-    hideMenu: function () {
+    hideMenu : function(){
         clearTimeout(this.showTimer);
         delete this.showTimer;
-        if (!this.hideTimer && this.menu && this.menu.isVisible()) {
+        if(!this.hideTimer && this.menu && this.menu.isVisible()){
             this.hideTimer = this.deferHide.defer(this.hideDelay, this);
         }
     },
 
     // private
-    deferHide: function () {
+    deferHide : function(){
         delete this.hideTimer;
         this.menu.hide();
     }

@@ -14,11 +14,6 @@
 // Distributed under the same terms as HTMLArea itself.
 // This notice MUST stay intact for use (see license.txt).
 {
-    "Insert template"
-:
-    "Inserir modelo",
-        "Cancel"
-:
-    "Cancelar"
-}
-;
+	"Insert template"          : "Inserir modelo",
+	"Cancel"                   : "Cancelar"
+};

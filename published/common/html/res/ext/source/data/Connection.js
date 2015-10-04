@@ -27,7 +27,7 @@
  * @constructor
  * @param {Object} config a configuration object.
  */
-Ext.data.Connection = function (config) {
+Ext.data.Connection = function(config){
     Ext.apply(this, config);
     this.addEvents(
         /**
@@ -81,12 +81,12 @@ Ext.extend(Ext.data.Connection, Ext.util.Observable, {
     /**
      * @cfg {Number} timeout (Optional) The timeout in milliseconds to be used for requests. (defaults to 30000)
      */
-    timeout: 30000,
+    timeout : 30000,
     /**
      * @cfg {Boolean} autoAbort (Optional) Whether this request should abort any pending requests. (defaults to false)
      * @type Boolean
      */
-    autoAbort: false,
+    autoAbort:false,
 
     /**
      * @cfg {Boolean} disableCaching (Optional) True to add a unique cache-buster param to GET requests. (defaults to true)
@@ -152,32 +152,32 @@ Ext.extend(Ext.data.Connection, Ext.util.Observable, {
      * @return {Number} transactionId The id of the server transaction. This may be used
      * to cancel the request.
      */
-    request: function (o) {
-        if (this.fireEvent("beforerequest", this, o) !== false) {
+    request : function(o){
+        if(this.fireEvent("beforerequest", this, o) !== false){
             var p = o.params;
 
-            if (typeof p == "function") {
-                p = p.call(o.scope || window, o);
+            if(typeof p == "function"){
+                p = p.call(o.scope||window, o);
             }
-            if (typeof p == "object") {
+            if(typeof p == "object"){
                 p = Ext.urlEncode(p);
             }
-            if (this.extraParams) {
+            if(this.extraParams){
                 var extras = Ext.urlEncode(this.extraParams);
                 p = p ? (p + '&' + extras) : extras;
             }
 
             var url = o.url || this.url;
-            if (typeof url == 'function') {
-                url = url.call(o.scope || window, o);
+            if(typeof url == 'function'){
+                url = url.call(o.scope||window, o);
             }
 
-            if (o.form) {
+            if(o.form){
                 var form = Ext.getDom(o.form);
                 url = url || form.action;
 
                 var enctype = form.getAttribute("enctype");
-                if (o.isUpload || (enctype && enctype.toLowerCase() == 'multipart/form-data')) {
+                if(o.isUpload || (enctype && enctype.toLowerCase() == 'multipart/form-data')){
                     return this.doFormUpload(o, p, url);
                 }
                 var f = Ext.lib.Ajax.serializeForm(form);
@@ -185,9 +185,9 @@ Ext.extend(Ext.data.Connection, Ext.util.Observable, {
             }
 
             var hs = o.headers;
-            if (this.defaultHeaders) {
+            if(this.defaultHeaders){
                 hs = Ext.apply(hs || {}, this.defaultHeaders);
-                if (!o.headers) {
+                if(!o.headers){
                     o.headers = hs;
                 }
             }
@@ -197,29 +197,29 @@ Ext.extend(Ext.data.Connection, Ext.util.Observable, {
                 failure: this.handleFailure,
                 scope: this,
                 argument: {options: o},
-                timeout: o.timeout || this.timeout
+                timeout : o.timeout || this.timeout
             };
 
-            var method = o.method || this.method || (p ? "POST" : "GET");
+            var method = o.method||this.method||(p ? "POST" : "GET");
 
-            if (method == 'GET' && (this.disableCaching && o.disableCaching !== false) || o.disableCaching === true) {
+            if(method == 'GET' && (this.disableCaching && o.disableCaching !== false) || o.disableCaching === true){
                 url += (url.indexOf('?') != -1 ? '&' : '?') + '_dc=' + (new Date().getTime());
             }
 
-            if (typeof o.autoAbort == 'boolean') { // options gets top priority
-                if (o.autoAbort) {
+            if(typeof o.autoAbort == 'boolean'){ // options gets top priority
+                if(o.autoAbort){
                     this.abort();
                 }
-            } else if (this.autoAbort !== false) {
+            }else if(this.autoAbort !== false){
                 this.abort();
             }
-            if ((method == 'GET' && p) || o.xmlData || o.jsonData) {
+            if((method == 'GET' && p) || o.xmlData || o.jsonData){
                 url += (url.indexOf('?') != -1 ? '&' : '?') + p;
                 p = '';
             }
             this.transId = Ext.lib.Ajax.request(method, url, cb, p, o);
             return this.transId;
-        } else {
+        }else{
             Ext.callback(o.callback, o.scope, [o, null, null]);
             return null;
         }
@@ -230,10 +230,10 @@ Ext.extend(Ext.data.Connection, Ext.util.Observable, {
      * @param {Number} transactionId (Optional) defaults to the last transaction
      * @return {Boolean} True if there is an outstanding request.
      */
-    isLoading: function (transId) {
-        if (transId) {
+    isLoading : function(transId){
+        if(transId){
             return Ext.lib.Ajax.isCallInProgress(transId);
-        } else {
+        }else{
             return this.transId ? true : false;
         }
     },
@@ -242,14 +242,14 @@ Ext.extend(Ext.data.Connection, Ext.util.Observable, {
      * Aborts any outstanding request.
      * @param {Number} transactionId (Optional) defaults to the last transaction
      */
-    abort: function (transId) {
-        if (transId || this.isLoading()) {
+    abort : function(transId){
+        if(transId || this.isLoading()){
             Ext.lib.Ajax.abort(transId || this.transId);
         }
     },
 
     // private
-    handleResponse: function (response) {
+    handleResponse : function(response){
         this.transId = false;
         var options = response.argument.options;
         response.argument = options ? options.argument : null;
@@ -259,7 +259,7 @@ Ext.extend(Ext.data.Connection, Ext.util.Observable, {
     },
 
     // private
-    handleFailure: function (response, e) {
+    handleFailure : function(response, e){
         this.transId = false;
         var options = response.argument.options;
         response.argument = options ? options.argument : null;
@@ -269,35 +269,35 @@ Ext.extend(Ext.data.Connection, Ext.util.Observable, {
     },
 
     // private
-    doFormUpload: function (o, ps, url) {
+    doFormUpload : function(o, ps, url){
         var id = Ext.id();
         var frame = document.createElement('iframe');
         frame.id = id;
         frame.name = id;
         frame.className = 'x-hidden';
-        if (Ext.isIE) {
+        if(Ext.isIE){
             frame.src = Ext.SSL_SECURE_URL;
         }
         document.body.appendChild(frame);
 
-        if (Ext.isIE) {
-            document.frames[id].name = id;
+        if(Ext.isIE){
+           document.frames[id].name = id;
         }
 
         var form = Ext.getDom(o.form);
         form.target = id;
         form.method = 'POST';
         form.enctype = form.encoding = 'multipart/form-data';
-        if (url) {
+        if(url){
             form.action = url;
         }
 
         var hiddens, hd;
-        if (ps) { // add dynamic params
+        if(ps){ // add dynamic params
             hiddens = [];
             ps = Ext.urlDecode(ps, false);
-            for (var k in ps) {
-                if (ps.hasOwnProperty(k)) {
+            for(var k in ps){
+                if(ps.hasOwnProperty(k)){
                     hd = document.createElement('input');
                     hd.type = 'hidden';
                     hd.name = k;
@@ -308,31 +308,31 @@ Ext.extend(Ext.data.Connection, Ext.util.Observable, {
             }
         }
 
-        function cb() {
+        function cb(){
             var r = {  // bogus response object
-                responseText: '',
-                responseXML: null
+                responseText : '',
+                responseXML : null
             };
 
             r.argument = o ? o.argument : null;
 
             try { //
                 var doc;
-                if (Ext.isIE) {
+                if(Ext.isIE){
                     doc = frame.contentWindow.document;
-                } else {
+                }else {
                     doc = (frame.contentDocument || window.frames[id].document);
                 }
-                if (doc && doc.body) {
+                if(doc && doc.body){
                     r.responseText = doc.body.innerHTML;
                 }
-                if (doc && doc.XMLDocument) {
+                if(doc && doc.XMLDocument){
                     r.responseXML = doc.XMLDocument;
-                } else {
+                }else {
                     r.responseXML = doc;
                 }
             }
-            catch (e) {
+            catch(e) {
                 // ignore
             }
 
@@ -343,16 +343,14 @@ Ext.extend(Ext.data.Connection, Ext.util.Observable, {
             Ext.callback(o.success, o.scope, [r, o]);
             Ext.callback(o.callback, o.scope, [o, true, r]);
 
-            setTimeout(function () {
-                Ext.removeNode(frame);
-            }, 100);
+            setTimeout(function(){Ext.removeNode(frame);}, 100);
         }
 
         Ext.EventManager.on(frame, 'load', cb, this);
         form.submit();
 
-        if (hiddens) { // remove dynamic params
-            for (var i = 0, len = hiddens.length; i < len; i++) {
+        if(hiddens){ // remove dynamic params
+            for(var i = 0, len = hiddens.length; i < len; i++){
                 Ext.removeNode(hiddens[i]);
             }
         }
@@ -364,8 +362,8 @@ Ext.extend(Ext.data.Connection, Ext.util.Observable, {
  * @extends Ext.data.Connection
  * Global Ajax request class.  Provides a simple way to make Ajax requests with maximum flexibility.  Example usage:
  * <pre><code>
- // Basic request
- Ext.Ajax.request({
+// Basic request
+Ext.Ajax.request({
    url: 'foo.php',
    success: someFn,
    failure: otherFn,
@@ -375,20 +373,20 @@ Ext.extend(Ext.data.Connection, Ext.util.Observable, {
    params: { foo: 'bar' }
 });
 
- // Simple ajax form submission
- Ext.Ajax.request({
+// Simple ajax form submission
+Ext.Ajax.request({
     form: 'some-form',
     params: 'foo=bar'
 });
 
- // Default headers to pass in every request
- Ext.Ajax.defaultHeaders = {
+// Default headers to pass in every request
+Ext.Ajax.defaultHeaders = {
     'Powered-By': 'Ext'
 };
 
- // Global Ajax events can be handled on every request!
- Ext.Ajax.on('beforerequest', this.showSpinner, this);
- </code></pre>
+// Global Ajax events can be handled on every request!
+Ext.Ajax.on('beforerequest', this.showSpinner, this);
+</code></pre>
  * @singleton
  */
 Ext.Ajax = new Ext.data.Connection({
@@ -438,7 +436,7 @@ Ext.Ajax = new Ext.data.Connection({
      */
     /**
      * @property  method
-     * The default HTTP method to be used for requests. Note that this is case-sensitive and should be all caps (defaults
+     * The default HTTP method to be used for requests. Note that this is case-sensitive and should be all caps (defaults 
      * to undefined; if not set but parms are present will use "POST," otherwise "GET.")
      * @type String
      */
@@ -453,14 +451,14 @@ Ext.Ajax = new Ext.data.Connection({
      * Whether a new request should abort any pending requests. (defaults to false)
      * @type Boolean
      */
-    autoAbort: false,
+    autoAbort : false,
 
     /**
      * Serialize the passed form into a url encoded string
      * @param {String/HTMLElement} form
      * @return {String}
      */
-    serializeForm: function (form) {
+    serializeForm : function(form){
         return Ext.lib.Ajax.serializeForm(form);
     }
 });

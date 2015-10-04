@@ -14,7 +14,7 @@
  * @constructor
  * @param {Object} data The data object which the Reader uses to construct a block of Ext.data.Records.
  */
-Ext.data.MemoryProxy = function (data) {
+Ext.data.MemoryProxy = function(data){
     Ext.data.MemoryProxy.superclass.constructor.call(this);
     this.data = data;
 };
@@ -37,21 +37,21 @@ Ext.extend(Ext.data.MemoryProxy, Ext.data.DataProxy, {
      * @param {Object} scope The scope in which to call the callback
      * @param {Object} arg An optional argument which is passed to the callback as its second parameter.
      */
-    load: function (params, reader, callback, scope, arg) {
+    load : function(params, reader, callback, scope, arg){
         params = params || {};
         var result;
         try {
             result = reader.readRecords(this.data);
-        } catch (e) {
+        }catch(e){
             this.fireEvent("loadexception", this, arg, null, e);
             callback.call(scope, null, arg, false);
             return;
         }
         callback.call(scope, result, arg, true);
     },
-
+    
     // private
-    update: function (params, records) {
-
+    update : function(params, records){
+        
     }
 });

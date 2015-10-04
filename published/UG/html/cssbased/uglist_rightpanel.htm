@@ -7,7 +7,7 @@
 <? assign var=rightPanelCaptionControls value="../../../common/html/cssbased/pageelements/ajax/catalog_folder.showbtn.htm" ?>
 
 <? if !$searchString ?>
-<? wbs_splitterPanelHeader
+	<? wbs_splitterPanelHeader
 		caption=$rightPanelHeader
 		active=true
 		id="RightPanelHeader"
@@ -17,20 +17,20 @@
 <? /if ?>
 
 <? if !$statisticsMode ?>
-<? if $viewMode != "GRID" ?>
-<? include file="../../../UG/html/cssbased/uglist_listheader.htm" ?>
-<? /if ?>
-<? assign var=gridFile value="../../../UG/html/cssbased/uglist_content.htm" ?>
+	<? if $viewMode != "GRID" ?>
+		<? include file="../../../UG/html/cssbased/uglist_listheader.htm" ?>
+	<? /if ?>
+	<? assign var=gridFile value="../../../UG/html/cssbased/uglist_content.htm" ?>
 <? else ?>
-<? assign var=gridFile value="../../../UG/html/cssbased/ul_statistics.htm" ?>
+	<? assign var=gridFile value="../../../UG/html/cssbased/ul_statistics.htm" ?>
 
-<? assign var=hideBottomPanel value=1 ?>
-<? assign var=hidePages value=1 ?>
-<? assign var=docsColumnName value=$kernelStrings.cm_summarydoc_title ?>
+	<? assign var=hideBottomPanel value=1 ?>
+	<? assign var=hidePages value=1 ?>
+	<? assign var=docsColumnName value=$kernelStrings.cm_summarydoc_title ?>
 <? /if ?>
 
 <? wbs_splitterScrollableArea ?>
-<? include file=$gridFile ?>
+	<? include file=$gridFile ?>
 <? /wbs_splitterScrollableArea ?>
 
 <? include file="../../../UG/html/cssbased/uglist_footer.htm" ?>

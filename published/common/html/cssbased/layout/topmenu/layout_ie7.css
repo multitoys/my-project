@@ -1,12 +1,15 @@
-#MainMenu {
-    overflow-x: hidden;
-    overflow-y: auto;
+#MainMenu
+{
+	overflow-x: hidden;
+	overflow-y: auto;
 }
 
-#ContentScroller {
-    position: absolute;
+#ContentScroller
+{
+	position: absolute;
 }
 
-#Toolbar ul {
-    position: absolute;
+#Toolbar ul
+{
+	position: absolute;
 }

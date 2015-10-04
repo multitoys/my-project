@@ -14,7 +14,5 @@
 // Distributed under the same terms as HTMLArea itself.
 // This notice MUST stay intact for use (see license.txt).
 {
-    "Spell Check using ieSpell"
-:
-    "Verificação Ortográfica utilizando ieSpell"
+  "Spell Check using ieSpell": "Verificação Ortográfica utilizando ieSpell"
 }

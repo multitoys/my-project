@@ -11,24 +11,22 @@
  * Do not remove this comment if you want to use script!
  * Не удаляйте данный комментарий, если вы хотите использовать скрипт!
  *
- * This library tries to use XMLHttpRequest (if available), and on
+ * This library tries to use XMLHttpRequest (if available), and on 
  * failure - use dynamically created <script> elements. Backend code
  * is the same for both cases.
  *
- * @author Dmitry Koterov
+ * @author Dmitry Koterov 
  * @version 3.29
  */
 
-function Subsys_JsHttpRequest_Js() {
-    this._construct()
-}
-(function () { // to create local-scope variables
-    var COUNT = 0;
-    var PENDING = {};
-    var CACHE = {};
+function Subsys_JsHttpRequest_Js() { this._construct() }
+(function() { // to create local-scope variables
+    var COUNT       = 0;
+    var PENDING     = {};
+    var CACHE       = {};
 
     // Called by server script on data load.
-    Subsys_JsHttpRequest_Js.dataReady = function (id, text, js) {
+    Subsys_JsHttpRequest_Js.dataReady = function(id, text, js) {
         var undef;
         var th = PENDING[id];
         delete PENDING[id];
@@ -37,35 +35,34 @@ function Subsys_JsHttpRequest_Js() {
             if (th.caching) CACHE[th.hash] = [text, js];
             th._dataReady(text, js);
         } else if (typeof(th) != typeof(undef)) {
-            alert("ScriptLoader: unknown pending id: " + id);
+            alert("ScriptLoader: unknown pending id: "+id);
         }
     }
-
+    
     Subsys_JsHttpRequest_Js.prototype = {
         // Standard properties.
         onreadystatechange: null,
-        readyState: 0,
-        responseText: null,
-        responseXML: null,
-        status: 200,
-        statusText: "OK",
-
+        readyState:         0,
+        responseText:       null,
+        responseXML:        null,
+        status:             200,
+        statusText:         "OK",
+        
         // Additional properties.
-        session_name: "PHPSESSID",  // set to SID cookie or GET parameter name
-        responseJS: null,         // JavaScript response array/hash
-        caching: false,        // need to use caching?
+        session_name:       "PHPSESSID",  // set to SID cookie or GET parameter name
+        responseJS:         null,         // JavaScript response array/hash
+        caching:            false,        // need to use caching?
 
         // Internals.
-        _span: null,
-        _id: null,
-        _xmlReq: null,
-        _openArg: null,
-        _reqHeaders: null,
+        _span:              null,
+        _id:                null,
+        _xmlReq:            null,
+        _openArg:           null,
+        _reqHeaders:        null,
 
-        dummy: function () {
-        }, // empty function
+        dummy: function() {}, // empty function
 
-        abort: function () {
+        abort: function() {
             if (this._xmlReq) return this._xmlReq.abort();
             if (this._span) {
                 this.readyState = 0;
@@ -73,31 +70,31 @@ function Subsys_JsHttpRequest_Js() {
                 this._cleanupScript();
             }
         },
-
-        open: function (method, url, asyncFlag, username, password) {
+            
+        open: function(method, url, asyncFlag, username, password) {
             this._openArg = {
-                'method': method,
-                'url': url,
+                'method':    method,
+                'url':       url,
                 'asyncFlag': asyncFlag,
-                'username': username,
-                'password': password
+                'username':  username,
+                'password':  password
             };
             this._id = null;
             this._xmlReq = null;
             this._reqHeaders = [];
             return true;
         },
-
-        send: function (content) {
+        
+        send: function(content) {
             var id = (new Date().getTime()) + "" + COUNT++;
-
+            
             // Build QUERY_STRING from query hash.
             var query = this._hash2query(content);
 
             // Append SID to original URL now.
             var url = this._openArg.url;
             var sid = this._getSid();
-            if (sid) url += (url.indexOf('?') >= 0 ? '&' : '?') + this.session_name + "=" + this.escape(sid);
+            if (sid) url += (url.indexOf('?')>=0? '&' : '?') + this.session_name + "=" + this.escape(sid);
 
             // Solve hash BEFORE appending ID.
             var hash = this.hash = url + '?' + query;
@@ -111,9 +108,9 @@ function Subsys_JsHttpRequest_Js() {
             this._xmlReq = this._obtainXmlReq(id, url);
 
             // Pass data in URL (GET, HEAD etc.) or in request body (POST)?
-            var hasSetHeader = this._xmlReq && (window.ActiveXObject || this._xmlReq.setRequestHeader);
+            var hasSetHeader = this._xmlReq && (window.ActiveXObject || this._xmlReq.setRequestHeader); 
             var href, body;
-            if (this._xmlReq && hasSetHeader && ("" + this._openArg.method).toUpperCase() == "POST") {
+            if (this._xmlReq && hasSetHeader && (""+this._openArg.method).toUpperCase() == "POST") {
                 // Use POST method. Pass query in request body.
                 // Opera 8.01 does not support setRequestHeader, so no POST method.
                 this._openArg.method = "POST";
@@ -121,12 +118,12 @@ function Subsys_JsHttpRequest_Js() {
                 body = query;
             } else {
                 this._openArg.method = "GET";
-                href = url + (url.indexOf('?') >= 0 ? '&' : '?') + query;
+                href = url + (url.indexOf('?')>=0? '&' : '?') + query;
                 body = null;
             }
 
             // Append ID: a=aaa&b=bbb&<id>
-            href = href + (href.indexOf('?') >= 0 ? '&' : '?') + id;
+            href = href + (href.indexOf('?')>=0? '&' : '?') + id;
 
             // Save loading script.
             PENDING[id] = this;
@@ -135,10 +132,10 @@ function Subsys_JsHttpRequest_Js() {
                 // Open request now & send it.
                 // In XMLHttpRequest mode request URL MUST be ended with "<id>-xml".
                 var a = this._openArg;
-                this._xmlReq.open(a.method, href + "-xml", a.asyncFlag, a.username, a.password);
+                this._xmlReq.open(a.method, href+"-xml", a.asyncFlag, a.username, a.password);
                 if (hasSetHeader) {
                     // Pass pending headers.
-                    for (var i = 0; i < this._reqHeaders.length; i++)
+                    for (var i=0; i<this._reqHeaders.length; i++)
                         this._xmlReq.setRequestHeader(this._reqHeaders[i][0], this._reqHeaders[i][1]);
                     // Set non-default Content-type. We cannot use 
                     // "application/x-www-form-urlencoded" here, because 
@@ -157,17 +154,17 @@ function Subsys_JsHttpRequest_Js() {
             }
         },
 
-        getAllResponseHeaders: function () {
+        getAllResponseHeaders: function() {
             if (this._xmlReq) return this._xmlReq.getAllResponseHeaders();
             return '';
         },
-
-        getResponseHeader: function (label) {
+            
+        getResponseHeader: function(label) {
             if (this._xmlReq) return this._xmlReq.getResponseHeader(label);
             return '';
         },
 
-        setRequestHeader: function (label, value) {
+        setRequestHeader: function(label, value) {
             // Collect headers.
             this._reqHeaders[this._reqHeaders.length] = [label, value];
         },
@@ -178,51 +175,39 @@ function Subsys_JsHttpRequest_Js() {
         //
 
         // Constructor.
-        _construct: function () {
-        },
+        _construct: function() {},
 
         // Do all work when data is ready.
-        _dataReady: function (text, js) {
-            with (this) {
-                if (text !== null || js !== null) {
-                    readyState = 4;
-                    responseText = responseXML = text;
-                    responseJS = js;
-                } else {
-                    readyState = 0;
-                    responseText = responseXML = responseJS = null;
-                }
-                if (onreadystatechange) onreadystatechange();
-                _cleanupScript();
+        _dataReady: function(text, js) { with (this) {
+            if (text !== null || js !== null) {
+                readyState = 4;
+                responseText = responseXML = text;
+                responseJS = js;
+            } else {
+                readyState = 0;
+                responseText = responseXML = responseJS = null;
             }
-        },
+            if (onreadystatechange) onreadystatechange();
+            _cleanupScript();
+        }},
 
         // Create new XMLHttpRequest object.
-        _obtainXmlReq: function (id, url) {
+        _obtainXmlReq: function(id, url) {
             // If url.domain specified, cannot use XMLHttpRequest!
             // XMLHttpRequest (and MS ActiveX'es) cannot work with different domains.
             if (url.match(new RegExp('^[a-z]+://', 'i'))) return null;
-
+            
             // Try to use built-in loaders.
             var req = null;
             if (window.XMLHttpRequest) {
-                try {
-                    req = new XMLHttpRequest()
-                } catch (e) {
-                }
+                try { req = new XMLHttpRequest() } catch(e) {}
             } else if (window.ActiveXObject) {
-                try {
-                    req = new ActiveXObject("Microsoft.XMLHTTP")
-                } catch (e) {
-                }
-                if (!req) try {
-                    req = new ActiveXObject("Msxml2.XMLHTTP")
-                } catch (e) {
-                }
+                try { req = new ActiveXObject("Microsoft.XMLHTTP") } catch(e) {}
+                if (!req) try { req = new ActiveXObject("Msxml2.XMLHTTP") } catch (e) {}
             }
             if (req) {
                 var th = this;
-                req.onreadystatechange = function () {
+                req.onreadystatechange = function() { 
                     var s = req.readyState;
                     if (s == 4) {
                         // Avoid memory leak by removing closure.
@@ -233,11 +218,11 @@ function Subsys_JsHttpRequest_Js() {
                             // Call associated dataReady().
                             eval(responseText);
                         } catch (e) {
-                            Subsys_JsHttpRequest_Js.dataReady(id, "JavaScript code generated by backend is invalid!\n" + responseText, null);
+                            Subsys_JsHttpRequest_Js.dataReady(id, "JavaScript code generated by backend is invalid!\n"+responseText, null);
                         }
                     } else {
                         th.readyState = s;
-                        if (th.onreadystatechange) th.onreadystatechange()
+                        if (th.onreadystatechange) th.onreadystatechange() 
                     }
                 };
                 this._id = id;
@@ -246,32 +231,30 @@ function Subsys_JsHttpRequest_Js() {
         },
 
         // Create new script element and start loading.
-        _obtainScript: function (id, href) {
-            with (document) {
-                var span = null;
-                // Oh shit! Damned stupid fucked Opera 7.23 does not allow to create SCRIPT
-                // element over createElement (in HEAD or BODY section or in nested SPAN -
-                // no matter): it is created deadly, and does not respons on href assignment.
-                // So - always create SPAN.
-                span = body.appendChild(createElement("SPAN"));
-                span.style.display = 'none';
-                span.innerHTML = 'Text for stupid IE.<s' + 'cript></' + 'script>';
-                setTimeout(function () {
-                    var s = span.getElementsByTagName("script")[0];
-                    s.language = "JavaScript";
-                    if (s.setAttribute) s.setAttribute('src', href); else s.src = href;
-                }, 10);
-                this._id = id;
-                this._span = span;
-            }
-        },
+        _obtainScript: function(id, href) { with (document) {
+            var span = null;
+            // Oh shit! Damned stupid fucked Opera 7.23 does not allow to create SCRIPT 
+            // element over createElement (in HEAD or BODY section or in nested SPAN - 
+            // no matter): it is created deadly, and does not respons on href assignment.
+            // So - always create SPAN.
+            span = body.appendChild(createElement("SPAN"));
+            span.style.display = 'none';
+            span.innerHTML = 'Text for stupid IE.<s'+'cript></' + 'script>';
+            setTimeout(function() {
+                var s = span.getElementsByTagName("script")[0];
+                s.language = "JavaScript";
+                if (s.setAttribute) s.setAttribute('src', href); else s.src = href;
+            }, 10);
+            this._id = id;
+            this._span = span;
+        }},
 
         // Remove last used script element (clean memory).
-        _cleanupScript: function () {
+        _cleanupScript: function() {
             var span = this._span;
             if (span) {
                 this._span = null;
-                setTimeout(function () {
+                setTimeout(function() {
                     // without setTimeout - crash in IE 5.0!
                     span.parentNode.removeChild(span);
                 }, 50);
@@ -280,14 +263,14 @@ function Subsys_JsHttpRequest_Js() {
         },
 
         // Convert hash to QUERY_STRING.
-        _hash2query: function (content, prefix) {
+        _hash2query: function(content, prefix) {
             if (prefix == null) prefix = "";
             var query = [];
             if (content instanceof Object) {
                 for (var k in content) {
                     var v = content[k];
-                    if (v == null || ((v.constructor || {}).prototype || {})[k]) continue;
-                    var curPrefix = prefix ? prefix + '[' + this.escape(k) + ']' : this.escape(k);
+                    if (v == null || ((v.constructor||{}).prototype||{})[k]) continue;
+                    var curPrefix = prefix? prefix+'['+this.escape(k)+']' : this.escape(k);
                     if (v instanceof Object)
                         query[query.length] = this._hash2query(v, curPrefix);
                     else
@@ -301,21 +284,21 @@ function Subsys_JsHttpRequest_Js() {
 
         // Return value of SID based on QUERY_STRING or cookie
         // (PHP compatible sessions).
-        _getSid: function () {
-            var m = document.location.search.match(new RegExp('[&?]' + this.session_name + '=([^&?]*)'));
+        _getSid: function() {
+            var m = document.location.search.match(new RegExp('[&?]'+this.session_name+'=([^&?]*)'));
             var sid = null;
             if (m) {
                 sid = m[1];
             } else {
-                var m = document.cookie.match(new RegExp(s = '(;|^)\\s*' + this.session_name + '=([^;]*)'));
+                var m = document.cookie.match(new RegExp(s='(;|^)\\s*'+this.session_name+'=([^;]*)'));
                 if (m) sid = m[2];
             }
             return sid;
         },
-
+        
         // Stupid JS escape() does not quote '+'.
-        escape: function (s) {
-            return escape(s).replace(new RegExp('\\+', 'g'), '%2B');
+        escape: function(s) {
+            return escape(s).replace(new RegExp('\\+','g'), '%2B');
         }
     }
 })();

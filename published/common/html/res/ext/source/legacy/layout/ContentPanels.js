@@ -29,50 +29,50 @@
  * @param {String/Object} config A string to set only the title or a config object
  * @param {String} content (optional) Set the HTML content for this panel
  */
-Ext.ContentPanel = function (el, config, content) {
-    if (el.autoCreate) {
+Ext.ContentPanel = function(el, config, content){
+    if(el.autoCreate){
         config = el;
         el = Ext.id();
     }
     this.el = Ext.get(el);
-    if (!this.el && config && config.autoCreate) {
-        if (typeof config.autoCreate == "object") {
-            if (!config.autoCreate.id) {
-                config.autoCreate.id = config.id || el;
+    if(!this.el && config && config.autoCreate){
+        if(typeof config.autoCreate == "object"){
+            if(!config.autoCreate.id){
+                config.autoCreate.id = config.id||el;
             }
             this.el = Ext.DomHelper.append(document.body,
-                config.autoCreate, true);
-        } else {
+                        config.autoCreate, true);
+        }else{
             this.el = Ext.DomHelper.append(document.body,
-                {tag: "div", cls: "x-layout-inactive-content", id: config.id || el}, true);
+                        {tag: "div", cls: "x-layout-inactive-content", id: config.id||el}, true);
         }
     }
     this.closable = false;
     this.loaded = false;
     this.active = false;
-    if (typeof config == "string") {
+    if(typeof config == "string"){
         this.title = config;
-    } else {
+    }else{
         Ext.apply(this, config);
     }
-    if (this.resizeEl) {
+    if(this.resizeEl){
         this.resizeEl = Ext.get(this.resizeEl, true);
-    } else {
+    }else{
         this.resizeEl = this.el;
     }
     this.addEvents({
         /**
          * @event activate
-         * Fires when this panel is activated.
+         * Fires when this panel is activated. 
          * @param {Ext.ContentPanel} this
          */
-        "activate": true,
+        "activate" : true,
         /**
          * @event deactivate
-         * Fires when this panel is activated.
+         * Fires when this panel is activated. 
          * @param {Ext.ContentPanel} this
          */
-        "deactivate": true,
+        "deactivate" : true,
 
         /**
          * @event resize
@@ -81,45 +81,45 @@ Ext.ContentPanel = function (el, config, content) {
          * @param {Number} width The width after any component adjustments
          * @param {Number} height The height after any component adjustments
          */
-        "resize": true
+        "resize" : true
     });
-    if (this.autoScroll) {
+    if(this.autoScroll){
         this.resizeEl.setStyle("overflow", "auto");
     }
     content = content || this.content;
-    if (content) {
+    if(content){
         this.setContent(content);
     }
-    if (config && config.url) {
+    if(config && config.url){
         this.setUrl(this.url, this.params, this.loadOnce);
     }
     Ext.ContentPanel.superclass.constructor.call(this);
 };
 
 Ext.extend(Ext.ContentPanel, Ext.util.Observable, {
-    tabTip: '',
-    setRegion: function (region) {
+    tabTip:'',
+    setRegion : function(region){
         this.region = region;
-        if (region) {
-            this.el.replaceClass("x-layout-inactive-content", "x-layout-active-content");
-        } else {
-            this.el.replaceClass("x-layout-active-content", "x-layout-inactive-content");
-        }
+        if(region){
+           this.el.replaceClass("x-layout-inactive-content", "x-layout-active-content");
+        }else{
+           this.el.replaceClass("x-layout-active-content", "x-layout-inactive-content");
+        } 
     },
-
+    
     /**
-     * Returns the toolbar for this Panel if one was configured.
-     * @return {Ext.Toolbar}
+     * Returns the toolbar for this Panel if one was configured. 
+     * @return {Ext.Toolbar} 
      */
-    getToolbar: function () {
+    getToolbar : function(){
         return this.toolbar;
     },
-
-    setActiveState: function (active) {
+    
+    setActiveState : function(active){
         this.active = active;
-        if (!active) {
+        if(!active){
             this.fireEvent("deactivate", this);
-        } else {
+        }else{
             this.fireEvent("activate", this);
         }
     },
@@ -127,15 +127,15 @@ Ext.extend(Ext.ContentPanel, Ext.util.Observable, {
      * Updates this panel's element
      * @param {String} content The new content
      * @param {Boolean} loadScripts (optional) true to look for and process scripts
-     */
-    setContent: function (content, loadScripts) {
+    */
+    setContent : function(content, loadScripts){
         this.el.update(content, loadScripts);
     },
 
-    ignoreResize: function (w, h) {
-        if (this.lastSize && this.lastSize.width == w && this.lastSize.height == h) {
+    ignoreResize : function(w, h){
+        if(this.lastSize && this.lastSize.width == w && this.lastSize.height == h){
             return true;
-        } else {
+        }else{
             this.lastSize = {width: w, height: h};
             return false;
         }
@@ -144,14 +144,14 @@ Ext.extend(Ext.ContentPanel, Ext.util.Observable, {
      * Get the {@link Ext.Updater} for this panel. Enables you to perform Ajax updates.
      * @return {Ext.Updater} The Updater
      */
-    getUpdater: function () {
+    getUpdater : function(){
         return this.el.getUpdater();
     },
-    /**
+     /**
      * Loads this content panel immediately with content from XHR. Note: to delay loading until the panel is activated, use {@link #setUrl}.
      * @param {Object/String/Function} url The URL for this request or a function to call to get the URL or a config object containing any of the following options:
-     <pre><code>
-     panel.load({
+<pre><code>
+panel.load({
     url: "your-url.php",
     params: {param1: "foo", param2: "bar"}, // or a URL encoded string
     callback: yourFunction,
@@ -162,7 +162,7 @@ Ext.extend(Ext.ContentPanel, Ext.util.Observable, {
     timeout: 30,
     scripts: false
 });
-     </code></pre>
+</code></pre>
      * The only required property is <i>url</i>. The optional properties <i>nocache</i>, <i>text</i> and <i>scripts</i>
      * are shorthand for <i>disableCaching</i>, <i>indicatorText</i> and <i>loadScripts</i> and are used to set their associated property on this panel Updater instance.
      * @param {String/Object} params (optional) The parameters to pass as either a URL encoded string "param1=1&amp;param2=2" or an object {param1: 1, param2: 2}
@@ -170,7 +170,7 @@ Ext.extend(Ext.ContentPanel, Ext.util.Observable, {
      * @param {Boolean} discardUrl (optional) By default when you execute an update the defaultUrl is changed to the last used URL. If true, it will not store the URL.
      * @return {Ext.ContentPanel} this
      */
-    load: function () {
+    load : function(){
         this.el.load.apply(this.el, arguments);
         return this;
     },
@@ -183,62 +183,62 @@ Ext.extend(Ext.ContentPanel, Ext.util.Observable, {
      * @param {Boolean} loadOnce (optional) Whether to only load the content once. If this is false it makes the Ajax call every time this panel is activated. (Defaults to false)
      * @return {Ext.Updater} The Updater
      */
-    setUrl: function (url, params, loadOnce) {
-        if (this.refreshDelegate) {
+    setUrl : function(url, params, loadOnce){
+        if(this.refreshDelegate){
             this.removeListener("activate", this.refreshDelegate);
         }
         this.refreshDelegate = this._handleRefresh.createDelegate(this, [url, params, loadOnce]);
         this.on("activate", this.refreshDelegate);
         return this.el.getUpdater();
     },
-
-    _handleRefresh: function (url, params, loadOnce) {
-        if (!loadOnce || !this.loaded) {
+    
+    _handleRefresh : function(url, params, loadOnce){
+        if(!loadOnce || !this.loaded){
             var updater = this.el.getUpdater();
             updater.update(url, params, this._setLoaded.createDelegate(this));
         }
     },
-
-    _setLoaded: function () {
+    
+    _setLoaded : function(){
         this.loaded = true;
-    },
-
+    }, 
+    
     /**
      * Returns this panel's id
-     * @return {String}
+     * @return {String} 
      */
-    getId: function () {
+    getId : function(){
         return this.el.id;
     },
-
+    
     /**
      * Returns this panel's element
-     * @return {Ext.Element}
+     * @return {Ext.Element} 
      */
-    getEl: function () {
+    getEl : function(){
         return this.el;
     },
-
-    adjustForComponents: function (width, height) {
-        if (this.resizeEl != this.el) {
+    
+    adjustForComponents : function(width, height){
+        if(this.resizeEl != this.el){
             width -= this.el.getFrameWidth('lr');
             height -= this.el.getFrameWidth('tb');
         }
-        if (this.toolbar) {
+        if(this.toolbar){
             var te = this.toolbar.getEl();
             height -= te.getHeight();
             te.setWidth(width);
         }
-        if (this.adjustments) {
+        if(this.adjustments){
             width += this.adjustments[0];
             height += this.adjustments[1];
         }
         return {"width": width, "height": height};
     },
-
-    setSize: function (width, height) {
-        if (this.fitToFrame && !this.ignoreResize(width, height)) {
-            if (this.fitContainer && this.resizeEl != this.el) {
+    
+    setSize : function(width, height){
+        if(this.fitToFrame && !this.ignoreResize(width, height)){
+            if(this.fitContainer && this.resizeEl != this.el){
                 this.el.setSize(width, height);
             }
             var size = this.adjustForComponents(width, height);
@@ -246,60 +246,60 @@ Ext.extend(Ext.ContentPanel, Ext.util.Observable, {
             this.fireEvent('resize', this, size.width, size.height);
         }
     },
-
+    
     /**
      * Returns this panel's title
-     * @return {String}
+     * @return {String} 
      */
-    getTitle: function () {
+    getTitle : function(){
         return this.title;
     },
-
+    
     /**
      * Set this panel's title
      * @param {String} title
      */
-    setTitle: function (title) {
+    setTitle : function(title){
         this.title = title;
-        if (this.region) {
+        if(this.region){
             this.region.updatePanelTitle(this, title);
         }
     },
-
+    
     /**
      * Returns true is this panel was configured to be closable
-     * @return {Boolean}
+     * @return {Boolean} 
      */
-    isClosable: function () {
+    isClosable : function(){
         return this.closable;
     },
-
-    beforeSlide: function () {
+    
+    beforeSlide : function(){
         this.el.clip();
         this.resizeEl.clip();
     },
-
-    afterSlide: function () {
+    
+    afterSlide : function(){
         this.el.unclip();
         this.resizeEl.unclip();
     },
-
+    
     /**
      *   Force a content refresh from the URL specified in the {@link #setUrl} method.
      *   Will fail silently if the {@link #setUrl} method has not been called.
      *   This does not activate the panel, just updates its content.
      */
-    refresh: function () {
-        if (this.refreshDelegate) {
-            this.loaded = false;
-            this.refreshDelegate();
+    refresh : function(){
+        if(this.refreshDelegate){
+           this.loaded = false;
+           this.refreshDelegate();
         }
     },
-
+    
     /**
      * Destroys this panel
      */
-    destroy: function () {
+    destroy : function(){
         this.el.removeAllListeners();
         var tempEl = document.createElement("span");
         tempEl.appendChild(this.el.dom);
@@ -319,12 +319,12 @@ Ext.ContentPanel.prototype.getUpdateManager = Ext.ContentPanel.prototype.getUpda
  * @param {Ext.grid.Grid} grid The grid for this panel
  * @param {String/Object} config A string to set only the panel's title, or a config object
  */
-Ext.GridPanel = function (grid, config) {
+Ext.GridPanel = function(grid, config){
     this.wrapper = Ext.DomHelper.append(document.body, // wrapper for IE7 strict & safari scroll issue
         {tag: "div", cls: "x-layout-grid-wrapper x-layout-inactive-content"}, true);
     this.wrapper.dom.appendChild(grid.getGridEl().dom);
     Ext.GridPanel.superclass.constructor.call(this, this.wrapper, config);
-    if (this.toolbar) {
+    if(this.toolbar){
         this.toolbar.el.insertBefore(this.wrapper.dom.firstChild);
     }
     grid.monitorWindowResize = false; // turn off autosizing
@@ -335,39 +335,39 @@ Ext.GridPanel = function (grid, config) {
 };
 
 Ext.extend(Ext.GridPanel, Ext.ContentPanel, {
-    getId: function () {
+    getId : function(){
         return this.grid.id;
     },
-
+    
     /**
      * Returns the grid for this panel
-     * @return {Ext.grid.Grid}
+     * @return {Ext.grid.Grid} 
      */
-    getGrid: function () {
-        return this.grid;
+    getGrid : function(){
+        return this.grid;    
     },
-
-    setSize: function (width, height) {
-        if (!this.ignoreResize(width, height)) {
+    
+    setSize : function(width, height){
+        if(!this.ignoreResize(width, height)){
             var grid = this.grid;
             var size = this.adjustForComponents(width, height);
             grid.getGridEl().setSize(size.width, size.height);
             grid.autoSize();
         }
     },
-
-    beforeSlide: function () {
+    
+    beforeSlide : function(){
         this.grid.getView().scroller.clip();
     },
-
-    afterSlide: function () {
+    
+    afterSlide : function(){
         this.grid.getView().scroller.unclip();
     },
-
-    destroy: function () {
+    
+    destroy : function(){
         this.grid.destroy();
         delete this.grid;
-        Ext.GridPanel.superclass.destroy.call(this);
+        Ext.GridPanel.superclass.destroy.call(this); 
     }
 });
 
@@ -380,7 +380,7 @@ Ext.extend(Ext.GridPanel, Ext.ContentPanel, {
  * @param {Ext.BorderLayout} layout The layout for this panel
  * @param {String/Object} config A string to set only the title or a config object
  */
-Ext.NestedLayoutPanel = function (layout, config) {
+Ext.NestedLayoutPanel = function(layout, config){
     Ext.NestedLayoutPanel.superclass.constructor.call(this, layout.getEl(), config);
     layout.monitorWindowResize = false; // turn off autosizing
     this.layout = layout;
@@ -389,35 +389,35 @@ Ext.NestedLayoutPanel = function (layout, config) {
 
 Ext.extend(Ext.NestedLayoutPanel, Ext.ContentPanel, {
 
-    setSize: function (width, height) {
-        if (!this.ignoreResize(width, height)) {
+    setSize : function(width, height){
+        if(!this.ignoreResize(width, height)){
             var size = this.adjustForComponents(width, height);
             var el = this.layout.getEl();
             el.setSize(size.width, size.height);
             var touch = el.dom.offsetWidth;
             this.layout.layout();
             // ie requires a double layout on the first pass
-            if (Ext.isIE && !this.initialized) {
+            if(Ext.isIE && !this.initialized){
                 this.initialized = true;
                 this.layout.layout();
             }
         }
     },
-
+    
     /**
      * Returns the nested BorderLayout for this panel
-     * @return {Ext.BorderLayout}
+     * @return {Ext.BorderLayout} 
      */
-    getLayout: function () {
+    getLayout : function(){
         return this.layout;
     }
 });
 
-Ext.ScrollPanel = function (el, config, content) {
+Ext.ScrollPanel = function(el, config, content){
     config = config || {};
     config.fitToFrame = true;
     Ext.ScrollPanel.superclass.constructor.call(this, el, config, content);
-
+    
     this.el.dom.style.overflow = "hidden";
     var wrap = this.el.wrap({cls: "x-scroller x-layout-inactive-content"});
     this.el.removeClass("x-layout-inactive-content");
@@ -425,8 +425,7 @@ Ext.ScrollPanel = function (el, config, content) {
 
     var up = wrap.createChild({cls: "x-scroller-up", html: "&#160;"}, this.el.dom);
     var down = wrap.createChild({cls: "x-scroller-down", html: "&#160;"});
-    up.unselectable();
-    down.unselectable();
+    up.unselectable(); down.unselectable();
     up.on("click", this.scrollUp, this);
     down.on("click", this.scrollDown, this);
     up.addClassOnOver("x-scroller-btn-over");
@@ -436,42 +435,40 @@ Ext.ScrollPanel = function (el, config, content) {
     this.adjustments = [0, -(up.getHeight() + down.getHeight())];
 
     this.resizeEl = this.el;
-    this.el = wrap;
-    this.up = up;
-    this.down = down;
+    this.el = wrap; this.up = up; this.down = down;
 };
 
 Ext.extend(Ext.ScrollPanel, Ext.ContentPanel, {
-    increment: 100,
-    wheelIncrement: 5,
-    scrollUp: function () {
+    increment : 100,
+    wheelIncrement : 5,
+    scrollUp : function(){
         this.resizeEl.scroll("up", this.increment, {callback: this.afterScroll, scope: this});
     },
 
-    scrollDown: function () {
+    scrollDown : function(){
         this.resizeEl.scroll("down", this.increment, {callback: this.afterScroll, scope: this});
     },
 
-    afterScroll: function () {
+    afterScroll : function(){
         var el = this.resizeEl;
         var t = el.dom.scrollTop, h = el.dom.scrollHeight, ch = el.dom.clientHeight;
         this.up[t == 0 ? "addClass" : "removeClass"]("x-scroller-btn-disabled");
         this.down[h - t <= ch ? "addClass" : "removeClass"]("x-scroller-btn-disabled");
     },
 
-    setSize: function () {
+    setSize : function(){
         Ext.ScrollPanel.superclass.setSize.apply(this, arguments);
         this.afterScroll();
     },
 
-    onWheel: function (e) {
+    onWheel : function(e){
         var d = e.getWheelDelta();
-        this.resizeEl.dom.scrollTop -= (d * this.wheelIncrement);
+        this.resizeEl.dom.scrollTop -= (d*this.wheelIncrement);
         this.afterScroll();
         e.stopEvent();
     },
 
-    setContent: function (content, loadScripts) {
+    setContent : function(content, loadScripts){
         this.resizeEl.update(content, loadScripts);
     }
 

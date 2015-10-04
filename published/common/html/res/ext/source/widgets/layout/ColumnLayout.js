@@ -29,8 +29,8 @@
  * with different percentages, the columnWidths must always add up to 1 (or 100%) when added together, otherwise your
  * layout may not render as expected.  Example usage:</p>
  * <pre><code>
- // All columns are percentages -- they must add up to 1
- var p = new Ext.Panel({
+// All columns are percentages -- they must add up to 1
+var p = new Ext.Panel({
     title: 'Column Layout - Percentage Only',
     layout:'column',
     items: [{
@@ -45,10 +45,10 @@
     }]
 });
 
- // Mix of width and columnWidth -- all columnWidth values values must add
- // up to 1. The first column will take up exactly 120px, and the last two
- // columns will fill the remaining container width.
- var p = new Ext.Panel({
+// Mix of width and columnWidth -- all columnWidth values values must add
+// up to 1. The first column will take up exactly 120px, and the last two
+// columns will fill the remaining container width.
+var p = new Ext.Panel({
     title: 'Column Layout - Mixed',
     layout:'column',
     items: [{
@@ -62,38 +62,38 @@
         columnWidth: .2
     }]
 });
- </code></pre>
+</code></pre>
  */
 Ext.layout.ColumnLayout = Ext.extend(Ext.layout.ContainerLayout, {
     // private
-    monitorResize: true,
+    monitorResize:true,
     // private
     extraCls: 'x-column',
 
-    scrollOffset: 0,
+    scrollOffset : 0,
 
     // private
-    isValidParent: function (c, target) {
+    isValidParent : function(c, target){
         return c.getEl().dom.parentNode == this.innerCt.dom;
     },
 
     // private
-    onLayout: function (ct, target) {
+    onLayout : function(ct, target){
         var cs = ct.items.items, len = cs.length, c, i;
 
-        if (!this.innerCt) {
+        if(!this.innerCt){
             target.addClass('x-column-layout-ct');
 
             // the innerCt prevents wrapping and shuffling while
             // the container is resizing
-            this.innerCt = target.createChild({cls: 'x-column-inner'});
-            this.innerCt.createChild({cls: 'x-clear'});
+            this.innerCt = target.createChild({cls:'x-column-inner'});
+            this.innerCt.createChild({cls:'x-clear'});
         }
         this.renderAll(ct, this.innerCt);
 
         var size = target.getViewSize();
 
-        if (size.width < 1 && size.height < 1) { // display none?
+        if(size.width < 1 && size.height < 1){ // display none?
             return;
         }
 
@@ -102,27 +102,27 @@ Ext.layout.ColumnLayout = Ext.extend(Ext.layout.ContainerLayout, {
             pw = w;
 
         this.innerCt.setWidth(w);
-
+        
         // some columns can be percentages while others are fixed
         // so we need to make 2 passes
 
-        for (i = 0; i < len; i++) {
+        for(i = 0; i < len; i++){
             c = cs[i];
-            if (!c.columnWidth) {
+            if(!c.columnWidth){
                 pw -= (c.getSize().width + c.getEl().getMargins('lr'));
             }
         }
 
         pw = pw < 0 ? 0 : pw;
 
-        for (i = 0; i < len; i++) {
+        for(i = 0; i < len; i++){
             c = cs[i];
-            if (c.columnWidth) {
-                c.setSize(Math.floor(c.columnWidth * pw) - c.getEl().getMargins('lr'));
+            if(c.columnWidth){
+                c.setSize(Math.floor(c.columnWidth*pw) - c.getEl().getMargins('lr'));
             }
         }
     }
-
+    
     /**
      * @property activeItem
      * @hide

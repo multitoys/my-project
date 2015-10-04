@@ -15,13 +15,7 @@
 // This notice MUST stay intact for use (see license.txt).
 
 {
-    "Choose stylesheet"
-:
-    "Escolher estilo",
-        "Default"
-:
-    "Padrão",
-        "Undefined"
-:
-    "Indefinido"
+  "Choose stylesheet": "Escolher estilo",
+  "Default": "Padrão",
+  "Undefined": "Indefinido"
 }

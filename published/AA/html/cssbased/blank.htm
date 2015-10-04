@@ -1,83 +1,76 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-    <? wbs_initLayout disableExt=true ?>
-
-    <script>
-        var counter = 0;
-        var scripts = new Array("../../../common/html/res/ext/pr-prototype.js",
-                "../../../common/html/res/ext/pr-adapter.js", "../../../common/html/res/ext/pr-effects.js",
-                "../../../common/html/res/ext/ext-small.js",
-                "../../../common/html/res/ext/ext-all.js",
-                "../../../common/html/cssbased/domready.js", "../../../common/html/cssbased/common.js", "../../../common/html/cssbased/layout.js",
-                "../../../common/html/res/wbscommon.js", "../../../common/help/helpopen.js", "../../../WG/html/cpicker/js_color_picker_v2.js",
-                "../../../common/html/cssbased/splitter.js",
-                "../../../common/html/cssbased/pageelements/common_js.js", "../../../common/html/classic/tree_templates/tree_functions.js",
-                "../../../common/html/cssbased/pageelements/ajax/common_dialog.js",
-                "../../../common/html/cssbased/pageelements/ajax/widgets.js",
-                "../../../common/html/classic/styles/popupmenu.js",
-                "../../../WG/html/cpicker/color_functions.js",
-                "../../../common/html/cssbased/pageelements/ajax/contacts_selector.js"
-        );
-        var styles = new Array(
-                "../../../common/html/res/ext/resources/css/my-ext-all.css",
-                "../../../common/html/res/ext/resources/css/xtheme-slate.css",
-                "../../../common/html/res/ext/resources/css/menu.css",
-                "../../../common/html/res/ext/resources/css/layout.css"
-        );
-
-        function start() {
-            f1();
-            f2();
-        }
-
-        function f1() {
-            var head = document.getElementsByTagName("head")[0];
-
-            if (counter < scripts.length) {
-                var source = scripts[counter];
-                var script = document.createElement("script");
-                script.type = 'text/javascript';
-                script.src = source;
-                head.appendChild(script);
-                counter++;
-                script.onreadystatechange = function () {
-                    if ('loaded' == script.readyState || 'complete' == script.readyState) f1();
-                };
-                script.onload = function () {
-                    f1();
-                }
-            }
-        }
-
-        function f2() {
-            var head = document.getElementsByTagName("head")[0];
-
-            for (var i = 0; i < styles.length; i++) {
-                var source = styles[i];
-                var css = document.createElement("link");
-                css.rel = "stylesheet";
-                css.type = "text/css";
-                css.href = source;
-                css.media = "screen";
-                head.appendChild(css);
-            }
-            ;
-        }
-    </script>
-
-    <style>
-        .FullScreenBlock {
-            display: none
-        }
-    </style>
+	<? wbs_initLayout disableExt=true ?>
+	
+	<script>
+		var counter = 0;
+		var scripts = new Array ("../../../common/html/res/ext/pr-prototype.js", 
+			"../../../common/html/res/ext/pr-adapter.js", "../../../common/html/res/ext/pr-effects.js", 
+			"../../../common/html/res/ext/ext-small.js",
+			"../../../common/html/res/ext/ext-all.js",
+			"../../../common/html/cssbased/domready.js", "../../../common/html/cssbased/common.js", "../../../common/html/cssbased/layout.js",
+			"../../../common/html/res/wbscommon.js", "../../../common/help/helpopen.js", "../../../WG/html/cpicker/js_color_picker_v2.js",
+			"../../../common/html/cssbased/splitter.js", 
+			"../../../common/html/cssbased/pageelements/common_js.js", "../../../common/html/classic/tree_templates/tree_functions.js",
+			"../../../common/html/cssbased/pageelements/ajax/common_dialog.js",
+			"../../../common/html/cssbased/pageelements/ajax/widgets.js",
+			"../../../common/html/classic/styles/popupmenu.js", 
+			"../../../WG/html/cpicker/color_functions.js",
+			"../../../common/html/cssbased/pageelements/ajax/contacts_selector.js"
+		);
+		var styles = new Array (
+			"../../../common/html/res/ext/resources/css/my-ext-all.css", 
+			"../../../common/html/res/ext/resources/css/xtheme-slate.css",
+			"../../../common/html/res/ext/resources/css/menu.css", 
+			"../../../common/html/res/ext/resources/css/layout.css"
+		);
+		
+		function start () {
+			f1 ();
+			f2 ();
+		}		
+	
+		function f1() {
+			var head = document.getElementsByTagName("head")[0];
+			
+			if (counter < scripts.length) {
+				var source = scripts[counter];
+				var script = document.createElement("script");
+				script.type='text/javascript';
+				script.src= source;
+				head.appendChild(script);
+				counter++;
+				script.onreadystatechange = function () {if ('loaded' == script.readyState || 'complete' == script.readyState) f1();};
+				script.onload = function () {f1();}
+			}
+		}
+		
+		function f2 () {
+			var head = document.getElementsByTagName("head")[0];
+			
+			for (var i= 0; i <styles.length; i++) {
+				var source = styles[i];
+				var css = document.createElement("link");
+				css.rel= "stylesheet";
+				css.type = "text/css";
+				css.href = source;
+				css.media = "screen";
+				head.appendChild(css);
+			};
+		}
+	</script>
+	
+	<style>
+		.FullScreenBlock {display: none}
+	</style>
 </head>
 <body onLoad="start()">
-<? wbs_pageLayout contentClass="NotFullWidth" ?>
-<? wbs_errorBlock ?>
+	<? wbs_pageLayout contentClass="NotFullWidth" ?>
+		<? wbs_errorBlock ?>
 
-<? $kernelStrings.app_welcomenote_text ?>
-
-<? /wbs_pageLayout ?>
+		<? $kernelStrings.app_welcomenote_text ?>
+		
+	<? /wbs_pageLayout ?>
 </body>
 </html>

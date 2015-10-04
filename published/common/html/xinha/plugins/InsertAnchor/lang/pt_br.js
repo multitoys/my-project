@@ -14,19 +14,9 @@
 // Distributed under the same terms as HTMLArea itself.
 // This notice MUST stay intact for use (see license.txt).
 {
-    "Anchor name"
-:
-    "Nome da âncora",
-        "Cancel"
-:
-    "Cancelar",
-        "Delete"
-:
-    "Deletar",
-        "Insert Anchor"
-:
-    "Inserir Âncora",
-        "OK"
-:
-    "OK"
+  "Anchor name": "Nome da âncora",
+  "Cancel": "Cancelar",
+  "Delete": "Deletar",
+  "Insert Anchor": "Inserir Âncora",
+  "OK": "OK"
 }

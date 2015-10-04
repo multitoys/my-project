@@ -12,12 +12,12 @@
 // $Id: popup.js 26 2004-03-31 02:35:21Z Wei Zhuo $
 
 function __dlg_onclose() {
-    if (opener.Dialog._return)
+    if(opener.Dialog._return)
         opener.Dialog._return(null);
 }
 
 function __dlg_translate(context) {
-    var types = ["span", "option", "td", "th", "button", "div", "label", "a", "img", "legend"];
+    var types = ["span", "option", "td", "th", "button", "div", "label", "a","img", "legend"];
     for (var type = 0; type < types.length; type++) {
         var spans = document.getElementsByTagName(types[type]);
         for (var i = spans.length; --i >= 0;) {

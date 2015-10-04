@@ -2,8 +2,5 @@
 // LANG: "nl", ENCODING: UTF-8
 // Author: Maarten Molenschot, maarten@nrgmm.nl
 {
-    "Page break"
-:
-    "Pagina einde"
-}
-;
+  "Page break": "Pagina einde"
+};

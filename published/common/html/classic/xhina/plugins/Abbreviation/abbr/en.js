@@ -7,23 +7,10 @@
 // This notice MUST stay intact for use (see license.txt).
 
 {
-    "ANSI"
-:
-    "American National Standards Institute",
-        "ASA"
-:
-    "American Standards Association",
-        "ISO"
-:
-    "International Organisation for Standardization",
-        "mime"
-:
-    "Multipurpose Internet Mail Extensions",
-        "UTF"
-:
-    "Unicode Transformation Format",
-        "W3C"
-:
-    "World Wide Web Consortium"
-}
-;
+  "ANSI": "American National Standards Institute",  
+  "ASA": "American Standards Association",
+  "ISO": "International Organisation for Standardization",
+  "mime": "Multipurpose Internet Mail Extensions",
+  "UTF": "Unicode Transformation Format",
+  "W3C": "World Wide Web Consortium"
+};

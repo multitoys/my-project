@@ -2,17 +2,8 @@
 // LANG: "nb", ENCODING: UTF-8
 // translated: Kim Steinhaug, http://www.steinhaug.com/, kim@steinhaug.com
 {
-    "Equation Editor"
-:
-    "Formeleditor",
-        "Select operation"
-:
-    "Velg formel",
-        "Insert"
-:
-    "Sett inn",
-        "Cancel"
-:
-    "Avbryt"
-}
-;
+  "Equation Editor": "Formeleditor",
+  "Select operation": "Velg formel",
+  "Insert": "Sett inn",
+  "Cancel": "Avbryt"
+};

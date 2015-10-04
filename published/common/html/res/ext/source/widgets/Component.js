@@ -18,69 +18,69 @@
  * <p>Every component has a specific xtype, which is its Ext-specific type name, along with methods for checking the
  * xtype like {@link #getXType} and {@link #isXType}. This is the list of all valid xtypes:</p>
  * <pre>
- xtype            Class
- -------------    ------------------
- box              Ext.BoxComponent
- button           Ext.Button
- colorpalette     Ext.ColorPalette
- component        Ext.Component
- container        Ext.Container
- cycle            Ext.CycleButton
- dataview         Ext.DataView
- datepicker       Ext.DatePicker
- editor           Ext.Editor
- editorgrid       Ext.grid.EditorGridPanel
- grid             Ext.grid.GridPanel
- paging           Ext.PagingToolbar
- panel            Ext.Panel
- progress         Ext.ProgressBar
- splitbutton      Ext.SplitButton
- tabpanel         Ext.TabPanel
- treepanel        Ext.tree.TreePanel
- viewport         Ext.ViewPort
- window           Ext.Window
+xtype            Class
+-------------    ------------------
+box              Ext.BoxComponent
+button           Ext.Button
+colorpalette     Ext.ColorPalette
+component        Ext.Component
+container        Ext.Container
+cycle            Ext.CycleButton
+dataview         Ext.DataView
+datepicker       Ext.DatePicker
+editor           Ext.Editor
+editorgrid       Ext.grid.EditorGridPanel
+grid             Ext.grid.GridPanel
+paging           Ext.PagingToolbar
+panel            Ext.Panel
+progress         Ext.ProgressBar
+splitbutton      Ext.SplitButton
+tabpanel         Ext.TabPanel
+treepanel        Ext.tree.TreePanel
+viewport         Ext.ViewPort
+window           Ext.Window
 
- Toolbar components
- ---------------------------------------
- toolbar          Ext.Toolbar
- tbbutton         Ext.Toolbar.Button
- tbfill           Ext.Toolbar.Fill
- tbitem           Ext.Toolbar.Item
- tbseparator      Ext.Toolbar.Separator
- tbspacer         Ext.Toolbar.Spacer
- tbsplit          Ext.Toolbar.SplitButton
- tbtext           Ext.Toolbar.TextItem
+Toolbar components
+---------------------------------------
+toolbar          Ext.Toolbar
+tbbutton         Ext.Toolbar.Button
+tbfill           Ext.Toolbar.Fill
+tbitem           Ext.Toolbar.Item
+tbseparator      Ext.Toolbar.Separator
+tbspacer         Ext.Toolbar.Spacer
+tbsplit          Ext.Toolbar.SplitButton
+tbtext           Ext.Toolbar.TextItem
 
- Form components
- ---------------------------------------
- form             Ext.FormPanel
- checkbox         Ext.form.Checkbox
- combo            Ext.form.ComboBox
- datefield        Ext.form.DateField
- field            Ext.form.Field
- fieldset         Ext.form.FieldSet
- hidden           Ext.form.Hidden
- htmleditor       Ext.form.HtmlEditor
- numberfield      Ext.form.NumberField
- radio            Ext.form.Radio
- textarea         Ext.form.TextArea
- textfield        Ext.form.TextField
- timefield        Ext.form.TimeField
- trigger          Ext.form.TriggerField
- </pre>
+Form components
+---------------------------------------
+form             Ext.FormPanel
+checkbox         Ext.form.Checkbox
+combo            Ext.form.ComboBox
+datefield        Ext.form.DateField
+field            Ext.form.Field
+fieldset         Ext.form.FieldSet
+hidden           Ext.form.Hidden
+htmleditor       Ext.form.HtmlEditor
+numberfield      Ext.form.NumberField
+radio            Ext.form.Radio
+textarea         Ext.form.TextArea
+textfield        Ext.form.TextField
+timefield        Ext.form.TimeField
+trigger          Ext.form.TriggerField
+</pre>
  * @constructor
  * @param {Ext.Element/String/Object} config The configuration options.  If an element is passed, it is set as the internal
  * element and its id used as the component id.  If a string is passed, it is assumed to be the id of an existing element
  * and is used as the component id.  Otherwise, it is assumed to be a standard config object and is applied to the component.
  */
-Ext.Component = function (config) {
+Ext.Component = function(config){
     config = config || {};
-    if (config.initialConfig) {
-        if (config.isAction) {           // actions
+    if(config.initialConfig){
+        if(config.isAction){           // actions
             this.baseAction = config;
         }
         config = config.initialConfig; // component cloning / action set up
-    } else if (config.tagName || config.dom || typeof config == "string") { // element object
+    }else if(config.tagName || config.dom || typeof config == "string"){ // element object
         config = {applyTo: config, id: config.id || config};
     }
 
@@ -96,120 +96,120 @@ Ext.Component = function (config) {
         /**
          * @event disable
          * Fires after the component is disabled.
-         * @param {Ext.Component} this
-         */
+	     * @param {Ext.Component} this
+	     */
         'disable',
         /**
          * @event enable
          * Fires after the component is enabled.
-         * @param {Ext.Component} this
-         */
+	     * @param {Ext.Component} this
+	     */
         'enable',
         /**
          * @event beforeshow
          * Fires before the component is shown. Return false to stop the show.
-         * @param {Ext.Component} this
-         */
+	     * @param {Ext.Component} this
+	     */
         'beforeshow',
         /**
          * @event show
          * Fires after the component is shown.
-         * @param {Ext.Component} this
-         */
+	     * @param {Ext.Component} this
+	     */
         'show',
         /**
          * @event beforehide
          * Fires before the component is hidden. Return false to stop the hide.
-         * @param {Ext.Component} this
-         */
+	     * @param {Ext.Component} this
+	     */
         'beforehide',
         /**
          * @event hide
          * Fires after the component is hidden.
-         * @param {Ext.Component} this
-         */
+	     * @param {Ext.Component} this
+	     */
         'hide',
         /**
          * @event beforerender
          * Fires before the component is rendered. Return false to stop the render.
-         * @param {Ext.Component} this
-         */
+	     * @param {Ext.Component} this
+	     */
         'beforerender',
         /**
          * @event render
          * Fires after the component is rendered.
-         * @param {Ext.Component} this
-         */
+	     * @param {Ext.Component} this
+	     */
         'render',
         /**
          * @event beforedestroy
          * Fires before the component is destroyed. Return false to stop the destroy.
-         * @param {Ext.Component} this
-         */
+	     * @param {Ext.Component} this
+	     */
         'beforedestroy',
         /**
          * @event destroy
          * Fires after the component is destroyed.
-         * @param {Ext.Component} this
-         */
+	     * @param {Ext.Component} this
+	     */
         'destroy',
         /**
          * @event beforestaterestore
          * Fires before the state of the component is restored. Return false to stop the restore.
-         * @param {Ext.Component} this
-         * @param {Object} state The hash of state values
-         */
+	     * @param {Ext.Component} this
+	     * @param {Object} state The hash of state values
+	     */
         'beforestaterestore',
         /**
          * @event staterestore
          * Fires after the state of the component is restored.
-         * @param {Ext.Component} this
-         * @param {Object} state The hash of state values
-         */
+	     * @param {Ext.Component} this
+	     * @param {Object} state The hash of state values
+	     */
         'staterestore',
         /**
          * @event beforestatesave
          * Fires before the state of the component is saved to the configured state provider. Return false to stop the save.
-         * @param {Ext.Component} this
-         * @param {Object} state The hash of state values
-         */
+	     * @param {Ext.Component} this
+	     * @param {Object} state The hash of state values
+	     */
         'beforestatesave',
         /**
          * @event statesave
          * Fires after the state of the component is saved to the configured state provider.
-         * @param {Ext.Component} this
-         * @param {Object} state The hash of state values
-         */
+	     * @param {Ext.Component} this
+	     * @param {Object} state The hash of state values
+	     */
         'statesave'
     );
     this.getId();
     Ext.ComponentMgr.register(this);
     Ext.Component.superclass.constructor.call(this);
 
-    if (this.baseAction) {
+    if(this.baseAction){
         this.baseAction.addComponent(this);
     }
 
     this.initComponent();
 
-    if (this.plugins) {
-        if (this.plugins instanceof Array) {
-            for (var i = 0, len = this.plugins.length; i < len; i++) {
+    if(this.plugins){
+        if(this.plugins instanceof Array){
+            for(var i = 0, len = this.plugins.length; i < len; i++){
                 this.plugins[i].init(this);
             }
-        } else {
+        }else{
             this.plugins.init(this);
         }
     }
 
-    if (this.stateful !== false) {
+    if(this.stateful !== false){
         this.initState(config);
     }
 
-    if (this.applyTo) {
+    if(this.applyTo){
         this.applyToMarkup(this.applyTo);
         delete this.applyTo;
-    } else if (this.renderTo) {
+    }else if(this.renderTo){
         this.render(this.renderTo);
         delete this.renderTo;
     }
@@ -283,10 +283,10 @@ Ext.extend(Ext.Component, Ext.util.Observable, {
      * of {@link Ext.state.Provider} which overrides the {@link Ext.state.Provider#set set}
      * and {@link Ext.state.Provider#get get} methods to save and recall name/value pairs.
      * A built-in implementation, {@link Ext.state.CookieProvider} is available.</p>
-     * <p>To set the state provider for the current page:</p>
+     * <p>To set the state provider for the current page:</p>	
      * <pre><code>
-     Ext.state.Manager.setProvider(new Ext.state.CookieProvider());
-     </code></pre>
+Ext.state.Manager.setProvider(new Ext.state.CookieProvider());
+</code></pre>
      * <p>Components attempt to save state when one of the events listed in the {@link #stateEvents}
      * configuration fires.</p>
      * <p>You can perform extra processing on state save and restore by attaching handlers to the
@@ -309,18 +309,18 @@ Ext.extend(Ext.Component, Ext.util.Observable, {
      * @cfg {String} disabledClass
      * CSS class added to the component when it is disabled (defaults to "x-item-disabled").
      */
-    disabledClass: "x-item-disabled",
-    /**
-     * @cfg {Boolean} allowDomMove
-     * Whether the component can move the Dom node when rendering (defaults to true).
-     */
-    allowDomMove: true,
-    /**
-     * @cfg {Boolean} autoShow
-     * True if the component should check for hidden classes (e.g. 'x-hidden' or 'x-hide-display') and remove
-     * them on render (defaults to false).
-     */
-    autoShow: false,
+    disabledClass : "x-item-disabled",
+	/**
+	 * @cfg {Boolean} allowDomMove
+	 * Whether the component can move the Dom node when rendering (defaults to true).
+	 */
+    allowDomMove : true,
+	/**
+	 * @cfg {Boolean} autoShow
+	 * True if the component should check for hidden classes (e.g. 'x-hidden' or 'x-hide-display') and remove
+	 * them on render (defaults to false).
+	 */
+    autoShow : false,
     /**
      * @cfg {String} hideMode
      * How this component should hidden. Supported values are "visibility" (css visibility), "offsets" (negative
@@ -346,61 +346,61 @@ Ext.extend(Ext.Component, Ext.util.Observable, {
      * @type Boolean
      * @property
      */
-    hidden: false,
+    hidden : false,
     /**
      * True if this component is disabled. Read-only.
      * @type Boolean
      * @property
      */
-    disabled: false,
+    disabled : false,
     /**
      * True if this component has been rendered. Read-only.
      * @type Boolean
      * @property
      */
-    rendered: false,
+    rendered : false,
 
     // private
-    ctype: "Ext.Component",
+    ctype : "Ext.Component",
 
     // private
-    actionMode: "el",
+    actionMode : "el",
 
     // private
-    getActionEl: function () {
+    getActionEl : function(){
         return this[this.actionMode];
     },
 
     /* // protected
      * Function to be implemented by Component subclasses to be part of standard component initialization flow (it is empty by default).
      * <pre><code>
-     // Traditional constructor:
-     Ext.Foo = function(config){
-     // call superclass constructor:
-     Ext.Foo.superclass.constructor.call(this, config);
+// Traditional constructor:
+Ext.Foo = function(config){
+	// call superclass constructor:
+    Ext.Foo.superclass.constructor.call(this, config);
 
-     this.addEvents({
-     // add events
-     });
-     };
-     Ext.extend(Ext.Foo, Ext.Bar, {
-     // class body
-     }
+    this.addEvents({
+		// add events
+    });
+};
+Ext.extend(Ext.Foo, Ext.Bar, {
+   // class body
+}
 
-     // initComponent replaces the constructor:
-     Ext.Foo = Ext.extend(Ext.Bar, {
-     initComponent : function(){
-     // call superclass initComponent
-     Ext.Container.superclass.initComponent.call(this);
+// initComponent replaces the constructor:
+Ext.Foo = Ext.extend(Ext.Bar, {
+    initComponent : function(){
+		// call superclass initComponent
+        Ext.Container.superclass.initComponent.call(this);
 
-     this.addEvents({
-     // add events
-     });
-     }
-     }
-     </code></pre>
+        this.addEvents({
+            // add events
+        });
+    }
+}
+</code></pre>
      */
-    initComponent: Ext.emptyFn,
+    initComponent : Ext.emptyFn,
 
     /**
      * If this is a lazy rendering component, render it to its container element.
@@ -409,43 +409,43 @@ Ext.extend(Ext.Component, Ext.util.Observable, {
      * @param {String/Number} position (optional) The element ID or DOM node index within the container <b>before</b>
      * which this component will be inserted (defaults to appending to the end of the container)
      */
-    render: function (container, position) {
-        if (!this.rendered && this.fireEvent("beforerender", this) !== false) {
-            if (!container && this.el) {
+    render : function(container, position){
+        if(!this.rendered && this.fireEvent("beforerender", this) !== false){
+            if(!container && this.el){
                 this.el = Ext.get(this.el);
                 container = this.el.dom.parentNode;
                 this.allowDomMove = false;
             }
             this.container = Ext.get(container);
-            if (this.ctCls) {
+            if(this.ctCls){
                 this.container.addClass(this.ctCls);
             }
             this.rendered = true;
-            if (position !== undefined) {
-                if (typeof position == 'number') {
+            if(position !== undefined){
+                if(typeof position == 'number'){
                     position = this.container.dom.childNodes[position];
-                } else {
+                }else{
                     position = Ext.getDom(position);
                 }
             }
             this.onRender(this.container, position || null);
-            if (this.autoShow) {
-                this.el.removeClass(['x-hidden', 'x-hide-' + this.hideMode]);
+            if(this.autoShow){
+                this.el.removeClass(['x-hidden','x-hide-' + this.hideMode]);
             }
-            if (this.cls) {
+            if(this.cls){
                 this.el.addClass(this.cls);
                 delete this.cls;
             }
-            if (this.style) {
+            if(this.style){
                 this.el.applyStyles(this.style);
                 delete this.style;
             }
             this.fireEvent("render", this);
             this.afterRender(this.container);
-            if (this.hidden) {
+            if(this.hidden){
                 this.hide();
             }
-            if (this.disabled) {
+            if(this.disabled){
                 this.disable();
             }
 
@@ -455,11 +455,11 @@ Ext.extend(Ext.Component, Ext.util.Observable, {
     },
 
     // private
-    initState: function (config) {
-        if (Ext.state.Manager) {
+    initState : function(config){
+        if(Ext.state.Manager){
             var state = Ext.state.Manager.get(this.stateId || this.id);
-            if (state) {
-                if (this.fireEvent('beforestaterestore', this, state) !== false) {
+            if(state){
+                if(this.fireEvent('beforestaterestore', this, state) !== false){
                     this.applyState(state);
                     this.fireEvent('staterestore', this, state);
                 }
@@ -468,31 +468,31 @@ Ext.extend(Ext.Component, Ext.util.Observable, {
     },
 
     // private
-    initStateEvents: function () {
-        if (this.stateEvents) {
-            for (var i = 0, e; e = this.stateEvents[i]; i++) {
-                this.on(e, this.saveState, this, {delay: 100});
+    initStateEvents : function(){
+        if(this.stateEvents){
+            for(var i = 0, e; e = this.stateEvents[i]; i++){
+                this.on(e, this.saveState, this, {delay:100});
             }
         }
     },
 
     // private
-    applyState: function (state, config) {
-        if (state) {
+    applyState : function(state, config){
+        if(state){
             Ext.apply(this, state);
         }
     },
 
     // private
-    getState: function () {
+    getState : function(){
         return null;
     },
 
     // private
-    saveState: function () {
-        if (Ext.state.Manager) {
+    saveState : function(){
+        if(Ext.state.Manager){
             var state = this.getState();
-            if (this.fireEvent('beforestatesave', this, state) !== false) {
+            if(this.fireEvent('beforestatesave', this, state) !== false){
                 Ext.state.Manager.set(this.stateId || this.id, state);
                 this.fireEvent('statesave', this, state);
             }
@@ -501,9 +501,9 @@ Ext.extend(Ext.Component, Ext.util.Observable, {
 
     /**
      * Apply this component to existing markup that is valid. With this function, no call to render() is required.
-     * @param {String/HTMLElement} el
+     * @param {String/HTMLElement} el 
      */
-    applyToMarkup: function (el) {
+    applyToMarkup : function(el){
         this.allowDomMove = false;
         this.el = Ext.get(el);
         this.render(this.el.dom.parentNode);
@@ -513,10 +513,10 @@ Ext.extend(Ext.Component, Ext.util.Observable, {
      * Adds a CSS class to the component's underlying element.
      * @param {string} cls The CSS class name to add
      */
-    addClass: function (cls) {
-        if (this.el) {
+    addClass : function(cls){
+        if(this.el){
             this.el.addClass(cls);
-        } else {
+        }else{
             this.cls = this.cls ? this.cls + ' ' + cls : cls;
         }
     },
@@ -525,46 +525,46 @@ Ext.extend(Ext.Component, Ext.util.Observable, {
      * Removes a CSS class from the component's underlying element.
      * @param {string} cls The CSS class name to remove
      */
-    removeClass: function (cls) {
-        if (this.el) {
+    removeClass : function(cls){
+        if(this.el){
             this.el.removeClass(cls);
-        } else if (this.cls) {
+        }else if(this.cls){
             this.cls = this.cls.split(' ').remove(cls).join(' ');
         }
     },
 
     // private
     // default function is not really useful
-    onRender: function (ct, position) {
-        if (this.autoEl) {
-            if (typeof this.autoEl == 'string') {
+    onRender : function(ct, position){
+        if(this.autoEl){
+            if(typeof this.autoEl == 'string'){
                 this.el = document.createElement(this.autoEl);
-            } else {
+            }else{
                 var div = document.createElement('div');
                 Ext.DomHelper.overwrite(div, this.autoEl);
                 this.el = div.firstChild;
             }
         }
-        if (this.el) {
+        if(this.el){
             this.el = Ext.get(this.el);
-            if (this.allowDomMove !== false) {
+            if(this.allowDomMove !== false){
                 ct.dom.insertBefore(this.el.dom, position);
             }
         }
     },
 
     // private
-    getAutoCreate: function () {
+    getAutoCreate : function(){
         var cfg = typeof this.autoCreate == "object" ?
-            this.autoCreate : Ext.apply({}, this.defaultAutoCreate);
-        if (this.id && !cfg.id) {
+                      this.autoCreate : Ext.apply({}, this.defaultAutoCreate);
+        if(this.id && !cfg.id){
             cfg.id = this.id;
         }
         return cfg;
     },
 
     // private
-    afterRender: Ext.emptyFn,
+    afterRender : Ext.emptyFn,
 
     /**
      * Destroys this component by purging any event listeners, removing the component's element from the DOM,
@@ -572,13 +572,13 @@ Ext.extend(Ext.Component, Ext.util.Observable, {
      * {@link Ext.ComponentMgr}.  Destruction is generally handled automatically by the framework and this method
      * should usually not need to be called directly.
      */
-    destroy: function () {
-        if (this.fireEvent("beforedestroy", this) !== false) {
+    destroy : function(){
+        if(this.fireEvent("beforedestroy", this) !== false){
             this.beforeDestroy();
-            if (this.rendered) {
+            if(this.rendered){
                 this.el.removeAllListeners();
                 this.el.remove();
-                if (this.actionMode == "container") {
+                if(this.actionMode == "container"){
                     this.container.remove();
                 }
             }
@@ -589,17 +589,17 @@ Ext.extend(Ext.Component, Ext.util.Observable, {
         }
     },
 
-    // private
-    beforeDestroy: Ext.emptyFn,
+	// private
+    beforeDestroy : Ext.emptyFn,
 
-    // private
-    onDestroy: Ext.emptyFn,
+	// private
+    onDestroy  : Ext.emptyFn,
 
     /**
      * Returns the underlying {@link Ext.Element}.
      * @return {Ext.Element} The element
      */
-    getEl: function () {
+    getEl : function(){
         return this.el;
     },
 
@@ -607,7 +607,7 @@ Ext.extend(Ext.Component, Ext.util.Observable, {
      * Returns the id of this component.
      * @return {String}
      */
-    getId: function () {
+    getId : function(){
         return this.id || (this.id = "ext-comp-" + (++Ext.Component.AUTO_ID));
     },
 
@@ -615,7 +615,7 @@ Ext.extend(Ext.Component, Ext.util.Observable, {
      * Returns the item id of this component.
      * @return {String}
      */
-    getItemId: function () {
+    getItemId : function(){
         return this.itemId || this.getId();
     },
 
@@ -625,14 +625,14 @@ Ext.extend(Ext.Component, Ext.util.Observable, {
      * @param {Boolean/Number} delay (optional) Delay the focus this number of milliseconds (true for 10 milliseconds)
      * @return {Ext.Component} this
      */
-    focus: function (selectText, delay) {
-        if (delay) {
+    focus : function(selectText, delay){
+        if(delay){
             this.focus.defer(typeof delay == 'number' ? delay : 10, this, [selectText, false]);
             return;
         }
-        if (this.rendered) {
+        if(this.rendered){
             this.el.focus();
-            if (selectText === true) {
+            if(selectText === true){
                 this.el.dom.select();
             }
         }
@@ -640,8 +640,8 @@ Ext.extend(Ext.Component, Ext.util.Observable, {
     },
 
     // private
-    blur: function () {
-        if (this.rendered) {
+    blur : function(){
+        if(this.rendered){
             this.el.blur();
         }
         return this;
@@ -651,8 +651,8 @@ Ext.extend(Ext.Component, Ext.util.Observable, {
      * Disable this component.
      * @return {Ext.Component} this
      */
-    disable: function () {
-        if (this.rendered) {
+    disable : function(){
+        if(this.rendered){
             this.onDisable();
         }
         this.disabled = true;
@@ -660,8 +660,8 @@ Ext.extend(Ext.Component, Ext.util.Observable, {
         return this;
     },
 
-    // private
-    onDisable: function () {
+	// private
+    onDisable : function(){
         this.getActionEl().addClass(this.disabledClass);
         this.el.dom.disabled = true;
     },
@@ -670,8 +670,8 @@ Ext.extend(Ext.Component, Ext.util.Observable, {
      * Enable this component.
      * @return {Ext.Component} this
      */
-    enable: function () {
-        if (this.rendered) {
+    enable : function(){
+        if(this.rendered){
             this.onEnable();
         }
         this.disabled = false;
@@ -679,8 +679,8 @@ Ext.extend(Ext.Component, Ext.util.Observable, {
         return this;
     },
 
-    // private
-    onEnable: function () {
+	// private
+    onEnable : function(){
         this.getActionEl().removeClass(this.disabledClass);
         this.el.dom.disabled = false;
     },
@@ -689,7 +689,7 @@ Ext.extend(Ext.Component, Ext.util.Observable, {
      * Convenience function for setting disabled/enabled by boolean.
      * @param {Boolean} disabled
      */
-    setDisabled: function (disabled) {
+    setDisabled : function(disabled){
         this[disabled ? "disable" : "enable"]();
     },
 
@@ -697,13 +697,13 @@ Ext.extend(Ext.Component, Ext.util.Observable, {
      * Show this component.
      * @return {Ext.Component} this
      */
-    show: function () {
-        if (this.fireEvent("beforeshow", this) !== false) {
+    show: function(){
+        if(this.fireEvent("beforeshow", this) !== false){
             this.hidden = false;
-            if (this.autoRender) {
+            if(this.autoRender){
                 this.render(typeof this.autoRender == 'boolean' ? Ext.getBody() : this.autoRender);
             }
-            if (this.rendered) {
+            if(this.rendered){
                 this.onShow();
             }
             this.fireEvent("show", this);
@@ -712,10 +712,10 @@ Ext.extend(Ext.Component, Ext.util.Observable, {
     },
 
     // private
-    onShow: function () {
-        if (this.hideParent) {
+    onShow : function(){
+        if(this.hideParent){
             this.container.removeClass('x-hide-' + this.hideMode);
-        } else {
+        }else{
             this.getActionEl().removeClass('x-hide-' + this.hideMode);
         }
 
@@ -725,10 +725,10 @@ Ext.extend(Ext.Component, Ext.util.Observable, {
      * Hide this component.
      * @return {Ext.Component} this
      */
-    hide: function () {
-        if (this.fireEvent("beforehide", this) !== false) {
+    hide: function(){
+        if(this.fireEvent("beforehide", this) !== false){
             this.hidden = true;
-            if (this.rendered) {
+            if(this.rendered){
                 this.onHide();
             }
             this.fireEvent("hide", this);
@@ -737,10 +737,10 @@ Ext.extend(Ext.Component, Ext.util.Observable, {
     },
 
     // private
-    onHide: function () {
-        if (this.hideParent) {
+    onHide : function(){
+        if(this.hideParent){
             this.container.addClass('x-hide-' + this.hideMode);
-        } else {
+        }else{
             this.getActionEl().addClass('x-hide-' + this.hideMode);
         }
     },
@@ -750,10 +750,10 @@ Ext.extend(Ext.Component, Ext.util.Observable, {
      * @param {Boolean} visible True to show, false to hide
      * @return {Ext.Component} this
      */
-    setVisible: function (visible) {
-        if (visible) {
+    setVisible: function(visible){
+        if(visible) {
             this.show();
-        } else {
+        }else{
             this.hide();
         }
         return this;
@@ -762,7 +762,7 @@ Ext.extend(Ext.Component, Ext.util.Observable, {
     /**
      * Returns true if this component is visible.
      */
-    isVisible: function () {
+    isVisible : function(){
         return this.rendered && this.getActionEl().isVisible();
     },
 
@@ -772,7 +772,7 @@ Ext.extend(Ext.Component, Ext.util.Observable, {
      * An id property can be passed on this object, otherwise one will be generated to avoid duplicates.
      * @return {Ext.Component} clone The cloned copy of this component
      */
-    cloneConfig: function (overrides) {
+    cloneConfig : function(overrides){
         overrides = overrides || {};
         var id = overrides.id || Ext.id();
         var cfg = Ext.applyIf(overrides, this.initialConfig);
@@ -784,12 +784,12 @@ Ext.extend(Ext.Component, Ext.util.Observable, {
      * Gets the xtype for this component as registered with {@link Ext.ComponentMgr}. For a list of all
      * available xtypes, see the {@link Ext.Component} header. Example usage:
      * <pre><code>
-     var t = new Ext.form.TextField();
-     alert(t.getXType());  // alerts 'textfield'
-     </code></pre>
+var t = new Ext.form.TextField();
+alert(t.getXType());  // alerts 'textfield'
+</code></pre>
      * @return {String} The xtype
      */
-    getXType: function () {
+    getXType : function(){
         return this.constructor.xtype;
     },
 
@@ -798,35 +798,35 @@ Ext.extend(Ext.Component, Ext.util.Observable, {
      * from the xtype (default) or whether it is directly of the xtype specified (shallow = true). For a list of all
      * available xtypes, see the {@link Ext.Component} header. Example usage:
      * <pre><code>
-     var t = new Ext.form.TextField();
-     var isText = t.isXType('textfield');        // true
-     var isBoxSubclass = t.isXType('box');       // true, descended from BoxComponent
-     var isBoxInstance = t.isXType('box', true); // false, not a direct BoxComponent instance
-     </code></pre>
+var t = new Ext.form.TextField();
+var isText = t.isXType('textfield');        // true
+var isBoxSubclass = t.isXType('box');       // true, descended from BoxComponent
+var isBoxInstance = t.isXType('box', true); // false, not a direct BoxComponent instance
+</code></pre>
      * @param {String} xtype The xtype to check for this component
      * @param {Boolean} shallow (optional) False to check whether this component is descended from the xtype (this is
      * the default), or true to check whether this component is directly of the specified xtype.
      */
-    isXType: function (xtype, shallow) {
+    isXType : function(xtype, shallow){
         return !shallow ?
-        ('/' + this.getXTypes() + '/').indexOf('/' + xtype + '/') != -1 :
-        this.constructor.xtype == xtype;
+               ('/' + this.getXTypes() + '/').indexOf('/' + xtype + '/') != -1 :
+                this.constructor.xtype == xtype;
     },
 
     /**
      * Returns this component's xtype hierarchy as a slash-delimited string. For a list of all
      * available xtypes, see the {@link Ext.Component} header. Example usage:
      * <pre><code>
-     var t = new Ext.form.TextField();
-     alert(t.getXTypes());  // alerts 'component/box/field/textfield'
-     </pre></code>
+var t = new Ext.form.TextField();
+alert(t.getXTypes());  // alerts 'component/box/field/textfield'
+</pre></code>
      * @return {String} The xtype hierarchy string
      */
-    getXTypes: function () {
+    getXTypes : function(){
         var tc = this.constructor;
-        if (!tc.xtypes) {
+        if(!tc.xtypes){
             var c = [], sc = this;
-            while (sc && sc.constructor.xtype) {
+            while(sc && sc.constructor.xtype){
                 c.unshift(sc.constructor.xtype);
                 sc = sc.constructor.superclass;
             }

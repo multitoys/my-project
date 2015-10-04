@@ -12,26 +12,26 @@
  * and window activation behavior.
  * @constructor
  */
-Ext.WindowGroup = function () {
+Ext.WindowGroup = function(){
     var list = {};
     var accessList = [];
     var front = null;
 
     // private
-    var sortWindows = function (d1, d2) {
+    var sortWindows = function(d1, d2){
         return (!d1._lastAccess || d1._lastAccess < d2._lastAccess) ? -1 : 1;
     };
 
     // private
-    var orderWindows = function () {
+    var orderWindows = function(){
         var a = accessList, len = a.length;
-        if (len > 0) {
+        if(len > 0){
             a.sort(sortWindows);
             var seed = a[0].manager.zseed;
-            for (var i = 0; i < len; i++) {
+            for(var i = 0; i < len; i++){
                 var win = a[i];
-                if (win && !win.hidden) {
-                    win.setZIndex(seed + (i * 10));
+                if(win && !win.hidden){
+                    win.setZIndex(seed + (i*10));
                 }
             }
         }
@@ -39,22 +39,22 @@ Ext.WindowGroup = function () {
     };
 
     // private
-    var setActiveWin = function (win) {
-        if (win != front) {
-            if (front) {
+    var setActiveWin = function(win){
+        if(win != front){
+            if(front){
                 front.setActive(false);
             }
             front = win;
-            if (win) {
+            if(win){
                 win.setActive(true);
             }
         }
     };
 
     // private
-    var activateLast = function () {
-        for (var i = accessList.length - 1; i >= 0; --i) {
-            if (!accessList[i].hidden) {
+    var activateLast = function(){
+        for(var i = accessList.length-1; i >=0; --i) {
+            if(!accessList[i].hidden){
                 setActiveWin(accessList[i]);
                 return;
             }
@@ -68,17 +68,17 @@ Ext.WindowGroup = function () {
          * The starting z-index for windows (defaults to 9000)
          * @type Number The z-index value
          */
-        zseed: 9000,
+        zseed : 9000,
 
         // private
-        register: function (win) {
+        register : function(win){
             list[win.id] = win;
             accessList.push(win);
             win.on('hide', activateLast);
         },
 
         // private
-        unregister: function (win) {
+        unregister : function(win){
             delete list[win.id];
             win.un('hide', activateLast);
             accessList.remove(win);
@@ -89,7 +89,7 @@ Ext.WindowGroup = function () {
          * @param {String/Object} id The id of the window or a {@link Ext.Window} instance
          * @return {Ext.Window}
          */
-        get: function (id) {
+        get : function(id){
             return typeof id == "object" ? id : list[id];
         },
 
@@ -99,9 +99,9 @@ Ext.WindowGroup = function () {
          * @return {Boolean} True if the dialog was brought to the front, else false
          * if it was already in front
          */
-        bringToFront: function (win) {
+        bringToFront : function(win){
             win = this.get(win);
-            if (win != front) {
+            if(win != front){
                 win._lastAccess = new Date().getTime();
                 orderWindows();
                 return true;
@@ -114,7 +114,7 @@ Ext.WindowGroup = function () {
          * @param {String/Object} win The id of the window or a {@link Ext.Window} instance
          * @return {Ext.Window} The window
          */
-        sendToBack: function (win) {
+        sendToBack : function(win){
             win = this.get(win);
             win._lastAccess = -(new Date().getTime());
             orderWindows();
@@ -124,9 +124,9 @@ Ext.WindowGroup = function () {
         /**
          * Hides all windows in the group.
          */
-        hideAll: function () {
-            for (var id in list) {
-                if (list[id] && typeof list[id] != "function" && list[id].isVisible()) {
+        hideAll : function(){
+            for(var id in list){
+                if(list[id] && typeof list[id] != "function" && list[id].isVisible()){
                     list[id].hide();
                 }
             }
@@ -136,7 +136,7 @@ Ext.WindowGroup = function () {
          * Gets the currently-active window in the group.
          * @return {Ext.Window} The active window
          */
-        getActive: function () {
+        getActive : function(){
             return front;
         },
 
@@ -149,11 +149,11 @@ Ext.WindowGroup = function () {
          * that gets passed to the function if not specified)
          * @return {Array} An array of zero or more matching windows
          */
-        getBy: function (fn, scope) {
+        getBy : function(fn, scope){
             var r = [];
-            for (var i = accessList.length - 1; i >= 0; --i) {
+            for(var i = accessList.length-1; i >=0; --i) {
                 var win = accessList[i];
-                if (fn.call(scope || win, win) !== false) {
+                if(fn.call(scope||win, win) !== false){
                     r.push(win);
                 }
             }
@@ -166,10 +166,10 @@ Ext.WindowGroup = function () {
          * @param {Function} fn The function to execute for each item
          * @param {Object} scope (optional) The scope in which to execute the function
          */
-        each: function (fn, scope) {
-            for (var id in list) {
-                if (list[id] && typeof list[id] != "function") {
-                    if (fn.call(scope || list[id], list[id]) === false) {
+        each : function(fn, scope){
+            for(var id in list){
+                if(list[id] && typeof list[id] != "function"){
+                    if(fn.call(scope || list[id], list[id]) === false){
                         return;
                     }
                 }

@@ -26,25 +26,25 @@ Ext.data.GroupingStore = Ext.extend(Ext.data.Store, {
      * grouping is local, it can be applied immediately to the data.  If it is remote, then it will simply act as a
      * helper, automatically sending the grouping field name as the 'groupBy' param with each XHR call.
      */
-    remoteGroup: false,
+    remoteGroup : false,
     /**
      * @cfg {Boolean} groupOnSort
      * True to sort the data on the grouping field when a grouping operation occurs, false to sort based on the
      * existing sort info (defaults to false).
      */
-    groupOnSort: false,
+    groupOnSort:false,
 
     /**
      * Clears any existing grouping and refreshes the data using the default sort.
      */
-    clearGrouping: function () {
+    clearGrouping : function(){
         this.groupField = false;
-        if (this.remoteGroup) {
-            if (this.baseParams) {
+        if(this.remoteGroup){
+            if(this.baseParams){
                 delete this.baseParams.groupBy;
             }
             this.reload();
-        } else {
+        }else{
             this.applySort();
             this.fireEvent('datachanged', this);
         }
@@ -56,28 +56,28 @@ Ext.data.GroupingStore = Ext.extend(Ext.data.Store, {
      * @param {Boolean} forceRegroup (optional) True to force the group to be refreshed even if the field passed
      * in is the same as the current grouping field, false to skip grouping on the same field (defaults to false)
      */
-    groupBy: function (field, forceRegroup) {
-        if (this.groupField == field && !forceRegroup) {
+    groupBy : function(field, forceRegroup){
+        if(this.groupField == field && !forceRegroup){
             return; // already grouped by this field
         }
         this.groupField = field;
-        if (this.remoteGroup) {
-            if (!this.baseParams) {
+        if(this.remoteGroup){
+            if(!this.baseParams){
                 this.baseParams = {};
             }
             this.baseParams['groupBy'] = field;
         }
-        if (this.groupOnSort) {
+        if(this.groupOnSort){
             this.sort(field);
             return;
         }
-        if (this.remoteGroup) {
+        if(this.remoteGroup){
             this.reload();
-        } else {
+        }else{
             var si = this.sortInfo || {};
-            if (si.field != field) {
+            if(si.field != field){
                 this.applySort();
-            } else {
+            }else{
                 this.sortData(field);
             }
             this.fireEvent('datachanged', this);
@@ -85,23 +85,23 @@ Ext.data.GroupingStore = Ext.extend(Ext.data.Store, {
     },
 
     // private
-    applySort: function () {
+    applySort : function(){
         Ext.data.GroupingStore.superclass.applySort.call(this);
-        if (!this.groupOnSort && !this.remoteGroup) {
+        if(!this.groupOnSort && !this.remoteGroup){
             var gs = this.getGroupState();
-            if (gs && gs != this.sortInfo.field) {
+            if(gs && gs != this.sortInfo.field){
                 this.sortData(this.groupField);
             }
         }
     },
 
     // private
-    applyGrouping: function (alwaysFireChange) {
-        if (this.groupField !== false) {
+    applyGrouping : function(alwaysFireChange){
+        if(this.groupField !== false){
             this.groupBy(this.groupField, true);
             return true;
-        } else {
-            if (alwaysFireChange === true) {
+        }else{
+            if(alwaysFireChange === true){
                 this.fireEvent('datachanged', this);
             }
             return false;
@@ -109,8 +109,8 @@ Ext.data.GroupingStore = Ext.extend(Ext.data.Store, {
     },
 
     // private
-    getGroupState: function () {
+    getGroupState : function(){
         return this.groupOnSort && this.groupField !== false ?
-            (this.sortInfo ? this.sortInfo.field : undefined) : this.groupField;
+               (this.sortInfo ? this.sortInfo.field : undefined) : this.groupField;
     }
 });

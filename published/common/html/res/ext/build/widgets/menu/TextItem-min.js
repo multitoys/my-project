@@ -6,16 +6,4 @@
  * http://extjs.com/license
  */
 
-Ext.menu.TextItem = function (A) {
-    this.text = A;
-    Ext.menu.TextItem.superclass.constructor.call(this)
-};
-Ext.extend(Ext.menu.TextItem, Ext.menu.BaseItem, {
-    hideOnClick: false, itemCls: "x-menu-text", onRender: function () {
-        var A = document.createElement("span");
-        A.className = this.itemCls;
-        A.innerHTML = this.text;
-        this.el = A;
-        Ext.menu.TextItem.superclass.onRender.apply(this, arguments)
-    }
-});
+Ext.menu.TextItem=function(A){this.text=A;Ext.menu.TextItem.superclass.constructor.call(this)};Ext.extend(Ext.menu.TextItem,Ext.menu.BaseItem,{hideOnClick:false,itemCls:"x-menu-text",onRender:function(){var A=document.createElement("span");A.className=this.itemCls;A.innerHTML=this.text;this.el=A;Ext.menu.TextItem.superclass.onRender.apply(this,arguments)}});

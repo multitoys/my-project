@@ -12,74 +12,74 @@
  * the singleton {@link Ext.TaskMgr} instead, but if needed, you can create separate instances of TaskRunner.  Any
  * number of separate tasks can be started at any time and will run independently of each other.  Example usage:
  * <pre><code>
- // Start a simple clock task that updates a div once per second
- var task = {
+// Start a simple clock task that updates a div once per second
+var task = {
     run: function(){
         Ext.fly('clock').update(new Date().format('g:i:s A'));
     },
     interval: 1000 //1 second
 }
- var runner = new Ext.util.TaskRunner();
- runner.start(task);
- </code></pre>
+var runner = new Ext.util.TaskRunner();
+runner.start(task);
+</code></pre>
  * @constructor
  * @param {Number} interval (optional) The minimum precision in milliseconds supported by this TaskRunner instance
  * (defaults to 10)
  */
-Ext.util.TaskRunner = function (interval) {
+Ext.util.TaskRunner = function(interval){
     interval = interval || 10;
     var tasks = [], removeQueue = [];
     var id = 0;
     var running = false;
 
     // private
-    var stopThread = function () {
+    var stopThread = function(){
         running = false;
         clearInterval(id);
         id = 0;
     };
 
     // private
-    var startThread = function () {
-        if (!running) {
+    var startThread = function(){
+        if(!running){
             running = true;
             id = setInterval(runTasks, interval);
         }
     };
 
     // private
-    var removeTask = function (t) {
+    var removeTask = function(t){
         removeQueue.push(t);
-        if (t.onStop) {
+        if(t.onStop){
             t.onStop.apply(t.scope || t);
         }
     };
 
     // private
-    var runTasks = function () {
-        if (removeQueue.length > 0) {
-            for (var i = 0, len = removeQueue.length; i < len; i++) {
+    var runTasks = function(){
+        if(removeQueue.length > 0){
+            for(var i = 0, len = removeQueue.length; i < len; i++){
                 tasks.remove(removeQueue[i]);
             }
             removeQueue = [];
-            if (tasks.length < 1) {
+            if(tasks.length < 1){
                 stopThread();
                 return;
             }
         }
         var now = new Date().getTime();
-        for (var i = 0, len = tasks.length; i < len; ++i) {
+        for(var i = 0, len = tasks.length; i < len; ++i){
             var t = tasks[i];
             var itime = now - t.taskRunTime;
-            if (t.interval <= itime) {
+            if(t.interval <= itime){
                 var rt = t.run.apply(t.scope || t, t.args || [++t.taskRunCount]);
                 t.taskRunTime = now;
-                if (rt === false || t.taskRunCount === t.repeat) {
+                if(rt === false || t.taskRunCount === t.repeat){
                     removeTask(t);
                     return;
                 }
             }
-            if (t.duration && t.duration <= (now - t.taskStartTime)) {
+            if(t.duration && t.duration <= (now - t.taskStartTime)){
                 removeTask(t);
             }
         }
@@ -104,7 +104,7 @@ Ext.util.TaskRunner = function (interval) {
      * </ul>
      * @return {Object} The task
      */
-    this.start = function (task) {
+    this.start = function(task){
         tasks.push(task);
         task.taskStartTime = new Date().getTime();
         task.taskRunTime = 0;
@@ -118,7 +118,7 @@ Ext.util.TaskRunner = function (interval) {
      * @param {Object} task The task to stop
      * @return {Object} The task
      */
-    this.stop = function (task) {
+    this.stop = function(task){
         removeTask(task);
         return task;
     };
@@ -126,10 +126,10 @@ Ext.util.TaskRunner = function (interval) {
     /**
      * Stops all tasks that are currently running.
      */
-    this.stopAll = function () {
+    this.stopAll = function(){
         stopThread();
-        for (var i = 0, len = tasks.length; i < len; i++) {
-            if (tasks[i].onStop) {
+        for(var i = 0, len = tasks.length; i < len; i++){
+            if(tasks[i].onStop){
                 tasks[i].onStop();
             }
         }
@@ -143,15 +143,15 @@ Ext.util.TaskRunner = function (interval) {
  * A static {@link Ext.util.TaskRunner} instance that can be used to start and stop arbitrary tasks.  See
  * {@link Ext.util.TaskRunner} for supported methods and task config properties.
  * <pre><code>
- // Start a simple clock task that updates a div once per second
- var task = {
+// Start a simple clock task that updates a div once per second
+var task = {
     run: function(){
         Ext.fly('clock').update(new Date().format('g:i:s A'));
     },
     interval: 1000 //1 second
 }
- Ext.TaskMgr.start(task);
- </code></pre>
+Ext.TaskMgr.start(task);
+</code></pre>
  * @singleton
  */
 Ext.TaskMgr = new Ext.util.TaskRunner();

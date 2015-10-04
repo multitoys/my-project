@@ -2,14 +2,7 @@
 // LANG: "nb", ENCODING: UTF-8
 // translated: Kim Steinhaug, http://www.steinhaug.com/, kim@steinhaug.com
 {
-    "Set Id and Name"
-:
-    "Sett ID og navn",
-        "Name/Id"
-:
-    "Navn (ID)",
-        "Delete"
-:
-    "Slett"
-}
-;
+  "Set Id and Name": "Sett ID og navn",
+  "Name/Id": "Navn (ID)",
+  "Delete": "Slett"
+};

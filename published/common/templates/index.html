@@ -1,211 +1,146 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-        "http://www.w3.org/TR/html4/strict.dtd">
+         "http://www.w3.org/TR/html4/strict.dtd">
 <html>
 <head>
-    <title><? lbl_index->welcome_title ?></title>
-    <link rel="stylesheet" type="text/css" href="<? $preproc->getTemplatesUrl(" css
-    /index.css") ?>">
-    <? assign var=theme value=$viewsettings.theme ?>
-    <link rel="stylesheet" type="text/css" href="<? $preproc->getPublishedUrl(" common
-    /html/cssbased/themes/$theme/colors.css") ?>">
-    <script type="text/javascript" src="<? $preproc->getTemplatesUrl(" js
-    /common.js") ?>"></script>
-    <
-    script
-    type = "text/javascript"
-    src = "<? $preproc->getTemplatesUrl("
-    js / index.js
-    ") ?>" ></script>
-    <script type="text/javascript">
-        document.appsData = {
-            "blank": {url: "AA/html/scripts/blank.php", name: "<? lbl_index->welcome_title ?>"},
-            "help": {url: "common/html/scripts/help.php", name: "<? lbl_index->help_title ?>"}
-        < ? foreach name = screens
-        from = $screens
-        item = screen
-        key = AppId ?
-        >
-        ,
-        "<? $AppId ?>"
-        : {url: "<? $screen->getUrl() ?>", name: "<? $screen->Name ?>"}<
-        ?
-        /
-        foreach ?
-        >
-        }
-        ;
-    </script>
+	<title><? lbl_index->welcome_title ?></title>
+	<link rel="stylesheet" type="text/css" href="<? $preproc->getTemplatesUrl("css/index.css") ?>">
+	<? assign var=theme value=$viewsettings.theme ?>
+	<link rel="stylesheet" type="text/css" href="<? $preproc->getPublishedUrl("common/html/cssbased/themes/$theme/colors.css") ?>">
+	<script type="text/javascript" src="<? $preproc->getTemplatesUrl("js/common.js") ?>"></script>
+	<script type="text/javascript" src="<? $preproc->getTemplatesUrl("js/index.js") ?>"></script>
+	<script type="text/javascript">
+		document.appsData = {
+			"blank": {url: "AA/html/scripts/blank.php", name: "<? lbl_index->welcome_title ?>"},
+			"help": {url: "common/html/scripts/help.php", name: "<? lbl_index->help_title ?>"}
+			<? foreach name=screens from=$screens item=screen key=AppId?>
+			,"<? $AppId ?>": {url: "<? $screen->getUrl() ?>", name: "<? $screen->Name ?>"}<? /foreach ?>
+		};
+	</script>
 </head>
 <body onLoad="resizeBodyFrame()" onResize="windowResized()" class="leftmenu">
-<div id="top-line">
-    <div id="user-block">
-        <a href="http://multitoys.com.ua/index.php?did=22">Покупатели</a>
-        <a class="userlink" onClick="showViewSelector()" href="javascript:void(0)"><b><? $currentUser->getDisplayName()
-                ?></b></a> |
-        <? if $controlPanelScreen ?>
-        <a href="javascript:void(0)" onClick='return openLink(null, "<? $controlPanelScreen->AppId ?>")'><? lbl_index->
-            settings_btn ?></a> |
-        <? /if ?>
-        <a href="javascript:void(0)" onClick='return openLink(null, "help")'><? lbl_index->help_btn ?></a> |
-        <a href="<? $preproc->getAppUrl(" AA","html/scripts/logout.php") ?>"><? lbl_index->logout_btn ?></a>
-        <? if $accountIsUnconfirmed && $controlPanelScreen ?>
-        <div class="message">
-            <? lbl_index->account_unconfirmed_message ?>
-            <a href="javascript:void(0)"
-               onClick='return openLink(null, "<? $controlPanelScreen->AppId ?>", "<? $preproc->getAppUrl("AA","html/scripts/confirm_info.php") ?>");'><? lbl_index->
-                account_unconfirmed_link ?></a>
-        </div>
-        <? /if ?>
-        <? if $needBillingAlert ?>
-        <div class="message">
-            <? $needBillingAlert.message ?>
-            <? if $controlPanelScreen ?>
-            <a href="javascript:void(0)"
-               onClick='return openLink(null, "<? $controlPanelScreen->AppId ?>", "<? $preproc->getAppUrl("AA","html/scripts/change_plan.php?exceed=period") ?>");'><? lbl_index->
-                account_expired_link ?></a>
-            <? /if ?>
-        </div>
-        <? /if ?>
-    </div>
+	<div id="top-line">
+		<div id="user-block">
+		 <a href="http://multitoys.com.ua/index.php?did=22">Покупатели</a>
+			<a class="userlink" onClick="showViewSelector()" href="javascript:void(0)"><b><? $currentUser->getDisplayName() ?></b></a> |
+			<? if $controlPanelScreen ?>
+				<a href="javascript:void(0)" onClick='return openLink(null, "<? $controlPanelScreen->AppId ?>")'><? lbl_index->settings_btn ?></a> |
+			<? /if ?>
+			<a href="javascript:void(0)" onClick='return openLink(null, "help")'><? lbl_index->help_btn ?></a> |
+			<a href="<? $preproc->getAppUrl("AA","html/scripts/logout.php") ?>"><? lbl_index->logout_btn ?></a>
+			<? if $accountIsUnconfirmed && $controlPanelScreen ?>
+				<div class="message">
+					<? lbl_index->account_unconfirmed_message ?>
+					<a href="javascript:void(0)" onClick='return openLink(null, "<? $controlPanelScreen->AppId ?>", "<? $preproc->getAppUrl("AA","html/scripts/confirm_info.php") ?>");'><? lbl_index->account_unconfirmed_link ?></a>
+				</div>
+			<? /if ?>
+			<? if $needBillingAlert ?>
+				<div class="message">
+					<? $needBillingAlert.message ?>
+					<? if $controlPanelScreen ?>
+						<a href="javascript:void(0)" onClick='return openLink(null, "<? $controlPanelScreen->AppId ?>", "<? $preproc->getAppUrl("AA","html/scripts/change_plan.php?exceed=period") ?>");'><? lbl_index->account_expired_link ?></a>
+					<? /if ?>
+				</div>
+			<? /if ?>
+		</div>
+		
 
 
-    <div id="logo-block">
-        <? if $viewsettings.showLogo ?>
-        <table>
-            <tr valign="middle">
-                <td><img onLoad="resizeLogo()" id="logo" src="<? $preproc->getPublishedUrl(" common/html/scripts/getlogo.php?lt=$logoTime")
-                    ?>" />
-                </td>
-            </tr>
-        </table>
-        <? /if ?>
-
-        <? if $viewsettings.showCompanyName ?>
-        <table>
-            <tr valign="middle">
-                <td><span class="label"><? $companyName|htmlsafe:true:true ?></span></td>
-            </tr>
-        </table>
-        <? /if ?>
-    </div>
-
-</div>
-
-<div id="menu-block">
-    <ul id="apps">
-        <? foreach from=$screens item=screen key=AppId?>
-        <? if $screen->forMenu () ?>
-        <li id="app_<? $AppId ?>"
-        <? if $AppId == $currentPage.app ?> onClick='return openLink(this, "<? $AppId ?>")'<? /if?> class="app-block
-        unselect" onMouseOver='highlight("<? $AppId ?>", this)' onMouseOut='highlightOff("<? $AppId ?>", this)'>
-        <a class="icon-link" title="<? $screen->Name ?>" href="?app=<? $AppId ?>"><img id="app_icon_<? $AppId ?>"
-                                                                                       src="<? $screen->getIconUrl() ?>"
-                                                                                       alt="<? $screen->Name ?>"></a>
-        <a class="app-label" onClick="return false;" href="?app=<? $AppId ?>"><? $screen->Name ?></a>
-        </li>
-        <? /if ?>
-        <? /foreach ?>
-    </ul>
-</div>
-
-<div id="view-selector" style="position: absolute;">
-    <div class="inner clearfix">
-        <div class="clearfix" style="border-bottom: 1px solid #BBB; padding-bottom: 5px">
-            <img id="userpic" src="<? $preproc->getPublishedUrl(" common/html/scripts/getuserpic.php")
-            ?>?uid=<? $currentUser->getId() ?>">
-            <span style="margin: 0px; font-size: 13pt; font-weight: bold"><? $currentUser->getDisplayName() ?></span>
-            <? if $myAccountScreen ?>
-            <br/>
-            <a onClick='openLink(null, "<? $myAccountScreen->AppId ?>"); hideViewSelector()'
-               href="javascript:void(0)"><? $myAccountScreen->Name ?></a>
-            <? /if ?>
-        </div>
-
-        <div style="margin-top: 5px">
-            <div style="float: left; width: 50%">
-                <span class="label"><? lbl_index->menu_position ?>: </span>
-
-                <table class="menupos">
-                    <tr>
-                        <td colspan=3><input onClick="changeMenuPos(this.value)" id="radio_topmenu" value="topmenu"
-                                             name="menupos" type="radio"><label for="radio_topmenu"><? lbl_index->
-                                menupos_top ?></label></td>
-                    </tr>
-                    <tr>
-                        <td width="30"><input onClick="changeMenuPos(this.value)" id="radio_leftmenu" value="leftmenu"
-                                              name="menupos" type="radio"><label for="radio_leftmenu"><BR><? lbl_index->
-                                menupos_left ?></label></td>
-                        <td width="50">&nbsp;</td>
-                        <td width="30"><input onClick="changeMenuPos(this.value)" id="radio_rightmenu" value="rightmenu"
-                                              name="menupos" type="radio"><label
-                                    for="radio_rightmenu"><BR><? lbl_index->menupos_right ?></label></td>
-                    </tr>
-                    <tr>
-                        <td colspan=3>
-                            <input onClick="changeMenuPos(this.value)" id="radio_bottommenu" value="bottommenu"
-                                   name="menupos" type="radio"><label for="radio_bottommenu"><? lbl_index->
-                                menupos_bottom ?></label>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-            <div style="float: left; width: 49%;">
-                <div style="margin-left: 20px">
-                    <span class="label"><? lbl_index->menu_type ?>: </span>
-                    <ul class="clearfix menutype">
-                        <li><input onClick="changeMenuType(this.value)" name="menutype" id="radio_iconslabels"
-                                   value="iconslabels" type="radio"><label for="radio_iconslabels"><? lbl_index->
-                                menutype_iconslabels ?></label>
-                        <li><input onClick="changeMenuType(this.value)" name="menutype" id="radio_onlyicons"
-                                   value="onlyicons" type="radio"><label for="radio_onlyicons"><? lbl_index->
-                                menutype_onlyicons ?></label>
-                        <li><input onClick="changeMenuType(this.value)" name="menutype" id="radio_onlylabels"
-                                   value="onlylabels" type="radio"><label for="radio_onlylabels"><? lbl_index->
-                                menutype_onlylabels ?></label>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div style="float: right">
-            <a href="javascript:void(0)" onClick="hideViewSelector()"><? lbl_index->viewselector_close_btn ?></a>
-        </div>
-    </div>
-</div>
-
-<div id="body-top-right-block">
-    <div id="fullscreen-block">
-        <a href="javascript:void(0)" onClick="setFullscreen('on')" class="on"><img src="<? $preproc->getTemplatesUrl("
-                                                                                   img/fullscreen.gif")
-            ?>"><? lbl_index->fullscreen_on_lbl ?></a>
-        <a href="javascript:void(0)" onClick='setFullscreen("off")' class="off"><img src="<? $preproc->getTemplatesUrl("
-                                                                                     img/fullscreen.gif")
-            ?>"><? lbl_index->fullscreen_off_lbl ?></a>
-    </div>
-    <div id="loading-block"><? lbl_index->loading_lbl ?>...</div>
-</div>
-<iframe onLoad="linkLoaded()" id="body-frame" scrolling="no" style="width: 100%; z-index: 0" frameborder=0></iframe>
-<script type="text/javascript">
-    initScreen();
-    <
-    ?
-    if $currentPage.app ?>
-    openLink(document.getElementById("app_<? $currentPage.app ?>"), "<? $currentPage.app ?>" < ?
-    if $currentPage.url ?>
-    ,
-    "<? $currentPage.url ?>" < ?
-    /
-    if ?>
-    )
-    ;
-    <
-    ?
-    else
-    if $currentPage.url ?>
-    openLink(null, null, "<? $currentPage.url ?>");
-    <
-    ?
-    /
-    if ?>
-</script>
+		<div id="logo-block">
+			<? if $viewsettings.showLogo ?>
+				<table>
+				<tr valign="middle">
+					<td><img onLoad="resizeLogo()" id="logo" src="<? $preproc->getPublishedUrl("common/html/scripts/getlogo.php?lt=$logoTime") ?>" /></td>
+				</tr>
+				</table>					
+			<? /if ?>
+		
+			<? if $viewsettings.showCompanyName ?>
+				<table>
+				<tr valign="middle">
+					<td><span class="label"><? $companyName|htmlsafe:true:true ?></span></td>
+				</tr>
+				</table>
+			<? /if ?>
+		</div>
+		
+	</div>
+	
+	<div id="menu-block" >
+		<ul id="apps">
+			<? foreach from=$screens item=screen key=AppId?>
+				<? if $screen->forMenu () ?>
+					<li id="app_<? $AppId ?>"  <? if $AppId == $currentPage.app ?> onClick='return openLink(this, "<? $AppId ?>")'<? /if?> class="app-block unselect" onMouseOver='highlight("<? $AppId ?>", this)' onMouseOut='highlightOff("<? $AppId ?>", this)'>
+						<a class="icon-link" title="<? $screen->Name ?>" href="?app=<? $AppId ?>"><img id="app_icon_<? $AppId ?>" src="<? $screen->getIconUrl() ?>" alt="<? $screen->Name ?>"></a>
+						<a class="app-label" onClick="return false;" href="?app=<? $AppId ?>"><? $screen->Name ?></a>
+					</li>
+				<? /if ?>
+			<? /foreach ?>
+		</ul>
+	</div>
+	
+	<div id="view-selector" style="position: absolute;">
+		<div class="inner clearfix">
+			<div class="clearfix" style="border-bottom: 1px solid #BBB; padding-bottom: 5px">
+				<img id="userpic" src="<? $preproc->getPublishedUrl("common/html/scripts/getuserpic.php") ?>?uid=<? $currentUser->getId() ?>">
+				<span style="margin: 0px; font-size: 13pt; font-weight: bold"><? $currentUser->getDisplayName() ?></span>
+				<? if $myAccountScreen ?>
+					<br />
+					<a onClick='openLink(null, "<? $myAccountScreen->AppId ?>"); hideViewSelector()' href="javascript:void(0)"><? $myAccountScreen->Name ?></a>
+				<? /if ?>
+			</div>
+			
+			<div style="margin-top: 5px">
+				<div style="float: left; width: 50%">
+					<span class="label"><? lbl_index->menu_position ?>: </span>
+					
+					<table class="menupos">
+						<tr>
+							<td colspan=3><input onClick="changeMenuPos(this.value)" id="radio_topmenu" value="topmenu" name="menupos" type="radio"><label for="radio_topmenu"><? lbl_index->menupos_top ?></label></td>
+						</tr>
+						<tr>
+							<td width="30"><input onClick="changeMenuPos(this.value)" id="radio_leftmenu" value="leftmenu" name="menupos" type="radio"><label for="radio_leftmenu"><BR><? lbl_index->menupos_left ?></label></td>
+							<td width="50">&nbsp;</td>
+							<td width="30"><input onClick="changeMenuPos(this.value)" id="radio_rightmenu" value="rightmenu" name="menupos" type="radio"><label for="radio_rightmenu"><BR><? lbl_index->menupos_right ?></label></td>
+						</tr>
+						<tr>
+							<td colspan=3>
+								<input onClick="changeMenuPos(this.value)" id="radio_bottommenu" value="bottommenu" name="menupos" type="radio"><label for="radio_bottommenu"><? lbl_index->menupos_bottom ?></label>
+							</td>
+						</tr>
+					</table>
+				</div>		
+				<div style="float: left; width: 49%;">
+					<div style="margin-left: 20px">
+						<span class="label"><? lbl_index->menu_type ?>: </span>
+						<ul class="clearfix menutype">
+							<li><input onClick="changeMenuType(this.value)" name="menutype" id="radio_iconslabels" value="iconslabels" type="radio"><label for="radio_iconslabels"><? lbl_index->menutype_iconslabels ?></label>
+							<li><input onClick="changeMenuType(this.value)" name="menutype" id="radio_onlyicons" value="onlyicons" type="radio"><label for="radio_onlyicons"><? lbl_index->menutype_onlyicons ?></label>
+							<li><input onClick="changeMenuType(this.value)" name="menutype" id="radio_onlylabels" value="onlylabels" type="radio"><label for="radio_onlylabels"><? lbl_index->menutype_onlylabels ?></label>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div style="float: right">
+				<a href="javascript:void(0)" onClick="hideViewSelector()"><? lbl_index->viewselector_close_btn ?></a>
+			</div>
+		</div>
+	</div>
+	
+	<div id="body-top-right-block">
+		<div id="fullscreen-block">
+			<a href="javascript:void(0)" onClick="setFullscreen('on')" class="on"><img src="<? $preproc->getTemplatesUrl("img/fullscreen.gif") ?>"><? lbl_index->fullscreen_on_lbl ?></a>
+			<a href="javascript:void(0)" onClick='setFullscreen("off")' class="off"><img src="<? $preproc->getTemplatesUrl("img/fullscreen.gif") ?>"><? lbl_index->fullscreen_off_lbl ?></a>
+		</div>
+		<div id="loading-block"><? lbl_index->loading_lbl ?>...</div>
+	</div>
+	<iframe onLoad="linkLoaded()" id="body-frame" scrolling="no" style="width: 100%; z-index: 0" frameborder=0></iframe>
+	<script type="text/javascript">
+		initScreen();
+		<? if $currentPage.app ?>
+			openLink (document.getElementById("app_<? $currentPage.app ?>"), "<? $currentPage.app ?>"<? if $currentPage.url ?>, "<? $currentPage.url ?>"<? /if ?> );
+		<? else if $currentPage.url ?>
+			openLink (null, null, "<? $currentPage.url ?>");			
+		<? /if ?>
+	</script>
 </body>
 </html>

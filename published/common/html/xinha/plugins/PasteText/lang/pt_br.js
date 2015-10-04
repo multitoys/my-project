@@ -14,16 +14,8 @@
 // Distributed under the same terms as HTMLArea itself.
 // This notice MUST stay intact for use (see license.txt)
 {
-    "Cancel"
-:
-    "Cancelar",
-        "OK"
-:
-    "OK",
-        "Paste Text"
-:
-    "Colar Texto",
-        "Paste as Plain Text"
-:
-    "Colar um texto básico"
+  "Cancel": "Cancelar",
+  "OK": "OK",
+  "Paste Text": "Colar Texto",
+  "Paste as Plain Text": "Colar um texto básico"
 }

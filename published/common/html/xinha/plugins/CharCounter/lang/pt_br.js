@@ -14,16 +14,8 @@
 // Distributed under the same terms as HTMLArea itself.
 // This notice MUST stay intact for use (see license.txt).
 {
-    "... in progress"
-:
-    "... em processo",
-        "Chars"
-:
-    "Caracteres",
-        "HTML"
-:
-    "HTML",
-        "Words"
-:
-    "Palavras"
+  "... in progress": "... em processo",
+  "Chars": "Caracteres",
+  "HTML": "HTML",
+  "Words": "Palavras"
 }

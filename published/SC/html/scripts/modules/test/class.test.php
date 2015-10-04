@@ -1043,12 +1043,11 @@ if(!class_exists('test',false)){
                 $_SESSION['cs_vip'],
                 $_SESSION['newtree'],
                 $_SESSION['cs_skidka'],
-                $_SESSION['cs_margin'],
+                $_SESSION['cs_skidka_ua'],
                 $_SESSION['cs_may_order'],
                 $_SESSION['cs_unlimited'],
                 $_SESSION['cs_last_name'],
                 $_SESSION['cs_first_name'],
-                $_SESSION['cs_special_price'],
                 $_SESSION['cs_may_order_until']
             );
 
@@ -1061,12 +1060,11 @@ if(!class_exists('test',false)){
             session_unregister('cs_vip');
             session_unregister('newtree');
             session_unregister('cs_skidka');
-            session_unregister('cs_margin');
+            session_unregister('cs_skidka_ua');
             session_unregister('cs_may_order');
             session_unregister('cs_unlimited');
             session_unregister('cs_last_name');
             session_unregister('cs_first_name');
-            session_unregister('cs_special_price');
             session_unregister('cs_may_order_until');
 
 			$checkoutEntry = &Checkout::getInstance(_CHECKOUT_INSTANCE_NAME);

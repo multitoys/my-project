@@ -21,7 +21,7 @@
 // $Customer = mysql_fetch_object($res);
         $cs_id = $_SESSION['cs_id'];
         $query = "
-	SELECT SC_shopping_carts.Quantity, SC_shopping_carts.itemID, SC_products.Price, SC_products.skidka, SC_products.SpecialPrice
+	SELECT SC_shopping_carts.Quantity, SC_shopping_carts.itemID, SC_products.Price, SC_products.skidka, SC_products.ukraine
       FROM SC_shopping_carts
       LEFT JOIN SC_shopping_cart_items ON SC_shopping_carts.itemID = SC_shopping_cart_items.itemID
       LEFT JOIN SC_products ON SC_shopping_cart_items.productID = SC_products.productID 
@@ -32,7 +32,7 @@
         $esumma = 0;
 
         while ($Product = mysql_fetch_object($res)) {
-            $price = ZCalcPrice($Product->Price, $Product->SpecialPrice, $Product->skidka);
+            $price = ZCalcPrice($Product->Price, $Product->skidka, $Product->ukraine);
             // $price = show_price($price);
             $stoimost = $Product->Quantity * $price;
             $esumma += $stoimost;

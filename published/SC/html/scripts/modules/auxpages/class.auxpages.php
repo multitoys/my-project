@@ -687,7 +687,7 @@ class AuxPages extends ComponentModule {
             $query = "
                     SELECT
                           t1.productID, t1.categoryID, t1.product_code,  t1.code_1c, t1.sort_order, t1.Price,
-                          t1.SpecialPrice, t1.list_price, t1.skidka, t1.name_ru, t1.default_picture, t1.ostatok,
+                          t1.list_price, t1.skidka, t1.ukraine, t1.name_ru, t1.default_picture, t1.ostatok,
                           t1.Bonus, t1.zakaz, t1.slug, t3.filename, t3.thumbnail
                     FROM SC_products t1
                     LEFT JOIN SC_product_list_item t2  USING(productID)
@@ -736,7 +736,7 @@ class AuxPages extends ComponentModule {
                     }
                 }
                 /**********************************************************************************************************/
-                $price = show_price(ZCalcPrice($Product->Price, $Product->SpecialPrice, $Product->skidka));
+                $price = show_price(ZCalcPrice($Product->Price, $Product->skidka, $Product->ukraine));
                 $category = $category_name[$Product->categoryID];
                 $label_new = ($new[$Product->productID]) ? '<div class="corner color_newitem"><span></span>Новинка!</div>' : '';
                 //$label_new = '<div class="corner color_newitemspostup"><span></span>Новинка!</div>';

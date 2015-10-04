@@ -1215,8 +1215,7 @@
             $_SESSION['cs_last_name'] = $Customer->last_name;
             $_SESSION['cs_may_order_until'] = date('H:i d/m/Y', strtotime($Customer->may_order_until));
             $_SESSION['cs_skidka'] = $Customer->skidka;
-            $_SESSION['cs_special_price'] = $Customer->is_special_price;
-            $_SESSION['cs_margin'] = $Customer->ignore_skidka;
+            $_SESSION['cs_skidka_ua'] = $Customer->skidka_ua;
             $_SESSION['cs_may_order'] = $cust_may_order;
             $_SESSION['cs_unlimited'] = $Customer->unlimited_order;
             $_SESSION['cs_vip'] = $Customer->vip;
@@ -1859,27 +1858,17 @@
         $customer_skidka - Пользовательская скидка
         $product_skidka - Значение из столбца "Скидка" файла product.xls
     */
-    function ZCalcPrice($Price, $SpecialPrice, $product_skidka)
+    function ZCalcPrice($Price, $product_skidka, $ua)
     {
+        $customer = (int)$_SESSION['cs_skidka'];
 
-        $is_special_price = $_SESSION['cs_special_price'];
-        $margin = $_SESSION['cs_margin'];
-        $customer_skidka = $_SESSION['cs_skidka'];
-        if (!$is_special_price && !$customer_skidka && !$margin) return $Price;
-        if ($is_special_price && !$customer_skidka && !$margin) return $SpecialPrice;
-        if (!$is_special_price && $customer_skidka && !$margin) {
-            if ($product_skidka > $customer_skidka) $outPrice = $Price - ($Price * $customer_skidka / 100);
-            else $outPrice = $Price - ($Price * $product_skidka / 100);
-
-            return $outPrice;
+        if ($ua > 0) {
+            $customer = (int)$_SESSION['cs_skidka_ua'];
         }
-        if ($is_special_price && $customer_skidka && !$margin) {
-            if ($product_skidka > $customer_skidka) $outPrice = $SpecialPrice - ($SpecialPrice * $customer_skidka / 100);
-            else $outPrice = $SpecialPrice - ($SpecialPrice * $product_skidka / 100);
 
-            return $outPrice;
-        }
-        if ($margin) $outPrice = $Price + ($Price * $customer_skidka / 100);
+        $skidka = (int)$product_skidka;
+        $real_skidka = min($customer, $skidka);
+        $outPrice = $Price - ($Price * $real_skidka / 100);
 
         return $outPrice;
     }

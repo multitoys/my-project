@@ -97,9 +97,12 @@
                             <div class="predloj">
                                 <div>Курс валют:</div>
                                 <div><span><b>USD = {$smarty.session.usd} грн</b></span></div>
-                                {if !$smarty.session.cs_margin}
-                                <div><b>скидка -&nbsp;{$smarty.session.cs_skidka}%</b></div>
-                                {/if}
+                                {*{if !$smarty.session.cs_margin}*}
+                                <h3>Ваши скидки:</h3>
+
+                                <div>Китай -&nbsp;<b>{$smarty.session.cs_skidka}%</b></div>
+                                <div>Украина -&nbsp;<b>{$smarty.session.cs_skidka_ua}%</b></div>
+                                {*{/if}*}
                             <!-- cpt_container_start -->
                             {cpt_currency_selection}
                             <!-- cpt_container_end -->

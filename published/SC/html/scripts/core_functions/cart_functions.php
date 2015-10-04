@@ -288,7 +288,7 @@ function GetPriceProductWithOption($variants, $productID)
 {
 
 	// $q=db_query("select * from ".PRODUCTS_TABLE." where productID='".$productID."'");
-	$q=db_query("select Price, SpecialPrice, skidka from ".PRODUCTS_TABLE." where productID='".$productID."'");
+    $q = db_query("SELECT Price, skidka, ukraine FROM ".PRODUCTS_TABLE." WHERE productID='".$productID."'");
 
 	$r=db_fetch_row($q);
 
@@ -304,7 +304,7 @@ function GetPriceProductWithOption($variants, $productID)
 	// echo($customer->skidka.'<br>');
 	// echo($r["skidka"].'<br>');
 
-	$full_price = ZCalcPrice($r["Price"], $r["SpecialPrice"], $r["skidka"]);
+    $full_price = ZCalcPrice($r["Price"], $r["skidka"], $r["ukraine"]);
 	// $full_price = RoundFloatValueStr($full_price);
 	// $full_price = show_price($full_price);
 	/*foreach($variants as $var)

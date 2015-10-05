@@ -49,7 +49,7 @@
     }
 
     $search = mysql_real_escape_string(_searchPatternReplace($search));
-    $query = mysql_query("SELECT t1.productID, t1.product_code, t1.Price, t1.name_ru, t1.code_1c,
+    $query = mysql_query("SELECT t1.productID, t1.product_code, t1.Price, t1.skidka, t1.ukraine, t1.name_ru, t1.code_1c,
                 t1.default_picture, t1.slug, t3.filename
                 FROM SC_products t1
                 LEFT JOIN SC_product_pictures t3 ON t1.default_picture = t3.photoID
@@ -72,7 +72,8 @@
             $name_ru = mb_strtolower($sql['name_ru'], 'UTF-8');
             $product_code = mb_strtolower($sql['product_code'], 'UTF-8');
             $picture = substr($sql['filename'], 0, -4).'_s.jpg';
-            $price = ($vip)?'<p><span style="color:#008DD9">цена: '.$sql['Price'].'</span></p>':'';
+            //$price = ($vip)?'<p><span style="color:#008DD9">цена: '.$sql['Price'].'</span></p>':'';
+            $price = '<p><span style="color:#008DD9">цена: '.ZCalcPrice($sql['Price'], $sql['skidka'], $sql['ukraine']).'</span></p>';
             $name_ru = str_replace($search, "<mark class=mark_name>$search</mark>", $name_ru);
             $product_code = str_replace($search, "<span class=mark_code>$search</span>", $product_code);
             echo "

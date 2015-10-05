@@ -53,9 +53,9 @@ TAG
 
     $login_url = URL_COMPETITORS.'/ru/user/login';
     $refferer = URL_COMPETITORS;
-    //postAuth($login_url, 'UserLogin[username]=Elenna&UserLogin[password]=0675230623', $headers);
+    postAuth($login_url, 'UserLogin[username]=Elenna&UserLogin[password]=0675230623', $headers);
 
-    //UpdateValue('Conc__grandtoys', 'enabled = 0');
+    UpdateValue('Conc__grandtoys', 'enabled = 0');
 
     //    DeleteRow('Conc__grandtoys');
     //    DeleteRow('Conc_search__grandtoys');
@@ -79,7 +79,7 @@ TAG
             $filename = DIR_COMPETITORS.'/'.$filename.EXT;
             $products = '';
 
-            //readUrl($category_url, $filename, '', $headers);
+            readUrl($category_url, $filename, '', $headers);
 
             $html = file_get_contents($filename);
             preg_match_all(

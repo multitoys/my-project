@@ -48,8 +48,9 @@
             $conc_args = func_get_args();
             $conc = $conc_args[0];
             $code = $conc_args[1];
-            $price = 0;
-            $limit = 2;
+            $price = $conc_args[2];
+            //$price = 0;
+            $limit = 3;
         }
 
         $ajax = (!count($conc_args));
@@ -203,7 +204,7 @@ href='/popup/search_by_conc/search_conc.php?mode=1&conc=$conc&code=$code&price=$
         }
     }
 
-    function getProductLike($value, $price = 0, $k = 0, $limit = 50)
+    function getProductLike($value, $price = 0, $k = 9, $limit = 50)
     {
         $condition = '';
         if ($price) {

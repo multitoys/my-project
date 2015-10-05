@@ -1001,7 +1001,7 @@ class AuxPages extends ComponentModule {
                     </p>";
                 }
             } else {
-                $analog = findAnalogs($name_conc, $Product->code);
+                $analog = findAnalogs($name_conc, $Product->code, $Product->price_uah);
                 $analog .= "<div>
                             <a class='blue-button fancybox fancybox.ajax find' title=''
                             href='/popup/search_by_conc/search_conc.php?mode=1&conc=$name_conc&code=$Product->code&price=$Product->price_uah' onclick=\"this.style.backgroundColor = 'transparent'\">Найти совпадения</a>

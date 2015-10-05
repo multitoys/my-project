@@ -43,7 +43,7 @@
             $conc = $_GET['conc'];
             $code = $_GET['code'];
             $price = $_GET['price'];
-            $limit = 50;
+            $limit = 30;
         } else {
             $conc_args = func_get_args();
             $conc = $conc_args[0];

@@ -41,6 +41,7 @@ TAG
     echo("<div id='extract'>Файлы ($zip->numFiles) успешно извлечены!</div><br>");
 
     //----------- Импорт покупателей -----------
+    $filename0 = 'clients.csv';
     $filename = $dest_dir.'clients.csv';
     $file = file($filename);
     $rowcount = count($file);
@@ -98,7 +99,7 @@ TAG
         echo('<br><span style="color:blue;">Обработано '.$no.' клиентов<br></span><br>');
         fclose($handle);
     } else {
-        die("<br>'Ошибка в при открытии файла: $filename");
+        echo("<br>'Ошибка в при открытии файла: $filename0");
     }
 
 

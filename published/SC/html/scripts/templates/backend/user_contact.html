@@ -33,6 +33,11 @@
   		skidka = skidka * -1;
   		$('#skidka_inp').val(skidka);
   	}
+    var skidka_ua = $('#skidka_ua_inp').val();
+  	if(skidka_ua && Number(skidka_ua)<0) {
+        skidka_ua = skidka_ua * -1;
+  		$('#skidka_ua_inp').val(skidka_ua);
+  	}
   }
 
   function ZHandleCheckBox(cmp) {
@@ -129,7 +134,7 @@
 	</tr>
 
 	<tr>
-		<td><strong>Скидка, %</strong></td>
+		<td><strong>Скидка Китай, %</strong></td>
 		<td>
             <span id="skidka_txt">{$customerInfo.skidka}</span>
             <input class="txt_or_sel" type="text" name="ci[skidka]" id="skidka_inp" value="{$customerInfo.skidka|escape:'html'}" style="display: none;" />
@@ -137,20 +142,28 @@
 	</tr>
 
 	<tr>
-		<td><strong>Наценка</strong></td>
+		<td><strong>Скидка Украина, %</strong></td>
 		<td>
-			<span id="ignore_skidka_txt">{if $customerInfo.ignore_skidka}{"str_answer_yes"|translate}{else}{"str_answer_no"|translate}{/if}</span>
-			<input id="ignore_skidka_inp" onchange="ZHandleCheckBox(this);" type="checkbox" {if $customerInfo.ignore_skidka}checked{/if} name = 'ci[ignore_skidka]' style="display: none;" value="1" />
+            <span id="skidka_ua_txt">{$customerInfo.skidka_ua}</span>
+            <input class="txt_or_sel" type="text" name="ci[skidka_ua]" id="skidka_ua_inp" value="{$customerInfo.skidka_ua|escape:'html'}" style="display: none;" />
         </td>
 	</tr>
 
-	<tr>
-		<td><strong>Спеццена</strong></td>
-		<td>
-			<span id="is_special_price_txt">{if $customerInfo.is_special_price}{"str_answer_yes"|translate}{else}{"str_answer_no"|translate}{/if}</span>
-			<input id="is_special_price_inp" onchange="ZHandleCheckBox(this);" type="checkbox" {if $customerInfo.is_special_price}checked{/if} name = 'ci[is_special_price]' style="display: none;" value="1" />
-        </td>
-	</tr>
+	{*<tr>*}
+		{*<td><strong>Наценка</strong></td>*}
+		{*<td>*}
+			{*<span id="ignore_skidka_txt">{if $customerInfo.ignore_skidka}{"str_answer_yes"|translate}{else}{"str_answer_no"|translate}{/if}</span>*}
+			{*<input id="ignore_skidka_inp" onchange="ZHandleCheckBox(this);" type="checkbox" {if $customerInfo.ignore_skidka}checked{/if} name = 'ci[ignore_skidka]' style="display: none;" value="1" />*}
+        {*</td>*}
+	{*</tr>*}
+
+	{*<tr>*}
+		{*<td><strong>Спеццена</strong></td>*}
+		{*<td>*}
+			{*<span id="is_special_price_txt">{if $customerInfo.is_special_price}{"str_answer_yes"|translate}{else}{"str_answer_no"|translate}{/if}</span>*}
+			{*<input id="is_special_price_inp" onchange="ZHandleCheckBox(this);" type="checkbox" {if $customerInfo.is_special_price}checked{/if} name = 'ci[is_special_price]' style="display: none;" value="1" />*}
+        {*</td>*}
+	{*</tr>*}
 
 		<td valign="top">
 			<strong>Авторизация</strong>
@@ -237,7 +250,7 @@ function showEditForm()
     };
     document.getElementById('form_buttons').style.display = '';
     document.getElementById('elink').style.display = 'none';
-};
+}
 
 function hideEditForm()
 {
@@ -249,10 +262,10 @@ function hideEditForm()
         frm.elements[i].style.display = 'none';
         document.getElementById(txt_id).style.display = '';
         frm.elements[i].parentNode.parentNode.style.backgroundColor = '#FFFFFF';
-    };
+    }
     document.getElementById('form_buttons').style.display = 'none';
     document.getElementById('elink').style.display = '';
-};
+}
 
 {/literal}
 </script>

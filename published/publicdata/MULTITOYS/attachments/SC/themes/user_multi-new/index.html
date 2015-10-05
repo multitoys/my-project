@@ -94,6 +94,7 @@
                             {newtree login=$smarty.session.log}
                         {/if}
                         {if $smarty.session.cs_may_order}
+                        {if $smarty.session.log}
                             <div class="predloj">
                                 <div>Курс валют:</div>
                                 <div><span><b>USD = {$smarty.session.usd} грн</b></span></div>
@@ -107,6 +108,7 @@
                             {cpt_currency_selection}
                             <!-- cpt_container_end -->
                             </div>
+                        {/if}
                         {/if}
                     </div>
 				</div>

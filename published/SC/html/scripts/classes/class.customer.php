@@ -38,6 +38,7 @@ class Customer extends DBObject {
 	var $affiliateEmailPayments;
 	var $ActivationCode;
   var $skidka;
+  var $skidka_ua;
   var $is_special_price;
   var $ignore_skidka;
   var $vip;

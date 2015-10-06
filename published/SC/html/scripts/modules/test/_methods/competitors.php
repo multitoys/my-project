@@ -126,7 +126,7 @@
 
         protected function __getCategoriesArray()
         {
-            $query = "SELECT DISTINCT category FROM $this->table WHERE 1  $this->competitor";
+            $query = "SELECT DISTINCT category FROM $this->table WHERE 1  $this->manufactured $this->brand $this->category $this->bestsellers $this->new $this->new_items_postup $this->competitor $this->search";
             $res = mysql_query($query) or die(mysql_error().$query);
 
             while ($Categories = mysql_fetch_object($res)) {
@@ -150,25 +150,7 @@
             $this->DBHandler = &$Register->get(VAR_DBHANDLER);
 
             parent::ActionsController();
-
-            $this->__getBrandsArray();
-            $this->__getCategoriesArray();
-        }
-
-        public function main()
-        {
-
-            $Register = &Register::getInstance();
-            /*@var $Register Register*/
-            $smarty = &$Register->get(VAR_SMARTY);
-            /*@var $smarty Smarty*/
-
-            //            $grid = ClassManager::getInstance('grid');
-            $grid = new Grid();
-
-//            if (isset($_GET['enabled'])) {
-//                $this->__setEnabled();
-//            }
+            
             if (isset($_GET['currency'])) {
                 $this->__setCurrency();
             }
@@ -196,7 +178,22 @@
             if (isset($_GET['searchstring']) && $_GET['searchstring'] !== null) {
                 $this->__setSearch();
             }
+        }
 
+        public function main()
+        {
+
+            $Register = &Register::getInstance();
+            /*@var $Register Register*/
+            $smarty = &$Register->get(VAR_SMARTY);
+            /*@var $smarty Smarty*/
+
+//            $grid = ClassManager::getInstance('grid');
+            $grid = new Grid();
+
+            $this->__getBrandsArray();
+            $this->__getCategoriesArray();
+            
             $grid->query_total_rows_num = "
                 SELECT COUNT(*) FROM $this->table
                 WHERE 1

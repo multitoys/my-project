@@ -9,7 +9,7 @@ class cattreeActions extends ActionsController {
 		
 		global $_RESULT;
 		
-		$per_page = 20;
+		$per_page = 100;
 		$navigatorParams = array('offset' => intval($this->getData('offset')), 'CountRowOnPage' => $per_page);
 		$callbackParams = array('categoryID'=>$this->getData('categoryID'));
 		if($this->getData('productID'))$callbackParams['!productID'] = $this->getData('productID');
@@ -58,9 +58,8 @@ class cattreeActions extends ActionsController {
 		$js_action = isset($GetVars['js_action'])?$GetVars['js_action']:'';
 		
 		$smarty->assign('categories', $categories);
-		$smarty->assign('js_action', $GetVars['js_action']);
+		$smarty->assign('js_action', $js_action);
 	}
 }
 
 ActionsController::exec('cattreeActions');
-?>

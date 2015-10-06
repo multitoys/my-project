@@ -67,7 +67,23 @@
     {*</script>*}
 
         {*$product_lists*}
-
+    <div>
+        <a href="/search?searchstring=BIGNL"><p style="
+            font-size: 30px;
+            color: #FD36B4;
+            text-align: center;
+            font-weight: 700;
+            font-family: cursive;">
+                Новинка! Нелопающиеся пузыри!
+            </p></a>
+        <video autoplay loop controls style="
+                                        border-radius: 2px;
+                                        margin: 15px auto;
+                                        display: block;">
+            <source src="/source/mylnye_puzyri.mp4" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'/>
+        </video>
+    </div>
+        
         {get_topproducts var=akcia limit=30}
         {if $akcia}{include file="product_top.html" top=$akcia str='str_akcia_items'}
         {else}{get_topproducts var=items_sold limit=30}

@@ -1,0 +1,5 @@
+http://www.cbr.ru/scripts/XML_daily.asp?date_req=02/04/2008
+
+
+http://www.cbr.ru/scripts/XML_dynamic.asp?date_req1=02/03/2008&date_req2=02/04/2008&VAL_NM_RQ=R01235
+

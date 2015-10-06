@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<catalog>
+    <book isbn="5-06-002611-6">
+        <author>С.Хьюз</author>
+        <title id="1" cont="20">PHP кукбук</title>
+        <pubyear>2001</pubyear>
+        <price>252</price>
+    </book>
+    <book isbn="4-12-046551-3">
+        <author>Григин</author>
+        <title id="2" cont="34">Специальный справочник</title>
+        <pubyear>2005</pubyear>
+        <price>150</price>
+    </book>
+    <book isbn="5-16-254611-3">
+        <author>З.Сурасски</author>
+        <title id="3" cont="12">PHP5</title>
+        <pubyear>2004</pubyear>
+        <price>400</price>
+    </book>
+    <book isbn="2-03-003211-1">
+        <author>Алекс Гомер</author>
+        <title id="4" cont="54">XML и IE5</title>
+        <pubyear>2007</pubyear>
+        <price>200</price>
+    </book>
+    <book isbn="4-12-365489-2">
+        <author>Алекс Хоумер</author>
+        <title id="5" cont="62">Dimanic HTML</title>
+        <pubyear>2009</pubyear>
+        <price>120</price>
+    </book>
+    <book isbn="6-46-242651-6">
+        <author>Алексей Валиков</author>
+        <title id="6" cont="23">Технология XSLT</title>
+        <pubyear>2008</pubyear>
+        <price>150</price>
+    </book>
+</catalog>

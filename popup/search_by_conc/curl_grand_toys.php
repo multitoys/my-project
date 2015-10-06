@@ -57,9 +57,6 @@ TAG
 
     UpdateValue('Conc__grandtoys', 'enabled = 0');
 
-    //    DeleteRow('Conc__grandtoys');
-    //    DeleteRow('Conc_search__grandtoys');
-
     $no = 0;
     $new = 0;
     $part = 0;
@@ -74,7 +71,8 @@ TAG
 
         foreach ($category_urls as $category => $url) {
 
-            $category_url = URL_COMPETITORS.$url.URL_POSTFIX.$products_cnt;
+            $url_postfix = (strpos($url, 'shop') === false) ? URL_POSTFIX.$products_cnt : '';
+            $category_url = URL_COMPETITORS.$url.$url_postfix;
             $filename = Rus2Translit(trim($category));
             $filename = DIR_COMPETITORS.'/'.$filename.EXT;
             $products = '';

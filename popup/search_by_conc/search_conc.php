@@ -88,10 +88,8 @@
                     foreach ($searchstrings as $keys => $match) {
 
                         $match = mb_strtolower($match, 'UTF-8');
-                        if () {
-                            $name_ru = str_replace($match, '<mark class=mark_name>'.$match.'</mark>', $name_ru);
-                            $product_code = str_replace($match, '<span class=mark_code>'.$match.'</span>', $product_code);
-                        }
+                        $name_ru = str_replace($match, '<mark class="mark_name">'.$match.'</mark>', $name_ru);
+                        $product_code = str_replace($match, '<span class="mark_code">'.$match.'</span>', $product_code);
                     }
 
                     $price_diff = round(($Product->Price / $price - 1) * 100, 1);

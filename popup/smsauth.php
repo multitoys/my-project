@@ -6,7 +6,8 @@
      * Time: 22:35
      */
     ini_set('display_errors', true);
-    define('DIR_ROOT', $_SERVER['DOCUMENT_ROOT']."/published/SC/html/scripts");
+    define('DIR_ROOT', $_SERVER['DOCUMENT_ROOT'].
+        '/published/SC/html/scripts');
     include_once(DIR_ROOT.'/includes/smslogpass.php');
 
     $sUrl = 'http://letsads.com/api';

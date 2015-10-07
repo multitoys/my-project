@@ -47,8 +47,14 @@
     $file = file($filename);
     $rowcount = count($file);
     echo $rowcount;
-    if (!$rowcount) die(ShowError("CSV-файл ($filename) не содержит данных! (rowcount = $rowcount)"));
+
+    if (!$rowcount) {
+        die(ShowError("CSV-файл ($filename) не содержит данных! (rowcount = $rowcount)"));
+    }
     if (($handle = fopen($filename, 'r')) !== false) {
+
+        $days = 0;
+
         echo("
 				Импорт фотографий ...<hr>
 				<div id='products' >
@@ -69,7 +75,7 @@
             $row++;
             $pics = $data[0];
             $num = $data[1];
-            $num = ($num > 0) ? $num : 0;
+            $num = ($num > 0)?$num:0;
             // $pics       = mysql_real_escape_string($pics);
             $dopic = $pics;
             if ($num > 9) {
@@ -84,17 +90,17 @@
             $picture = $pics.'.jpg';
             $file_name = $dest_dir.$picture;
             $file_name2 = $archive_dir.$picture;
-            $file_name = is_file($file_name) ? $file_name : $file_name2;
+            $file_name = is_file($file_name)?$file_name:$file_name2;
             $stamp200 = false;
             $stamp400 = $watermark_dir.'watermark400.png';
             $stamp600 = $watermark_dir.'watermark600.png';
 
             if (!is_file($file_name)) {
-                echo("<span style='color: #E9967A;'>$picture - файл не найден! (строка $row)<br></span>");
+                echo("<span style='color: #E9967A;'>$picture - фото не загружено! (строка $row)<br></span>");
                 $erorr++;
             } else {
                 $file_name2 = $searh_dir.$pics_search;
-                if (filemtime($file_name2) < time() - 86400 * 3) {
+                if (filemtime($file_name2) < time() - 86400 * $days) {
                     unlink($file_name2);
                     make_thumbnail($file_name, $file_name2, $stamp200, 80);
                 }
@@ -118,7 +124,7 @@
                 $file_name2 = DIR_PRODUCTS_PICTURES.'/'.$pics_enl;
                 if (filemtime($file_name2) < time() - 86400 * 3) {
                     unlink($file_name2);
-                    make_thumbnail($file_name, $file_name2, $stamp600, 600, 90);
+                    make_thumbnail($file_name, $file_name2, $stamp600, 600, 85);
                 } else {
                     $last_modified--;
                 }
@@ -131,7 +137,7 @@
                 $productID = GetValue('productID', 'SC_products', "code_1c = $dopic");
 
                 if (!$productID) {
-                    echo("<span style='color: #FF8000;'>$picture - товар не найден!<br></span>");
+                    echo("<span style='color: #FF8000;'>$picture - товара нет на сайте<br></span>");
                     $erorr++;
                 } else {
 
@@ -188,42 +194,44 @@
     Debugging($start);
 
     // Функции
-    function make_thumbnail($file_name, $fileout, $stamp, $max_size, $quality = 85)
+    function make_thumbnail($file_name, $fileout, $stamp, $max_size, $quality = 80)
     {
         $image_info = getimagesize($file_name);
-        $image = imagecreatefromJPEG($file_name);
+        $image = imagecreatefromjpeg($file_name);
 
         $image_width = imagesx($image);
         $image_height = imagesy($image);
 
         //задано ограничение на высоту и ширину:
-        if ($max_size) {
-            if ($image_width < $image_height) {
-                $thumb_height = min(array($max_size, $image_height));
-                $thumb_width = min(array(round($max_size * $image_width / $image_height), $image_width));
-            } else {
-                $thumb_width = min(array($max_size, $image_width));
-                $thumb_height = min(array(round($max_size * $image_height / $image_width), $image_height));
-            }
-        } //задана только ширина
-        elseif ($thumb_width && !$thumb_height) {
-            $thumb_height = round($thumb_width * $image_height / $image_width);
-        } //задана только высота
-        elseif (!$thumb_width && $thumb_height) {
-            $thumb_width = round($thumb_height * $image_width / $image_height);
-        } //не задан ни один из размеров
-        else {
-            $thumb_width = $image_width;
-            $thumb_height = $image_height;
+        if (!$max_size) {
+            return false;
         }
+        if ($image_width < $image_height) {
+            $thumb_height = min(array($max_size, $image_height));
+            $thumb_width = min(array(round($max_size * $image_width / $image_height), $image_width));
+        } else {
+            $thumb_width = min(array($max_size, $image_width));
+            $thumb_height = min(array(round($max_size * $image_height / $image_width), $image_height));
+        }
+        //        //задана только ширина
+        //        elseif ($thumb_width && !$thumb_height) {
+        //            $thumb_height = round($thumb_width * $image_height / $image_width);
+        //        } //задана только высота
+        //        elseif (!$thumb_width && $thumb_height) {
+        //            $thumb_width = round($thumb_height * $image_width / $image_height);
+        //        } //не задан ни один из размеров
+        //        else {
+        //            $thumb_width = $image_width;
+        //            $thumb_height = $image_height;
+        //        }
 
         $thumb = imagecreatetruecolor($thumb_width, $thumb_height);
         // imagealphablending($thumb, false);
         // imagesavealpha($thumb, true);
         imagecopyresampled($thumb, $image, 0, 0, 0, 0, $thumb_width, $thumb_height, $image_width, $image_height);
-//	 imagejpeg($thumb, $fileout,80);
+        //	 imagejpeg($thumb, $fileout,80);
         imagedestroy($image);
-//    imagedestroy($thumb);
+        //    imagedestroy($thumb);
         if ($stamp) {
             $stamp = imagecreatefrompng($stamp);
             $marge_right = 0;
@@ -233,10 +241,19 @@
             // $im = imagecreatefromjpeg($main_img_obj);
 
             //		$image = imagecreatefromJPEG($fileout);
-            imagecopy($thumb, $stamp, imagesx($thumb) - $sx - $marge_right, imagesy($thumb) - $sy - $marge_bottom, 0, 0, imagesx($stamp), imagesy($stamp));
+            imagecopy(
+                $thumb,
+                $stamp,
+                imagesx($thumb) - $sx - $marge_right,
+                imagesy($thumb) - $sy - $marge_bottom,
+                0,
+                0,
+                imagesx($stamp),
+                imagesy($stamp)
+            );
         }
         imagejpeg($thumb, $fileout, $quality);
-// 		imagejpeg($thumb, $fileout);
+        // 		imagejpeg($thumb, $fileout);
         imagedestroy($thumb);
     }
 

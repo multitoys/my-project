@@ -19,7 +19,7 @@
                     </auth>
                     <message>
                         <from>Multitoys</from>
-                        <text>1605</text>
+                        <text>'.$sUrl.'</text>
                         <recipient>380676383204</recipient>
                     </message>
                 </request>';

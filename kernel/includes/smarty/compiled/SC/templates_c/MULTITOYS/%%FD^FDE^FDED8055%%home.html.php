@@ -1,16 +1,32 @@
-<?php /* Smarty version 2.6.9, created on 2015-10-03 00:39:41
+<?php /* Smarty version 2.6.9, created on 2015-10-08 20:21:45
          compiled from home.html */ ?>
 <?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
-smarty_core_load_plugins(array('plugins' => array(array('function', 'zakcia', 'home.html', 9, false),array('function', 'get_topproducts', 'home.html', 71, false),)), $this); ?>
+smarty_core_load_plugins(array('plugins' => array(array('function', 'zakcia', 'home.html', 9, false),array('function', 'get_topproducts', 'home.html', 87, false),)), $this); ?>
 <?php if ($_SESSION['cs_may_order']): ?>
                             <?php echo smarty_function_zakcia(array(), $this);?>
 
                                                                         
                 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                         
+                                                                                                                                                                                                                                                                                                                                                                                                
+    
             
-                                                
-                                                                                                                                                                                       
+                                            
+            <div>
+        <a href="/search?searchstring=BIGNL"><p style="
+            font-size: 30px;
+            color: #FD36B4;
+            text-align: center;
+            font-weight: 700;
+            font-family: cursive;">
+                Новинка! Нелопающиеся пузыри!
+            </p></a>
+        <video loop controls style="
+                                        border-radius: 2px;
+                                        margin: 15px auto;
+                                        display: block;">
+            <source src="/source/mylnye_puzyri.mp4" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'/>
+        </video>
+    </div>
         
         <?php echo smarty_function_get_topproducts(array('var' => 'akcia','limit' => 30), $this);?>
 
@@ -28,4 +44,4 @@ unset($_smarty_tpl_vars);
  ?>
         <?php endif; ?>
 
-            <?php endif; ?>
+            <?php endif; ?>

@@ -166,7 +166,7 @@ TAG
                 if ($productID) {
                     $query
                         = "
-                                    UPDATE  Conc__grandtoys
+                                    UPDATE  Conc__grandtoys2
                                     SET     parent       = '$parent',
                                             category     = '$category',
                                             name         = '$name',
@@ -179,7 +179,7 @@ TAG
                 } else {
                     $query
                         = "
-                                INSERT INTO Conc__grandtoys
+                                INSERT INTO Conc__grandtoys2
                                             (parent, category, code, name, price_uah, price_usd)
                                 VALUES      ('$parent', '$category', $code, '$name', $price, $price_usd)
                               ";
@@ -202,7 +202,7 @@ TAG
     echo('<hr><span style="color:blue;">Обработано '.$no.' товаров</span><br><br>Новых '.$new.' товаров</span><br>');
 
     // Оптимизация таблиц
-    $query = "UPDATE Conc__grandtoys SET parent='', category='' WHERE enabled=0";
+    $query = "UPDATE Conc__grandtoys2 SET parent='', category='' WHERE enabled=0";
     $res = mysql_query($query) or die(mysql_error()."<br>$query");
 
     $query = 'OPTIMIZE TABLE `Conc__grandtoys`, `Conc_search__grandtoys`';

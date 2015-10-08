@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.9, created on 2015-09-22 08:33:07
+<?php /* Smarty version 2.6.9, created on 2015-10-07 20:43:18
          compiled from backend/gridheader.tpl.html */ ?>
 <?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
 smarty_core_load_plugins(array('plugins' => array(array('modifier', 'set_query_html', 'backend/gridheader.tpl.html', 8, false),array('modifier', 'default', 'backend/gridheader.tpl.html', 10, false),)), $this); ?>
@@ -28,20 +28,22 @@ $this->_sections['j']['last']       = ($this->_sections['j']['iteration'] == $th
 ?>
 <td nowrap <?php if ($this->_tpl_vars['GridHeaders'][$this->_sections['j']['index']]['align']): ?>align="<?php echo $this->_tpl_vars['GridHeaders'][$this->_sections['j']['index']]['align']; ?>
 "<?php endif; ?>>
-    <?php if ($this->_tpl_vars['GridHeaders'][$this->_sections['j']['index']]['add_str'] != 'checkbox'): ?>  
-    <?php if ($this->_tpl_vars['GridHeaders'][$this->_sections['j']['index']]['descsort']['enabled'] == 1): ?><img src="images_common/asc_img.gif" alt="asc"  /><?php endif; ?>
-    <?php if ($this->_tpl_vars['GridHeaders'][$this->_sections['j']['index']]['ascsort']['enabled'] == 1): ?><img src="images_common/desc_img.gif" alt="desc"  /><?php endif; ?>
-    <?php if ($this->_tpl_vars['GridHeaders'][$this->_sections['j']['index']]['ascsort']['getvars'] != '' && $this->_tpl_vars['GridHeaders'][$this->_sections['j']['index']]['descsort']['getvars'] != ''): ?>
-        <a class="gridheader"
-        href="<?php if ($this->_tpl_vars['GridHeaders'][$this->_sections['j']['index']]['ascsort']['enabled'] == '1'):  echo ((is_array($_tmp=($this->_tpl_vars['GridHeaders'][$this->_sections['j']['index']]['descsort']['getvars']))) ? $this->_run_mod_handler('set_query_html', true, $_tmp) : smarty_modifier_set_query_html($_tmp));  elseif ($this->_tpl_vars['GridHeaders'][$this->_sections['j']['index']]['descsort']['enabled'] == '1'):  echo ((is_array($_tmp=($this->_tpl_vars['GridHeaders'][$this->_sections['j']['index']]['ascsort']['getvars']))) ? $this->_run_mod_handler('set_query_html', true, $_tmp) : smarty_modifier_set_query_html($_tmp));  elseif ($this->_tpl_vars['GridHeaders'][$this->_sections['j']['index']]['defsort']['getvars']):  echo ((is_array($_tmp=($this->_tpl_vars['GridHeaders'][$this->_sections['j']['index']]['defsort']['getvars']))) ? $this->_run_mod_handler('set_query_html', true, $_tmp) : smarty_modifier_set_query_html($_tmp));  else:  echo ((is_array($_tmp=($this->_tpl_vars['GridHeaders'][$this->_sections['j']['index']]['ascsort']['getvars']))) ? $this->_run_mod_handler('set_query_html', true, $_tmp) : smarty_modifier_set_query_html($_tmp));  endif; ?>"><?php echo $this->_tpl_vars['GridHeaders'][$this->_sections['j']['index']]['header_name']; ?>
+    <?php if ($this->_tpl_vars['GridHeaders'][$this->_sections['j']['index']]['add_str'] != 'checkbox'): ?>
+        <?php if ($this->_tpl_vars['GridHeaders'][$this->_sections['j']['index']]['descsort']['enabled'] == 1): ?><img src="images_common/asc_img.gif" alt="asc"/><?php endif; ?>
+        <?php if ($this->_tpl_vars['GridHeaders'][$this->_sections['j']['index']]['ascsort']['enabled'] == 1): ?><img src="images_common/desc_img.gif" alt="desc"/><?php endif; ?>
+        <?php if ($this->_tpl_vars['GridHeaders'][$this->_sections['j']['index']]['ascsort']['getvars'] != '' && $this->_tpl_vars['GridHeaders'][$this->_sections['j']['index']]['descsort']['getvars'] != ''): ?>
+            <a class="gridheader"
+               href="<?php if ($this->_tpl_vars['GridHeaders'][$this->_sections['j']['index']]['ascsort']['enabled'] == '1'):  echo ((is_array($_tmp=($this->_tpl_vars['GridHeaders'][$this->_sections['j']['index']]['descsort']['getvars']))) ? $this->_run_mod_handler('set_query_html', true, $_tmp) : smarty_modifier_set_query_html($_tmp));  elseif ($this->_tpl_vars['GridHeaders'][$this->_sections['j']['index']]['descsort']['enabled'] == '1'):  echo ((is_array($_tmp=($this->_tpl_vars['GridHeaders'][$this->_sections['j']['index']]['ascsort']['getvars']))) ? $this->_run_mod_handler('set_query_html', true, $_tmp) : smarty_modifier_set_query_html($_tmp));  elseif ($this->_tpl_vars['GridHeaders'][$this->_sections['j']['index']]['defsort']['getvars']):  echo ((is_array($_tmp=($this->_tpl_vars['GridHeaders'][$this->_sections['j']['index']]['defsort']['getvars']))) ? $this->_run_mod_handler('set_query_html', true, $_tmp) : smarty_modifier_set_query_html($_tmp));  else:  echo ((is_array($_tmp=($this->_tpl_vars['GridHeaders'][$this->_sections['j']['index']]['ascsort']['getvars']))) ? $this->_run_mod_handler('set_query_html', true, $_tmp) : smarty_modifier_set_query_html($_tmp));  endif; ?>"><?php echo $this->_tpl_vars['GridHeaders'][$this->_sections['j']['index']]['header_name']; ?>
 </a>
+        <?php else: ?>
+            <?php echo ((is_array($_tmp=@$this->_tpl_vars['GridHeaders'][$this->_sections['j']['index']]['header_name'])) ? $this->_run_mod_handler('default', true, $_tmp, "&nbsp;") : smarty_modifier_default($_tmp, "&nbsp;")); ?>
+
+        <?php endif; ?>
+        <?php echo $this->_tpl_vars['GridHeaders'][$this->_sections['j']['index']]['add_str']; ?>
+
+        </td>
     <?php else: ?>
-    <?php echo ((is_array($_tmp=@$this->_tpl_vars['GridHeaders'][$this->_sections['j']['index']]['header_name'])) ? $this->_run_mod_handler('default', true, $_tmp, "&nbsp;") : smarty_modifier_default($_tmp, "&nbsp;")); ?>
+        <?php echo $this->_tpl_vars['GridHeaders'][$this->_sections['j']['index']]['header_name']; ?>
 
     <?php endif; ?>
-    <?php echo $this->_tpl_vars['GridHeaders'][$this->_sections['j']['index']]['add_str']; ?>
-
-</td>
-<?php else:  echo $this->_tpl_vars['GridHeaders'][$this->_sections['j']['index']]['header_name']; ?>
-
-<?php endif;  endfor; endif; ?>
+<?php endfor; endif; ?>

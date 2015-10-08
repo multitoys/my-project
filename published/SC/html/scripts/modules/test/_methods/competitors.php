@@ -9,7 +9,7 @@
 
         protected $DBHandler;
         protected $manufactured = '';
-        protected $competitor = ' AND (kindermarket OR divoland OR dreamtoys OR mixtoys OR grandtoys)';
+        protected $competitor = ' AND (kindermarket OR divoland OR dreamtoys OR mixtoys OR grandtoys OR grandtoys2)';
         protected $conc = '';
         protected $currency = '';
         protected $brand = '';
@@ -236,6 +236,8 @@
                 case 'grandtoys':
                     $grid->registerHeader('Г.-Тойс', 'grandtoys', false, 'ASC', 'right');
                     $grid->registerHeader('раз-ца', 'diff_grandtoys', false, 'ASC', 'right');
+                    $grid->registerHeader('Г.-Тойс-2', 'grandtoys2', false, 'ASC', 'right');
+                    $grid->registerHeader('раз-ца', 'diff_grandtoys2', false, 'ASC', 'right');
                     break;
                 case 'kindermarket':
                     $grid->registerHeader('К.-Маркет', 'kindermarket', false, 'ASC', 'right');
@@ -250,6 +252,8 @@
                     $grid->registerHeader('раз-ца', 'diff_grandtoys', false, 'ASC', 'right');
                     $grid->registerHeader('Г.Тойс', 'grandtoys', false, 'ASC', 'right');
                     $grid->registerHeader('раз-ца', 'diff_grandtoys', false, 'ASC', 'right');
+                    $grid->registerHeader('Г.-Тойс-2', 'grandtoys2', false, 'ASC', 'right');
+                    $grid->registerHeader('раз-ца', 'diff_grandtoys2', false, 'ASC', 'right');
                     $grid->registerHeader('К.-Маркет', 'kindermarket', false, 'ASC', 'right');
                     $grid->registerHeader('раз-ца', 'diff_kindermarket', false, 'ASC', 'right');
             }
@@ -275,6 +279,8 @@
                 $rows[$k]['diff_mixtoys'] = ($rows[$k]['mixtoys'] === '-----')?'-----':$rows[$k]['diff_mixtoys'].'%';
                 $rows[$k]['grandtoys'] = (is_null($rows[$k][$this->currency.'grandtoys']))?'-----':$rows[$k][$this->currency.'grandtoys'];
                 $rows[$k]['diff_grandtoys'] = ($rows[$k]['grandtoys'] === '-----')?'-----':$rows[$k]['diff_grandtoys'].'%';
+                $rows[$k]['grandtoys2'] = (is_null($rows[$k][$this->currency.'grandtoys2']))?'-----':$rows[$k][$this->currency.'grandtoys2'];
+                $rows[$k]['diff_grandtoys2'] = ($rows[$k]['grandtoys2'] === '-----')?'-----':$rows[$k]['diff_grandtoys2'].'%';
                 $rows[$k]['kindermarket'] = (is_null($rows[$k][$this->currency.'kindermarket']))?'-----':$rows[$k][$this->currency.'kindermarket'];
                 $rows[$k]['diff_kindermarket'] = ($rows[$k]['kindermarket'] === '-----')?'-----':$rows[$k]['diff_kindermarket'].'%';
             }

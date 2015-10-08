@@ -426,7 +426,7 @@ class AuxPages extends ComponentModule {
 		return "pgn_ap_{$aux_page_ID}";
 	}
 
-    function transform_auxpage($name, $text, $ajax)
+    protected function transform_auxpage($name, $text, $ajax)
     {
         $log = isset($_SESSION['log']) ? $_SESSION['log'] : '';
         $vip = isset($_SESSION['cs_vip']) ? $_SESSION['cs_vip'] : '';
@@ -867,7 +867,7 @@ class AuxPages extends ComponentModule {
         }
     }
 
-    function transform_auxpage_conc($name, $text)
+    protected function transform_auxpage_conc($name, $text)
     {
         include($_SERVER['DOCUMENT_ROOT'].'/popup/search_by_conc/search_conc.php');
 

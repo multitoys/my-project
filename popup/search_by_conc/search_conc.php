@@ -56,7 +56,7 @@
         $ajax = (!count($conc_args));
         
         $replace = array(',', '.', ')', '(', '\'');
-        $match_str = str_replace('|', ' ', str_replace($replace, '', $conc));
+        $match_str = preg_replace('/\s\s+/', ' ', str_replace('|', ' ', str_replace($replace, ' ', $conc)));
         $match_str = mysql_real_escape_string($match_str);
         $tmp = explode('|', str_replace($replace, '', $conc));
         $searchstring = array();

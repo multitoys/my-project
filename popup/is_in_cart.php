@@ -1,17 +1,16 @@
 <?php
 
-  ini_set('display_errors', true);
+  ini_set('display_errors', false);
   define('DIR_ROOT', $_SERVER['DOCUMENT_ROOT']."/published/SC/html/scripts");
   $DebugMode = false;
   $Warnings = array();
   include_once(DIR_ROOT.'/includes/init.php');
   include_once(DIR_CFG.'/connect.inc.wa.php');
   include(DIR_FUNC.'/setting_functions.php' );
+    
   $DB_tree = new DataBase();
   $DB_tree->connect(SystemSettings::get('DB_HOST'), SystemSettings::get('DB_USER'), SystemSettings::get('DB_PASS'));
-
   $DB_tree->selectDB(SystemSettings::get('DB_NAME'));
-  define('VAR_DBHANDLER','DBHandler');
 
   $customerLogin = isset($_SESSION['log'])?$_SESSION['log']:'';
   $id = isset($_GET['id'])?$_GET['id']:0;
@@ -35,5 +34,3 @@
   }
 
   echo $found;
-
-?>

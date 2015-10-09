@@ -179,6 +179,29 @@
                 $this->__setSearch();
             }
         }
+        
+        protected function priceDiscount($Price, $ua, $conc)
+        {
+//            $customer = (int)$_SESSION['cs_skidka'];
+//
+//            if ($ua > 0) {
+//                $customer = (int)$_SESSION['cs_skidka_ua'];
+//            }
+
+//            $skidka = (int)$product_skidka;
+//            $real_skidka = min($customer, $skidka);
+            
+            if ($conc !== 'grandtoys') {
+                
+                return $Price;
+            }
+            
+            $real_skidka = ($ua)?20:27;
+            $outPrice = $Price - ($Price * $real_skidka / 100);
+
+            return $outPrice;
+        }
+
 
         public function main()
         {
@@ -267,9 +290,13 @@
                 $rows[$k]['img'] = '/published/publicdata/MULTITOYS/attachments/SC/search_pictures/'.$rows[$k]['code_1c'].'_s.jpg';
                 $rows[$k]['img_big'] = '/published/publicdata/MULTITOYS/attachments/SC/products_pictures/'.$rows[$k]['code_1c'].'.jpg';
                 $rows[$k]['purchase'] = $rows[$k][$this->currency.'purchase'];
-                $rows[$k]['Price'] = $rows[$k][$this->currency.'Price'];
-                $rows[$k]['margin'] .= '%';
-                $rows[$k]['max_diff'] = ($rows[$k]['max_diff'] > 0)?$rows[$k]['max_diff'].'%':'';
+                $rows[$k]['Price'] = $this->priceDiscount($rows[$k][$this->currency.'Price'], $rows[$k]['ukraine'], $this->conc);
+                
+                if ($this->conc !== 'grandtoys') {
+                    $rows[$k]['margin'] .= '%';
+                    $rows[$k]['max_diff'] = ($rows[$k]['max_diff'] > 0)?$rows[$k]['max_diff'].'%':'';
+                }
+                
 
                 $rows[$k]['divoland'] = (is_null($rows[$k][$this->currency.'divoland']))?'-----':$rows[$k][$this->currency.'divoland'];
                 $rows[$k]['diff_divoland'] = ($rows[$k]['divoland'] === '-----')?'-----':$rows[$k]['diff_divoland'].'%';
@@ -283,6 +310,12 @@
                 $rows[$k]['diff_grandtoys2'] = ($rows[$k]['grandtoys2'] === '-----')?'-----':$rows[$k]['diff_grandtoys2'].'%';
                 $rows[$k]['kindermarket'] = (is_null($rows[$k][$this->currency.'kindermarket']))?'-----':$rows[$k][$this->currency.'kindermarket'];
                 $rows[$k]['diff_kindermarket'] = ($rows[$k]['kindermarket'] === '-----')?'-----':$rows[$k]['diff_kindermarket'].'%';
+
+                if ($this->conc === 'grandtoys') {
+                    $rows[$k]['margin'] = round((100 * ($rows[$k]['Price'] / $rows[$k]['purchase']) - 100), 1).'%';
+                    $rows[$k]['max_diff'] = (round((1 - min($rows[$k]['grandtoys'], $rows[$k]['grandtoys2']) / $rows[$k]['Price'])*100, 1)).'%';
+                }
+                
             }
             $count_rows = array('100' => 100, '500' => 500, '1000' => 1000);
 

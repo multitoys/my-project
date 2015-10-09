@@ -60,8 +60,10 @@ TAG
         define('URL_POSTFIX', '/page_size');
         define('EXT', '.html');
 
-        define('LOGIN', 'Elenna');
-        define('PASSWORD', '0675230623');
+//        define('LOGIN', 'Elenna');
+//        define('PASSWORD', '0675230623');
+        define('LOGIN', '973846984');
+        define('PASSWORD', '973846984');
         //define('LOGIN', 'rusmol');
         //define('PASSWORD', '333');
 

@@ -572,7 +572,7 @@ TAG
     //          WHERE in_stock = 100 AND enabled AND Price <> 0.00 AND ostatok NOT LIKE 'под заказ'";
     //    $res = mysql_query($query) or die(mysql_error()."<br>$query");
 
-    $concs = array('divoland', 'mixtoys', 'dreamtoys', 'kindermarket', 'grandtoys', 'grandtoys2');
+    $concs = array('divoland', 'mixtoys', 'dreamtoys', 'kindermarket', 'grandtoys', 'grandtoys2', 'grandtoys3');
     $currency_table = 'Conc__currency';
 
     $start_query = microtime(true);
@@ -633,7 +633,7 @@ TAG
     }
     $start_query = microtime(true);
 
-    $query = "UPDATE $table SET max_diff = GREATEST(diff_kindermarket, diff_divoland, diff_dreamtoys, diff_mixtoys, diff_grandtoys, diff_grandtoys2)";
+    $query = "UPDATE $table SET max_diff = GREATEST(diff_kindermarket, diff_divoland, diff_dreamtoys, diff_mixtoys, diff_grandtoys, diff_grandtoys2, diff_grandtoys3)";
     $res = mysql_query($query) or die(mysql_error().$query);
 
     $query_conc += microtime(true) - $start_query;

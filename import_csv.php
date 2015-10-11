@@ -588,17 +588,22 @@ TAG
     }
 
     foreach ($concs as $conc) {
+
+        $unic_conc = $conc;
+        $pattern = '/([^\d]+)\d*/i';
+        $replacement = '${1}';
+        $unic_conc = preg_replace($pattern, $replacement, $unic_conc);
+
         $start_query = microtime(true);
-//if ($conc == 'grandtoys2')
-        $query = "SELECT code, code_1c FROM Conc_search__$conc";
+        $query = "SELECT code, code_1c FROM Conc_search__$unic_conc";
         $res = mysql_query($query) or die(mysql_error().$query);
 
         $query_conc += microtime(true) - $start_query;
 
         $usd_conc = $usd;
 
-        if (array_key_exists($conc, $competitors)) {
-            $usd_conc = $competitors[$conc];
+        if (array_key_exists($unic_conc, $competitors)) {
+            $usd_conc = $competitors[$unic_conc];
         }
 
         while ($Codes = mysql_fetch_object($res)) {
@@ -622,7 +627,7 @@ TAG
                     = "UPDATE $table
                             SET    $conc      = $analog[0],
                                    usd_$conc  = $analog[0]/$usd_conc,
-                                   diff_$conc = ROUND((Price/$analog[0]-1)*100)
+                                   diff_$conc = ROUND((Price/$analog[0]-1)*100, 1)
                             WHERE  code_1c    = '$Codes->code_1c'";
                 $res3 = mysql_query($query3) or die(mysql_error()."<br>$query");
 

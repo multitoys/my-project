@@ -182,15 +182,6 @@
         
         protected function priceDiscount($Price, $ua, $conc)
         {
-//            $customer = (int)$_SESSION['cs_skidka'];
-//
-//            if ($ua > 0) {
-//                $customer = (int)$_SESSION['cs_skidka_ua'];
-//            }
-
-//            $skidka = (int)$product_skidka;
-//            $real_skidka = min($customer, $skidka);
-            
             if ($conc !== 'grandtoys') {
                 
                 return $Price;
@@ -318,8 +309,9 @@
                 $rows[$k]['diff_kindermarket'] = ($rows[$k]['kindermarket'] === '-----')?'-----':$rows[$k]['diff_kindermarket'].'%';
 
                 if ($this->conc === 'grandtoys') {
-                    $rows[$k]['margin'] = round((100 * ($rows[$k]['Price'] / $rows[$k]['purchase']) - 100), 1).'%';
-                    $rows[$k]['max_diff'] = (round((1 - min($rows[$k]['grandtoys'], $rows[$k]['grandtoys2'], $rows[$k]['grandtoys3']) / $rows[$k]['Price'])*100, 1)).'%';
+                    $rows[$k]['margin'] = (round(($rows[$k]['Price'] / $rows[$k]['purchase'] - 1)*100, 1)).'%';
+                    $rows[$k]['max_diff'] = (round(($rows[$k]['Price'] / min($rows[$k]['grandtoys'], $rows[$k]['grandtoys2'], $rows[$k]['grandtoys3'])-1)*100, 1)).'%';
+                    //$rows[$k]['max_diff'] = (round((1 - min($rows[$k]['grandtoys'], $rows[$k]['grandtoys2'], $rows[$k]['grandtoys3']) / $rows[$k]['Price'])*100, 1)).'%';
                 }
                 
             }

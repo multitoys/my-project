@@ -100,8 +100,7 @@
                 <td>
                     <input type="checkbox" name="new_items_postup" value="1" id="new_items_postup"
                             {if $smarty.get.new_items_postup} checked="checked"{/if}>
-                    <label for="new_items_postup" style="color: #C00DC1; font-style: italic">- только Новые
-                                                                                             Поступления</label>
+                    <label for="new_items_postup" style="color: #C00DC1; font-style: italic">- только Новые Поступления</label>
                 </td>
                 <td>
                     <input type="checkbox" name="bestsellers" value="1" id="bestsellers"
@@ -118,7 +117,7 @@
                             {if $smarty.get.currency} checked="checked"{/if}>
                     <label for="currency" style="color: darkred; font-style: italic">- цены в $USD</label>
                 </td>
-                <td>
+                <td colspan="2">
                     <label for="searchstring">Поиск товаров</label>
                     <input type="text" class="input_message" rel="Поиск товаров" value=""
                            name="searchstring" id="searchstring">
@@ -155,7 +154,7 @@
                     {/section}
                     </select>
                 </td>
-                <td colspan="3">
+                <td colspan="1">
                     <label for="category" style="color: darkorange">Категория: </label>
                     <select name="category" id="category">
                         <option value='all'>Все категории</option>
@@ -163,6 +162,16 @@
                         <option value='{$Categories[i]|escape:'html'}' {if $smarty.get.category eq $Categories[i]|escape:'html'} selected="selected"{/if}>{$Categories[i]|escape:'html'}</option>
                     {/section}
                     </select>
+                </td>
+                <td>
+                    <label for="disc_usd">Скидка Китай</label>
+                    <input type="text" class="input_message" value="{$disc_usd}"
+                           style="width:100px;" name="disc_usd" id="disc_usd">
+                </td>
+                <td>
+                    <label for="disc_ua">Скидка Украина</label>
+                    <input type="text" class="input_message" value="{$disc_ua}"
+                           style="width:110px;" name="disc_ua" id="disc_ua">
                 </td>
                 <td><input type="submit" name="search" value="{"btn_find"|translate}"></td>
             </tr>

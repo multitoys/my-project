@@ -20,6 +20,8 @@
         protected $new = '';
         protected $new_items_postup = '';
         protected $search = '';
+        protected $disc_usd = 0;
+        protected $disc_ua = 0;
         protected $table = 'Conc__analogs';
 //        protected $enabled = '';
 
@@ -28,6 +30,16 @@
 //            $this->enabled = ' AND enabled = 1';
 //        }
 
+        protected function __setDisc_usd()
+        {
+            $this->disc_usd = (int)$_GET['disc_usd'];
+        }
+        
+        protected function __setDisc_ua()
+        {
+            $this->disc_ua = (int)$_GET['disc_ua'];
+        }
+        
         protected function __setCurrency()
         {
             $this->currency = 'usd_';
@@ -151,6 +163,12 @@
 
             parent::ActionsController();
             
+            if (isset($_GET['disc_usd'])) {
+                $this->__setDisc_usd();
+            }            
+            if (isset($_GET['disc_ua'])) {
+                $this->__setDisc_ua();
+            }            
             if (isset($_GET['currency'])) {
                 $this->__setCurrency();
             }
@@ -180,15 +198,15 @@
             }
         }
         
-        protected function priceDiscount($Price, $ua, $conc)
+        protected function __priceDiscount($Price, $ua, $disc_usd = 0, $disc_ua = 0)
         {
-            if ($conc !== 'grandtoys') {
-                
-                return $Price;
-            }
+//            if ($conc !== 'grandtoys') {
+//                
+//                return $Price;
+//            }
             
-            $real_skidka = ($ua)?20:27;
-            $outPrice = $Price - ($Price * $real_skidka / 100);
+            $real_skidka = ($ua)?$disc_ua:$disc_usd;
+            $outPrice = round($Price - ($Price * $real_skidka / 100), 2);
 
             return $outPrice;
         }
@@ -285,12 +303,12 @@
                 $rows[$k]['img'] = '/published/publicdata/MULTITOYS/attachments/SC/search_pictures/'.$rows[$k]['code_1c'].'_s.jpg';
                 $rows[$k]['img_big'] = '/published/publicdata/MULTITOYS/attachments/SC/products_pictures/'.$rows[$k]['code_1c'].'.jpg';
                 $rows[$k]['purchase'] = $rows[$k][$this->currency.'purchase'];
-                $rows[$k]['Price'] = $this->priceDiscount($rows[$k][$this->currency.'Price'], $rows[$k]['ukraine'], $this->conc);
+                $rows[$k]['Price'] = $this->__priceDiscount($rows[$k][$this->currency.'Price'], $rows[$k]['ukraine'], $this->disc_usd, $this->disc_ua);
                 
-                if ($this->conc !== 'grandtoys') {
-                    $rows[$k]['margin'] .= '%';
-                    $rows[$k]['max_diff'] = ($rows[$k]['max_diff'] > 0)?$rows[$k]['max_diff'].'%':'';
-                }
+//                if ($this->conc !== 'grandtoys') {
+//                    $rows[$k]['margin'] .= '%';
+//                    $rows[$k]['max_diff'] = ($rows[$k]['max_diff'] > 0)?$rows[$k]['max_diff'].'%':'';
+//                }
                 
 
                 $rows[$k]['divoland'] = (is_null($rows[$k][$this->currency.'divoland']))?'-----':$rows[$k][$this->currency.'divoland'];
@@ -308,17 +326,25 @@
                 $rows[$k]['kindermarket'] = (is_null($rows[$k][$this->currency.'kindermarket']))?'-----':$rows[$k][$this->currency.'kindermarket'];
                 $rows[$k]['diff_kindermarket'] = ($rows[$k]['kindermarket'] === '-----')?'-----':$rows[$k]['diff_kindermarket'].'%';
 
-                if ($this->conc === 'grandtoys') {
-                    $rows[$k]['margin'] = (round(($rows[$k]['Price'] / $rows[$k]['purchase'] - 1)*100, 1)).'%';
-                    $rows[$k]['max_diff'] = (round(($rows[$k]['Price'] / min($rows[$k]['grandtoys'], $rows[$k]['grandtoys2'], $rows[$k]['grandtoys3'])-1)*100, 1)).'%';
-                    //$rows[$k]['max_diff'] = (round((1 - min($rows[$k]['grandtoys'], $rows[$k]['grandtoys2'], $rows[$k]['grandtoys3']) / $rows[$k]['Price'])*100, 1)).'%';
+                $competitors = array(kindermarket, divoland, dreamtoys, mixtoys, grandtoys, grandtoys2, grandtoys3);
+                $min = array();
+                foreach ($competitors as $competitor) {
+                    $min[$competitor] = ($rows[$k][$competitor] == '-----')?100000:doubleval($rows[$k][$competitor]);
                 }
+//                if ($this->conc === 'grandtoys') {
+                    $rows[$k]['margin'] = (round(($rows[$k]['Price'] / $rows[$k]['purchase'] - 1)*100, 1)).'%';
+                    $diff = (round(($rows[$k]['Price'] / min($min['grandtoys'], $min['grandtoys2'], $min['grandtoys3'], $min['divoland'], $min['dreamtoys'], $min['mixtoys'], $min['kindermarket'])-1)*100, 1));
+                    $rows[$k]['max_diff'] = $diff.'%';
+                    //$rows[$k]['max_diff'] = (round((1 - min($rows[$k]['grandtoys'], $rows[$k]['grandtoys2'], $rows[$k]['grandtoys3']) / $rows[$k]['Price'])*100, 1)).'%';
+//                }
                 
             }
             $count_rows = array('100' => 100, '500' => 500, '1000' => 1000);
 
             $smarty->assign('Brands', $this->brands);
             $smarty->assign('Categories', $this->categories);
+            $smarty->assign('disc_usd', $this->disc_usd);
+            $smarty->assign('disc_ua', $this->disc_ua);
             $smarty->assign('GridRows', $rows);
             $smarty->assign('rows', $count_rows);
             $smarty->assign('TotalFound', str_replace('{N}', $grid->total_rows_num, 'Найдено товаров: {N}'));

@@ -50,7 +50,7 @@
             $code = $conc_args[1];
             $price = $conc_args[2];
             //$price = 0;
-            $limit = 3;
+            $limit = 2;
         }
 
         $ajax = (!count($conc_args));

@@ -215,7 +215,7 @@
                         <img class="preview" width="64px" height="48px" src="{$GridRows[i].img|escape:'html'}" alt="Нет фото">
                     </td>
                     <td {if $GridRows[i].max_diff > 0}class="red"{/if}>{$GridRows[i].name_ru|escape:'html'}</td>
-                    <td class="brand">{$GridRows[i].category|escape:'html'}</td>
+                    {*<td class="brand">{$GridRows[i].category|escape:'html'}</td>*}
                     <td class="to_right choco">{$GridRows[i].purchase}</td>
                     <td class="to_right choco">{$GridRows[i].margin}</td>
                     <td class="to_right bold {if $GridRows[i].max_diff > 0}red{else}blue{/if}">{$GridRows[i].Price}</td>

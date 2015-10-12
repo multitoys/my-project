@@ -245,7 +245,7 @@
             $grid->registerHeader('Артикул', 'product_code', false, 'ASC');
             $grid->registerHeader('Фото');
             $grid->registerHeader('Наименование', 'name_ru', true, 'ASC');
-            $grid->registerHeader('Категория', 'category', false, 'ASC');
+//            $grid->registerHeader('Категория', 'category', false, 'ASC');
             $grid->registerHeader('Закупка', 'purchase', false, 'ASC', 'right');
             $grid->registerHeader('Наценка', 'margin', false, 'ASC', 'right');
             $grid->registerHeader('Мультитойс', 'Price', false, 'ASC', 'right');

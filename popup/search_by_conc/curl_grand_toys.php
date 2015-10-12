@@ -44,7 +44,7 @@
 
 TAG
         );
-        $usd = GetValue('currency_value', 'Conc__currency', 'CCID = 7');
+        $usd = GetValue('currency_value', 'Conc__currency', 'CCID = 5');
 
         define('SLASH', '|');
         define('NAME_PATTERN', '<div\s+class="block[0-9]*?"[^<>]*?>[^<>]*?<div\s+class="product-title"[^<>]*?>[^<>]*?<a[^<>]*?>[\s]*([^<>]+?)[\s]*</a>[^<>]*?</div>[^<>]*?<div\s+class="block_border"[^<>]*?>[^<>]*?<div\s+class="product-overview-image"[^<>]*?>[^<>]*?<div\s+id="img-radius"[^<>]*?>[^<>]*?<a[^<>]*?>[^<>]*?</a>[^<>]*?</div>[^<>]*?</div>[^<>]*?(<div[^<>]*?>[^<>]*?<img[^<>]*?>[^<>]*?</div>[^<>]*?)?');
@@ -60,18 +60,18 @@ TAG
         define('URL_POSTFIX', '/page_size');
         define('EXT', '.html');
 
-//        define('LOGIN', 'Elenna');
-//        define('PASSWORD', '0675230623');
-        define('LOGIN', '973846984');
-        define('PASSWORD', '973846984');
+        define('LOGIN', 'Elenna');
+        define('PASSWORD', '0675230623');
+//        define('LOGIN', '973846984');
+//        define('PASSWORD', '973846984');
         //define('LOGIN', 'rusmol');
         //define('PASSWORD', '333');
 
         $login_url = URL_COMPETITORS.'/ru/user/login';
         $refferer = URL_COMPETITORS;
-        //postAuth($login_url, 'UserLogin[username]='.LOGIN.'&UserLogin[password]='.PASSWORD, $headers);
+        postAuth($login_url, 'UserLogin[username]='.LOGIN.'&UserLogin[password]='.PASSWORD, $headers);
 
-        UpdateValue('Conc__grandtoys3', 'enabled = 0');
+        UpdateValue('Conc__grandtoys', 'enabled = 0');
 
         $no = 0;
         $new = 0;
@@ -96,7 +96,7 @@ TAG
                 $filename = DIR_COMPETITORS.'/'.$filename.EXT;
                 $products = '';
 
-                //readUrl($category_url, $filename, '', $headers);
+                readUrl($category_url, $filename, '', $headers);
 
                 $html = file_get_contents($filename);
                 preg_match_all(
@@ -117,13 +117,13 @@ TAG
                     $name = mysql_real_escape_string(preg_replace('/\s\s+/', ' ', trim(str_replace($replace_name, ' ', DecodeCodepage($products[1][$j])))));
                     $price = (double)$products[3][$j];
                     $code = mysql_real_escape_string(DecodeCodepage($products[4][$j]));
-                    $productID = GetValue('productID', 'Conc__grandtoys3', "code = '$code'");
+                    $productID = GetValue('productID', 'Conc__grandtoys', "code = '$code'");
                     $price_usd = $price / $usd;
 
                     if ($productID) {
                         $query
                             = "
-                                        UPDATE  Conc__grandtoys3
+                                        UPDATE  Conc__grandtoys
                                         SET     parent       = '$parent',
                                                 category     = '$category',
                                                 name         = '$name',
@@ -136,7 +136,7 @@ TAG
                     } else {
                         $query
                             = "
-                                    INSERT INTO Conc__grandtoys3
+                                    INSERT INTO Conc__grandtoys
                                                 (parent, category, code, name, price_uah, price_usd)
                                     VALUES      ('$parent', '$category', $code, '$name', $price, $price_usd)
                                   ";
@@ -159,10 +159,10 @@ TAG
         echo('<hr><span style="color:blue;">Обработано '.$no.' товаров</span><br><br>Новых '.$new.' товаров</span><br>');
 
         // Оптимизация таблиц
-        $query = "UPDATE Conc__grandtoys3 SET parent='', category='' WHERE enabled=0";
+        $query = "UPDATE Conc__grandtoys SET parent='', category='' WHERE enabled=0";
         $res = mysql_query($query) or die(mysql_error()."<br>$query");
 
-        $query = 'OPTIMIZE TABLE `Conc__grandtoys3`, `Conc_search__grandtoys3`';
+        $query = 'OPTIMIZE TABLE `Conc__grandtoys`, `Conc_search__grandtoys`';
         $res = mysql_query($query) or die(mysql_error()."<br>$query");
         mysql_close();
 

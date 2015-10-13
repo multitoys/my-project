@@ -19,7 +19,7 @@
             color: darkorange;
         }
 
-        label {
+        #checkings label {
             vertical-align: top;
         }
 
@@ -61,6 +61,47 @@
         tr.even:hover td {
             background-color: #ECA;
         }
+        
+        #form div {
+            float: left;
+        }       
+        
+        #form div div {
+            clear: both;
+        }
+        
+        #checkings, #selections, #discounts {
+            margin: 0 0 5px 5px;
+        }
+                
+        #checkings {
+            border-right: 2px ridge #7987FF;
+        }
+                
+        #selections {
+            border-left: 2px ridge #7987FF;
+        }
+
+        label, select, .input_message {
+            margin-right: 5px;
+            color: darkblue;
+            font-size: 13px;
+        }
+        
+        .input_message {
+            height: 18px;
+            margin-top: 7px;
+        }
+
+        #selections select {
+            height: 18px;
+            margin-top: 3px;
+            font-size: 12px;
+            color: darkblue;
+        }
+        #selections label {
+            margin-left: 5px;
+        }
     </style>
 {/literal}
 {*{literal}*}
@@ -78,56 +119,62 @@
         <small>({$TotalFound})</small>
     </h3>
     <form name="MainForm" method="get" action="{''|set_query}">
-        <input type="hidden" name="did" value="{$CurrentDivision.id}"/>
-        <table border="0" cellspacing="1" cellpadding="3">
-            <tr>
-                <td colspan="10"><p>{"competitors_search_params"|translate}</p></td>
-            </tr>
-            <tr>
-                <td>
-                    <label for="manufactured" style="color: #45AF10;">Производители</label>
-                    <select name="manufactured" id="manufactured">
-                        <option value='all'      {if $smarty.get.manufactured eq 'all'} selected="selected"{/if}>Все производители</option>
-                        <option value='Ukraine' {if $smarty.get.manufactured eq 'Ukraine'} selected="selected"{/if}>только Украина</option>
-                        <option value='China' {if $smarty.get.manufactured eq 'China'} selected="selected"{/if}>только Китай</option>
-                    </select>
-                </td>
-                {*<td>*}
-                    {*<input type="checkbox" name="enabled" value="1" id="enabled" *}
-                            {*{if $smarty.get.enabled} checked="checked"{/if}>*}
-                    {*<label for="enabled" style="color: #116DCE; font-style: italic">- только товары на остатке</label>*}
-                {*</td>*}
-                <td>
+
+        <input type="hidden" name="did" value="{$CurrentDivision.id}">
+
+        <div id=form>
+            {*<p>{"competitors_search_params"|translate}</p>*}
+
+            <div id=checkings>
+                <div>
                     <input type="checkbox" name="new_items_postup" value="1" id="new_items_postup"
-                            {if $smarty.get.new_items_postup} checked="checked"{/if}>
-                    <label for="new_items_postup" style="color: #C00DC1; font-style: italic">- только Новые
-                                                                                             Поступления</label>
-                </td>
-                <td>
-                    <input type="checkbox" name="bestsellers" value="1" id="bestsellers"
-                            {if $smarty.get.bestsellers} checked="checked"{/if}>
-                    <label for="bestsellers" style="color: coral; font-style: italic">- только Хиты продаж</label>
-                </td>
-                <td>
+                        {if $smarty.get.new_items_postup} checked="checked"{/if}>
+                    <label for="new_items_postup" style="color: #C00DC1; font-style: italic">- только Новые Поступления</label>
+                </div>
+
+    
+                <div><input type="checkbox" name="bestsellers" value="1" id="bestsellers"
+                        {if $smarty.get.bestsellers} checked="checked"{/if}>
+                    </div>
+                <label for="bestsellers" style="color: coral; font-style: italic">- только Хиты продаж</label>
+
+                <div>
                     <input type="checkbox" name="new" value="1" id="new"
-                            {if $smarty.get.new} checked="checked"{/if}>
+                        {if $smarty.get.new} checked="checked"{/if}>
                     <label for="new" style="color: #3A73BD; font-style: italic">- только Новинки</label>
-                </td>
-                <td>
+                </div>
+
+                <div>
                     <input type="checkbox" name="currency" value="1" id="currency"
-                            {if $smarty.get.currency} checked="checked"{/if}>
+                        {if $smarty.get.currency} checked="checked"{/if}>
                     <label for="currency" style="color: darkred; font-style: italic">- цены в $USD</label>
-                </td>
-                <td>
+                </div>
+            </div>
+
+            <div id=discounts>
+                <div>
+                    <label for="disc_usd">Скидка Китай</label>
+                    <input type="text" class="input_message" value="{$disc_usd}"
+                       style="width:154px;" name="disc_usd" id="disc_usd">
+                </div>
+
+                <div>
+                    <label for="disc_ua">Скидка Украина</label>
+                    <input type="text" class="input_message" value="{$disc_ua}"
+                       style="width:139px;" name="disc_ua" id="disc_ua">
+                </div>          
+                
+                <div>
                     <label for="searchstring">Поиск товаров</label>
                     <input type="text" class="input_message" rel="Поиск товаров" value=""
-                           name="searchstring" id="searchstring">
-                </td>
-            </tr>
-            <tr>
-                <td>
+                           style="width:150px;" name="searchstring" id="searchstring">
+                </div>
+            </div>
+
+            <div id=selections>
+                <div>
                     <label for="competitor" style="color: #FF0000">Сравнить с: </label>
-                    <select name="competitor" id="competitor">
+                    <select name="competitor" style="width:196px;" id="competitor">
                         <option value='all'      {if $smarty.get.competitor eq 'all'} selected="selected"{/if}>Все конкуренты</option>
                         <option value='kindermarket' {if $smarty.get.competitor eq 'kindermarket'} selected="selected"{/if}>
                             Киндер-Маркет
@@ -145,28 +192,42 @@
                             ГрандТойс
                         </option>
                     </select>
-                </td>
-                <td>
+                </div>
+
+                <div>
+                    <label for="manufactured" style="color: #45AF10;">Производители</label>
+                    <select name="manufactured" style="width:176px;" id="manufactured">
+                        <option value='all'      {if $smarty.get.manufactured eq 'all'} selected="selected"{/if}>Все производители</option>
+                        <option value='Ukraine' {if $smarty.get.manufactured eq 'Ukraine'} selected="selected"{/if}>только Украина</option>
+                        <option value='China' {if $smarty.get.manufactured eq 'China'} selected="selected"{/if}>только Китай</option>
+                    </select>
+                </div>
+
+                <div>
                     <label for="brand" style="color: #C00DC1">Торговая марка: </label>
-                    <select name="brand" id="brand">
+                    <select name="brand" style="width:165px;" id="brand">
                         <option value='all'>Все TM</option>
-                    {section name=i loop=$Brands}
-                        <option value='{$Brands[i]|escape:'html'}' {if $smarty.get.brand eq $Brands[i]|escape:'html'} selected="selected"{/if}>{$Brands[i]|escape:'html'}</option>
-                    {/section}
+                        {section name=i loop=$Brands}
+                            <option value='{$Brands[i]|escape:'html'}' {if $smarty.get.brand eq $Brands[i]|escape:'html'} selected="selected"{/if}>{$Brands[i]|escape:'html'}</option>
+                        {/section}
                     </select>
-                </td>
-                <td colspan="3">
+                </div>
+
+                <div>
                     <label for="category" style="color: darkorange">Категория: </label>
-                    <select name="category" id="category">
+                    <select name="category" style="width:200px;" id="category">
                         <option value='all'>Все категории</option>
-                    {section name=i loop=$Categories}
-                        <option value='{$Categories[i]|escape:'html'}' {if $smarty.get.category eq $Categories[i]|escape:'html'} selected="selected"{/if}>{$Categories[i]|escape:'html'}</option>
-                    {/section}
+                        {section name=i loop=$Categories}
+                            <option value='{$Categories[i]|escape:'html'}' {if $smarty.get.category eq $Categories[i]|escape:'html'} selected="selected"{/if}>{$Categories[i]|escape:'html'}</option>
+                        {/section}
                     </select>
-                </td>
-                <td><input type="submit" name="search" value="{"btn_find"|translate}"></td>
-            </tr>
-        </table>
+                </div>
+
+            </div>
+
+            <input type="submit" name="search" value="{"btn_find"|translate}">
+
+        </div>
     </form>
     <script src='{$smarty.const.URL_JS}/jquery.1.9.1.js'></script>
     {if $GridRows}
@@ -206,7 +267,7 @@
                         <img class="preview" width="64px" height="48px" src="{$GridRows[i].img|escape:'html'}" alt="Нет фото">
                     </td>
                     <td {if $GridRows[i].max_diff > 0}class="red"{/if}>{$GridRows[i].name_ru|escape:'html'}</td>
-                    <td class="brand">{$GridRows[i].category|escape:'html'}</td>
+                    {*<td class="brand">{$GridRows[i].category|escape:'html'}</td>*}
                     <td class="to_right choco">{$GridRows[i].purchase}</td>
                     <td class="to_right choco">{$GridRows[i].margin}</td>
                     <td class="to_right bold {if $GridRows[i].max_diff > 0}red{else}blue{/if}">{$GridRows[i].Price}</td>

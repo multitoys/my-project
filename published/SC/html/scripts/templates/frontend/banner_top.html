@@ -1,0 +1,133 @@
+{* product top *}
+{*{strip}*}
+{literal}
+<style>
+
+    .product_top_ua h3 {
+        margin: 15px 0;
+        padding: 0
+    }
+
+    .product_top_ua .clear {
+        clear: both
+    }
+
+    .product_top_ua ul {
+        padding: 0;
+        display: block;
+        overflow: hidden;
+        list-style: none;
+        text-align: center
+    }
+
+    .product_top_ua ul li {
+        width: 180px;
+        display: block;
+        float: left;
+        text-align: center;
+        border: #9ccce3 double 3px;
+        box-sizing: border-box;
+        overflow: hidden;
+        box-shadow: 0 4px 5px 0 rgba(0, 0, 0, .14), 0 1px 10px 0 rgba(0, 0, 0, .12), 0 2px 4px -1px rgba(0, 0, 0, .2);
+        background-color: #f7f7f7;
+        margin: 10px 15px;
+    }
+
+    .product_top_ua ul li:hover {
+        border: #ff7f50 double 3px;
+        background-color: white
+    }
+
+    .product_top_ua ul li .top_ua-pict {
+        min-height: 125px;
+        margin: 2px;
+        /*padding: 75px 0 0;*/
+        position: relative
+    }
+
+    .product_top_ua ul li .top_ua-pict img {
+        max-width: 160px;
+        max-height: 120px;
+        border: 0;
+        background: #fff;
+        box-sizing: border-box;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+        transition: all 1s
+    }
+
+    .product_top_ua ul li .top_ua-pict p {
+        margin: 0;
+        padding: 0;
+        position: absolute;
+        top: 0;
+        line-height: .9em
+    }
+
+    .product_top_ua ul li .top_ua-pict p a {
+        color: #0141f7;
+        font-family: corbel;
+        font-style: italic;
+        font-size: 13px
+    }
+
+    .product_top_ua ul li .top_ua-price {
+        margin: 0 0 5px;
+        font-size: 13px;
+        font-weight: 700
+    }
+    
+    .client_info {
+        margin: 0;
+        z-index: 100;
+        font-size: 18px;
+        box-sizing: border-box;
+        background-origin: border-box !important
+    }
+
+    .inlog div, .client_info div {
+        text-align: center
+    }
+
+    .inlog span, .client_info div span {
+        color: red
+    }
+
+    .client_info > div > b {
+        color: #ff0
+    }
+    
+</style>
+{/literal}
+<h2 style="text-align: center; color: white">Уважаемый, клиент!</h2>
+<div class="client_info">
+    <h3 style="color: white; font-size: larger">Ваши скидки:</h3>
+    <div><span><b>Китай -&nbsp;</b></span><b>{$smarty.session.cs_skidka}%</b></div>
+    <div><span><b>Украина -&nbsp;</b></span><b>{$smarty.session.cs_skidka_ua}%</b></div>
+    {if $smarty.session.cs_skidka eq 0}
+        <h3 style="color: #00FF16;font-style: italic;">Обратитесь к Вашему менеджеру для получения скидки!</h3>
+    {/if}
+</div>
+<div class=product_top_ua>
+    {*<h1>{"$str"|translate}</h1>*}
+    <ul>
+        {foreach from=$top_ua item=_top_ua}
+            <li>
+            <div class=top_ua-pict>
+                <a href='{"?productID=`$_top_ua.productID`&product_slug=`$_top_ua.slug`"|set_query_html}'>
+                    {if $_top_ua.thumbnail || $_top_ua.picture}
+                    <img width=160 height=120 src="{$smarty.const.URL_PRODUCTS_PICTURES}/{if $_top_ua.thumbnail}{$_top_ua.thumbnail|escape:'url'}{else}{$_top_ua.picture|escape:'url'}{/if}" alt="{$_top_ua.name|escape:'html'}" title="{$_top_ua.name|escape:'html'}">
+                {else}
+                    <img width=153 height=117 src='/img/nophoto.jpg'>
+                {/if}
+                </a>
+                <div class="corner right_list color_hit"><span></span>Хит продаж</div>
+                {*<p><a href='{"?productID=`$_top_ua.productID`&product_slug=`$_top_ua.slug`"|set_query_html}'>{$_top_ua.name}</a></p>*}
+            </div>
+            <div class=top_ua-price>{$_top_ua.price_str}</div>
+        </li>
+        {/foreach}
+    </ul>
+    <div class=clear></div>
+</div>
+
+{*{/strip}*}

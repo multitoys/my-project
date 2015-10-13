@@ -1171,7 +1171,7 @@ ul#navmenu-v li:hover ul ul {
 }
 
 #popup {
-    background: rgba(0, 0, 0, 0.9);
+    background: rgba(0, 0, 0, 0.8);
     width: 630px;
     margin: 8% auto;
     padding: 15px;

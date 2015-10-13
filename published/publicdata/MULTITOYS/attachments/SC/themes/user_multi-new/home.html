@@ -6,40 +6,38 @@
         {*<div class="string">
             <marquee scrollamount="5"><a id="runner">Уважаемые клиенты! В связи с проведением инвентаризации, с 28 января по 1 февраля - СКЛАД будет ЗАКРЫТ!</a></marquee>
         </div>*}
+    
         {zakcia}
-        {*<div id="parent_popup" onclick="document.getElementById('parent_popup').style.display='none';">*}
-            {*<div id="popup" class="animated bounceInDown">*}
-                {*<h1>Дарим Вам «ДВАДЦАТКУ»!</h1>*}
-                {*<a href="/published/publicdata/MULTITOYS/attachments/SC/images/twenty.jpg"  target="_blank">*}
-                    {*<img src="/published/publicdata/MULTITOYS/attachments/SC/images/twenty-banner.jpg" width="600" height="418" alt="Дарим Вам «ДВАДЦАТКУ»!" style="float:left;margin:5px 10px 5px 0; border:0;"></a>*}
+    
+        <div id="parent_popup" onclick="document.getElementById('parent_popup').style.display='none';">
+            <div id="popup" class="animated bounceInDown">
+                <h1 style="text-align: center; font-size: 26px;">Новые СКИДКИ и новые ЦЕНЫ!</h1>
+                {get_top_ua var=top_ua}
+                {include file="banner_top.html" top_ua=$top_ua}
 
-                {*<h2>Уважаемые, клиенты!</h2>*}
-
-                {*<p>Обращаем Ваше внимание, что Акция <strong>"МУЛЬТИДЕНЬГИ"</strong> <br/>заканчивается <strong>31 августа</strong>*}
-                   {*2015!</p>*}
                 {*<p style="text-align: center;"><strong><a class="button" href="/published/publicdata/MULTITOYS/attachments/SC/images/twenty.jpg"  target="_blank">Подробнее »</a></strong></p>*}
-                {*<a class="close" title="Закрыть"*}
-                   {*onclick="document.getElementById('parent_popup').style.display='none';">&times;</a>*}
-            {*</div>*}
-        {*</div>*}
-        {*<div id="parent_popup" onclick="document.getElementById('parent_popup').style.display='none';">*}
-            {*<div id="popup" class="animated bounceInDown">*}
-                {*<h1>Дарим Вам «ДВАДЦАТКУ»!</h1>*}
-                {*<a href="/published/publicdata/MULTITOYS/attachments/SC/images/twenty.jpg"  target="_blank">*}
-                    {*<img src="/published/publicdata/MULTITOYS/attachments/SC/images/twenty-banner.jpg" width="600" height="418" alt="Дарим Вам «ДВАДЦАТКУ»!" style="float:left;margin:5px 10px 5px 0; border:0;">*}
-                {*</a>*}
-                {*<h2>Уважаемые, клиенты!</h2>*}
-                {*<p>Обращаем Ваше внимание, что Акция <strong>"МУЛЬТИДЕНЬГИ"</strong> <br/>заканчивается <strong>31 августа</strong>*}
-                   {*2015!</p>*}
-                {*<p style="text-align: center;"><strong><a class="button" href="/published/publicdata/MULTITOYS/attachments/SC/images/twenty.jpg"  target="_blank">Подробнее »</a></strong></p>*}
-                {*<a class="close" title="Закрыть"*}
-                   {*onclick="document.getElementById('parent_popup').style.display='none';">&times;</a>*}
-            {*</div>*}
-        {*</div>*}
-        {*<script type="text/javascript">*}
-            {*var delay_popup = 5000;*}
-            {*setTimeout("document.getElementById('parent_popup').style.display='block'", delay_popup);*}
-        {*</script>*}
+                <a class="close" title="Закрыть"
+                   onclick="document.getElementById('parent_popup').style.display='none';">&times;</a>
+            </div>
+        </div>
+        <script type="text/javascript">
+            var delay_popup = 500;
+            setTimeout("document.getElementById('parent_popup').style.display='block'", delay_popup);
+        </script>
+    {*<div id="parent_popup" onclick="document.getElementById('parent_popup').style.display='none';">*}
+    {*<div id="popup" class="animated bounceInDown">*}
+    {*<h1>Дарим Вам «ДВАДЦАТКУ»!</h1>*}
+    {*<a href="/published/publicdata/MULTITOYS/attachments/SC/images/twenty.jpg"  target="_blank">*}
+    {*<img src="/published/publicdata/MULTITOYS/attachments/SC/images/twenty-banner.jpg" width="600" height="418" alt="Дарим Вам «ДВАДЦАТКУ»!" style="float:left;margin:5px 10px 5px 0; border:0;">*}
+    {*</a>*}
+    {*<h2>Уважаемые, клиенты!</h2>*}
+    {*<p>Обращаем Ваше внимание, что Акция <strong>"МУЛЬТИДЕНЬГИ"</strong> <br/>заканчивается <strong>31 августа</strong>*}
+    {*2015!</p>*}
+    {*<p style="text-align: center;"><strong><a class="button" href="/published/publicdata/MULTITOYS/attachments/SC/images/twenty.jpg"  target="_blank">Подробнее »</a></strong></p>*}
+    {*<a class="close" title="Закрыть"*}
+    {*onclick="document.getElementById('parent_popup').style.display='none';">&times;</a>*}
+    {*</div>*}
+    {*</div>*}
     {*<div id="parent_popup" onclick="document.getElementById('parent_popup').style.display='none';">*}
     {*<div id="popup" class="animated bounceInDown">*}
     {*<h1 style="text-align: center;">Поймай «УШАСТОГО»!</h1>*}
@@ -67,22 +65,22 @@
     {*</script>*}
 
         {*$product_lists*}
-    <div>
-        <a href="/search?searchstring=BIGNL"><p style="
-            font-size: 30px;
-            color: #FD36B4;
-            text-align: center;
-            font-weight: 700;
-            font-family: cursive;">
-                Новинка! Нелопающиеся пузыри!
-            </p></a>
-        <video loop controls style="
-                                        border-radius: 2px;
-                                        margin: 15px auto;
-                                        display: block;">
-            <source src="/source/mylnye_puzyri.mp4" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'/>
-        </video>
-    </div>
+    {*<div>*}
+        {*<a href="/search?searchstring=BIGNL"><p style="*}
+            {*font-size: 30px;*}
+            {*color: #FD36B4;*}
+            {*text-align: center;*}
+            {*font-weight: 700;*}
+            {*font-family: cursive;">*}
+                {*Новинка! Нелопающиеся пузыри!*}
+            {*</p></a>*}
+        {*<video loop controls style="*}
+                                        {*border-radius: 2px;*}
+                                        {*margin: 15px auto;*}
+                                        {*display: block;">*}
+            {*<source src="/source/mylnye_puzyri.mp4" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'/>*}
+        {*</video>*}
+    {*</div>*}
         
         {get_topproducts var=akcia limit=30}
         {if $akcia}{include file="product_top.html" top=$akcia str='str_akcia_items'}

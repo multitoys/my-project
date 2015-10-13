@@ -7,14 +7,22 @@ function smarty_function_get_top_ua( $params, &$smarty )
     {
         $top_ua = $params['var'];
 
-        $sql = '
+//        $sql = '
+//            SELECT productID, name_ru AS name,
+//            Price, list_price, items_sold, sort_order, skidka, 
+//            ukraine, default_picture, slug 
+//            FROM SC_products
+//            WHERE enabled AND categoryID > 1 AND items_sold > 0 AND in_stock > 0 AND ukraine > 0 
+//            ORDER BY  items_sold DESC LIMIT 9
+//        ';
+        $sql = "
             SELECT productID, name_ru AS name,
             Price, list_price, items_sold, sort_order, skidka, 
             ukraine, default_picture, slug 
             FROM SC_products
-            WHERE enabled AND categoryID > 1 AND items_sold > 0 AND in_stock > 0 AND ukraine > 0 
+            WHERE enabled AND code_1c IN ('01813', '18657', '39594', '29779', '14046', '03448', '32439', '44249', '01210')
             ORDER BY  items_sold DESC LIMIT 9
-        ';
+        ";
         $q = db_query($sql);
         $tops=array();
         while( $row = db_fetch_assoc($q) )

@@ -1,7 +1,7 @@
-<?php /* Smarty version 2.6.9, created on 2015-09-22 11:31:45
+<?php /* Smarty version 2.6.9, created on 2015-10-13 11:58:27
          compiled from backend/user_contact.html */ ?>
 <?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
-smarty_core_load_plugins(array('plugins' => array(array('modifier', 'translate', 'backend/user_contact.html', 54, false),array('modifier', 'escape', 'backend/user_contact.html', 62, false),array('modifier', 'date_format', 'backend/user_contact.html', 119, false),array('modifier', 'transcape', 'backend/user_contact.html', 209, false),)), $this); ?>
+smarty_core_load_plugins(array('plugins' => array(array('modifier', 'translate', 'backend/user_contact.html', 59, false),array('modifier', 'escape', 'backend/user_contact.html', 67, false),array('modifier', 'date_format', 'backend/user_contact.html', 124, false),array('modifier', 'transcape', 'backend/user_contact.html', 222, false),)), $this); ?>
 <script type="text/javascript" src="<?php echo @URL_JS; ?>
 /jquery.1.4.2.js"></script>
 
@@ -37,6 +37,11 @@ smarty_core_load_plugins(array('plugins' => array(array('modifier', 'translate',
   	if(skidka && Number(skidka)<0) {
   		skidka = skidka * -1;
   		$(\'#skidka_inp\').val(skidka);
+  	}
+    var skidka_ua = $(\'#skidka_ua_inp\').val();
+  	if(skidka_ua && Number(skidka_ua)<0) {
+        skidka_ua = skidka_ua * -1;
+  		$(\'#skidka_ua_inp\').val(skidka_ua);
   	}
   }
 
@@ -162,7 +167,7 @@ _txt" value="<?php echo ((is_array($_tmp=$this->_tpl_vars['reg_fld']['reg_field_
 	</tr>
 
 	<tr>
-		<td><strong>Скидка, %</strong></td>
+		<td><strong>Скидка Китай, %</strong></td>
 		<td>
             <span id="skidka_txt"><?php echo $this->_tpl_vars['customerInfo']['skidka']; ?>
 </span>
@@ -172,21 +177,17 @@ _txt" value="<?php echo ((is_array($_tmp=$this->_tpl_vars['reg_fld']['reg_field_
 	</tr>
 
 	<tr>
-		<td><strong>Наценка</strong></td>
+		<td><strong>Скидка Украина, %</strong></td>
 		<td>
-			<span id="ignore_skidka_txt"><?php if ($this->_tpl_vars['customerInfo']['ignore_skidka']):  echo ((is_array($_tmp='str_answer_yes')) ? $this->_run_mod_handler('translate', true, $_tmp) : smarty_modifier_translate($_tmp));  else:  echo ((is_array($_tmp='str_answer_no')) ? $this->_run_mod_handler('translate', true, $_tmp) : smarty_modifier_translate($_tmp));  endif; ?></span>
-			<input id="ignore_skidka_inp" onchange="ZHandleCheckBox(this);" type="checkbox" <?php if ($this->_tpl_vars['customerInfo']['ignore_skidka']): ?>checked<?php endif; ?> name = 'ci[ignore_skidka]' style="display: none;" value="1" />
+            <span id="skidka_ua_txt"><?php echo $this->_tpl_vars['customerInfo']['skidka_ua']; ?>
+</span>
+            <input class="txt_or_sel" type="text" name="ci[skidka_ua]" id="skidka_ua_inp" value="<?php echo ((is_array($_tmp=$this->_tpl_vars['customerInfo']['skidka_ua'])) ? $this->_run_mod_handler('escape', true, $_tmp, 'html') : smarty_modifier_escape($_tmp, 'html')); ?>
+" style="display: none;" />
         </td>
 	</tr>
 
-	<tr>
-		<td><strong>Спеццена</strong></td>
-		<td>
-			<span id="is_special_price_txt"><?php if ($this->_tpl_vars['customerInfo']['is_special_price']):  echo ((is_array($_tmp='str_answer_yes')) ? $this->_run_mod_handler('translate', true, $_tmp) : smarty_modifier_translate($_tmp));  else:  echo ((is_array($_tmp='str_answer_no')) ? $this->_run_mod_handler('translate', true, $_tmp) : smarty_modifier_translate($_tmp));  endif; ?></span>
-			<input id="is_special_price_inp" onchange="ZHandleCheckBox(this);" type="checkbox" <?php if ($this->_tpl_vars['customerInfo']['is_special_price']): ?>checked<?php endif; ?> name = 'ci[is_special_price]' style="display: none;" value="1" />
-        </td>
-	</tr>
-
+											        	
+											        	
 		<td valign="top">
 			<strong>Авторизация</strong>
 		</td>
@@ -288,7 +289,7 @@ function showEditForm()
     };
     document.getElementById(\'form_buttons\').style.display = \'\';
     document.getElementById(\'elink\').style.display = \'none\';
-};
+}
 
 function hideEditForm()
 {
@@ -300,10 +301,10 @@ function hideEditForm()
         frm.elements[i].style.display = \'none\';
         document.getElementById(txt_id).style.display = \'\';
         frm.elements[i].parentNode.parentNode.style.backgroundColor = \'#FFFFFF\';
-    };
+    }
     document.getElementById(\'form_buttons\').style.display = \'none\';
     document.getElementById(\'elink\').style.display = \'\';
-};
+}
 
 '; ?>
 

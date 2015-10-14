@@ -31,8 +31,7 @@ TAG
     define('PRICE_PATTERN', '<a[^<>]*?class="price[\s]+nyroModal">[\s]*?([^<>]*?)<small>');
     define('SLASH', '|');
 
-    //$query = 'DELETE FROM Conc__divoland';
-    //$res = mysql_query($query) or die(mysql_error()."<br>$query");
+    $usd = GetValue('currency_value', 'Conc__currency', 'CCID = 1');
     UpdateValue('Conc__divoland', 'enabled = 0');
 
     $html_dir = $_SERVER['DOCUMENT_ROOT'].'/popup/search_by_conc/divoland/';
@@ -75,7 +74,7 @@ TAG
                 $name
                            = mysql_real_escape_string(trim(str_replace($replace_name, '', DecodeCodepage($products[2][$i]))));
                 $price     = (double)$products[3][$i];
-                $price_usd = $price / 20.60;
+                $price_usd = $price / $usd;
                 $productID = GetValue('productID', 'Conc__divoland', "code = '$code'");
 
                 if ($productID) {

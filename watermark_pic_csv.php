@@ -53,7 +53,7 @@
     }
     if (($handle = fopen($filename, 'r')) !== false) {
 
-        $days = 0;
+        $days = 3;
 
         echo("
 				Импорт фотографий ...<hr>
@@ -106,7 +106,7 @@
                 }
 
                 $file_name2 = DIR_PRODUCTS_PICTURES.'/'.$pics_thm;
-                if (filemtime($file_name2) < time() - 86400 * 3) {
+                if (filemtime($file_name2) < time() - 86400 * $days) {
                     unlink($file_name2);
                     make_thumbnail($file_name, $file_name2, $stamp200, 160);
                 } else {
@@ -114,7 +114,7 @@
                 }
 
                 $file_name2 = DIR_PRODUCTS_PICTURES.'/'.$picture;
-                if (filemtime($file_name2) < time() - 86400 * 3) {
+                if (filemtime($file_name2) < time() - 86400 * $days) {
                     unlink($file_name2);
                     make_thumbnail($file_name, $file_name2, $stamp400, 400);
                 } else {
@@ -122,7 +122,7 @@
                 }
 
                 $file_name2 = DIR_PRODUCTS_PICTURES.'/'.$pics_enl;
-                if (filemtime($file_name2) < time() - 86400 * 3) {
+                if (filemtime($file_name2) < time() - 86400 * $days) {
                     unlink($file_name2);
                     make_thumbnail($file_name, $file_name2, $stamp600, 600, 85);
                 } else {

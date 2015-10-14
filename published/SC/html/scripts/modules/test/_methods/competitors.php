@@ -6,7 +6,7 @@
          */
         protected $DBHandler;
         protected $manufactured = '';
-        protected $competitor = ' AND (kindermarket OR divoland OR dreamtoys OR mixtoys OR grandtoys OR grandtoys2 OR grandtoys3)';
+        protected $competitor = '';
         protected $conc = '';
         protected $currency = '';
         protected $brand = '';

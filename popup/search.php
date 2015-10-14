@@ -22,11 +22,11 @@
 
     $vip = isset($_SESSION['cs_vip']) ? $_SESSION['cs_vip'] : '';
 
-    $search = $_POST['search'];
-    $search = addslashes($search);
-    $search = htmlspecialchars($search);
-    $search = stripslashes($search);
-    $search = trim($search);
+    $search = (stripslashes(trim(strip_tags($_POST['search']))));
+//    $search = addslashes($search);
+//    $search = htmlspecialchars($search);
+//    $search = stripslashes($search);
+//    $search = trim($search);
 
     if ($search === '') {
         exit;
@@ -50,10 +50,10 @@
 
     $search = mysql_real_escape_string(_searchPatternReplace($search));
     $query = mysql_query("SELECT t1.productID, t1.product_code, t1.Price, t1.skidka, t1.ukraine, t1.name_ru, t1.code_1c,
-                t1.default_picture, t1.slug, t3.filename
+                t1.default_picture, t1.slug, t1.brand, t3.filename
                 FROM SC_products t1
                 LEFT JOIN SC_product_pictures t3 ON t1.default_picture = t3.photoID
-                WHERE $enabled (t1.product_code LIKE '%$search%' OR  t1.name_ru LIKE '%$search%')  ORDER BY $order ASC $limit") or die('<ul><li>Мы ничего не нашли по Вашему запросу...
+                WHERE $enabled (t1.product_code LIKE '%$search%' OR  t1.name_ru LIKE '%$search%' OR  t1.brand LIKE '%$search%')  ORDER BY $order ASC $limit") or die('<ul><li>Мы ничего не нашли по Вашему запросу...
               Попробуйте изменить запрос.</li></ul>');
 
     if (mysql_num_rows($query) > 0) {

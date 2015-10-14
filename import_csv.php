@@ -56,7 +56,7 @@ TAG
         ShowError("CSV-файл ($filename) не содержит данных! (rowcount = $rowcount)");
     }
     if (($handle = fopen($filename, 'r')) !== false) {
-        $query = "UPDATE SC_customers SET  1C = 0";
+        $query = 'UPDATE SC_customers SET  1C = 0';
         $res = mysql_query($query) or die(mysql_error()."<br>$query");
         $row = 0;
         $no = 0;
@@ -640,6 +640,9 @@ TAG
 
     $query = "UPDATE $table SET max_diff = GREATEST(diff_kindermarket, diff_divoland, diff_dreamtoys, diff_mixtoys, diff_grandtoys, diff_grandtoys2, diff_grandtoys3)";
     $res = mysql_query($query) or die(mysql_error().$query);
+    
+    $query = "DELETE FROM $table WHERE (kindermarket IS NULL AND divoland IS NULL AND dreamtoys IS NULL AND mixtoys IS NULL AND grandtoys IS NULL AND grandtoys2 IS NULL AND grandtoys3 IS NULL)";
+    $res = mysql_query($query) or die(mysql_error().$query);
 
     $query_conc += microtime(true) - $start_query;
 
@@ -670,9 +673,9 @@ TAG
 
     /*----------- Фото ----------*/
     $zip = new ZipArchive();
-    $fileName = $archive_dir."pics.zip";
+    $fileName = $archive_dir.'pics.zip';
 
-    if ($zip->open($fileName) == true) {
+    if ($zip->open($fileName) === true) {
         include($_SERVER['DOCUMENT_ROOT'].'/curl_pics.php');
     }
 

@@ -3,7 +3,6 @@
 /popup/my_auxpages.php
 /popup/update_alliance.php
 /popup/search_conc.php
-/popup/search.php
 /popup/ajax_auxpages.php
 /popup/search_by_conc/conc_auxpages.php
 # Windows image file caches
@@ -64,6 +63,7 @@ Temporary Items
 *.csv
 *[0-9]
 [0-9]*.php
+[0-9]*.html
 .idea/
 images/
 img/
@@ -72,3 +72,4 @@ upload/
 published/publicdata/MULTITOYS/attachments/SC/rss/
 published/publicdata/MULTITOYS/attachments/SC/themes/multitoys/
 published/publicdata/MULTITOYS/attachments/SC/themes/user_multi-new/temp_overridestyles/
+popup/search_by_conc/divoland/**/*.html

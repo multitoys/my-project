@@ -938,14 +938,15 @@ class AuxPages extends ComponentModule {
             $category_name[$Categories->categoryID] = $Categories->name_ru;
         }
 
-        $order = 'name ASC';
+//        $order = 'name ASC';
+        $order = 'date_added DESC, code DESC';
 
-        if ($div_cat === '') {
-            $order = 'code DESC';
-            if ($auxpage === 'divoland') {
-                $order = 'productID DESC';
-            }
-        }
+//        if ($div_cat === '') {
+//            $order = 'code DESC';
+//            if ($auxpage === 'divoland') {
+//                $order = 'productID DESC';
+//            }
+//        }
         $query2 = "SELECT
 					category, code, product_code, name, price_uah
 				FROM

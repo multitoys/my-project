@@ -160,7 +160,7 @@
          *
          * @param string $id the time zone id to use
          */
-        function setDefault($id)
+        static function setDefault($id)
         {
             global $_DATE_TIMEZONE_DEFAULT;
             if (Date_TimeZone::isValidID($id)) {
@@ -179,7 +179,7 @@
          *
          * @return boolean true if the supplied ID is valid
          */
-        function isValidID($id)
+        static function isValidID($id)
         {
             global $_DATE_TIMEZONE_DATA;
             if (isset($_DATE_TIMEZONE_DATA[$id])) {
@@ -900,4 +900,3 @@
     }
     //
     // END
-?>

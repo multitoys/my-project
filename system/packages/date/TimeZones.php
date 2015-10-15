@@ -5,7 +5,7 @@
 			return new CTimeZone($id, $zd["offset"], $zd["hasdst"], $zd["longname"], $zd["shortname"], $dst);
 		}
 		
-		public function getTimeZoneData($id) {
+		public  static function getTimeZoneData($id) {
 			if (isset (self::$zones[$id]))
 				return self::$zones[$id];
 			else

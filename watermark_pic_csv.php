@@ -53,7 +53,7 @@
     }
     if (($handle = fopen($filename, 'r')) !== false) {
 
-        $days = 3;
+        $days = 0;
 
         echo("
 				Импорт фотографий ...<hr>
@@ -318,4 +318,9 @@
         closedir($dir);
 
         return true;
+    }
+
+    function ShowError($msg)
+    {
+        return "<div style='color:red; font-size:16px;'>$msg</div>";
     }

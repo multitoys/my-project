@@ -1233,7 +1233,7 @@ include("./cfg/tables.inc.php");
         }
         
         $replace = array('AppleWebKit/537.36', '(KHTML, like Gecko)', 'Safari/537.36');
-        $user_agent = str_replace($replace, '', $user_agent);
+//        $user_agent = str_replace($replace, '', $user_agent);
             
         return $user_agent;
     }

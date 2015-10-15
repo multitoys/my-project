@@ -1,6 +1,6 @@
 <?php
 
-header('Content-Type: text/html; charset=UTF-8;');
+//header('Content-Type: text/html; charset=UTF-8;');
 
 if (!defined("WBS_ROOT_PATH")) {
     define ("WBS_ROOT_PATH", realpath(dirname(__FILE__). "/.."));
@@ -40,4 +40,3 @@ if (Kernel::isHosted()) {
 		trigger_error($ex->getMessage (), E_USER_ERROR);
 	}
 }
-?>

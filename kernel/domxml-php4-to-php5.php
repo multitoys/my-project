@@ -329,7 +329,7 @@
             return $this->myDOMNode->parentNode->removeChild($this->myDOMNode);
         }
 
-        function dump_node()
+        function dump_node($node)
         {
             return $this->myOwnerDocument->myDOMNode->saveXML($this->myDOMNode);
         }

@@ -197,7 +197,17 @@
         'Сувенирная продукция'    => array(
             'Небесные фонарики' => '/ru/1136-Nebesnie-fonariki',
             'Открытки'          => '/ru/1078-Otkritki',
-            'Подарочные пакеты' => '/ru/1139-Podarochnie-paketi')
+            'Подарочные пакеты' => '/ru/1139-Podarochnie-paketi'),
+
+        'Новинки'    => array(
+            '14 октября 2015' => '/ru/shop/news/view/227',
+            '10 октября 2015' => '/ru/shop/news/view/223',
+            '8 октября 2015'          => '/ru/shop/news/view/219?page_size=2000',
+            '7 октября 2015'          => '/ru/shop/news/view/218?page_size=2000',
+            '6 октября 2015'          => '/ru/shop/news/view/217?page_size=2000',
+            '3 октября 2015'          => '/ru/shop/news/view/214?page_size=2000',
+            '2 октября 2015'          => '/ru/shop/news/view/212?page_size=2000',
+            '1 октября 2015' => '/ru/shop/news/view/210')
     );
 
     $parts = count($categories);

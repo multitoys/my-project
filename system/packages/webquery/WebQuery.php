@@ -3,7 +3,7 @@
 		static public $Params;
 		static private $publishedUrl;
 
-		public function initialize() {
+		public static function initialize() {
 			// calculate published url relative current path
 			
 			$requestUri = preg_replace("/(\?|\#)(.*)/", "", $_SERVER["REQUEST_URI"]);

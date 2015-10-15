@@ -38,6 +38,4 @@ try {
 if (Wbs::isHosted()) {
 	$updater = new WbsUpdater("SYSTEM");
 	$updater->check();
-}	
-
-?>
+}

@@ -73,7 +73,8 @@
             $product_code = mb_strtolower($sql['product_code'], 'UTF-8');
             $picture = substr($sql['filename'], 0, -4).'_s.jpg';
             //$price = ($vip)?'<p><span style="color:#008DD9">цена: '.$sql['Price'].'</span></p>':'';
-            $price = '<p><span style="color:#008DD9">цена: '.ZCalcPrice($sql['Price'], $sql['skidka'], $sql['ukraine']).'</span></p>';
+            $price = round(ZCalcPrice($sql['Price'], $sql['skidka'], $sql['ukraine']), 2);
+            $price = '<p><span style="color:#008DD9">цена: '.$price.'</span></p>';
             $name_ru = str_replace($search, "<mark class=mark_name>$search</mark>", $name_ru);
             $product_code = str_replace($search, "<span class=mark_code>$search</span>", $product_code);
             echo "

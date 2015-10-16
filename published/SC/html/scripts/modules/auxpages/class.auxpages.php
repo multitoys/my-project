@@ -719,7 +719,9 @@ class AuxPages extends ComponentModule {
                             $res3 = mysql_query($query3) or die(mysql_error().$query3);
 
                             if ($M_Product = mysql_fetch_object($res3)) {
-                                $price_diff = round(($Product->Price / $M_Product->price_uah - 1) * 100, 1);
+                                $price = show_price(ZCalcPrice($Product->Price, $Product->skidka, $Product->ukraine));
+                                $price_diff = round(($price / $M_Product->price_uah - 1) * 100, 1);
+                                //                                $price_diff = round(($Product->Price / $M_Product->price_uah - 1) * 100, 1);
                                 $marked = ($price_diff > 0) ? 'red' : 'green';
                                 $mark_conc = ($price_diff > 0) ? 'font-weight:bold;background:yellow; box-shadow:
                              2px 2px 4px #9999aa;' : '';

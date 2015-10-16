@@ -9,8 +9,8 @@
 	$in_results = false;
 //	if(isset($GetVars["in_results"]))$in_results = true;
 //	if(isset($PostVars["in_results"]))$in_results = true;
-	
-	$smarty->assign("search_in_results", $in_results);
+
+    $smarty->assign('search_in_results', $in_results);
 
 	$searchstring = '';
 	$searchtag = '';
@@ -36,22 +36,25 @@
 			array('product_code', 'SKU'),
 			array('Bonus', 'BONUS')
 		);
-		$sort_string = translate("prd_sort_main_control_string");
+        $sort_string = translate('prd_sort_main_control_string');
 		$current_sort_field = isset($_GET['sort'])?$_GET['sort']:'';
 		$current_sort_direction = isset($_GET['direction'])?$_GET['direction']:'';
 		
 		foreach ($sort_fields as $field){
-			
-			$sort_string = str_replace( "{ASC_".$field[1]."}", $field[0] == $current_sort_field && $current_sort_direction == 'ASC'?translate("str_ascending"):"<a href='".set_query("&sort={$field[0]}&direction=ASC&searchstring=".urlencode($searchstring))."'>".translate("str_ascending")."</a>",	$sort_string );
-			$sort_string = str_replace( "{DESC_".$field[1]."}", $field[0] == $current_sort_field && $current_sort_direction == 'DESC'?translate("str_descending"):"<a href='".set_query("&sort={$field[0]}&direction=DESC&searchstring=".urlencode($searchstring))."'>".translate("str_descending")."</a>",	$sort_string );
+
+            $sort_string = str_replace('{ASC_'.$field[1].'}', $field[0] == $current_sort_field && $current_sort_direction == 'ASC'?translate('str_ascending'):"<a href='".set_query("&sort={$field[0]}&direction=ASC&searchstring=".urlencode($searchstring))."'>".translate('str_ascending').'</a>', $sort_string);
+            $sort_string = str_replace('{DESC_'.$field[1].'}', $field[0] == $current_sort_field && $current_sort_direction == 'DESC'?translate('str_descending'):"<a href='".set_query("&sort={$field[0]}&direction=DESC&searchstring=".urlencode($searchstring))."'>".translate('str_descending').'</a>', $sort_string);
 		}
-		$smarty->assign( "string_product_sort", $sort_string );
+        $smarty->assign('string_product_sort', $sort_string);
 	}
 
 	$searchstrings = array();
 	$tmp = explode(' ', $searchstring);
 	foreach( $tmp as $key=> $val ){
-		if ( strlen( trim($val) ) > 0 )$searchstrings[] = $val;
+        $min = 1;
+        $val = trim($val);
+        if ($val[0] >= "\xc3") $min = 4;
+        if (strlen($val) > $min) $searchstrings[] = $val;
 	}
 
 	if($in_results){
@@ -74,7 +77,7 @@
 	if ( isset($_GET['sort']) )$callBackParam['sort'] = $_GET['sort'];
 	if ( isset($_GET['direction']) )$callBackParam['direction'] = $_GET['direction'];
 
-	$Register->assign("show_all", isset($_GET['show_all']));
+    $Register->assign('show_all', isset($_GET['show_all']));
 	renderURL('show_all=', '', true);
 	$countTotal = 0;
 	$navigatorHtml = GetNavigatorHtml(count($searchstrings)?('&searchstring='.urlencode($searchstring)):('&searchtag='.urlencode(implode(',',$searchtags))), CONF_PRODUCTS_PER_PAGE, 'prdSearchProductByTemplate', $callBackParam, $products, $offset, $countTotal );

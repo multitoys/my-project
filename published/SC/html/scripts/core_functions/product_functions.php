@@ -282,7 +282,7 @@
             $DefaultPictures = array();
             $TC = count($Products);
             for ($j = 0; $j < $TC; $j++) {
-                if (!is_null($Products[$j]['default_picture'])) $DefaultPictures[intval($Products[$j]['default_picture'])][] = $j;
+                if (!is_null($Products[$j]['default_picture'])) $DefaultPictures[(int)$Products[$j]['default_picture']][] = $j;
             }
             if (!count($DefaultPictures)) return;
             $sql = '
@@ -301,33 +301,17 @@
         }
     }
 
-    function ZSetSpecialPrice($product)
-    {
-        if (isset($_SESSION["log"])) $log = $_SESSION["log"];
-        else return $product;
-
-        // GetCustomer
-        $q = db_query("SELECT * FROM SC_customers WHERE Login='".$log."'");
-        if ($customer = db_fetch_assoc($q)) {
-            if (intval($customer["is_special_price"]) == 1) {
-                $product["Price"] = $product["SpecialPrice"];
-
-                return $product;
-            }
-        } else return $product;
-    }
-
     function GetProductInSubCategories($callBackParam, &$count_row, $navigatorParams = null)
     {
         if ($navigatorParams != null) {
-            $offset = $navigatorParams["offset"];
-            $CountRowOnPage = $navigatorParams["CountRowOnPage"];
+            $offset = $navigatorParams['offset'];
+            $CountRowOnPage = $navigatorParams['CountRowOnPage'];
         } else {
             $offset = 0;
             $CountRowOnPage = 0;
         }
 
-        $categoryID = $callBackParam["categoryID"];
+        $categoryID = $callBackParam['categoryID'];
         $subCategoryIDArray = catGetSubCategories($categoryID);
         $cond = "";
         foreach ($subCategoryIDArray as $subCategoryID) {
@@ -358,19 +342,19 @@
             if (($i >= $offset && $i < $offset + $CountRowOnPage) ||
                 $navigatorParams == null
             ) {
-                $row["PriceWithUnit"] = show_price(ZCalcPrice($row["Price"], $row["skidka"], $row["ukraine"]));
-                $row["list_priceWithUnit"] = show_price($row["list_price"]);
+                $row['PriceWithUnit'] = show_price(ZCalcPrice($row['Price'], $row['skidka'], $row['ukraine']));
+                $row['list_priceWithUnit'] = show_price($row['list_price']);
                 // you save (value)
-                $row["SavePrice"] = show_price($row["list_price"] - $row["Price"]);
+                $row['SavePrice'] = show_price($row['list_price'] - $row['Price']);
 
                 // you save (%)
-                if ($row["list_price"])
-                    $row["SavePricePercent"] = ceil(((($row["list_price"] - $row["Price"]) / $row["list_price"]) * 100));
+                if ($row['list_price'])
+                    $row['SavePricePercent'] = ceil(((($row['list_price'] - $row['Price']) / $row['list_price']) * 100));
 
                 _setPictures($row);
 
-                $row["product_extra"] = GetExtraParametrs($row["productID"]);
-                $row["PriceWithOutUnit"] = show_priceWithOutUnit(ZCalcPrice($row["Price"], $row["skidka"], $row["ukraine"]));
+                $row['product_extra'] = GetExtraParametrs($row['productID']);
+                $row['PriceWithOutUnit'] = show_priceWithOutUnit(ZCalcPrice($row['Price'], $row['skidka'], $row['ukraine']));
                 $result[] = $row;
             }
             $i++;
@@ -390,8 +374,8 @@
     function prdGetProductByCategory($callBackParam, &$count_row, $navigatorParams = null)
     {
         if ($navigatorParams != null) {
-            $offset = $navigatorParams["offset"];
-            $CountRowOnPage = $navigatorParams["CountRowOnPage"];
+            $offset = $navigatorParams['offset'];
+            $CountRowOnPage = $navigatorParams['CountRowOnPage'];
         } else {
             $offset = 0;
             $CountRowOnPage = 0;
@@ -399,14 +383,14 @@
 
         $result = array();
 
-        $categoryID = $callBackParam["categoryID"];
-        $fullFlag = $callBackParam["fullFlag"];
+        $categoryID = $callBackParam['categoryID'];
+        $fullFlag = $callBackParam['fullFlag'];
         if ($fullFlag) {
             $conditions = array(" categoryID=$categoryID ");
             $q = db_query("select productID from ".
                 CATEGORIY_PRODUCT_TABLE." where  categoryID=$categoryID");
             while ($products = db_fetch_row($q))
-                $conditions[] = " productID=".$products[0];
+                $conditions[] = ' productID='.$products[0];
 
             $data = array();
             $langManager = &LanguagesManager::getInstance();
@@ -415,17 +399,17 @@
                     " WHERE ".$cond);
                 while ($row = db_fetch_row($q)) {
                     LanguagesManager::ml_fillFields(PRODUCTS_TABLE, $row);
-                    $row["PriceWithUnit"] = show_price(ZCalcPrice($row["Price"], $row["skidka"], $row["ukraine"]));
-                    $row["list_priceWithUnit"] = show_price($row["list_price"]);
+                    $row['PriceWithUnit'] = show_price(ZCalcPrice($row['Price'], $row['skidka'], $row['ukraine']));
+                    $row['list_priceWithUnit'] = show_price($row['list_price']);
                     // you save (value)
-                    $row["SavePrice"] = show_price($row["list_price"] - $row["Price"]);
+                    $row['SavePrice'] = show_price($row['list_price'] - $row['Price']);
 
                     // you save (%)
-                    if ($row["list_price"])
-                        $row["SavePricePercent"] = ceil(((($row["list_price"] - $row["Price"]) / $row["list_price"]) * 100));
+                    if ($row['list_price'])
+                        $row['SavePricePercent'] = ceil(((($row['list_price'] - $row['Price']) / $row['list_price']) * 100));
                     _setPictures($row);
-                    $row["product_extra"] = GetExtraParametrs($row["productID"]);
-                    $row["PriceWithOutUnit"] = show_priceWithOutUnit(ZCalcPrice($row["Price"], $row["skidka"], $row["ukraine"]));
+                    $row['product_extra'] = GetExtraParametrs($row['productID']);
+                    $row['PriceWithOutUnit'] = show_priceWithOutUnit(ZCalcPrice($row['Price'], $row['skidka'], $row['ukraine']));
                     $data[] = $row;
                 }
             }
@@ -570,7 +554,7 @@
                 if ($rowtmp)
                     $item_text_value = $rowtmp[0];
                 else
-                    $item_text_value = "";
+                    $item_text_value = '';
 
                 //changed this fragment to support search in fixed product parameters.
                 $search_name = 'option_value_'.($_count++);
@@ -594,14 +578,15 @@
 
     function _searchPatternReplace($string)
     {
-        static $patterns = array('/\\\\/',
+        static $patterns = array(
+            '/\\\\/',
             '/%/',
             '/_/',
             '/\?/',
             '/\*/',
-                                 '/\./',
-                                 '/,/',
-                                 '/\//',
+            '/\./',
+            '/,/',
+            '/\//',
             '/(^|[^\/]{1})(\?)/',
             '/([\/]{1})(\?)/',
             '/(^|[^\/]{1})(\*)/',
@@ -675,7 +660,7 @@
 
                     $value = mb_strtolower($value, 'UTF-8');
 
-                    if (!strlen($value)) continue;
+                    if (strlen($value) < 2) continue;
                     //$value = preg_replace(array('/([\/]{1})\+/','/(^|[^\/]{1})\+/'),array('+',' '),$value);
                     //$sql_value = xEscapeSQLstring($value);
                     $search_name = 'search_simple_'.($_count++);
@@ -749,7 +734,7 @@
             ) {
 
                 $order_by_clause = ' ORDER BY '.LanguagesManager::sql_getSortField(PRODUCTS_TABLE, $callBackParam['sort']).' ASC ';
-                if (isset($callBackParam['direction']) && $callBackParam['direction'] == 'DESC') $order_by_clause = ' ORDER BY '.LanguagesManager::sql_getSortField(PRODUCTS_TABLE, $callBackParam['sort']).' DESC ';
+                if (isset($callBackParam['direction']) && $callBackParam['direction'] === 'DESC') $order_by_clause = ' ORDER BY '.LanguagesManager::sql_getSortField(PRODUCTS_TABLE, $callBackParam['sort']).' DESC ';
             }
         } else {
             $order_by_clause = ' ORDER BY categoryID, name_ru';
@@ -772,7 +757,7 @@
                 if (strlen($value) > 3 && $value{strlen($value) - 1} == 's') {
                     $value = substr($value, 0, strlen($value) - 1);
                 }
-                if (!$value) continue;
+                if ($value < 2) continue;
                 $value = mb_strtolower($value, 'UTF-8');
                 //$value = xEscapeSQLstring($value);
                 $search_name = 'search_tags'.($_count++);
@@ -827,14 +812,14 @@
         while ($_Product = db_fetch_assoc($Result)) {
 
             LanguagesManager::ml_fillFields(PRODUCTS_TABLE, $_Product);
-            if (!$_Product["productID"] && ($_Product[0] > 0)) $_Product["productID"] = $_Product[0];
-            $_Product['PriceWithUnit'] = show_price(ZCalcPrice($_Product["Price"], $_Product["skidka"], $_Product["ukraine"]));
+            if (!$_Product['productID'] && ($_Product[0] > 0)) $_Product['productID'] = $_Product[0];
+            $_Product['PriceWithUnit'] = show_price(ZCalcPrice($_Product['Price'], $_Product['skidka'], $_Product['ukraine']));
             $_Product['list_priceWithUnit'] = show_price($_Product['list_price']);
             // you save (value)
             $_Product['SavePrice'] = show_price($_Product['list_price'] - $_Product['Price']);
             // you save (%)
             if ($_Product['list_price']) $_Product['SavePricePercent'] = ceil(((($_Product['list_price'] - $_Product['Price']) / $_Product['list_price']) * 100));
-            $_Product['PriceWithOutUnit'] = show_priceWithOutUnit(ZCalcPrice($_Product["Price"], $_Product["skidka"], $_Product["ukraine"]));
+            $_Product['PriceWithOutUnit'] = show_priceWithOutUnit(ZCalcPrice($_Product['Price'], $_Product['skidka'], $_Product['ukraine']));
             if (((float)$_Product['shipping_freight']) > 0)
                 $_Product['shipping_freightUC'] = show_price($_Product['shipping_freight']);
             $ProductsIDs[$_Product['productID']] = $Counter;
@@ -842,11 +827,11 @@
             $Products[] = $_Product;
             $Counter++;
         }
-        $ProductsExtra = GetExtraParametrs(array_keys($ProductsIDs));
-        foreach ($ProductsExtra as $_ProductID => $_Extra) {
-
-            $Products[$ProductsIDs[$_ProductID]]['product_extra'] = $_Extra;
-        }
+        //        $ProductsExtra = GetExtraParametrs(array_keys($ProductsIDs));
+        //        foreach ($ProductsExtra as $_ProductID => $_Extra) {
+        //
+        //            $Products[$ProductsIDs[$_ProductID]]['product_extra'] = $_Extra;
+        //        }
         _setPictures($Products);
 
 // //иконки списков для фото-----

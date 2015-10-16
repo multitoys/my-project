@@ -71,6 +71,7 @@
             $name_ru = mb_strtolower($name_ru, 'UTF-8');
             $product_code = mb_strtolower($sql['product_code'], 'UTF-8');
             $name_ru = str_replace($search, "<mark class=mark_name>$search</mark>", $name_ru);
+            $name_ru = ucfirst_utf8($name_ru);
             $name_ru .= ($too_long)?'...':'';
             $product_code = str_replace($search, "<span class=mark_code>$search</span>", $product_code);
 

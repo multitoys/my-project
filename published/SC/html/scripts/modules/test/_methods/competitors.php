@@ -188,17 +188,37 @@
                 $rows[$k]['kindermarket'] = (is_null($rows[$k][$this->currency.'kindermarket'])) ? '-----' : $rows[$k][$this->currency.'kindermarket'];
                 $rows[$k]['diff_kindermarket'] = ($rows[$k]['kindermarket'] === '-----') ? '-----' : $rows[$k]['diff_kindermarket'].'%';
 
-                $competitors = array(kindermarket, divoland, dreamtoys, mixtoys, grandtoys, grandtoys2, grandtoys3);
-                $min = array();
-                foreach ($competitors as $competitor) {
-                    $min[$competitor] = ($rows[$k][$competitor] == '-----') ? 100000 : doubleval($rows[$k][$competitor]);
+
+                if ($this->conc) {
+
+                    if ($this->conc === 'grandtoys') {
+                        $diff = round(($rows[$k]['Price'] / min($rows[$k]['grandtoys'], $rows[$k]['grandtoys2'], $rows[$k]['grandtoys3']) - 1)*100, 1);
+                    } else {
+                        $diff = round(($rows[$k]['Price'] / $rows[$k][$this->conc] - 1)*100, 1);
+                    }
+
+                } else {
+                    $competitors = array(kindermarket, divoland, dreamtoys, mixtoys, grandtoys, grandtoys2, grandtoys3);
+                    $min = array();
+
+                    foreach ($competitors as $competitor) {
+                        $min[$competitor] = ($rows[$k][$competitor] == '-----') ? 100000 : doubleval($rows[$k][$competitor]);
+                    }
+                    
+                    $diff = round(($rows[$k]['Price'] / min(
+                                                           $min['grandtoys'], 
+                                                           $min['grandtoys2'], 
+                                                           $min['grandtoys3'], 
+                                                           $min['divoland'], 
+                                                           $min['dreamtoys'], 
+                                                           $min['mixtoys'], 
+                                                           $min['kindermarket']
+                                                           ) - 1) * 100, 1)
+                    ;
                 }
-//                if ($this->conc === 'grandtoys') {
+
                 $rows[$k]['margin'] = (round(($rows[$k]['Price'] / $rows[$k]['purchase'] - 1) * 100, 1)).'%';
-                $diff = (round(($rows[$k]['Price'] / min($min['grandtoys'], $min['grandtoys2'], $min['grandtoys3'], $min['divoland'], $min['dreamtoys'], $min['mixtoys'], $min['kindermarket']) - 1) * 100, 1));
                 $rows[$k]['max_diff'] = $diff.'%';
-                //$rows[$k]['max_diff'] = (round((1 - min($rows[$k]['grandtoys'], $rows[$k]['grandtoys2'], $rows[$k]['grandtoys3']) / $rows[$k]['Price'])*100, 1)).'%';
-//                }
 
             }
             $count_rows = array('100' => 100, '500' => 500, '1000' => 1000);

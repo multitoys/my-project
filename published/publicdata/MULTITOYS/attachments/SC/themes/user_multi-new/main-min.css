@@ -959,7 +959,7 @@ ol {
 }
 
 #columns > #center.conc {
-    right: 400px
+    right: 300px;
 }
 
 #columns > #right {
@@ -973,10 +973,16 @@ ol {
 }
 
 #columns > #right.conc {
-    max-width: 400px;
-    min-width: 400px;
-    width: 400px;
+    max-width: 300px;
+    min-width: 300px;
+    width: 300px;
     max-height: 100%
+
+
+
+
+
+
 }
 
 .cl-effect-21 a {
@@ -2045,10 +2051,14 @@ div#live_search {
     overflow-x: hidden;
     box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.4);
     z-index: 99999;
-    min-width: 350px;
-    max-width: 550px;
-    width: 100%;
+    min-width: 330px;
+    /* max-width: 400px; */
+    width: 330px;
     max-height: 100%
+
+
+
+
 }
 
 #live_search li, #right.conc li {
@@ -2057,7 +2067,7 @@ div#live_search {
     border-bottom: 1px solid rgba(3, 169, 244, 1);
     z-index: 9999999;
     box-sizing: border-box;
-    height: 55px
+    height: 67px;
 }
 
 #right.conc li:hover {
@@ -2077,9 +2087,14 @@ div#live_search {
     border: 2px;
     height: 27px;
     box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.4);
-    min-width: 350px;
-    max-width: 550px;
-    width: 50%
+    min-width: 330px;
+    max-width: 330px;/* width: 50%
+
+
+
+
+
+ */
 }
 
 #right.conc li:first-of-type {
@@ -2096,6 +2111,436 @@ div#live_search {
     font-style: italic
 }
 
+#right.conc p {
+    font-size: 13px;
+    color: red;
+    font-style: normal
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+;
+    font-weight: 700;
+}
+
 #live_search img, #right.conc img {
     float: left;
     margin-right: 2px;
@@ -2107,7 +2552,7 @@ div#live_search {
     text-decoration: underline;
     font-style: italic;
     cursor: pointer;
-    margin-right: 30px
+    /* margin-right: 20px; */
 }
 
 #live_search label:hover {
@@ -2117,11 +2562,13 @@ div#live_search {
 #live_search span {
     font-size: 12px;
     display: list-item
+
+
 }
 
 #right.conc span {
-    font-size: 11px;
-    line-height: 11px;
+    font-size: 12px;
+    line-height: 14px;
     display: list-item
 }
 
@@ -2390,8 +2837,8 @@ div.compact-theme ul li {
 }
 
 .mark_name {
-    box-shadow: 2px 2px 4px #99a;
-    font-size: larger
+    box-shadow: 2px 2px 4px #99a;/* font-size: larger
+ */
 }
 
 .mark_code {
@@ -2400,6 +2847,7 @@ div.compact-theme ul li {
     box-shadow: 2px 2px 4px #99a;
     display: inline !important;
     font-size: larger
+
 }
 
 .animated {

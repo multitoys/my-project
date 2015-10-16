@@ -24,22 +24,22 @@
     $archive_dir = $_SERVER['DOCUMENT_ROOT'].'/upload/';
     $dest_dir = $_SERVER['DOCUMENT_ROOT'].'/temp/import/';
 
-    $zip = new ZipArchive();
-    $fileName = $archive_dir.'pics.zip';
+//    $zip = new ZipArchive();
+//    $fileName = $archive_dir.'pics.zip';
+//
+//    if ($zip->open($fileName) !== true) {
+//        echo('Error while openning archive file: pics.zip');
+//        exit(1);
+//    }
+//
+//    if ($zip->extractTo($dest_dir) !== true) {
+//        echo('Error while extracting archive file: pics.zip');
+//        exit(1);
+//    }
+//
+//    echo("<div id='extract'>Файлы ($zip->numFiles) успешно извлечены!<br><br>");
 
-    if ($zip->open($fileName) !== true) {
-        echo('Error while openning archive file: pics.zip');
-        exit(1);
-    }
-
-    if ($zip->extractTo($dest_dir) !== true) {
-        echo('Error while extracting archive file: pics.zip');
-        exit(1);
-    }
-
-    echo("<div id='extract'>Файлы ($zip->numFiles) успешно извлечены!<br><br>");
-
-    $watermark_dir = $_SERVER['DOCUMENT_ROOT'].'/img/';
+//    $watermark_dir = $_SERVER['DOCUMENT_ROOT'].'/img/';
     $searh_dir = $_SERVER['DOCUMENT_ROOT'].'/published/publicdata/MULTITOYS/attachments/SC/search_pictures/';
 
     $filename = $dest_dir.'pics.csv';
@@ -85,94 +85,94 @@
             }
             //$dopic      = ($num > 0)?substr($pics, 0, -2):$pics;
             $pics_search = $pics.'_s.jpg';
-            $pics_thm = $pics.'_thm.jpg';
-            $pics_enl = $pics.'_enl.jpg';
+//            $pics_thm = $pics.'_thm.jpg';
+//            $pics_enl = $pics.'_enl.jpg';
             $picture = $pics.'.jpg';
             $file_name = $dest_dir.$picture;
-            $file_name2 = $archive_dir.$picture;
-            $file_name = is_file($file_name)?$file_name:$file_name2;
-            $stamp200 = false;
-            $stamp400 = $watermark_dir.'watermark400.png';
-            $stamp600 = $watermark_dir.'watermark600.png';
+//            $file_name2 = $archive_dir.$picture;
+//            $file_name = is_file($file_name)?$file_name:$file_name2;
+//            $stamp200 = false;
+//            $stamp400 = $watermark_dir.'watermark400.png';
+//            $stamp600 = $watermark_dir.'watermark600.png';
 
             if (!is_file($file_name)) {
                 echo("<span style='color: #E9967A;'>$picture - фото не загружено! (строка $row)<br></span>");
                 $erorr++;
             } else {
                 $file_name2 = $searh_dir.$pics_search;
-                if (filemtime($file_name2) < time() - 86400 * $days) {
+//                if (filemtime($file_name2) < time() - 86400 * $days) {
                     unlink($file_name2);
                     make_thumbnail($file_name, $file_name2, false, 80);
-                }
-
-                $file_name2 = DIR_PRODUCTS_PICTURES.'/'.$pics_thm;
-                if (filemtime($file_name2) < time() - 86400 * $days) {
-                    unlink($file_name2);
-                    make_thumbnail($file_name, $file_name2, false, 160);
-                } else {
-                    $last_modified--;
-                }
-
-                $file_name2 = DIR_PRODUCTS_PICTURES.'/'.$picture;
-                if (filemtime($file_name2) < time() - 86400 * $days) {
-                    unlink($file_name2);
-                    make_thumbnail($file_name, $file_name2, $stamp400, 400);
-                } else {
-                    $last_modified--;
-                }
-
-                $file_name2 = DIR_PRODUCTS_PICTURES.'/'.$pics_enl;
-                if (filemtime($file_name2) < time() - 86400 * $days) {
-                    unlink($file_name2);
-                    make_thumbnail($file_name, $file_name2, $stamp600, 600, 85);
-                } else {
-                    $last_modified--;
-                }
-
-                if ($last_modified === 0) {
-                    $not_modified++;
-                }
+//                }
+//
+//                $file_name2 = DIR_PRODUCTS_PICTURES.'/'.$pics_thm;
+//                if (filemtime($file_name2) < time() - 86400 * $days) {
+//                    unlink($file_name2);
+//                    make_thumbnail($file_name, $file_name2, $stamp200, 160);
+//                } else {
+//                    $last_modified--;
+//                }
+//
+//                $file_name2 = DIR_PRODUCTS_PICTURES.'/'.$picture;
+//                if (filemtime($file_name2) < time() - 86400 * $days) {
+//                    unlink($file_name2);
+//                    make_thumbnail($file_name, $file_name2, $stamp400, 400);
+//                } else {
+//                    $last_modified--;
+//                }
+//
+//                $file_name2 = DIR_PRODUCTS_PICTURES.'/'.$pics_enl;
+//                if (filemtime($file_name2) < time() - 86400 * $days) {
+//                    unlink($file_name2);
+//                    make_thumbnail($file_name, $file_name2, $stamp600, 600, 85);
+//                } else {
+//                    $last_modified--;
+//                }
+//
+//                if ($last_modified === 0) {
+//                    $not_modified++;
+//                }
                 unlink($file_name);
 
-                $productID = GetValue('productID', 'SC_products', "code_1c = $dopic");
-
-                if (!$productID) {
-                    echo("<span style='color: #FF8000;'>$picture - товара нет на сайте<br></span>");
-                    $erorr++;
-                } else {
-
-                    $pictureID = GetValue('default_picture', 'SC_products', "code_1c = $dopic");
-                    $query = "DELETE FROM `SC_product_pictures` WHERE `filename`='$picture' AND `productID`!=$productID";
-                    $res = mysql_query($query) or die(mysql_error()."<br>$query");
-                    $pid = GetValue('PhotoID', 'SC_product_pictures', "filename = '$picture'");
-
-                    if ($pid) {
-                        $query = "UPDATE SC_product_pictures
-													SET 
-													priority = $num
-													WHERE filename = '$picture'";
-                        $res = mysql_query($query) or die(mysql_error()."<br>$query");
-                    } else {
-                        $query = "INSERT INTO SC_product_pictures
-												 (productID , filename, thumbnail, enlarged, priority)
-												 VALUES ($productID, '$picture', '$pics_thm', '$pics_enl', $num)";
-                        $res = mysql_query($query) or die(mysql_error()."<br>$query");
-                        $pid = mysql_insert_id();
-                    }
-
-                    if ($num === 0 || $pictureID === '') {
-                        $query = "UPDATE SC_products SET default_picture = $pid
-													WHERE productID = $productID";
-                        $res = mysql_query($query) or die(mysql_error()."<br>$query");
-                    }
-
+//                $productID = GetValue('productID', 'SC_products', "code_1c = $dopic");
+//
+//                if (!$productID) {
+//                    echo("<span style='color: #FF8000;'>$picture - товара нет на сайте<br></span>");
+//                    $erorr++;
+//                } else {
+//
+//                    $pictureID = GetValue('default_picture', 'SC_products', "code_1c = $dopic");
+//                    $query = "DELETE FROM `SC_product_pictures` WHERE `filename`='$picture' AND `productID`!=$productID";
+//                    $res = mysql_query($query) or die(mysql_error()."<br>$query");
+//                    $pid = GetValue('PhotoID', 'SC_product_pictures', "filename = '$picture'");
+//
+//                    if ($pid) {
+//                        $query = "UPDATE SC_product_pictures
+//													SET 
+//													priority = $num
+//													WHERE filename = '$picture'";
+//                        $res = mysql_query($query) or die(mysql_error()."<br>$query");
+//                    } else {
+//                        $query = "INSERT INTO SC_product_pictures
+//												 (productID , filename, thumbnail, enlarged, priority)
+//												 VALUES ($productID, '$picture', '$pics_thm', '$pics_enl', $num)";
+//                        $res = mysql_query($query) or die(mysql_error()."<br>$query");
+//                        $pid = mysql_insert_id();
+//                    }
+//
+//                    if ($num === 0 || $pictureID === '') {
+//                        $query = "UPDATE SC_products SET default_picture = $pid
+//													WHERE productID = $productID";
+//                        $res = mysql_query($query) or die(mysql_error()."<br>$query");
+//                    }
+//
                     $progress = round(($no / ($rowcount) * 100), 0, PHP_ROUND_HALF_DOWN);
                     if ($progress > $percent) {
                         $percent = $progress.'%';
                         ProgressBar('products', $percent, $start);
                     }
+//                }
                     BuferOut();
-                }
             }
         }
         fclose($handle);
@@ -286,7 +286,7 @@
 
     function BuferOut($delay = 0)
     {
-        echo str_repeat(' ', 64 * 1024);
+        echo str_repeat(' ', 256);
         flush();
         usleep($delay);
     }

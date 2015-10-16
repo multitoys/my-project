@@ -39,7 +39,7 @@
     $order = 't1.name_ru';
     $enabled = 't1.enabled AND';
     $close = '<button class=\'search_close blue-button\' onclick=document.getElementById(\'live_search\').innerHTML=\'\';>&times;</button>';
-    $all_res = '<ul><li><label for=search_ok>Просмотреть все результаты поиска...</label>'.$close.'</li>';
+    $all_res = '<ul><li><label for=search_ok>Все результаты поиска</label>... '.$close.'</li>';
 
     if (array_key_exists('conc', $_POST)) {
         $limit = '';
@@ -53,34 +53,45 @@
                 t1.default_picture, t1.slug, t1.brand, t3.filename
                 FROM SC_products t1
                 LEFT JOIN SC_product_pictures t3 ON t1.default_picture = t3.photoID
-                WHERE $enabled (t1.product_code LIKE '%$search%' OR  t1.name_ru LIKE '%$search%' OR  t1.brand LIKE '%$search%')  ORDER BY $order ASC $limit") or die('<ul><li>Мы ничего не нашли по Вашему запросу...
-              Попробуйте изменить запрос.</li></ul>');
+                WHERE $enabled (t1.product_code LIKE '%$search%' OR  t1.name_ru LIKE '%$search%' OR  t1.brand LIKE '%$search%')  ORDER BY $order ASC $limit") or die('<ul><li>Мы ничего не нашли...:(</li></ul>');
 
     if (mysql_num_rows($query) > 0) {
         echo $all_res;
         while ($sql = mysql_fetch_array($query)) {
 
-            $set_conc = "href='/product/{$sql['slug']}'";
-            if (isset($_POST['conc'])) {
-                $conc = $_POST['conc'];
-                $code = $_POST['code'];
-                $code1c = $sql['code_1c'];
-                $price_conc = $_POST['priceConc'];
-                $set_conc = "onclick=setAnalogs(\"$conc\",\"$code\",\"$code1c\",\"$price_conc\")";
+            $too_long = false;
+            $name_ru = $sql['name_ru'];
+
+            if (mb_strlen($name_ru) > 105) {
+                $too_long = true;
+                $name_ru = mb_substr($name_ru, 0, 105);
             }
+
             $search = mb_strtolower($search, 'UTF-8');
-            $name_ru = mb_strtolower($sql['name_ru'], 'UTF-8');
+            $name_ru = mb_strtolower($name_ru, 'UTF-8');
             $product_code = mb_strtolower($sql['product_code'], 'UTF-8');
-            $picture = substr($sql['filename'], 0, -4).'_s.jpg';
-            //$price = ($vip)?'<p><span style="color:#008DD9">цена: '.$sql['Price'].'</span></p>':'';
-            $price = round(ZCalcPrice($sql['Price'], $sql['skidka'], $sql['ukraine']), 2);
-            $price = '<p><span style="color:#008DD9">цена: '.$price.'</span></p>';
             $name_ru = str_replace($search, "<mark class=mark_name>$search</mark>", $name_ru);
+            $name_ru .= ($too_long)?'...':'';
             $product_code = str_replace($search, "<span class=mark_code>$search</span>", $product_code);
+
+            $set_conc = "href='/product/{$sql['slug']}'";
+            $picture = substr($sql['filename'], 0, -4).'_s.jpg';
+            $price = '';
+            if (isset($_POST['conc'])) {
+                $conc = (stripslashes(trim(strip_tags($_POST['conc']))));
+                $code = (stripslashes(trim(strip_tags($_POST['code']))));
+                $code1c = $sql['code_1c'];
+                $price_conc = (stripslashes(trim(strip_tags($_POST['priceConc']))));
+                $set_conc = "onclick=setAnalogs(\"$conc\",\"$code\",\"$code1c\",\"$price_conc\")";
+            } else {
+                $price = round(ZCalcPrice($sql['Price'], $sql['skidka'], $sql['ukraine']), 2);
+                $price = '<p><span style="color:#008DD9">цена: '.$price.'</span></p>';
+            }
+            //$price = ($vip)?'<p><span style="color:#008DD9">цена: '.$sql['Price'].'</span></p>':'';
             echo "
                 <li>
                     <a $set_conc>
-                        <img width=64px height=48px
+                        <img width=80px height=60px
                               src='/published/publicdata/MULTITOYS/attachments/SC/search_pictures/{$picture}'
                               alt='{$sql['name_ru']}'>
                         <span>{$name_ru}</span>
@@ -91,5 +102,5 @@
         }
         echo '</ul>';
     } else {
-        echo '<ul><li><label>Мы ничего не нашли по Вашему запросу...</label>' . $close . '</li></ul>';
+        echo '<ul><li><label>Мы ничего не нашли... </label> :(' . $close . '</li></ul>';
     }

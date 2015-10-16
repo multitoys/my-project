@@ -64,8 +64,8 @@ TAG
         define('PASSWORD', '0675230623');
 //        define('LOGIN', '973846984');
 //        define('PASSWORD', '973846984');
-        //define('LOGIN', 'rusmol');
-        //define('PASSWORD', '333');
+//        define('LOGIN', 'rusmol');
+//        define('PASSWORD', '333');
 
         $login_url = URL_COMPETITORS.'/ru/user/login';
         $refferer = URL_COMPETITORS;
@@ -80,8 +80,8 @@ TAG
         $products_cnt = 2000;
         $replace_name = array('&laquo;', '&raquo;', '&quot;', '\'', '"');
 
-        $replace = array(',', '.', ')', '(', '\'');
-        $match_str = preg_replace('/\s\s+/', ' ', str_replace('|', ' ', str_replace($replace, ' ', $conc)));
+//        $replace = array(',', '.', ')', '(', '\'');
+//        $match_str = preg_replace('/\s\s+/', ' ', str_replace('|', ' ', str_replace($replace, ' ', $conc)));
 
         foreach ($categories as $parent => $cats) {
 
@@ -145,6 +145,7 @@ TAG
                     }
                     $no++;
                 }
+				unlink($filename);
             }
             $part++;
             $progress = round(($part / $parts * 100), 0, PHP_ROUND_HALF_DOWN);

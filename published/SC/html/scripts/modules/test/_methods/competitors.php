@@ -17,8 +17,8 @@
         protected $new = '';
         protected $new_items_postup = '';
         protected $search = '';
-        protected $disc_usd = 0;
-        protected $disc_ua = 0;
+        protected $disc_usd = 27;
+        protected $disc_ua = 20;
         protected $table = 'Conc__analogs';
 
         public function __construct()
@@ -40,7 +40,7 @@
                         $this->__setCurrency();
                         break;
                     case 'bestsellers':
-                        $this->__getListProducts('items_sold', 300);
+                        $this->__getListProducts('items_sold', 150);
                         break;
                     case 'new':
                         $this->__getListProducts('code_1c', 500);

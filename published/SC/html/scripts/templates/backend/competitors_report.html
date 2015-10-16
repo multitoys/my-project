@@ -99,8 +99,33 @@
             font-size: 12px;
             color: darkblue;
         }
+        
         #selections label {
             margin-left: 5px;
+        }
+        
+        #ok {
+            width: 80px;
+            height: 70px;
+            padding: 0;
+            margin: 7px 0 0 5px;
+            background-color: cornflowerblue;
+            border: 0;
+            color: white;
+            font-size: xx-large;
+            font-family: monospace;
+            box-shadow: 1px 2px 7px 0 rgba(0, 0, 0, 0.4);
+            cursor: pointer;
+        }
+        
+        #ok:hover {
+            background-color: #0288d1;
+            box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.4);
+        }
+
+        #ok:active {
+            background-color: #03a9f4;
+            box-shadow: 1px 2px 5px 0 rgba(0, 0, 0, 0.4);
         }
     </style>
 {/literal}
@@ -225,7 +250,7 @@
 
             </div>
 
-            <input type="submit" name="search" value="{"btn_find"|translate}">
+            <input id=ok type="submit" name="search" value="{"btn_find"|translate}">
 
         </div>
     </form>
@@ -264,7 +289,7 @@
                     <td class="blue">{$GridRows[i].product_code|escape:'html'}</td>
                     {*<td><img class="preview" width="64px" height="48px" src="{$GridRows[i].img|escape:'html'}" alt="Нет фото" data-pid='{$GridRows[i].img_big|escape:'html'}'></td>*}
                     <td>
-                        <img class="preview" width="64px" height="48px" src="{$GridRows[i].img|escape:'html'}" alt="Нет фото">
+                        <img class="preview" width="80px" height="60px" src="{$GridRows[i].img|escape:'html'}" alt="Нет фото">
                     </td>
                     <td {if $GridRows[i].max_diff > 0}class="red"{/if}>{$GridRows[i].name_ru|escape:'html'}</td>
                     {*<td class="brand">{$GridRows[i].category|escape:'html'}</td>*}

@@ -19,6 +19,7 @@
         protected $search = '';
         protected $disc_usd = 27;
         protected $disc_ua = 20;
+        protected $disc_conc = 10;
         protected $table = 'Conc__analogs';
 
         public function __construct()
@@ -35,6 +36,9 @@
                         break;
                     case 'disc_ua':
                         $this->__setDisc_ua();
+                        break;
+                    case 'disc_conc':
+                        $this->__setDisc_conc();
                         break;
                     case 'currency':
                         $this->__setCurrency();
@@ -164,7 +168,7 @@
 
                 $rows[$k]['num'] = $k + 1;
                 $rows[$k]['img'] = '/published/publicdata/MULTITOYS/attachments/SC/search_pictures/'.$rows[$k]['code_1c'].'_s.jpg';
-                $rows[$k]['img_big'] = '/published/publicdata/MULTITOYS/attachments/SC/products_pictures/'.$rows[$k]['code_1c'].'.jpg';
+                //$rows[$k]['img_big'] = '/published/publicdata/MULTITOYS/attachments/SC/products_pictures/'.$rows[$k]['code_1c'].'.jpg';
                 $rows[$k]['purchase'] = $rows[$k][$this->currency.'purchase'];
                 $rows[$k]['Price'] = $this->__priceDiscount($rows[$k][$this->currency.'Price'], $rows[$k]['ukraine'], $this->disc_usd, $this->disc_ua);
 
@@ -173,19 +177,19 @@
 //                    $rows[$k]['max_diff'] = ($rows[$k]['max_diff'] > 0)?$rows[$k]['max_diff'].'%':'';
 //                }
 
-                $rows[$k]['divoland'] = (is_null($rows[$k][$this->currency.'divoland'])) ? '-----' : $rows[$k][$this->currency.'divoland'];
+                $rows[$k]['divoland'] = (is_null($rows[$k][$this->currency.'divoland'])) ? '-----' : $this->__priceConc($rows[$k][$this->currency.'divoland']);
                 $rows[$k]['diff_divoland'] = ($rows[$k]['divoland'] === '-----') ? '-----' : $rows[$k]['diff_divoland'].'%';
-                $rows[$k]['dreamtoys'] = (is_null($rows[$k][$this->currency.'dreamtoys'])) ? '-----' : $rows[$k][$this->currency.'dreamtoys'];
+                $rows[$k]['dreamtoys'] = (is_null($rows[$k][$this->currency.'dreamtoys'])) ? '-----' : $this->__priceConc($rows[$k][$this->currency.'dreamtoys']);
                 $rows[$k]['diff_dreamtoys'] = ($rows[$k]['dreamtoys'] === '-----') ? '-----' : $rows[$k]['diff_dreamtoys'].'%';
-                $rows[$k]['mixtoys'] = (is_null($rows[$k][$this->currency.'mixtoys'])) ? '-----' : $rows[$k][$this->currency.'mixtoys'];
+                $rows[$k]['mixtoys'] = (is_null($rows[$k][$this->currency.'mixtoys'])) ? '-----' : $this->__priceConc($rows[$k][$this->currency.'mixtoys']);
                 $rows[$k]['diff_mixtoys'] = ($rows[$k]['mixtoys'] === '-----') ? '-----' : $rows[$k]['diff_mixtoys'].'%';
-                $rows[$k]['grandtoys'] = (is_null($rows[$k][$this->currency.'grandtoys'])) ? '-----' : $rows[$k][$this->currency.'grandtoys'];
+                $rows[$k]['grandtoys'] = (is_null($rows[$k][$this->currency.'grandtoys'])) ? '-----' : $this->__priceConc($rows[$k][$this->currency.'grandtoys']);
                 $rows[$k]['diff_grandtoys'] = ($rows[$k]['grandtoys'] === '-----') ? '-----' : $rows[$k]['diff_grandtoys'].'%';
-                $rows[$k]['grandtoys2'] = (is_null($rows[$k][$this->currency.'grandtoys2'])) ? '-----' : $rows[$k][$this->currency.'grandtoys2'];
+                $rows[$k]['grandtoys2'] = (is_null($rows[$k][$this->currency.'grandtoys2'])) ? '-----' : $this->__priceConc($rows[$k][$this->currency.'grandtoys2']);
                 $rows[$k]['diff_grandtoys2'] = ($rows[$k]['grandtoys2'] === '-----') ? '-----' : $rows[$k]['diff_grandtoys2'].'%';
-                $rows[$k]['grandtoys3'] = (is_null($rows[$k][$this->currency.'grandtoys3'])) ? '-----' : $rows[$k][$this->currency.'grandtoys3'];
+                $rows[$k]['grandtoys3'] = (is_null($rows[$k][$this->currency.'grandtoys3'])) ? '-----' : $this->__priceConc($rows[$k][$this->currency.'grandtoys3']);
                 $rows[$k]['diff_grandtoys3'] = ($rows[$k]['grandtoys3'] === '-----') ? '-----' : $rows[$k]['diff_grandtoys3'].'%';
-                $rows[$k]['kindermarket'] = (is_null($rows[$k][$this->currency.'kindermarket'])) ? '-----' : $rows[$k][$this->currency.'kindermarket'];
+                $rows[$k]['kindermarket'] = (is_null($rows[$k][$this->currency.'kindermarket'])) ? '-----' : $this->__priceConc($rows[$k][$this->currency.'kindermarket']);
                 $rows[$k]['diff_kindermarket'] = ($rows[$k]['kindermarket'] === '-----') ? '-----' : $rows[$k]['diff_kindermarket'].'%';
 
 
@@ -227,6 +231,7 @@
             $smarty->assign('Categories', $this->categories);
             $smarty->assign('disc_usd', $this->disc_usd);
             $smarty->assign('disc_ua', $this->disc_ua);
+            $smarty->assign('disc_conc', $this->disc_conc);
             $smarty->assign('GridRows', $rows);
             $smarty->assign('rows', $count_rows);
             $smarty->assign('TotalFound', str_replace('{N}', $grid->total_rows_num, 'Найдено товаров: {N}'));
@@ -242,6 +247,11 @@
         protected function __setDisc_ua()
         {
             $this->disc_ua = (int)$_GET['disc_ua'];
+        }
+
+        protected function __setDisc_conc()
+        {
+            $this->disc_conc = (int)$_GET['disc_conc'];
         }
 
         protected function __setCurrency()
@@ -336,21 +346,16 @@
             sort($this->categories);
         }
 
-        protected function __getCategory()
-        {
-            $query = "SELECT DISTINCT category FROM $this->table";
-            $result = mysql_query($query) or die(mysql_error().$query);
-            $row = mysql_fetch_row($result);
-
-            return $row[0];
-        }
-
         protected function __priceDiscount($Price, $ua, $disc_usd = 0, $disc_ua = 0)
         {
             $real_skidka = ($ua) ? $disc_ua : $disc_usd;
             $outPrice = round($Price - ($Price * $real_skidka / 100), 2);
 
             return $outPrice;
+        }
+        protected function __priceConc($Price)
+        {
+            return $outPrice = round($Price - ($Price * $this->disc_conc / 100), 2);
         }
     }
 

@@ -82,15 +82,19 @@
             border-left: 2px ridge #7987FF;
         }
 
+        #discounts input {
+            width: 20px;
+        }
+
         label, select, .input_message {
             margin-right: 5px;
             color: darkblue;
             font-size: 13px;
         }
         
-        .input_message {
+        .input_message .search{
             height: 18px;
-            margin-top: 7px;
+            margin-top: 3px;
         }
 
         #selections select {
@@ -178,21 +182,27 @@
 
             <div id=discounts>
                 <div>
-                    <label for="disc_usd">Скидка Китай</label>
+                    <label for="disc_usd">Скидка Китай:</label>
                     <input type="text" class="input_message" value="{$disc_usd}"
-                       style="width:154px;" name="disc_usd" id="disc_usd">
+                       style="margin-left: 41px;" name="disc_usd" id="disc_usd">
                 </div>
 
                 <div>
-                    <label for="disc_ua">Скидка Украина</label>
+                    <label for="disc_ua">Скидка Украина:</label>
                     <input type="text" class="input_message" value="{$disc_ua}"
-                       style="width:139px;" name="disc_ua" id="disc_ua">
+                       style="margin-left: 26px;" name="disc_ua" id="disc_ua">
                 </div>          
-                
+
                 <div>
-                    <label for="searchstring">Поиск товаров</label>
-                    <input type="text" class="input_message" rel="Поиск товаров" value=""
-                           style="width:150px;" name="searchstring" id="searchstring">
+                    <label for="disc_conc">Скидка Конкурентов:</label>
+                    <input type="text" class="input_message" value="{$disc_conc}"
+                       name="disc_conc" id="disc_conc">
+                </div>
+
+                <div>
+                    <label for="searchstring" style="color: #45AF10;">Поиск товаров:</label>
+                    <input type="text" class="search" rel="Поиск товаров" value=""
+                           style="width:100px;" name="searchstring" id="searchstring">
                 </div>
             </div>
 
@@ -281,16 +291,9 @@
                 {*{assign var=customer_url value="did=&ukey=user_info&userID=`$GridRows[i].customerID`"|set_query_html}*}
                 <tr class="{cycle values="odd,even"}">
                     <td class="to_right">{$GridRows[i].num}.</td>
-                    <td>
-                        {*<!-- <a href='{$customer_url}'> -->*}
-                        {$GridRows[i].code_1c}
-                        {*<!-- </a> -->*}
-                    </td>
+                    <td>{$GridRows[i].code_1c}</td>
                     <td class="blue">{$GridRows[i].product_code|escape:'html'}</td>
-                    {*<td><img class="preview" width="64px" height="48px" src="{$GridRows[i].img|escape:'html'}" alt="Нет фото" data-pid='{$GridRows[i].img_big|escape:'html'}'></td>*}
-                    <td>
-                        <img class="preview" width="80px" height="60px" src="{$GridRows[i].img|escape:'html'}" alt="Нет фото">
-                    </td>
+                    <td><img class="preview" width="80px" height="60px" src="{$GridRows[i].img|escape:'html'}" alt="Нет фото"></td>
                     <td {if $GridRows[i].max_diff > 0}class="red"{/if}>{$GridRows[i].name_ru|escape:'html'}</td>
                     {*<td class="brand">{$GridRows[i].category|escape:'html'}</td>*}
                     <td class="to_right choco">{$GridRows[i].purchase}</td>

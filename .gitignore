@@ -70,6 +70,7 @@ img/
 upload/
 *pictures*/
 published/publicdata/MULTITOYS/attachments/SC/rss/
+/kernel/includes/smarty/compiled/SC/templates_c/MULTITOYS/*.php
 published/publicdata/MULTITOYS/attachments/SC/themes/multitoys/
 published/publicdata/MULTITOYS/attachments/SC/themes/user_multi-new/temp_overridestyles/
 popup/search_by_conc/divoland/**/*.html

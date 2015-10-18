@@ -108,7 +108,7 @@ class ProductList extends DBObject {
 		while($row = db_fetch_assoc($dbres)){
             LanguagesManager::ml_fillFields(PRODUCTS_TABLE, $row);
 			if(!$row['thumbnail'] || !file_exists(DIR_PRODUCTS_PICTURES.'/'.$row['thumbnail']))unset($row['thumbnail']);
-            $price = ZCalcPrice($row['Price'], $row['skidka'], $row['ukraine']);
+            $price = priceDiscount($row['Price'], $row['skidka'], $row['ukraine']);
 			$row["price_str"] = show_price($price);
 			$row["list_price_str"] = show_price($row["list_price"]);
 			$products[] = $row;

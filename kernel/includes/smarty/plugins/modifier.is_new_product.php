@@ -1,16 +1,13 @@
 <?php
 
-function smarty_modifier_is_new_product($productID)
-{
-  $query = "
-SELECT count(*)  FROM SC_product_list_item
-WHERE list_id = 'newitemspostup' AND productID = '".$productID."' ";
+    function smarty_modifier_is_new_product($productID)
+    {
+        $query = "
+                SELECT count(*)  FROM SC_category_product
+                WHERE categoryID = 66666 AND productID = '".$productID."' ";
 
-  $res   = mysql_query($query) or die(mysql_error()."<br>$query");
-  $row = mysql_fetch_row($res);
-  return intval($row[0]);
-}
+        $res = mysql_query($query) or die(mysql_error()."<br>$query");
+        $row = mysql_fetch_row($res);
 
-/* vim: set expandtab: */
-
-?>
+        return (int)$row[0];
+    }

@@ -27,7 +27,7 @@ function smarty_function_get_top_ua( $params, &$smarty )
         $tops=array();
         while( $row = db_fetch_assoc($q) )
         {
-            $price = ZCalcPrice($row['Price'], $row['skidka'], $row['ukraine']);
+            $price = priceDiscount($row['Price'], $row['skidka'], $row['ukraine']);
             $row['price_str'] = show_price($price);
             $tops[] = $row;
         }

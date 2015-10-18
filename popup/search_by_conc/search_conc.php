@@ -71,52 +71,55 @@
         $no = 0;
         //if ($res = getProductLike($match_str, $price, $k, $limit)) {
         if ($res = getProductLike($match_str, 0, 0, $limit)) {
-
+            $auxpage = $_SESSION['auxpage'];
             while ($Product = mysql_fetch_object($res)) {
 
-                $score = round($Product->score, 1);
-                $min_score = ($ajax)?5:7;
+                if (!getValue('code_1c', "code_1c = '$Product->code_1c'", 'Conc_search__'.$auxpage)) {
 
-                if ($score > $min_score) {
+                    $score = round($Product->score, 1);
+                    $min_score = ($ajax) ? 5 : 7;
 
-                    $no++;
-                    $name_ru = mb_strtolower($Product->name_ru, 'UTF-8');
-                    $product_code = mb_strtolower($Product->product_code, 'UTF-8');
-                    $category = $category_name[$Product->categoryID];
-                    $searchstrings = array_unique($searchstring);
+                    if ($score > $min_score) {
 
-                    foreach ($searchstrings as $keys => $match) {
+                        $no++;
+                        $name_ru = mb_strtolower($Product->name_ru, 'UTF-8');
+                        $product_code = mb_strtolower($Product->product_code, 'UTF-8');
+                        $category = $category_name[$Product->categoryID];
+                        $searchstrings = array_unique($searchstring);
 
-                        $match = mb_strtolower($match, 'UTF-8');
-                        $name_ru = str_replace($match, '<mark class="mark_name">'.$match.'</mark>', $name_ru);
-                        $product_code = str_replace($match, '<span class="mark_code">'.$match.'</span>', $product_code);
-                    }
+                        foreach ($searchstrings as $keys => $match) {
 
-                    $price_diff = round(($Product->Price / $price - 1) * 100, 1);
-                    $marked = ($price_diff > 0) ? '#BD2626' : 'green';
-                    $disabled = '';
-                    $button = 'font-size:1.3em;height: 2.2em;width: 3em;';
-                    $art = 'font-weight:700;color:orangered;';
-
-                    if ($ajax) {
-                        if (!$Product->enabled) {
-                            //$disabled = 'color:grey;text-decoration:line-through;';
-                            $button .= 'background-color: #848484;';
+                            $match = mb_strtolower($match, 'UTF-8');
+                            $name_ru = str_replace($match, '<mark class="mark_name">'.$match.'</mark>', $name_ru);
+                            $product_code = str_replace($match, '<span class="mark_code">'.$match.'</span>', $product_code);
                         }
-                    } else {
-                        $button .= 'background-color: lime;';
-                    }
 
-                    $search .= "<div style='max-width: 800px;'><div style='float:left;'><button class='blue-button' title=''
-                    onclick='setAnalogs(\"$conc\",\"$code\",\"$Product->code_1c\",\"$price\")' type=button
-                     style=\"$button\">$score</button></div><div style=\"$disabled\">
-                    $no) $Product->code_1c  <span style=$art>[$product_code]</span> $name_ru
-                    <span style='color:$marked'>$Product->Price</span> &#8372; <br><span style='color: #03A9F4;font-style: italic;'>разница: </span><span style='color:$marked;font-weight:700'>$price_diff%</span>
-                    <br><small style='font-size:0.7em;'>категория: &laquo;$category&raquo;</small>";
-                    if (!count($conc_args)) {
-                        $search .= '<hr>';
+                        $price_diff = round(($Product->Price / $price - 1) * 100, 1);
+                        $marked = ($price_diff > 0) ? '#BD2626' : 'green';
+                        $disabled = '';
+                        $button = 'font-size:1.3em;height: 2.2em;width: 3em;';
+                        $art = 'font-weight:700;color:orangered;';
+
+                        if ($ajax) {
+                            if (!$Product->enabled) {
+                                //$disabled = 'color:grey;text-decoration:line-through;';
+                                $button .= 'background-color: #848484;';
+                            }
+                        } else {
+                            $button .= 'background-color: lime;';
+                        }
+
+                        $search .= "<div style='max-width: 800px;'><div style='float:left;'><button class='blue-button' title=''
+                        onclick='setAnalogs(\"$conc\",\"$code\",\"$Product->code_1c\",\"$price\")' type=button
+                         style=\"$button\">$score</button></div><div style=\"$disabled\">
+                        $no) $Product->code_1c  <span style=$art>[$product_code]</span> $name_ru
+                        <span style='color:$marked'>$Product->Price</span> &#8372; <br><span style='color: #03A9F4;font-style: italic;'>разница: </span><span style='color:$marked;font-weight:700'>$price_diff%</span>
+                        <br><small style='font-size:0.7em;'>категория: &laquo;$category&raquo;</small>";
+                        if (!count($conc_args)) {
+                            $search .= '<hr>';
+                        }
+                        $search .= '</div></div>';
                     }
-                    $search .= '</div></div>';
                 }
             }
             if (!$ajax) {
@@ -151,7 +154,7 @@
             $code = $_GET['code'];
             $code1c = $_GET['code1c'];
             $price = $_GET['price'];
-            $analog = getValue('code_1c', "code = '$code'", $auxpage);
+            $analog = getValue('code_1c', "code = '$code'", 'Conc_search__'.$auxpage);
             if (!$analog) {
                 $query = "INSERT INTO $table
 								 (  code,    code_1c )
@@ -190,7 +193,7 @@
             $code = $_GET['code'];
             $code1c = $_GET['code1c'];
             $price = $_GET['price'];
-            $analog = getValue('code_1c', "code = '$code'", $auxpage);
+            $analog = getValue('code_1c', "code = '$code'", 'Conc_search__'.$auxpage);
             if ($analog) {
                 $query = "DELETE FROM $table
                       WHERE code = '$code'";
@@ -224,7 +227,7 @@ href='/popup/search_by_conc/search_conc.php?mode=1&conc=$conc&code=$code&price=$
 
     function getValue($what, $condition, $auxpage)
     {
-        $query = "SELECT $what FROM Conc_search__$auxpage WHERE $condition LIMIT 1";
+        $query = "SELECT $what FROM $auxpage WHERE $condition LIMIT 1";
         $result = mysql_query($query) or die('Ошибка в запросе: '.mysql_error().'<br>'.$query);
         $row = mysql_fetch_row($result);
 

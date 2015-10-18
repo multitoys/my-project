@@ -85,7 +85,7 @@
                 $price_conc = (stripslashes(trim(strip_tags($_POST['priceConc']))));
                 $set_conc = "onclick=setAnalogs(\"$conc\",\"$code\",\"$code1c\",\"$price_conc\")";
             } else {
-                $price = round(ZCalcPrice($sql['Price'], $sql['skidka'], $sql['ukraine']), 2);
+                $price = round(priceDiscount($sql['Price'], $sql['skidka'], $sql['ukraine']), 2);
                 $price = '<p><span style="color:#008DD9">цена: '.$price.'</span></p>';
             }
             //$price = ($vip)?'<p><span style="color:#008DD9">цена: '.$sql['Price'].'</span></p>':'';

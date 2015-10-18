@@ -32,7 +32,7 @@
         $esumma = 0;
 
         while ($Product = mysql_fetch_object($res)) {
-            $price = ZCalcPrice($Product->Price, $Product->skidka, $Product->ukraine);
+            $price = priceDiscount($Product->Price, $Product->skidka, $Product->ukraine);
             // $price = show_price($price);
             $stoimost = $Product->Quantity * $price;
             $esumma += $stoimost;

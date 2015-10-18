@@ -24,7 +24,7 @@ function smarty_function_get_topproducts( $params, &$smarty )
         $products=array();
         while( $row = db_fetch_assoc($q) )
         {
-            $price = ZCalcPrice($row['Price'], $row['skidka'], $row['ukraine']);
+            $price = priceDiscount($row['Price'], $row['skidka'], $row['ukraine']);
             $row['price_str'] = show_price($price);
             $row['list_price_str'] = show_price($row['list_price']);
             $products[] = $row;

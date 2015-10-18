@@ -1,7 +1,7 @@
-<?php /* Smarty version 2.6.9, created on 2015-09-21 23:30:23
+<?php /* Smarty version 2.6.9, created on 2015-10-19 00:23:56
          compiled from shopping_cart.html */ ?>
 <?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
-smarty_core_load_plugins(array('plugins' => array(array('modifier', 'translate', 'shopping_cart.html', 33, false),array('modifier', 'set_query_html', 'shopping_cart.html', 36, false),array('modifier', 'escape', 'shopping_cart.html', 120, false),array('modifier', 'is_new_product', 'shopping_cart.html', 125, false),array('modifier', 'string_format', 'shopping_cart.html', 138, false),array('modifier', 'transcape', 'shopping_cart.html', 163, false),array('function', 'cycle', 'shopping_cart.html', 115, false),)), $this); ?>
+smarty_core_load_plugins(array('plugins' => array(array('modifier', 'translate', 'shopping_cart.html', 33, false),array('modifier', 'set_query_html', 'shopping_cart.html', 36, false),array('modifier', 'escape', 'shopping_cart.html', 125, false),array('modifier', 'is_new_product', 'shopping_cart.html', 130, false),array('modifier', 'string_format', 'shopping_cart.html', 161, false),array('modifier', 'transcape', 'shopping_cart.html', 168, false),array('function', 'cycle', 'shopping_cart.html', 120, false),)), $this); ?>
 <div id="blck-content">
 
 
@@ -67,23 +67,28 @@ smarty_core_load_plugins(array('plugins' => array(array('modifier', 'translate',
                 <div class="<?php if ($this->_tpl_vars['direction'] == 'ASC' && $this->_tpl_vars['sort'] == 'Price'): ?>z_sort_desc<?php else: ?>z_sort_asc<?php endif; ?>"></div>
             </td></tr></table>
         </a></td>
-        <td align="center"><a href="/?ukey=cart&sort=Bonus&direction=<?php if ($this->_tpl_vars['direction'] == 'ASC'): ?>DESC<?php else: ?>ASC<?php endif; ?>">
-            <table><tr><td>Кол-во бонусов</td><td>
-                <div class="<?php if ($this->_tpl_vars['direction'] == 'ASC' && $this->_tpl_vars['sort'] == 'Bonus'): ?>z_sort_desc<?php else: ?>z_sort_asc<?php endif; ?>"></div>
-            </td></tr></table>
-            </a>
-        </td>
         <td align="center">
             <table><tr><td>Остаток</td></tr></table>
         </td>
-		<td align="center"><a href="/?ukey=cart&sort=count&direction=<?php if ($this->_tpl_vars['direction'] == 'ASC'): ?>DESC<?php else: ?>ASC<?php endif; ?>">
+        <td align="center"><a href="/?ukey=cart&sort=count&direction=<?php if ($this->_tpl_vars['direction'] == 'ASC'): ?>DESC<?php else: ?>ASC<?php endif; ?>">
             <table><tr><td><?php echo ((is_array($_tmp='cart_product_quantity')) ? $this->_run_mod_handler('translate', true, $_tmp) : smarty_modifier_translate($_tmp)); ?>
 </td><td>
                 <div class="<?php if ($this->_tpl_vars['direction'] == 'ASC' && $this->_tpl_vars['sort'] == 'count'): ?>z_sort_desc<?php else: ?>z_sort_asc<?php endif; ?>"></div>
             </td></tr></table>
         </a></td>
-		<td align="center">Сумма</td>
-		<td align="center">Удалить</td>
+        <td align="center"><a href="/?ukey=cart&sort=Bonus&direction=<?php if ($this->_tpl_vars['direction'] == 'ASC'): ?>DESC<?php else: ?>ASC<?php endif; ?>">
+                <table>
+                    <tr>
+                        <td>Кол-во баллов</td>
+                        <td>
+                            <div class="<?php if ($this->_tpl_vars['direction'] == 'ASC' && $this->_tpl_vars['sort'] == 'Bonus'): ?>z_sort_desc<?php else: ?>z_sort_asc<?php endif; ?>"></div>
+                        </td>
+                    </tr>
+                </table>
+            </a>
+        </td>
+        <td align="center">Сумма</td>
+        <td align="center">Удалить</td>
 	</tr>
 	<?php $this->assign('ProductsNum', 0); ?>
 	<?php $this->assign('num', 1); ?>
@@ -143,13 +148,9 @@ $this->_sections['i']['last']       = ($this->_sections['i']['iteration'] == $th
 		</td>
 		<td align="center"><?php echo $this->_tpl_vars['cart_content'][$this->_sections['i']['index']]['costUC']; ?>
 </td>
-        <td align="center">
-            <?php echo ((is_array($_tmp=$this->_tpl_vars['cart_content'][$this->_sections['i']['index']]['Bonus'])) ? $this->_run_mod_handler('string_format', true, $_tmp, "%d") : smarty_modifier_string_format($_tmp, "%d")); ?>
-&nbsp;бал.
-        </td>
 		<td align="center"><?php echo $this->_tpl_vars['cart_content'][$this->_sections['i']['index']]['ostatok']; ?>
 &nbsp;шт.</td>
-		<td align="center" style='white-space:nowrap;'>
+        <td align="center" style='white-space:nowrap;'>
 			<?php $this->assign('ProductsNum', $this->_tpl_vars['ProductsNum']+$this->_tpl_vars['cart_content'][$this->_sections['i']['index']]['quantity']); ?>
 
 			<?php if ($this->_tpl_vars['session_items']):  $this->assign('_prdid', $this->_tpl_vars['session_items'][$this->_sections['i']['index']]); ?>
@@ -171,7 +172,11 @@ $this->_sections['i']['last']       = ($this->_sections['i']['iteration'] == $th
 			</span></div>
 			<?php endif; ?>
 		</td>
-		<td align="center" nowrap="nowrap">
+        <td align="center">
+            <?php echo ((is_array($_tmp=$this->_tpl_vars['cart_content'][$this->_sections['i']['index']]['Bonus'])) ? $this->_run_mod_handler('string_format', true, $_tmp, "%d") : smarty_modifier_string_format($_tmp, "%d")); ?>
+&nbsp;бал.
+        </td>
+        <td align="center" nowrap="nowrap">
 			<?php echo $this->_tpl_vars['cart_content'][$this->_sections['i']['index']]['cost']; ?>
 
 		</td>
@@ -242,42 +247,25 @@ $this->_sections['i']['last']       = ($this->_sections['i']['iteration'] == $th
     <?php endif; ?>
 
 	<tr>
-		<td id="cart_total_label" colspan="3"></td>
-		<td align="center" style="color:blue; font-size: 110%;"><b><?php echo ((is_array($_tmp='str_total')) ? $this->_run_mod_handler('translate', true, $_tmp) : smarty_modifier_translate($_tmp)); ?>
+        <td></td>
+        <td id="cart_total_label" colspan="4">
+            <input type='hidden' name="123" id="recalculate" value='123'>
+            <input type="button" class="blue-button check" value='Обновить заказ' tabindex="1004" onclick='del_items();'>
+            <input type="submit" class="btn_checkout blue-button check" name="checkout" value="<?php echo ((is_array($_tmp='str_checkout')) ? $this->_run_mod_handler('translate', true, $_tmp) : smarty_modifier_translate($_tmp)); ?>
+" id="btn-checkout" tabindex="1005">
+        </td>
+        <td style="color:blue; font-size: 130%;"><b><?php echo ((is_array($_tmp='str_total')) ? $this->_run_mod_handler('translate', true, $_tmp) : smarty_modifier_translate($_tmp)); ?>
 :</b></td>
-        <td align="center" style="color:green; font-size: 110%;"><b><?php echo $this->_tpl_vars['bonus_total']; ?>
+        <td style="color:green;"><b><?php echo $this->_tpl_vars['bonus_total']; ?>
 </b>&nbsp;баллов</td>
-        <td></td><td></td>
-		<td id="cart_total" align="center" style="color:red; font-size: 110%;"><b><?php echo $this->_tpl_vars['cart_total']; ?>
+		<td id="cart_total" style="color:red; font-size: 110%;"><b><?php echo $this->_tpl_vars['cart_total']; ?>
 </b></td>
 		<td align='right'></td>
 	</tr>
 	
 <tr style="height: 10px;"></tr>
-	<tr>
-		<td colspan='4' style='text-align:right;'>
-		  <input type='hidden' name="123" id="recalculate" value='123'>
-		  <input type="button" class="blue-button check" value='Обновить заказ' tabindex="1004" onclick='del_items();'/>
-		</td>
-		<td colspan="4"  style='text-align:left;' id="cart_checkout_btn">
-			<input type="submit" class="btn_checkout blue-button check" name="checkout" value="<?php echo ((is_array($_tmp='str_checkout')) ? $this->_run_mod_handler('translate', true, $_tmp) : smarty_modifier_translate($_tmp)); ?>
-" id="btn-checkout" tabindex="1005" />
-
-			<?php if (( $this->_tpl_vars['GoogleCheckout_CheckoutButton'] || $this->_tpl_vars['PPExpressCheckout_button'] ) && $this->_tpl_vars['PAGE_VIEW'] != 'mobile'): ?>
-			<p><?php echo ((is_array($_tmp='cart_checkout_alternative')) ? $this->_run_mod_handler('translate', true, $_tmp) : smarty_modifier_translate($_tmp)); ?>
-</p>
-			<table>
-			<tr>
-				<td valign="middle"><?php echo $this->_tpl_vars['GoogleCheckout_CheckoutButton']; ?>
-</td>
-				<td valign="middle"><?php echo $this->_tpl_vars['PPExpressCheckout_button']; ?>
-</td>
-			</tr>
-			</table>
-			<?php endif; ?>
-		</td>
-	</tr>
-	</table>
+					  		  							
+																																	</table>
 	</form>
 <?php else: ?>
 
@@ -288,3 +276,4 @@ $this->_sections['i']['last']       = ($this->_sections['i']['iteration'] == $th
   <br>
   </div>
 
+

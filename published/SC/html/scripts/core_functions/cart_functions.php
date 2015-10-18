@@ -304,7 +304,7 @@ function GetPriceProductWithOption($variants, $productID)
 	// echo($customer->skidka.'<br>');
 	// echo($r["skidka"].'<br>');
 
-    $full_price = ZCalcPrice($r["Price"], $r["skidka"], $r["ukraine"]);
+    $full_price = priceDiscount($r["Price"], $r["skidka"], $r["ukraine"]);
 	// $full_price = RoundFloatValueStr($full_price);
 	// $full_price = show_price($full_price);
 	/*foreach($variants as $var)

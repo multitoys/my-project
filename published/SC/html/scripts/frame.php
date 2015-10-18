@@ -60,23 +60,23 @@
 		}
 		if(!count($i['sub_tabs']))continue;	
 		$top_menu[] = $i;		
-		/*
-		$i = array(
-			'title' => $scStrings[$_div['xName']],
-			'xID' => $_div['xID'],
-			'sub_divisions' => array()
-		);
-		if(is_array($_div['sub_divs'])){
-			foreach ($_div['sub_divs'] as $__div){
-			
-				if(!checkUserFunctionsRights( $currentUser, 'SC', 'SC__'.$__div['xID'], $kernelStrings ))continue;
-				$i['sub_divisions'][$scStrings[$__div['xName']]] = 'frame.php?did='.$__div['xID'];
-			}
-		}
-		if(!count($i['sub_divisions']))continue;	
-		$top_menu[] = $i;		
 
-		 */
+		//$i = array(
+		//	'title' => $scStrings[$_div['xName']],
+		//	'xID' => $_div['xID'],
+		//	'sub_divisions' => array()
+		//);
+		//if(is_array($_div['sub_divs'])){
+		//	foreach ($_div['sub_divs'] as $__div){
+		//
+		//		if(!checkUserFunctionsRights( $currentUser, 'SC', 'SC__'.$__div['xID'], $kernelStrings ))continue;
+		//		$i['sub_divisions'][$scStrings[$__div['xName']]] = 'frame.php?did='.$__div['xID'];
+		//	}
+		//}
+		//if(!count($i['sub_divisions']))continue;
+		//$top_menu[] = $i;
+
+
 	}
 //	var_dump($top_menu);
 	

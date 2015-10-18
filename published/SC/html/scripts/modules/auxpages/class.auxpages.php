@@ -719,7 +719,7 @@ class AuxPages extends ComponentModule {
                             $res3 = mysql_query($query3) or die(mysql_error().$query3);
 
                             if ($M_Product = mysql_fetch_object($res3)) {
-                                $price = show_price(ZCalcPrice($Product->Price, $Product->skidka, $Product->ukraine));
+                                $price = show_price(priceDiscount($Product->Price, $Product->skidka, $Product->ukraine));
                                 $price_diff = round(($price / $M_Product->price_uah - 1) * 100, 1);
                                 //                                $price_diff = round(($Product->Price / $M_Product->price_uah - 1) * 100, 1);
                                 $marked = ($price_diff > 0) ? 'red' : 'green';
@@ -738,7 +738,7 @@ class AuxPages extends ComponentModule {
                     }
                 }
                 /**********************************************************************************************************/
-                $price = show_price(ZCalcPrice($Product->Price, $Product->skidka, $Product->ukraine));
+                $price = show_price(priceDiscount($Product->Price, $Product->skidka, $Product->ukraine));
                 $category = $category_name[$Product->categoryID];
                 $label_new = ($new[$Product->productID]) ? '<div class="corner color_newitem"><span></span>Новинка!</div>' : '';
                 //$label_new = '<div class="corner color_newitemspostup"><span></span>Новинка!</div>';

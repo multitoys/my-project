@@ -387,7 +387,7 @@
                     }
                 }
                 /**********************************************************************************************************/
-                $price = show_price(ZCalcPrice($Product->Price, $Product->skidka));
+                $price = show_price(priceDiscount($Product->Price, $Product->skidka));
                 $category = $category_name[$Product->categoryID];
                 $label_new = ($new[$Product->productID])?'<div class="corner color_newitem"><span></span>Новинка!</div>':'';
                 //$label_new = '<div class="corner color_newitemspostup"><span></span>Новинка!</div>';

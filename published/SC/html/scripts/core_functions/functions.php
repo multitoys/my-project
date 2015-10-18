@@ -1858,7 +1858,22 @@
         $customer_skidka - Пользовательская скидка
         $product_skidka - Значение из столбца "Скидка" файла product.xls
     */
-    function ZCalcPrice($Price, $product_skidka, $ua)
+    function priceDiscount($Price, $product_skidka, $ua)
+    {
+        $customer = (int)$_SESSION['cs_skidka'];
+
+        if ($ua > 0) {
+            $customer = (int)$_SESSION['cs_skidka_ua'];
+        }
+
+        $skidka = (int)$product_skidka;
+        $real_skidka = min($customer, $skidka);
+        $outPrice = $Price - ($Price * $real_skidka / 100);
+
+        return $outPrice;
+    }
+
+    function bonusDiscount($Price, $product_skidka, $ua)
     {
         $customer = (int)$_SESSION['cs_skidka'];
 

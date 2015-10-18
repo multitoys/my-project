@@ -110,7 +110,7 @@ $Message = $Register->get(VAR_MESSAGE);
 			$smarty->assign("main_content_template", "product_info.frame.html");
 
 			$a = $product;
-            $a["PriceWithUnit"] = show_price(ZCalcPrice($a['Price'], $a['skidka'], $a['ukraine']));
+            $a["PriceWithUnit"] = show_price(priceDiscount($a['Price'], $a['skidka'], $a['ukraine']));
 			$a["list_priceWithUnit"] = show_price( $a["list_price"] );
 			
 			$currencyEntry = Currency::getSelectedCurrencyInstance();

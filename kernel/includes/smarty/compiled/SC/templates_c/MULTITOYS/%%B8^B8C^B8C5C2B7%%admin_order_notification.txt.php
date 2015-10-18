@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.9, created on 2015-09-22 08:32:52
+<?php /* Smarty version 2.6.9, created on 2015-10-18 21:31:20
          compiled from admin_order_notification.txt */ ?>
 <?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
 smarty_core_load_plugins(array('plugins' => array(array('modifier', 'translate', 'admin_order_notification.txt', 1, false),array('modifier', 'escape', 'admin_order_notification.txt', 8, false),)), $this); ?>
@@ -78,7 +78,8 @@ $this->_sections['i']['index_prev'] = $this->_sections['i']['index'] - $this->_s
 $this->_sections['i']['index_next'] = $this->_sections['i']['index'] + $this->_sections['i']['step'];
 $this->_sections['i']['first']      = ($this->_sections['i']['iteration'] == 1);
 $this->_sections['i']['last']       = ($this->_sections['i']['iteration'] == $this->_sections['i']['total']);
- if ($this->_tpl_vars['content'][$this->_sections['i']['index']]['product_code']): ?>[<?php echo $this->_tpl_vars['content'][$this->_sections['i']['index']]['product_code']; ?>
+?>
+<?php if ($this->_tpl_vars['content'][$this->_sections['i']['index']]['product_code']): ?>[<?php echo $this->_tpl_vars['content'][$this->_sections['i']['index']]['product_code']; ?>
 ] <?php endif;  echo ((is_array($_tmp=$this->_tpl_vars['content'][$this->_sections['i']['index']]['name'])) ? $this->_run_mod_handler('escape', true, $_tmp, 'html') : smarty_modifier_escape($_tmp, 'html')); ?>
  (x<?php echo $this->_tpl_vars['content'][$this->_sections['i']['index']]['Quantity']; ?>
 ): <?php echo $this->_tpl_vars['content'][$this->_sections['i']['index']]['Price']; ?>

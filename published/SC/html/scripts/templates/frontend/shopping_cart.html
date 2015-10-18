@@ -213,34 +213,40 @@
     {/if}
 
 	<tr>
-        <td id="cart_total_label" colspan="5"></td>
-        <td align="center" style="color:blue; font-size: 130%;"><b>{"str_total"|translate}:</b></td>
-        {*<td></td><td></td>*}
-        <td align="center" style="color:green; font-size: 110%;"><b>{$bonus_total}</b> баллов</td>
-		<td id="cart_total" align="center" style="color:red; font-size: 110%;"><b>{$cart_total}</b></td>
+        <td></td>
+        <td id="cart_total_label" colspan="4">
+            <input type='hidden' name="123" id="recalculate" value='123'>
+            <input type="button" class="blue-button check" value='Обновить заказ' tabindex="1004"
+                   onclick='del_items();'>
+            <input type="submit" class="btn_checkout blue-button check" name="checkout"
+                   value="{"str_checkout"|translate}" id="btn-checkout" tabindex="1005">
+        </td>
+        <td style="color:blue; font-size: 130%;"><b>{"str_total"|translate}:</b></td>
+        <td style="color:green;"><b>{$bonus_total}</b>&nbsp;баллов</td>
+        <td id="cart_total" style="color:red; font-size: 110%;"><b>{$cart_total}</b></td>
 		<td align='right'></td>
 	</tr>
 	
 <tr style="height: 10px;"></tr>
-	<tr>
-		<td colspan='4' style='text-align:right;'>
-		  <input type='hidden' name="123" id="recalculate" value='123'>
-		  <input type="button" class="blue-button check" value='Обновить заказ' tabindex="1004" onclick='del_items();'/>
-		</td>
-		<td colspan="4"  style='text-align:left;' id="cart_checkout_btn">
-			<input type="submit" class="btn_checkout blue-button check" name="checkout" value="{"str_checkout"|translate}" id="btn-checkout" tabindex="1005" />
+        {*<tr>*}
+        {*<td colspan='4' style='text-align:right;'>*}
+        {*<input type='hidden' name="123" id="recalculate" value='123'>*}
+        {*<input type="button" class="blue-button check" value='Обновить заказ' tabindex="1004" onclick='del_items();'/>*}
+        {*</td>*}
+        {*<td colspan="4"  style='text-align:left;' id="cart_checkout_btn">*}
+        {*<input type="submit" class="btn_checkout blue-button check" name="checkout" value="{"str_checkout"|translate}" id="btn-checkout" tabindex="1005">*}
 
-			{if ($GoogleCheckout_CheckoutButton || $PPExpressCheckout_button) && $PAGE_VIEW ne 'mobile'}
-			<p>{lbl_cart_checkout_alternative}</p>
-			<table>
-			<tr>
-				<td valign="middle">{$GoogleCheckout_CheckoutButton}</td>
-				<td valign="middle">{$PPExpressCheckout_button}</td>
-			</tr>
-			</table>
-			{/if}
-		</td>
-	</tr>
+        {*{if ($GoogleCheckout_CheckoutButton || $PPExpressCheckout_button) && $PAGE_VIEW ne 'mobile'}*}
+        {*<p>{lbl_cart_checkout_alternative}</p>*}
+        {*<table>*}
+        {*<tr>*}
+        {*<td valign="middle">{$GoogleCheckout_CheckoutButton}</td>*}
+        {*<td valign="middle">{$PPExpressCheckout_button}</td>*}
+        {*</tr>*}
+        {*</table>*}
+        {*{/if}*}
+        {*</td>*}
+        {*</tr>*}
 	</table>
 	</form>
 {else}

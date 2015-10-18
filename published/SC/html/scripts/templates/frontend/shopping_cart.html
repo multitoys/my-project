@@ -91,22 +91,27 @@
                 <div class="{if $direction=='ASC'&&$sort=='Price'}z_sort_desc{else}z_sort_asc{/if}"></div>
             </td></tr></table>
         </a></td>
-        <td align="center"><a href="/?ukey=cart&sort=Bonus&direction={if $direction=='ASC'}DESC{else}ASC{/if}">
-            <table><tr><td>Кол-во бонусов</td><td>
-                <div class="{if $direction=='ASC'&&$sort=='Bonus'}z_sort_desc{else}z_sort_asc{/if}"></div>
-            </td></tr></table>
-            </a>
-        </td>
         <td align="center">
             <table><tr><td>Остаток</td></tr></table>
         </td>
-		<td align="center"><a href="/?ukey=cart&sort=count&direction={if $direction=='ASC'}DESC{else}ASC{/if}">
+        <td align="center"><a href="/?ukey=cart&sort=count&direction={if $direction=='ASC'}DESC{else}ASC{/if}">
             <table><tr><td>{lbl_cart_product_quantity}</td><td>
                 <div class="{if $direction=='ASC'&&$sort=='count'}z_sort_desc{else}z_sort_asc{/if}"></div>
             </td></tr></table>
         </a></td>
-		<td align="center">Сумма</td>
-		<td align="center">Удалить</td>
+        <td align="center"><a href="/?ukey=cart&sort=Bonus&direction={if $direction=='ASC'}DESC{else}ASC{/if}">
+                <table>
+                    <tr>
+                        <td>Кол-во баллов</td>
+                        <td>
+                            <div class="{if $direction=='ASC'&&$sort=='Bonus'}z_sort_desc{else}z_sort_asc{/if}"></div>
+                        </td>
+                    </tr>
+                </table>
+            </a>
+        </td>
+        <td align="center">Сумма</td>
+        <td align="center">Удалить</td>
 	</tr>
 	{assign var="ProductsNum" value=0}
 	{assign var="num" value=1}
@@ -134,11 +139,8 @@
 			{/if}
 		</td>
 		<td align="center">{$cart_content[i].costUC}</td>
-        <td align="center">
-            {$cart_content[i].Bonus|string_format:"%d"}&nbsp;бал.
-        </td>
 		<td align="center">{$cart_content[i].ostatok}&nbsp;шт.</td>
-		<td align="center" style='white-space:nowrap;'>
+        <td align="center" style='white-space:nowrap;'>
 			{assign var="ProductsNum" value=$ProductsNum+$cart_content[i].quantity}
 
 			{if $session_items}{assign var=_prdid value=$session_items[i]}
@@ -155,7 +157,10 @@
 			</span></div>
 			{/if}
 		</td>
-		<td align="center" nowrap="nowrap">
+        <td align="center">
+            {$cart_content[i].Bonus|string_format:"%d"}&nbsp;бал.
+        </td>
+        <td align="center" nowrap="nowrap">
 			{$cart_content[i].cost}
 		</td>
 		<td align="center">
@@ -208,10 +213,10 @@
     {/if}
 
 	<tr>
-		<td id="cart_total_label" colspan="3"></td>
-		<td align="center" style="color:blue; font-size: 110%;"><b>{"str_total"|translate}:</b></td>
-        <td align="center" style="color:green; font-size: 110%;"><b>{$bonus_total}</b>&nbsp;баллов</td>
-        <td></td><td></td>
+        <td id="cart_total_label" colspan="5"></td>
+        <td align="center" style="color:blue; font-size: 130%;"><b>{"str_total"|translate}:</b></td>
+        {*<td></td><td></td>*}
+        <td align="center" style="color:green; font-size: 110%;"><b>{$bonus_total}</b> баллов</td>
 		<td id="cart_total" align="center" style="color:red; font-size: 110%;"><b>{$cart_total}</b></td>
 		<td align='right'></td>
 	</tr>

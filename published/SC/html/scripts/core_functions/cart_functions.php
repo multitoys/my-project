@@ -408,280 +408,235 @@ function cartGetCartContent($sort='name', $direction='ASC'){
 	$currencyEntry = Currency::getSelectedCurrencyInstance();
 	$customerEntry = Customer::getAuthedInstance();
 
-	if(!is_null($customerEntry)){//get cart content from the database
+    //if(!is_null($customerEntry)){//get cart content from the database
+    //$query         = "SELECT skidka FROM SC_customers WHERE customerID = $customerEntry->customerID";
+    //$skidka        = mysql_fetch_object(mysql_query($query))->skidka;
 
-	  $query         = "SELECT skidka FROM SC_customers WHERE customerID = $customerEntry->customerID";
-	  $skidka        = mysql_fetch_object(mysql_query($query))->skidka;
+    if (isset($_SESSION['log'])) {
 
-	  switch ($sort) {
-	  	case 'name':
-	  		$sort_field = 't3.name_ru';
-	  		break;
-	  	case 'Price':
-	  		$sort_field = 't3.Price';
-	  		break;
-		case 'optprice':
-	  		$sort_field = 't3.optprice';
-	  		break;
-	  	case 'doza':
-	  		$sort_field = 't3.doza';
-	  		break;
-		case 'ostatok':
-	  		$sort_field = 't3.ostatok';
-	  	case 'Bonus':
-	  		$sort_field = 't3.Bonus';
-	  		break;
+        $skidka = (int)$_SESSION['cs_skidka'];
 
-			
-	  	case 'Bonus':
-	  		$sort_field = 't3.Bonus';
-	  		break;
-	  	case 'count':
-	  		$sort_field = 't1.Quantity';
-	  		break;	
-	  	default:
-	  		$sort_field = 't3.name_ru';
-	  		break;
-	  }
+        switch ($sort) {
+            case 'name':
+                $sort_field = 't3.name_ru';
+                break;
+            case 'Price':
+                $sort_field = 't3.Price';
+                break;
+            case 'ostatok':
+                $sort_field = 't3.ostatok';
+                break;
+            case 'Bonus':
+                $sort_field = 't3.Bonus';
+                break;
+            case 'count':
+                $sort_field = 't1.Quantity';
+                break;
+            default:
+                $sort_field = 't3.name_ru';
+                break;
+        }
 
-
-		$q = db_phquery('
-			SELECT t3.*, t1.itemID, t1.Quantity, t4.thumbnail, t4.filename FROM ?#SHOPPING_CARTS_TABLE t1
+        $q = db_phquery('
+			SELECT t3.productID, t3.name_ru, t3.Price, t3.Bonus, t3.ostatok,
+			       t1.itemID, t1.Quantity, t4.thumbnail, t4.filename 
+			    FROM ?#SHOPPING_CARTS_TABLE t1
 				LEFT JOIN ?#SHOPPING_CART_ITEMS_TABLE t2 ON t1.itemID=t2.itemID
 				LEFT JOIN ?#PRODUCTS_TABLE t3 ON t2.productID=t3.productID
 				LEFT JOIN ?#PRODUCT_PICTURES t4 ON t3.default_picture=t4.photoID
-			WHERE customerID=? ORDER BY '.$sort_field.' '.$direction, $customerEntry->customerID);
+			WHERE customerID=? ORDER BY '.$sort_field.' '.$direction, $_SESSION['cs_id']);
 
-		while ($cart_item = db_fetch_assoc($q)){
+        while ($cart_item = db_fetch_assoc($q)) {
 
-			// get variants
-			$variants=GetConfigurationByItemId( $cart_item["itemID"] );
+            // get variants
+            $variants = GetConfigurationByItemId($cart_item['itemID']);
 
-			LanguagesManager::ml_fillFields(PRODUCTS_TABLE, $cart_item);
+            LanguagesManager::ml_fillFields(PRODUCTS_TABLE, $cart_item);
 
-		  $maxskidka = $cart_item['skidka'];
-		  $oneskidka = min($maxskidka, $skidka);
+            $maxskidka = $cart_item['skidka'];
+            $oneskidka = min($maxskidka, $skidka);
 
-			$costUC = GetPriceProductWithOption( $variants, $cart_item["productID"]);
-			// $costUC = doubleval (str_replace(",", "", $costUC));
-			$Bonus = $cart_item["Bonus"];
-			$tmp = array(
-			"productID" => $cart_item["productID"],
-			
-			"slug" => $cart_item["slug"],
-			"id" =>	$cart_item["itemID"],
-			"name" =>	$cart_item["name"],
-			'thumbnail_url' => $cart_item['thumbnail']&&file_exists(DIR_PRODUCTS_PICTURES.'/'.$cart_item['thumbnail'])?URL_PRODUCTS_PICTURES.'/'.$cart_item['thumbnail']:'',
-			'picture_url'   => $cart_item['filename']&&file_exists(DIR_PRODUCTS_PICTURES.'/'.$cart_item['filename'])?URL_PRODUCTS_PICTURES.'/'.$cart_item['filename']:'',
-			"ostatok"  => $cart_item["ostatok"],
-			"brief_description"	=>	$cart_item["brief_description"],
-			"quantity"	=>	$cart_item["Quantity"],
-			"free_shipping"	=>	$cart_item["free_shipping"],
-			"costUC"	=>	show_price($costUC),
-			"optprice"  => $cart_item["optprice"],
-			"doza"  => $cart_item["doza"],
-			"Bonus" => $Bonus,
-			"cost" => show_price($cart_item["Quantity"]*$costUC),
-			"product_code" => $cart_item["product_code"],
-			);
+            $costUC = GetPriceProductWithOption($variants, $cart_item['productID']);
+            // $costUC = doubleval (str_replace(",", "", $costUC));
+            $Bonus = ($cart_item['Bonus']) ? (int)$costUC : '';
 
-			if($tmp['thumbnail_url']){
+            $tmp = array(
+                'productID'         => $cart_item['productID'],
+                'slug'              => $cart_item['slug'],
+                'id'                => $cart_item['itemID'],
+                'name'              => $cart_item['name'],
+                'thumbnail_url'     => $cart_item['thumbnail'] && file_exists(DIR_PRODUCTS_PICTURES.'/'.$cart_item['thumbnail']) ? URL_PRODUCTS_PICTURES.'/'.$cart_item['thumbnail'] : '',
+                'picture_url'       => $cart_item['filename'] && file_exists(DIR_PRODUCTS_PICTURES.'/'.$cart_item['filename']) ? URL_PRODUCTS_PICTURES.'/'.$cart_item['filename'] : '',
+                'ostatok'           => $cart_item['ostatok'],
+                'brief_description' => $cart_item['brief_description'],
+                'quantity'          => $cart_item['Quantity'],
+                'free_shipping'     => $cart_item['free_shipping'],
+                'costUC'            => show_price($costUC),
+                //'optprice'  => $cart_item['optprice'],
+                //'doza'  => $cart_item['doza'],
+                'Bonus'             => $Bonus * $cart_item['Quantity'],
+                'cost'              => show_price($cart_item['Quantity'] * $costUC),
+                'product_code'      => $cart_item['product_code'],
+            );
 
-				list($thumb_width, $thumb_height) = getimagesize(DIR_PRODUCTS_PICTURES.'/'.$cart_item['thumbnail']);
-				list($tmp['thumbnail_width'], $tmp['thumbnail_height']) = shrink_size($thumb_width, $thumb_height, round(CONF_PRDPICT_THUMBNAIL_SIZE/2), round(CONF_PRDPICT_THUMBNAIL_SIZE/2));
-			}
+            if ($tmp['thumbnail_url']) {
 
-			$freight_cost += $cart_item["Quantity"]*$cart_item["shipping_freight"];
+                list($thumb_width, $thumb_height) = getimagesize(DIR_PRODUCTS_PICTURES.'/'.$cart_item['thumbnail']);
+                list($tmp['thumbnail_width'], $tmp['thumbnail_height']) = shrink_size($thumb_width, $thumb_height, round(CONF_PRDPICT_THUMBNAIL_SIZE / 2), round(CONF_PRDPICT_THUMBNAIL_SIZE / 2));
+            }
 
-			$strOptions=GetStrOptions(GetConfigurationByItemId( $tmp["id"] ));
-			if(trim($strOptions) != "")
-			$tmp["name"].="  (".$strOptions.")";
+            $freight_cost += $cart_item['Quantity'] * $cart_item['shipping_freight'];
 
-			if ( $cart_item["min_order_amount"] > $cart_item["Quantity"] )
-			$tmp["min_order_amount"] = $cart_item["min_order_amount"];
+            $strOptions = GetStrOptions(GetConfigurationByItemId($tmp['id']));
+            if (trim($strOptions) !== '')
+                $tmp['name'] .= "  (".$strOptions.")";
 
-			$total_price += $cart_item["Quantity"]*$costUC;
+            if ($cart_item['min_order_amount'] > $cart_item['Quantity'])
+                $tmp['min_order_amount'] = $cart_item['min_order_amount'];
 
-			$cart_content[] = $tmp;
-		}
-	}else{ //unauthorized user - get cart from session vars
+            $total_price += $cart_item['Quantity'] * $costUC;
 
-		$total_price 	= 0; //total cart value
-		$cart_content	= array();
+            $cart_content[] = $tmp;
+        }
+    } else { //unauthorized user - get cart from session vars
 
-		//shopping cart items count
+        $total_price = 0; //total cart value
+        $cart_content = array();
 
-		if ( isset($_SESSION["gids"]) )
+        //shopping cart items count
 
-		for ($j=0; $j<count($_SESSION["gids"]); $j++)
+        if (isset($_SESSION['gids']))
 
-		{
+            for ($j = 0; $j < count($_SESSION['gids']); $j++) {
 
-			if ($_SESSION["gids"][$j])
+                if ($_SESSION['gids'][$j]) {
 
-			{
+                    $session_items[] = CodeItemInClient($_SESSION['configurations'][$j], $_SESSION['gids'][$j]);
 
-				$session_items[] = CodeItemInClient($_SESSION["configurations"][$j], $_SESSION["gids"][$j]);
+                    $q = db_phquery("SELECT t1.*, p1.thumbnail FROM ?#PRODUCTS_TABLE t1 LEFT JOIN ?#PRODUCT_PICTURES p1 ON t1.default_picture=p1.photoID WHERE t1.productID=?", $_SESSION['gids'][$j]);
 
+                    if ($r = db_fetch_row($q)) {
 
+                        LanguagesManager::ml_fillFields(PRODUCTS_TABLE, $r);
 
-				$q = db_phquery("SELECT t1.*, p1.thumbnail FROM ?#PRODUCTS_TABLE t1 LEFT JOIN ?#PRODUCT_PICTURES p1 ON t1.default_picture=p1.photoID WHERE t1.productID=?", $_SESSION["gids"][$j]);
+                        $costUC = GetPriceProductWithOption(
 
-				if ($r = db_fetch_row($q)){
+                            $_SESSION['configurations'][$j],
 
+                            $_SESSION['gids'][$j])/* * $_SESSION["counts"][$j]*/
+                        ;
 
+                        $id = $_SESSION['gids'][$j];
 
-					LanguagesManager::ml_fillFields(PRODUCTS_TABLE, $r);
+                        if (count($_SESSION['configurations'][$j]) > 0) {
 
-					$costUC = GetPriceProductWithOption(
+                            for ($tmp1 = 0; $tmp1 < count($_SESSION['configurations'][$j]); $tmp1++) $id .= '_'.$_SESSION['configurations'][$j][$tmp1];
 
-					$_SESSION["configurations"][$j],
+                        }
 
-					$_SESSION["gids"][$j])/* * $_SESSION["counts"][$j]*/;
+                        $tmp = array(
 
+                            'productID'         => $_SESSION['gids'][$j],
 
+                            'slug'              => $r['slug'],
 
-					$id = $_SESSION["gids"][$j];
+                            'id'                => $id, //$_SESSION['gids'][$j],
 
-					if (count($_SESSION["configurations"][$j]) > 0)
+                            'name'              => $r['name'],
 
-					{
+                            'thumbnail_url'     => $r['thumbnail'] && file_exists(DIR_PRODUCTS_PICTURES.'/'.$r['thumbnail']) ? URL_PRODUCTS_PICTURES.'/'.$r['thumbnail'] : '',
 
-						for ($tmp1=0;$tmp1<count($_SESSION["configurations"][$j]);$tmp1++) $id .= "_".$_SESSION["configurations"][$j][$tmp1];
+                            'brief_description' => $r['brief_description'],
 
-					}
+                            'quantity'          => $_SESSION['counts'][$j],
 
+                            'free_shipping'     => $r['free_shipping'],
 
+                            'costUC'            => $costUC,
 
-					$tmp = array(
+                            'cost'              => show_price($costUC * $_SESSION['counts'][$j])
 
-					"productID"	=>  $_SESSION["gids"][$j],
+                        );
 
-					"slug"	=>  $r['slug'],
+                        if ($tmp['thumbnail_url']) {
 
-					"id"		=>	$id, //$_SESSION["gids"][$j],
+                            list($thumb_width, $thumb_height) = getimagesize(DIR_PRODUCTS_PICTURES.'/'.$r['thumbnail']);
 
-					"name"		=>	$r['name'],
+                            list($tmp['thumbnail_width'], $tmp['thumbnail_height']) = shrink_size($thumb_width, $thumb_height, round(CONF_PRDPICT_THUMBNAIL_SIZE / 2), round(CONF_PRDPICT_THUMBNAIL_SIZE / 2));
 
-					'thumbnail_url' => $r['thumbnail']&&file_exists(DIR_PRODUCTS_PICTURES.'/'.$r['thumbnail'])?URL_PRODUCTS_PICTURES.'/'.$r['thumbnail']:'',
+                        }
 
-					"brief_description"	=> $r["brief_description"],
+                        $strOptions = GetStrOptions($_SESSION['configurations'][$j]);
 
-					"quantity"	=>	$_SESSION["counts"][$j],
+                        if (trim($strOptions) !== '')
 
-					"free_shipping"	=>	$r["free_shipping"],
+                            $tmp['name'] .= "  (".$strOptions.")";
 
-					"costUC"	=>	$costUC,
+                        $q_product = db_query("select min_order_amount, shipping_freight from ".PRODUCTS_TABLE.
 
-					"cost"		=>	show_price($costUC * $_SESSION["counts"][$j])
+                            " where productID=".
 
-					);
+                            $_SESSION['gids'][$j]);
 
-					if($tmp['thumbnail_url']){
+                        $product = db_fetch_row($q_product);
 
+                        if ($product['min_order_amount'] > $_SESSION['counts'][$j])
 
+                            $tmp['min_order_amount'] = $product['min_order_amount'];
 
-						list($thumb_width, $thumb_height) = getimagesize(DIR_PRODUCTS_PICTURES.'/'.$r['thumbnail']);
+                        $freight_cost += $_SESSION['counts'][$j] * $product['shipping_freight'];
 
-						list($tmp['thumbnail_width'], $tmp['thumbnail_height']) = shrink_size($thumb_width, $thumb_height, round(CONF_PRDPICT_THUMBNAIL_SIZE/2), round(CONF_PRDPICT_THUMBNAIL_SIZE/2));
+                        $cart_content[] = $tmp;
 
-					}
+                        $total_price += GetPriceProductWithOption(
 
-					$strOptions=GetStrOptions( $_SESSION["configurations"][$j] );
+                                $_SESSION['configurations'][$j],
 
-					if ( trim($strOptions) != "" )
+                                $_SESSION['gids'][$j]) * $_SESSION['counts'][$j];
 
-					$tmp["name"].="  (".$strOptions.")";
+                    }
 
+                }
 
+            }
 
+    }
 
-
-					$q_product = db_query( "select min_order_amount, shipping_freight from ".PRODUCTS_TABLE.
-
-					" where productID=".
-
-					$_SESSION["gids"][$j] );
-
-					$product = db_fetch_row( $q_product );
-
-					if ( $product["min_order_amount"] > $_SESSION["counts"][$j] )
-
-					$tmp["min_order_amount"] = $product["min_order_amount"];
-
-
-
-					$freight_cost += $_SESSION["counts"][$j]*$product["shipping_freight"];
-
-
-
-					$cart_content[] = $tmp;
-
-
-
-					$total_price += GetPriceProductWithOption(
-
-					$_SESSION["configurations"][$j],
-
-					$_SESSION["gids"][$j] )*$_SESSION["counts"][$j];
-
-				}
-
-			}
-
-		}
-
-	}
-
-	return array(
-	"cart_content"	=> $cart_content,
-	"total_price"	=> $total_price,
-	"freight_cost"	=> $freight_cost
+    return array(
+        'cart_content' => $cart_content,
+        'total_price'  => $total_price,
+        'freight_cost' => $freight_cost
 	);
 }
 
-
-
-
-
 function cartCheckMinOrderAmount()
-
 {
-
 	$cart_content = cartGetCartContent();
+    $cart_content = $cart_content['cart_content'];
 
-	$cart_content = $cart_content["cart_content"];
+    foreach ($cart_content as $cart_item) {
+        if (isset($cart_item['min_order_amount'])) {
+            return false;
+        }
+    }
 
-	foreach( $cart_content as $cart_item )
-
-	if ( isset($cart_item["min_order_amount"]) )
-
-	return false;
-
-	return true;
-
+    return true;
 }
 
-
-
-function cartCheckMinTotalOrderAmount(){
-
-
-
+    function cartCheckMinTotalOrderAmount()
+    {
 	$res = cartGetCartContent();
+        $d = oaGetDiscountValue($res, '');
 
-	$d = oaGetDiscountValue( $res, "" );
+        $order['order_amount'] = $res['total_price'] - $d;
 
-	$order["order_amount"] = $res["total_price"] - $d;
+        $check = true;
 
-	if($order["order_amount"]<CONF_MINIMAL_ORDER_AMOUNT)
+        if ($order['order_amount'] < CONF_MINIMAL_ORDER_AMOUNT) {
+            $check = false;
+        }
 
-	return false;
-
-	else
-
-	return true;
-
+        return $check;
 }
 
 function cartUpdateAddCounter($productID)
@@ -753,9 +708,9 @@ function cartMinimizeCart()
 
 function cartAddToCart( $productID, $variants, $qty = 0 ){
 	//if($qty === ''){$qty = 0;}
-	$qty = max(0,intval($qty));
+    $qty = max(0, (int)$qty);
 
-	$productID = intval($productID);
+    $productID = (int)$productID;
 
 	$product_data = GetProduct($productID);
 
@@ -763,17 +718,17 @@ function cartAddToCart( $productID, $variants, $qty = 0 ){
 
 	if(!$product_data['enabled'])return false;
 
-	$is = intval($product_data['in_stock']);
+    $is = (int)$product_data['in_stock'];
 
 	$min_order_amount = $product_data['min_order_amount'];
 
 	//$min_order_amount = db_phquery_fetch(DBRFETCH_FIRST, "SELECT min_order_amount FROM ?#PRODUCTS_TABLE WHERE productID=?", $productID );
 
-	if (!isset($_SESSION["log"])){ //save shopping cart in the session variables
-		if (!isset($_SESSION["gids"])){
-			$_SESSION["gids"] = array();
-			$_SESSION["counts"] = array();
-			$_SESSION["configurations"] = array();
+    if (!isset($_SESSION['log'])) { //save shopping cart in the session variables
+        if (!isset($_SESSION['gids'])) {
+            $_SESSION['gids'] = array();
+            $_SESSION['counts'] = array();
+            $_SESSION['configurations'] = array();
 		}
 
 
@@ -785,13 +740,13 @@ function cartAddToCart( $productID, $variants, $qty = 0 ){
 			}*/
 			//$qty = max($qty,$min_order_amount - $_SESSION["counts"][$item_index],0);
 			if(CONF_CHECKSTOCK!=0){
-				$qty = min($qty,$is - $_SESSION["counts"][$item_index]);
+                $qty = min($qty, $is - $_SESSION['counts'][$item_index]);
 			}
 			$qty = max($qty,0);
-			if(CONF_CHECKSTOCK==0 || (($_SESSION["counts"][$item_index]+$qty <= $is)&&$is&&$qty)){
-				$_SESSION["counts"][$item_index] += $qty;
+            if (CONF_CHECKSTOCK == 0 || (($_SESSION['counts'][$item_index] + $qty <= $is) && $is && $qty)) {
+                $_SESSION['counts'][$item_index] += $qty;
 			}else{
-				return $_SESSION["counts"][$item_index];
+                return $_SESSION['counts'][$item_index];
 			}
 
 		}else{ //no item - add it to $gids array
@@ -802,9 +757,9 @@ function cartAddToCart( $productID, $variants, $qty = 0 ){
 			$qty = max($qty,0);
 
 			if(CONF_CHECKSTOCK==0 || ($is >= $qty&&$qty)){
-				$_SESSION["gids"][] = $productID;
-				$_SESSION["counts"][] = $qty;
-				$_SESSION["configurations"][]=$variants;
+                $_SESSION['gids'][] = $productID;
+                $_SESSION['counts'][] = $qty;
+                $_SESSION['configurations'][] = $variants;
 				cartUpdateAddCounter($productID);
 			}else{
 				return 0;
@@ -812,7 +767,7 @@ function cartAddToCart( $productID, $variants, $qty = 0 ){
 
 		}
 
-	}else{ //authorized customer - get cart from database
+    } else { //authorized customer - get cart from database
 
 		$itemID = SearchConfigurationInDataBase($variants, $productID );
 		$customerEntry = Customer::getAuthedInstance();
@@ -824,7 +779,7 @@ function cartAddToCart( $productID, $variants, $qty = 0 ){
 				$qty = min($qty,$is-$quantity);
 			}
 			$qty = max($qty,0);
-			if (CONF_CHECKSTOCK==0 || $quantity + $qty <= $is && $is){
+            if (CONF_CHECKSTOCK == 0 || ($quantity + $qty <= $is && $is)) {
 				db_phquery("UPDATE ?#SHOPPING_CARTS_TABLE SET Quantity=Quantity+? WHERE customerID=? AND itemID=?", $qty, $customerEntry->customerID, $itemID);
 			}else{
 				return $quantity;
@@ -855,54 +810,28 @@ function cartAddToCart( $productID, $variants, $qty = 0 ){
 
 }
 
-
-
-
-
-
-
 // *****************************************************************************
 
 // Purpose
-
 // Inputs	$customerID - customer ID
-
 // Remarks
-
 // Returns	returns true if cart is empty for this customer
 
-function cartCartIsEmpty( $log )
-
+    function cartCartIsEmpty($log)
 {
-
 	$customerID = $_SESSION['cs_id'];
 
-	if ( (int)$customerID > 0 )
-
-	{
+    if ((int)$customerID > 0) {
 
 		$customerID = (int)$customerID;
 
 		$q_count = db_query( "select count(*) from ".SHOPPING_CARTS_TABLE." where customerID=".$customerID );
-
 		$count = db_fetch_row( $q_count );
-
 		$count = $count[0];
 
 		return ( $count == 0 );
 
-	}
-
-	else
-
-	return true;
-
+    } else {
+        return true;
+    }
 }
-
-
-
-
-
-
-
-?>

@@ -4,35 +4,35 @@ define('ACTCTRL_POST', 'post');
 define('ACTCTRL_AJAX', 'ajax');
 define('ACTCTRL_CUST', 'custom');
 
-class ActionsController{
+class ActionsController {
 	
-	var $__action_sources;
-	var $__current_data;
-	var $__action_source;
-	var $__action;
+	public $__action_sources;
+	public $__current_data;
+	public $__action_source;
+	public $__action;
 	
-	var $__params = array();
+	public $__params = array();
 	
-	function preAction($action){
+	public function preAction($action){
 		
-		safeMode($action != 'main');
+		safeMode($action !== 'main');
 	}
 	
-	function postAction($action){
+	public function postAction($action){
 		;
 	}
 	
-	function ActionsController(){
+	public function __construct(){
 		
 		$this->registerStandardSources();
 	}
 	
-	function registerSource($source_id, &$source_data){
+	public function registerSource($source_id, &$source_data){
 		
 		$this->__action_sources[$source_id] = &$source_data;
 	}
 	
-	function registerStandardSources(){
+	public function registerStandardSources(){
 		
 		$Register = &Register::getInstance();
 		$GetVars = &$Register->get(VAR_GET);
@@ -50,49 +50,50 @@ class ActionsController{
 		$this->registerSource(ACTCTRL_GET, $Register->get(VAR_GET));
 	}
 	
-	function exec($controller_name, $sources = array(ACTCTRL_POST, ACTCTRL_GET, ACTCTRL_AJAX, ACTCTRL_CUST), $params = array()){
+	public function exec($controller_name, $sources = array(ACTCTRL_POST, ACTCTRL_GET, ACTCTRL_AJAX, ACTCTRL_CUST), array $params){
 		$controller = new $controller_name;
 		/*@var $controller ActionsController*/
 		$controller->__params = $params;
 		$controller->__exec($sources);
 	}
 	
-	function __exec_cust($data){
+	public function __exec_cust($data){
 		
 		$this->registerSource(ACTCTRL_CUST, $data);
 		
 		return $this->__exec(ACTCTRL_CUST);
 	}
 	
-	function __exec($sources = null){
+	public function __exec($sources = null){
 
-		if(!is_array($sources))$sources = array($sources);
+        if (!is_array($sources)) $sources = array($sources);
 
-		foreach ($sources as $source){
-			
-			if(!isset($this->__action_sources[$source]['action']))continue;
-			
-			if(!method_exists($this, $this->__action_sources[$source]['action'])){
-				pear_dump('No action handler');die;
-			}
+        foreach ($sources as $source) {
 
-			$this->__current_data = &$this->__action_sources[$source];
-			$this->__action_source = $source;
-			$this->__action = $this->__action_sources[$source]['action'];  
-			
-			switch ($source) {
-				case ACTCTRL_GET:
-					renderURL('action=', '', true);
-					break;
-			}
-			
-			$this->preAction($this->__action);
-			
-			$return = $this->{$this->__action}();
-			
-			$this->postAction($this->__action);
-			
-			return $return;
+            if (!isset($this->__action_sources[$source]['action'])) continue;
+
+            if (!method_exists($this, $this->__action_sources[$source]['action'])) {
+                pear_dump('No action handler');
+                die;
+            }
+
+            $this->__current_data = &$this->__action_sources[$source];
+            $this->__action_source = $source;
+            $this->__action = $this->__action_sources[$source]['action'];
+
+            switch ($source) {
+                case ACTCTRL_GET:
+                    renderURL('action=', '', true);
+                    break;
+            }
+
+            $this->preAction($this->__action);
+
+            $return = $this->{$this->__action}();
+
+            $this->postAction($this->__action);
+
+            return $return;
 		}
 		
 		if(!$this->__action){
@@ -106,27 +107,29 @@ class ActionsController{
 		}
 	}
 	
-	function getData($key = null, $key2 = null){
+	public function getData($key = null, $key2 = null){
 		
-		if(is_null($key))return $this->__current_data;
+		if (is_null($key)) {
+            return $this->__current_data;
+        }
 		
-		if(is_null($key2))
+		if (is_null($key2)) {
 			return isset($this->__current_data[$key])?$this->__current_data[$key]:'';
-		else
+        } else {
 			return isset($this->__current_data[$key][$key2])?$this->__current_data[$key][$key2]:'';
+        }
 	}
 
-	function existsData($key){
+	public function existsData($key){
 		return isset($this->__current_data[$key]);		
 	}
 	
-	function setData($key, $value){
+	public function setData($key, $value){
 		
 		$this->__current_data[$key] = $value;
 	}
 
-	function main(){
+	public function main(){
 		;
 	}
 }
-?>

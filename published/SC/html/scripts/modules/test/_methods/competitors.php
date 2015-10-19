@@ -27,7 +27,7 @@
             $Register = &Register::getInstance();
             $this->DBHandler = &$Register->get(VAR_DBHANDLER);
 
-            parent::ActionsController();
+            parent::__construct();
 
             foreach (array_keys($_GET) as $get_key) {
                 switch ($get_key) {

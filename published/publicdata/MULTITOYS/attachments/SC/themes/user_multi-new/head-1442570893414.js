@@ -299,6 +299,10 @@ $(function () {
     }, 1500));
 });
 function changePic(id, direction) {
+    var pic = "pic";
+    if (id < 10000) {
+        id = "0" + id;
+    }
     var element = document.getElementById("pic" + id);
     var picNums = Number(element.getAttribute("data-pics"));
     var currPic = Number(element.getAttribute("data-current"));

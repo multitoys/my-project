@@ -19,7 +19,7 @@
         protected $search = '';
         protected $disc_usd = 27;
         protected $disc_ua = 20;
-        protected $disc_conc = 10;
+        protected $disc_conc = 0;
         protected $table = 'Conc__analogs';
 
         public function __construct()

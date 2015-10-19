@@ -301,6 +301,18 @@
         }
     }
 
+    function _countPictures($productID) 
+    {
+        $q = '
+            SELECT count(*) AS pics_all_count
+            FROM SC_product_pictures
+            WHERE productID = '.$productID;
+        $r = mysql_query($q) or die(mysql_error().$q);
+        $pics_count = mysql_fetch_object($r);
+        $pics_all_count = (int)($pics_count->pics_all_count);
+        return $pics_all_count - 1;
+    }
+    
     function GetProductInSubCategories($callBackParam, &$count_row, $navigatorParams = '')
     {
         if ($navigatorParams) {
@@ -354,6 +366,7 @@
 
 
                 _setPictures($row);
+                _countPictures($row);
 
                 $row['product_extra'] = GetExtraParametrs($row['productID']);
                 $row['PriceWithOutUnit'] = show_priceWithOutUnit($row['PriceNoUnit']);
@@ -412,6 +425,7 @@
                     if ($row['list_price'])
                         $row['SavePricePercent'] = ceil(((($row['list_price'] - $row['Price']) / $row['list_price']) * 100));
                     _setPictures($row);
+                    _countPictures($row);
                     $row['product_extra'] = GetExtraParametrs($row['productID']);
                     $row['PriceWithOutUnit'] = show_priceWithOutUnit($row['PriceNoUnit']);
                     $data[] = $row;
@@ -825,6 +839,7 @@
             if (((float)$_Product['shipping_freight']) > 0)
                 $_Product['shipping_freightUC'] = show_price($_Product['shipping_freight']);
             $ProductsIDs[$_Product['productID']] = $Counter;
+            $_Product['pics_for_slider'] = _countPictures($_Product['productID']);
 
             $Products[] = $_Product;
             $Counter++;
@@ -835,7 +850,6 @@
         //            $Products[$ProductsIDs[$_ProductID]]['product_extra'] = $_Extra;
         //        }
         _setPictures($Products);
-
 // //иконки списков для фото-----
 // $ProductList = new ProductList();
 // $product_lists = $ProductList->stc_getLists(true);

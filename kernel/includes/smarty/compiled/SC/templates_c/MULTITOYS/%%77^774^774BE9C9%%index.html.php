@@ -1,7 +1,7 @@
-<?php /* Smarty version 2.6.9, created on 2015-10-16 11:48:19
+<?php /* Smarty version 2.6.9, created on 2015-10-19 17:45:53
          compiled from index.html */ ?>
 <?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
-smarty_core_load_plugins(array('plugins' => array(array('function', 'component', 'index.html', 6, false),array('function', 'welcome', 'index.html', 26, false),array('function', 'conc_tree', 'index.html', 84, false),array('function', 'newtree', 'index.html', 94, false),array('function', 'cs_show_main_page', 'index.html', 141, false),array('modifier', 'isauthpage', 'index.html', 121, false),)), $this); ?>
+smarty_core_load_plugins(array('plugins' => array(array('function', 'component', 'index.html', 6, false),array('function', 'welcome', 'index.html', 26, false),array('function', 'conc_tree', 'index.html', 84, false),array('function', 'newtree', 'index.html', 94, false),array('function', 'cs_show_main_page', 'index.html', 141, false),array('function', 'debug', 'index.html', 161, false),array('modifier', 'isauthpage', 'index.html', 121, false),)), $this); ?>
 <?php echo '<div>';  if ($_SESSION['log']):  echo '<div id="multi-logo-mini"><!-- cpt_container_start -->';  echo smarty_function_component(array('cpt_id' => 'logo','file' => 'logo_mini.png'), $this); echo '<!-- cpt_container_end --></div><div id="out-login"><div class="seans_out"><a href="/logout" id="logout">Выйти из сеанса</a></div><div><a href="/myaccount" id="myaccount">Личный кабинет</a></div></div>';  else:  echo '<div id="multi-logo"><!-- cpt_container_start[id=2] -->';  echo smarty_function_component(array('cpt_id' => 'logo','file' => 'logo.png'), $this); echo '<!-- cpt_container_end --></div><div id="pass-login">';  $_smarty_tpl_vars = $this->_tpl_vars;
 $this->_smarty_include(array('smarty_include_tpl_file' => (@DIR_FTPLS)."/login2.html", 'smarty_include_vars' => array()));
 $this->_tpl_vars = $_smarty_tpl_vars;
@@ -15,4 +15,5 @@ $this->_smarty_include(array('smarty_include_tpl_file' => "login.html", 'smarty_
 $this->_tpl_vars = $_smarty_tpl_vars;
 unset($_smarty_tpl_vars);
   echo '';  else:  echo '';  echo smarty_function_cs_show_main_page(array(), $this); echo '';  endif;  echo '';  endif;  echo '';  endif;  echo '</div><div id="right"';  if ($_GET['ukey'] == 'auxpage_divoland' || $_GET['ukey'] == 'auxpage_mixtoys' || $_GET['ukey'] == 'auxpage_dreamtoys' || $_GET['ukey'] == 'auxpage_kindermarket' || $_GET['ukey'] == 'auxpage_grandtoys'):  echo 'class=conc';  endif;  echo '><div class="cpt_maincolumns">';  if ($_GET['ukey'] == 'auxpage_divoland' || $_GET['ukey'] == 'auxpage_mixtoys' || $_GET['ukey'] == 'auxpage_dreamtoys' || $_GET['ukey'] == 'auxpage_kindermarket' || $_GET['ukey'] == 'auxpage_grandtoys'):  echo '';  else:  echo '<!-- cpt_container_start -->';  echo smarty_function_component(array('cpt_id' => 'product_lists','list_id' => 'hitu','limit' => '10'), $this); echo '<!-- cpt_container_end -->';  endif;  echo '</div></div></div></div></div>'; ?>
-
+
+<?php echo smarty_function_debug(array(), $this);?>

@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.9, created on 2015-10-19 00:23:56
+<?php /* Smarty version 2.6.9, created on 2015-10-19 12:08:11
          compiled from shopping_cart.html */ ?>
 <?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
 smarty_core_load_plugins(array('plugins' => array(array('modifier', 'translate', 'shopping_cart.html', 33, false),array('modifier', 'set_query_html', 'shopping_cart.html', 36, false),array('modifier', 'escape', 'shopping_cart.html', 125, false),array('modifier', 'is_new_product', 'shopping_cart.html', 130, false),array('modifier', 'string_format', 'shopping_cart.html', 161, false),array('modifier', 'transcape', 'shopping_cart.html', 168, false),array('function', 'cycle', 'shopping_cart.html', 120, false),)), $this); ?>
@@ -250,22 +250,24 @@ $this->_sections['i']['last']       = ($this->_sections['i']['iteration'] == $th
         <td></td>
         <td id="cart_total_label" colspan="4">
             <input type='hidden' name="123" id="recalculate" value='123'>
-            <input type="button" class="blue-button check" value='Обновить заказ' tabindex="1004" onclick='del_items();'>
-            <input type="submit" class="btn_checkout blue-button check" name="checkout" value="<?php echo ((is_array($_tmp='str_checkout')) ? $this->_run_mod_handler('translate', true, $_tmp) : smarty_modifier_translate($_tmp)); ?>
+            <input type="button" class="blue-button check" value='Обновить заказ' tabindex="1004"
+                   onclick='del_items();'>
+            <input type="submit" class="btn_checkout blue-button check" name="checkout"
+                   value="<?php echo ((is_array($_tmp='str_checkout')) ? $this->_run_mod_handler('translate', true, $_tmp) : smarty_modifier_translate($_tmp)); ?>
 " id="btn-checkout" tabindex="1005">
         </td>
         <td style="color:blue; font-size: 130%;"><b><?php echo ((is_array($_tmp='str_total')) ? $this->_run_mod_handler('translate', true, $_tmp) : smarty_modifier_translate($_tmp)); ?>
 :</b></td>
         <td style="color:green;"><b><?php echo $this->_tpl_vars['bonus_total']; ?>
 </b>&nbsp;баллов</td>
-		<td id="cart_total" style="color:red; font-size: 110%;"><b><?php echo $this->_tpl_vars['cart_total']; ?>
+        <td id="cart_total" style="color:red; font-size: 110%;"><b><?php echo $this->_tpl_vars['cart_total']; ?>
 </b></td>
 		<td align='right'></td>
 	</tr>
 	
 <tr style="height: 10px;"></tr>
-					  		  							
-																																	</table>
+                                                        
+                                                                                        	</table>
 	</form>
 <?php else: ?>
 

@@ -301,9 +301,21 @@
         }
     }
 
-    function GetProductInSubCategories($callBackParam, &$count_row, $navigatorParams = null)
+    function _countPictures($productID) 
     {
-        if ($navigatorParams != null) {
+        $q = '
+            SELECT count(*) AS pics_all_count
+            FROM SC_product_pictures
+            WHERE productID = '.$productID;
+        $r = mysql_query($q) or die(mysql_error().$q);
+        $pics_count = mysql_fetch_object($r);
+        $pics_all_count = (int)($pics_count->pics_all_count);
+        return $pics_all_count - 1;
+    }
+    
+    function GetProductInSubCategories($callBackParam, &$count_row, $navigatorParams = '')
+    {
+        if ($navigatorParams) {
             $offset = $navigatorParams['offset'];
             $CountRowOnPage = $navigatorParams['CountRowOnPage'];
         } else {
@@ -331,7 +343,7 @@
             return $result;
         }
 
-        $langManager = &LanguagesManager::getInstance();
+        //        $langManager = &LanguagesManager::getInstance();
 
         $q = db_query("
 	SELECT * FROM ".PRODUCTS_TABLE.
@@ -339,10 +351,11 @@
         $i = 0;
         while ($row = db_fetch_row($q)) {
             LanguagesManager::ml_fillFields(PRODUCTS_TABLE, $row);
-            if (($i >= $offset && $i < $offset + $CountRowOnPage) ||
-                $navigatorParams == null
-            ) {
-                $row['PriceWithUnit'] = show_price(priceDiscount($row['Price'], $row['skidka'], $row['ukraine']));
+            if (($i >= $offset && $i < $offset + $CountRowOnPage) || !$navigatorParams) {
+
+                $row['PriceNoUnit'] = priceDiscount($row['Price'], $row['skidka'], $row['ukraine']);
+                $row['PriceWithUnit'] = show_price($row['PriceNoUnit']);
+                $row['Bonus'] = ($row['Bonus'])?(int)$row['PriceNoUnit']:'';
                 $row['list_priceWithUnit'] = show_price($row['list_price']);
                 // you save (value)
                 $row['SavePrice'] = show_price($row['list_price'] - $row['Price']);
@@ -351,10 +364,12 @@
                 if ($row['list_price'])
                     $row['SavePricePercent'] = ceil(((($row['list_price'] - $row['Price']) / $row['list_price']) * 100));
 
+
                 _setPictures($row);
+                _countPictures($row);
 
                 $row['product_extra'] = GetExtraParametrs($row['productID']);
-                $row['PriceWithOutUnit'] = show_priceWithOutUnit(priceDiscount($row['Price'], $row['skidka'], $row['ukraine']));
+                $row['PriceWithOutUnit'] = show_priceWithOutUnit($row['PriceNoUnit']);
                 $result[] = $row;
             }
             $i++;
@@ -371,9 +386,9 @@
 //			"fullFlag"
 // Remarks
 // Returns
-    function prdGetProductByCategory($callBackParam, &$count_row, $navigatorParams = null)
+    function prdGetProductByCategory($callBackParam, &$count_row, $navigatorParams = '')
     {
-        if ($navigatorParams != null) {
+        if ($navigatorParams) {
             $offset = $navigatorParams['offset'];
             $CountRowOnPage = $navigatorParams['CountRowOnPage'];
         } else {
@@ -399,7 +414,9 @@
                     " WHERE ".$cond);
                 while ($row = db_fetch_row($q)) {
                     LanguagesManager::ml_fillFields(PRODUCTS_TABLE, $row);
-                    $row['PriceWithUnit'] = show_price(priceDiscount($row['Price'], $row['skidka'], $row['ukraine']));
+                    $row['PriceNoUnit'] = priceDiscount($row['Price'], $row['skidka'], $row['ukraine']);
+                    $row['PriceWithUnit'] = show_price($row['PriceNoUnit']);
+                    $row['Bonus'] = ($row['Bonus'])?(int)$row['PriceNoUnit']:'';
                     $row['list_priceWithUnit'] = show_price($row['list_price']);
                     // you save (value)
                     $row['SavePrice'] = show_price($row['list_price'] - $row['Price']);
@@ -408,8 +425,9 @@
                     if ($row['list_price'])
                         $row['SavePricePercent'] = ceil(((($row['list_price'] - $row['Price']) / $row['list_price']) * 100));
                     _setPictures($row);
+                    _countPictures($row);
                     $row['product_extra'] = GetExtraParametrs($row['productID']);
-                    $row['PriceWithOutUnit'] = show_priceWithOutUnit(priceDiscount($row['Price'], $row['skidka'], $row['ukraine']));
+                    $row['PriceWithOutUnit'] = show_priceWithOutUnit($row['PriceNoUnit']);
                     $data[] = $row;
                 }
             }
@@ -427,9 +445,7 @@
             $result = array();
             $i = 0;
             foreach ($data as $res) {
-                if (($i >= $offset && $i < $offset + $CountRowOnPage) ||
-                    $navigatorParams == null
-                )
+                if (($i >= $offset && $i < $offset + $CountRowOnPage) || !$navigatorParams)
                     $result[] = $res;
                 $i++;
             }
@@ -440,9 +456,7 @@
             $q = db_phquery("SELECT *,".LanguagesManager::sql_constractSortField(PRODUCTS_TABLE, 'name')." FROM ?#PRODUCTS_TABLE WHERE categoryID=? AND enabled=1 order by sort_order, ".LanguagesManager::sql_getSortField(PRODUCTS_TABLE, 'name'), $categoryID);
             $i = 0;
             while ($row = db_fetch_assoc($q)) {
-                if (($i >= $offset && $i < $offset + $CountRowOnPage) ||
-                    $navigatorParams == null
-                )
+                if (($i >= $offset && $i < $offset + $CountRowOnPage) || !$navigatorParams)
                     LanguagesManager::ml_fillFields(PRODUCTS_TABLE, $row);
                 $result[] = $row;
                 $i++;
@@ -635,10 +649,10 @@
 //					"enabled"		- value of column "enabled"
 //									in database
 //					"extraParametrsTemplate"
-    function prdSearchProductByTemplate($callBackParam, &$count_row, $navigatorParams = null)
+    function prdSearchProductByTemplate($callBackParam, &$count_row, $navigatorParams = '')
     {
 
-        $limit = $navigatorParams != null ? ' LIMIT '.(int)$navigatorParams['offset'].','.(int)$navigatorParams['CountRowOnPage'] : '';
+        $limit = $navigatorParams?' LIMIT '.(int)$navigatorParams['offset'].','.(int)$navigatorParams['CountRowOnPage']:'';
         $where_clause = '';
         $where_sku_clause = '';
         $_sqlParams = array();
@@ -800,7 +814,7 @@
             $navigatorParams['offset'] = $navigatorParams['CountRowOnPage'] * intval($count_row / $navigatorParams['CountRowOnPage']);
         }
 
-        $limit = $navigatorParams != null ? ' LIMIT '.(int)$navigatorParams['offset'].','.(int)$navigatorParams['CountRowOnPage'] : '';
+        $limit = $navigatorParams?' LIMIT '.(int)$navigatorParams['offset'].','.(int)$navigatorParams['CountRowOnPage']:'';
 
         $dbq = 'SELECT p.*, '.LanguagesManager::sql_constractSortField(PRODUCTS_TABLE, $sort_field).' FROM '.PRODUCTS_TABLE.' p '.$left_join.$where_clause.$group_by.' '.$order_by_clause.$limit;
 
@@ -813,16 +827,19 @@
 
             LanguagesManager::ml_fillFields(PRODUCTS_TABLE, $_Product);
             if (!$_Product['productID'] && ($_Product[0] > 0)) $_Product['productID'] = $_Product[0];
-            $_Product['PriceWithUnit'] = show_price(priceDiscount($_Product['Price'], $_Product['skidka'], $_Product['ukraine']));
+            $_Product['PriceNoUnit'] = priceDiscount($_Product['Price'], $_Product['skidka'], $_Product['ukraine']);
+            $_Product['PriceWithUnit'] = show_price($_Product['PriceNoUnit']);
+            $_Product['Bonus'] = ($_Product['Bonus'])?(int)$_Product['PriceNoUnit']:'';
             $_Product['list_priceWithUnit'] = show_price($_Product['list_price']);
             // you save (value)
             $_Product['SavePrice'] = show_price($_Product['list_price'] - $_Product['Price']);
             // you save (%)
             if ($_Product['list_price']) $_Product['SavePricePercent'] = ceil(((($_Product['list_price'] - $_Product['Price']) / $_Product['list_price']) * 100));
-            $_Product['PriceWithOutUnit'] = show_priceWithOutUnit(priceDiscount($_Product['Price'], $_Product['skidka'], $_Product['ukraine']));
+            $_Product['PriceWithOutUnit'] = show_priceWithOutUnit($_Product['PriceNoUnit']);
             if (((float)$_Product['shipping_freight']) > 0)
                 $_Product['shipping_freightUC'] = show_price($_Product['shipping_freight']);
             $ProductsIDs[$_Product['productID']] = $Counter;
+            $_Product['pics_for_slider'] = _countPictures($_Product['productID']);
 
             $Products[] = $_Product;
             $Counter++;
@@ -832,8 +849,8 @@
         //
         //            $Products[$ProductsIDs[$_ProductID]]['product_extra'] = $_Extra;
         //        }
+        $Products['shop_counts'] = get_shop_counts((int)$_SESSION['cs_id']);
         _setPictures($Products);
-
 // //иконки списков для фото-----
 // $ProductList = new ProductList();
 // $product_lists = $ProductList->stc_getLists(true);
@@ -924,5 +941,3 @@
     ', $product_list['id'], $productID);
         }
     }
-
-?>

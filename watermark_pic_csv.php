@@ -53,7 +53,7 @@
     }
     if (($handle = fopen($filename, 'r')) !== false) {
 
-        $days = 0;
+        $days = 3;
 
         echo("
 				Импорт фотографий ...<hr>

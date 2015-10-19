@@ -1882,7 +1882,7 @@
         return;
     }
 
-    function get_shop_couts($CustomerID)
+    function get_shop_counts($CustomerID)
     {
         $query = "
             SELECT SC_products.productID, SC_shopping_carts.Quantity

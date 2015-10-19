@@ -849,6 +849,7 @@
         //
         //            $Products[$ProductsIDs[$_ProductID]]['product_extra'] = $_Extra;
         //        }
+        $Products['shop_counts'] = get_shop_counts((int)$_SESSION['cs_id']);
         _setPictures($Products);
 // //иконки списков для фото-----
 // $ProductList = new ProductList();

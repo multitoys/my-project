@@ -698,7 +698,7 @@ class AuxPages extends ComponentModule {
                 ";
             $res = mysql_query($query) or die(mysql_error().$query);
 
-            if ($CustomerID) $shop_count_cart = get_shop_couts($CustomerID);
+            if ($CustomerID) $shop_count_cart = get_shop_counts($CustomerID);
 
             while ($Product = mysql_fetch_object($res)) {
 

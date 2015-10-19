@@ -117,7 +117,7 @@
 			{assign var=_product_url value="?ukey=product&productID=`$products_to_show[i1].productID`"|set_query_html}
 			{/if}
 			{if $widget}{assign var=_form_action_url value="&view=noframe&external=1"}{/if}
-			{assign var=_cnt value=''}
+			{assign var=_cnt value=$products_to_show[i1].productID}
 			<table class='cs_product_info'>
 				<tbody>
 					<tr>
@@ -226,7 +226,11 @@
 													<button class="z_add_cart" onclick='add_2cart("#qty{$products_to_show[i1].productID}");' type="button">
 														<div id="zpid_{$products_to_show[i1].productID}" class='in_cart'>
                                                             <div class="animated zoomInDown">
-                                                                {z_shopping_count productID=$products_to_show[i1].productID}
+                                                                {if $shop_counts[$_cnt]}
+                                                                    {$shop_counts[$_cnt]}
+                                                                {else}
+                                                                    0
+                                                                {/if}
                                                             </div>
                                                         </div>
 													</button>

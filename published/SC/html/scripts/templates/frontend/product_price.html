@@ -20,13 +20,21 @@
 		{/if}
 	{/if}
 
-	{* product code (SKU) *}
-	{if $product_info.product_code && $smarty.const.CONF_ENABLE_PRODUCT_SKU}
+    {* Bonus *}
+    {if $product_info.Bonus > 0}
 	<div>
-		<span class="productCodeLabel">{"prdset_product_code"|translate}:&nbsp;</span>
-		<span class="productCode">{$product_info.product_code|escape:'html'}</span>
+        <span class="productCodeLabel">Бонусы:&nbsp;</span>
+        <span class="totalPrice">{$product_info.Bonus}&nbsp;баллов</span>
 	</div>
 	{/if}
+
+    {* product code (SKU) *}
+    {if $product_info.product_code && $smarty.const.CONF_ENABLE_PRODUCT_SKU}
+        <div>
+            <span class="productCodeLabel">{"prdset_product_code"|translate}:&nbsp;</span>
+            <span class="productCode">{$product_info.product_code|escape:'html'}</span>
+        </div>
+    {/if}
 
 	<div>
 		<span class="productCodeLabel">На остатке:&nbsp;</span>

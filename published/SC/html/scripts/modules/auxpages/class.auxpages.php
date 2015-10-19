@@ -701,6 +701,10 @@ class AuxPages extends ComponentModule {
             if ($CustomerID) $shop_count_cart = get_shop_couts($CustomerID);
 
             while ($Product = mysql_fetch_object($res)) {
+
+                $price_without_unit = priceDiscount($Product->Price, $Product->skidka, $Product->ukraine);
+                $price = show_price($price_without_unit);
+                
                 /**********************************************************************************************************/
                 $add2cart_conc = '';
 
@@ -719,7 +723,7 @@ class AuxPages extends ComponentModule {
                             $res3 = mysql_query($query3) or die(mysql_error().$query3);
 
                             if ($M_Product = mysql_fetch_object($res3)) {
-                                $price = show_price(priceDiscount($Product->Price, $Product->skidka, $Product->ukraine));
+
                                 $price_diff = round(($price / $M_Product->price_uah - 1) * 100, 1);
                                 //                                $price_diff = round(($Product->Price / $M_Product->price_uah - 1) * 100, 1);
                                 $marked = ($price_diff > 0) ? 'red' : 'green';
@@ -738,12 +742,11 @@ class AuxPages extends ComponentModule {
                     }
                 }
                 /**********************************************************************************************************/
-                $price = show_price(priceDiscount($Product->Price, $Product->skidka, $Product->ukraine));
+                $bonus = ($Product->Bonus)?(int)$price_without_unit:'';
                 $category = $category_name[$Product->categoryID];
                 $label_new = ($new[$Product->productID]) ? '<div class="corner color_newitem"><span></span>Новинка!</div>' : '';
                 //$label_new = '<div class="corner color_newitemspostup"><span></span>Новинка!</div>';
                 //$zakaz = $Product->zakaz;
-                $bonus = $Product->Bonus;
 
                 $shop_count = 0;
                 if (($shop_count_cart[$Product->productID])) {

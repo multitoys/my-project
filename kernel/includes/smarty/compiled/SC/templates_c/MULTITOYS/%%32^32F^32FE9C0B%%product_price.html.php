@@ -1,7 +1,7 @@
-<?php /* Smarty version 2.6.9, created on 2015-09-21 23:17:29
+<?php /* Smarty version 2.6.9, created on 2015-10-19 11:47:10
          compiled from product_price.html */ ?>
 <?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
-smarty_core_load_plugins(array('plugins' => array(array('modifier', 'translate', 'product_price.html', 17, false),array('modifier', 'escape', 'product_price.html', 27, false),)), $this); ?>
+smarty_core_load_plugins(array('plugins' => array(array('modifier', 'translate', 'product_price.html', 17, false),array('modifier', 'escape', 'product_price.html', 35, false),)), $this); ?>
 <?php if (! $this->_tpl_vars['CPT_CONSTRUCTOR_MODE']): ?>
 	<?php if ($this->_tpl_vars['currencies_count'] != 0 && $this->_tpl_vars['product_info']['Price'] > 0): ?>
 				<?php if ($this->_tpl_vars['product_info']['list_price'] > 0 && $this->_tpl_vars['product_info']['list_price'] > $this->_tpl_vars['product_info']['Price'] && $this->_tpl_vars['product_info']['Price'] > 0): ?>
@@ -27,14 +27,22 @@ smarty_core_load_plugins(array('plugins' => array(array('modifier', 'translate',
 		<?php endif; ?>
 	<?php endif; ?>
 
-		<?php if ($this->_tpl_vars['product_info']['product_code'] && @CONF_ENABLE_PRODUCT_SKU): ?>
+        <?php if ($this->_tpl_vars['product_info']['Bonus'] > 0): ?>
 	<div>
-		<span class="productCodeLabel"><?php echo ((is_array($_tmp='prdset_product_code')) ? $this->_run_mod_handler('translate', true, $_tmp) : smarty_modifier_translate($_tmp)); ?>
-:&nbsp;</span>
-		<span class="productCode"><?php echo ((is_array($_tmp=$this->_tpl_vars['product_info']['product_code'])) ? $this->_run_mod_handler('escape', true, $_tmp, 'html') : smarty_modifier_escape($_tmp, 'html')); ?>
-</span>
+        <span class="productCodeLabel">Бонусы:&nbsp;</span>
+        <span class="totalPrice"><?php echo $this->_tpl_vars['product_info']['Bonus']; ?>
+&nbsp;баллов</span>
 	</div>
 	<?php endif; ?>
+
+        <?php if ($this->_tpl_vars['product_info']['product_code'] && @CONF_ENABLE_PRODUCT_SKU): ?>
+        <div>
+            <span class="productCodeLabel"><?php echo ((is_array($_tmp='prdset_product_code')) ? $this->_run_mod_handler('translate', true, $_tmp) : smarty_modifier_translate($_tmp)); ?>
+:&nbsp;</span>
+            <span class="productCode"><?php echo ((is_array($_tmp=$this->_tpl_vars['product_info']['product_code'])) ? $this->_run_mod_handler('escape', true, $_tmp, 'html') : smarty_modifier_escape($_tmp, 'html')); ?>
+</span>
+        </div>
+    <?php endif; ?>
 
 	<div>
 		<span class="productCodeLabel">На остатке:&nbsp;</span>

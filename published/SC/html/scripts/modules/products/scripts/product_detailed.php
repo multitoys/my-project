@@ -111,7 +111,7 @@ $Message = $Register->get(VAR_MESSAGE);
 
 			$a = $product;
             $a["PriceNoUnit"] = priceDiscount($a['Price'], $a['skidka'], $a['ukraine']);
-            $a["PriceWithUnit"] = show_price($a["PriceWithOutUnit"]);
+            $a["PriceWithUnit"] = show_price($a["PriceNoUnit"]);
             $a["Bonus"] = (int)$a["PriceNoUnit"];
             $a["list_priceWithUnit"] = show_price($a["list_price"]);
 			

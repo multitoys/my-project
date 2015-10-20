@@ -42,7 +42,7 @@
     $file = file($filename);
     $rowcount = count($file);
     echo $rowcount;
-    if (!$rowcount) die(ShowError("CSV-файл ($filename) не содержит данных! (rowcount = $rowcount)"));
+    if (!$rowcount) die(showError("CSV-файл ($filename) не содержит данных! (rowcount = $rowcount)"));
     if (($handle = fopen($filename, "r")) !== FALSE) {
         echo ("
 				Импорт фотографий ...<hr>

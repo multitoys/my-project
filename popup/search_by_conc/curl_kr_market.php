@@ -95,8 +95,8 @@ TAG
             set_time_limit(0);
             $category_url = $categories[1][$i];
             $category_url = URL_COMPETITORS.$category_url.URL_POSTFIX;
-            $category = trim(DecodeCodepage($categories[2][$i]));
-            $category_file = Rus2Translit($category);
+            $category = trim(decodeCodepage($categories[2][$i]));
+            $category_file = rus2Translit($category);
             $filename = DIR_COMPETITORS.'/'.$category_file.EXT;
             $products = '';
 
@@ -112,19 +112,19 @@ TAG
 
             $rowcount = count($products[1]);
             echo('<p>обновление цен категории <b>&laquo;'.$category.'&raquo;</b>...(<i>'.$rowcount.' товаров</i>)</p>');
-            BuferOut();
+            buferOut();
 
             $category = mysql_real_escape_string($category);
 
             for ($j = 0; $j < $rowcount; $j++) {
                 set_time_limit(0);
-                $code = mysql_real_escape_string(DecodeCodepage($products[1][$j]));
+                $code = mysql_real_escape_string(decodeCodepage($products[1][$j]));
                 $name
-                    = mysql_real_escape_string(trim(str_replace($replace_name, '', DecodeCodepage($products[2][$j]))));
+                    = mysql_real_escape_string(trim(str_replace($replace_name, '', decodeCodepage($products[2][$j]))));
                 $price = (double)$products[3][$j];
                 $price_usd = $price / 20.51;
                 $product_code = mysql_real_escape_string(trim($products[4][$j]));
-                $productID = GetValue('productID', 'Conc__kindermarket', "code = '$code'");
+                $productID = getValue('productID', 'Conc__kindermarket', "code = '$code'");
 
                 if ($productID) {
                     $query
@@ -157,11 +157,11 @@ TAG
 
             if ($progress > $percent) {
                 $percent = $progress.'%';
-                ProgressBar('products', $percent);
+                progressBar('products', $percent);
             }
-            BuferOut(5000);
+            buferOut(5000);
         }
-        ProgressBar('products', $percent, true);
+        progressBar('products', $percent, true);
         echo('<hr><span style="color:blue;">Обработано '.$no.' товаров</span><br><br>Новых '.$new.' товаров</span><br>');
 
         // Оптимизация таблиц
@@ -176,7 +176,7 @@ TAG
         <br>
           <div id=\'end\'>Импорт завершен!</div>
       ');
-        Debugging($start);
+        debugging($start);
     } else {
         var_dump($_SESSION);
         die('NO LOGIN SESSION');

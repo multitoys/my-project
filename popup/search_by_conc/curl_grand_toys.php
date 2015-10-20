@@ -44,7 +44,7 @@
 
 TAG
         );
-        $usd = GetValue('currency_value', 'Conc__currency', 'CCID = 5');
+        $usd = getValue('currency_value', 'Conc__competitors', 'CCID = 5');
 
         define('SLASH', '|');
         define('NAME_PATTERN', '<div\s+class="block[0-9]*?"[^<>]*?>[^<>]*?<div\s+class="product-title"[^<>]*?>[^<>]*?<a[^<>]*?>[\s]*([^<>]+?)[\s]*</a>[^<>]*?</div>[^<>]*?<div\s+class="block_border"[^<>]*?>[^<>]*?<div\s+class="product-overview-image"[^<>]*?>[^<>]*?<div\s+id="img-radius"[^<>]*?>[^<>]*?<a[^<>]*?>[^<>]*?</a>[^<>]*?</div>[^<>]*?</div>[^<>]*?(<div[^<>]*?>[^<>]*?<img[^<>]*?>[^<>]*?</div>[^<>]*?)?');
@@ -58,16 +58,27 @@ TAG
 
         define('URL_COMPETITORS', 'http://gtoys.com.ua');
         define('URL_POSTFIX', '/page_size');
+        define('URL_PREFIX', '/ru/');
         define('EXT', '.html');
 
         define('LOGIN', 'Elenna');
         define('PASSWORD', '0675230623');
-//        define('LOGIN', '973846984');
-//        define('PASSWORD', '973846984');
 //        define('LOGIN', 'rusmol');
 //        define('PASSWORD', '333');
+//        define('LOGIN', '973846984');
+//        define('PASSWORD', '973846984');
 
-        $login_url = URL_COMPETITORS.'/ru/user/login';
+        $price_number = 1;
+        switch (LOGIN) {
+            case 'rusmol':
+                $price_number = 2;
+                break;
+            case '973846984':
+                $price_number = 3;
+                break;
+        }
+        
+        $login_url = URL_COMPETITORS.URL_PREFIX.'user/login';
         $refferer = URL_COMPETITORS;
         postAuth($login_url, 'UserLogin[username]='.LOGIN.'&UserLogin[password]='.PASSWORD, $headers);
 
@@ -77,8 +88,8 @@ TAG
         $new = 0;
         $part = 0;
         $percent = 0;
-        $products_cnt = 2000;
-        $replace_name = array('&laquo;', '&raquo;', '&quot;', '\'', '"');
+        $products_cnt = 1000;
+        $replace_name = array('&laquo;', '&raquo;', '&quot;', '\'', '.', '"');
 
 //        $replace = array(',', '.', ')', '(', '\'');
 //        $match_str = preg_replace('/\s\s+/', ' ', str_replace('|', ' ', str_replace($replace, ' ', $conc)));
@@ -90,9 +101,9 @@ TAG
 
             foreach ($category_urls as $category => $url) {
 
-                $url_postfix = (strpos($url, 'shop') === false) ? URL_POSTFIX.$products_cnt : '';
-                $category_url = URL_COMPETITORS.$url.$url_postfix;
-                $filename = Rus2Translit(trim($category));
+                $url_postfix = (strpos($url, 'page_size') === false) ? URL_POSTFIX.$products_cnt : '';
+                $category_url = URL_COMPETITORS.URL_PREFIX.$url.$url_postfix;
+                $filename = rus2Translit(trim($category));
                 $filename = DIR_COMPETITORS.'/'.$filename.EXT;
                 $products = '';
 
@@ -108,16 +119,16 @@ TAG
 
                 $rowcount = count($products[1]);
                 echo('<p>обновление цен категории <b>&laquo;'.$category.'&raquo;</b>...(<i>'.$rowcount.' товаров</i>)</p>');
-                BuferOut();
+                buferOut();
 
                 $category = mysql_real_escape_string($category);
 
                 for ($j = 0; $j < $rowcount; $j++) {
                     set_time_limit(0);
-                    $name = mysql_real_escape_string(preg_replace('/\s\s+/', ' ', trim(str_replace($replace_name, ' ', DecodeCodepage($products[1][$j])))));
+                    $name = mysql_real_escape_string(preg_replace('/\s\s+/', ' ', trim(str_replace($replace_name, ' ', decodeCodepage($products[1][$j])))));
                     $price = (double)$products[3][$j];
-                    $code = mysql_real_escape_string(DecodeCodepage($products[4][$j]));
-                    $productID = GetValue('productID', 'Conc__grandtoys', "code = '$code'");
+                    $code = mysql_real_escape_string(decodeCodepage($products[4][$j]));
+                    $productID = getValue('productID', 'Conc__grandtoys', "code = '$code'");
                     $price_usd = $price / $usd;
 
                     if ($productID) {
@@ -127,8 +138,8 @@ TAG
                                         SET     parent       = '$parent',
                                                 category     = '$category',
                                                 name         = '$name',
-                                                price_uah    =  $price,
-                                                price_usd    =  $price_usd,
+                                                price_uah.$price_number    =  $price,
+                                                price_usd.$price_number    =  $price_usd,
                                                 enabled      =  1
                                         WHERE   productID    =  $productID
                             ";
@@ -137,7 +148,7 @@ TAG
                         $query
                             = "
                                     INSERT INTO Conc__grandtoys
-                                                (parent, category, code, name, price_uah, price_usd)
+                                                (parent, category, code, name, price_uah.$price_number, price_usd.$price_number)
                                     VALUES      ('$parent', '$category', $code, '$name', $price, $price_usd)
                                   ";
                         $res = mysql_query($query) or die(mysql_error()."<br>$query");
@@ -146,17 +157,18 @@ TAG
                     $no++;
                 }
 				unlink($filename);
+                buferOut(5000);
             }
             $part++;
             $progress = round(($part / $parts * 100), 0, PHP_ROUND_HALF_DOWN);
 
             if ($progress > $percent) {
                 $percent = $progress.'%';
-                ProgressBar('products', $percent);
-                BuferOut();
+                progressBar('products', $percent);
+                buferOut();
             }
         }
-        ProgressBar('products', $percent, true);
+        progressBar('products', $percent, true);
         echo('<hr><span style="color:blue;">Обработано '.$no.' товаров</span><br><br>Новых '.$new.' товаров</span><br>');
 
         // Оптимизация таблиц
@@ -172,7 +184,7 @@ TAG
               <div id=\'end\'>Импорт завершен!</div>
           ');
 
-        Debugging($start);
+        debugging($start);
     } else {
         var_dump($_SESSION);
         die('NO LOGIN SESSION');

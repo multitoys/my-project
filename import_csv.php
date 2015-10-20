@@ -1,7 +1,6 @@
 <?php
 
     $start = microtime(true);
-    //    apache_setenv('no-gzip', '1');
     ini_set('display_errors', true);
     define('DIR_ROOT', $_SERVER['DOCUMENT_ROOT'].'/published/SC/html/scripts');
 
@@ -35,7 +34,7 @@ TAG
         exit(1);
     }
 
-    RemoveDir($dest_dir);
+    removeDirectory($dest_dir);
     $zip->extractTo($dest_dir);
 
     echo("<div id='extract'>Файлы ($zip->numFiles) успешно извлечены!</div><br>");
@@ -53,9 +52,10 @@ TAG
 //TAG
 //    );
     if (!$rowcount) {
-        ShowError("CSV-файл ($filename) не содержит данных! (rowcount = $rowcount)");
+        showError("CSV-файл ($filename) не содержит данных! (rowcount = $rowcount)");
     }
     if (($handle = fopen($filename, 'r')) !== false) {
+        
         $query = 'UPDATE SC_customers SET  1C = 0';
         $res = mysql_query($query) or die(mysql_error()."<br>$query");
         $row = 0;
@@ -72,12 +72,12 @@ TAG
             $skidka_ua = $data[4];
             $fam = $data[5];
 
-            $login = mysql_real_escape_string(DecodeCodepage1251($login));
+            $login = mysql_real_escape_string(decodeCodepage1251($login));
             $bonus = (is_numeric($bonus)) ? $bonus : 0;
             $skidka = (is_numeric($skidka)) ? $skidka : 0;
             $skidka_ua = (is_numeric($skidka_ua)) ? $skidka_ua : 0;
-            $fam = DecodeCodepage1251($fam);
-            $est = GetValue('Login', 'SC_customers', "Login LIKE '$login'");
+            $fam = decodeCodepage1251($fam);
+            $est = getValue('Login', 'SC_customers', "Login LIKE '$login'");
 
             if (!$est) {
                 echo('<small>'.$no.') '.$fam.' <span style="color:green;">'.$login.'</span><span style="color:red;"> не найден!<br></span></small>');
@@ -99,7 +99,7 @@ TAG
         echo('<br><span style="color:blue;">Обработано '.$no.' клиентов<br></span><br>');
         fclose($handle);
     } else {
-        echo("<br>'Ошибка в при открытии файла: $filename0");
+        showError("CSV-файл ($filename0) не загружен.");
     }
 
 
@@ -115,24 +115,24 @@ TAG
 TAG
     );
     if (!$rowcount) {
-        die(ShowError("CSV-файл ($filename) не содержит данных! (rowcount = $rowcount)"));
+        die(showError("CSV-файл ($filename) не содержит данных! (rowcount = $rowcount)"));
     }
     if (($handle = fopen($filename, 'r')) !== false) {
 
         // Идентификатор категории "новинки"
-        define('CAT_NOVINKI_ID', GetValue('categoryID', 'SC_categories', "name_ru = 'Новинки'"));
+        define('CAT_NOVINKI_ID', getValue('categoryID', 'SC_categories', "name_ru = 'Новинки'"));
 
         // Идентификатор категории "акция"
-        define('CAT_AKCIA_ID', GetValue('categoryID', 'SC_categories', "name_ru = 'Акция'"));
+        define('CAT_AKCIA_ID', getValue('categoryID', 'SC_categories', "name_ru = 'Акция'"));
 
         // Идентификатор категории "акция "Баллы"
-        define('CAT_AKCIA_BALLY_ID', GetValue('categoryID', 'SC_categories', "name_ru = 'Суперцена'"));
+        define('CAT_AKCIA_BALLY_ID', getValue('categoryID', 'SC_categories', "name_ru = 'Суперцена'"));
 
         // Идентификатор категории "Все бонусные товары"
-        define('CAT_BONUS_ID', GetValue('categoryID', 'SC_categories', "name_ru = 'Все бонусные товары'"));
+        define('CAT_BONUS_ID', getValue('categoryID', 'SC_categories', "name_ru = 'Все бонусные товары'"));
 
         // Идентификатор категории "Все товары под заказ"
-        define('CAT_ZAKAZ_ID', GetValue('categoryID', 'SC_categories', "name_ru = 'Все товары под заказ'"));
+        define('CAT_ZAKAZ_ID', getValue('categoryID', 'SC_categories', "name_ru = 'Все товары под заказ'"));
 
         $query = 'SELECT categoryID FROM SC_categories WHERE allow_products_comparison';
         $res = mysql_query($query) or die(mysql_error()."<br>$query");
@@ -163,12 +163,12 @@ TAG
             $parent = ($parent === 'NULL') ? 1 : $parent;
             $parent = ($parent) ? 1 : $parent;
             $parent = $data[2];
-            $name = mysql_real_escape_string(DecodeCodepage1251($data[3]));
+            $name = mysql_real_escape_string(decodeCodepage1251($data[3]));
 
-            $slug = Str2Url("$name").'-'.$cid;
+            $slug = str2Url("$name").'-'.$cid;
 
             if (is_numeric($cid) && is_numeric($parent)) {
-                $est = GetValue('categoryID', 'SC_categories', "categoryID = $cid");
+                $est = getValue('categoryID', 'SC_categories', "categoryID = $cid");
                 if (!$est) {
                     $query
                         = "INSERT INTO SC_categories (
@@ -205,12 +205,12 @@ TAG
                 $progress = round(($no / ($rowcount - 1) * 100), 0, PHP_ROUND_HALF_DOWN);
                 if ($progress > $percent) {
                     $percent = $progress.'%';
-                    ProgressBar('categories', $percent);
+                    progressBar('categories', $percent);
                 }
-                BuferOut();
+                buferOut();
                 $no++;
             } else {
-                echo(ShowError("Неверный id ($cid) или parent ($parent) в строке $row (категории)"));
+                echo(showError("Неверный id ($cid) или parent ($parent) в строке $row (категории)"));
             }
         }
 
@@ -222,8 +222,8 @@ TAG
 
         // echo '<img src="css/images/preloader-01.gif"/>';
         echo('<span style="color:blue;">Обработано '.$no.' категорий<br></span><br><br>Ожидайте...<br><br>');
-        ProgressBar('categories', $percent, false, true);
-        BuferOut();
+        progressBar('categories', $percent, false, true);
+        buferOut();
     } else {
         die("<br>'Ошибка в при открытии файла: $filename");
     }
@@ -241,11 +241,12 @@ TAG
     );
 
     if (!$rowcount) {
-        die(ShowError("CSV-файл ($filename) не содержит данных! (rowcount = $rowcount)"));
+        die(showError("CSV-файл ($filename) не содержит данных! (rowcount = $rowcount)"));
     }
 
     $no = 0;
     $row = 0;
+    $usd = 1;
     $error = 0;
     $new_id = 0;
     $percent = 0;
@@ -267,18 +268,18 @@ TAG
                 $no++;
                 $ua = $data[0];
                 $id = $data[1];
-                $code = mysql_real_escape_string(DecodeCodepage1251($data[2]));
+                $code = mysql_real_escape_string(decodeCodepage1251($data[2]));
                 $catid = is_numeric($data[3]) ? $data[3] : 1;
                 $price = $data[4];
                 $special_price = $data[5];
                 $bonus = $data[6];
-                $name = mysql_real_escape_string(trim(DecodeCodepage1251($data[7])));
+                $name = mysql_real_escape_string(trim(decodeCodepage1251($data[7])));
                 $skidka = $data[8];
                 $hit = $data[9];
                 $new = $data[10];
                 $new_postup = $data[11];
                 $akcia = $data[12];
-                $ostatok = mysql_real_escape_string(DecodeCodepage1251($data[13]));
+                $ostatok = mysql_real_escape_string(decodeCodepage1251($data[13]));
                 //                $optprice      = $data[14];
                 $doza = $data[15];
                 //                $optprice_usd  = $data[16];
@@ -286,7 +287,7 @@ TAG
                 $minorder = $data[21];
                 $oldprice = $data[22];
                 $zakaz = $data[26];
-                $brand = mysql_real_escape_string(DecodeCodepage1251($data[27]));
+                $brand = mysql_real_escape_string(decodeCodepage1251($data[27]));
                 $purchase = $data[28];
 
                 // Исправление цен
@@ -325,12 +326,12 @@ TAG
                 $oldprice = ($oldprice > $price) ? $oldprice : 0;
                 $minorder = ($minorder > 0) ? 1 : 0;
                 $zakaz = ($zakaz > 0) ? 1 : 0;
-                $slug = Str2Url("$name").'-'.$id;
+                $slug = str2Url("$name").'-'.$id;
                 // $akcia        = ($oldprice > 0)?1:0;
 
                 if (is_numeric($id) && strlen($id) > 4) {
 
-                    $productID = GetValue('productID', 'SC_products', "code_1c = '$id'");
+                    $productID = getValue('productID', 'SC_products', "code_1c = '$id'");
 
                     if (!$productID) {
                         $start_query = microtime(true);
@@ -344,7 +345,7 @@ TAG
                         $res = mysql_query($query) or die(mysql_error()."<br>$query");
                         $productID = mysql_insert_id();
 
-                        $query_time += microtime(true) - $start_query;
+                        queryTime($start_query);
 
                         $new_id++;
                     } else {
@@ -388,7 +389,7 @@ TAG
                         $query = "DELETE FROM SC_product_list_item WHERE productID = $productID";
                         $res = mysql_query($query) or die(mysql_error()."<br>$query");
 
-                        $query_time += microtime(true) - $start_query;
+                        queryTime($start_query);
                     }
 
                     //if ($new === 7) {
@@ -411,7 +412,7 @@ TAG
                         $query
                             = "INSERT INTO SC_product_list_item (list_id, productID, priority) VALUES ('akcia', $productID, 1)";
                         $res = mysql_query($query) or die(mysql_error()."<br>$query");
-                        $query_time += microtime(true) - $start_query;
+                        queryTime($start_query);
                     }
                     if ($new === 7) {
                         $start_query = microtime(true);
@@ -420,33 +421,33 @@ TAG
 
                         $query = "INSERT INTO SC_category_product VALUES ($productID, ".CAT_AKCIA_BALLY_ID.", 1)";
                         $res = mysql_query($query) or die(mysql_error()."<br>$query");
-                        $query_time += microtime(true) - $start_query;
+                        queryTime($start_query);
                     }
                     if ($bonus) {
                         $start_query = microtime(true);
                         $query = "INSERT INTO SC_category_product VALUES ($productID, ".CAT_BONUS_ID.", 1)";
                         $res = mysql_query($query) or die(mysql_error()."<br>$query");
-                        $query_time += microtime(true) - $start_query;
+                        queryTime($start_query);
                     }
                     if ($zakaz) {
                         $start_query = microtime(true);
                         $query = "INSERT INTO SC_category_product VALUES ($productID, ".CAT_ZAKAZ_ID.", 1)";
                         $res = mysql_query($query) or die(mysql_error()."<br>$query");
-                        $query_time += microtime(true) - $start_query;
+                        queryTime($start_query);
                     }
                     if ($hit) {
                         $start_query = microtime(true);
                         $query
                             = "INSERT INTO SC_product_list_item (list_id, productID, priority) VALUES ('hitu', $productID, 1)";
                         $res = mysql_query($query) or die(mysql_error()."<br>$query");
-                        $query_time += microtime(true) - $start_query;
+                        queryTime($start_query);
                     }
                     if ($new_postup) {
                         $start_query = microtime(true);
                         $query
                             = "INSERT INTO SC_product_list_item (list_id, productID, priority, date) VALUES ('newitemspostup', $productID, 1, $new_postup)";
                         $res = mysql_query($query) or die(mysql_error()."<br>$query");
-                        $query_time += microtime(true) - $start_query;
+                        queryTime($start_query);
                     }
 
                     // добавление товара в таблицу сравнения конкурентов
@@ -460,7 +461,7 @@ TAG
                                 VALUES
                                        ($productID, $catid, '$categories[$catid]', '$id', '$code', '$name', '$brand', $purchase, ($purchase/$usd), $margin, $price, ($price/$usd), $ua)";
                         $res = mysql_query($query) or die(mysql_error()."<br>$query");
-                        $query_conc += microtime(true) - $start_query;
+                        queryTime($start_query);
                     }
                     // -----------
 
@@ -469,11 +470,11 @@ TAG
                     if ($progress > $percent) {
                         $percent = $progress.'%';
                         $start = ($progress > 20) ? $start2 : false;
-                        ProgressBar('products', $percent, $start);
+                        progressBar('products', $percent, $start);
                     }
-                    BuferOut();
+                    buferOut();
                 } else {
-                    echo(ShowError("Неверный id ($id) (строка $row) - <span style='color:red;'>позиция проигнорирована</span>"));
+                    echo(showError("Неверный id ($id) (строка $row) - <span style='color:red;'>позиция проигнорирована</span>"));
                     $error++;
                 }
             } else {
@@ -491,11 +492,11 @@ TAG
     } else {
         die("<br>'Ошибка в при открытии файла: $filename");
     }
-    ProgressBar('products', $percent, false, true);
-    echo('<span style="color:blue;"><br>Обработано '.($no - $error).' товаров</span><br><span style="color:green;">Новых '.$new_id.' товаров</span><br>');
+    progressBar('products', $percent, false, true);
+    echo('<span style="color:blue;"><br>Обработано '.($no - $error).' товаров</span><br>
+          <span style="color:green;">Новых '.$new_id.' товаров</span><br>');
 
     $start_query = microtime(true);
-
     $query = 'UPDATE SC_products SET enabled = FALSE, items_sold = 0 WHERE in_stock = 100';
     $res = mysql_query($query) or die(mysql_error()."<br>$query");
 
@@ -515,17 +516,14 @@ TAG
     $res = mysql_query($query) or die(mysql_error()."<br>$query");
     $query = 'UPDATE SC_product_list_item SET priority = 0';
     $res = mysql_query($query) or die(mysql_error()."<br>$query");
-
-    $query_time += microtime(true) - $start_query;
+    queryTime($start_query);
 
     $new_count = 500;
 
     $start_query = microtime(true);
-
     $query = "SELECT productID FROM SC_products WHERE enabled = 1 ORDER BY code_1c DESC LIMIT $new_count";
     $res = mysql_query($query) or die('Ошибка в запросе: '.mysql_error().'<br>'.$query);
-
-    $query_time += microtime(true) - $start_query;
+    queryTime($start_query);
 
     while ($ids = mysql_fetch_object($res)) {
         $id = $ids->productID;
@@ -535,7 +533,7 @@ TAG
         $query = "INSERT INTO SC_category_product VALUES (".$id.", ".CAT_NOVINKI_ID.", 0)";
         $result = mysql_query($query) or die(mysql_error()."<br>$query");
 
-        $query_time += microtime(true) - $start_query;
+        queryTime($start_query);
         //$query  = "INSERT INTO SC_product_list_item (list_id, productID, priority) VALUES ('newitems', ".$id.", 0)";
         //$result = mysql_query($query) or die(mysql_error()."<br>$query");
 
@@ -554,11 +552,17 @@ TAG
            SELECT  categoryID, code_1c, product_code, name_ru, Price, enabled FROM SC_products  WHERE in_stock = 100';
     $res = mysql_query($query) or die(mysql_error()."<br>$query");
 
-    $query_conc += microtime(true) - $start_query;
+    queryTime($start_query);
 
     // Оптимизация таблиц
     $query
-        = 'OPTIMIZE TABLE `SC_auth_log`, `SC_categories`, `SC_category_product`, `SC_currency_types`, `SC_customers`, `SC_customer_addresses`, `SC_customer_reg_fields_values`, `SC_ordered_carts`, `SC_orders`, `SC_order_status_changelog`, `SC_products`, `SC_product_list_item`, `SC_product_pictures`, `SC_shopping_carts`, `SC_shopping_cart_items`, `SC_subscribers`, `Search_products`, `Conc__kindermarket`, `Conc__divoland`, `Conc__dreamtoys`, `Conc__mixtoys`, `Conc_search__kindermarket`, `Conc_search__divoland`, `Conc_search__dreamtoys`, `Conc_search__mixtoys`';
+        = 'OPTIMIZE TABLE 
+            `SC_auth_log`, `SC_categories`, `SC_category_product`, `SC_currency_types`, `SC_customers`, 
+            `SC_customer_addresses`, `SC_customer_reg_fields_values`, `SC_ordered_carts`, `SC_orders`, 
+            `SC_order_status_changelog`, `SC_products`, `SC_product_list_item`, `SC_product_pictures`, 
+            `SC_shopping_carts`, `SC_shopping_cart_items`, `SC_subscribers`, `Search_products`, 
+            `Conc__kindermarket`, `Conc__divoland`, `Conc__dreamtoys`, `Conc__mixtoys`, 
+            `Conc_search__kindermarket`, `Conc_search__divoland`, `Conc_search__dreamtoys`, `Conc_search__mixtoys`';
     $res = mysql_query($query) or die(mysql_error()."<br>$query");
 
     /*------------------------------------*/
@@ -572,22 +576,22 @@ TAG
     //          WHERE in_stock = 100 AND enabled AND Price <> 0.00 AND ostatok NOT LIKE 'под заказ'";
     //    $res = mysql_query($query) or die(mysql_error()."<br>$query");
 
-    $concs = array('divoland', 'mixtoys', 'dreamtoys', 'kindermarket', 'grandtoys', 'grandtoys2', 'grandtoys3');
-    $currency_table = 'Conc__currency';
+    $competitors_table = 'Conc__competitors';
 
     $start_query = microtime(true);
-
     $query = 'SELECT * FROM Conc__competitors';
-    $res = mysql_query($query) or die(mysql_error()."<br>$query");
+    $result = mysql_query($query) or die(mysql_error()."<br>$query");
+    queryTime($start_query);
 
-    $query_conc += microtime(true) - $start_query;
-
+    $concs = array();
     $competitors = array();
-    while ($Currs = mysql_fetch_object($res)) {
+    $unic_conc_prev ='';
+    
+    while ($Currs = mysql_fetch_object($result)) {
+        
         $competitors[$Currs->competitor] = $Currs->currency_value;
-    }
-
-    foreach ($concs as $conc) {
+        $conc = $Currs->competitor;
+        $number = ($Currs->count_prices)?:'';
 
         $unic_conc = $conc;
         $pattern = '/([^\d]+)\d*/i';
@@ -597,109 +601,98 @@ TAG
         $start_query = microtime(true);
         $query = "SELECT code, code_1c FROM Conc_search__$unic_conc";
         $res = mysql_query($query) or die(mysql_error().$query);
+        queryTime($start_query);
 
-        $query_conc += microtime(true) - $start_query;
-
-        $usd_conc = $usd;
+        $usd_conc = 1;
 
         if (array_key_exists($unic_conc, $competitors)) {
             $usd_conc = $competitors[$unic_conc];
         }
 
+        $prices_uah = 'price_uah';
+        
+        if ($number > 0) {
+            
+            $price_uah = 'price_uah';
+            $prices_uah = $price_uah.'1';
+            
+            for ($i = 2; $i <= $number; $i++) {
+                $prices_uah .= ', '.$price_uah.$i;
+            }
+        }
+        
+        $start_query = microtime(true);
         while ($Codes = mysql_fetch_object($res)) {
-            $start_query = microtime(true);
 
             $query2
                 = "SELECT
-                        price_uah
+                        $prices_uah
                     FROM
                         Conc__$conc
                     WHERE
                         code = '$Codes->code' AND enabled=1";
             $res2 = mysql_query($query2) or die(mysql_error().$query2);
 
-            $query_conc += microtime(true) - $start_query;
+            if ($analogs = mysql_fetch_row($res2)) {
 
-            if ($analog = mysql_fetch_row($res2)) {
-                $start_query = microtime(true);
-
-                $query3
-                    = "UPDATE $table
-                            SET    $conc      = $analog[0],
-                                   usd_$conc  = $analog[0]/$usd_conc,
-                                   diff_$conc = ROUND((Price/$analog[0]-1)*100, 1)
+                if ($number > 0) {
+                    
+                    for ($i = 1; $i <= $number; $i++) {
+                        $j = $i - 1; 
+                        $query3
+                            = "UPDATE $table
+                            SET    $conc$i      = $analogs[$j],
+                                   usd_$conc$i  = $analogs[$j]/$usd_conc,
+                                   diff_$conc$i = ROUND((Price/$analogs[$j]-1)*100, 1)
                             WHERE  code_1c    = '$Codes->code_1c'";
-                $res3 = mysql_query($query3) or die(mysql_error()."<br>$query");
-
-                $query_conc += microtime(true) - $start_query;
-
+                        $res3 = mysql_query($query3) or die(mysql_error()."<br>$query");
+                    }
+                } else {
+                    $query3
+                        = "UPDATE $table
+                            SET    $conc      = $analogs[0],
+                                   usd_$conc  = $analogs[0]/$usd_conc,
+                                   diff_$conc = ROUND((Price/$analogs[0]-1)*100, 1)
+                            WHERE  code_1c    = '$Codes->code_1c'";
+                    $res3 = mysql_query($query3) or die(mysql_error()."<br>$query");
+                }
             }
         }
+        queryTime($start_query);
     }
+    
     $start_query = microtime(true);
 
-    $query = "UPDATE $table SET max_diff = GREATEST(diff_kindermarket, diff_divoland, diff_dreamtoys, diff_mixtoys, diff_grandtoys, diff_grandtoys2, diff_grandtoys3)";
+    $query = "UPDATE $table SET max_diff = GREATEST(diff_kindermarket, diff_divoland, diff_dreamtoys, diff_mixtoys, diff_grandtoys1, diff_grandtoys2, diff_grandtoys3)";
     $res = mysql_query($query) or die(mysql_error().$query);
     
-    $query = "DELETE FROM $table WHERE (kindermarket IS NULL AND divoland IS NULL AND dreamtoys IS NULL AND mixtoys IS NULL AND grandtoys IS NULL AND grandtoys2 IS NULL AND grandtoys3 IS NULL)";
+    $query = "DELETE FROM $table WHERE (kindermarket IS NULL AND divoland IS NULL AND dreamtoys IS NULL AND mixtoys IS NULL AND grandtoys1 IS NULL AND grandtoys2 IS NULL AND grandtoys3 IS NULL)";
     $res = mysql_query($query) or die(mysql_error().$query);
 
-    $query_conc += microtime(true) - $start_query;
+    $query_time = queryTime($start_query);
 
     optimizeTable($table);
-
-    function get($what, $condition, $table = '')
-    {
-        $query = "SELECT $what FROM $table WHERE $condition LIMIT 1";
-        $result = mysql_query($query) or die('Ошибка в запросе: '.mysql_error().'<br>'.$query);
-        $row = mysql_fetch_row($result);
-
-        return $row[0];
-    }
-
-    function deleteRow($table, $condition = '')
-    {
-        $condition = ($condition) ? "WHERE $condition" : "";
-        $query = "DELETE FROM $table $condition";
-        $result = mysql_query($query) or die('Ошибка в запросе: '.mysql_error().'<br>'.$query);
-    }
-
-    function optimizeTable($table)
-    {
-        $query = "OPTIMIZE TABLE $table";
-        $res = mysql_query($query) or die(mysql_error()."<br>$query");
-        mysql_close();
-    }
-
-    /*----------- Фото ----------*/
-    $zip = new ZipArchive();
-    $fileName = $archive_dir.'pics.zip';
-
-    if ($zip->open($fileName) === true) {
-        include($_SERVER['DOCUMENT_ROOT'].'/curl_pics.php');
-    }
-
     mysql_close();
+    
     // Удаление временных файлов
-    RemoveDir($_SERVER['DOCUMENT_ROOT'].'/upload/');
+    removeDirectory($_SERVER['DOCUMENT_ROOT'].'/upload/');
 
     echo(<<<TAG
 	<br>
 	<div id='end'>Импорт завершен!</div>
 TAG
     );
-    printf('<br>Query_products: %.2F сек.', $query_time);
-    printf('<br>Query_competitors: %.2F сек.', $query_conc);
-
-    Debugging($start);
+    
+    printf('<br>Время обращений к БД: %.2F сек.', $query_time);
+    debugging($start);
 
     /*--------- Функции ---------*/
-    function ShowError($msg)
+    function showError($msg)
     {
         return "<div style='color:red; font-size:16px;'>$msg</div>";
     }
 
-    function RemoveDir($directory)
+    function removeDirectory($directory)
     {
         $dir = opendir($directory);
         while (($file = readdir($dir))) {
@@ -707,7 +700,7 @@ TAG
                 unlink($directory.'/'.$file);
             } else {
                 if (is_dir($directory.'/'.$file) && ($file != '.') && ($file != '..')) {
-                    RemoveDir($directory.'/'.$file);
+                    removeDirectory($directory.'/'.$file);
                 }
             }
         }
@@ -716,7 +709,7 @@ TAG
         return true;
     }
 
-    function GetValue($what, $table, $condition)
+    function getValue($what, $table, $condition)
     {
         $query = "SELECT $what FROM $table WHERE $condition LIMIT 1";
         $result = mysql_query($query) or die('Ошибка в запросе: '.mysql_error().'<br>'.$query);
@@ -725,21 +718,7 @@ TAG
         return $row[0];
     }
 
-    function UpdateValue($table, $new_value, $condition = '')
-    {
-        $condition = ($condition) ? "WHERE $condition" : '';
-        $query = "UPDATE $table SET $new_value $condition";
-        $result = mysql_query($query) or die('Ошибка в запросе: '.mysql_error().'<br>'.$query);
-    }
-
-//    function DeleteRow($table, $condition = '')
-//    {
-//        $condition = ($condition) ? "WHERE $condition" : '';
-//        $query     = "DELETE FROM $table $condition";
-//        $result = mysql_query($query) or die('Ошибка в запросе: '.mysql_error().'<br>'.$query);
-//    }
-
-    function DecodeCodepage($text)
+    function decodeCodepage($text)
     {
         $s = mb_detect_encoding($text);
         $q = iconv($s, 'UTF-8', $text);
@@ -747,7 +726,7 @@ TAG
         return $q;
     }
 
-    function DecodeCodepage1251($text)
+    function decodeCodepage1251($text)
     {
         $s = 'windows-1251';
         $q = iconv($s, 'UTF-8', $text);
@@ -755,7 +734,7 @@ TAG
         return $q;
     }
 
-    function Rus2Translit($string)
+    function rus2Translit($string)
     {
         $converter = array(
             'а' => 'a', 'б' => 'b', 'в' => 'v',
@@ -786,9 +765,9 @@ TAG
         return strtr($string, $converter);
     }
 
-    function Str2Url($str)
+    function str2Url($str)
     {
-        $str = Rus2Translit($str);
+        $str = rus2Translit($str);
         $str = strtolower($str);
         $str = preg_replace('~[^-a-z0-9_]+~u', '-', $str);
         $str = trim($str, '-');
@@ -796,7 +775,7 @@ TAG
         return $str;
     }
 
-    function ProgressBar($import_items, $percent, $start = false, $full = false)
+    function progressBar($import_items, $percent, $start = false, $full = false)
     {
         $end = '';
         if ($start) {
@@ -814,14 +793,14 @@ TAG
         ";
     }
 
-    function BuferOut($delay = 0)
+    function buferOut($delay = 0)
     {
         echo str_repeat(' ', 256);
         flush();
         usleep($delay);
     }
 
-    function Debugging($start)
+    function debugging($start)
     {
         // $memoscript = memory_get_usage(true)/1048576;
         $memoscript_peak = memory_get_peak_usage(true) / 1048576;
@@ -829,4 +808,30 @@ TAG
         printf('<br>Скрипт выполнялся: %.2F сек.', $time);
         printf('<br>Пик оперативной памяти: %.2F МБ.', $memoscript_peak);
         // printf('<br>Использовано оперативной памяти: %.2F МБ.', $memoscript);
+    }
+    
+    function queryTime($start_query, $return = false)
+    {
+        static $query_time = 0;
+        $query_time += (microtime(true) - $start_query);
+        
+        if ($return) {
+            return $query_time;
+        }
+
+        return true;
+    }
+
+    function deleteRow($table, $condition = '')
+    {
+        $condition = ($condition) ? "WHERE $condition" : '';
+        $query = "DELETE FROM $table $condition";
+        $result = mysql_query($query) or die('Ошибка в запросе: '.mysql_error().'<br>'.$query);
+    }
+
+    function optimizeTable($table)
+    {
+        $query = "OPTIMIZE TABLE $table";
+        $res = mysql_query($query) or die(mysql_error()."<br>$query");
+        mysql_close();
     }

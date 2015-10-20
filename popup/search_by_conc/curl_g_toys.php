@@ -135,7 +135,7 @@ TAG
         foreach ($category_urls as $category => $url) {
 
             $category_url = URL_COMPETITORS.$url.URL_POSTFIX.$products_cnt;
-            $filename = Rus2Translit(trim($category));
+            $filename = rus2Translit(trim($category));
             $filename = DIR_COMPETITORS.'/'.$filename.EXT;
             $products = '';
 
@@ -151,17 +151,17 @@ TAG
 
             $rowcount = count($products[1]);
             echo('<p>обновление цен категории <b>&laquo;'.$category.'&raquo;</b>...(<i>'.$rowcount.' товаров</i>)</p>');
-            BuferOut();
+            buferOut();
 
             $category = mysql_real_escape_string($category);
 
             for ($j = 0; $j < $rowcount; $j++) {
                 set_time_limit(0);
-                $name = mysql_real_escape_string(trim(str_replace($replace_name, '', DecodeCodepage($products[1][$j]))));
+                $name = mysql_real_escape_string(trim(str_replace($replace_name, '', decodeCodepage($products[1][$j]))));
                 $price = (double)$products[2][$j];
-                $code = mysql_real_escape_string(DecodeCodepage($products[3][$j]));
+                $code = mysql_real_escape_string(decodeCodepage($products[3][$j]));
                 $price_usd = $price / 20.51;
-                $productID = GetValue('productID', 'Conc__grandtoys', "code = '$code'");
+                $productID = getValue('productID', 'Conc__grandtoys', "code = '$code'");
 
                 if ($productID) {
                     $query
@@ -194,11 +194,11 @@ TAG
 
         if ($progress > $percent) {
             $percent = $progress.'%';
-            ProgressBar('products', $percent);
-            BuferOut();
+            progressBar('products', $percent);
+            buferOut();
         }
     }
-    ProgressBar('products', $percent, true);
+    progressBar('products', $percent, true);
     echo('<hr><span style="color:blue;">Обработано '.$no.' товаров</span><br><br>Новых '.$new.' товаров</span><br>');
 
     // Оптимизация таблиц
@@ -214,4 +214,4 @@ TAG
           <div id=\'end\'>Импорт завершен!</div>
       ');
 
-    Debugging($start);
+    debugging($start);

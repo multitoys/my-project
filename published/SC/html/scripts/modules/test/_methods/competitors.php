@@ -29,51 +29,65 @@
 
             parent::__construct();
 
+            //контроллер выбора функций конструктора путем обхода массива $_GET
             foreach (array_keys($_GET) as $get_key) {
+                
                 switch ($get_key) {
+                    
                     case 'disc_usd':
                         $this->__setDisc_usd();
                         break;
+                    
                     case 'disc_ua':
                         $this->__setDisc_ua();
                         break;
+                    
                     case 'disc_conc':
                         $this->__setDisc_conc();
                         break;
+                    
                     case 'currency':
                         $this->__setCurrency();
                         break;
+                    
                     case 'bestsellers':
-                        $this->__getListProducts('items_sold', 150);
+                        $this->__getProductsList('items_sold', 150);
                         break;
+                    
                     case 'new':
-                        $this->__getListProducts('code_1c', 500);
+                        $this->__getProductsList('code_1c', 500);
                         break;
+                    
                     case 'new_items_postup':
                         $this->__getNewItemsPostup();
                         break;
+                    
                     case 'manufactured':
                         if ($_GET['manufactured'] !== 'all') {
                             $this->__setManufactured();
                         }
                         break;
+                    
                     case 'brand':
                         if ($_GET['brand'] !== 'all') {
                             $this->__setBrand();
                         }
                         break;
+                    
                     case 'category':
                         if ($_GET['category'] !== 'all') {
                             $this->__setCategory();
                         }
                         break;
+                    
                     case 'competitor':
                         if ($_GET['competitor'] !== 'all') {
                             $this->__setCompetitor();
                         }
                         break;
+                    
                     case 'searchstring':
-                        if ($_GET['searchstring'] !== null) {
+                        if ($_GET['searchstring'] !== '') {
                             $this->__setSearch();
                         }
                         break;
@@ -107,12 +121,12 @@
             $grid->default_sort_direction = 'DESC';
             $grid->rows_num = 100;
 
+            //выбор и установка заголовков для таблицы отчета
             $grid->registerHeader('№');
             $grid->registerHeader('Код 1С', 'code_1c', false, 'ASC');
             $grid->registerHeader('Артикул', 'product_code', false, 'ASC');
             $grid->registerHeader('Фото');
             $grid->registerHeader('Наименование', 'name_ru', true, 'ASC');
-//            $grid->registerHeader('Категория', 'category', false, 'ASC');
             $grid->registerHeader('Закупка', 'purchase', false, 'ASC', 'right');
             $grid->registerHeader('Наценка', 'margin', false, 'ASC', 'right');
             $grid->registerHeader('Мультитойс', 'Price', false, 'ASC', 'right');
@@ -132,7 +146,7 @@
                     $grid->registerHeader('Микстойс', 'mixtoys', false, 'ASC', 'right');
                     $grid->registerHeader('раз-ца', 'diff_mixtoys', false, 'ASC', 'right');
                     break;
-                case 'grandtoys':
+                case 'grandtoys1':
                     $grid->registerHeader('Г.-Тойс', 'grandtoys', false, 'ASC', 'right');
                     $grid->registerHeader('раз-ца', 'diff_grandtoys', false, 'ASC', 'right');
                     $grid->registerHeader('Г.-Тойс-2', 'grandtoys2', false, 'ASC', 'right');
@@ -288,10 +302,25 @@
 
         protected function __setSearch()
         {
-            $this->search = ' AND (product_code LIKE "%'.xEscapeSQLstring($_GET['searchstring']).'%" OR name_ru LIKE "%'.xEscapeSQLstring($_GET['searchstring']).'%")';
+            $this->search = ' AND (product_code LIKE "%'.xEscapeSQLstring($_GET['searchstring']).'%" OR code_1c='.xEscapeSQLstring($_GET['searchstring']).' OR name_ru LIKE "%'.xEscapeSQLstring($_GET['searchstring']).'%")';
         }
 
-        protected function __getListProducts($field_for_list, $limit = 150)
+        protected function __getCompetitorsList()
+        {
+            $query = 'SELECT * FROM Conc__competitors';
+            $res = mysql_query($query) or die(mysql_error()."<br>$query");
+
+            $ids = array();
+
+            while ($row = mysql_fetch_object($res)) {
+                $ids[] = $row->code_1c;
+            }
+            $ids = implode(',', $ids);
+
+            $this->bestsellers = ' AND code_1c IN ('.$ids.')';
+        }
+
+        protected function __getProductsList($field_for_list, $limit = 150)
         {
             $query = 'SELECT code_1c FROM SC_products WHERE enabled = 1 ORDER BY '.$field_for_list.' DESC LIMIT '.$limit;
             $res = mysql_query($query) or die(mysql_error().$query);

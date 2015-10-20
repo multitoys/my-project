@@ -200,7 +200,7 @@
                 </div>
 
                 <div>
-                    <label for="searchstring" style="color: #45AF10;">Поиск товаров:</label>
+                    <label for="searchstring" title="По артикулу, наименованию или Коду 1С" style="color: #45AF10;">Поиск товаров:</label>
                     <input type="text" class="search" rel="Поиск товаров" value=""
                            style="width:100px;" name="searchstring" id="searchstring">
                 </div>
@@ -223,7 +223,7 @@
                         <option value='mixtoys' {if $smarty.get.competitor eq 'mixtoys'} selected="selected"{/if}>
                             Микстойс
                         </option>
-                        <option value='grandtoys' {if $smarty.get.competitor eq 'grandtoys'} selected="selected"{/if}>
+                        <option value='grandtoys1' {if $smarty.get.competitor eq 'grandtoys1'} selected="selected"{/if}>
                             ГрандТойс
                         </option>
                     </select>
@@ -311,7 +311,7 @@
                     {elseif $smarty.get.competitor eq 'mixtoys'}
                         <td class="to_right border {if $GridRows[i].diff_mixtoys > 0}red{else}green{/if}">{$GridRows[i].mixtoys}</td>
                         <td class="to_right {if $GridRows[i].diff_mixtoys > 0}red{else}green{/if}">{$GridRows[i].diff_mixtoys}</td>
-                    {elseif $smarty.get.competitor eq 'grandtoys'}
+                    {elseif $smarty.get.competitor eq 'grandtoys1'}
                         <td class="to_right border {if $GridRows[i].diff_grandtoys > 0}red{else}green{/if}">{$GridRows[i].grandtoys}</td>
                         <td class="to_right {if $GridRows[i].diff_grandtoys > 0}red{else}green{/if}">{$GridRows[i].diff_grandtoys}</td>
                         <td class="to_right border {if $GridRows[i].diff_grandtoys2 > 0}red{else}green{/if}">{$GridRows[i].grandtoys2}</td>

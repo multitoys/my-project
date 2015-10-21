@@ -141,12 +141,12 @@
     //    }
 
     /*--------- Функции ---------*/
-    function ShowError($msg)
+    function showError($msg)
     {
         return "<div style='color:red; font-size:16px;'>$msg</div>";
     }
 
-    function RemoveDir($directory)
+    function removeDir($directory)
     {
         $dir = opendir($directory);
         while (($file = readdir($dir))) {
@@ -163,7 +163,7 @@
         return true;
     }
 
-    function GetValue($what, $table, $condition)
+    function getValue($what, $table, $condition)
     {
         $query = "SELECT $what FROM $table WHERE $condition LIMIT 1";
         $result = mysql_query($query) or die('Ошибка в запросе: '.mysql_error().'<br>'.$query);
@@ -172,21 +172,21 @@
         return $row[0];
     }
 
-    function UpdateValue($table, $new_value, $condition = '')
+    function updateValue($table, $new_value, $condition = '')
     {
         $condition = ($condition)?"WHERE $condition":'';
         $query = "UPDATE $table SET $new_value $condition";
         $result = mysql_query($query) or die('Ошибка в запросе: '.mysql_error().'<br>'.$query);
     }
 
-    function DeleteRow($table, $condition = '')
+    function deleteRow($table, $condition = '')
     {
         $condition = ($condition)?"WHERE $condition":'';
         $query = "DELETE FROM $table $condition";
         $result = mysql_query($query) or die('Ошибка в запросе: '.mysql_error().'<br>'.$query);
     }
 
-    function DecodeCodepage($text)
+    function decodeCodepage($text)
     {
         $s = mb_detect_encoding($text);
         $q = iconv($s, 'UTF-8', $text);
@@ -194,7 +194,7 @@
         return $q;
     }
 
-    function DecodeCodepage1251($text)
+    function decodeCodepage1251($text)
     {
         $s = 'windows-1251';
         $q = iconv($s, 'UTF-8', $text);
@@ -202,7 +202,7 @@
         return $q;
     }
 
-    function DecodeCodeArray1251($array)
+    function decodeCodeArray1251($array)
     {
         $array_new = array();
         foreach ($array as $arr) {
@@ -214,7 +214,7 @@
         return $array_new;
     }
 
-    function Rus2Translit($string)
+    function rus2Translit($string)
     {
         $converter = array(
             'а' => 'a', 'б' => 'b', 'в' => 'v', 'г' => 'g', 'д' => 'd', 'е' => 'e', 'ё' => 'e', 'ж' => 'zh', 'з' => 'z',
@@ -230,7 +230,7 @@
         return strtr($string, $converter);
     }
 
-    function Str2Url($str)
+    function str2Url($str)
     {
         $str = Rus2Translit($str);
         $str = strtolower($str);
@@ -240,7 +240,7 @@
         return $str;
     }
 
-    function ProgressBar($import_items, $percent, $full = '')
+    function progressBar($import_items, $percent, $full = '')
     {
         if ($full === true) {
             $full = 'background-image:linear-gradient(to bottom, #6AFF7D, #00DC08)';
@@ -251,14 +251,14 @@
         ";
     }
 
-    function BuferOut($delay = 0)
+    function buferOut($delay = 0)
     {
         echo str_repeat(' ', 1024 * 128);
         flush();
         usleep($delay);
     }
 
-    function Debugging($start)
+    function debugging($start)
     {
         // $memoscript = memory_get_usage(true)/1048576;
         $memoscript_peak = memory_get_peak_usage(true) / 1048576;

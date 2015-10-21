@@ -84,6 +84,8 @@
 
         #discounts input {
             width: 20px;
+            margin-top: 1px;
+            height: 20px;
         }
 
         label, select, .input_message {
@@ -223,15 +225,15 @@
                         <option value='mixtoys' {if $smarty.get.competitor eq 'mixtoys'} selected="selected"{/if}>
                             Микстойс
                         </option>
-                        <option value='grandtoys1' {if $smarty.get.competitor eq 'grandtoys1'} selected="selected"{/if}>
+                        <option value='grandtoys' {if $smarty.get.competitor eq 'grandtoys'} selected="selected"{/if}>
                             ГрандТойс
                         </option>
                     </select>
                 </div>
 
                 <div>
-                    <label for="manufactured" style="color: #45AF10;">Производители</label>
-                    <select name="manufactured" style="width:176px;" id="manufactured">
+                    <label for="manufactured" style="color: #45AF10;">Производители:</label>
+                    <select name="manufactured" style="width:171px;" id="manufactured">
                         <option value='all'      {if $smarty.get.manufactured eq 'all'} selected="selected"{/if}>Все производители</option>
                         <option value='Ukraine' {if $smarty.get.manufactured eq 'Ukraine'} selected="selected"{/if}>только Украина</option>
                         <option value='China' {if $smarty.get.manufactured eq 'China'} selected="selected"{/if}>только Китай</option>
@@ -264,23 +266,23 @@
 
         </div>
     </form>
-    <script src='{$smarty.const.URL_JS}/jquery.1.9.1.js'></script>
+    {*<script src='{$smarty.const.URL_JS}/jquery.1.9.1.js'></script>*}
     {if $GridRows}
-    {literal}
-        <script>
-            $(document).ready(function () {
-                var HeaderTop = $('#header').offset().top;
+    {*{literal}*}
+        {*<script>*}
+            {*$(document).ready(function () {*}
+                {*var HeaderTop = $('#header').offset().top;*}
 
-                $(window).scroll(function () {
-                    if ($(window).scrollTop() > HeaderTop) {
-                        $('#header').css({position: 'fixed', top: '0px'});
-                    } else {
-                        $('#header').css({position: 'static'});
-                    }
-                });
-            });
-        </script>
-    {/literal}
+                {*$(window).scroll(function () {*}
+                    {*if ($(window).scrollTop() > HeaderTop) {*}
+                        {*$('#header').css({position: 'fixed', top: '0px'});*}
+                    {*} else {*}
+                        {*$('#header').css({position: 'static'});*}
+                    {*}*}
+                {*});*}
+            {*});*}
+        {*</script>*}
+    {*{/literal}*}
         {*{if $navigator}<p>{$navigator}</p>{/if}*}
         {*<p class="gridsfooter">{$TotalFound} &nbsp;{include file="backend/lister.tpl.html"}</p>*}
         <table width="100%" border="0" cellpadding="0" cellspacing="0" class="grid">
@@ -311,7 +313,7 @@
                     {elseif $smarty.get.competitor eq 'mixtoys'}
                         <td class="to_right border {if $GridRows[i].diff_mixtoys > 0}red{else}green{/if}">{$GridRows[i].mixtoys}</td>
                         <td class="to_right {if $GridRows[i].diff_mixtoys > 0}red{else}green{/if}">{$GridRows[i].diff_mixtoys}</td>
-                    {elseif $smarty.get.competitor eq 'grandtoys1'}
+                    {elseif $smarty.get.competitor eq 'grandtoys'}
                         <td class="to_right border {if $GridRows[i].diff_grandtoys > 0}red{else}green{/if}">{$GridRows[i].grandtoys}</td>
                         <td class="to_right {if $GridRows[i].diff_grandtoys > 0}red{else}green{/if}">{$GridRows[i].diff_grandtoys}</td>
                         <td class="to_right border {if $GridRows[i].diff_grandtoys2 > 0}red{else}green{/if}">{$GridRows[i].grandtoys2}</td>

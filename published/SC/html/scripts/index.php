@@ -321,7 +321,7 @@ ORDER BY `cnt` DESC");
 
     checkLogin($a);
 
-    if (detectMSIE()) {
+    if (!detectMSIE()) {
         $smarty->assign('deffer', 'deffer');
     }
 

@@ -68,7 +68,7 @@ TAG
 //        define('LOGIN', '973846984');
 //        define('PASSWORD', '973846984');
 
-        $price_number = 1;
+        $price_number = '';
         switch (LOGIN) {
             case 'rusmol':
                 $price_number = 2;
@@ -82,7 +82,7 @@ TAG
         $refferer = URL_COMPETITORS;
         postAuth($login_url, 'UserLogin[username]='.LOGIN.'&UserLogin[password]='.PASSWORD, $headers);
 
-        UpdateValue('Conc__grandtoys', 'enabled = 0');
+        updateValue('Conc__grandtoys', 'enabled = 0');
 
         $no = 0;
         $new = 0;
@@ -138,8 +138,8 @@ TAG
                                         SET     parent       = '$parent',
                                                 category     = '$category',
                                                 name         = '$name',
-                                                price_uah.$price_number    =  $price,
-                                                price_usd.$price_number    =  $price_usd,
+                                                price_uah$price_number    =  $price,
+                                                price_usd$price_number    =  $price_usd,
                                                 enabled      =  1
                                         WHERE   productID    =  $productID
                             ";
@@ -148,7 +148,7 @@ TAG
                         $query
                             = "
                                     INSERT INTO Conc__grandtoys
-                                                (parent, category, code, name, price_uah.$price_number, price_usd.$price_number)
+                                                (parent, category, code, name, price_uah$price_number, price_usd$price_number)
                                     VALUES      ('$parent', '$category', $code, '$name', $price, $price_usd)
                                   ";
                         $res = mysql_query($query) or die(mysql_error()."<br>$query");

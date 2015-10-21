@@ -1777,10 +1777,8 @@
         $useragent = $_SERVER['HTTP_USER_AGENT'];
         $msie = 'MSIE';
         $match = stripos($useragent, $msie);
-        if ($match === false) {
-            return true;
-        }
-        return false;
+        
+        return $match;
     }
 
     function make_clean_slug($string, $prefix, $table, $slug_field, $id_field = '', $id = null)

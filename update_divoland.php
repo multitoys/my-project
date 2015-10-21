@@ -38,7 +38,7 @@ TAG
     $folders  = array_slice(scandir($html_dir), 2);
     $parts    = count($folders);
     $files    = array();
-    $error    = 0;
+    $new    = 0;
     $part     = 0;
     $no       = 0;
 
@@ -98,7 +98,7 @@ TAG
                                 VALUES   ('$parent', '$category', '$code', '$name', $price, $price_usd)
                     ";
                     $res = mysql_query($query) or die(mysql_error()."<br>$query");
-                    $error++;
+                    $new++;
                 }
 
             }
@@ -114,7 +114,7 @@ TAG
         }
     }
     ProgressBar('products', $percent, true);
-    echo('<hr><span style="color:blue;">Обработано '.$no.' товаров</span><br><br>Новых '.$error.' товаров</span><br>');
+    echo('<hr><span style="color:blue;">Обработано '.$no.' товаров</span><br><br>Новых '.$new.' товаров</span><br>');
 
     // Оптимизация таблиц
 	$query = "UPDATE Conc__divoland SET parent='', category='' WHERE enabled=0";

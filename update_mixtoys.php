@@ -24,7 +24,7 @@
 TAG
     );
 
-    $usd = GetValue('currency_value', 'Conc__currency', 'CCID = 3');
+    $usd = GetValue('currency_value', 'Conc__competitors', 'CCID = 3');
     $archive_dir = $_SERVER['DOCUMENT_ROOT'] . '/upload/';
     //$dest_dir = $_SERVER['DOCUMENT_ROOT'].'/temp/import/';
 
@@ -112,7 +112,7 @@ TAG
                         VALUES      ('$parent', '$category', '$code', '$product_code', '$name', $price, $price_usd)
                       ";
                 $res = mysql_query($query) or die(mysql_error() . "<br>$query");
-                $productID = mysql_insert_id();
+                $no++;
             } else {
                 $query = "
                             UPDATE
@@ -133,7 +133,6 @@ TAG
                 $res = mysql_query($query) or die(mysql_error() . "<br>$query");
             }
             $row++;
-            $no++;
             $progress = round(($no / ($rowcount - 1) * 100), 0, PHP_ROUND_HALF_DOWN);
             if ($progress > $percent) {
                 $percent = $progress . '%';
@@ -143,7 +142,7 @@ TAG
         }
         fclose($handle);
     }
-    echo('<span style="color:blue;"><br>Обработано ' . $no . ' товаров</span><br>');
+    echo('<span style="color:blue;"><br>Обработано ' . $row . ' товаров</span><br>');
 
     // Оптимизация таблиц
     //DeleteRow('Conc__mixtoys', 'price_uah = 0.00');
@@ -154,7 +153,7 @@ TAG
     $res = mysql_query($query) or die(mysql_error() . "<br>$query");
     mysql_close();
 
-    ProgressBar('products', $percent, false, true);
+    ProgressBar('products', $percent, true);
     echo('
         <br>
           <div id=\'end\'>Импорт завершен!</div>

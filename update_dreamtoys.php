@@ -118,7 +118,7 @@ TAG
                             VALUES      ('$parent', '$category', '$code', '$product_code', '$name', $price, $price_usd)
                           ";
                     $res = mysql_query($query) or die(mysql_error()."<br>$query");
-                    $productID = mysql_insert_id();
+                    $no++;
                 } else {
                     $query
                         = "
@@ -137,7 +137,6 @@ TAG
                 }
             }
             $row++;
-            $no++;
             $progress = round(($no / ($rowcount - 1) * 100), 0, PHP_ROUND_HALF_DOWN);
             if ($progress > $percent) {
                 $percent = $progress.'%';
@@ -158,7 +157,7 @@ TAG
     $res = mysql_query($query) or die(mysql_error()."<br>$query");
     mysql_close();
 
-    ProgressBar('products', $percent, false, true);
+    ProgressBar('products', $percent, true);
     echo('
         <br>
           <div id=\'end\'>Импорт завершен!</div>

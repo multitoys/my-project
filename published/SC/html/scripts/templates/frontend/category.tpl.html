@@ -178,7 +178,7 @@
                             {if $products_to_show[i1].Bonus/$products_to_show[i1].Price>2}
                                 <div style='color: red; font-size: 14px;'><b>{$products_to_show[i1].Bonus|string_format:"%d"}</b></div>
                             {else}
-                                <div class="totalPrice">{$products_to_show[i1].Bonus|string_format:"%d"}</div>
+                                <div class="totalPrice bonus">{$products_to_show[i1].Bonus|string_format:"%d"}</div>
                             {/if}
 						</td>
 						{*if $products_to_show[i1].zakaz}

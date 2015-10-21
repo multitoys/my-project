@@ -511,7 +511,8 @@ class AuxPages extends ComponentModule {
             if ($sort === 'name') {
                 $ajax_sort = $sort;
                 $sort = 'name_ru';
-                $default_sort = 't1.sort_order, t1.ukraine, t1.categoryID,';
+                $default_sort = 't1.sort_order, t1.categoryID,';
+//                $default_sort = 't1.sort_order, t1.ukraine, t1.categoryID,';
             }
 
             $date = 0;
@@ -573,12 +574,18 @@ class AuxPages extends ComponentModule {
             }
 
             $url = '/auxpage_new_items/'.$date.'/';
-            $out = SimpleNavigator($tov_all_count, $start_row, $p_count, $url, $out);
+
+
             $start = $start_row;
             $direction_nav = 'ASC';
             if ($direction) {
                 $direction_nav = $direction;
             }
+            $out = '';
+            if ($tov_all_count > $p_count) {
+                $out = SimpleNavigator($tov_all_count, $start_row, $p_count, $url, $out);
+            }
+            
             $newitems_start = "
                                 <div
                                     id='light-pagination'
@@ -607,7 +614,7 @@ class AuxPages extends ComponentModule {
                                                 <div class='.$arrow_name.'></div>
                                             </div>
                                         </td>
-                                        <td width=100px>
+                                        <td width=105px>
                                             <div class="'.$sort_class_pc.' ">
                                                 <div class=arbopr>
                                                     <a href="/auxpage_new_items/'.$date.'/product_code/'.$new_dir.'/">Артикул</a>
@@ -615,7 +622,7 @@ class AuxPages extends ComponentModule {
                                                 <div class='.$arrow_product_code.'></div>
                                             </div>
                                         </td>
-                                        <td width=60px>
+                                        <td width=65px>
                                             <div class='.$sort_class_bonus.'>
                                                 <div class=arbopr>
                                                     <a href="/auxpage_new_items/'.$date.'/Bonus/'.$new_dir.'/">Баллы</a>
@@ -623,16 +630,13 @@ class AuxPages extends ComponentModule {
                                                 <div class='.$arrow_bonus.'></div>
                                             </div>
                                         </td>
-                                        <td width=80px>
+                                        <td width=125px>
                                             <div class='.$sort_class_price.'>
                                                 <div class=arbopr>
                                                     <a href="/auxpage_new_items/'.$date.'/Price/'.$new_dir.'/">Цена</a>
                                                 </div>
                                                 <div class='.$arrow_price.'></div>
                                             </div>
-                                        </td>
-                                        <td width=110px>
-                                            <div class=ost>Остаток</div>
                                         </td>
                                         <td width=65px>
                                             <div class=zakaz>Заказано</div>
@@ -645,6 +649,9 @@ class AuxPages extends ComponentModule {
                     <div class=scroll-pane1>
                         <div id=content>
             ';
+//                                        <td width=110px>
+//                                            <div class=ost>Остаток</div>
+//                                        </td>
             if ($vip) {
                 $newitems_start .= '<hr style=\'border-color: coral\'>';
             } else {
@@ -753,14 +760,11 @@ class AuxPages extends ComponentModule {
                     $shop_count = $shop_count_cart[$Product->productID];
                 }
                 $add2cart = ($buy_enabled) ? "
-                                        <table width=175px>
+                                        <table width=110px>
                                             <tbody>
                                                 <tr>
                                                     <td>
                                                         <input class=cart_product_quantity id=qty$Product->productID name=product_qty title='Количество' value='' size=2 data-id=$Product->productID onkeypress='if (event.keyCode == 13){add_2cart(\"#qty$Product->productID\")}'>
-                                                    </td>
-                                                    <td style='vertical-align:middle;white-space:nowrap;'>
-                                                        <div class=ostatok_div>&nbsp;$Product->ostatok&nbsp;шт.</div>
                                                     </td>
                                                     <td>
                                                         <button class=z_add_cart title='добавить в корзину' onclick='add_2cart(\"#qty$Product->productID\")' type=button>
@@ -773,6 +777,9 @@ class AuxPages extends ComponentModule {
                                             </tbody>
                                         </table>
                                         " : '';
+//                                                    <td style='vertical-align:middle;white-space:nowrap;'>
+//                                                        <div class=ostatok_div>&nbsp;$Product->ostatok&nbsp;шт.</div>
+//                                                    </td>
                 $q = '
                     SELECT count(*) AS pics_all_count
                     FROM SC_product_pictures
@@ -816,16 +823,16 @@ class AuxPages extends ComponentModule {
                                                 </div>
                                                 $add2cart_conc
                                             </td>
-                                            <td width=100px>
+                                            <td width=105px>
                                                 <a href='/product/$Product->slug'>$Product->product_code</a>
                                             </td>
-                                            <td width=60px>
-                                                <div class=totalPrice>$bonus</div>
+                                            <td width=65px>
+                                                <div class='totalPrice bonus'>$bonus</div>
                                             </td>
                                             <td width=80px>
                                                 <div class=totalPrice>$price</div>
                                             </td>
-                                            <td width=175px>
+                                            <td width=110px>
                                                 $add2cart
                                             </td>
                                         </tr>

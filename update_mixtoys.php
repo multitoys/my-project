@@ -133,7 +133,7 @@ TAG
                 $res = mysql_query($query) or die(mysql_error() . "<br>$query");
             }
             $row++;
-            $progress = round(($no / ($rowcount - 1) * 100), 0, PHP_ROUND_HALF_DOWN);
+            $progress = round(($row / ($rowcount - 1) * 100), 0, PHP_ROUND_HALF_DOWN);
             if ($progress > $percent) {
                 $percent = $progress . '%';
                 ProgressBar('products', $percent, $start2);
@@ -142,7 +142,11 @@ TAG
         }
         fclose($handle);
     }
-    echo('<span style="color:blue;"><br>Обработано ' . $row . ' товаров</span><br>');
+    echo(
+        '<span style="color:blue;">
+         <br>Обработано ' . $row . ' товаров</span><br>
+         <br>Новых '.$no.' товаров</span><br>
+        ');
 
     // Оптимизация таблиц
     //DeleteRow('Conc__mixtoys', 'price_uah = 0.00');

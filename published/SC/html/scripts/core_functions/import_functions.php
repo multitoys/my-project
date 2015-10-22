@@ -39,7 +39,7 @@
 
     function updateValue($table, $new_value, $condition = '')
     {
-        $condition = ($condition) ? "WHERE $condition" : '';
+        $condition = ($condition)?"WHERE $condition":'';
         $query = "UPDATE $table SET $new_value $condition";
         $result = mysql_query($query) or die('Ошибка в запросе: '.mysql_error().'<br>'.$query);
     }
@@ -130,14 +130,13 @@
     {
         $memoscript_peak = memory_get_peak_usage(true) / 1048576;
         $time = microtime(true) - $start;
-        printf('<br>Скрипт выполнялся: %.2F сек.', $time);
-        printf('<br>Пик оперативной памяти: %.2F МБ.', $memoscript_peak);
+        printf('<br>Скрипт выполнялся: %.4F сек.', $time);
+        printf('<br>Пик оперативной памяти: %.4F МБ.<br>', $memoscript_peak);
     }
-
 
     function deleteRow($table, $condition = '')
     {
-        $condition = ($condition) ? "WHERE $condition" : "";
+        $condition = ($condition)?"WHERE $condition":"";
         $query = "DELETE FROM $table $condition";
         $result = mysql_query($query) or die('Ошибка в запросе: '.mysql_error().'<br>'.$query);
     }
@@ -147,4 +146,102 @@
         $query = "OPTIMIZE TABLE $table";
         $res = mysql_query($query) or die(mysql_error()."<br>$query");
         mysql_close();
+    }
+
+    function csvToArray($filename = '', $length = 0, $delimiter = ';')
+    {
+        if (!file_exists($filename) || !is_readable($filename))
+            return false;
+
+        $header = null;
+        $csv = array();
+        
+        if (($handle = fopen($filename, 'r')) !== false) {
+            $no = 0;
+            while (($data = fgetcsv($handle, $length, $delimiter)) !== false) {
+                if ($no !== 0) {
+                    
+                    $ua = $data[0];
+                    $id = $data[1];
+                    $code = mysql_real_escape_string(decodeCodepage1251($data[2]));
+                    $catid = is_numeric($data[3]) ? $data[3] : 1;
+                    $price = $data[4];
+                    $bonus = $data[6];
+                    $name = mysql_real_escape_string(trim(decodeCodepage1251($data[7])));
+                    $skidka = $data[8];
+                    $hit = $data[9];
+                    $new = $data[10];
+                    $new_postup = $data[11];
+                    $akcia = $data[12];
+                    $ostatok = mysql_real_escape_string(decodeCodepage1251($data[13]));
+                    $doza = $data[15];
+                    $box = $data[18];
+                    $minorder = $data[21];
+                    $oldprice = $data[22];
+                    $zakaz = $data[26];
+                    $brand = mysql_real_escape_string(decodeCodepage1251($data[27]));
+                    $purchase = $data[28];
+
+                    if (!is_numeric($price)) {
+                        $price = preg_replace('/[^0-9.]/', '', $price);
+                    }
+                    if (!is_numeric($oldprice)) {
+                        $oldprice = preg_replace('/[^0-9.]/', '', $oldprice);
+                    }
+
+                    if (!is_numeric($purchase)) {
+                        $purchase = preg_replace('/[^0-9.]/', '', $purchase);
+                    }
+
+                    $ua = ($ua > 1) ? 1 : 0;
+                    $skidka = is_numeric($skidka) ? $skidka : 0;
+                    $bonus = is_numeric($bonus) ? $bonus : 0;
+                    $hit = ($hit > 0) ? $hit : 0;
+                    $new = ($new > 0) ? 7 : 5;
+                    $new_postup = ($new_postup > 0) ? $new_postup : 0;
+                    $akcia = ($akcia > 0) ? 1 : 0;
+                    $akcia_skidka = ($akcia > 0) ? (1 - $price / $oldprice) * 100 : 0;
+                    $akcia_skidka = is_numeric($akcia_skidka) ? $akcia_skidka : 0;
+                    $akcia_bally = $bonus / $price;
+                    $akcia_bally = is_numeric($akcia_bally) ? $akcia_bally : 0;
+                    $akcia_bally = ($akcia_bally > 2) ? 1 : 0;
+                    $doza = is_numeric($doza) ? $doza : 0;
+                    $box = is_numeric($box) ? $box : 0;
+                    $oldprice = ($oldprice > $price) ? $oldprice : 0;
+                    $minorder = ($minorder > 0) ? 1 : 0;
+                    $zakaz = ($zakaz > 0) ? 1 : 0;
+                    $slug = str2Url("$name").'-'.$id;
+
+                    $csv[$data[1]] = array(
+                        'categoryID'              => $catid,
+                        'purchase'                => $purchase,
+                        'Price'                   => $price,
+                        'Bonus'                   => $bonus,
+                        'in_stock'                => 200,
+                        'items_sold'              => $hit,
+                        'enabled'                 => 1,
+                        'list_price'              => $oldprice,
+                        'akcia'                   => $akcia,
+                        'akcia_skidka'            => $akcia_skidka,
+                        'product_code'            => $code,
+                        'sort_order'              => $new_postup,
+                        'ordering_available'      => 1,
+                        'slug'                    => $slug,
+                        'name_ru'                 => $name,
+                        'skidka'                  => $skidka ,
+                        'ostatok'                 => $ostatok,
+                        'ukraine'                 => $ua,
+                        'doza'                    => $doza,
+                        'box'                     => $box,
+                        'zakaz'                   => $zakaz,
+                        'brand'                   => $brand,
+                        'eproduct_available_days' => $new
+                    );
+                }
+                $no++;
+            }
+            fclose($handle);
+        }
+
+        return $csv;
     }

@@ -1,7 +1,7 @@
 <?php
 
   ini_set('display_errors', true);
-  define('DIR_ROOT', $_SERVER['DOCUMENT_ROOT']."/published/SC/html/scripts");
+  define('DIR_ROOT', $_SERVER['DOCUMENT_ROOT'].'/published/SC/html/scripts');
   $DebugMode = false;
   $Warnings = array();
   include_once(DIR_ROOT.'/includes/init.php');
@@ -15,10 +15,10 @@
   define('VAR_DBHANDLER','DBHandler');
 
 
-  $prefix     = GetValue("settings_value","SC_settings","settings_constant_name = 'CONF_ORDERID_PREFIX'");
-  $email_to   = GetValue("settings_value","SC_settings","settings_constant_name = 'CONF_ORDERS_EMAIL'");
+  $prefix     = GetValue('settings_value','SC_settings',"settings_constant_name = 'CONF_ORDERID_PREFIX'");
+  $email_to   = GetValue('settings_value','SC_settings',"settings_constant_name = 'CONF_ORDERS_EMAIL'");
 
-  $query = "SELECT orderID, customerID, order_time FROM SC_orders WHERE statusID = 2"; // Новые заказы
+  $query = 'SELECT orderID, customerID, order_time FROM SC_orders WHERE statusID = 2'; // Новые заказы
   $res = mysql_query($query) or die(mysql_error()."<br>$query");
  // echo("Num_orders:".mysql_num_rows($res)."<br><br>");
   while($row = mysql_fetch_object($res)) {
@@ -30,12 +30,12 @@
     $filename1 = my_translit($filename);
     $filename2 = my_translit('Cast-Zakaz'.$filename);
     $thm = "Новый заказ $row->orderID-$name-$row->order_time";
-    $msg1 = "Основной заказ $row->orderID-$name с MULTITOYS";//GetNonAutomatic($row->orderID);
+    $msg1 = "Основной заказ $row->orderID-$name с MULTITOYS";
     $msg = "Пазлы и товары под заказ $row->orderID-$name с MULTITOYS";
     // Отправляем почтовое сообщение
     $o = send_mail2($email_to, $thm, $msg1, $filename1, $file_content);
 	 if ($file_content1) $o = send_mail2($email_to, $thm, $msg, $filename2, $file_content1);
-    if ($o == 1) {
+    if ($o === 1) {
       $query = "UPDATE SC_orders SET statusID = 5 WHERE orderID = $row->orderID";
       $res2 = mysql_query($query) or die(mysql_error()."<br>$query");
     }

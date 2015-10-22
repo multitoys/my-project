@@ -384,7 +384,8 @@
         }
         protected function __priceConc($Price)
         {
-            return $outPrice = round($Price - ($Price * $this->disc_conc / 100), 2);
+            $outPrice = round($Price - ($Price * $this->disc_conc / 100), 2);
+            return $outPrice;
         }
     }
 

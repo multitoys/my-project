@@ -20,7 +20,6 @@ class Cart extends Module {
 	function methodCartInfo(){
 		
 		global $smarty;
-		//include(DIR_INCLUDES.'/shopping_cart_info.php');
 		include(DIR_MODULES.'/'.$this->ModuleDir.'/scripts/shopping_cart_info.php');
 	}
 	
@@ -30,4 +29,3 @@ class Cart extends Module {
 		include(DIR_MODULES.'/'.$this->ModuleDir.'/scripts/shopping_cart.php');
 	}
 }
-?>

@@ -3,7 +3,7 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-		<meta name="viewport" content="width=320"> <!--  user-scalable=no,initial-scale=1.0 -->
+		<meta name="viewport" content="width=800"> <!--  user-scalable=no,initial-scale=1.0 -->
 		<base href="{$smarty.const.CONF_FULL_SHOP_URL}">
 
 
@@ -24,8 +24,6 @@
 
 		<div style="padding:6px;border-color:#777777;border-style:solid;border-width:0px;border-top-width:1px;text-align:center;">
 		{cpt_divisions_navigation divisions="mobile" view="horizontal"}
-		</div>{if !$smarty.get.productwidget && !$productwidget &&!$printable_version && $show_powered_by }
-		<div id="powered_by">{if $show_powered_by_link}{lbl_powered_by}{else}{lbl_powered_by_text}{/if}</div>
-{/if}
+		</div>
 	</body>
 </html>

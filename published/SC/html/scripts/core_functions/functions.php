@@ -1757,11 +1757,11 @@
     {
         $container = $_SERVER['HTTP_USER_AGENT'];
         $useragents = array(
-            'iPhone', 'iPod', "Elaine/3.0", "Palm", "EudoraWeb", "Blazer", "AvantGo", "Windows CE", "Cellphone", "Small", "MMEF20", "Danger", "hiptop"
-        , "Proxinet", "ProxiNet", "Newt", "PalmOS", "NetFront", "SHARP-TQ-GX10", "SonyEricsson", "SymbianOS", "UP.Browser"
-        , "UP.Link", "TS21i-10", "BlackBerry", "MOT-V", 'portalmmm', 'Nokia', 'DoCoMo', 'Opera Mini'
-        , "Palm", "Handspring", "Nokia", "Kyocera", "Samsung", "Motorola", "Mot", "Smartphone", "Blackberry"
-        , "WAP", "PlayStation Portable", "LG", "MMP", "OPWV", "Symbian", "EPOC");
+            'Android', 'iPhone', 'iPod', 'Elaine/3.0', 'Palm', 'EudoraWeb', 'Blazer', 'AvantGo', 'Windows CE', 'Cellphone', 'Small', 'MMEF20', 'Danger', 'hiptop'
+        , 'Proxinet', 'ProxiNet', 'Newt', 'PalmOS', 'NetFront', 'SHARP-TQ-GX10', 'SonyEricsson', 'SymbianOS', 'UP.Browser'
+        , 'UP.Link', 'TS21i-10', 'BlackBerry', 'MOT-V', 'portalmmm', 'Nokia', 'DoCoMo', 'Opera Mini'
+        , 'Palm', 'Handspring', 'Nokia', 'Kyocera', 'Samsung', 'Motorola', 'Mot', 'Smartphone', 'Blackberry'
+        , 'WAP', 'PlayStation Portable', 'LG', 'MMP', 'OPWV', 'Symbian', 'EPOC');
         $pda = false;
         foreach ($useragents as $useragent) {
             if (!eregi($useragent, $container)) continue;

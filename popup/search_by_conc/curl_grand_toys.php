@@ -91,9 +91,6 @@ TAG
         $products_cnt = 1000;
         $replace_name = array('&laquo;', '&raquo;', '&quot;', '\'', '.', '"');
 
-//        $replace = array(',', '.', ')', '(', '\'');
-//        $match_str = preg_replace('/\s\s+/', ' ', str_replace('|', ' ', str_replace($replace, ' ', $conc)));
-
         foreach ($categories as $parent => $cats) {
 
             set_time_limit(0);

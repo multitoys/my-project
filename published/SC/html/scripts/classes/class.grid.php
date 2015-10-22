@@ -144,4 +144,3 @@
 			return $GridRows;
 		}
 	}
-?>

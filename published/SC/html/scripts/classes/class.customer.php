@@ -1,236 +1,246 @@
 <?php
-class CustomerGroup extends DBObject {
 
-	var $custgroupID;
-	var $custgroup_discount;
-	var $sort_order;
-	var $custgroup_name;
+    class CustomerGroup extends DBObject
+    {
 
-	var $__primary_key = 'custgroupID';
-	var $__db_table = CUSTGROUPS_TABLE;
-}
+        var $custgroupID;
+        var $custgroup_discount;
+        var $sort_order;
+        var $custgroup_name;
 
-class Customer extends DBObject {
+        var $__primary_key = 'custgroupID';
+        var $__db_table    = CUSTGROUPS_TABLE;
+    }
 
-	var $customerID;
-	var $Login;
-	var $cust_password;
-	var $Email;
-	var $first_name;
-	var $last_name;
-	var $subscribed4news;
-	var $custgroupID;
-	/**
-	 * Default address id
-	 *
-	 * @var int
-	 */
-	var $addressID;
-	var $reg_datetime;
-	/**
-	 * Customer selected currency id
-	 *
-	 * @var int
-	 */
-	var $CID;
-	var $affiliateID;
-	var $affiliateEmailOrders;
-	var $affiliateEmailPayments;
-	var $ActivationCode;
-  var $skidka;
-  var $skidka_ua;
-  var $is_special_price;
-  var $ignore_skidka;
-  var $vip;
-/*   var $open; */
+    class Customer extends DBObject
+    {
 
-	var $_custom_fields = array();
+        var $customerID;
+        var $Login;
+        var $cust_password;
+        var $Email;
+        var $first_name;
+        var $last_name;
+        var $subscribed4news;
+        var $custgroupID;
+        /**
+         * Default address id
+         *
+         * @var int
+         */
+        var $addressID;
+        var $reg_datetime;
+        /**
+         * Customer selected currency id
+         *
+         * @var int
+         */
+        var $CID;
+        var $affiliateID;
+        var $affiliateEmailOrders;
+        var $affiliateEmailPayments;
+        var $ActivationCode;
+        var $skidka;
+        var $skidka_ua;
+        //  var $is_special_price;
+        //  var $ignore_skidka;
+        var $vip;
+        /*   var $open; */
 
-	var $__primary_key = 'customerID';
-	var $__db_table = CUSTOMERS_TABLE;
+        var $_custom_fields = array();
 
-	function loadByID($customerID){
-		$res = parent::loadByID($customerID);
+        var $__primary_key = 'customerID';
+        var $__db_table    = CUSTOMERS_TABLE;
 
-		$this->cust_password = Crypt::PasswordDeCrypt( $this->cust_password, null );
+        function loadByID($customerID)
+        {
+            $res = parent::loadByID($customerID);
 
-		if (CONF_BACKEND_SAFEMODE)$this->Email = translate("msg_safemode_info_blocked");
+            $this->cust_password = Crypt::PasswordDeCrypt($this->cust_password, null);
 
-		return $res;
-	}
+            if (CONF_BACKEND_SAFEMODE) $this->Email = translate("msg_safemode_info_blocked");
 
-	function loadByLogin($Login){
+            return $res;
+        }
 
-		$Register = &Register::getInstance();
-		/*@var $Register Register*/
-		$DBHandler = &$Register->get(VAR_DBHANDLER);
-		/*@var $DBHandler DataBase*/
+        function loadByLogin($Login)
+        {
 
-		$DBRes = $DBHandler->ph_query('SELECT * FROM ?#CUSTOMERS_TABLE WHERE Login=?', $Login);
-		if(!$DBRes->getNumRows())return false;
+            $Register = &Register::getInstance();
+            /*@var $Register Register*/
+            $DBHandler = &$Register->get(VAR_DBHANDLER);
+            /*@var $DBHandler DataBase*/
 
-		$this->loadFromArray($DBRes->fetchAssoc());
+            $DBRes = $DBHandler->ph_query('SELECT * FROM ?#CUSTOMERS_TABLE WHERE Login=?', $Login);
+            if (!$DBRes->getNumRows()) return false;
 
-		$this->cust_password = Crypt::PasswordDeCrypt( $this->cust_password, null );
+            $this->loadFromArray($DBRes->fetchAssoc());
 
-		if (CONF_BACKEND_SAFEMODE)$this->Email = translate("msg_safemode_info_blocked");
+            $this->cust_password = Crypt::PasswordDeCrypt($this->cust_password, null);
 
-		return true;
-	}
+            if (CONF_BACKEND_SAFEMODE) $this->Email = translate("msg_safemode_info_blocked");
 
-	/**
-	 * @return bool
-	 */
-	function save(){
-		$_cust_password = $this->cust_password;
-		$this->cust_password = Crypt::PasswordCrypt($this->cust_password, null);
+            return true;
+        }
 
-		if(!$this->customerID){
+        /**
+         * @return bool
+         */
+        function save()
+        {
+            $_cust_password = $this->cust_password;
+            $this->cust_password = Crypt::PasswordCrypt($this->cust_password, null);
 
-			if(is_null($this->reg_datetime))$this->reg_datetime = date('Y-m-d H:i:s');
-			if(is_null($this->custgroupID))$this->custgroupID = CONF_DEFAULT_CUSTOMER_GROUP;
+            if (!$this->customerID) {
 
-		}
-		if($this->subscribed4news){
-			subscrAddUnRegisteredCustomerEmail($this->Email);
-		}else{
-			subscrUnsubscribeSubscriberByEmail(base64_encode($this->Email));
-		}
-		$res = parent::save();
+                if (is_null($this->reg_datetime)) $this->reg_datetime = date('Y-m-d H:i:s');
+                if (is_null($this->custgroupID)) $this->custgroupID = CONF_DEFAULT_CUSTOMER_GROUP;
+            }
+            if ($this->subscribed4news) {
+                subscrAddUnRegisteredCustomerEmail($this->Email);
+            } else {
+                subscrUnsubscribeSubscriberByEmail(base64_encode($this->Email));
+            }
+            $res = parent::save();
 
-		$this->cust_password = $_cust_password;
+            $this->cust_password = $_cust_password;
 
-		return $res;
-	}
+            return $res;
+        }
 
-	/**
-	 * @return PEAR_Error
-	 */
-	function checkInfo($scheme = null){
+        /**
+         * @return PEAR_Error
+         */
+        function checkInfo($scheme = null)
+        {
 
-		$res = parent::checkInfo($scheme);
-		if(PEAR::isError($res))return $res;
+            $res = parent::checkInfo($scheme);
+            if (PEAR::isError($res)) return $res;
 
-		if(!$this->first_name)
-			return PEAR::raiseError('err_input_name', null, null, null, 'first_name');
-		if(!$this->last_name)
-			return PEAR::raiseError('err_input_name', null, null, null, 'last_name');
-		if(!$this->Email)
-			return PEAR::raiseError('err_input_email', null, null, null, 'Email');
+            if (!$this->first_name)
+                return PEAR::raiseError('err_input_name', null, null, null, 'first_name');
+            if (!$this->last_name)
+                return PEAR::raiseError('err_input_name', null, null, null, 'last_name');
+            if (!$this->Email)
+                return PEAR::raiseError('err_input_email', null, null, null, 'Email');
 
-		switch ($scheme){
-			case 'required_loginpass':
-				if(!$this->Login)
-					return PEAR::raiseError('err_input_login', null, null, null, 'Login');
-				if(!$this->cust_password)
-					return PEAR::raiseError('err_input_password', null, null, null, 'cust_password');
+            switch ($scheme) {
+                case 'required_loginpass':
+                    if (!$this->Login)
+                        return PEAR::raiseError('err_input_login', null, null, null, 'Login');
+                    if (!$this->cust_password)
+                        return PEAR::raiseError('err_input_password', null, null, null, 'cust_password');
 
-				if(!$this->customerID && $this->Login){
+                    if (!$this->customerID && $this->Login) {
 
-					$replCustomer = new Customer();
-					$replCustomer->loadByLogin($this->Login);
-					// if($replCustomer->loadByLogin($this->Login)){
-					// 	return PEAR::raiseError(translate("err_user_already_exists"));
-					// }
-				}
+                        $replCustomer = new Customer();
+                        $replCustomer->loadByLogin($this->Login);
+                        // if($replCustomer->loadByLogin($this->Login)){
+                        // 	return PEAR::raiseError(translate("err_user_already_exists"));
+                        // }
+                    }
 
-				$dbq = 'SELECT 1 FROM ?#CUSTOMERS_TABLE WHERE Email=? AND login<>"" AND login<>?';
+                    $dbq = 'SELECT 1 FROM ?#CUSTOMERS_TABLE WHERE Email=? AND login<>"" AND login<>?';
 
-				$is_free_email = !db_phquery_fetch(DBRFETCH_FIRST, $dbq, $this->Email, $this->Login);
-				if(!$is_free_email){
-					return PEAR::raiseError(translate('err_occupied_email'));
-				}
+                    $is_free_email = !db_phquery_fetch(DBRFETCH_FIRST, $dbq, $this->Email, $this->Login);
+                    if (!$is_free_email) {
+                        return PEAR::raiseError(translate('err_occupied_email'));
+                    }
 
-				break;
-		}
+                    break;
+            }
 
-		$custom_fields = GetRegFields();
+            $custom_fields = GetRegFields();
 
-		foreach ($custom_fields as $_field){
+            foreach ($custom_fields as $_field) {
 
-			if(!$_field['reg_field_required'])continue;
-			if($this->_custom_fields[$_field['reg_field_ID']])continue;
+                if (!$_field['reg_field_required']) continue;
+                if ($this->_custom_fields[$_field['reg_field_ID']]) continue;
 
-			return PEAR::raiseError('err_input_all_required_fields', null, null, null, "_custom_fields[{$_field['reg_field_ID']}]");
-		}
-	}
+                return PEAR::raiseError('err_input_all_required_fields', null, null, null, "_custom_fields[{$_field['reg_field_ID']}]");
+            }
+        }
 
-	/**
-	 * @return Customer | null
-	 */
-	static function getAuthedInstance(){
+        /**
+         * @return Customer | null
+         */
+        static function getAuthedInstance()
+        {
 
-		static $customerEntry = null;
-		if(!is_object($customerEntry) && isset($_SESSION['log'])&&$_SESSION['log']){
+            static $customerEntry = null;
+            if (!is_object($customerEntry) && isset($_SESSION['log']) && $_SESSION['log']) {
 
-			$customerEntry = new Customer;
-			if(!$customerEntry->loadByLogin($_SESSION['log']))return null;
-		}
+                $customerEntry = new Customer;
+                if (!$customerEntry->loadByLogin($_SESSION['log'])) return null;
+            }
 
-		return $customerEntry;
-	}
+            return $customerEntry;
+        }
 
-	function getAddressesNumber(){
+        function getAddressesNumber()
+        {
 
-		return db_phquery_fetch(DBRFETCH_FIRST, 'SELECT COUNT(addressID) FROM ?#CUSTOMER_ADDRESSES_TABLE WHERE customerID=?', $this->customerID);
-	}
+            return db_phquery_fetch(DBRFETCH_FIRST, 'SELECT COUNT(addressID) FROM ?#CUSTOMER_ADDRESSES_TABLE WHERE customerID=?', $this->customerID);
+        }
 
-	function getOrdersNumber(){
+        function getOrdersNumber()
+        {
 
-		return db_phquery_fetch(DBRFETCH_FIRST, 'SELECT COUNT(orderID) FROM ?#ORDERS_TABLE WHERE customerID=?', $this->customerID);
-	}
+            return db_phquery_fetch(DBRFETCH_FIRST, 'SELECT COUNT(orderID) FROM ?#ORDERS_TABLE WHERE customerID=?', $this->customerID);
+        }
 
-	function getOrdersSum($order_status = null)
-	{
-	    $sql = "select sum(order_amount) as orders_sum from ?#ORDERS_TABLE where customerID=?";
-	    $sql .= ($order_status? ' and statusID=?':'');
-	    $res = db_phquery($sql,$this->customerID,$order_status);
-	    $row = db_fetch_assoc($res);
-	    return floatval($row['orders_sum']);
-	}
+        function getOrdersSum($order_status = null)
+        {
+            $sql = "SELECT sum(order_amount) AS orders_sum FROM ?#ORDERS_TABLE where customerID=?";
+            $sql .= ($order_status?' and statusID=?':'');
+            $res = db_phquery($sql, $this->customerID, $order_status);
+            $row = db_fetch_assoc($res);
 
-	function saveCustomFields(){
+            return floatval($row['orders_sum']);
+        }
 
-		$custom_fields = GetRegFields();
-		foreach ($custom_fields as $_field){
+        function saveCustomFields()
+        {
 
-			$this->setCustomField($_field['reg_field_ID'], isset($this->_custom_fields[$_field['reg_field_ID']])?$this->_custom_fields[$_field['reg_field_ID']]:'');
-		}
+            $custom_fields = GetRegFields();
+            foreach ($custom_fields as $_field) {
 
-	}
+                $this->setCustomField($_field['reg_field_ID'], isset($this->_custom_fields[$_field['reg_field_ID']])?$this->_custom_fields[$_field['reg_field_ID']]:'');
+            }
+        }
 
-	function setCustomField($reg_field_ID, $reg_field_value){
+        function setCustomField($reg_field_ID, $reg_field_value)
+        {
 
-		$sql = '
+            $sql = '
 			SELECT COUNT(*) FROM ?#CUSTOMER_REG_FIELDS_VALUES_TABLE WHERE reg_field_ID=? AND customerID=?
 		';
 
-		$q=db_phquery( $sql, $reg_field_ID, $this->customerID );
-		$r=db_fetch_row($q);
-		if ( $r[0] == 0 ){
+            $q = db_phquery($sql, $reg_field_ID, $this->customerID);
+            $r = db_fetch_row($q);
+            if ($r[0] == 0) {
 
-			if ( trim($reg_field_value) == "" )return;
+                if (trim($reg_field_value) == "") return;
 
-			$sql = '
+                $sql = '
 				INSERT ?#CUSTOMER_REG_FIELDS_VALUES_TABLE (reg_field_ID, customerID, reg_field_value) VALUES(?,?,?)
 			';
-			db_phquery($sql,$reg_field_ID,$this->customerID,$reg_field_value);
-		}else{
+                db_phquery($sql, $reg_field_ID, $this->customerID, $reg_field_value);
+            } else {
 
-			if ( trim($reg_field_value) == "" ){
+                if (trim($reg_field_value) == "") {
 
-				$sql = '
+                    $sql = '
 					DELETE FROM ?#CUSTOMER_REG_FIELDS_VALUES_TABLE WHERE reg_field_ID=? AND customerID=?
 				';
-				db_phquery($sql,$reg_field_ID,$this->customerID);
-			}else{
+                    db_phquery($sql, $reg_field_ID, $this->customerID);
+                } else {
 
-				$sql = '
+                    $sql = '
 					UPDATE ?#CUSTOMER_REG_FIELDS_VALUES_TABLE SET reg_field_value=? WHERE reg_field_ID=? AND customerID=?
 				';
-				db_phquery($sql,$reg_field_value,$reg_field_ID,$this->customerID);
-			}
-		}
-	}
-}
-?>
+                    db_phquery($sql, $reg_field_value, $reg_field_ID, $this->customerID);
+                }
+            }
+        }
+    }

@@ -306,6 +306,10 @@ ORDER BY `cnt` DESC");
         LanguagesManager::setCurrentLanguage($_GET['lang']);
         RedirectSQ('lang=');
     }
+    
+//    if (isset($_GET['mobile']) && !isset($_SESSION['mobile'])) {
+//        $_SESSION['mobile'] = escape($_GET['mobile']);
+//    }
 
     if (!MOD_REWRITE_SUPPORT and isset($_GET['lang_iso2'])) {
         $lang = LanguagesManager::getLanguageByISO2($_GET['lang_iso2']);
@@ -324,6 +328,11 @@ ORDER BY `cnt` DESC");
     if (!detectMSIE()) {
         $smarty->assign('deffer', 'deffer');
     }
+
+//    if (detectPDA()) {
+//        $GetVars['view'] = 'mobile';
+//        $smarty->assign('PAGE_VIEW', 'mobile');
+//    }
 
     if (isset($_SESSION['xPOST']['g01j'])) {
 
@@ -653,11 +662,11 @@ ORDER BY `cnt` DESC");
             $smarty->assign('overridestyles', file_exists($themeEntry->getPath().'/overridestyles.css'));
         }
         define('PDA_VERSION', 1);
-        // $smarty->assign('PAGE_VIEW', 'mobile');
+//         $smarty->assign('PAGE_VIEW', 'mobile');
         $main_body_tpl = $smarty->get_template_vars('main_content_template') ? $smarty->get_template_vars('main_content_template') : 'home.html';
-        // if(file_exists(DIR_FTPLS.'/m.'.$main_body_tpl))$main_body_tpl = 'm.'.$main_body_tpl;
-        // $smarty->assign('main_body_tpl', $main_body_tpl);
-        // print $smarty->fetch('m.frame.html');
+//         if(file_exists(DIR_FTPLS.'/m.'.$main_body_tpl))$main_body_tpl = 'm.'.$main_body_tpl;
+//         $smarty->assign('main_body_tpl', $main_body_tpl);
+//         print $smarty->fetch('m.frame.html');
     }
 
     //DEBUG futures

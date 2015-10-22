@@ -30,7 +30,7 @@
 		
 	 {section name=i1 loop=$products_to_show}
 		{if $smarty.section.i1.index is div by $smarty.const.CONF_COLUMNS_PER_PAGE}<tr>{/if}
-		{include file="product_brief.html" product_info=$products_to_show[i1]}
+		{include file="product_brief.tpl.html" product_info=$products_to_show[i1]}
 	
 		<br />
 		<br />

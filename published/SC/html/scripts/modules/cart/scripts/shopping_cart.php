@@ -260,4 +260,3 @@
     }
 
     ActionsController::exec('ShoppingCartController');
-?>

@@ -1,13 +1,13 @@
 <?php
 
     $start = microtime(true);
-    //    apache_setenv('no-gzip', '1');
     ini_set('display_errors', true);
     define('DIR_ROOT', $_SERVER['DOCUMENT_ROOT'].'/published/SC/html/scripts');
 
     include_once(DIR_ROOT.'/includes/init.php');
     include_once(DIR_CFG.'/connect.inc.wa.php');
     include(DIR_FUNC.'/setting_functions.php');
+    include(DIR_FUNC.'/import_functions.php');
 
     $DB_tree = new DataBase();
     $DB_tree->connect(SystemSettings::get('DB_HOST'), SystemSettings::get('DB_USER'), SystemSettings::get('DB_PASS'));
@@ -35,7 +35,7 @@ TAG
         exit(1);
     }
 
-    RemoveDir($dest_dir);
+    removeDirRec($dest_dir);
     $zip->extractTo($dest_dir);
 
     echo("<div id='extract'>Файлы ($zip->numFiles) успешно извлечены!</div><br>");
@@ -53,7 +53,7 @@ TAG
 //TAG
 //    );
     if (!$rowcount) {
-        ShowError("CSV-файл ($filename) не содержит данных! (rowcount = $rowcount)");
+        showError("CSV-файл ($filename) не содержит данных! (rowcount = $rowcount)");
     }
     if (($handle = fopen($filename, 'r')) !== false) {
         $query = 'UPDATE SC_customers SET  1C = 0';
@@ -72,12 +72,12 @@ TAG
             $skidka_ua = $data[4];
             $fam = $data[5];
 
-            $login = mysql_real_escape_string(DecodeCodepage1251($login));
+            $login = mysql_real_escape_string(decodeCodepage1251($login));
             $bonus = (is_numeric($bonus)) ? $bonus : 0;
             $skidka = (is_numeric($skidka)) ? $skidka : 0;
             $skidka_ua = (is_numeric($skidka_ua)) ? $skidka_ua : 0;
-            $fam = DecodeCodepage1251($fam);
-            $est = GetValue('Login', 'SC_customers', "Login LIKE '$login'");
+            $fam = decodeCodepage1251($fam);
+            $est = getValue('Login', 'SC_customers', "Login LIKE '$login'");
 
             if (!$est) {
                 echo('<small>'.$no.') '.$fam.' <span style="color:green;">'.$login.'</span><span style="color:red;"> не найден!<br></span></small>');
@@ -115,24 +115,24 @@ TAG
 TAG
     );
     if (!$rowcount) {
-        die(ShowError("CSV-файл ($filename) не содержит данных! (rowcount = $rowcount)"));
+        die(showError("CSV-файл ($filename) не содержит данных! (rowcount = $rowcount)"));
     }
     if (($handle = fopen($filename, 'r')) !== false) {
 
         // Идентификатор категории "новинки"
-        define('CAT_NOVINKI_ID', GetValue('categoryID', 'SC_categories', "name_ru = 'Новинки'"));
+        define('CAT_NOVINKI_ID', getValue('categoryID', 'SC_categories', "name_ru = 'Новинки'"));
 
         // Идентификатор категории "акция"
-        define('CAT_AKCIA_ID', GetValue('categoryID', 'SC_categories', "name_ru = 'Акция'"));
+        define('CAT_AKCIA_ID', getValue('categoryID', 'SC_categories', "name_ru = 'Акция'"));
 
         // Идентификатор категории "акция "Баллы"
-        define('CAT_AKCIA_BALLY_ID', GetValue('categoryID', 'SC_categories', "name_ru = 'Суперцена'"));
+        define('CAT_AKCIA_BALLY_ID', getValue('categoryID', 'SC_categories', "name_ru = 'Суперцена'"));
 
         // Идентификатор категории "Все бонусные товары"
-        define('CAT_BONUS_ID', GetValue('categoryID', 'SC_categories', "name_ru = 'Все бонусные товары'"));
+        define('CAT_BONUS_ID', getValue('categoryID', 'SC_categories', "name_ru = 'Все бонусные товары'"));
 
         // Идентификатор категории "Все товары под заказ"
-        define('CAT_ZAKAZ_ID', GetValue('categoryID', 'SC_categories', "name_ru = 'Все товары под заказ'"));
+        define('CAT_ZAKAZ_ID', getValue('categoryID', 'SC_categories', "name_ru = 'Все товары под заказ'"));
 
         $query = 'SELECT categoryID FROM SC_categories WHERE allow_products_comparison';
         $res = mysql_query($query) or die(mysql_error()."<br>$query");
@@ -163,12 +163,12 @@ TAG
             $parent = ($parent === 'NULL') ? 1 : $parent;
             $parent = ($parent) ? 1 : $parent;
             $parent = $data[2];
-            $name = mysql_real_escape_string(DecodeCodepage1251($data[3]));
+            $name = mysql_real_escape_string(decodeCodepage1251($data[3]));
 
-            $slug = Str2Url("$name").'-'.$cid;
+            $slug = str2Url("$name").'-'.$cid;
 
             if (is_numeric($cid) && is_numeric($parent)) {
-                $est = GetValue('categoryID', 'SC_categories', "categoryID = $cid");
+                $est = getValue('categoryID', 'SC_categories', "categoryID = $cid");
                 if (!$est) {
                     $query
                         = "INSERT INTO SC_categories (
@@ -205,12 +205,12 @@ TAG
                 $progress = round(($no / ($rowcount - 1) * 100), 0, PHP_ROUND_HALF_DOWN);
                 if ($progress > $percent) {
                     $percent = $progress.'%';
-                    ProgressBar('categories', $percent);
+                    progressBar('categories', $percent);
                 }
-                BuferOut();
+                buferOut();
                 $no++;
             } else {
-                echo(ShowError("Неверный id ($cid) или parent ($parent) в строке $row (категории)"));
+                echo(showError("Неверный id ($cid) или parent ($parent) в строке $row (категории)"));
             }
         }
 
@@ -222,8 +222,8 @@ TAG
 
         // echo '<img src="css/images/preloader-01.gif"/>';
         echo('<span style="color:blue;">Обработано '.$no.' категорий<br></span><br><br>Ожидайте...<br><br>');
-        ProgressBar('categories', $percent, false, true);
-        BuferOut();
+        progressBar('categories', $percent, false, true);
+        buferOut();
     } else {
         die("<br>'Ошибка в при открытии файла: $filename");
     }
@@ -241,7 +241,7 @@ TAG
     );
 
     if (!$rowcount) {
-        die(ShowError("CSV-файл ($filename) не содержит данных! (rowcount = $rowcount)"));
+        die(showError("CSV-файл ($filename) не содержит данных! (rowcount = $rowcount)"));
     }
 
     $no = 0;
@@ -267,18 +267,18 @@ TAG
                 $no++;
                 $ua = $data[0];
                 $id = $data[1];
-                $code = mysql_real_escape_string(DecodeCodepage1251($data[2]));
+                $code = mysql_real_escape_string(decodeCodepage1251($data[2]));
                 $catid = is_numeric($data[3]) ? $data[3] : 1;
                 $price = $data[4];
                 $special_price = $data[5];
                 $bonus = $data[6];
-                $name = mysql_real_escape_string(trim(DecodeCodepage1251($data[7])));
+                $name = mysql_real_escape_string(trim(decodeCodepage1251($data[7])));
                 $skidka = $data[8];
                 $hit = $data[9];
                 $new = $data[10];
                 $new_postup = $data[11];
                 $akcia = $data[12];
-                $ostatok = mysql_real_escape_string(DecodeCodepage1251($data[13]));
+                $ostatok = mysql_real_escape_string(decodeCodepage1251($data[13]));
                 //                $optprice      = $data[14];
                 $doza = $data[15];
                 //                $optprice_usd  = $data[16];
@@ -286,7 +286,7 @@ TAG
                 $minorder = $data[21];
                 $oldprice = $data[22];
                 $zakaz = $data[26];
-                $brand = mysql_real_escape_string(DecodeCodepage1251($data[27]));
+                $brand = mysql_real_escape_string(decodeCodepage1251($data[27]));
                 $purchase = $data[28];
 
                 // Исправление цен
@@ -325,12 +325,12 @@ TAG
                 $oldprice = ($oldprice > $price) ? $oldprice : 0;
                 $minorder = ($minorder > 0) ? 1 : 0;
                 $zakaz = ($zakaz > 0) ? 1 : 0;
-                $slug = Str2Url("$name").'-'.$id;
+                $slug = str2Url("$name").'-'.$id;
                 // $akcia        = ($oldprice > 0)?1:0;
 
                 if (is_numeric($id) && strlen($id) > 4) {
 
-                    $productID = GetValue('productID', 'SC_products', "code_1c = '$id'");
+                    $productID = getValue('productID', 'SC_products', "code_1c = '$id'");
 
                     if (!$productID) {
                         $start_query = microtime(true);
@@ -469,11 +469,11 @@ TAG
                     if ($progress > $percent) {
                         $percent = $progress.'%';
                         $start = ($progress > 20) ? $start2 : false;
-                        ProgressBar('products', $percent, $start);
+                        progressBar('products', $percent, $start);
                     }
-                    BuferOut();
+                    buferOut();
                 } else {
-                    echo(ShowError("Неверный id ($id) (строка $row) - <span style='color:red;'>позиция проигнорирована</span>"));
+                    echo(showError("Неверный id ($id) (строка $row) - <span style='color:red;'>позиция проигнорирована</span>"));
                     $error++;
                 }
             } else {
@@ -491,7 +491,7 @@ TAG
     } else {
         die("<br>'Ошибка в при открытии файла: $filename");
     }
-    ProgressBar('products', $percent, false, true);
+    progressBar('products', $percent, false, true);
     echo('<span style="color:blue;"><br>Обработано '.($no - $error).' товаров</span><br><span style="color:green;">Новых '.$new_id.' товаров</span><br>');
 
     $start_query = microtime(true);
@@ -648,40 +648,9 @@ TAG
 
     optimizeTable($table);
 
-    function get($what, $condition, $table = '')
-    {
-        $query = "SELECT $what FROM $table WHERE $condition LIMIT 1";
-        $result = mysql_query($query) or die('Ошибка в запросе: '.mysql_error().'<br>'.$query);
-        $row = mysql_fetch_row($result);
-
-        return $row[0];
-    }
-
-    function deleteRow($table, $condition = '')
-    {
-        $condition = ($condition) ? "WHERE $condition" : "";
-        $query = "DELETE FROM $table $condition";
-        $result = mysql_query($query) or die('Ошибка в запросе: '.mysql_error().'<br>'.$query);
-    }
-
-    function optimizeTable($table)
-    {
-        $query = "OPTIMIZE TABLE $table";
-        $res = mysql_query($query) or die(mysql_error()."<br>$query");
-        mysql_close();
-    }
-
-    /*----------- Фото ----------*/
-    $zip = new ZipArchive();
-    $fileName = $archive_dir.'pics.zip';
-
-    if ($zip->open($fileName) === true) {
-        include($_SERVER['DOCUMENT_ROOT'].'/curl_pics.php');
-    }
-
     mysql_close();
     // Удаление временных файлов
-    RemoveDir($_SERVER['DOCUMENT_ROOT'].'/upload/');
+    removeDirRec($_SERVER['DOCUMENT_ROOT'].'/upload/');
 
     echo(<<<TAG
 	<br>
@@ -691,142 +660,4 @@ TAG
     printf('<br>Query_products: %.2F сек.', $query_time);
     printf('<br>Query_competitors: %.2F сек.', $query_conc);
 
-    Debugging($start);
-
-    /*--------- Функции ---------*/
-    function ShowError($msg)
-    {
-        return "<div style='color:red; font-size:16px;'>$msg</div>";
-    }
-
-    function RemoveDir($directory)
-    {
-        $dir = opendir($directory);
-        while (($file = readdir($dir))) {
-            if (is_file($directory.'/'.$file)) {
-                unlink($directory.'/'.$file);
-            } else {
-                if (is_dir($directory.'/'.$file) && ($file != '.') && ($file != '..')) {
-                    RemoveDir($directory.'/'.$file);
-                }
-            }
-        }
-        closedir($dir);
-
-        return true;
-    }
-
-    function GetValue($what, $table, $condition)
-    {
-        $query = "SELECT $what FROM $table WHERE $condition LIMIT 1";
-        $result = mysql_query($query) or die('Ошибка в запросе: '.mysql_error().'<br>'.$query);
-        $row = mysql_fetch_row($result);
-
-        return $row[0];
-    }
-
-    function UpdateValue($table, $new_value, $condition = '')
-    {
-        $condition = ($condition) ? "WHERE $condition" : '';
-        $query = "UPDATE $table SET $new_value $condition";
-        $result = mysql_query($query) or die('Ошибка в запросе: '.mysql_error().'<br>'.$query);
-    }
-
-//    function DeleteRow($table, $condition = '')
-//    {
-//        $condition = ($condition) ? "WHERE $condition" : '';
-//        $query     = "DELETE FROM $table $condition";
-//        $result = mysql_query($query) or die('Ошибка в запросе: '.mysql_error().'<br>'.$query);
-//    }
-
-    function DecodeCodepage($text)
-    {
-        $s = mb_detect_encoding($text);
-        $q = iconv($s, 'UTF-8', $text);
-
-        return $q;
-    }
-
-    function DecodeCodepage1251($text)
-    {
-        $s = 'windows-1251';
-        $q = iconv($s, 'UTF-8', $text);
-
-        return $q;
-    }
-
-    function Rus2Translit($string)
-    {
-        $converter = array(
-            'а' => 'a', 'б' => 'b', 'в' => 'v',
-            'г' => 'g', 'д' => 'd', 'е' => 'e',
-            'ё' => 'e', 'ж' => 'zh', 'з' => 'z',
-            'и' => 'i', 'й' => 'y', 'к' => 'k',
-            'л' => 'l', 'м' => 'm', 'н' => 'n',
-            'о' => 'o', 'п' => 'p', 'р' => 'r',
-            'с' => 's', 'т' => 't', 'у' => 'u',
-            'ф' => 'f', 'х' => 'h', 'ц' => 'c',
-            'ч' => 'ch', 'ш' => 'sh', 'щ' => 'sch',
-            'ь' => '\'', 'ы' => 'y', 'ъ' => '\'',
-            'э' => 'e', 'ю' => 'yu', 'я' => 'ya',
-
-            'А' => 'A', 'Б' => 'B', 'В' => 'V',
-            'Г' => 'G', 'Д' => 'D', 'Е' => 'E',
-            'Ё' => 'E', 'Ж' => 'Zh', 'З' => 'Z',
-            'И' => 'I', 'Й' => 'Y', 'К' => 'K',
-            'Л' => 'L', 'М' => 'M', 'Н' => 'N',
-            'О' => 'O', 'П' => 'P', 'Р' => 'R',
-            'С' => 'S', 'Т' => 'T', 'У' => 'U',
-            'Ф' => 'F', 'Х' => 'H', 'Ц' => 'C',
-            'Ч' => 'Ch', 'Ш' => 'Sh', 'Щ' => 'Sch',
-            'Ь' => '\'', 'Ы' => 'Y', 'Ъ' => '\'',
-            'Э' => 'E', 'Ю' => 'Yu', 'Я' => 'Ya'
-        );
-
-        return strtr($string, $converter);
-    }
-
-    function Str2Url($str)
-    {
-        $str = Rus2Translit($str);
-        $str = strtolower($str);
-        $str = preg_replace('~[^-a-z0-9_]+~u', '-', $str);
-        $str = trim($str, '-');
-
-        return $str;
-    }
-
-    function ProgressBar($import_items, $percent, $start = false, $full = false)
-    {
-        $end = '';
-        if ($start) {
-            $time = round(((100 - $percent) * (microtime(true) - $start) / $percent), 0);
-            $end = ' - <small>Осталось: '.$time.' сек.</small>';
-        }
-
-        $success = '';
-        if ($full === true) {
-            $success = 'background-image:linear-gradient(to bottom, #6AFF7D, #00DC08)';
-        }
-        echo "<script language='javascript'>
-                    document.getElementById('$import_items').innerHTML=\"<div style='width:$percent;$success'>$percent $end</div>\"
-              </script>
-        ";
-    }
-
-    function BuferOut($delay = 0)
-    {
-        echo str_repeat(' ', 256);
-        flush();
-        usleep($delay);
-    }
-
-    function Debugging($start)
-    {
-        // $memoscript = memory_get_usage(true)/1048576;
-        $memoscript_peak = memory_get_peak_usage(true) / 1048576;
-        $time = microtime(true) - $start;
-        printf('<br>Скрипт выполнялся: %.2F сек.', $time);
-        printf('<br>Пик оперативной памяти: %.2F МБ.', $memoscript_peak);
-        // printf('<br>Использовано оперативной памяти: %.2F МБ.', $memoscript);
-    }
+    debugging($start);

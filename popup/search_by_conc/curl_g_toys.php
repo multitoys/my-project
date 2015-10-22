@@ -115,7 +115,7 @@ TAG
     $refferer = URL_COMPETITORS;
     postAuth($login_url, 'UserLogin[username]=Elenna&UserLogin[password]=0675230623', $headers);
 
-    UpdateValue('Conc__grandtoys', 'enabled = 0');
+    updateValue('Conc__grandtoys', 'enabled = 0');
 
     //    DeleteRow('Conc__grandtoys');
     //    DeleteRow('Conc_search__grandtoys');

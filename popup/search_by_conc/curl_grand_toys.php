@@ -186,6 +186,6 @@ TAG
 
         debugging($start);
     } else {
-        var_dump($_SESSION);
+//        var_dump($_SESSION);
         die('NO LOGIN SESSION');
     }

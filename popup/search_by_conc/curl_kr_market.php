@@ -65,7 +65,7 @@ TAG
         $filename = DIR_COMPETITORS.'/category.html';
         readUrl($url, $filename, $refferer, $headers);
 
-        UpdateValue('Conc__kindermarket', 'enabled = 0');
+        updateValue('Conc__kindermarket', 'enabled = 0');
 
         $html = file_get_contents($filename);
 
@@ -83,7 +83,7 @@ TAG
 
         //    DeleteRow('Conc__kindermarket');
         //    DeleteRow('Conc_search__kindermarket');
-        UpdateValue('Conc__kindermarket', 'enabled = 0');
+        updateValue('Conc__kindermarket', 'enabled = 0');
         $no = 0;
         $new = 0;
         $part = 0;

@@ -160,19 +160,20 @@
                 <div>
                     <input type="checkbox" name="new_items_postup" value="1" id="new_items_postup"
                         {if $smarty.get.new_items_postup} checked="checked"{/if}>
-                    <label for="new_items_postup" style="color: #C00DC1; font-style: italic">- только Новые Поступления</label>
+                    <label for="new_items_postup" style="color: darkviolet; font-style: italic">- только Новые Поступления</label>
                 </div>
 
     
-                <div><input type="checkbox" name="bestsellers" value="1" id="bestsellers"
+                <div>
+                    <input type="checkbox" name="bestsellers" value="1" id="bestsellers"
                         {if $smarty.get.bestsellers} checked="checked"{/if}>
-                    </div>
-                <label for="bestsellers" style="color: coral; font-style: italic">- только Хиты продаж</label>
+                    <label for="bestsellers" style="color: coral; font-style: italic">- только Хиты продаж</label>
+                </div>
 
                 <div>
                     <input type="checkbox" name="new" value="1" id="new"
                         {if $smarty.get.new} checked="checked"{/if}>
-                    <label for="new" style="color: #3A73BD; font-style: italic">- только Новинки</label>
+                    <label for="new" style="color: cornflowerblue; font-style: italic">- только Новинки</label>
                 </div>
 
                 <div>
@@ -183,7 +184,7 @@
                 
                 <div>
                     <input type="checkbox" name="export" value="1" id="export">
-                    <label for="export" style="color: green; font-style: italic">- экспорт в EXEL</label>
+                    <label for="export" style="color: red; font-style: italic">- экспорт в <b>EXEL</b></label>
                 </div>
             </div>
 

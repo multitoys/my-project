@@ -23,9 +23,9 @@
 
             $colnumber = 0;
             
-            foreach ($this->_headers as $header) {
+            foreach ($this->_headers as $header => $name) {
                 
-                $this->_content .= $this->_xlsWriteLabel(0, $colnumber, $header);
+                $this->_content .= $this->_xlsWriteLabel(0, $colnumber, $name);
                 $rownumber = 0;
                 
                 foreach ($this->_rows as $row) {
@@ -38,7 +38,7 @@
 
             $this->_content .= $this->_xlsEOF();
             
-            $filename = "$this->filename.xls";
+            $filename = $this->filename.self::EXTENSION;
             $handle = fopen($filename, 'a');
             fwrite($handle, $this->_content);
             fclose($handle);

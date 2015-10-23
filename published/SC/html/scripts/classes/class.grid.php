@@ -72,7 +72,7 @@
 			}
 			
 			$this->total_rows_num = $DBRes->fetchRow(0);
-			$rows_show_all = isset($GetVars['rows_num']) && $GetVars['rows_num'] == 'show_all';
+			$rows_show_all = (isset($GetVars['rows_num']) && $GetVars['rows_num'] == 'show_all') || isset($_GET['export']);
 			
 			$this->rows_num = isset($GetVars['rows_num']) && intval($GetVars['rows_num'])>0?intval($GetVars['rows_num']):$this->rows_num;
 			$total_pages = ceil($this->total_rows_num/$this->rows_num);

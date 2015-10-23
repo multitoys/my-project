@@ -216,7 +216,7 @@
                     }
 
                 } else {
-                    $competitors = array(kindermarket, divoland, dreamtoys, mixtoys, grandtoys, grandtoys2, grandtoys3);
+                    $competitors = array('kindermarket', 'divoland', 'dreamtoys', 'mixtoys', 'grandtoys', 'grandtoys2', 'grandtoys3');
                     $min = array();
 
                     foreach ($competitors as $competitor) {
@@ -241,6 +241,34 @@
             }
             $count_rows = array('100' => 100, '500' => 500, '1000' => 1000);
 
+            if (isset($_GET['export'])) {
+                $headers = array(
+                    'num',
+                    'code_1c',
+                    'product_code',
+                    'name_ru',
+                    'purchase',
+                    'margin',
+                    'Price',
+                    'max_diff',
+                    'divoland',
+                    'diff_divoland',
+                    'dreamtoys',
+                    'diff_dreamtoys',
+                    'mixtoys',
+                    'diff_mixtoys',
+                    'kindermarket',
+                    'diff_kindermarket',
+                    'grandtoys',
+                    'diff_grandtoys',
+                    'grandtoys2',
+                    'diff_grandtoys2',
+                    'grandtoys3',
+                    'diff_grandtoys3'
+                );
+                $this->__getExportXLS($headers, $rows);
+            }
+            
             $smarty->assign('Brands', $this->brands);
             $smarty->assign('Categories', $this->categories);
             $smarty->assign('disc_usd', $this->disc_usd);
@@ -251,6 +279,7 @@
             $smarty->assign('TotalFound', str_replace('{N}', $grid->total_rows_num, 'Найдено товаров: {N}'));
 
             $smarty->display(DIR_TPLS.'/backend/competitors_report.html');
+
         }
 
         protected function __setDisc_usd()
@@ -382,10 +411,16 @@
 
             return $outPrice;
         }
+        
         protected function __priceConc($Price)
         {
             $outPrice = round($Price - ($Price * $this->disc_conc / 100), 2);
             return $outPrice;
+        }
+        
+        protected function __getExportXLS($headers, $rows)
+        {
+            new MakeXLS($headers, $rows);
         }
     }
 

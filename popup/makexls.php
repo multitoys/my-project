@@ -8,7 +8,7 @@
 
     ini_set('display_errors', true);
     define('DIR_ROOT', $_SERVER['DOCUMENT_ROOT'].'/published/SC/html/scripts');
-    $DebugMode = false;
+    $DebugMode = true;
     $Warnings = array();
     include_once(DIR_ROOT.'/includes/init.php');
     include_once(DIR_CFG.'/connect.inc.wa.php');
@@ -20,21 +20,21 @@
     $DB_tree->selectDB(SystemSettings::get('DB_NAME'));
     define('VAR_DBHANDLER', 'DBHandler');
 
-    $file_content = MakeXLS(19859, 0);
+    $file_content = MakeXLS(19961, 0);
 
-    $filename = "19859.xls";
+    $filename = "19961.xls";
     $handle = fopen($filename, 'a');
     fwrite($handle, $file_content);
     fclose($handle);
-    $filename1 = my_translit($filename);
+    $filename1 = translitCyr($filename);
 
 
-    //if ($file_content) {
-    //    header('Content-Type: application/xls');
-    //    header("Content-Disposition: attachment; filename=$filename");
-    //    readfile($filename);
-    //    unlink($filename);
-    //}
+    if ($file_content) {
+        header('Content-Type: application/xls');
+        header("Content-Disposition: attachment; filename=$filename");
+        readfile($filename);
+        unlink($filename);
+    }
 
     function MakeXLS($orderID, $per)
     {
@@ -140,7 +140,7 @@ WHERE SC_ordered_carts.orderID = $orderID
         return $row[0];
     }
 
-    function my_translit($cyr_str)
+    function translitCyr($cyr_str)
     {
         $tr = array("Ґ" => "G", "Ё" => "YO", "Є" => "E", "Ї" => "YI", "І" => "I",
                     "і" => "i", "ґ" => "g", "ё" => "yo", "№" => "_", "є" => "e",
@@ -180,17 +180,17 @@ WHERE SC_ordered_carts.orderID = $orderID
 
     function xlsWriteLabel($Row, $Col, $Value)
     {
-        $Value = perevod($Value);
+        $Value = utfToWin($Value);
         $L = strlen($Value);
 
         return pack("ssssss", 0x204, 8 + $L, $Row, $Col, 0x0, $L).$Value;
     }
 
-    function perevod($p)
+    function utfToWin($p)
     {
         return iconv('UTF-8', 'WINDOWS-1251//IGNORE', $p);
     }
-    //echo        php_strip_whitespace(__FILE__);
+
 
     function highlight_num($file)
     {

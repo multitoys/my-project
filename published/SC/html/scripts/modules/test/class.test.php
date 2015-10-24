@@ -1052,20 +1052,20 @@ if(!class_exists('test',false)){
             );
 
             //calling session_unregister() is required since unset() may not work on some systems
-            session_unregister('log');
-            session_unregister('usd');
-            session_unregister('pass');
-            session_unregister('enter');
-            session_unregister('cs_id');
-            session_unregister('cs_vip');
-            session_unregister('newtree');
-            session_unregister('cs_skidka');
-            session_unregister('cs_skidka_ua');
-            session_unregister('cs_may_order');
-            session_unregister('cs_unlimited');
-            session_unregister('cs_last_name');
-            session_unregister('cs_first_name');
-            session_unregister('cs_may_order_until');
+            //session_unregister('log');
+            //session_unregister('usd');
+            //session_unregister('pass');
+            //session_unregister('enter');
+            //session_unregister('cs_id');
+            //session_unregister('cs_vip');
+            //session_unregister('newtree');
+            //session_unregister('cs_skidka');
+            //session_unregister('cs_skidka_ua');
+            //session_unregister('cs_may_order');
+            //session_unregister('cs_unlimited');
+            //session_unregister('cs_last_name');
+            //session_unregister('cs_first_name');
+            //session_unregister('cs_may_order_until');
 
 			$checkoutEntry = &Checkout::getInstance(_CHECKOUT_INSTANCE_NAME);
 			$checkoutEntry->clean();

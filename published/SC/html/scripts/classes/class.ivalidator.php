@@ -58,17 +58,17 @@ class IValidator{
 	}
 	
 	function storeCode($_Code){
-		
-		if(!session_is_registered($this->SPrefix.'IVAL')){
-			
-			session_register($this->SPrefix.'IVAL');
+
+        if (!isset($_SESSION[$this->SPrefix.'IVAL'])) {
+
+            $_SESSION[$this->SPrefix.'IVAL'];
 		}
 		$_SESSION[$this->SPrefix.'IVAL'] = $_Code;
 	}
 	
 	function checkCode($_Code){
-		
-		if(!session_is_registered($this->SPrefix.'IVAL'))return false;
+
+        if (!isset($_SESSION[$this->SPrefix.'IVAL'])) return false;
 		if(!$_Code)return false;
 		if(strtolower($_SESSION[$this->SPrefix.'IVAL']) == strtolower($_Code)){
 			

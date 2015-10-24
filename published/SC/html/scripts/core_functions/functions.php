@@ -996,9 +996,9 @@
     function xSaveData($_ID, $_Data, $_TimeControl = 0)
     {
 
-        if (!session_is_registered('_xSAVE_DATA')) {
+        if (!isset($_SESSION['_xSAVE_DATA'])) {
 
-            session_register('_xSAVE_DATA');
+            //session_register('_xSAVE_DATA');
             $_SESSION['_xSAVE_DATA'] = array();
         }
 
@@ -1339,8 +1339,8 @@
     function storePOST($_VarName, $_VarData)
     {
 
-        if (!session_is_registered('xPOST'))
-            session_register('xPOST');
+        if (!isset($_SESSION['xPOST']))
+            //session_register('xPOST');
         $_SESSION['xPOST'][$_VarName] = $_VarData;
     }
 

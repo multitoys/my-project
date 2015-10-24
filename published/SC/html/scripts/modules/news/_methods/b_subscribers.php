@@ -10,10 +10,10 @@ if(isset($_POST['fACTION'])){
 	 * this action is forbidden when SAFE MODE is ON
 	 */
 	if (CONF_BACKEND_SAFEMODE)RedirectSQ('&safemode=yes');
-	
-	if(!session_is_registered('SUBSCRIBE_MESSAGE')){
-		
-		session_register('SUBSCRIBE_MESSAGE');
+
+    if (!isset($_SESSION['SUBSCRIBE_MESSAGE'])) {
+
+        $_SESSION['SUBSCRIBE_MESSAGE'];
 	}
 	switch ($_POST['fACTION']){
 		case 'fLoadSubscribersListFile':
@@ -131,10 +131,10 @@ if (isset($_GET['unsub'])) // unsubscribe registered user
 	}
 
 	subscrUnsubscribeSubscriberByEmail( ($_GET["unsub"]) );
-	
-	if(!session_is_registered('SUBSCRIBE_MESSAGE')){
-		
-		session_register('SUBSCRIBE_MESSAGE');
+
+    if (!isset($_SESSION['SUBSCRIBE_MESSAGE'])) {
+
+        $_SESSION['SUBSCRIBE_MESSAGE'];
 	}
 	$_SESSION['SUBSCRIBE_MESSAGE'] = array(
 		'Message' => str_replace('{*EMAIL*}',base64_decode($_GET["unsub"]), translate("sbscrbrs_msg_email_deleted")),

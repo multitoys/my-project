@@ -27,75 +27,68 @@
     /**
      * nulling session arrayes by request
      */
-    if (isset($_POST['clear_session']))
+    if (isset($_POST['clear_session'])) {
         if ($_POST['clear_session']) {
-
             /**
              * Checked categories array
              * Key category id, value checked or not
              * if isset() for category false category werent displayed
              */
             session_unregister('checkedCategories');
-            unset($_SESSION['checkedCategories']);
-
+            unset(
+                $_SESSION['checkedCategories'],
+                $_SESSION['explortExpandedIDs'],
+                $_SESSION['selectedProducts'],
+                $_SESSION['selectedProductsIncSub'],
+                $_SESSION['isExpanded']
+            );
+            Redirect($_SERVER['REQUEST_URI']);
             /**
              * Expanded categories array
              */
-            session_unregister('explortExpandedIDs');
-            unset($_SESSION['explortExpandedIDs']);
-
+            //session_unregister('explortExpandedIDs');
+            //unset($_SESSION['explortExpandedIDs']);
             /**
              * Number of selected  products in category
              * Key is id of category
              * If isset() for category false products didnt selected
              */
-            session_unregister('selectedProducts');
-            unset($_SESSION['selectedProducts']);
-
+            //session_unregister('selectedProducts');
+            //unset($_SESSION['selectedProducts']);
             /**
              * Number of selected products in unexpanded category
              * Key category id, value number of products
              */
-            session_unregister('selectedProductsIncSub');
-            unset($_SESSION['selectedProductsIncSub']);
-
-            session_unregister('isExpanded');
-            unset($_SESSION['isExpanded']);
-
-            Redirect($_SERVER['REQUEST_URI']);
+            //session_unregister('selectedProductsIncSub');
+            //unset($_SESSION['selectedProductsIncSub']);
+            //
+            //session_unregister('isExpanded');
+            //unset($_SESSION['isExpanded']);
         }
+    }
 
     /**
      * registering necessary arrayes in session
      */
-    if (!session_is_registered('explortExpandedIDs')) {
-
-        session_register('explortExpandedIDs');
+    if (!isset($_SESSION['explortExpandedIDs'])) {
         $_SESSION['explortExpandedIDs'] = array(1 => 1);
+        //session_register('explortExpandedIDs');
     }
-
-    if (!session_is_registered('checkedCategories')) {
-
-        session_register('checkedCategories');
+    if (!isset($_SESSION['checkedCategories'])) {
         $_SESSION['checkedCategories'] = array();
+        //session_register('checkedCategories');
     }
-
-    if (!session_is_registered('selectedProducts')) {
-
-        session_register('selectedProducts');
+    if (!isset($_SESSION['selectedProducts'])) {
         $_SESSION['selectedProducts'] = array();
+        //session_register('selectedProducts');
     }
-
-    if (!session_is_registered('selectedProductsIncSub')) {
-
-        session_register('selectedProductsIncSub');
+    if (!isset($_SESSION['selectedProductsIncSub'])) {
         $_SESSION['selectedProductsIncSub'] = array();
+        //session_register('selectedProductsIncSub');
     }
-
-    if (!session_is_registered('isExpanded')) {
-
-        session_register('isExpanded');
+    if (!isset($_SESSION['isExpanded'])) {
         $_SESSION['isExpanded'] = array();
+        //session_register('isExpanded');
     }
 
     /**

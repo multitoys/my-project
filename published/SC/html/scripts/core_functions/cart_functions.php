@@ -337,7 +337,7 @@
             }
 
             $q = db_phquery('
-			SELECT t3.productID, t3.name_ru, t3.Price, t3.Bonus, t3.ostatok,
+			SELECT t3.productID, t3.name_ru, t3.Price, t3.product_code, t3.Bonus, t3.ostatok,
 			       t1.itemID, t1.Quantity, t4.thumbnail, t4.filename 
 			    FROM ?#SHOPPING_CARTS_TABLE t1
 				LEFT JOIN ?#SHOPPING_CART_ITEMS_TABLE t2 ON t1.itemID=t2.itemID

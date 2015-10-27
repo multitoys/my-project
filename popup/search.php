@@ -21,6 +21,13 @@
     define('VAR_DBHANDLER','DBHandler');
 
     $vip = isset($_SESSION['cs_vip']) ? $_SESSION['cs_vip'] : '';
+    $usd = 1;
+    $currency = ' грн.';
+    
+    if (isset($_SESSION['current_currency']) && $_SESSION['current_currency'] == 10) {
+        $usd = isset($_SESSION['usd']) ? $_SESSION['usd'] : 1;
+        $currency = ' у.е.';
+    }
 
     $search = (stripslashes(trim(strip_tags($_POST['search']))));
 //    $search = addslashes($search);
@@ -85,8 +92,8 @@
                 $price_conc = (stripslashes(trim(strip_tags($_POST['priceConc']))));
                 $set_conc = "onclick=setAnalogs(\"$conc\",\"$code\",\"$code1c\",\"$price_conc\")";
             } else {
-                $price = round(priceDiscount($sql['Price'], $sql['skidka'], $sql['ukraine']), 2);
-                $price = '<p><span style="color:#008DD9">цена: '.$price.'</span></p>';
+                $price = round(priceDiscount($sql['Price'], $sql['skidka'], $sql['ukraine'])/$usd, 2);
+                $price = '<p><span style="color:#008DD9">цена: '.$price.$currency.'</span></p>';
             }
             //$price = ($vip)?'<p><span style="color:#008DD9">цена: '.$sql['Price'].'</span></p>':'';
             echo "

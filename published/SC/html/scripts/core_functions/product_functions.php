@@ -350,6 +350,7 @@
             " ".$whereClause." ORDER BY sort_order, NAME ");
         $i = 0;
         while ($row = db_fetch_row($q)) {
+
             LanguagesManager::ml_fillFields(PRODUCTS_TABLE, $row);
             if (($i >= $offset && $i < $offset + $CountRowOnPage) || !$navigatorParams) {
 
@@ -408,7 +409,7 @@
                 $conditions[] = ' productID='.$products[0];
 
             $data = array();
-            $langManager = &LanguagesManager::getInstance();
+            //            $langManager = &LanguagesManager::getInstance();
             foreach ($conditions as $cond) {
                 $q = db_query("SELECT * FROM ".PRODUCTS_TABLE.
                     " WHERE ".$cond);

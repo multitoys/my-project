@@ -83,7 +83,8 @@
             $product_code = str_replace($search, "<span class=mark_code>$search</span>", $product_code);
 
             $set_conc = "href='/product/{$sql['slug']}'";
-            $picture = substr($sql['filename'], 0, -4).'_s.jpg';
+            $picture = ($sql['filename'])?substr($sql['filename'], 0, -4).'_s':'no_photo';
+            $picture .= '.jpg';
             $price = '';
             if (isset($_POST['conc'])) {
                 $conc = (stripslashes(trim(strip_tags($_POST['conc']))));

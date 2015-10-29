@@ -11,10 +11,10 @@
 
 use CGI ':cgi';
 use strict;
-use HTTP::Request::Common;				# Обращение к серверу.
-use LWP::UserAgent;					# Общение с сетью.
-use IPC::Open2;						# Двунаправленные pipes (подпись/шифрование)
-use Fcntl	':flock';				# Экслюзивный доступ к файлам
+use HTTP::Request::Common;				# пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ.
+use LWP::UserAgent;					# пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ.
+use IPC::Open2;						# пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ pipes (пїЅпїЅпїЅпїЅпїЅпїЅпїЅ/пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
+use Fcntl	':flock';				# пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 use POSIX qw(strftime);
 #use CGI::Carp qw (fatalsToBrowser);
 
@@ -273,7 +273,7 @@ sub SaveChecks
 		or &error ("Can't create $SessionsPath$SubDir: $!", $CallType);
 	}
 	my $Filename			=	$SessionsPath .$SubDir. $TransactionID. $ChecksExt;
-	#Если файл не пустой, то добавить следующую запись в конец с разделителем next
+	#пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ next
 	if (-s $Filename)	{$next  =  "\nNEXT ATTEMPT->\n";}
 	$Filename			=  ">>".$Filename;
 	&WriteLog ("Saving Check", 1);
@@ -294,7 +294,7 @@ sub SaveStatus
 		or &error ("Can't create $SessionsPath$SubDir: $!", $CallType);
 	}
 
-	#Формирование строки статуса сессии
+	#пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 	my $Status				=	"Status=$Status";
 	if ($ParentTransactionID)   {	$Status	.=	"&ParentTransactionID=$ParentTransactionID";	}
 	if ($ErrorCode)		    {	$Status .=	"&ErrorCode=$ErrorCode";			}
@@ -305,9 +305,9 @@ sub SaveStatus
 	my $FileIndex	=	defined ($ParentTransactionID) ? $ParentTransactionID : $TransactionID;
 	&WriteLog ("Saved Status=$Status", 2);
 
-	#Запись
+	#пїЅпїЅпїЅпїЅпїЅпїЅ
 	my $Filename			=	$SessionsPath .$SubDir. $FileIndex . $Ext;
-	#Если файл не пустой, то добавить следующую запись в конец с разделителем next
+	#пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ next
 	if (-s $Filename)	{$next  =  "\nNEXT ATTEMPT->\n";}
 	$Filename			=  ">>".$Filename;
 	&WriteLog ("SessionType=$Filename", 1);
@@ -326,7 +326,7 @@ sub communicateHost
 	my $data			=	shift;
 	my $ua				=	LWP::UserAgent->new or &error ("Error constructing UserAgent object: $!", $CallType);
 
-	if ($data)				#Если пытаемся передавать данные
+	if ($data)				#пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 	{
 		# Under Win32 we use corresponding OLE automation server instead of checker.exe
 		my $sdata 	= $^O =~ /MSWin32/
@@ -361,13 +361,13 @@ sub communicateHost
 
 sub Sign
 {
-	my $text			=	shift;		#Что подписывать/проверять
-        my $mode			=	shift;		#Подписывается текст или проверяется (0 - подпись, 1 - проверка)
+	my $text			=	shift;		#пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ/пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        my $mode			=	shift;		#пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (0 - пїЅпїЅпїЅпїЅпїЅпїЅпїЅ, 1 - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
 	my $stext			=	'';
 
 	my $pid;
 
-	my $filename		=	$SIGN_TOOL;	#Путь к утилите
+	my $filename		=	$SIGN_TOOL;	#пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
 	if ($mode)
 	{	$filename		.=	" -c -f $SIGN_INI";	}
@@ -375,22 +375,22 @@ sub Sign
 	{	$filename		.=	" -s -f $SIGN_INI";	}
 
 	&WriteLog ("Checker paths=$filename", 1);
-	#Открыть двунаправленный pipe.
+	#пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ pipe.
 	$pid				=	open2(\*Reader, \*Writer, $filename)  or &error ("Couldn't open pipe: $!", $CallType);
-	#Передать данные и закрыть поток.
+	#пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ.
 	print Writer $text		or &error ("Can't write data to checker: $!", $CallType);
 	close Writer;
-	#Принять данные и закрыть поток.
+	#пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ.
 	while (my $line		= <Reader>)
 	{
 		$stext			.=	$line or &error ("Cant' read signed data from checker: $!", $CallType);
 	}
 	close Reader;
 
-	#Дождаться завершения процесса.
+	#пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ.
 	waitpid($pid, 0);
 
-	return $stext;						#Вернуть результат работы утилиты.
+	return $stext;						#пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ.
 }
 
 sub IsValidID

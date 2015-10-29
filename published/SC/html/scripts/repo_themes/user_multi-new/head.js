@@ -1,4 +1,4 @@
-﻿// // JavaScript Document
+// // JavaScript Document
 
 // function RealResizeCatalog (){
 // var window_height        = $(window).height();

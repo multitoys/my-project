@@ -2,12 +2,12 @@
 		      *CREDITS*
 __________	      *********
 Thanks to:
-¯¯¯¯¯¯¯¯¯¯
+ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 -Olivier Plathey for the fpdf.php class [http://www.fpdf.org]
 -Damon Kohler for the Flowing Block script [mailto:damonkohler@yahoo.com]
--Clément Lavoillotte for HTML-oriented FPDF idea
+-Clï¿½ment Lavoillotte for HTML-oriented FPDF idea
 -Yamasoft for the gif.php class [http://www.yamasoft.com/]
--Jérôme Fenal for the _parsegif() function
+-Jï¿½rï¿½me Fenal for the _parsegif() function
 -"VIETCOM" for the PDFTable code [http://www.freepgs.com/vietcom/tool/pdftable/] [mailto:vncommando@yahoo.com]
 -Yukihiro O. for the SetDash() function [mailto:yukihiro_o@infoseek.jp]
 -Ron Korving for the WordWrap() function
@@ -18,6 +18,6 @@ Thanks to:
 -W3SCHOOLS for HTML-related reference info [http://www.w3schools.com/]
 __________________
 Special Thanks to:
-¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 --- Montfort Cultural Association - the site for which I generated this script [http://www.montfort.org.br] 
 

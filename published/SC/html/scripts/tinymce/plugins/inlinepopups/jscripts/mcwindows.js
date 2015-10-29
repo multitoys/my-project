@@ -4,7 +4,7 @@
  * Moxiecode DHTML Windows script.
  *
  * @author Moxiecode
- * @copyright Copyright © 2004, Moxiecode Systems AB, All rights reserved.
+ * @copyright Copyright ï¿½ 2004, Moxiecode Systems AB, All rights reserved.
  */
 
 // Windows handler

@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.9, created on 2015-10-19 12:08:11
+<?php /* Smarty version 2.6.9, created on 2015-10-22 14:40:14
          compiled from shopping_cart.html */ ?>
 <?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
 smarty_core_load_plugins(array('plugins' => array(array('modifier', 'translate', 'shopping_cart.html', 33, false),array('modifier', 'set_query_html', 'shopping_cart.html', 36, false),array('modifier', 'escape', 'shopping_cart.html', 125, false),array('modifier', 'is_new_product', 'shopping_cart.html', 130, false),array('modifier', 'string_format', 'shopping_cart.html', 161, false),array('modifier', 'transcape', 'shopping_cart.html', 168, false),array('function', 'cycle', 'shopping_cart.html', 120, false),)), $this); ?>
@@ -269,13 +269,12 @@ $this->_sections['i']['last']       = ($this->_sections['i']['iteration'] == $th
                                                         
                                                                                         	</table>
 	</form>
-<?php else: ?>
-
-	<p style="text-align: center;"><?php echo ((is_array($_tmp='cart_cart_is_empty')) ? $this->_run_mod_handler('translate', true, $_tmp) : smarty_modifier_translate($_tmp)); ?>
-</p>
-<?php endif; ?>
 </div>
-  <br>
+<?php else: ?>
+<h3><?php echo ((is_array($_tmp='cart_cart_is_empty')) ? $this->_run_mod_handler('translate', true, $_tmp) : smarty_modifier_translate($_tmp)); ?>
+</h3>
+<?php endif; ?>
+<br>
   </div>
 
-
+

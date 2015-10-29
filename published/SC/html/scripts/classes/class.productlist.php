@@ -106,6 +106,7 @@ class ProductList extends DBObject {
 		$dbres = db_phquery($dbq, $this->id);
 		$products = array();
 		while($row = db_fetch_assoc($dbres)){
+			
             LanguagesManager::ml_fillFields(PRODUCTS_TABLE, $row);
 			if(!$row['thumbnail'] || !file_exists(DIR_PRODUCTS_PICTURES.'/'.$row['thumbnail']))unset($row['thumbnail']);
             $price = priceDiscount($row['Price'], $row['skidka'], $row['ukraine']);

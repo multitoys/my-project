@@ -1,6 +1,0 @@
-AuthType Basic
-AuthName "/www/multitoys.com.ua/installer"
-AuthUserFile /var/www/multitoy/data/etc/291432.passwd
-<Limit GET POST>
-	require valid-user
-</Limit>

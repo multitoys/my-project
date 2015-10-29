@@ -1888,7 +1888,7 @@ class UR_RightsManager extends UR_RightsObject
 
         $sql = $justCopy ? $qr_ur_copyRightsLink : $qr_ur_setRightsLink;
 
-        $sqlParts = split(";", $sql);
+        $sqlParts = explode(";", $sql);
 
         foreach ($sqlParts as $cSql) {
             $cSql = trim($cSql);
@@ -3322,7 +3322,7 @@ if ( isset( $host_applications ) )
         $ur_applications[$application] = $application;
 
     $sortList = sortApplicationList( $ur_applications ) ;
-    $currentApps = (defined("CURRENT_APP")) ? split(",", CURRENT_APP) : array ();
+    $currentApps = (defined("CURRENT_APP")) ? explode(",", CURRENT_APP) : array ();
     foreach ( $sortList as $application ) {
         if ($currentApps && !(in_array($application, $currentApps) || $application == "AA" || in_array("AA", $currentApps) || in_array("UG", $currentApps)))
             continue;

@@ -1,7 +1,7 @@
 /******************************************************************************
  Name:    Highslide HTML Extension
  Version: 3.2.10 (October 22 2007)
- Author:  Torstein Hønsi
+ Author:  Torstein Hï¿½nsi
  Support: http://vikjavev.no/highslide/forum
  Email:   See http://vikjavev.no/megsjol
 

@@ -1,6 +1,6 @@
 <html>
 <head>
-    <title>Генерируем графику</title>
+    <title>пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ</title>
 </head>
 <body>
 <img src="test.php" width="500" height="300">

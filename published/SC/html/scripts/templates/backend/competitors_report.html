@@ -308,42 +308,42 @@
                     <td class="to_right choco">{$GridRows[i].margin}</td>
                     <td class="to_right bold {if $GridRows[i].max_diff > 0}red{else}blue{/if}">{$GridRows[i].Price}</td>
                     <td class="to_right {if $GridRows[i].max_diff > 0}red{else}green{/if}">
-                        <strong>{$GridRows[i].max_diff}</strong>
+                        <strong>{$GridRows[i].max_diff}%</strong>
                     </td>
                     {if $smarty.get.competitor eq 'divoland'}
                         <td class="to_right border {if $GridRows[i].diff_divoland > 0}red{else}green{/if}">{$GridRows[i].divoland}</td>
-                        <td class="to_right {if $GridRows[i].diff_divoland > 0}red{else}green{/if}">{$GridRows[i].diff_divoland}</td>
+                        <td class="to_right {if $GridRows[i].diff_divoland > 0}red{else}green{/if}">{$GridRows[i].diff_divoland}%</td>
                     {elseif $smarty.get.competitor eq 'dreamtoys'}
                         <td class="to_right border {if $GridRows[i].diff_dreamtoys > 0}red{else}green{/if}">{$GridRows[i].dreamtoys}</td>
-                        <td class="to_right {if $GridRows[i].diff_dreamtoys > 0}red{else}green{/if}">{$GridRows[i].diff_dreamtoys}</td>
+                        <td class="to_right {if $GridRows[i].diff_dreamtoys > 0}red{else}green{/if}">{$GridRows[i].diff_dreamtoys}%</td>
                     {elseif $smarty.get.competitor eq 'mixtoys'}
                         <td class="to_right border {if $GridRows[i].diff_mixtoys > 0}red{else}green{/if}">{$GridRows[i].mixtoys}</td>
-                        <td class="to_right {if $GridRows[i].diff_mixtoys > 0}red{else}green{/if}">{$GridRows[i].diff_mixtoys}</td>
+                        <td class="to_right {if $GridRows[i].diff_mixtoys > 0}red{else}green{/if}">{$GridRows[i].diff_mixtoys}%</td>
                     {elseif $smarty.get.competitor eq 'grandtoys'}
                         <td class="to_right border {if $GridRows[i].diff_grandtoys > 0}red{else}green{/if}">{$GridRows[i].grandtoys}</td>
-                        <td class="to_right {if $GridRows[i].diff_grandtoys > 0}red{else}green{/if}">{$GridRows[i].diff_grandtoys}</td>
+                        <td class="to_right {if $GridRows[i].diff_grandtoys > 0}red{else}green{/if}">{$GridRows[i].diff_grandtoys}%</td>
                         {*<td class="to_right border {if $GridRows[i].diff_grandtoys2 > 0}red{else}green{/if}">{$GridRows[i].grandtoys2}</td>*}
                         {*<td class="to_right {if $GridRows[i].diff_grandtoys2 > 0}red{else}green{/if}">{$GridRows[i].diff_grandtoys2}</td>*}
                         {*<td class="to_right border {if $GridRows[i].diff_grandtoys3 > 0}red{else}green{/if}">{$GridRows[i].grandtoys3}</td>*}
                         {*<td class="to_right {if $GridRows[i].diff_grandtoys3 > 0}red{else}green{/if}">{$GridRows[i].diff_grandtoys3}</td>*}
                     {elseif $smarty.get.competitor eq 'kindermarket'}
                         <td class="to_right border {if $GridRows[i].diff_kindermarket > 0}red{else}green{/if}">{$GridRows[i].kindermarket}</td>
-                        <td class="to_right {if $GridRows[i].diff_kindermarket > 0}red{else}green{/if}">{$GridRows[i].diff_kindermarket}</td>
+                        <td class="to_right {if $GridRows[i].diff_kindermarket > 0}red{else}green{/if}">{$GridRows[i].diff_kindermarket}%</td>
                     {else}
                         <td class="to_right border {if $GridRows[i].diff_divoland > 0}red{else}green{/if}">{$GridRows[i].divoland}</td>
-                        <td class="to_right {if $GridRows[i].diff_divoland > 0}red{else}green{/if}">{$GridRows[i].diff_divoland}</td>
+                        <td class="to_right {if $GridRows[i].diff_divoland > 0}red{else}green{/if}">{$GridRows[i].diff_divoland}%</td>
                         <td class="to_right border {if $GridRows[i].diff_dreamtoys > 0}red{else}green{/if}">{$GridRows[i].dreamtoys}</td>
-                        <td class="to_right {if $GridRows[i].diff_dreamtoys > 0}red{else}green{/if}">{$GridRows[i].diff_dreamtoys}</td>
+                        <td class="to_right {if $GridRows[i].diff_dreamtoys > 0}red{else}green{/if}">{$GridRows[i].diff_dreamtoys}%</td>
                         <td class="to_right border {if $GridRows[i].diff_mixtoys > 0}red{else}green{/if}">{$GridRows[i].mixtoys}</td>
-                        <td class="to_right {if $GridRows[i].diff_mixtoys > 0}red{else}green{/if}">{$GridRows[i].diff_mixtoys}</td>
+                        <td class="to_right {if $GridRows[i].diff_mixtoys > 0}red{else}green{/if}">{$GridRows[i].diff_mixtoys}%</td>
                         <td class="to_right border {if $GridRows[i].diff_grandtoys > 0}red{else}green{/if}">{$GridRows[i].grandtoys}</td>
-                        <td class="to_right {if $GridRows[i].diff_grandtoys > 0}red{else}green{/if}">{$GridRows[i].diff_grandtoys}</td>
+                        <td class="to_right {if $GridRows[i].diff_grandtoys > 0}red{else}green{/if}">{$GridRows[i].diff_grandtoys}%</td>
                         {*<td class="to_right border {if $GridRows[i].diff_grandtoys2 > 0}red{else}green{/if}">{$GridRows[i].grandtoys2}</td>*}
                         {*<td class="to_right {if $GridRows[i].diff_grandtoys2 > 0}red{else}green{/if}">{$GridRows[i].diff_grandtoys2}</td>*}
                         {*<td class="to_right border {if $GridRows[i].diff_grandtoys3 > 0}red{else}green{/if}">{$GridRows[i].grandtoys3}</td>*}
                         {*<td class="to_right {if $GridRows[i].diff_grandtoys3 > 0}red{else}green{/if}">{$GridRows[i].diff_grandtoys3}</td>*}
                         <td class="to_right border {if $GridRows[i].diff_kindermarket > 0}red{else}green{/if}">{$GridRows[i].kindermarket}</td>
-                        <td class="to_right {if $GridRows[i].diff_kindermarket > 0}red{else}green{/if}">{$GridRows[i].diff_kindermarket}</td>
+                        <td class="to_right {if $GridRows[i].diff_kindermarket > 0}red{else}green{/if}">{$GridRows[i].diff_kindermarket}%</td>
                     {/if}
                 </tr>
             {/section}

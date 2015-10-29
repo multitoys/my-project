@@ -65,7 +65,7 @@ TAG
             'Хоз. товары', 'Товары для праздников'
         );
         if (($handle = fopen($filename, 'r')) !== false) {
-            updateValue('Conc__dreamtoys', 'enabled = 0');
+//            updateValue('Conc__dreamtoys', 'enabled = 0');
 
             while (($data = fgetcsv($handle, 1000, ';')) !== false) {
                 set_time_limit(0);
@@ -166,8 +166,8 @@ TAG
         ');
 
         // Оптимизация таблиц
-        $query = "UPDATE Conc__dreamtoys SET parent='', category='' WHERE enabled=0";
-        $res = mysql_query($query) or die(mysql_error()."<br>$query");
+//        $query = "UPDATE Conc__dreamtoys SET parent='', category='' WHERE enabled=0";
+//        $res = mysql_query($query) or die(mysql_error()."<br>$query");
 
         $query = 'OPTIMIZE TABLE Conc__dreamtoys';
         $res = mysql_query($query) or die(mysql_error()."<br>$query");

@@ -18,7 +18,7 @@
     // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
     // THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-    // Adapted to PEAR standards by Stig Sæther Bakken <stig@php.net>
+    // Adapted to PEAR standards by Stig Sï¿½ther Bakken <stig@php.net>
 
     // XML RPC Server class
     // requires: xmlrpc.inc

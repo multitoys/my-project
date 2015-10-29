@@ -382,7 +382,7 @@ function _sendOrderNotifycationToCustomer( $orderID, &$smarty_mail, $email, $log
 	}
 	/*@var $smarty_mail View */
 
-    /*Запрещена отправка почты*/
+    /*пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ*/
 	//$smarty_mail->assign( "content", $content );
 	//$html = $smarty_mail->fetch( "order_notification.txt" );
 	//$res = ss_mail( $email, translate('ordr_id')." ".$order['orderID_view'], $html, true);

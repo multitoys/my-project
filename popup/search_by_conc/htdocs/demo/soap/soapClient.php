@@ -1,8 +1,8 @@
 <?php
-    // Создание SOAP-клиента
+    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ SOAP-пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     $client = new SoapClient("http://localhost/primer/soap/CurrencyExchangeService.wsdl");
 
-    // Посылка SOAP-запроса c получением результат
+    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ SOAP-пїЅпїЅпїЅпїЅпїЅпїЅпїЅ c пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     $result = $client->getRate("us", "russia");
-    echo "Текущий курс: ", $result;
+    echo "пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ: ", $result;
 ?>

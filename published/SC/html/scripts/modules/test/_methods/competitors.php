@@ -192,19 +192,19 @@
 //                }
 
                 $rows[$k]['divoland'] = (is_null($rows[$k][$this->currency.'divoland'])) ? '-----' : $this->__priceConc($rows[$k][$this->currency.'divoland']);
-                $rows[$k]['diff_divoland'] = ($rows[$k]['divoland'] === '-----') ? '-----' : $rows[$k]['diff_divoland'].'%';
+                $rows[$k]['diff_divoland'] = ($rows[$k]['divoland'] === '-----') ? '-----' : $rows[$k]['diff_divoland'];
                 $rows[$k]['dreamtoys'] = (is_null($rows[$k][$this->currency.'dreamtoys'])) ? '-----' : $this->__priceConc($rows[$k][$this->currency.'dreamtoys']);
-                $rows[$k]['diff_dreamtoys'] = ($rows[$k]['dreamtoys'] === '-----') ? '-----' : $rows[$k]['diff_dreamtoys'].'%';
+                $rows[$k]['diff_dreamtoys'] = ($rows[$k]['dreamtoys'] === '-----') ? '-----' : $rows[$k]['diff_dreamtoys'];
                 $rows[$k]['mixtoys'] = (is_null($rows[$k][$this->currency.'mixtoys'])) ? '-----' : $this->__priceConc($rows[$k][$this->currency.'mixtoys']);
-                $rows[$k]['diff_mixtoys'] = ($rows[$k]['mixtoys'] === '-----') ? '-----' : $rows[$k]['diff_mixtoys'].'%';
+                $rows[$k]['diff_mixtoys'] = ($rows[$k]['mixtoys'] === '-----') ? '-----' : $rows[$k]['diff_mixtoys'];
                 $rows[$k]['grandtoys'] = (is_null($rows[$k][$this->currency.'grandtoys'])) ? '-----' : $this->__priceConc($rows[$k][$this->currency.'grandtoys']);
-                $rows[$k]['diff_grandtoys'] = ($rows[$k]['grandtoys'] === '-----') ? '-----' : $rows[$k]['diff_grandtoys'].'%';
+                $rows[$k]['diff_grandtoys'] = ($rows[$k]['grandtoys'] === '-----') ? '-----' : $rows[$k]['diff_grandtoys'];
 //                $rows[$k]['grandtoys2'] = (is_null($rows[$k][$this->currency.'grandtoys2'])) ? '-----' : $this->__priceConc($rows[$k][$this->currency.'grandtoys2']);
 //                $rows[$k]['diff_grandtoys2'] = ($rows[$k]['grandtoys2'] === '-----') ? '-----' : $rows[$k]['diff_grandtoys2'].'%';
 //                $rows[$k]['grandtoys3'] = (is_null($rows[$k][$this->currency.'grandtoys3'])) ? '-----' : $this->__priceConc($rows[$k][$this->currency.'grandtoys3']);
 //                $rows[$k]['diff_grandtoys3'] = ($rows[$k]['grandtoys3'] === '-----') ? '-----' : $rows[$k]['diff_grandtoys3'].'%';
                 $rows[$k]['kindermarket'] = (is_null($rows[$k][$this->currency.'kindermarket'])) ? '-----' : $this->__priceConc($rows[$k][$this->currency.'kindermarket']);
-                $rows[$k]['diff_kindermarket'] = ($rows[$k]['kindermarket'] === '-----') ? '-----' : $rows[$k]['diff_kindermarket'].'%';
+                $rows[$k]['diff_kindermarket'] = ($rows[$k]['kindermarket'] === '-----') ? '-----' : $rows[$k]['diff_kindermarket'];
 
 
                 if ($this->conc) {
@@ -236,8 +236,8 @@
                     ;
                 }
 
-                $rows[$k]['margin'] = (round(($rows[$k]['Price'] / $rows[$k]['purchase'] - 1) * 100, 1)).'%';
-                $rows[$k]['max_diff'] = $diff.'%';
+                $rows[$k]['margin'] = (round(($rows[$k]['Price'] / $rows[$k]['purchase'] - 1) * 100, 1));
+                $rows[$k]['max_diff'] = $diff;
 
             }
             $count_rows = array('100' => 100, '500' => 500, '1000' => 1000);

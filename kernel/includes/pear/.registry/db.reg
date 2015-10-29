@@ -17,7 +17,7 @@ a:12:{s:8:"provides";a:1:{s:30:"function;array_change_key_case";a:3:{s:4:"type";
 DB layers itself on top of PHP's existing database extensions.  The
 currently supported extensions are: dbase, fbsql, interbase, informix,
 msql, mssql, mysql, oci8, odbc, pgsql, sqlite and sybase (DB style interfaces
-to LDAP servers and MS ADO (using COM) are also avaible from a separate package).";s:11:"maintainers";a:2:{i:0;a:4:{s:6:"handle";s:3:"ssb";s:4:"name";s:18:"Stig Sæther Bakken";s:5:"email";s:12:"stig@php.net";s:4:"role";s:4:"lead";}i:1;a:4:{s:6:"handle";s:3:"cox";s:4:"name";s:13:"Tomas V.V.Cox";s:5:"email";s:15:"cox@idecnet.com";s:4:"role";s:9:"developer";}}s:7:"version";s:8:"1.5.0RC1";s:12:"release_date";s:10:"2003-06-23";s:15:"release_license";s:11:"PHP License";s:13:"release_state";s:6:"stable";s:13:"release_notes";s:727:"New Features:
+to LDAP servers and MS ADO (using COM) are also avaible from a separate package).";s:11:"maintainers";a:2:{i:0;a:4:{s:6:"handle";s:3:"ssb";s:4:"name";s:18:"Stig Sï¿½ther Bakken";s:5:"email";s:12:"stig@php.net";s:4:"role";s:4:"lead";}i:1;a:4:{s:6:"handle";s:3:"cox";s:4:"name";s:13:"Tomas V.V.Cox";s:5:"email";s:15:"cox@idecnet.com";s:4:"role";s:9:"developer";}}s:7:"version";s:8:"1.5.0RC1";s:12:"release_date";s:10:"2003-06-23";s:15:"release_license";s:11:"PHP License";s:13:"release_state";s:6:"stable";s:13:"release_notes";s:727:"New Features:
 - Added $dbh->freePrepared(), for explicitily free a prepared result
 - Test suite enhanced
 - Added new *experimental* driver for SQLite

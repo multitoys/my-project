@@ -18,6 +18,15 @@
         $a = true;
     }
 
+    $b = false;
+
+    if (isset($_GET) &&
+        array_key_exists('new', $_GET) &&
+        $_GET['new'] === '1'
+    ) {
+        $b = true;
+    }
+
     if ($a) {
 
         echo(<<<TAG
@@ -39,7 +48,11 @@ TAG
         $archive_dir = $_SERVER['DOCUMENT_ROOT'].'/upload/';
 
         //----------- Импорт товаров ----------- 
-        $filename = $archive_dir.'dreamtoys.csv';
+        if ($b) {
+            $filename = $archive_dir.'dreamtoys_new.csv';
+        } else {
+            $filename = $archive_dir.'dreamtoys.csv';
+        }
         $file = file($filename);
         $rowcount = count($file);
 
@@ -65,7 +78,10 @@ TAG
             'Хоз. товары', 'Товары для праздников'
         );
         if (($handle = fopen($filename, 'r')) !== false) {
-//            updateValue('Conc__dreamtoys', 'enabled = 0');
+
+            if (!$b) {
+                updateValue('Conc__dreamtoys', 'enabled = 0');
+            }
 
             while (($data = fgetcsv($handle, 1000, ';')) !== false) {
                 set_time_limit(0);
@@ -166,8 +182,8 @@ TAG
         ');
 
         // Оптимизация таблиц
-//        $query = "UPDATE Conc__dreamtoys SET parent='', category='' WHERE enabled=0";
-//        $res = mysql_query($query) or die(mysql_error()."<br>$query");
+        $query = "UPDATE Conc__dreamtoys SET parent='', category='' WHERE enabled=0";
+        $res = mysql_query($query) or die(mysql_error()."<br>$query");
 
         $query = 'OPTIMIZE TABLE Conc__dreamtoys';
         $res = mysql_query($query) or die(mysql_error()."<br>$query");

@@ -1040,7 +1040,7 @@
                     $analog = findAnalogs($name_conc, $Product->code, $Product->price_uah);
                     $analog .= "<div>
                             <a class='blue-button fancybox fancybox.ajax find' title=''
-                            href='/popup/search_by_conc/search_conc.php?mode=1&conc=$name_conc&code=$Product->code&price=$Product->price_uah' onclick=\"this.style.backgroundColor = 'transparent'\">Найти совпадения</a>
+                            href='/popup/search_by_conc/search_conc.php?mode=1&conc=$name_conc&code=$Product->code&price=$Product->price_uah' onclick=\"this.style.backgroundColor = 'lightgrey'\">Найти совпадения</a>
                             <input type='text' class='input_message search-concs' rel='Поиск аналогов' value='Поиск аналогов' 
                             autocomplete='off' name='searchstring' data-conc=$name_conc data-code=$Product->code data-price=$Product->price_uah >
                             </div>";
@@ -1051,7 +1051,7 @@
             <div class=cs_product_info style='height: auto'>
                 <div class='productname newpostup'>
                         $name <small>&laquo;$category_conc&raquo;</small><br>
-                        <small>арт.: </small><span style='color: #008BFF'>$product_code</span><br>
+                        <small>арт.: </small><span class='search-product-code blue-button' style='color: white;background-color: lightcoral;' onclick=\"this.style.boxShadow = 'none'; this.style.backgroundColor = 'transparent'; this.style.color = '#008BFF';\">$product_code</span><br>
                         <small>цена: </small><span class=totalPrice>$Product->price_uah&nbsp;&#8372;</span>
                 </div>
                 <div class=delimiter></div>

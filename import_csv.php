@@ -42,10 +42,9 @@ TAG
 
     //----------- Импорт покупателей -----------
     $filename0 = 'clients.csv';
-    $filename = $dest_dir.'clients.csv';
+    $filename = $dest_dir.$filename0;
     $file = file($filename);
     $rowcount = count($file);
-    echo('<h1>Импорт покупателей ...('.$rowcount.')</h1><hr><br>');
 //    echo(<<<TAG
 //				<div id='clients' >
 //					<div style='width:0px;'>&nbsp;</div>
@@ -53,11 +52,15 @@ TAG
 //TAG
 //    );
     if (!$rowcount) {
-        showError("CSV-файл ($filename) не содержит данных! (rowcount = $rowcount)");
+        showError("CSV-файл ($filename0) не содержит данных! (rowcount = $rowcount)");
     }
     if (($handle = fopen($filename, 'r')) !== false) {
+
+        echo('<h1>Импорт покупателей ...('.$rowcount.')</h1><hr><br>');
+		
         $query = 'UPDATE SC_customers SET  1C = 0';
         $res = mysql_query($query) or die(mysql_error()."<br>$query");
+        $success = 0;
         $row = 0;
         $no = 0;
 
@@ -77,7 +80,7 @@ TAG
             $skidka = (is_numeric($skidka)) ? $skidka : 0;
             $skidka_ua = (is_numeric($skidka_ua)) ? $skidka_ua : 0;
             $fam = decodeCodepage1251($fam);
-            $est = getValue('Login', 'SC_customers', "Login LIKE '$login'");
+            $est = getValue('Login', 'SC_customers', "Login = '$login'");
 
             if (!$est) {
                 echo('<small>'.$no.') '.$fam.' <span style="color:green;">'.$login.'</span><span style="color:red;"> не найден!<br></span></small>');
@@ -93,18 +96,20 @@ TAG
                      WHERE Login = '$login';
                 ";
                 $res = mysql_query($query) or die(mysql_error()."<br>$query");
+                $success++;
             }
         }
 
-        echo('<br><span style="color:blue;">Обработано '.$no.' клиентов<br></span><br>');
+        echo('<br><span style="color:blue;">Обработано '.$success.' клиентов<br></span><br>');
         fclose($handle);
     } else {
-        echo("<br>'Ошибка в при открытии файла: $filename0");
+        //echo("<br>'Ошибка в при открытии файла: $filename0");
     }
 
 
     //----------- Импорт категорий -----------
-    $filename = $dest_dir.'categories.csv';
+    $filename0 = 'categories.csv';
+    $filename = $dest_dir.$filename0;
     $file = file($filename);
     $rowcount = count($file);
     echo('<h1>Импорт категорий ...('.$rowcount.')</h1><hr><br>');
@@ -115,7 +120,7 @@ TAG
 TAG
     );
     if (!$rowcount) {
-        die(showError("CSV-файл ($filename) не содержит данных! (rowcount = $rowcount)"));
+        die(showError("CSV-файл ($filename0) не содержит данных! (rowcount = $rowcount)"));
     }
     if (($handle = fopen($filename, 'r')) !== false) {
 
@@ -225,11 +230,12 @@ TAG
         progressBar('categories', $percent, false, true);
         buferOut();
     } else {
-        die("<br>'Ошибка в при открытии файла: $filename");
+        die("<br>'Ошибка в при открытии файла: $filename0");
     }
 
     //----------- Импорт товаров -----------
-    $filename = $dest_dir.'products.csv';
+    $filename0 = 'products.csv';
+    $filename = $dest_dir.$filename0;
     $file = file($filename);
     $rowcount = count($file);
     echo('<h1>Импорт товаров ...('.($rowcount - 1).')</h1><hr><br>');
@@ -241,7 +247,7 @@ TAG
     );
 
     if (!$rowcount) {
-        die(showError("CSV-файл ($filename) не содержит данных! (rowcount = $rowcount)"));
+        die(showError("CSV-файл ($filename0) не содержит данных! (rowcount = $rowcount)"));
     }
 
     $no = 0;
@@ -489,7 +495,7 @@ TAG
         }
         fclose($handle);
     } else {
-        die("<br>'Ошибка в при открытии файла: $filename");
+        die("<br>'Ошибка в при открытии файла: $filename0");
     }
     progressBar('products', $percent, false, true);
     echo('<span style="color:blue;"><br>Обработано '.($no - $error).' товаров</span><br><span style="color:green;">Новых '.$new_id.' товаров</span><br>');
@@ -572,7 +578,8 @@ TAG
     //          WHERE in_stock = 100 AND enabled AND Price <> 0.00 AND ostatok NOT LIKE 'под заказ'";
     //    $res = mysql_query($query) or die(mysql_error()."<br>$query");
 
-    $concs = array('divoland', 'mixtoys', 'dreamtoys', 'kindermarket', 'grandtoys', 'grandtoys2', 'grandtoys3');
+    //    $concs = array('divoland', 'mixtoys', 'dreamtoys', 'kindermarket', 'grandtoys', 'grandtoys2', 'grandtoys3');
+    $concs = array('divoland', 'mixtoys', 'dreamtoys', 'kindermarket', 'grandtoys');
     $currency_table = 'Conc__currency';
 
     //$start_query = microtime(true);
@@ -638,10 +645,12 @@ TAG
     }
     //$start_query = microtime(true);
 
-    $query = "UPDATE $table SET max_diff = GREATEST(diff_kindermarket, diff_divoland, diff_dreamtoys, diff_mixtoys, diff_grandtoys, diff_grandtoys2, diff_grandtoys3)";
+    //    $query = "UPDATE $table SET max_diff = GREATEST(diff_kindermarket, diff_divoland, diff_dreamtoys, diff_mixtoys, diff_grandtoys, diff_grandtoys2, diff_grandtoys3)";
+    $query = "UPDATE $table SET max_diff = GREATEST(diff_kindermarket, diff_divoland, diff_dreamtoys, diff_mixtoys, diff_grandtoys)";
     $res = mysql_query($query) or die(mysql_error().$query);
-    
-    $query = "DELETE FROM $table WHERE (kindermarket IS NULL AND divoland IS NULL AND dreamtoys IS NULL AND mixtoys IS NULL AND grandtoys IS NULL AND grandtoys2 IS NULL AND grandtoys3 IS NULL)";
+
+    //    $query = "DELETE FROM $table WHERE (kindermarket IS NULL AND divoland IS NULL AND dreamtoys IS NULL AND mixtoys IS NULL AND grandtoys IS NULL AND grandtoys2 IS NULL AND grandtoys3 IS NULL)";
+    $query = "DELETE FROM $table WHERE (kindermarket IS NULL AND divoland IS NULL AND dreamtoys IS NULL AND mixtoys IS NULL AND grandtoys IS NULL)";
     $res = mysql_query($query) or die(mysql_error().$query);
 
 //    $query_conc += microtime(true) - $start_query;
@@ -657,7 +666,7 @@ TAG
 	<div id='end'>Импорт завершен!</div>
 TAG
     );
-    printf('<br>Query_products: %.2F сек.', $query_time);
-    printf('<br>Query_competitors: %.2F сек.', $query_conc);
+    //    printf('<br>Query_products: %.2F сек.', $query_time);
+    //    printf('<br>Query_competitors: %.2F сек.', $query_conc);
 
     debugging($start);

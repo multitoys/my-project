@@ -53,9 +53,11 @@
         $order = 't1.product_code';
         $enabled = '';
         $all_res = '<ul><li>Результаты поиска</li>';
+    } else {
+        $search = _searchPatternReplace($search);
     }
 
-    $search = mysql_real_escape_string(_searchPatternReplace($search));
+    $search = mysql_real_escape_string($search);
     $query = mysql_query("SELECT t1.productID, t1.product_code, t1.Price, t1.skidka, t1.ukraine, t1.name_ru, t1.code_1c,
                 t1.default_picture, t1.slug, t1.brand, t3.filename
                 FROM SC_products t1

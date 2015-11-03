@@ -993,7 +993,7 @@
             }
 
             $query2 = "SELECT
-					category, code, product_code, name, price_uah
+					category, code, product_code, name, price_uah, date_added
 				FROM
 					Conc__$auxpage WHERE enabled $div_cat $search
 				ORDER BY
@@ -1002,16 +1002,17 @@
 					$start_row, $tov_count";
             $res2 = mysql_query($query2) or die(mysql_error().$query2);
 
-            while ($Product = mysql_fetch_object($res2)) {
+            while ($competitor_product = mysql_fetch_object($res2)) {
 
-                $category_conc = escape($Product->category);
-                $name = escape($Product->name);
-                $product_code = escape($Product->product_code);
+                $category_conc = escape($competitor_product->category);
+                $name = escape($competitor_product->name);
+                $product_code = escape($competitor_product->product_code);
                 $replace_arr = array('+', '.', '\'', '/', '"', ',', '  ', '  ');
                 $name_conc = str_replace($replace_arr, ' ', trim($name).' '.trim($product_code));;
                 $name_conc = escape(str_replace(' ', '|', $name_conc), 'javascript');
-
-                if ($matched_product = $codes_multi[$Product->code]) {
+                $analog = '';
+                
+                if ($matched_product = $codes_multi[$competitor_product->code]) {
 
                     $query3 = "SELECT categoryID, code_1c, product_code, name_ru, Price, enabled
                       FROM SC_products WHERE code_1c LIKE '$matched_product'";
@@ -1020,7 +1021,7 @@
                     if ($M_Product = mysql_fetch_object($res3)) {
 
                         //                        $category = $category_name[$M_Product->categoryID];
-                        $price_diff = round(($M_Product->Price / $Product->price_uah - 1) * 100, 1);
+                        $price_diff = round(($M_Product->Price / $competitor_product->price_uah - 1) * 100, 1);
                         $marked = ($price_diff > 0)?'red':'green';
                         $disabled = '';
                         $button = 'gainsboro';
@@ -1030,38 +1031,40 @@
                         }
 
                         $analog = "
-                    <p class='productname newpostup' style=\"$disabled\"><button class='blue-button' title=''
-                     style='background-color: $button'
-                     onclick='unsetAnalogs(\"$name_conc\",\"$Product->code\",\"$M_Product->code_1c\",\"$Product->price_uah\")' type=button>
-                   X</button>($M_Product->code_1c)  $M_Product->name_ru<br>
-                        <small>арт.: </small><span style='color: #008BFF'>$M_Product->product_code</span><br>
-                        <small>цена: </small><span class=totalPrice
-                        style='color:$marked;'>$M_Product->Price&nbsp;&#8372;&nbsp;|&nbsp;</span>
-                        <small>разница: </small><span style='color:$marked;font-weight:700'>$price_diff%</span>
-                    </p>";
+                            <p class='productname newpostup' style=\"$disabled\"><button class='blue-button' title=''
+                             style='background-color: $button'
+                             onclick='unsetAnalogs(\"$name_conc\",\"$competitor_product->code\",\"$M_Product->code_1c\",\"$competitor_product->price_uah\")' type=button>
+                           X</button>($M_Product->code_1c)  $M_Product->name_ru<br>
+                                <small>арт.: </small><span style='color: #008BFF'>$M_Product->product_code</span><br>
+                                <small>цена: </small><span class=totalPrice
+                                style='color:$marked;'>$M_Product->Price&nbsp;&#8372;&nbsp;|&nbsp;</span>
+                                <small>разница: </small><span style='color:$marked;font-weight:700'>$price_diff%</span>
+                            </p>"
+                        ;
                     }
                 } else {
-                    $analog = findAnalogs($name_conc, $Product->code, $Product->price_uah);
+                    $analog = findAnalogs($name_conc, $competitor_product->code, $competitor_product->price_uah);
                     $analog .= "
                         <div>
                             <a class='blue-button fancybox fancybox.ajax find' title=''
-                            href='/popup/search_by_conc/search_conc.php?mode=1&conc=$name_conc&code=$Product->code&price=$Product->price_uah' onclick=\"this.style.backgroundColor = 'lightgrey'\">Найти совпадения</a>
+                            href='/popup/search_by_conc/search_conc.php?mode=1&conc=$name_conc&code=$competitor_product->code&price=$competitor_product->price_uah' onclick=\"this.style.backgroundColor = 'lightgrey'\">Найти совпадения</a>
                             <input type='text' class='input_message search-concs' rel='Поиск аналогов' value='Поиск аналогов' 
-                            autocomplete='off' name='searchstring' data-conc=$name_conc data-code=$Product->code data-price=$Product->price_uah >
+                            autocomplete='off' name='searchstring' data-conc=$name_conc data-code=$competitor_product->code data-price=$competitor_product->price_uah >
                         </div>
                     ";
                 }
-
+                
+                $date_added = substr($competitor_product->date_added, 0, 11);
                 $newitems .= "
                     <hr style='border-color: coral;'>
                     <div class=cs_product_info style='height: auto'>
                         <div class='productname newpostup'>
-                                $name <small>&laquo;$category_conc&raquo;</small><br>
+                                $name <small>&laquo;$category_conc&raquo;</small><span style='color:dodgerblue; font-size: x-small'> $date_added</span><br>
                                 <small>арт.: </small><span class='search-product-code blue-button' style='color: white;background-color: lightcoral;' onclick=\"this.style.boxShadow = 'none'; this.style.backgroundColor = 'transparent'; this.style.color = '#008BFF';\">$product_code</span><br>
-                                <small>цена: </small><span class=totalPrice>$Product->price_uah&nbsp;&#8372;</span>
+                                <small>цена: </small><span class=totalPrice>$competitor_product->price_uah&nbsp;&#8372;</span>
                         </div>
                         <div class=delimiter></div>
-                        <div id=conc_$Product->code style='display: flex;'>
+                        <div id=conc_$competitor_product->code style='display: flex;'>
                             $analog
                         </div>
                     </div>

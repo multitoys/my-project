@@ -221,8 +221,8 @@
             'Новинки' => 'page_size500?new=1',
             'Хиты'    => 'page_size500?bestseller=1',
             'Акция'   => 'page_size500?offer=1',
-            '21 октября 2015' => 'shop/news/view/235?page_size=500',
-            '24 октября 2015' => 'shop/news/view/238?page_size=500',
+            '29 октября 2015' => 'shop/news/view/242?page_size=500',
+            '2 ноября 2015' => 'shop/news/view/246?page_size=500'
         )
 
         //        'Новинки'    => array(

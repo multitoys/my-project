@@ -317,7 +317,7 @@ TAG
                 $bonus = is_numeric($bonus) ? $bonus : 0;
                 $hit = ($hit > 0) ? $hit : 0;
                 $new = ($new > 0) ? 7 : 5;
-                $new_postup = ($new_postup > 0) ? $new_postup : 0;
+                $new_postup = ($new_postup > 0) ? $new_postup + 3 : 0;
                 $akcia = ($akcia > 0) ? 1 : 0;
                 $akcia_skidka = ($akcia > 0) ? (1 - $price / $oldprice) * 100 : 0;
                 $akcia_skidka = is_numeric($akcia_skidka) ? $akcia_skidka : 0;
@@ -558,6 +558,11 @@ TAG
     $query
         = 'INSERT INTO Search_products (categoryID, code_1c, product_code, name_ru, Price,enabled)
            SELECT  categoryID, code_1c, product_code, name_ru, Price, enabled FROM SC_products  WHERE in_stock = 100';
+    $res = mysql_query($query) or die(mysql_error()."<br>$query");
+    
+    $query
+        = 'DELETE FROM `SC_shopping_cart_items`
+            WHERE `productID` IS NULL';
     $res = mysql_query($query) or die(mysql_error()."<br>$query");
 
 //    $query_conc += microtime(true) - $start_query;

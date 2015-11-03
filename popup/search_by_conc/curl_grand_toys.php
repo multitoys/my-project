@@ -61,22 +61,22 @@ TAG
         define('URL_PREFIX', '/ru/');
         define('EXT', '.html');
 
-        define('LOGIN', 'Elenna');
-        define('PASSWORD', '0675230623');
+//        define('LOGIN', 'Elenna');
+//        define('PASSWORD', '0675230623');
 //        define('LOGIN', 'rusmol');
 //        define('PASSWORD', '333');
-//        define('LOGIN', '973846984');
-//        define('PASSWORD', '973846984');
+        define('LOGIN', '973846984');
+        define('PASSWORD', '973846984');
 
         $price_number = '';
-        switch (LOGIN) {
-            case 'rusmol':
-                $price_number = 2;
-                break;
-            case '973846984':
-                $price_number = 3;
-                break;
-        }
+//        switch (LOGIN) {
+//            case 'rusmol':
+//                $price_number = 2;
+//                break;
+//            case '973846984':
+//                $price_number = 3;
+//                break;
+//        }
         
         $login_url = URL_COMPETITORS.URL_PREFIX.'user/login';
         $refferer = URL_COMPETITORS;

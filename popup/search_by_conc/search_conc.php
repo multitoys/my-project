@@ -77,7 +77,7 @@
                 if (!getValue('code_1c', "code_1c = '$Product->code_1c'", 'Conc_search__'.$auxpage)) {
 
                     $score = round($Product->score, 1);
-                    $min_score = ($ajax) ? 5 : 19;
+                    $min_score = ($ajax) ? 5 : 16;
 
                     if ($score > $min_score) {
 

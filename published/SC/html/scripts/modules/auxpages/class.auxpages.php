@@ -7,6 +7,7 @@
 
         $pages = $moduleInstance->__getEnabledPages();
         $params['options'] = array();
+        
         foreach ($pages as $page) {
             $params['options'][$page['id']] = $page['name'];
         }
@@ -18,10 +19,10 @@
 
     function cptsettingserializer_auxpagegroup($params, $post)
     {
-
         $Register = &Register::getInstance();
 
         if (!$Register->is_set('__AUXNAV_SERIALIZED') && is_array($post[$params['name']])) {
+            
             $post[$params['name']] = implode(':', $post[$params['name']]);
             $reg = 1;
             $Register->set('__AUXNAV_SERIALIZED', $reg);
@@ -35,11 +36,8 @@
 
         function save_order()
         {
-
             $scan_result = scanArrayKeysForID($_POST, 'priority');
-            $sql = '
-			UPDATE ?#AUX_PAGES_TABLE SET aux_page_priority=? WHERE aux_page_ID=?
-		';
+            $sql = 'UPDATE ?#AUX_PAGES_TABLE SET aux_page_priority=? WHERE aux_page_ID=?';
 
             foreach ($scan_result as $aux_id => $scan_info) {
 
@@ -52,7 +50,6 @@
 
         function main()
         {
-
             $moduleEntry = &$this->__params['module'];
             /*@var $moduleEntry AuxPages*/
 
@@ -69,15 +66,24 @@
             if (isset($_GET['add_new'])) {
 
                 if (isset($_POST['save'])) {
+                    
                     $AuxDivision = new Division();
                     $max_priority = db_phquery_fetch(DBRFETCH_FIRST, 'SELECT MAX(aux_page_priority) FROM ?#AUX_PAGES_TABLE') + 1;
+                    
                     if (!isset($_POST['aux_page_slug']) || trim($_POST['aux_page_slug']) == '') {
+                        
                         $_POST['aux_page_slug'] = LanguagesManager::ml_getFieldValue('aux_page_name', $_POST);
-                        $_POST['aux_page_slug'] = make_clean_slug($_POST['aux_page_slug'], '', AUX_PAGES_TABLE, 'aux_page_slug');
+                        $_POST['aux_page_slug'] = make_clean_slug($_POST['aux_page_slug'], '', 
+                                                                  AUX_PAGES_TABLE, 'aux_page_slug');
+                        
                     } else {
-                        $_POST['aux_page_slug'] = make_clean_slug($_POST['aux_page_slug'], '', AUX_PAGES_TABLE, 'aux_page_slug');
+                        $_POST['aux_page_slug'] = make_clean_slug($_POST['aux_page_slug'], '', 
+                                                                  AUX_PAGES_TABLE, 'aux_page_slug');
                     }
-                    $AuxID = $moduleEntry->auxpgAddAuxPage($_POST, $_POST, $_POST, $_POST, isset($_POST['aux_page_enabled'])?1:0, $max_priority, $_POST['aux_page_slug']);
+                    
+                    $AuxID = $moduleEntry->auxpgAddAuxPage($_POST, $_POST, $_POST, $_POST, 
+                                                           isset($_POST['aux_page_enabled'])?1:0, 
+                                                           $max_priority, $_POST['aux_page_slug']);
                     $TitlePageID = DivisionModule::getDivisionIDByUnicKey('TitlePage');
 
                     $moduleEntry->addAuxPageNameLocal($AuxID, $_POST);
@@ -93,19 +99,33 @@
 
                     RedirectSQ('add_new=');
                 }
+                
                 $smarty->assign('add_new', 1);
+                
             } elseif (isset($_GET['edit'])) {
+                
                 if (isset($_POST['save'])) {
 
                     safeMode(true);
+                    
                     if (!isset($_POST['aux_page_slug']) || strlen(trim($_POST['aux_page_slug'])) == 0) {
+                        
                         $_POST['aux_page_slug'] = LanguagesManager::ml_getFieldValue('aux_page_name', $_POST);
-                        $_POST['aux_page_slug'] = make_clean_slug($_POST['aux_page_slug'], 'auxpage_', DIVISIONS_TBL, 'xUnicKey', 'xName', $moduleEntry->getAuxPageLocalID($_GET['edit']));
+                        $_POST['aux_page_slug'] = make_clean_slug($_POST['aux_page_slug'], 'auxpage_', 
+                                                                  DIVISIONS_TBL, 'xUnicKey', 'xName', 
+                                                                  $moduleEntry->getAuxPageLocalID($_GET['edit']));
+                        
                     } else {
-                        $_POST['aux_page_slug'] = make_clean_slug($_POST['aux_page_slug'], 'auxpage_', DIVISIONS_TBL, 'xUnicKey', 'xName', $moduleEntry->getAuxPageLocalID($_GET['edit']));
+                        
+                        $_POST['aux_page_slug'] = make_clean_slug($_POST['aux_page_slug'], 'auxpage_', 
+                                                                  DIVISIONS_TBL, 'xUnicKey', 'xName', 
+                                                                  $moduleEntry->getAuxPageLocalID($_GET['edit']));
                     }
-                    $moduleEntry->auxpgUpdateAuxPage($_GET['edit'], $_POST, $_POST, $_POST, $_POST, isset($_POST['aux_page_enabled'])?1:0, $_POST['aux_page_slug']);
+                    
+                    $moduleEntry->auxpgUpdateAuxPage($_GET['edit'], $_POST, $_POST, $_POST, $_POST, 
+                                                     isset($_POST['aux_page_enabled'])?1:0, $_POST['aux_page_slug']);
                     $moduleEntry->updateAuxPageNameLocal($_GET['edit'], $_POST);
+                    
                     RedirectSQ('edit=');
                 }
 
@@ -131,22 +151,26 @@
 
         function getInterface()
         {
-
             $Args = func_get_args();
             $_InterfaceName = array_shift($Args);
             $Results = array();
+            
             if (isset($this->Interfaces[$_InterfaceName])) {
 
                 $SubPatterns = array();
+                
                 if (preg_match('|auxpage_(\d+)|', $_InterfaceName, $SubPatterns)) {
 
                     global $smarty;
+                    
                     $AuxInfo = $this->auxpgGetAuxPage($SubPatterns[1]);
                     if (!$AuxInfo['aux_page_enabled']) RedirectSQ('?');
                     $page_title = $AuxInfo["aux_page_name"]." ― ".CONF_SHOP_NAME;
                     $meta_tags = "";
+                    
                     if ($AuxInfo["meta_description"] != "")
                         $meta_tags .= '<meta name="description" content="'.xHtmlSpecialChars($AuxInfo["meta_description"]).'">'."\n";
+                    
                     if ($AuxInfo["meta_keywords"] != "")
                         $meta_tags .= '<meta name="keywords" content="'.xHtmlSpecialChars($AuxInfo["meta_keywords"]).'">'."\n";
 
@@ -157,6 +181,7 @@
 
                     return '';
                 }
+                
                 $ParamsNum = count($Args);
                 $EvalParams = array();
 
@@ -177,7 +202,6 @@
 
         function initInterfaces()
         {
-
             $this->Interfaces = array(
                 'fauxpage' => array(
                     'name'   => 'pgn_auxpages',
@@ -190,9 +214,11 @@
             );
 
             $sql = '
-			SELECT *, '.LanguagesManager::sql_prepareField('aux_page_name').' AS aux_page_name FROM ?#AUX_PAGES_TABLE ORDER BY aux_page_name ASC
-		';
+			        SELECT *, '.LanguagesManager::sql_prepareField('aux_page_name').' 
+			        AS aux_page_name FROM ?#AUX_PAGES_TABLE ORDER BY aux_page_name ASC
+		    ';
             $Result = $this->dbHandler->ph_query($sql);
+            
             while ($_Row = $Result->fetchAssoc()) {
 
                 $this->Interfaces['auxpage_'.$_Row['aux_page_ID']] = array(
@@ -211,7 +237,6 @@
 
         function __getEnabledPages()
         {
-
             $sql = 'SELECT '.LanguagesManager::sql_prepareField('aux_page_name').' AS name, `aux_page_ID` AS `id`, `aux_page_slug` FROM ?#AUX_PAGES_TABLE WHERE aux_page_enabled=1 ORDER BY `aux_page_priority` ASC';
             //		return db_phquery_array($sql);
             $Register = &Register::getInstance();
@@ -227,7 +252,6 @@
 
         function cpt_auxpages_navigation()
         {
-
             list($local_settings) = $this->__getFromStack('call_params');
             if (isset($local_settings['local_settings'])) $local_settings = $local_settings['local_settings'];
 
@@ -247,13 +271,11 @@
 
         function methodBAuxPage()
         {
-
             ActionsController::exec('AuxAdministrationController', array(ACTCTRL_POST, ACTCTRL_GET, ACTCTRL_AJAX, ACTCTRL_CUST), array('module' => &$this));
         }
 
         function methodFAuxPage()
         {
-
             global $smarty;
             $aux_page = $this->auxpgGetAuxPage($_GET['show_aux_page']);
 
@@ -269,7 +291,6 @@
 
         function auxpgGetAllPageAttributes()
         {
-
             $sql = '
 			SELECT * FROM ?#AUX_PAGES_TABLE ORDER BY aux_page_priority ASC
 		';
@@ -305,37 +326,28 @@
             $ajax = false;
 
             if ('auxpage' === substr($a['ukey'], 0, 7)) {
+                
                 if (array_key_exists('count_show', $_POST) || $_POST['count_show'] || $_POST['p']) {
                     $ajax = true;
                 }
+                
                 if (array_key_exists('ajax', $_POST)) {
                     $ajax = (int)$_POST['ajax'];
                 }
+                
                 switch ($a['ukey']) {
                     case 'auxpage_divoland':
-                        //include(DIR_ROOT . '/../../../../popup/search_by_conc/conc_auxpages.php');
-                        //$row = transform_auxpage_conc($a['ukey'], $row);
-                        //break;
                     case 'auxpage_mixtoys':
-                        //include(DIR_ROOT . '/../../../../popup/search_by_conc/conc_auxpages.php');
-                        //$row = transform_auxpage_conc($a['ukey'], $row);
-                        //break;
                     case 'auxpage_dreamtoys':
-                        //include(DIR_ROOT . '/../../../../popup/search_by_conc/conc_auxpages.php');
-                        //$row = transform_auxpage_conc($a['ukey'], $row);
-                        //break;
                     case 'auxpage_kindermarket':
                     case 'auxpage_grandtoys':
                         $row = $this->transform_auxpage_conc($a['ukey'], $row);
-                        //include(DIR_ROOT . '/../../../../popup/search_by_conc/conc_auxpages.php');
-                        //$row = transform_auxpage_conc($a['ukey'], $row);
                         break;
                     default:
-                        //include(DIR_ROOT . '/../../../../popup/ajax_auxpages.php');
-                        //$row = transform_auxpage($a['ukey'], $row, $ajax);
                         $row = $this->transform_auxpage($a['ukey'], $row, $ajax);
                 }
             }
+            
             if ($ajax) {
 
                 if (!$row) {
@@ -433,7 +445,6 @@
 
         function addAuxPageNameLocal($aux_page_ID, $data)
         {
-
             $languages = LanguagesManager::getLanguages();
             foreach ($languages as $languageEntry) {
                 /*@var $languageEntry Language*/
@@ -443,7 +454,6 @@
 
         function getAuxPageLocalID($aux_page_ID)
         {
-
             return "pgn_ap_{$aux_page_ID}";
         }
 
@@ -911,30 +921,26 @@
             }
             $_SESSION['auxpage'] = substr($name, 8);
             $auxpage = $_SESSION['auxpage'];
+
             // Количество выводимых товаров на странице
-            //    $query = 'SELECT settings_value FROM SC_settings where settings_constant_name=\'CONF_NEWTOV_COUNT\'';
-            //    $res = mysql_query($query) or die(mysql_error() . $query);
-            //    $settings = mysql_fetch_object($res);
-            //    if ($settings) {
-            //                    $tov_count = intval($settings->settings_value);
-            //    } else {
             $tov_count = 50;
-            //    }
+
             $div_cat = '';
-            //$cat_div = '';
-            //$selected_category = '';
+
             if (isset($_GET['div_cat'])) {
+
                 $selected_category = $_GET['div_cat'];
                 $div_cat = " AND category LIKE '$selected_category'";
-                $cat_div = 'div_cat';
+                
             } elseif (isset($_GET['div_par'])) {
+
                 $selected_category = $_GET['div_par'];
                 $div_cat = " AND parent LIKE '$selected_category'";
-                $cat_div = 'div_par';
             }
 
             $search = '';
             if (isset($_GET['searchstring_competitors']) && $_GET['searchstring_competitors'] !== null) {
+
                 $search = $_GET['searchstring_competitors'];
                 //            $search = (is_int($search)) ? (int)$search : xEscapeSQLstring($search);
                 $search = xEscapeSQLstring($search);
@@ -946,42 +952,46 @@
             SELECT count(*) AS tov_all_count
             FROM Conc__'.$auxpage.' WHERE enabled '.$div_cat.$search;
             $res = mysql_query($query) or die(mysql_error().$query);
+
             $product_list_item = mysql_fetch_object($res);
             $tov_all_count = (int)$product_list_item->tov_all_count;
             $start_row = isset($_GET['p'])?(int)$_GET['p']:0;
             $url = '/'.$name.'/';
+
             //$pag_content = pagination($tov_all_count, $tov_count, 50, $start_row, $cat_div, $url, $selected_category);
             $out = SimpleNavigator($tov_all_count, $start_row, $tov_count, $url, $out);
-            //$newitems    = $pag_content;
             $newitems = "<div class='simple-pagination compact-theme'>$out</div>";
             $newitems .= '</div>
                     <div class=scroll-pane1 style="background-color: whitesmoke;">';
 
             $query1 = "SELECT code, code_1c FROM Conc_search__$auxpage";
             $res1 = mysql_query($query1) or die(mysql_error().$query1);
+
             $codes_multi = array();
+
             while ($Codes = mysql_fetch_object($res1)) {
                 $codes_multi[$Codes->code] = $Codes->code_1c;
             }
 
             $query = 'SELECT categoryID, name_ru FROM SC_categories';
             $res = mysql_query($query) or die(mysql_error().$query);
+
             $category_name = array();
+
             while ($Categories = mysql_fetch_object($res)) {
                 $category_name[$Categories->categoryID] = $Categories->name_ru;
             }
 
-            //        $order = 'name ASC';
-            $order = 'date_added DESC, code DESC';
+            $order = 'name ASC';
+
             if ($search) {
                 $order = 'product_code';
             }
-            //        if ($div_cat === '') {
-            //            $order = 'code DESC';
-            //            if ($auxpage === 'divoland') {
-            //                $order = 'productID DESC';
-            //            }
-            //        }
+
+            if (!$div_cat) {
+                $order = 'date_added DESC, code DESC';
+            }
+
             $query2 = "SELECT
 					category, code, product_code, name, price_uah
 				FROM
@@ -1002,29 +1012,23 @@
                 $name_conc = escape(str_replace(' ', '|', $name_conc), 'javascript');
 
                 if ($matched_product = $codes_multi[$Product->code]) {
+
                     $query3 = "SELECT categoryID, code_1c, product_code, name_ru, Price, enabled
                       FROM SC_products WHERE code_1c LIKE '$matched_product'";
                     $res3 = mysql_query($query3) or die(mysql_error().$query3);
 
                     if ($M_Product = mysql_fetch_object($res3)) {
-                        $category = $category_name[$M_Product->categoryID];
+
+                        //                        $category = $category_name[$M_Product->categoryID];
                         $price_diff = round(($M_Product->Price / $Product->price_uah - 1) * 100, 1);
                         $marked = ($price_diff > 0)?'red':'green';
-                        //                $disabled = 'line-height:65px;';
                         $disabled = '';
                         $button = 'gainsboro';
 
                         if (!$M_Product->enabled) {
                             $disabled .= 'color:grey;text-decoration:line-through;';
-                            //                    $button = '#848484';
                         }
-                        //                $analog = "
-                        //                    <div class='productname newpostup' id=multi_$M_Product->code_1c $style>
-                        //                        $M_Product->code_1c  [$M_Product->product_code]  $M_Product->name_ru
-                        //                        <span style='color:$marked;'>$M_Product->Price</span> &#8372;  <br>
-                        //                        разница: <span style='color:$marked;font-weight:700'>$price_diff%</span><br>
-                        //                        <small>категория: &laquo;$category&raquo;</small>
-                        //                    </div>";
+
                         $analog = "
                     <p class='productname newpostup' style=\"$disabled\"><button class='blue-button' title=''
                      style='background-color: $button'
@@ -1038,30 +1042,32 @@
                     }
                 } else {
                     $analog = findAnalogs($name_conc, $Product->code, $Product->price_uah);
-                    $analog .= "<div>
+                    $analog .= "
+                        <div>
                             <a class='blue-button fancybox fancybox.ajax find' title=''
                             href='/popup/search_by_conc/search_conc.php?mode=1&conc=$name_conc&code=$Product->code&price=$Product->price_uah' onclick=\"this.style.backgroundColor = 'lightgrey'\">Найти совпадения</a>
                             <input type='text' class='input_message search-concs' rel='Поиск аналогов' value='Поиск аналогов' 
                             autocomplete='off' name='searchstring' data-conc=$name_conc data-code=$Product->code data-price=$Product->price_uah >
-                            </div>";
+                        </div>
+                    ";
                 }
-                //        $pictures  = (strlen($Product->foto)) ? "<img width=160 height=120  class=preview alt='$name' src='/$auxpage/$Product->foto' pid='/$auxpage/$Product->foto'>" : "<img width=153 height=117 alt='no foto' src='/img/nophoto.jpg'>";
-                $newitems .= "
-            <hr style='border-color: coral;'>
-            <div class=cs_product_info style='height: auto'>
-                <div class='productname newpostup'>
-                        $name <small>&laquo;$category_conc&raquo;</small><br>
-                        <small>арт.: </small><span class='search-product-code blue-button' style='color: white;background-color: lightcoral;' onclick=\"this.style.boxShadow = 'none'; this.style.backgroundColor = 'transparent'; this.style.color = '#008BFF';\">$product_code</span><br>
-                        <small>цена: </small><span class=totalPrice>$Product->price_uah&nbsp;&#8372;</span>
-                </div>
-                <div class=delimiter></div>
-                <div id=conc_$Product->code style='display: flex;'>
-                    $analog
-                </div>
-            </div>
-		";
-            }
 
+                $newitems .= "
+                    <hr style='border-color: coral;'>
+                    <div class=cs_product_info style='height: auto'>
+                        <div class='productname newpostup'>
+                                $name <small>&laquo;$category_conc&raquo;</small><br>
+                                <small>арт.: </small><span class='search-product-code blue-button' style='color: white;background-color: lightcoral;' onclick=\"this.style.boxShadow = 'none'; this.style.backgroundColor = 'transparent'; this.style.color = '#008BFF';\">$product_code</span><br>
+                                <small>цена: </small><span class=totalPrice>$Product->price_uah&nbsp;&#8372;</span>
+                        </div>
+                        <div class=delimiter></div>
+                        <div id=conc_$Product->code style='display: flex;'>
+                            $analog
+                        </div>
+                    </div>
+                ";
+            }
+            
             $newitems .= '</div>';
             foreach ($text as $key => $oneline) {
                 $text[$key] = str_replace('%new_list%', $newitems, $oneline);

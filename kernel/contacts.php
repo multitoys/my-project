@@ -1777,7 +1777,7 @@
 			$this->globalPrefix = "CM";
 		}
 
-		function addmodFolder( $action, $U_ID, $ID_PARENT, $folderdata, $kernelStrings, $admin, $createCallback = null, $callbackParams = null, $propagateFolderRights = true, $suppressNotifications = false )
+		function addmodFolder( $action, $U_ID, $ID_PARENT, $folderdata, $kernelStrings, $admin, $createCallback = null, $callbackParams = null, $propagateFolderRights = true, $suppressNotifications = false, $folderStatus = null, $checkFolderName = true, $onBeforeFolderCreate = null )
 		//
 		// Adds/modifies folder
 		//
@@ -1927,9 +1927,9 @@
 		}
 
 		function moveFolder( $srcID, $destID, $U_ID, $kernelStrings, $onAfterDocumentOperation, $onBeforeDocumentOperation = null, $onFolderCreate = null,
-			$onFolderDelete = null, $callbackParams = null, $onFinishMove = null, $checkUserRights = true,
-			$topLevel = true, $accessInheritance = ACCESSINHERITANCE_COPY, $mostTopRightsSource = null,
-			$folderStatus = TREE_FSTATUS_NORMAL, $plainMove = false, $checkFolderName = true )
+                             $onFolderDelete = null, $callbackParams = null, $onFinishMove = null, $checkUserRights = true,
+                             $topLevel = true, $accessInheritance = ACCESSINHERITANCE_COPY, $mostTopRightsSource = null,
+                             $folderStatus = TREE_FSTATUS_NORMAL, $plainMove = false, $checkFolderName = true )
 		{
 			global $_cmQuotaManager;
 
@@ -1954,7 +1954,7 @@
 			return $res;
 		}
 
-		function copyFolder( $srcID, $destID, $U_ID, $kernelStrings, $onAfterDocumentOperation, $onBeforeDocumentOperation = null, $onFolderCreate = null, $callbackParams = null, $onFininshCopy = null, $accessInheritance = ACCESSINHERITANCE_COPY, $onBeforeFolderCreate = null, $checkFolderName = true, $copyChilds = true )
+		function copyFolder( $srcID, $destID, $U_ID, $kernelStrings, $onAfterDocumentOperation, $onBeforeDocumentOperation = null, $onFolderCreate = null, $callbackParams = null, $onFininshCopy = null, $accessInheritance = ACCESSINHERITANCE_COPY, $onBeforeFolderCreate = null, $checkFolderName = true, $copyChilds = true, $checkUserRights = true )
 		{
 			global $_cmQuotaManager;
 

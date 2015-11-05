@@ -9,54 +9,71 @@
     
     class MakeXLS
     {
-        const EXTENSION   = '.xls';
-        public $filename  = 'report';
-        private $_headers = array();
-        private $_rows    = array();
-        private $_content = '';
+        const   EXTENSION  = '.xls';
+        private $_filename = 'report';
+        private $_headers  = array();
+        private $_rows     = array();
+        private $_row;
+        private $_col;
+        private $_content  = '';
 
-        public function __construct(array $headers, array $rows)
+        public function __construct(array $headers, array $rows, $title = '')
         {
             $this->_headers = $headers;
             $this->_rows    = $rows;
             $this->_content = $this->_xlsBOF();
 
-            $colnumber = 0;
+            $this->_col = 0;
             
             foreach ($this->_headers as $header => $name) {
-                
-                $this->_content .= $this->_xlsWriteLabel(0, $colnumber, $name);
-                $rownumber = 0;
+
+                $this->_row = 0;
+                $this->_content .= $this->_xlsWriteLabel($name);
                 
                 foreach ($this->_rows as $row) {
-                    $rownumber++;
-                    $this->_content .= $this->_xlsWriteLabel($rownumber, $colnumber, $row[$header]);
+                    $this->_row++;
+                    $this->_content .= $this->_xlsWriteLabel($row[$header]);
                 }
                 
-                $colnumber++;
+                $this->_col++;
             }
 
             $this->_content .= $this->_xlsEOF();
             
-            $filename = $this->filename.self::EXTENSION;
+            if ($title) {
+                $this->_fileTitle($title);
+            }
+            
+            $filename = $this->_filename.self::EXTENSION;
             $handle = fopen($filename, 'a');
             fwrite($handle, $this->_content);
             fclose($handle);
-            $filename = $this->_translitCyr($filename);
-
 
             if ($this->_content) {
                 header('Content-Type: application/xls');
                 header("Content-Disposition: attachment; filename=$filename");
+                header("Content-Transfer-Encoding: binary ");
                 readfile($filename);
             }
         }
 
         protected function __destruct()
         {
-            unlink($this->filename.self::EXTENSION);
+            unlink($this->_filename.self::EXTENSION);
         }
-        
+
+        protected function _fileTitle($title)
+        {
+            $result = $this->_translitCyr($title);
+            $result = strtolower(trim($result));
+            $result = str_replace("'", '', $result);
+            $result = preg_replace('#[^a-z0-9_]+#', '-', $result);
+            $result = preg_replace('#\-{2,}#', '-', $result);
+            $result = preg_replace('#(^\-+|\-+$)#D', '', $result);
+            
+            $this->_filename = $result;
+        }
+
         protected function _xlsBOF()
         {
             return pack("ssssss", 0x809, 0x8, 0x0, 0x10, 0x0, 0x0);
@@ -67,22 +84,22 @@
             return pack("ss", 0x0A, 0x00);
         }
 
-        protected function _xlsWriteNumber($Row, $Col, $Value)
+        protected function _xlsWriteNumber($Value)
         {
-            return pack("sssss", 0x203, 14, $Row, $Col, 0x0).pack("d", $Value);
+            return pack("sssss", 0x203, 14, $this->_row, $this->_col, 0x0).pack("d", $Value);
         }
 
-        protected function _xlsWriteLabel($Row, $Col, $Value)
+        protected function _xlsWriteLabel($Value)
         {
             $Value = $this->_utfToWin($Value);
-            $L = strlen($Value);
+            $length = strlen($Value);
 
-            return pack("ssssss", 0x204, 8 + $L, $Row, $Col, 0x0, $L).$Value;
+            return pack("ssssss", 0x204, 8 + $length, $this->_row, $this->_col, 0x0, $length).$Value;
         }
 
-        protected function _utfToWin($p)
+        protected function _utfToWin($string)
         {
-            return iconv('UTF-8', 'WINDOWS-1251//IGNORE', $p);
+            return iconv('UTF-8', 'WINDOWS-1251//IGNORE', $string);
         }
 
         protected function _translitCyr($cyr_str)

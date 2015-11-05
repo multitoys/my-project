@@ -421,7 +421,7 @@
         
         protected function __getExportXLS($headers, $rows)
         {
-            new MakeXLS($headers, $rows);
+            new MakeXLS($headers, $rows, 'Отчёт');
         }
     }
 

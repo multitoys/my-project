@@ -423,7 +423,7 @@
         {
             $replace = array(' ', 'AND');
             $date = date('d-m-Y', time());
-            new MakeXLS($headers, $rows, str_replace($replace, '-', $this->competitor.'-'.$this->manufactured.'-'.$this->brand.'-'.$this->category).'-'.$date);
+            new MakeXLS($headers, $rows, str_replace($replace, '-', $this->competitor.'-'.xEscapeSQLstring($_GET['manufactured'].'-'.$this->brand.'-'.$this->category).'-'.$date);
         }
     }
 

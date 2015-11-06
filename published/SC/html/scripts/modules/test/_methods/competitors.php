@@ -421,7 +421,9 @@
         
         protected function __getExportXLS($headers, $rows)
         {
-            new MakeXLS($headers, $rows, 'Отчёт');
+            $replace = array(' ', 'AND');
+            $date = date('d-m-Y', time());
+            new MakeXLS($headers, $rows, str_replace($replace, '-', $this->competitor.'-'.$this->manufactured.'-'.$this->brand.'-'.$this->category).'-'.$date);
         }
     }
 

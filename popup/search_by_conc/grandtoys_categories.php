@@ -218,11 +218,11 @@
         ),
 
         'Новинки, Хиты, Акция'    => array(
-            'Новинки' => 'page_size500?new=1',
-            'Хиты'    => 'page_size500?bestseller=1',
-            'Акция'   => 'page_size500?offer=1',
-            '29 октября 2015' => 'shop/news/view/242?page_size=500',
-            '2 ноября 2015' => 'shop/news/view/246?page_size=500'
+            'Новинки'       => 'page_size500?new=1',
+            'Хиты'          => 'page_size500?bestseller=1',
+            'Акция'         => 'page_size500?offer=1',
+            '2 ноября 2015' => 'shop/news/view/246?page_size=500',
+            '4 ноября 2015' => 'shop/news/view/252?page_size=500'
         )
 
         //        'Новинки'    => array(

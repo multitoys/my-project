@@ -89,7 +89,7 @@ TAG
         $part = 0;
         $percent = 0;
         $products_cnt = 1000;
-        $replace_name = array('&laquo;', '&raquo;', '&quot;', '\'', '.', '"');
+        $replace_name = array('&laquo;', '&raquo;', '&rdquo;', '&ldquo;', '&quot;', '&#039;', '\'', '.', '"');
 
         foreach ($categories as $parent => $cats) {
 

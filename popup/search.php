@@ -62,7 +62,7 @@
                 t1.default_picture, t1.slug, t1.brand, t3.filename
                 FROM SC_products t1
                 LEFT JOIN SC_product_pictures t3 ON t1.default_picture = t3.photoID
-                WHERE $enabled (t1.product_code LIKE '%$search%' OR  t1.name_ru LIKE '%$search%' OR  t1.brand LIKE '%$search%')  ORDER BY $order ASC $limit") or die('<ul><li>Мы ничего не нашли...:(</li></ul>');
+                WHERE t1.in_stock>0  AND $enabled (t1.product_code LIKE '%$search%' OR  t1.name_ru LIKE '%$search%' OR  t1.brand LIKE '%$search%')  ORDER BY $order ASC $limit") or die('<ul><li>Мы ничего не нашли...:(</li></ul>');
 
     if (mysql_num_rows($query) > 0) {
         echo $all_res;

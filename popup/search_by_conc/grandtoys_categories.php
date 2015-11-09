@@ -47,13 +47,13 @@
             'Музыкальные'                    => '1135-Muzikalnie',
             'Размер см более 50'             => '158-Razmer-sm-bolee-50',
             'Размер см от 19 до 30'          => '156-Razmer-sm-ot-19-do-30',
-//            'Размер см от 30 до 50'          => '157-Razmer-sm-ot-30-do-50',
+            'Размер см от 30 до 50' => '157-Razmer-sm-ot-30-do-50',
             'Сердца, подушки,маски'          => '161-Serdca-podushki'
         ),
 
         'Настольные игры'         => array(
+            'Спортивные' => '564-Cportivnie',
             'Домино и шахматы'      => '383-Domino-i-shahmati',
-            'Игры на магнитах'      => '798-Igri--na-magnitah',
             'Игры с наклейками'     => '794-Igri--s-nakleikami',
             'Логические'            => '739-Logicheskie',
             'ЛотоДомино'            => '740-LotoDomino',
@@ -70,6 +70,7 @@
             'Головоломки'                    => '350-Golovolomki',
             'Деревянные развивающие игрушки' => '351-Derevyannie-razvivayuschie-igrushki',
             'Доски для рисования,магнитные'  => '392-Doski-drisovaniya',
+            'Игры Yo-Yo, юла, колечки, калейдоскопы, радуги' => '369-Igri-Yo-Yo-yula-kolechki-kaleidoskopi-radugi-svetyashki',
             'Компьютеры, ноутбуки, планшеты' => '356-Kompyutera-noutbuki-plansheti',
             'Кубики'                         => '419-Kubiki',
             'Мозаики'                        => '406-Mozaiki',
@@ -78,6 +79,7 @@
             'Оптические приборы'             => '762-Opticheskie-pribori',
             'Сборные модели'                 => '345-Sbornie-modeli',
             'Творчество'                     => '409-Tvorchestvo',
+            'Тетрисы, электронные игры'                      => '421-Tetrisi-elektronnie-igri',
             'Фомовые развивающие игрушки'    => '393-Fomovie-razvivayuschie-igrushki'
         ),
 
@@ -91,9 +93,11 @@
         'Товары для девочек'      => array(
             'Бижутерия, бисер, украшения, косметика,веера' => '397-Bizhuteriya-biser-ukrasheniya-kosmetika',
             'Герои'                                        => '548-Geroi',
+            'Докторские наборы' => '382-Doktora',
             'Дома, мебель для Барби'                       => '352-Doma-mebel-dBarbi',
             'Кареты, пони, лошади'                         => '378-Kareti-poni-loshadi',
             'Коляски,кроватки'                             => '40-Kolyaski',
+            'Копилки, часы'     => '420-Kopilki-chasi',
             'Кукла Ever After High'                        => '1072-Ever-After-High',
             'Кукла Monster High'                           => '394-Kukla-Monster-High',
             'Кукла Winx'                                   => '275-Kukla-Winx',
@@ -104,25 +108,25 @@
             'Куклы интерактивные'                          => '1132-Kukli-interaktivnie',
             'Одежда для кукол и пупсов'                    => '416-Odezhda-dlya-kukol-i-pupsov',
             'Посуда, кухни, быт.приборы,овощи-фрукты'      => '360-Posuda-kuhni-bitpriboriovoschi-frukti',
-//            'Пупсы BABY BORN'                              => '417-Pupsi-BABY-BORN',
+            'Пупсы BABY BORN'   => '417-Pupsi-BABY-BORN',
             'Столики кухонные, туалетные'                  => '363-Stoliki-kuhonnie-tualetnie-doktora-instrumentalnie'
         ),
 
         'Товары для детей'        => array(
             'Аксессуары для детей'                                  => '1094-Aksessuari-dlya-detei',
-            'Докторские наборы'                                     => '382-Doktora',
+            //            'Докторские наборы'                                     => '382-Doktora',
             'Животные'                                              => '44-Zhivotnie',
             'Заводные и музыкальные игрушки'                        => '411-Zavodnie-igrushki-krutie-bobi-muzikalnie',
             'Игровые центры'                                        => '1129-Kukla-Defa-Lucy',
-            'Игры Yo-Yo, юла, колечки, калейдоскопы, радуги'        => '369-Igri-Yo-Yo-yula-kolechki-kaleidoskopi-radugi-svetyashki',
+            //            'Игры Yo-Yo, юла, колечки, калейдоскопы, радуги'        => '369-Igri-Yo-Yo-yula-kolechki-kaleidoskopi-radugi-svetyashki',
             'Интерактивные игрушки'                                 => '368-Govoryaschie-homyaki-i-koti-Tomi',
             'Карусели на кроватку'                                  => '354-Karuseli-na-krovatku-mobili',
             'Каталки'                                               => '370-Katalki',
             'Коврики мягкие,музыкальные,для рисования'              => '355-Kovriki-myagkie-i-muzikalnie',
-            'Копилки, часы'                                         => '420-Kopilki-chasi',
+            //            'Копилки, часы'                                         => '420-Kopilki-chasi',
             'Молоточки'                                             => '381-Molotochki',
             'Музыкальные инструменты'                               => '366-Muzikalnie-instrumenti',
-            'Мыльные пузыри'                                        => '532-Milnie-puziri',
+            //            'Мыльные пузыри'                                        => '532-Milnie-puziri',
             'Мячики-попрыгунчики резиновые, с наполнителем, лизуны' => '398-Priguni-rezinovie-s-napolnitelem-lizuni',
             'Ночники,светильники,проекторы'                         => '1137-Nochnikisvetilnikiproektori',
             'Палатки, корзины для игрушек'                          => '414-Palatki-korzini-dlya-igrushek',
@@ -132,7 +136,7 @@
             'Рыбалки'                                               => '361-Ribalki',
             'Светящиеся игрушки'                                    => '62-Svetyaschiesya-igrushki',
             'Телефоны, фотоаппараты'                                => '410-Telefoni-fotoapparati',
-            'Тетрисы, электронные игры'                             => '421-Tetrisi-elektronnie-igri',
+            //            'Тетрисы, электронные игры'                             => '421-Tetrisi-elektronnie-igri',
             'Ходунки, кровати, стулья для кормления'                => '389-Hodunki-krovati-stulya-dkormleniya'
         ),
 
@@ -157,6 +161,7 @@
             'Конструкторы'                  => '553-Konstruktori',
             'Кроватки, коляски'             => '1028-Krovatki-kolyaski',
             'Кубики, шарики, кегли'         => '555-Kubiki-shariki',
+            'Кукольные театры' => '1153-Kukolnie-teatri',
             'Кухни, посуда,корзины,маркеты' => '554-Kuhni-posuda',
             'Логические игры'               => '557-Logicheskie-igri',
             'Машинки'                       => '563-Mashinki',
@@ -213,7 +218,7 @@
 
         'Сувенирная продукция'    => array(
             'Небесные фонарики' => '1136-Nebesnie-fonariki',
-            'Открытки'          => '1078-Otkritki',
+            //            'Открытки'          => '1078-Otkritki',
             'Подарочные пакеты' => '1139-Podarochnie-paketi'
         ),
 
@@ -221,8 +226,7 @@
             'Новинки'       => 'page_size500?new=1',
             'Хиты'          => 'page_size500?bestseller=1',
             'Акция'         => 'page_size500?offer=1',
-            '2 ноября 2015' => 'shop/news/view/246?page_size=500',
-            '4 ноября 2015' => 'shop/news/view/252?page_size=500'
+            '7 ноября 2015' => 'shop/news/view/256?page_size=500'
         )
 
         //        'Новинки'    => array(

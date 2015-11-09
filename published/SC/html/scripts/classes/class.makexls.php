@@ -22,23 +22,37 @@
             $this->_headers = $headers;
             $this->_rows    = $rows;
             $this->_content = $this->_xlsBOF();
+//            $this->_content = $this->_storeBof();
 
             $this->_col = 0;
-            
+
+            $labels = array(
+                'code_1c',
+                'product_code',
+                'name_ru'
+            );
+                
             foreach ($this->_headers as $header => $name) {
 
                 $this->_row = 0;
                 $this->_content .= $this->_xlsWriteLabel($name);
                 
                 foreach ($this->_rows as $row) {
+
                     $this->_row++;
-                    $this->_content .= $this->_xlsWriteLabel($row[$header]);
+
+                    if (in_array($header, $labels)) {
+                        $this->_content .= $this->_xlsWriteLabel($row[$header]);
+                    } else {
+                        $this->_content .= $this->_xlsWriteNumber($row[$header]);
+                    }
                 }
                 
                 $this->_col++;
             }
 
             $this->_content .= $this->_xlsEOF();
+//            $this->_content .= $this->_storeEof();
             
             if ($title) {
                 $this->_fileTitle($title);
@@ -79,14 +93,51 @@
             return pack("ssssss", 0x809, 0x8, 0x0, 0x10, 0x0, 0x0);
         }
 
+        /**
+         * Writes Excel BOF record to indicate the beginning of a stream or
+         * sub-stream in the BIFF file.
+         *
+         * @param  integer $type Type of BIFF file to write: 0x0005 Workbook,
+         *                       0x0010 Worksheet.
+         * @access private
+         */
+        protected function _storeBof($type = '0x0005')
+        {
+            $record = 0x0809;            // Record identifier	(BIFF5-BIFF8)
+            $length = 0x0010;
+
+            // by inspection of real files, MS Office Excel 2007 writes the following
+            $unknown = pack("VV", 0x000100D1, 0x00000406);
+
+            $build = 0x0DBB;            //	Excel 97
+            $year = 0x07CC;            //	Excel 97
+
+            $version = 0x0600;            //	BIFF8
+
+            $header = pack("vv", $record, $length);
+            $data = pack("vvvv", $version, $type, $build, $year);
+
+            return $header . $data . $unknown;
+        }
+        
         protected function _xlsEOF()
         {
             return pack("ss", 0x0A, 0x00);
         }
 
+        protected function _storeEof()
+        {
+            $record = 0x000A;   // Record identifier
+            $length = 0x0000;   // Number of bytes to follow
+
+            $header = pack("vv", $record, $length);
+
+            return $header;
+        }
+        
         protected function _xlsWriteNumber($Value)
         {
-            return pack("sssss", 0x203, 14, $this->_row, $this->_col, 0x0).pack("d", $Value);
+            return pack("sssss", 0x203, 14, $this->_row, $this->_col, 0x0) . pack("d", (float)$Value);
         }
 
         protected function _xlsWriteLabel($Value)

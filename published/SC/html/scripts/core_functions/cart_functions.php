@@ -61,10 +61,11 @@
     function SearchConfigurationInDataBase($variants, $productID)
 
     {
-
+        $customerID = (int)$_SESSION['cs_id'];
+        
         $q = db_query("SELECT itemID FROM ".SHOPPING_CARTS_TABLE.
 
-                      " WHERE customerID='".regGetIdByLogin($_SESSION["log"])."'");
+                      " WHERE customerID='".$customerID."'");
 
         while ($r = db_fetch_row($q)) {
 
@@ -133,12 +134,12 @@
     function InsertItemIntoCart($itemID)
 
     {
-
+        $customerID = (int)$_SESSION['cs_id'];
         db_query("insert ".SHOPPING_CARTS_TABLE.
 
                  "(customerID, itemID, Quantity)".
 
-                 "values( '".$_SESSION["cs_id"]."', '".$itemID."', 1 )");
+                 "values( '".$customerID."', '".$itemID."', 1 )");
     }
 
     function GetStrOptions($variants)
@@ -264,32 +265,20 @@
     function cartClearCartContet($mode = 'succes')
     {
 
-        $customerEntry = Customer::getAuthedInstance();
+        $customerID = (int)$_SESSION['cs_id'];
 
-        if (!is_null($customerEntry)) {
+        if (!is_null($customerID)) {
             if ($mode == 'erase') {
-                $itemIDs = db_phquery_fetch(DBRFETCH_FIRST_ALL, 'SELECT itemID FROM ?#SHOPPING_CARTS_TABLE WHERE customerID=?', $customerEntry->customerID);
+                $itemIDs = db_phquery_fetch(DBRFETCH_FIRST_ALL, 'SELECT itemID FROM ?#SHOPPING_CARTS_TABLE WHERE customerID=?', $customerID);
                 if (is_array($itemIDs) && count($itemIDs)) {
                     db_phquery("DELETE FROM ?#SHOPPING_CART_ITEMS_CONTENT_TABLE WHERE itemID IN (?@)", $itemIDs);
                     db_phquery("DELETE FROM ?#SHOPPING_CART_ITEMS_TABLE WHERE itemID IN (?@)", $itemIDs);
                 }
             }
             if ($mode != 'recalculate')
-                db_phquery("DELETE FROM ?#SHOPPING_CARTS_TABLE WHERE customerID=?", $customerEntry->customerID);
+                db_phquery("DELETE FROM ?#SHOPPING_CARTS_TABLE WHERE customerID=?", $customerID);
             else
-                db_phquery("UPDATE ?#SHOPPING_CARTS_TABLE SET Quantity=0 WHERE customerID=?", $customerEntry->customerID);
-        } else {
-            if ($mode == 'recalculate' && isset($_SESSION["counts"]) && is_array($_SESSION["counts"])) {
-                $i = 0;
-                foreach ($_SESSION["counts"] as $counts) {
-                    $_SESSION["counts"][$i++] = 0;
-                }
-            } else {
-                unset($_SESSION["gids"], $_SESSION["counts"], $_SESSION["configurations"]);
-                // session_unregister("gids"); //calling session_unregister() is required since unset() may not work on some systems
-                // session_unregister("counts");
-                // session_unregister("configurations");
-            }
+                db_phquery("UPDATE ?#SHOPPING_CARTS_TABLE SET Quantity=0 WHERE customerID=?", $customerID);
         }
     }
 
@@ -305,13 +294,13 @@
         $variants = '';
 
         $currencyEntry = Currency::getSelectedCurrencyInstance();
-        $customerEntry = Customer::getAuthedInstance();
+        $customerID = (int)$_SESSION['cs_id'];
 
         //if(!is_null($customerEntry)){//get cart content from the database
         //$query         = "SELECT skidka FROM SC_customers WHERE customerID = $customerEntry->customerID";
         //$skidka        = mysql_fetch_object(mysql_query($query))->skidka;
 
-        if (isset($_SESSION['log'])) {
+        if (isset($customerID)) {
 
             $skidka = (int)$_SESSION['cs_skidka'];
 
@@ -343,7 +332,7 @@
 				LEFT JOIN ?#SHOPPING_CART_ITEMS_TABLE t2 ON t1.itemID=t2.itemID
 				LEFT JOIN ?#PRODUCTS_TABLE t3 ON t2.productID=t3.productID
 				LEFT JOIN ?#PRODUCT_PICTURES t4 ON t3.default_picture=t4.photoID
-			WHERE customerID=? ORDER BY '.$sort_field.' '.$direction, $_SESSION['cs_id']);
+			WHERE customerID=? ORDER BY '.$sort_field.' '.$direction, $customerID);
 
             while ($cart_item = db_fetch_assoc($q)) {
 
@@ -397,102 +386,6 @@
 
                 $cart_content[] = $tmp;
             }
-        } else { //unauthorized user - get cart from session vars
-
-            $total_price = 0; //total cart value
-            $cart_content = array();
-
-            //shopping cart items count
-
-            if (isset($_SESSION['gids']))
-
-                for ($j = 0; $j < count($_SESSION['gids']); $j++) {
-
-                    if ($_SESSION['gids'][$j]) {
-
-                        $session_items[] = CodeItemInClient($_SESSION['configurations'][$j], $_SESSION['gids'][$j]);
-
-                        $q = db_phquery("SELECT t1.*, p1.thumbnail FROM ?#PRODUCTS_TABLE t1 LEFT JOIN ?#PRODUCT_PICTURES p1 ON t1.default_picture=p1.photoID WHERE t1.productID=?", $_SESSION['gids'][$j]);
-
-                        if ($r = db_fetch_row($q)) {
-
-                            LanguagesManager::ml_fillFields(PRODUCTS_TABLE, $r);
-
-                            $costUC = GetPriceProductWithOption(
-
-                                $_SESSION['configurations'][$j],
-
-                                $_SESSION['gids'][$j])/* * $_SESSION["counts"][$j]*/
-                            ;
-
-                            $id = $_SESSION['gids'][$j];
-
-                            if (count($_SESSION['configurations'][$j]) > 0) {
-
-                                for ($tmp1 = 0; $tmp1 < count($_SESSION['configurations'][$j]); $tmp1++) $id .= '_'.$_SESSION['configurations'][$j][$tmp1];
-                            }
-
-                            $tmp = array(
-
-                                'productID'         => $_SESSION['gids'][$j],
-
-                                'slug'              => $r['slug'],
-
-                                'id'                => $id, //$_SESSION['gids'][$j],
-
-                                'name'              => $r['name'],
-
-                                'thumbnail_url'     => $r['thumbnail'] && file_exists(DIR_PRODUCTS_PICTURES.'/'.$r['thumbnail'])?URL_PRODUCTS_PICTURES.'/'.$r['thumbnail']:'',
-
-                                'brief_description' => $r['brief_description'],
-
-                                'quantity'          => $_SESSION['counts'][$j],
-
-                                'free_shipping'     => $r['free_shipping'],
-
-                                'costUC'            => $costUC,
-
-                                'cost'              => show_price($costUC * $_SESSION['counts'][$j])
-
-                            );
-
-                            if ($tmp['thumbnail_url']) {
-
-                                list($thumb_width, $thumb_height) = getimagesize(DIR_PRODUCTS_PICTURES.'/'.$r['thumbnail']);
-
-                                list($tmp['thumbnail_width'], $tmp['thumbnail_height']) = shrink_size($thumb_width, $thumb_height, round(CONF_PRDPICT_THUMBNAIL_SIZE / 2), round(CONF_PRDPICT_THUMBNAIL_SIZE / 2));
-                            }
-
-                            $strOptions = GetStrOptions($_SESSION['configurations'][$j]);
-
-                            if (trim($strOptions) !== '')
-
-                                $tmp['name'] .= "  (".$strOptions.")";
-
-                            $q_product = db_query("SELECT min_order_amount, shipping_freight FROM ".PRODUCTS_TABLE.
-
-                                                  " WHERE productID=".
-
-                                                  $_SESSION['gids'][$j]);
-
-                            $product = db_fetch_row($q_product);
-
-                            if ($product['min_order_amount'] > $_SESSION['counts'][$j])
-
-                                $tmp['min_order_amount'] = $product['min_order_amount'];
-
-                            $freight_cost += $_SESSION['counts'][$j] * $product['shipping_freight'];
-
-                            $cart_content[] = $tmp;
-
-                            $total_price += GetPriceProductWithOption(
-
-                                                $_SESSION['configurations'][$j],
-
-                                                $_SESSION['gids'][$j]) * $_SESSION['counts'][$j];
-                        }
-                    }
-                }
         }
 
         return array(
@@ -559,29 +452,15 @@
 
     function cartMinimizeCart()
     {
-        //if (/*!isset($_SESSION["log"])*/true){
-        $customerEntry = Customer::getAuthedInstance();
-        //print ":D";exit;
-        if ($customerEntry) {
-            $itemIDs = db_phquery_fetch(DBRFETCH_FIRST_ALL, 'SELECT itemID FROM ?#SHOPPING_CARTS_TABLE WHERE Quantity=0 AND customerID=?', $customerEntry->customerID);
+        $customerID = (int)$_SESSION['cs_id'];
+
+        if ($customerID) {
+            $itemIDs = db_phquery_fetch(DBRFETCH_FIRST_ALL, 'SELECT itemID FROM ?#SHOPPING_CARTS_TABLE WHERE Quantity=0 AND customerID=?', $customerID);
             if (is_array($itemIDs) && count($itemIDs)) {
                 db_phquery("DELETE FROM ?#SHOPPING_CART_ITEMS_CONTENT_TABLE WHERE itemID IN (?@)", $itemIDs);
                 db_phquery("DELETE FROM ?#SHOPPING_CART_ITEMS_TABLE WHERE itemID IN (?@)", $itemIDs);
             }
-            db_phquery("DELETE FROM ?#SHOPPING_CARTS_TABLE WHERE Quantity=0 AND customerID=?", $customerEntry->customerID);
-        } else {
-            if (isset($_SESSION["counts"]) && is_array($_SESSION["counts"])) {
-                $counts_counts = count($_SESSION["counts"]);
-                for ($i = 0; $i < $counts_counts;) {
-                    if ($_SESSION["counts"][$i] == 0) {
-                        array_splice($_SESSION["gids"], $i, 1);
-                        array_splice($_SESSION["counts"], $i, 1);
-                        array_splice($_SESSION["configurations"], $i, 1);
-                    } else {
-                        $i++;
-                    }
-                }
-            }
+            db_phquery("DELETE FROM ?#SHOPPING_CARTS_TABLE WHERE Quantity=0 AND customerID=?", $customerID);
         }
     }
 
@@ -612,59 +491,20 @@
 
         //$min_order_amount = db_phquery_fetch(DBRFETCH_FIRST, "SELECT min_order_amount FROM ?#PRODUCTS_TABLE WHERE productID=?", $productID );
 
-        if (!isset($_SESSION['log'])) { //save shopping cart in the session variables
-            if (!isset($_SESSION['gids'])) {
-                $_SESSION['gids'] = array();
-                $_SESSION['counts'] = array();
-                $_SESSION['configurations'] = array();
-            }
-
-            //check for current item in the current shopping cart content
-            $item_index = SearchConfigurationInSessionVariable($variants, $productID);
-            if ($item_index != -1) { //increase current product's quantity
-                /*if($_SESSION["counts"][$item_index]+$qty<$min_order_amount){
-                $qty=$min_order_amount-$_SESSION["counts"][$item_index];
-                }*/
-                //$qty = max($qty,$min_order_amount - $_SESSION["counts"][$item_index],0);
-                if (CONF_CHECKSTOCK != 0) {
-                    $qty = min($qty, $is - $_SESSION['counts'][$item_index]);
-                }
-                $qty = max($qty, 0);
-                if (CONF_CHECKSTOCK == 0 || (($_SESSION['counts'][$item_index] + $qty <= $is) && $is && $qty)) {
-                    $_SESSION['counts'][$item_index] += $qty;
-                } else {
-                    return $_SESSION['counts'][$item_index];
-                }
-            } else { //no item - add it to $gids array
-                $qty = max($qty, $min_order_amount, 0);
-                if (CONF_CHECKSTOCK != 0) {
-                    $qty = min($qty, $is);
-                }
-                $qty = max($qty, 0);
-
-                if (CONF_CHECKSTOCK == 0 || ($is >= $qty && $qty)) {
-                    $_SESSION['gids'][] = $productID;
-                    $_SESSION['counts'][] = $qty;
-                    $_SESSION['configurations'][] = $variants;
-                    cartUpdateAddCounter($productID);
-                } else {
-                    return 0;
-                }
-            }
-        } else { //authorized customer - get cart from database
+        if (isset($_SESSION['log'])) { //authorized customer - get cart from database
 
             $itemID = SearchConfigurationInDataBase($variants, $productID);
-            $customerEntry = Customer::getAuthedInstance();
-            if (is_null($customerEntry)) return false;
+            $customerID = (int)$_SESSION['cs_id'];
+            if (is_null($customerID)) return false;
 
             if ($itemID != -1) { // if this configuration exists in database
-                $quantity = db_phquery_fetch(DBRFETCH_FIRST, "SELECT Quantity FROM ?#SHOPPING_CARTS_TABLE WHERE customerID=? AND itemID=?", $customerEntry->customerID, $itemID);
+                $quantity = db_phquery_fetch(DBRFETCH_FIRST, "SELECT Quantity FROM ?#SHOPPING_CARTS_TABLE WHERE customerID=? AND itemID=?", $customerID, $itemID);
                 if (CONF_CHECKSTOCK != 0) {
                     $qty = min($qty, $is - $quantity);
                 }
                 $qty = max($qty, 0);
                 if (CONF_CHECKSTOCK == 0 || ($quantity + $qty <= $is && $is)) {
-                    db_phquery("UPDATE ?#SHOPPING_CARTS_TABLE SET Quantity=Quantity+? WHERE customerID=? AND itemID=?", $qty, $customerEntry->customerID, $itemID);
+                    db_phquery("UPDATE ?#SHOPPING_CARTS_TABLE SET Quantity=Quantity+? WHERE customerID=? AND itemID=?", $qty, $customerID, $itemID);
                 } else {
                     return $quantity;
                 }
@@ -678,7 +518,7 @@
                     $itemID = InsertNewItem($variants, $productID);
                     InsertItemIntoCart($itemID);
                     db_phquery("UPDATE ?#SHOPPING_CARTS_TABLE SET Quantity=Quantity+? WHERE customerID=? AND itemID=?",
-                               $qty - 1, $customerEntry->customerID, $itemID);
+                               $qty - 1, $customerID, $itemID);
                     cartUpdateAddCounter($productID);
                 } else {
                     return 0;

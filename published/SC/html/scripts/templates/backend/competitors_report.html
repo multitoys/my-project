@@ -216,12 +216,9 @@
 
             <div id=selections>
                 <div>
-                    <label for="competitor" style="color: #FF0000">Сравнить с: </label>
+                    <label for="competitor" style="color: #FF0000">Конкуренты: </label>
                     <select name="competitor" style="width:196px;" id="competitor">
                         <option value='all'      {if $smarty.get.competitor eq 'all'} selected="selected"{/if}>Все конкуренты</option>
-                        <option value='kindermarket' {if $smarty.get.competitor eq 'kindermarket'} selected="selected"{/if}>
-                            Киндер-Маркет
-                        </option>
                         <option value='divoland' {if $smarty.get.competitor eq 'divoland'} selected="selected"{/if}>
                             Диволенд
                         </option>
@@ -233,6 +230,9 @@
                         </option>
                         <option value='grandtoys' {if $smarty.get.competitor eq 'grandtoys'} selected="selected"{/if}>
                             ГрандТойс
+                        </option>
+                        <option value='kindermarket' {if $smarty.get.competitor eq 'kindermarket'} selected="selected"{/if}>
+                            Киндер-Маркет
                         </option>
                     </select>
                 </div>
@@ -296,7 +296,6 @@
                 {include file="backend/gridheader.tpl.html"}
             </tr>
             {section name=i loop=$GridRows}
-                {*{assign var=customer_url value="did=&ukey=user_info&userID=`$GridRows[i].customerID`"|set_query_html}*}
                 <tr class="{cycle values="odd,even"}">
                     <td class="to_right">{$GridRows[i].num}.</td>
                     <td>{$GridRows[i].code_1c}</td>
@@ -322,10 +321,6 @@
                     {elseif $smarty.get.competitor eq 'grandtoys'}
                         <td class="to_right border {if $GridRows[i].diff_grandtoys > 0}red{else}green{/if}">{$GridRows[i].grandtoys}</td>
                         <td class="to_right {if $GridRows[i].diff_grandtoys > 0}red{else}green{/if}">{$GridRows[i].diff_grandtoys}%</td>
-                        {*<td class="to_right border {if $GridRows[i].diff_grandtoys2 > 0}red{else}green{/if}">{$GridRows[i].grandtoys2}</td>*}
-                        {*<td class="to_right {if $GridRows[i].diff_grandtoys2 > 0}red{else}green{/if}">{$GridRows[i].diff_grandtoys2}</td>*}
-                        {*<td class="to_right border {if $GridRows[i].diff_grandtoys3 > 0}red{else}green{/if}">{$GridRows[i].grandtoys3}</td>*}
-                        {*<td class="to_right {if $GridRows[i].diff_grandtoys3 > 0}red{else}green{/if}">{$GridRows[i].diff_grandtoys3}</td>*}
                     {elseif $smarty.get.competitor eq 'kindermarket'}
                         <td class="to_right border {if $GridRows[i].diff_kindermarket > 0}red{else}green{/if}">{$GridRows[i].kindermarket}</td>
                         <td class="to_right {if $GridRows[i].diff_kindermarket > 0}red{else}green{/if}">{$GridRows[i].diff_kindermarket}%</td>
@@ -338,10 +333,6 @@
                         <td class="to_right {if $GridRows[i].diff_mixtoys > 0}red{else}green{/if}">{$GridRows[i].diff_mixtoys}%</td>
                         <td class="to_right border {if $GridRows[i].diff_grandtoys > 0}red{else}green{/if}">{$GridRows[i].grandtoys}</td>
                         <td class="to_right {if $GridRows[i].diff_grandtoys > 0}red{else}green{/if}">{$GridRows[i].diff_grandtoys}%</td>
-                        {*<td class="to_right border {if $GridRows[i].diff_grandtoys2 > 0}red{else}green{/if}">{$GridRows[i].grandtoys2}</td>*}
-                        {*<td class="to_right {if $GridRows[i].diff_grandtoys2 > 0}red{else}green{/if}">{$GridRows[i].diff_grandtoys2}</td>*}
-                        {*<td class="to_right border {if $GridRows[i].diff_grandtoys3 > 0}red{else}green{/if}">{$GridRows[i].grandtoys3}</td>*}
-                        {*<td class="to_right {if $GridRows[i].diff_grandtoys3 > 0}red{else}green{/if}">{$GridRows[i].diff_grandtoys3}</td>*}
                         <td class="to_right border {if $GridRows[i].diff_kindermarket > 0}red{else}green{/if}">{$GridRows[i].kindermarket}</td>
                         <td class="to_right {if $GridRows[i].diff_kindermarket > 0}red{else}green{/if}">{$GridRows[i].diff_kindermarket}%</td>
                     {/if}

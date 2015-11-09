@@ -149,10 +149,6 @@
                 case 'grandtoys':
                     $grid->registerHeader('Г.-Тойс', 'grandtoys', false, 'ASC', 'right');
                     $grid->registerHeader('раз-ца', 'diff_grandtoys', false, 'ASC', 'right');
-//                    $grid->registerHeader('Г.-Тойс-2', 'grandtoys2', false, 'ASC', 'right');
-//                    $grid->registerHeader('раз-ца', 'diff_grandtoys2', false, 'ASC', 'right');
-//                    $grid->registerHeader('Г.-Тойс-3', 'grandtoys3', false, 'ASC', 'right');
-//                    $grid->registerHeader('раз-ца', 'diff_grandtoys3', false, 'ASC', 'right');
                     break;
                 case 'kindermarket':
                     $grid->registerHeader('К.-Маркет', 'kindermarket', false, 'ASC', 'right');
@@ -167,10 +163,6 @@
                     $grid->registerHeader('раз-ца', 'diff_grandtoys', false, 'ASC', 'right');
                     $grid->registerHeader('Г.Тойс', 'grandtoys', false, 'ASC', 'right');
                     $grid->registerHeader('раз-ца', 'diff_grandtoys', false, 'ASC', 'right');
-//                    $grid->registerHeader('Г.-Тойс-2', 'grandtoys2', false, 'ASC', 'right');
-//                    $grid->registerHeader('раз-ца', 'diff_grandtoys2', false, 'ASC', 'right');
-//                    $grid->registerHeader('Г.-Тойс-3', 'grandtoys3', false, 'ASC', 'right');
-//                    $grid->registerHeader('раз-ца', 'diff_grandtoys3', false, 'ASC', 'right');
                     $grid->registerHeader('К.-Маркет', 'kindermarket', false, 'ASC', 'right');
                     $grid->registerHeader('раз-ца', 'diff_kindermarket', false, 'ASC', 'right');
             }
@@ -186,37 +178,28 @@
                 $rows[$k]['purchase'] = $rows[$k][$this->currency.'purchase'];
                 $rows[$k]['Price'] = $this->__priceDiscount($rows[$k][$this->currency.'Price'], $rows[$k]['ukraine'], $this->disc_usd, $this->disc_ua);
 
-//                if ($this->conc !== 'grandtoys') {
-//                    $rows[$k]['margin'] .= '%';
-//                    $rows[$k]['max_diff'] = ($rows[$k]['max_diff'] > 0)?$rows[$k]['max_diff'].'%':'';
-//                }
-
                 $rows[$k]['divoland'] = (is_null($rows[$k][$this->currency.'divoland'])) ? '-----' : $this->__priceConc($rows[$k][$this->currency.'divoland']);
                 $rows[$k]['diff_divoland'] = ($rows[$k]['divoland'] === '-----') ? '-----' : $rows[$k]['diff_divoland'];
+
                 $rows[$k]['dreamtoys'] = (is_null($rows[$k][$this->currency.'dreamtoys'])) ? '-----' : $this->__priceConc($rows[$k][$this->currency.'dreamtoys']);
                 $rows[$k]['diff_dreamtoys'] = ($rows[$k]['dreamtoys'] === '-----') ? '-----' : $rows[$k]['diff_dreamtoys'];
+
                 $rows[$k]['mixtoys'] = (is_null($rows[$k][$this->currency.'mixtoys'])) ? '-----' : $this->__priceConc($rows[$k][$this->currency.'mixtoys']);
                 $rows[$k]['diff_mixtoys'] = ($rows[$k]['mixtoys'] === '-----') ? '-----' : $rows[$k]['diff_mixtoys'];
+
                 $rows[$k]['grandtoys'] = (is_null($rows[$k][$this->currency.'grandtoys'])) ? '-----' : $this->__priceConc($rows[$k][$this->currency.'grandtoys']);
                 $rows[$k]['diff_grandtoys'] = ($rows[$k]['grandtoys'] === '-----') ? '-----' : $rows[$k]['diff_grandtoys'];
-//                $rows[$k]['grandtoys2'] = (is_null($rows[$k][$this->currency.'grandtoys2'])) ? '-----' : $this->__priceConc($rows[$k][$this->currency.'grandtoys2']);
-//                $rows[$k]['diff_grandtoys2'] = ($rows[$k]['grandtoys2'] === '-----') ? '-----' : $rows[$k]['diff_grandtoys2'].'%';
-//                $rows[$k]['grandtoys3'] = (is_null($rows[$k][$this->currency.'grandtoys3'])) ? '-----' : $this->__priceConc($rows[$k][$this->currency.'grandtoys3']);
-//                $rows[$k]['diff_grandtoys3'] = ($rows[$k]['grandtoys3'] === '-----') ? '-----' : $rows[$k]['diff_grandtoys3'].'%';
+
                 $rows[$k]['kindermarket'] = (is_null($rows[$k][$this->currency.'kindermarket'])) ? '-----' : $this->__priceConc($rows[$k][$this->currency.'kindermarket']);
                 $rows[$k]['diff_kindermarket'] = ($rows[$k]['kindermarket'] === '-----') ? '-----' : $rows[$k]['diff_kindermarket'];
 
 
                 if ($this->conc) {
 
-//                    if ($this->conc === 'grandtoys') {
-//                        $diff = round(($rows[$k]['Price'] / min($rows[$k]['grandtoys'], $rows[$k]['grandtoys2'], $rows[$k]['grandtoys3']) - 1)*100, 1);
-//                    } else {
-                        $diff = round(($rows[$k]['Price'] / $rows[$k][$this->conc] - 1)*100, 1);
-//                    }
-
+                    $diff = round(($rows[$k]['Price'] / $rows[$k][$this->conc] - 1) * 100, 1);
+                    
                 } else {
-//                    $competitors = array('kindermarket', 'divoland', 'dreamtoys', 'mixtoys', 'grandtoys', 'grandtoys2', 'grandtoys3');
+
                     $competitors = array('kindermarket', 'divoland', 'dreamtoys', 'mixtoys', 'grandtoys');
                     $min = array();
 
@@ -225,14 +208,13 @@
                     }
                     
                     $diff = round(($rows[$k]['Price'] / min(
-                                                           $min['grandtoys'], 
-//                                                           $min['grandtoys2'], 
-//                                                           $min['grandtoys3'], 
-                                                           $min['divoland'], 
-                                                           $min['dreamtoys'], 
-                                                           $min['mixtoys'], 
-                                                           $min['kindermarket']
-                                                           ) - 1) * 100, 1)
+                                          $min['grandtoys'],
+                                          $min['divoland'],
+                                          $min['dreamtoys'],
+                                          $min['mixtoys'],
+                                          $min['kindermarket']
+                                      ) - 1) * 100, 1
+                    )
                     ;
                 }
 
@@ -240,9 +222,11 @@
                 $rows[$k]['max_diff'] = $diff;
 
             }
+
             $count_rows = array('100' => 100, '500' => 500, '1000' => 1000);
 
             if (isset($_GET['export'])) {
+
                 $headers = array(
                     'num'               => '№',
                     'code_1c'           => 'Код 1С',
@@ -262,11 +246,8 @@
                     'diff_kindermarket' => 'раз-ца',
                     'grandtoys'         => 'Г.-Тойс',
                     'diff_grandtoys'    => 'раз-ца'
-//                    'grandtoys2'        => 'Г.-Тойс-2',
-//                    'diff_grandtoys2'   => 'раз-ца',
-//                    'grandtoys3'        => 'Г.-Тойс-3',
-//                    'diff_grandtoys3'   => 'раз-ца'
                 );
+
                 $this->__getExportXLS($headers, $rows);
             }
             
@@ -360,6 +341,7 @@
             while ($row = mysql_fetch_object($res)) {
                 $ids[] = $row->code_1c;
             }
+
             $ids = implode(',', $ids);
 
             $this->bestsellers = ' AND code_1c IN ('.$ids.')';
@@ -376,6 +358,7 @@
             while ($row = mysql_fetch_object($res)) {
                 $ids[] = $row->productID;
             }
+
             $ids = implode(',', $ids);
 
             $this->new_items_postup = ' AND productID IN ('.$ids.')';
@@ -421,6 +404,29 @@
         
         protected function __getExportXLS($headers, $rows)
         {
+            if ($_GET['competitor'] !== 'all') {
+
+                $competitors = array('kindermarket' => 'kindermarket', 'divoland' => 'divoland', 'dreamtoys' => 'dreamtoys', 'mixtoys' => 'mixtoys', 'grandtoys' => 'grandtoys', 'diff_kindermarket' => 'diff_kindermarket', 'diff_divoland' => 'diff_divoland', 'diff_dreamtoys' => 'diff_dreamtoys', 'diff_mixtoys' => 'diff_mixtoys', 'diff_grandtoys' => 'diff_grandtoys');
+
+                $current_competitor = $_GET['competitor'];
+
+                if (in_array($current_competitor, $competitors)) {
+
+                    unset(
+                        $competitors[$current_competitor],
+                        $competitors['diff_'.$current_competitor]
+                    );
+
+                    foreach ($competitors as $competitor) {
+
+                        unset(
+                            $headers[$competitor],
+                            $headers['diff_'.$competitor]
+                        );
+                    }
+                }
+            }
+            
             $replace = array(' ', 'AND', 'category');
             $date = date('d-m-Y', time());
             new MakeXLS($headers, $rows, str_replace($replace, '-', $this->competitor.'-'.xEscapeSQLstring($_GET['manufactured']).'-'.$this->brand.'-'.$this->category).'-'.$date);

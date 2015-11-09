@@ -42,12 +42,12 @@
                     $this->_row++;
 
                     if (in_array($header, $labels)) {
+
                         $this->_content .= $this->_xlsWriteLabel($row[$header]);
                     } else {
                         $this->_content .= $this->_xlsWriteNumber($row[$header]);
                     }
                 }
-                
                 $this->_col++;
             }
 
@@ -64,7 +64,8 @@
             fclose($handle);
 
             if ($this->_content) {
-                header('Content-Type: application/xls');
+                //                header('Content-Type: application/xls');
+                header('Content-Type: application/vnd.ms-excel');
                 header("Content-Disposition: attachment; filename=$filename");
                 header("Content-Transfer-Encoding: binary ");
                 readfile($filename);
@@ -101,42 +102,43 @@
          *                       0x0010 Worksheet.
          * @access private
          */
-        protected function _storeBof($type = '0x0005')
-        {
-            $record = 0x0809;            // Record identifier	(BIFF5-BIFF8)
-            $length = 0x0010;
-
-            // by inspection of real files, MS Office Excel 2007 writes the following
-            $unknown = pack("VV", 0x000100D1, 0x00000406);
-
-            $build = 0x0DBB;            //	Excel 97
-            $year = 0x07CC;            //	Excel 97
-
-            $version = 0x0600;            //	BIFF8
-
-            $header = pack("vv", $record, $length);
-            $data = pack("vvvv", $version, $type, $build, $year);
-
-            return $header . $data . $unknown;
-        }
+        //        protected function _storeBof($type = '0x0005')
+        //        {
+        //            $record = 0x0809;            // Record identifier	(BIFF5-BIFF8)
+        //            $length = 0x0010;
+        //
+        //            // by inspection of real files, MS Office Excel 2007 writes the following
+        //            $unknown = pack("VV", 0x000100D1, 0x00000406);
+        //
+        //            $build = 0x0DBB;            //	Excel 97
+        //            $year = 0x07CC;            //	Excel 97
+        //
+        //            $version = 0x0600;            //	BIFF8
+        //
+        //            $header = pack("vv", $record, $length);
+        //            $data = pack("vvvv", $version, $type, $build, $year);
+        //
+        //            return $header . $data . $unknown;
+        //        }
         
         protected function _xlsEOF()
         {
             return pack("ss", 0x0A, 0x00);
         }
 
-        protected function _storeEof()
-        {
-            $record = 0x000A;   // Record identifier
-            $length = 0x0000;   // Number of bytes to follow
-
-            $header = pack("vv", $record, $length);
-
-            return $header;
-        }
+        //        protected function _storeEof()
+        //        {
+        //            $record = 0x000A;   // Record identifier
+        //            $length = 0x0000;   // Number of bytes to follow
+        //
+        //            $header = pack("vv", $record, $length);
+        //
+        //            return $header;
+        //        }
         
         protected function _xlsWriteNumber($Value)
         {
+            $Value = ($Value === '-----')?0:$Value;
             return pack("sssss", 0x203, 14, $this->_row, $this->_col, 0x0) . pack("d", (float)$Value);
         }
 

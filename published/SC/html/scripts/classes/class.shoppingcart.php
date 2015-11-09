@@ -2,7 +2,6 @@
 
     class ShoppingCart
     {
-
         /**
          * Items in shoppping cart
          *
@@ -23,9 +22,7 @@
 
         function loadCurrentCartFromSession()
         {
-
             $i = 0;
-
             $this->Items = new xmlNodeX('items');
 
             if (!isset($_SESSION['gids']) || !is_array($_SESSION['gids'])) return false;
@@ -60,7 +57,6 @@
 
         function loadCurrentCustomerCart($customerID)
         {
-
             $this->Items = new xmlNodeX('items');
             /**
              * Select all items from SHOPPING_CARTS_TABLE
@@ -69,6 +65,7 @@
 				SELECT itemID, Quantity FROM ?#SHOPPING_CARTS_TABLE WHERE customerID=?
 			';
             $q_items = db_phquery($dbq, $customerID);
+
             while ($item = db_fetch_assoc($q_items)) {
 
                 $productID = GetProductIdByItemId($item['itemID']);
@@ -108,7 +105,6 @@
          */
         function saveToOrderedCarts($orderID, $shipping_info, $billing_info, $calculate_tax = true)
         {
-
             $sql = "DELETE FROM ?#ORDERED_CARTS_TABLE WHERE orderID=?";
             db_phquery($sql, $orderID);
 
@@ -118,14 +114,17 @@
             $skidka = 0;
             $r_aItem = $this->Items->getChildNodes('item');
             $tc = count($r_aItem);
+
             for ($i = 0; $i < $tc; $i++) {
 
                 $aItem = &$r_aItem[$i];
                 /* @var $aItem xmlNodeX */
                 $aProduct = &$aItem->getFirstChildByName('product');
                 $productID = $aProduct->attribute('id');
+
                 db_phquery('INSERT ?#SHOPPING_CART_ITEMS_TABLE (productID) VALUES(?)', $productID);
                 $aItem->attribute('id', db_insert_id(SHOPPING_CART_ITEMS_TABLE));
+
                 if (strpos($aItem->attribute('id'), '_') !== false) {
 
                     //	db_phquery('INSERT ?#SHOPPING_CART_ITEMS_TABLE (productID) VALUES(?)',$productID);
@@ -136,17 +135,15 @@
 
                     foreach ($r_aVariant as $aVariant) {
                         /* @var $aVariant xmlNodeX */
-
                         db_phquery('INSERT ?#SHOPPING_CART_ITEMS_CONTENT_TABLE (itemID, variantID)
 							VALUES(?,?)', $aItem->attribute('id'), $aVariant->attribute('id'));
                     }
                 }
-
                 /* $dbq = '
                     SELECT '.LanguagesManager::sql_prepareField('name').' AS name, product_code, skidka FROM ?#PRODUCTS_TABLE WHERE productID=?
                 '; */
                 $dbq = '
-					SELECT '.LanguagesManager::sql_prepareField('name').' AS name, product_code FROM ?#PRODUCTS_TABLE WHERE productID=?
+					SELECT name_ru AS name, product_code FROM ?#PRODUCTS_TABLE WHERE productID=?
 				';
                 $q_product = db_phquery($dbq, $productID);
                 $product = db_fetch_row($q_product);
@@ -209,7 +206,6 @@
          */
         function exportInXML()
         {
-
             return $this->Items->getNodeXML();
         }
 
@@ -218,7 +214,6 @@
          */
         function loadFromXML($xmlCart)
         {
-
             $this->Items->renderTreeFromInner($xmlCart);
         }
 
@@ -229,7 +224,6 @@
          */
         function emulate_cartGetCartContent()
         {
-
             $customerLogin = isset($_SESSION['log'])?$_SESSION['log']:'';
             /*  $query         = "SELECT skidka FROM SC_customers WHERE Login = '$customerLogin'";
              $skidka        = mysql_fetch_object(mysql_query($query))->skidka; */
@@ -282,7 +276,6 @@
          */
         function emulate_GetConfigurationByItemId($xnItem)
         {
-
             $variant_ids = array();
             $xnVariants = &$xnItem->getFirstChildByName('variants');
             if (is_null($xnVariants)) return $variant_ids;
@@ -304,7 +297,6 @@
          */
         function calculateTotalPrice($roundfloat = true, $currency = 0, $ignore_freeshipping = false)
         {
-
             $total_price = 0;
             $r_aItem = $this->Items->getChildNodes('item');
             foreach ($r_aItem as $aItem) {
@@ -325,18 +317,14 @@
 
         function calculateTotalPriceWithoutFreeShippingProducts($roundfloat = true, $currency = 0)
         {
-
             return $this->calculateTotalPrice($roundfloat, $currency, true);
         }
 
         function loadCurrentCart()
         {
-
-            ClassManager::includeClass('Customer');
-            $customerEntry = Customer::getAuthedInstance();
-            $customerID = isset($_SESSION['log'])?regGetIdByLogin($_SESSION['log']):0;
-            if ($customerEntry instanceof Customer) {
-                $this->loadCurrentCustomerCart($customerEntry->customerID);
+            $customerID = isset($_SESSION['cs_id'])?(int)$_SESSION['cs_id']:0;
+            if ($customerID) {
+                $this->loadCurrentCustomerCart($customerID);
             } else {
                 $this->loadCurrentCartFromSession();
             }
@@ -344,11 +332,8 @@
 
         function saveCurrentCart()
         {
-
-            ClassManager::includeClass('Customer');
-            $customerEntry = Customer::getAuthedInstance();
-            $customerID = isset($_SESSION['log'])?regGetIdByLogin($_SESSION['log']):0;
-            if ($customerEntry instanceof Customer) {
+            $customerID = isset($_SESSION['cs_id'])?(int)$_SESSION['cs_id']:0;
+            if ($customerID) {
                 $this->saveToCurrentCustomerCart();
             } else {
                 $this->saveToCurrentSessionCart();
@@ -384,7 +369,6 @@
 
         function saveToCurrentCustomerCart()
         {
-
             $this->saveToCurrentSessionCart();
         }
 

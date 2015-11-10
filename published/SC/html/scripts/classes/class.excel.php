@@ -1,10 +1,12 @@
 <?php
 
     /**
-     * Created by PhpStorm.
-     * User: Gololobov
-     * Date: 05.11.2015
-     * Time: 13:51
+     * Simple excel writer class with no external dependencies, drop it in and have fun
+     *
+     * @author  Matt Nowack
+     * @link    https://gist.github.com/ihumanable/929039/edit
+     * @license Unlicensed
+     * @version 1.0
      */
     class Excel
     {
@@ -195,8 +197,14 @@
          */
         function label($value)
         {
+            $value = $this->_utfToWin($value);
             $length = strlen($value);
             $this->data .= pack("ssssss", 0x204, 8 + $length, $this->row, $this->col, 0x0, $length);
             $this->data .= $value;
+        }
+
+        protected function _utfToWin($string)
+        {
+            return iconv('UTF-8', 'WINDOWS-1251//IGNORE', $string);
         }
     }

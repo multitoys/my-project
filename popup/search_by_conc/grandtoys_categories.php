@@ -228,17 +228,6 @@
             'Акция'         => 'page_size500?offer=1',
             '7 ноября 2015' => 'shop/news/view/256?page_size=500'
         )
-
-        //        'Новинки'    => array(
-        //            '21 октября 2015' => 'shop/news/view/235?page_size=500',
-        //            '14 октября 2015' => 'shop/news/view/227',
-        //            '10 октября 2015' => 'shop/news/view/223',
-        //            '8 октября 2015'          => 'shop/news/view/219?page_size=2000',
-        //            '7 октября 2015'          => 'shop/news/view/218?page_size=2000',
-        //            '6 октября 2015'          => 'shop/news/view/217?page_size=2000',
-        //            '3 октября 2015'          => 'shop/news/view/214?page_size=2000',
-        //            '2 октября 2015'          => 'shop/news/view/212?page_size=2000',
-        //            '1 октября 2015' => 'shop/news/view/210')
     );
 
     $parts = count($categories);

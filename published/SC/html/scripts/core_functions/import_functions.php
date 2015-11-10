@@ -96,6 +96,8 @@
         $str = rus2Translit($str);
         $str = strtolower($str);
         $str = preg_replace('~[^-a-z0-9_]+~u', '-', $str);
+        $str = str_replace("'", '', $str);
+        $str = preg_replace('~\-{2,}~', '-', $str);
         $str = trim($str, '-');
 
         return $str;

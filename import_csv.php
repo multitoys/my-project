@@ -317,7 +317,7 @@ TAG
                 $bonus = is_numeric($bonus) ? $bonus : 0;
                 $hit = ($hit > 0) ? $hit : 0;
                 $new = ($new > 0) ? 7 : 5;
-                $new_postup = ($new_postup > 0) ? $new_postup + 3 : 0;
+                $new_postup = ($new_postup > 0)?$new_postup:0;
                 $akcia = ($akcia > 0) ? 1 : 0;
                 $akcia_skidka = ($akcia > 0) ? (1 - $price / $oldprice) * 100 : 0;
                 $akcia_skidka = is_numeric($akcia_skidka) ? $akcia_skidka : 0;

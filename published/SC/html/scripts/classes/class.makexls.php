@@ -29,7 +29,8 @@
             $labels = array(
                 'code_1c',
                 'product_code',
-                'name_ru'
+                'name_ru',
+                'brand'
             );
                 
             foreach ($this->_headers as $header => $name) {
@@ -138,7 +139,7 @@
         
         protected function _xlsWriteNumber($Value)
         {
-            $Value = ($Value === '-----')?0:$Value;
+            $Value = ($Value === '--')?0:$Value;
             return pack("sssss", 0x203, 14, $this->_row, $this->_col, 0x0) . pack("d", (float)$Value);
         }
 

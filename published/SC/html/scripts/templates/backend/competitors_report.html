@@ -302,9 +302,9 @@
                     <td class="blue">{$GridRows[i].product_code|escape:'html'}</td>
                     <td><img class="preview" width="80px" height="60px" src="{$GridRows[i].img|escape:'html'}" alt="Нет фото"></td>
                     <td {if $GridRows[i].max_diff > 0}class="red"{/if}>{$GridRows[i].name_ru|escape:'html'}</td>
-                    {*<td class="brand">{$GridRows[i].category|escape:'html'}</td>*}
+                    <td class="brand">{$GridRows[i].brand|escape:'html'}</td>
                     <td class="to_right choco">{$GridRows[i].purchase}</td>
-                    <td class="to_right choco">{$GridRows[i].margin}</td>
+                    <td class="to_right choco">{$GridRows[i].margin}%</td>
                     <td class="to_right bold {if $GridRows[i].max_diff > 0}red{else}blue{/if}">{$GridRows[i].Price}</td>
                     <td class="to_right {if $GridRows[i].max_diff > 0}red{else}green{/if}">
                         <strong>{$GridRows[i].max_diff}%</strong>

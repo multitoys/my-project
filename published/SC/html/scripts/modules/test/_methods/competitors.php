@@ -127,6 +127,7 @@
             $grid->registerHeader('Артикул', 'product_code', false, 'ASC');
             $grid->registerHeader('Фото');
             $grid->registerHeader('Наименование', 'name_ru', true, 'ASC');
+            $grid->registerHeader('Бренд', 'brand', true, 'ASC');
             $grid->registerHeader('Закупка', 'purchase', false, 'ASC', 'right');
             $grid->registerHeader('Наценка', 'margin', false, 'ASC', 'right');
             $grid->registerHeader('Мультитойс', 'Price', false, 'ASC', 'right');
@@ -136,35 +137,35 @@
 
                 case 'divoland':
                     $grid->registerHeader('Диволенд', 'divoland', false, 'ASC', 'right');
-                    $grid->registerHeader('раз-ца', 'diff_divoland', false, 'ASC', 'right');
+                    $grid->registerHeader('%', 'diff_divoland', false, 'ASC', 'right');
                     break;
                 case 'dreamtoys':
                     $grid->registerHeader('Веселка', 'dreamtoys', false, 'ASC', 'right');
-                    $grid->registerHeader('раз-ца', 'diff_dreamtoys', false, 'ASC', 'right');
+                    $grid->registerHeader('%', 'diff_dreamtoys', false, 'ASC', 'right');
                     break;
                 case 'mixtoys':
                     $grid->registerHeader('Микстойс', 'mixtoys', false, 'ASC', 'right');
-                    $grid->registerHeader('раз-ца', 'diff_mixtoys', false, 'ASC', 'right');
+                    $grid->registerHeader('%', 'diff_mixtoys', false, 'ASC', 'right');
                     break;
                 case 'grandtoys':
                     $grid->registerHeader('Г.-Тойс', 'grandtoys', false, 'ASC', 'right');
-                    $grid->registerHeader('раз-ца', 'diff_grandtoys', false, 'ASC', 'right');
+                    $grid->registerHeader('%', 'diff_grandtoys', false, 'ASC', 'right');
                     break;
                 case 'kindermarket':
                     $grid->registerHeader('К.-Маркет', 'kindermarket', false, 'ASC', 'right');
-                    $grid->registerHeader('раз-ца', 'diff_kindermarket', false, 'ASC', 'right');
+                    $grid->registerHeader('%', 'diff_kindermarket', false, 'ASC', 'right');
                     break;
                 default:
                     $grid->registerHeader('Диволенд', 'divoland', false, 'ASC', 'right');
-                    $grid->registerHeader('раз-ца', 'diff_divoland', false, 'ASC', 'right');
+                    $grid->registerHeader('%', 'diff_divoland', false, 'ASC', 'right');
                     $grid->registerHeader('Веселка', 'dreamtoys', false, 'ASC', 'right');
-                    $grid->registerHeader('раз-ца', 'diff_dreamtoys', false, 'ASC', 'right');
+                    $grid->registerHeader('%', 'diff_dreamtoys', false, 'ASC', 'right');
                     $grid->registerHeader('Микстойс', 'mixtoys', false, 'ASC', 'right');
-                    $grid->registerHeader('раз-ца', 'diff_grandtoys', false, 'ASC', 'right');
+                    $grid->registerHeader('%', 'diff_grandtoys', false, 'ASC', 'right');
                     $grid->registerHeader('Г.Тойс', 'grandtoys', false, 'ASC', 'right');
-                    $grid->registerHeader('раз-ца', 'diff_grandtoys', false, 'ASC', 'right');
+                    $grid->registerHeader('%', 'diff_grandtoys', false, 'ASC', 'right');
                     $grid->registerHeader('К.-Маркет', 'kindermarket', false, 'ASC', 'right');
-                    $grid->registerHeader('раз-ца', 'diff_kindermarket', false, 'ASC', 'right');
+                    $grid->registerHeader('%', 'diff_kindermarket', false, 'ASC', 'right');
             }
             $grid->prepare();
 
@@ -175,28 +176,29 @@
                 $rows[$k]['num'] = $k + 1;
                 $rows[$k]['img'] = '/published/publicdata/MULTITOYS/attachments/SC/search_pictures/'.$rows[$k]['code_1c'].'_s.jpg';
                 //$rows[$k]['img_big'] = '/published/publicdata/MULTITOYS/attachments/SC/products_pictures/'.$rows[$k]['code_1c'].'.jpg';
+
                 $rows[$k]['purchase'] = $rows[$k][$this->currency.'purchase'];
-                $rows[$k]['Price'] = $this->__priceDiscount($rows[$k][$this->currency.'Price'], $rows[$k]['ukraine'], $this->disc_usd, $this->disc_ua);
+                $rows[$k]['Price'] = $this->__priceDiscount($rows[$k][$this->currency.'Price'], $rows[$k]['ukraine']);
 
-                $rows[$k]['divoland'] = (is_null($rows[$k][$this->currency.'divoland'])) ? '-----' : $this->__priceConc($rows[$k][$this->currency.'divoland']);
-                $rows[$k]['diff_divoland'] = ($rows[$k]['divoland'] === '-----') ? '-----' : $rows[$k]['diff_divoland'];
+                $rows[$k]['divoland'] = (is_null($rows[$k][$this->currency.'divoland']))?'--':$this->__priceConc($rows[$k][$this->currency.'divoland']);
+                $rows[$k]['diff_divoland'] = ($rows[$k]['divoland'] === '--')?'--':$this->__priceDiff($rows[$k]['Price'], $rows[$k]['divoland']);
 
-                $rows[$k]['dreamtoys'] = (is_null($rows[$k][$this->currency.'dreamtoys'])) ? '-----' : $this->__priceConc($rows[$k][$this->currency.'dreamtoys']);
-                $rows[$k]['diff_dreamtoys'] = ($rows[$k]['dreamtoys'] === '-----') ? '-----' : $rows[$k]['diff_dreamtoys'];
+                $rows[$k]['dreamtoys'] = (is_null($rows[$k][$this->currency.'dreamtoys']))?'--':$this->__priceConc($rows[$k][$this->currency.'dreamtoys']);
+                $rows[$k]['diff_dreamtoys'] = ($rows[$k]['dreamtoys'] === '--')?'--':$this->__priceDiff($rows[$k]['Price'], $rows[$k]['dreamtoys']);
 
-                $rows[$k]['mixtoys'] = (is_null($rows[$k][$this->currency.'mixtoys'])) ? '-----' : $this->__priceConc($rows[$k][$this->currency.'mixtoys']);
-                $rows[$k]['diff_mixtoys'] = ($rows[$k]['mixtoys'] === '-----') ? '-----' : $rows[$k]['diff_mixtoys'];
+                $rows[$k]['mixtoys'] = (is_null($rows[$k][$this->currency.'mixtoys']))?'--':$this->__priceConc($rows[$k][$this->currency.'mixtoys']);
+                $rows[$k]['diff_mixtoys'] = ($rows[$k]['mixtoys'] === '--')?'--':$this->__priceDiff($rows[$k]['Price'], $rows[$k]['mixtoys']);
 
-                $rows[$k]['grandtoys'] = (is_null($rows[$k][$this->currency.'grandtoys'])) ? '-----' : $this->__priceConc($rows[$k][$this->currency.'grandtoys']);
-                $rows[$k]['diff_grandtoys'] = ($rows[$k]['grandtoys'] === '-----') ? '-----' : $rows[$k]['diff_grandtoys'];
+                $rows[$k]['grandtoys'] = (is_null($rows[$k][$this->currency.'grandtoys']))?'--':$this->__priceConc($rows[$k][$this->currency.'grandtoys']);
+                $rows[$k]['diff_grandtoys'] = ($rows[$k]['grandtoys'] === '--')?'--':$this->__priceDiff($rows[$k]['Price'], $rows[$k]['grandtoys']);
 
-                $rows[$k]['kindermarket'] = (is_null($rows[$k][$this->currency.'kindermarket'])) ? '-----' : $this->__priceConc($rows[$k][$this->currency.'kindermarket']);
-                $rows[$k]['diff_kindermarket'] = ($rows[$k]['kindermarket'] === '-----') ? '-----' : $rows[$k]['diff_kindermarket'];
+                $rows[$k]['kindermarket'] = (is_null($rows[$k][$this->currency.'kindermarket']))?'--':$this->__priceConc($rows[$k][$this->currency.'kindermarket']);
+                $rows[$k]['diff_kindermarket'] = ($rows[$k]['kindermarket'] === '--')?'--':$this->__priceDiff($rows[$k]['Price'], $rows[$k]['kindermarket']);
 
 
                 if ($this->conc) {
 
-                    $diff = round(($rows[$k]['Price'] / $rows[$k][$this->conc] - 1) * 100, 1);
+                    $diff = $this->__priceDiff($rows[$k]['Price'], $rows[$k][$this->conc], 1);
                     
                 } else {
 
@@ -204,21 +206,16 @@
                     $min = array();
 
                     foreach ($competitors as $competitor) {
-                        $min[$competitor] = ($rows[$k][$competitor] == '-----') ? 100000 : doubleval($rows[$k][$competitor]);
+                        $min[$competitor] = ($rows[$k][$competitor] == '--')?100000:(float)$rows[$k][$competitor];
                     }
-                    
-                    $diff = round(($rows[$k]['Price'] / min(
-                                          $min['grandtoys'],
-                                          $min['divoland'],
-                                          $min['dreamtoys'],
-                                          $min['mixtoys'],
-                                          $min['kindermarket']
-                                      ) - 1) * 100, 1
-                    )
-                    ;
+
+                    asort($min, SORT_NUMERIC);
+                    $min_diff = array_shift($min);
+
+                    $diff = $this->__priceDiff($rows[$k]['Price'], $min_diff, 1);
                 }
 
-                $rows[$k]['margin'] = (round(($rows[$k]['Price'] / $rows[$k]['purchase'] - 1) * 100, 1));
+                $rows[$k]['margin'] = $this->__priceDiff($rows[$k]['Price'], $rows[$k]['purchase'], 1);
                 $rows[$k]['max_diff'] = $diff;
 
             }
@@ -232,20 +229,21 @@
                     'code_1c'           => 'Код 1С',
                     'product_code'      => 'Артикул',
                     'name_ru'           => 'Наименование',
+                    'brand'             => 'Бренд',
                     'purchase'          => 'Закупка',
                     'margin'            => 'Наценка',
                     'Price'             => 'Мультитойс',
                     'max_diff'          => 'MAX-%',
                     'divoland'          => 'Диволенд',
-                    'diff_divoland'     => 'раз-ца',
+                    'diff_divoland'     => '%',
                     'dreamtoys'         => 'Веселка',
-                    'diff_dreamtoys'    => 'раз-ца',
+                    'diff_dreamtoys'    => '%',
                     'mixtoys'           => 'Микстойс',
-                    'diff_mixtoys'      => 'раз-ца',
+                    'diff_mixtoys'      => '%',
                     'kindermarket'      => 'К.-Маркет',
-                    'diff_kindermarket' => 'раз-ца',
+                    'diff_kindermarket' => '%',
                     'grandtoys'         => 'Г.-Тойс',
-                    'diff_grandtoys'    => 'раз-ца'
+                    'diff_grandtoys'    => '%'
                 );
 
                 $this->__getExportXLS($headers, $rows);
@@ -379,7 +377,21 @@
 
         protected function __getCategoriesArray()
         {
-            $query = "SELECT DISTINCT category FROM $this->table WHERE 1  $this->manufactured $this->brand $this->category $this->bestsellers $this->new $this->new_items_postup $this->competitor $this->search";
+            $query = "
+                      SELECT DISTINCT 
+                          category 
+                      FROM 
+                          $this->table 
+                      WHERE 1 
+                          $this->manufactured 
+                          $this->brand 
+                          $this->category 
+                          $this->bestsellers 
+                          $this->new 
+                          $this->new_items_postup 
+                          $this->competitor 
+                          $this->search
+                     ";
             $res = mysql_query($query) or die(mysql_error().$query);
 
             while ($Categories = mysql_fetch_object($res)) {
@@ -388,18 +400,26 @@
             sort($this->categories);
         }
 
-        protected function __priceDiscount($Price, $ua, $disc_usd = 0, $disc_ua = 0)
+        protected function __priceDiscount($Price, $ua)
         {
-            $real_skidka = ($ua) ? $disc_ua : $disc_usd;
+            $real_skidka = ($ua)?$this->disc_ua:$this->disc_usd;
             $outPrice = round($Price - ($Price * $real_skidka / 100), 2);
 
-            return $outPrice;
+            return number_format($outPrice, 2);
         }
         
         protected function __priceConc($Price)
         {
             $outPrice = round($Price - ($Price * $this->disc_conc / 100), 2);
-            return $outPrice;
+
+            return number_format($outPrice, 2);
+        }
+
+        protected function __priceDiff($Price, $price_conc, $decimals = 0)
+        {
+            $outDiff = round(($Price / $price_conc - 1) * 100, 1);
+
+            return number_format($outDiff, $decimals);
         }
         
         protected function __getExportXLS($headers, $rows)

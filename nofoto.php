@@ -20,24 +20,31 @@
     $DB_tree->selectDB(SystemSettings::get('DB_NAME'));
 
     $query = 'SELECT 
-                      p.code_1c, p.product_code, p.default_picture, p.name_ru, pp.filename
+                      p.code_1c, p.product_code, p.default_picture, p.name_ru AS item,
+                      pp.filename, c.parent, c.name_ru AS category
               FROM 
                       SC_products p
               LEFT JOIN 
                       SC_product_pictures pp
               ON 
                       pp.photoID = p.default_picture
+              LEFT JOIN 
+                      SC_categories c
+              ON 
+                      c.categoryID = p.categoryID
               WHERE 
                       p.enabled=1 AND p.in_stock != 0
               ORDER BY 
-                      p.code_1c ASC';
+                      c.parent, category, p.product_code';
     $res = mysql_query($query) or die(mysql_error()."<br>$query");
 
     $erorr = 0;
 
-    $Report = new Excel('nofoto'.$date = date('d-m-Y', time()));
+    $Report = new Excel('no_foto'.$date = date('d-m-Y', time()));
 
     $Report->label('Код 1С');
+    $Report->right();
+    $Report->label('Категория');
     $Report->right();
     $Report->label('Артикул');
     $Report->right();
@@ -65,9 +72,11 @@
 
             $Report->label($row->code_1c);
             $Report->right();
+            $Report->label($row->category);
+            $Report->right();
             $Report->label($row->product_code);
             $Report->right();
-            $Report->label($row->name_ru);
+            $Report->label($row->item);
             $Report->right();
             $Report->number($erorr);
         }

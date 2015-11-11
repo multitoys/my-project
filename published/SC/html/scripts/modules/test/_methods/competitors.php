@@ -141,7 +141,7 @@
             if ($this->conc) {
 
                 $Grid->registerHeader($this->competitors_name[$this->conc], $this->conc, false, 'ASC', 'right');
-                $Grid->registerHeader('%', 'diff_'.$this->conc, false, 'ASC', 'right');
+                $Grid->registerHeader('Разница', 'diff_'.$this->conc, false, 'ASC', 'right');
             } else {
 
                 foreach ($this->competitors_name as $conc => $name) {
@@ -159,45 +159,32 @@
 
                 $rows[$k]['num'] = $k + 1;
                 $rows[$k]['img'] = '/published/publicdata/MULTITOYS/attachments/SC/search_pictures/'.$rows[$k]['code_1c'].'_s.jpg';
-                //$rows[$k]['img_big'] = '/published/publicdata/MULTITOYS/attachments/SC/products_pictures/'.$rows[$k]['code_1c'].'.jpg';
-
                 $rows[$k]['purchase'] = $rows[$k][$this->currency.'purchase'];
                 $rows[$k]['Price'] = $this->__priceDiscount($rows[$k][$this->currency.'Price'], $rows[$k]['ukraine']);
 
-                if ($this->conc) {
+                $min = array();
 
-                    $rows[$k][$this->conc] = (is_null($rows[$k][$this->currency.$this->conc]))?'--':$this->__priceConc($rows[$k][$this->currency.$this->conc]);
-                    $rows[$k]['diff_'.$this->conc] = ($rows[$k][$this->conc] === '--')?'--':$this->__priceDiff($rows[$k]['Price'], $rows[$k][$this->conc]);
-                } else {
+                foreach ($this->competitors_name as $conc => $name) {
 
-                    foreach ($this->competitors_name as $conc => $name) {
+                    $price_conc = '--';
+                    $diff_conc = '--';
 
-                        $rows[$k][$conc] = (is_null($rows[$k][$this->currency.$conc]))?'--':$this->__priceConc($rows[$k][$this->currency.$conc]);
-                        $rows[$k]['diff_'.$conc] = ($rows[$k][$conc] === '--')?'--':$this->__priceDiff($rows[$k]['Price'], $rows[$k][$conc]);
-                    }
-                }
+                    if (!is_null($rows[$k][$this->currency.$conc])) {
 
-                if ($this->conc) {
-
-                    $diff = $this->__priceDiff($rows[$k]['Price'], $rows[$k][$this->conc], 1);
-                    
-                } else {
-
-                    $min = array();
-
-                    foreach ($this->competitors_name as $competitor => $name) {
-                        $min[$competitor] = ($rows[$k][$competitor] == '--')?100000:(float)$rows[$k][$competitor];
+                        $price_conc = $this->__priceConc($rows[$k][$this->currency.$conc]);
+                        $diff_conc = $this->__priceDiff($rows[$k]['Price'], $price_conc);
+                        $min[$conc] = (float)$price_conc;
                     }
 
-                    asort($min, SORT_NUMERIC);
-                    $min_diff = array_shift($min);
-
-                    $diff = $this->__priceDiff($rows[$k]['Price'], $min_diff, 1);
+                    $rows[$k][$conc] = $price_conc;
+                    $rows[$k]['diff_'.$conc] = $diff_conc;
                 }
+
+                asort($min, SORT_NUMERIC);
+                $min_diff = array_shift($min);
 
                 $rows[$k]['margin'] = $this->__priceDiff($rows[$k]['Price'], $rows[$k]['purchase'], 1);
-                $rows[$k]['max_diff'] = $diff;
-
+                $rows[$k]['max_diff'] = $this->__priceDiff($rows[$k]['Price'], $min_diff, 1);
             }
 
             $count_rows = array('100' => 100, '500' => 500, '1000' => 1000);

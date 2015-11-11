@@ -412,14 +412,14 @@
         {
             $outPrice = round($Price - ($Price * $this->disc_conc / 100), 2);
 
-            return number_format($outPrice, 2);
+            return number_format($outPrice, 2, $dec_point = '.', $thousands_sep = '');
         }
 
         protected function __priceDiff($Price, $price_conc, $decimals = 0)
         {
             $outDiff = round(($Price / $price_conc - 1) * 100, 1);
 
-            return number_format($outDiff, $decimals);
+            return number_format($outDiff, $decimals, $dec_point = '.', $thousands_sep = '');
         }
         
         protected function __getExportXLS($headers, $rows)

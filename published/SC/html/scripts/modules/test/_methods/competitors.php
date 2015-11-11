@@ -21,6 +21,10 @@
         protected $disc_ua = 20;
         protected $disc_conc = 0;
         protected $table = 'Conc__analogs';
+        protected $table_conc        = 'Conc__competitors';
+        protected $competitors_name  = array();
+        protected $competitors_array = array();
+        protected $competitors_params = array();
 
         public function __construct()
         {
@@ -30,7 +34,7 @@
             parent::__construct();
 
             //контроллер выбора функций конструктора путем обхода массива $_GET
-            foreach (array_keys($_GET) as $get_key) {
+            foreach ($_GET as $get_key => $get_key) {
                 
                 switch ($get_key) {
                     
@@ -102,72 +106,52 @@
             $smarty = &$Register->get(VAR_SMARTY);
             /*@var $smarty Smarty*/
 
-            $grid = new Grid();
+            $Grid = new Grid();
 
             $this->__getBrandsArray();
             $this->__getCategoriesArray();
+            $this->__getCompetitorsParams();
 
-            $grid->query_total_rows_num = "
+            $Grid->query_total_rows_num = "
                 SELECT COUNT(*) FROM $this->table
                 WHERE 1
                 $this->manufactured $this->brand $this->category $this->bestsellers $this->new $this->new_items_postup $this->competitor $this->search";
 
-            $grid->query_select_rows = "
+            $Grid->query_select_rows = "
                 SELECT * FROM $this->table
                 WHERE 1
                 $this->manufactured $this->brand $this->category $this->bestsellers $this->new  $this->new_items_postup $this->competitor $this->search";
 
-            $grid->show_rows_num_select = true;
-            $grid->default_sort_direction = 'DESC';
-            $grid->rows_num = 100;
+            $Grid->show_rows_num_select = true;
+            $Grid->default_sort_direction = 'DESC';
+            $Grid->rows_num = 100;
 
             //выбор и установка заголовков для таблицы отчета
-            $grid->registerHeader('№');
-            $grid->registerHeader('Код 1С', 'code_1c', false, 'ASC');
-            $grid->registerHeader('Артикул', 'product_code', false, 'ASC');
-            $grid->registerHeader('Фото');
-            $grid->registerHeader('Наименование', 'name_ru', true, 'ASC');
-            $grid->registerHeader('Бренд', 'brand', true, 'ASC');
-            $grid->registerHeader('Закупка', 'purchase', false, 'ASC', 'right');
-            $grid->registerHeader('Наценка', 'margin', false, 'ASC', 'right');
-            $grid->registerHeader('Мультитойс', 'Price', false, 'ASC', 'right');
-            $grid->registerHeader('MAX-%', 'max_diff', false, 'ASC', 'right');
+            $Grid->registerHeader('№');
+            $Grid->registerHeader('Код 1С', 'code_1c', false, 'ASC');
+            $Grid->registerHeader('Артикул', 'product_code', false, 'ASC');
+            $Grid->registerHeader('Фото');
+            $Grid->registerHeader('Наименование', 'name_ru', true, 'ASC');
+            $Grid->registerHeader('Бренд', 'brand', true, 'ASC');
+            $Grid->registerHeader('Закупка', 'purchase', false, 'ASC', 'right');
+            $Grid->registerHeader('Наценка', 'margin', false, 'ASC', 'right');
+            $Grid->registerHeader('Мультитойс', 'Price', false, 'ASC', 'right');
+            $Grid->registerHeader('MAX-%', 'max_diff', false, 'ASC', 'right');
 
-            switch ($this->conc) {
+            if ($this->conc) {
 
-                case 'divoland':
-                    $grid->registerHeader('Диволенд', 'divoland', false, 'ASC', 'right');
-                    $grid->registerHeader('%', 'diff_divoland', false, 'ASC', 'right');
-                    break;
-                case 'dreamtoys':
-                    $grid->registerHeader('Веселка', 'dreamtoys', false, 'ASC', 'right');
-                    $grid->registerHeader('%', 'diff_dreamtoys', false, 'ASC', 'right');
-                    break;
-                case 'mixtoys':
-                    $grid->registerHeader('Микстойс', 'mixtoys', false, 'ASC', 'right');
-                    $grid->registerHeader('%', 'diff_mixtoys', false, 'ASC', 'right');
-                    break;
-                case 'grandtoys':
-                    $grid->registerHeader('Г.-Тойс', 'grandtoys', false, 'ASC', 'right');
-                    $grid->registerHeader('%', 'diff_grandtoys', false, 'ASC', 'right');
-                    break;
-                case 'kindermarket':
-                    $grid->registerHeader('К.-Маркет', 'kindermarket', false, 'ASC', 'right');
-                    $grid->registerHeader('%', 'diff_kindermarket', false, 'ASC', 'right');
-                    break;
-                default:
-                    $grid->registerHeader('Диволенд', 'divoland', false, 'ASC', 'right');
-                    $grid->registerHeader('%', 'diff_divoland', false, 'ASC', 'right');
-                    $grid->registerHeader('Веселка', 'dreamtoys', false, 'ASC', 'right');
-                    $grid->registerHeader('%', 'diff_dreamtoys', false, 'ASC', 'right');
-                    $grid->registerHeader('Микстойс', 'mixtoys', false, 'ASC', 'right');
-                    $grid->registerHeader('%', 'diff_grandtoys', false, 'ASC', 'right');
-                    $grid->registerHeader('Г.Тойс', 'grandtoys', false, 'ASC', 'right');
-                    $grid->registerHeader('%', 'diff_grandtoys', false, 'ASC', 'right');
-                    $grid->registerHeader('К.-Маркет', 'kindermarket', false, 'ASC', 'right');
-                    $grid->registerHeader('%', 'diff_kindermarket', false, 'ASC', 'right');
+                $Grid->registerHeader($this->competitors_name[$this->conc], $this->conc, false, 'ASC', 'right');
+                $Grid->registerHeader('Разница', 'diff_'.$this->conc, false, 'ASC', 'right');
+            } else {
+
+                foreach ($this->competitors_name as $conc => $name) {
+
+                    $Grid->registerHeader($name, $conc, false, 'ASC', 'right');
+                    $Grid->registerHeader('%', 'diff_'.$conc, false, 'ASC', 'right');
+                }
             }
-            $grid->prepare();
+
+            $Grid->prepare();
 
             $rows = $smarty->get_template_vars('GridRows');
 
@@ -175,49 +159,32 @@
 
                 $rows[$k]['num'] = $k + 1;
                 $rows[$k]['img'] = '/published/publicdata/MULTITOYS/attachments/SC/search_pictures/'.$rows[$k]['code_1c'].'_s.jpg';
-                //$rows[$k]['img_big'] = '/published/publicdata/MULTITOYS/attachments/SC/products_pictures/'.$rows[$k]['code_1c'].'.jpg';
-
                 $rows[$k]['purchase'] = $rows[$k][$this->currency.'purchase'];
                 $rows[$k]['Price'] = $this->__priceDiscount($rows[$k][$this->currency.'Price'], $rows[$k]['ukraine']);
 
-                $rows[$k]['divoland'] = (is_null($rows[$k][$this->currency.'divoland']))?'--':$this->__priceConc($rows[$k][$this->currency.'divoland']);
-                $rows[$k]['diff_divoland'] = ($rows[$k]['divoland'] === '--')?'--':$this->__priceDiff($rows[$k]['Price'], $rows[$k]['divoland']);
+                $min = array();
 
-                $rows[$k]['dreamtoys'] = (is_null($rows[$k][$this->currency.'dreamtoys']))?'--':$this->__priceConc($rows[$k][$this->currency.'dreamtoys']);
-                $rows[$k]['diff_dreamtoys'] = ($rows[$k]['dreamtoys'] === '--')?'--':$this->__priceDiff($rows[$k]['Price'], $rows[$k]['dreamtoys']);
+                foreach ($this->competitors_name as $conc => $name) {
 
-                $rows[$k]['mixtoys'] = (is_null($rows[$k][$this->currency.'mixtoys']))?'--':$this->__priceConc($rows[$k][$this->currency.'mixtoys']);
-                $rows[$k]['diff_mixtoys'] = ($rows[$k]['mixtoys'] === '--')?'--':$this->__priceDiff($rows[$k]['Price'], $rows[$k]['mixtoys']);
+                    $price_conc = '--';
+                    $diff_conc = '--';
 
-                $rows[$k]['grandtoys'] = (is_null($rows[$k][$this->currency.'grandtoys']))?'--':$this->__priceConc($rows[$k][$this->currency.'grandtoys']);
-                $rows[$k]['diff_grandtoys'] = ($rows[$k]['grandtoys'] === '--')?'--':$this->__priceDiff($rows[$k]['Price'], $rows[$k]['grandtoys']);
+                    if (!is_null($rows[$k][$this->currency.$conc])) {
 
-                $rows[$k]['kindermarket'] = (is_null($rows[$k][$this->currency.'kindermarket']))?'--':$this->__priceConc($rows[$k][$this->currency.'kindermarket']);
-                $rows[$k]['diff_kindermarket'] = ($rows[$k]['kindermarket'] === '--')?'--':$this->__priceDiff($rows[$k]['Price'], $rows[$k]['kindermarket']);
-
-
-                if ($this->conc) {
-
-                    $diff = $this->__priceDiff($rows[$k]['Price'], $rows[$k][$this->conc], 1);
-                    
-                } else {
-
-                    $competitors = array('kindermarket', 'divoland', 'dreamtoys', 'mixtoys', 'grandtoys');
-                    $min = array();
-
-                    foreach ($competitors as $competitor) {
-                        $min[$competitor] = ($rows[$k][$competitor] == '--')?100000:(float)$rows[$k][$competitor];
+                        $price_conc = $this->__priceConc($rows[$k][$this->currency.$conc]);
+                        $diff_conc = $this->__priceDiff($rows[$k]['Price'], $price_conc);
+                        $min[$conc] = (float)$price_conc;
                     }
 
-                    asort($min, SORT_NUMERIC);
-                    $min_diff = array_shift($min);
-
-                    $diff = $this->__priceDiff($rows[$k]['Price'], $min_diff, 1);
+                    $rows[$k][$conc] = $price_conc;
+                    $rows[$k]['diff_'.$conc] = $diff_conc;
                 }
 
-                $rows[$k]['margin'] = $this->__priceDiff($rows[$k]['Price'], $rows[$k]['purchase'], 1);
-                $rows[$k]['max_diff'] = $diff;
+                asort($min, SORT_NUMERIC);
+                $min_diff = array_shift($min);
 
+                $rows[$k]['margin'] = $this->__priceDiff($rows[$k]['Price'], $rows[$k]['purchase'], 1);
+                $rows[$k]['max_diff'] = $this->__priceDiff($rows[$k]['Price'], $min_diff, 1);
             }
 
             $count_rows = array('100' => 100, '500' => 500, '1000' => 1000);
@@ -234,21 +201,18 @@
                     'margin'            => 'Наценка',
                     'Price'             => 'Мультитойс',
                     'max_diff'          => 'MAX-%',
-                    'divoland'          => 'Диволенд',
-                    'diff_divoland'     => '%',
-                    'dreamtoys'         => 'Веселка',
-                    'diff_dreamtoys'    => '%',
-                    'mixtoys'           => 'Микстойс',
-                    'diff_mixtoys'      => '%',
-                    'kindermarket'      => 'К.-Маркет',
-                    'diff_kindermarket' => '%',
-                    'grandtoys'         => 'Г.-Тойс',
-                    'diff_grandtoys'    => '%'
                 );
 
+                foreach ($this->competitors_params as $params) {
+
+                    $headers[$params['conc']] = $params['name'];
+                    $headers['diff_'.$params['conc']] = '%';
+                }
+                
                 $this->__getExportXLS($headers, $rows);
             }
-            
+
+            $smarty->assign('Competitors', $this->competitors_params);
             $smarty->assign('Brands', $this->brands);
             $smarty->assign('Categories', $this->categories);
             $smarty->assign('disc_usd', $this->disc_usd);
@@ -256,7 +220,7 @@
             $smarty->assign('disc_conc', $this->disc_conc);
             $smarty->assign('GridRows', $rows);
             $smarty->assign('rows', $count_rows);
-            $smarty->assign('TotalFound', str_replace('{N}', $grid->total_rows_num, 'Найдено товаров: {N}'));
+            $smarty->assign('TotalFound', str_replace('{N}', $Grid->total_rows_num, 'Найдено товаров: {N}'));
 
             $smarty->display(DIR_TPLS.'/backend/competitors_report.html');
 
@@ -314,19 +278,21 @@
             $this->search = ' AND (product_code LIKE "%'.xEscapeSQLstring($_GET['searchstring']).'%" OR code_1c='.xEscapeSQLstring($_GET['searchstring']).' OR name_ru LIKE "%'.xEscapeSQLstring($_GET['searchstring']).'%")';
         }
 
-        protected function __getCompetitorsList()
+        protected function __getCompetitorsParams()
         {
-            $query = 'SELECT * FROM Conc__competitors';
+            $query = "SELECT * FROM $this->table_conc ORDER BY CCID";
             $res = mysql_query($query) or die(mysql_error()."<br>$query");
 
-            $ids = array();
-
             while ($row = mysql_fetch_object($res)) {
-                $ids[] = $row->code_1c;
-            }
-            $ids = implode(',', $ids);
 
-            $this->bestsellers = ' AND code_1c IN ('.$ids.')';
+                $this->competitors_params[] = array(
+                    'conc' => $row->competitor,
+                    'diff' => 'diff_'.$row->competitor,
+                    'name' => $row->name_ru
+                );
+                $this->competitors_name[$row->competitor] = $row->name_ru;
+                $this->competitors_array[$row->competitor] = $row->competitor;
+            }
         }
 
         protected function __getProductsList($field_for_list, $limit = 150)
@@ -424,26 +390,16 @@
         
         protected function __getExportXLS($headers, $rows)
         {
-            if ($_GET['competitor'] !== 'all') {
+            if ($this->conc !== 'all' && in_array($this->conc, $this->competitors_array)) {
 
-                $competitors = array('kindermarket' => 'kindermarket', 'divoland' => 'divoland', 'dreamtoys' => 'dreamtoys', 'mixtoys' => 'mixtoys', 'grandtoys' => 'grandtoys', 'diff_kindermarket' => 'diff_kindermarket', 'diff_divoland' => 'diff_divoland', 'diff_dreamtoys' => 'diff_dreamtoys', 'diff_mixtoys' => 'diff_mixtoys', 'diff_grandtoys' => 'diff_grandtoys');
+                unset($this->competitors_array[$this->conc]);
 
-                $current_competitor = $_GET['competitor'];
-
-                if (in_array($current_competitor, $competitors)) {
+                foreach ($this->competitors_array as $competitor) {
 
                     unset(
-                        $competitors[$current_competitor],
-                        $competitors['diff_'.$current_competitor]
+                        $headers[$competitor],
+                        $headers['diff_'.$competitor]
                     );
-
-                    foreach ($competitors as $competitor) {
-
-                        unset(
-                            $headers[$competitor],
-                            $headers['diff_'.$competitor]
-                        );
-                    }
                 }
             }
             

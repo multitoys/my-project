@@ -21,8 +21,9 @@
         protected $disc_ua = 20;
         protected $disc_conc = 0;
         protected $table = 'Conc__analogs';
-        protected $table_conc         = 'Conc__competitors';
-        protected $competitors_name   = array();
+        protected $table_conc        = 'Conc__competitors';
+        protected $competitors_name  = array();
+        protected $competitors_array = array();
         protected $competitors_params = array();
 
         public function __construct()
@@ -303,6 +304,7 @@
                     'name' => $row->name_ru
                 );
                 $this->competitors_name[$row->competitor] = $row->name_ru;
+                $this->competitors_array[$row->competitor] = $row->competitor;
             }
         }
 
@@ -401,26 +403,16 @@
         
         protected function __getExportXLS($headers, $rows)
         {
-            if ($_GET['competitor'] !== 'all') {
+            if ($this->conc !== 'all' && in_array($this->conc, $this->competitors_array)) {
 
-                $competitors = array('kindermarket' => 'kindermarket', 'divoland' => 'divoland', 'dreamtoys' => 'dreamtoys', 'mixtoys' => 'mixtoys', 'grandtoys' => 'grandtoys', 'diff_kindermarket' => 'diff_kindermarket', 'diff_divoland' => 'diff_divoland', 'diff_dreamtoys' => 'diff_dreamtoys', 'diff_mixtoys' => 'diff_mixtoys', 'diff_grandtoys' => 'diff_grandtoys');
+                unset($this->competitors_array[$this->conc]);
 
-                $current_competitor = $_GET['competitor'];
-
-                if (in_array($current_competitor, $competitors)) {
+                foreach ($this->competitors_array as $competitor) {
 
                     unset(
-                        $competitors[$current_competitor],
-                        $competitors['diff_'.$current_competitor]
+                        $headers[$competitor],
+                        $headers['diff_'.$competitor]
                     );
-
-                    foreach ($competitors as $competitor) {
-
-                        unset(
-                            $headers[$competitor],
-                            $headers['diff_'.$competitor]
-                        );
-                    }
                 }
             }
             

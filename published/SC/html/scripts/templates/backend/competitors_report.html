@@ -137,7 +137,7 @@
                     </td>
                     {if $smarty.get.competitor ne 'all' and $smarty.get.competitor ne ''}
                         {assign var=conc value=$smarty.get.competitor}
-                        {assign var=diff value="diff__$conc"}
+                        {assign var=diff value="diff_$conc"}
                         <td class="to_right border {if $GridRows[i].$diff > 0}red{else}green{/if}">{$GridRows[i].$conc}</td>
                         <td class="to_right {if $GridRows[i].$diff > 0}red{else}green{/if}">{$GridRows[i].$diff}%</td>
                     {else}

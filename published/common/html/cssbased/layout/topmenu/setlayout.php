@@ -147,7 +147,7 @@
 <?php if ( $FullScreen || $Inplace) { ?>
 	
 	#HeaderContainer {height: 0px}
-	#TContentWrapper {top: 10px; left: 10px}
+	#TContentWrapper {top: 0; left: 0}
 	#FooterContainer {display: none; height: 2px}
 	#LoginBlock {display: none}
 	#Header {display: none}

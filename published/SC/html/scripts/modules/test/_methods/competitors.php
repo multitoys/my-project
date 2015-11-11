@@ -248,7 +248,16 @@
 
                 $this->__getExportXLS($headers, $rows);
             }
+
+            $all_competitors = array(
+                array('conc' => 'divoland', 'diff' => 'diff_divoland', 'name' => 'Диволенд'),
+                array('conc' => 'dreamtoys', 'diff' => 'diff_dreamtoys', 'name' => 'Веселка'),
+                array('conc' => 'mixtoys', 'diff' => 'diff_mixtoys', 'name' => 'Микстойс'),
+                array('conc' => 'grandtoys', 'diff' => 'diff_grandtoys', 'name' => 'ГрандТойс'),
+                array('conc' => 'kindermarket', 'diff' => 'diff_kindermarket', 'name' => 'Киндер-Маркет')
+            );
             
+            $smarty->assign('Competitors', $all_competitors);
             $smarty->assign('Brands', $this->brands);
             $smarty->assign('Categories', $this->categories);
             $smarty->assign('disc_usd', $this->disc_usd);

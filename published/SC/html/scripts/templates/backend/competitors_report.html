@@ -1,6 +1,7 @@
 {*<link rel="stylesheet" href="/css/jquery.tooltip.css">*}
 {*<script src='/published/SC/html/scripts/js/jquery.min.js'></script>*}
 {*<script src='/js/jquery.tooltip.js'></script>*}
+{*{debug}*}
 {literal}
     <style>
         .za_body h3 {
@@ -135,16 +136,7 @@
         }
     </style>
 {/literal}
-{*{literal}*}
-    {*<script>*}
-        {*$(".preview").tooltip({*}
-            {*delay: 0, showURL: false, bodyHandler: function () {*}
-                {*return $("<img/>").attr("src", $(this).attr("data-pid"));*}
-            {*}*}
-        {*});*}
-    {*</script>*}
-{*{/literal}*}
-{*<link rel="stylesheet" href="/published/publicdata/MULTITOYS/attachments/SC/themes/user_multi-new/main.css" type="text/css">*}
+
 <div class="za_body">
     <h3>Сравнение цен по конкурентам
         <small>({$TotalFound})</small>
@@ -159,29 +151,29 @@
             <div id=checkings>
                 <div>
                     <input type="checkbox" name="new_items_postup" value="1" id="new_items_postup"
-                        {if $smarty.get.new_items_postup} checked="checked"{/if}>
+                            {if $smarty.get.new_items_postup} checked="checked"{/if}>
                     <label for="new_items_postup" style="color: darkviolet; font-style: italic">- только Новые Поступления</label>
                 </div>
 
-    
+
                 <div>
                     <input type="checkbox" name="bestsellers" value="1" id="bestsellers"
-                        {if $smarty.get.bestsellers} checked="checked"{/if}>
+                            {if $smarty.get.bestsellers} checked="checked"{/if}>
                     <label for="bestsellers" style="color: coral; font-style: italic">- только Хиты продаж</label>
                 </div>
 
                 <div>
                     <input type="checkbox" name="new" value="1" id="new"
-                        {if $smarty.get.new} checked="checked"{/if}>
+                            {if $smarty.get.new} checked="checked"{/if}>
                     <label for="new" style="color: cornflowerblue; font-style: italic">- только Новинки</label>
                 </div>
 
                 <div>
                     <input type="checkbox" name="currency" value="1" id="currency"
-                        {if $smarty.get.currency} checked="checked"{/if}>
+                            {if $smarty.get.currency} checked="checked"{/if}>
                     <label for="currency" style="color: darkred; font-style: italic">- цены в $USD</label>
                 </div>
-                
+
                 <div>
                     <input type="checkbox" name="export" value="1" id="export">
                     <label for="export" style="color: red; font-style: italic">- экспорт в <b>EXEL</b></label>
@@ -192,19 +184,19 @@
                 <div>
                     <label for="disc_usd">Скидка Китай:</label>
                     <input type="text" class="input_message" value="{$disc_usd}"
-                       style="margin-left: 41px;" name="disc_usd" id="disc_usd">
+                           style="margin-left: 41px;" name="disc_usd" id="disc_usd">
                 </div>
 
                 <div>
                     <label for="disc_ua">Скидка Украина:</label>
                     <input type="text" class="input_message" value="{$disc_ua}"
-                       style="margin-left: 26px;" name="disc_ua" id="disc_ua">
-                </div>          
+                           style="margin-left: 26px;" name="disc_ua" id="disc_ua">
+                </div>
 
                 <div>
                     <label for="disc_conc">Скидка Конкурентов:</label>
                     <input type="text" class="input_message" value="{$disc_conc}"
-                       name="disc_conc" id="disc_conc">
+                           name="disc_conc" id="disc_conc">
                 </div>
 
                 <div>
@@ -219,21 +211,11 @@
                     <label for="competitor" style="color: #FF0000">Конкуренты: </label>
                     <select name="competitor" style="width:196px;" id="competitor">
                         <option value='all'      {if $smarty.get.competitor eq 'all'} selected="selected"{/if}>Все конкуренты</option>
-                        <option value='divoland' {if $smarty.get.competitor eq 'divoland'} selected="selected"{/if}>
-                            Диволенд
-                        </option>
-                        <option value='dreamtoys'{if $smarty.get.competitor eq 'dreamtoys'} selected="selected"{/if}>
-                            Веселка
-                        </option>
-                        <option value='mixtoys' {if $smarty.get.competitor eq 'mixtoys'} selected="selected"{/if}>
-                            Микстойс
-                        </option>
-                        <option value='grandtoys' {if $smarty.get.competitor eq 'grandtoys'} selected="selected"{/if}>
-                            ГрандТойс
-                        </option>
-                        <option value='kindermarket' {if $smarty.get.competitor eq 'kindermarket'} selected="selected"{/if}>
-                            Киндер-Маркет
-                        </option>
+                        {section name=i loop=$Competitors}
+                            <option value="{$Competitors[i].conc}" {if $smarty.get.competitor eq $Competitors[i].conc} selected="selected"{/if}>
+                                {$Competitors[i].name}
+                            </option>
+                        {/section}
                     </select>
                 </div>
 
@@ -272,25 +254,7 @@
 
         </div>
     </form>
-    {*<script src='{$smarty.const.URL_JS}/jquery.1.9.1.js'></script>*}
     {if $GridRows}
-    {*{literal}*}
-        {*<script>*}
-            {*$(document).ready(function () {*}
-                {*var HeaderTop = $('#header').offset().top;*}
-
-                {*$(window).scroll(function () {*}
-                    {*if ($(window).scrollTop() > HeaderTop) {*}
-                        {*$('#header').css({position: 'fixed', top: '0px'});*}
-                    {*} else {*}
-                        {*$('#header').css({position: 'static'});*}
-                    {*}*}
-                {*});*}
-            {*});*}
-        {*</script>*}
-    {*{/literal}*}
-        {*{if $navigator}<p>{$navigator}</p>{/if}*}
-        {*<p class="gridsfooter">{$TotalFound} &nbsp;{include file="backend/lister.tpl.html"}</p>*}
         <table width="100%" border="0" cellpadding="0" cellspacing="0" class="grid">
             <tr class="gridsheader" id="header">
                 {include file="backend/gridheader.tpl.html"}
@@ -309,32 +273,19 @@
                     <td class="to_right {if $GridRows[i].max_diff > 0}red{else}green{/if}">
                         <strong>{$GridRows[i].max_diff}%</strong>
                     </td>
-                    {if $smarty.get.competitor eq 'divoland'}
-                        <td class="to_right border {if $GridRows[i].diff_divoland > 0}red{else}green{/if}">{$GridRows[i].divoland}</td>
-                        <td class="to_right {if $GridRows[i].diff_divoland > 0}red{else}green{/if}">{$GridRows[i].diff_divoland}%</td>
-                    {elseif $smarty.get.competitor eq 'dreamtoys'}
-                        <td class="to_right border {if $GridRows[i].diff_dreamtoys > 0}red{else}green{/if}">{$GridRows[i].dreamtoys}</td>
-                        <td class="to_right {if $GridRows[i].diff_dreamtoys > 0}red{else}green{/if}">{$GridRows[i].diff_dreamtoys}%</td>
-                    {elseif $smarty.get.competitor eq 'mixtoys'}
-                        <td class="to_right border {if $GridRows[i].diff_mixtoys > 0}red{else}green{/if}">{$GridRows[i].mixtoys}</td>
-                        <td class="to_right {if $GridRows[i].diff_mixtoys > 0}red{else}green{/if}">{$GridRows[i].diff_mixtoys}%</td>
-                    {elseif $smarty.get.competitor eq 'grandtoys'}
-                        <td class="to_right border {if $GridRows[i].diff_grandtoys > 0}red{else}green{/if}">{$GridRows[i].grandtoys}</td>
-                        <td class="to_right {if $GridRows[i].diff_grandtoys > 0}red{else}green{/if}">{$GridRows[i].diff_grandtoys}%</td>
-                    {elseif $smarty.get.competitor eq 'kindermarket'}
-                        <td class="to_right border {if $GridRows[i].diff_kindermarket > 0}red{else}green{/if}">{$GridRows[i].kindermarket}</td>
-                        <td class="to_right {if $GridRows[i].diff_kindermarket > 0}red{else}green{/if}">{$GridRows[i].diff_kindermarket}%</td>
+                    {if $smarty.get.competitor ne 'all'}
+                        {assign var=conc value=$smarty.get.competitor}
+                        {assign var=diff value="diff__$conc"}
+                        <td class="to_right border {if $GridRows[i].$diff > 0}red{else}green{/if}">{$GridRows[i].$conc}</td>
+                        <td class="to_right {if $GridRows[i].$diff > 0}red{else}green{/if}">{$GridRows[i].$diff}%</td>
                     {else}
-                        <td class="to_right border {if $GridRows[i].diff_divoland > 0}red{else}green{/if}">{$GridRows[i].divoland}</td>
-                        <td class="to_right {if $GridRows[i].diff_divoland > 0}red{else}green{/if}">{$GridRows[i].diff_divoland}%</td>
-                        <td class="to_right border {if $GridRows[i].diff_dreamtoys > 0}red{else}green{/if}">{$GridRows[i].dreamtoys}</td>
-                        <td class="to_right {if $GridRows[i].diff_dreamtoys > 0}red{else}green{/if}">{$GridRows[i].diff_dreamtoys}%</td>
-                        <td class="to_right border {if $GridRows[i].diff_mixtoys > 0}red{else}green{/if}">{$GridRows[i].mixtoys}</td>
-                        <td class="to_right {if $GridRows[i].diff_mixtoys > 0}red{else}green{/if}">{$GridRows[i].diff_mixtoys}%</td>
-                        <td class="to_right border {if $GridRows[i].diff_grandtoys > 0}red{else}green{/if}">{$GridRows[i].grandtoys}</td>
-                        <td class="to_right {if $GridRows[i].diff_grandtoys > 0}red{else}green{/if}">{$GridRows[i].diff_grandtoys}%</td>
-                        <td class="to_right border {if $GridRows[i].diff_kindermarket > 0}red{else}green{/if}">{$GridRows[i].kindermarket}</td>
-                        <td class="to_right {if $GridRows[i].diff_kindermarket > 0}red{else}green{/if}">{$GridRows[i].diff_kindermarket}%</td>
+                        {section name=x loop=$Competitors}
+                            {assign var=conc value=$Competitors[x].conc}
+                            {assign var=diff value=$Competitors[x].diff}
+                            <td class="to_right border {if $GridRows[i].$diff > 0}red{else}green{/if}">{$GridRows[i].$conc}</td>
+                            <td class="to_right {if $GridRows[i].$diff > 0}red{else}green{/if}">{$GridRows[i].$diff}%
+                            </td>
+                        {/section}
                     {/if}
                 </tr>
             {/section}

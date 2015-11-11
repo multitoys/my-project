@@ -273,7 +273,7 @@
                     <td class="to_right {if $GridRows[i].max_diff > 0}red{else}green{/if}">
                         <strong>{$GridRows[i].max_diff}%</strong>
                     </td>
-                    {if $smarty.get.competitor ne 'all'}
+                    {if $smarty.get.competitor ne 'all' and $smarty.get.competitor ne ''}
                         {assign var=conc value=$smarty.get.competitor}
                         {assign var=diff value="diff__$conc"}
                         <td class="to_right border {if $GridRows[i].$diff > 0}red{else}green{/if}">{$GridRows[i].$conc}</td>

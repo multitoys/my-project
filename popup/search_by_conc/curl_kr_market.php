@@ -159,7 +159,8 @@ TAG
                 $percent = $progress.'%';
                 progressBar('products', $percent);
             }
-            buferOut(5000);
+            unlink($filename);
+            buferOut(10000);
         }
         progressBar('products', $percent, true);
         echo('<hr><span style="color:blue;">Обработано '.$no.' товаров</span><br><br>Новых '.$new.' товаров</span><br>');

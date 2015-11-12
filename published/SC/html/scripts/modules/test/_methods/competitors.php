@@ -21,8 +21,8 @@
         protected $disc_ua = 20;
         protected $disc_conc = 0;
         protected $table = 'Conc__analogs';
-        protected $table_conc        = 'Conc__competitors';
-        protected $competitors_name  = array();
+        protected $table_conc       = 'Conc__competitors';
+        protected $competitors_name = array();
         protected $competitors_array = array();
         protected $competitors_params = array();
 
@@ -106,21 +106,23 @@
             $smarty = &$Register->get(VAR_SMARTY);
             /*@var $smarty Smarty*/
 
-            $Grid = new Grid();
-
             $this->__getBrandsArray();
             $this->__getCategoriesArray();
             $this->__getCompetitorsParams();
 
+            $Grid = new Grid();
+            
             $Grid->query_total_rows_num = "
                 SELECT COUNT(*) FROM $this->table
                 WHERE 1
-                $this->manufactured $this->brand $this->category $this->bestsellers $this->new $this->new_items_postup $this->competitor $this->search";
+                    $this->manufactured $this->brand $this->category $this->bestsellers 
+                    $this->new $this->new_items_postup $this->competitor $this->search";
 
             $Grid->query_select_rows = "
                 SELECT * FROM $this->table
                 WHERE 1
-                $this->manufactured $this->brand $this->category $this->bestsellers $this->new  $this->new_items_postup $this->competitor $this->search";
+                    $this->manufactured $this->brand $this->category $this->bestsellers 
+                    $this->new  $this->new_items_postup $this->competitor $this->search";
 
             $Grid->show_rows_num_select = true;
             $Grid->default_sort_direction = 'DESC';

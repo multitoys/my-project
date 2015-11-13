@@ -21,7 +21,7 @@
 		</div>
 	{/if}
 		<div class="header{if $smarty.session.log} inlog{/if}">
-		{if $smarty.session.cs_may_order > 0}
+            {if $smarty.session.log && $smarty.session.cs_may_order > 0}
 			<div>
 			  {welcome}, <span> {$smarty.session.cs_first_name} {$smarty.session.cs_last_name}</span>!
 			  {*if $smarty.session.log|cs_bonus>0}У Вас <span>{$smarty.session.log|cs_bonus} баллов</span>!{/if*}
@@ -132,11 +132,12 @@
 						{if $CurrentDivision.ukey|isauthpage}
 							{cpt_maincontent}
 						{else}
-							{if $smarty.get.already == 1}
-							{$MessageBlock}
+                            {*{if $smarty.get.already == 1}*}
+                            {if $MessageBlock}
+                                {$MessageBlock}
 								{include file="remind_password.html"}
-							{elseif $smarty.get.ukey=="act_customer"}
-								{include file="login.html"}
+                                {*{elseif $smarty.get.ukey=="act_customer"}*}
+                                {*{include file="login.html"}*}
 							{else}
 								{cs_show_main_page}
 							{/if}

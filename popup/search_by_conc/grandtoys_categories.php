@@ -226,7 +226,7 @@
             'Новинки'       => 'page_size500?new=1',
             'Хиты'          => 'page_size500?bestseller=1',
             'Акция'         => 'page_size500?offer=1',
-            '7 ноября 2015' => 'shop/news/view/256?page_size=500'
+            '12 ноября 2015' => 'shop/news/view/259?page_size=500'
         )
     );
 

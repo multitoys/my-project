@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="/css/competitors.css">
 <div class="za_body">
     <h3>Сравнение цен по конкурентам
-        <small>({$TotalFound})</small>
+        <small>({$search_word} {$TotalFound})</small>
     </h3>
     <form name="MainForm" method="get" action="{''|set_query}">
 
@@ -130,22 +130,22 @@
                     <td {if $GridRows[i].max_diff > 0}class="red"{/if}>{$GridRows[i].name_ru|escape:'html'}</td>
                     <td class="brand">{$GridRows[i].brand|escape:'html'}</td>
                     <td class="to_right choco">{$GridRows[i].purchase}</td>
-                    <td class="to_right choco">{$GridRows[i].margin}%</td>
-                    <td class="to_right bold {if $GridRows[i].max_diff > 0}red{else}blue{/if}">{$GridRows[i].Price}</td>
-                    <td class="to_right {if $GridRows[i].max_diff > 0}red{else}green{/if}">
+                    <td class="to_right choco{if $GridRows[i].margin < 10} red warning{/if}">{$GridRows[i].margin}%</td>
+                    <td class="to_right bold{if $GridRows[i].max_diff > 0} red{else} blue{/if}">{$GridRows[i].Price}</td>
+                    <td class="to_right{if $GridRows[i].max_diff > 0} red{else} green{/if}">
                         <strong>{$GridRows[i].max_diff}%</strong>
                     </td>
                     {if $smarty.get.competitor ne 'all' and $smarty.get.competitor ne ''}
                         {assign var=conc value=$smarty.get.competitor}
                         {assign var=diff value="diff_$conc"}
-                        <td class="to_right border {if $GridRows[i].$diff > 0}red{else}green{/if}">{$GridRows[i].$conc}</td>
-                        <td class="to_right {if $GridRows[i].$diff > 0}red{else}green{/if}">{$GridRows[i].$diff}%</td>
+                        <td class="to_right border{if $GridRows[i].$diff > 0} red{else} green{/if}">{$GridRows[i].$conc}</td>
+                        <td class="to_right{if $GridRows[i].$diff > 0} red{else} green{/if}">{$GridRows[i].$diff}%</td>
                     {else}
                         {section name=x loop=$Competitors}
                             {assign var=conc value=$Competitors[x].conc}
                             {assign var=diff value=$Competitors[x].diff}
-                            <td class="to_right border {if $GridRows[i].$diff > 0}red{else}green{/if}">{$GridRows[i].$conc}</td>
-                            <td class="to_right {if $GridRows[i].$diff > 0}red{else}green{/if}">{$GridRows[i].$diff}%
+                            <td class="to_right border{if $GridRows[i].$diff > 0} red{else} green{/if}">{$GridRows[i].$conc}</td>
+                            <td class="to_right{if $GridRows[i].$diff > 0} red{else} green{/if}">{$GridRows[i].$diff}%
                             </td>
                         {/section}
                     {/if}

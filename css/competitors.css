@@ -18,24 +18,24 @@ h3 small {
     vertical-align: top;
 }
 
-.red {
-    color: red;
-}
-
-.yellow {
-    color: yellow;
-}
-
-.green {
-    color: green;
-}
-
 .blue {
     color: blue;
 }
 
 .choco {
     color: #9800A0;
+}
+
+.red {
+    color: red;
+}
+
+.green {
+    color: green;
+}
+
+.yellow {
+    color: yellow;
 }
 
 .bold {
@@ -50,6 +50,10 @@ h3 small {
     color: gray;
     font-size: 11px;
     font-style: italic;
+}
+
+.warning {
+    text-decoration: underline;
 }
 
 tr.odd:hover td,
@@ -127,4 +131,9 @@ label, select, .input_message {
 #ok:active {
     background-color: #03a9f4;
     box-shadow: 1px 2px 5px 0 rgba(0, 0, 0, 0.4);
+}
+
+.yellow_mark {
+    box-shadow: 2px 2px 4px #99a;
+    background-color: yellow;
 }

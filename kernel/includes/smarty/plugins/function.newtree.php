@@ -22,7 +22,8 @@
                             <li><a href="/auxpage_kindermarket" aria-haspopup=true>Киндер-Маркет</a></li>
                             <li><a href="/auxpage_grandtoys" aria-haspopup=true>Гранд-Тойс</a></li>
                         </ul>
-                    </li>';
+                    </li>
+                    <li><a href="/category/novinki" aria-haspopup=true>Новинки</a></li>';
         }
         $query = '
                     SELECT count(*) AS tov_all_count
@@ -42,15 +43,15 @@
                 if ($res['slug'] === 'akcija' || $res['slug'] === 'akcija-bally') {
                     $a = 'style="color: red;text-shadow: 1px 1px 3px rgb(200, 104, 104),-1px -1px 3px rgb(255,255,255);"';
                 }
-                if ($res['slug'] !== 'novinki') {
-                    if ($res['slug'] !== 'akcija-bally' || $count > 0) {
+                if ($res['slug'] !== 'novinki' && $res['slug'] !== 'akcija' && $res['slug'] !== 'akcija-bally') {
+                    //                    if ($res['slug'] !== 'akcija-bally' || $count > 0) {
                         $disp .= '<li>';
                         if ($res['slug'] !== '')
                             $disp .= '<a '.$a.' href="/category/'.$res['slug'].'" aria-haspopup=true>'.$res['name'].'</a>';
                         else
                             $disp .= '<a href="?categoryID='.$res['categoryID'].'">'.$res['name'].'</a>';
                         $disp .= subcat($res['categoryID']).'';
-                    }
+                    //                    }
                 }
             }
             $disp .= '</li>

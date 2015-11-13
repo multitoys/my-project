@@ -156,7 +156,7 @@ TAG
                     $no++;
                 }
 				unlink($filename);
-                buferOut(5000);
+                buferOut(10000);
             }
             $part++;
             $progress = round(($part / $parts * 100), 0, PHP_ROUND_HALF_DOWN);

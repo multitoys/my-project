@@ -8,14 +8,14 @@
         </div>*}
     
         {zakcia}
-    
-        <div id="parent_popup" onclick="document.getElementById('parent_popup').style.display='none';">
-            <div id="popup" class="animated bounceInDown">
-                <h1 style="text-align: center; font-size: 26px;">Новые СКИДКИ и новые ЦЕНЫ!</h1>
-                {get_top_ua var=top_ua}
-                {include file="banner_top.html" top_ua=$top_ua}
 
-                {*<p style="text-align: center;"><strong><a class="button" href="/published/publicdata/MULTITOYS/attachments/SC/images/twenty.jpg"  target="_blank">Подробнее »</a></strong></p>*}
+    {*        <div id="parent_popup" onclick="document.getElementById('parent_popup').style.display='none';">
+                <div id="popup" class="animated bounceInDown">
+                    <h1 style="text-align: center; font-size: 26px;">Новые СКИДКИ и новые ЦЕНЫ!</h1>
+                    {get_top_ua var=top_ua}
+                    {include file="banner_top.html" top_ua=$top_ua}
+    
+                    *}{*<p style="text-align: center;"><strong><a class="button" href="/published/publicdata/MULTITOYS/attachments/SC/images/twenty.jpg"  target="_blank">Подробнее »</a></strong></p>*}{*
                 <a class="close" title="Закрыть"
                    onclick="document.getElementById('parent_popup').style.display='none';">&times;</a>
             </div>
@@ -23,7 +23,8 @@
         <script type="text/javascript">
             var delay_popup = 500;
             setTimeout("document.getElementById('parent_popup').style.display='block'", delay_popup);
-        </script>
+        </script>*}
+    
     {*<div id="parent_popup" onclick="document.getElementById('parent_popup').style.display='none';">*}
     {*<div id="popup" class="animated bounceInDown">*}
     {*<h1>Дарим Вам «ДВАДЦАТКУ»!</h1>*}

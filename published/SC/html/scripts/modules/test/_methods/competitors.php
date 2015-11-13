@@ -214,6 +214,9 @@
                 $this->__getExportXLS($headers, $rows);
             }
 
+            if ($this->search) {
+                $smarty->assign('search_word', 'По запросу "'.xEscapeSQLstring(trim($_GET['searchstring'])).'"');
+            }
             $smarty->assign('Competitors', $this->competitors_params);
             $smarty->assign('Brands', $this->brands);
             $smarty->assign('Categories', $this->categories);
@@ -277,7 +280,8 @@
 
         protected function __setSearch()
         {
-            $this->search = ' AND (product_code LIKE "%'.xEscapeSQLstring($_GET['searchstring']).'%" OR code_1c='.xEscapeSQLstring($_GET['searchstring']).' OR name_ru LIKE "%'.xEscapeSQLstring($_GET['searchstring']).'%")';
+            $search = xEscapeSQLstring(trim($_GET['searchstring']));
+            $this->search = ' AND (product_code LIKE "%'.$search.'%" OR code_1c="'.$search.'" OR name_ru LIKE "%'.$search.'%")';
         }
 
         protected function __getCompetitorsParams()
@@ -287,10 +291,12 @@
 
             while ($row = mysql_fetch_object($res)) {
 
-                $this->competitors_params[] = array(
+                $this->competitors_params[$row->CCID] = array(
                     'conc' => $row->competitor,
                     'diff' => 'diff_'.$row->competitor,
-                    'name' => $row->name_ru
+                    'name'     => $row->name_ru,
+                    'currency' => $row->currency_value,
+                    'disc'     => $row->disc_conc
                 );
                 $this->competitors_name[$row->competitor] = $row->name_ru;
                 $this->competitors_array[$row->competitor] = $row->competitor;
@@ -345,20 +351,29 @@
 
         protected function __getCategoriesArray()
         {
+            //            $query = "
+            //                      SELECT DISTINCT 
+            //                          category 
+            //                      FROM 
+            //                          $this->table 
+            //                      WHERE 1 
+            //                          $this->manufactured 
+            //                          $this->brand 
+            //                          $this->category 
+            //                          $this->bestsellers 
+            //                          $this->new 
+            //                          $this->new_items_postup 
+            //                          $this->competitor 
+            //                          $this->search
+            //                     ";
             $query = "
                       SELECT DISTINCT 
                           category 
                       FROM 
                           $this->table 
                       WHERE 1 
-                          $this->manufactured 
-                          $this->brand 
-                          $this->category 
-                          $this->bestsellers 
-                          $this->new 
-                          $this->new_items_postup 
                           $this->competitor 
-                          $this->search
+                          $this->manufactured
                      ";
             $res = mysql_query($query) or die(mysql_error().$query);
 

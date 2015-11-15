@@ -1,7 +1,7 @@
 /******************************************************************************
 Name:    Highslide JS
 Version: 3.2.6 (September 8 2007)
-Author:  Torstein Hønsi
+Author:  Torstein Hï¿½nsi
 Support: http://vikjavev.no/highslide/forum
 Email:   See http://vikjavev.no/megsjol
 

@@ -39,7 +39,7 @@ function toggle(action)
         editor.setMode(current_action);
 
         //constraints on the scale,
-        //code by Frédéric Klee <fklee@isuisse.com>
+        //code by Frï¿½dï¿½ric Klee <fklee@isuisse.com>
         if(action == 'scale')
         {
             var theImage = editor.window.document.getElementById('theImage');
@@ -69,7 +69,7 @@ function toggleMarker()
     }
 }
 
-//Togggle constraints, by Frédéric Klee <fklee@isuisse.com>
+//Togggle constraints, by Frï¿½dï¿½ric Klee <fklee@isuisse.com>
 function toggleConstraints()
 {
     var lock = document.getElementById("scaleConstImg");
@@ -91,7 +91,7 @@ function toggleConstraints()
     }
 }
 
-//check the constraints, by Frédéric Klee <fklee@isuisse.com>
+//check the constraints, by Frï¿½dï¿½ric Klee <fklee@isuisse.com>
 function checkConstrains(changed)
 {
     var constrained = document.getElementById('constProp');

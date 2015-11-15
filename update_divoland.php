@@ -111,8 +111,8 @@ TAG
                         $res = mysql_query($query) or die(mysql_error()."<br>$query");
                         $new++;
                     }
+                    $no++;
                 }
-                $no++;
             }
             $part++;
             $progress = round(($part / $parts * 100), 0, PHP_ROUND_HALF_DOWN);

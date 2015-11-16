@@ -291,12 +291,10 @@
 
             while ($row = mysql_fetch_object($res)) {
 
-                $this->competitors_params[$row->CCID] = array(
+                $this->competitors_params[] = array(
                     'conc' => $row->competitor,
                     'diff' => 'diff_'.$row->competitor,
-                    'name'     => $row->name_ru,
-                    'currency' => $row->currency_value,
-                    'disc'     => $row->disc_conc
+                    'name' => $row->name_ru
                 );
                 $this->competitors_name[$row->competitor] = $row->name_ru;
                 $this->competitors_array[$row->competitor] = $row->competitor;
@@ -351,21 +349,21 @@
 
         protected function __getCategoriesArray()
         {
-            //            $query = "
-            //                      SELECT DISTINCT 
-            //                          category 
-            //                      FROM 
-            //                          $this->table 
-            //                      WHERE 1 
-            //                          $this->manufactured 
-            //                          $this->brand 
-            //                          $this->category 
-            //                          $this->bestsellers 
-            //                          $this->new 
-            //                          $this->new_items_postup 
-            //                          $this->competitor 
-            //                          $this->search
-            //                     ";
+//            $query = "
+//                      SELECT DISTINCT 
+//                          category 
+//                      FROM 
+//                          $this->table 
+//                      WHERE 1 
+//                          $this->manufactured 
+//                          $this->brand 
+//                          $this->category 
+//                          $this->bestsellers 
+//                          $this->new 
+//                          $this->new_items_postup 
+//                          $this->competitor 
+//                          $this->search
+//                     ";
             $query = "
                       SELECT DISTINCT 
                           category 

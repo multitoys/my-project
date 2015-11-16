@@ -22,7 +22,7 @@
 
     if (isset($_GET) &&
         array_key_exists('new', $_GET) &&
-        $_GET['new'] === '1'
+        $_GET['new'] > 0
     ) {
         $b = true;
     }
@@ -49,7 +49,17 @@ TAG
 
         //----------- Импорт товаров ----------- 
         if ($b) {
-            $filename = $archive_dir.'dreamtoys_new.csv';
+            switch ($_GET['new']) {
+                case '3':
+                    $filename = $archive_dir . 'dreamtoys_akcia.csv';
+                    break;
+                case '2':
+                    $filename = $archive_dir . 'dreamtoys_new_postup.csv';
+                    break;
+                case '1':
+                    $filename = $archive_dir . 'dreamtoys_new.csv';
+                    break;
+            }
         } else {
             $filename = $archive_dir.'dreamtoys.csv';
         }

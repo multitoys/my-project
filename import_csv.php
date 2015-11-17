@@ -10,7 +10,11 @@
     include(DIR_FUNC.'/import_functions.php');
 
     $DB_tree = new DataBase();
-    $DB_tree->connect(SystemSettings::get('DB_HOST'), SystemSettings::get('DB_USER'), SystemSettings::get('DB_PASS'));
+    $DB_tree->connect(
+        SystemSettings::get('DB_HOST'),
+        SystemSettings::get('DB_USER'),
+        SystemSettings::get('DB_PASS')
+    );
     $DB_tree->selectDB(SystemSettings::get('DB_NAME'));
 
     header('Content-Encoding: none', true);
@@ -45,19 +49,19 @@ TAG
     $filename = $dest_dir.$filename0;
     $file = file($filename);
     $rowcount = count($file);
-//    echo(<<<TAG
-//				<div id='clients' >
-//					<div style='width:0px;'>&nbsp;</div>
-//				</div>
-//TAG
-//    );
+    //    echo(<<<TAG
+    //				<div id='clients' >
+    //					<div style='width:0px;'>&nbsp;</div>
+    //				</div>
+    //TAG
+    //    );
     if (!$rowcount) {
         showError("CSV-файл ($filename0) не содержит данных! (rowcount = $rowcount)");
     }
     if (($handle = fopen($filename, 'r')) !== false) {
 
         echo('<h1>Импорт покупателей ...('.$rowcount.')</h1><hr><br>');
-		
+
         $query = 'UPDATE SC_customers SET  1C = 0';
         $res = mysql_query($query) or die(mysql_error()."<br>$query");
         $success = 0;
@@ -353,7 +357,7 @@ TAG
                             $products_enabled[] = $productID;
                         }
                         // --------------------------------------------------
-                        
+
                     } else {
 
                         $query
@@ -552,7 +556,7 @@ TAG
         = 'INSERT INTO Search_products (categoryID, code_1c, product_code, name_ru, Price,enabled)
            SELECT  categoryID, code_1c, product_code, name_ru, Price, enabled FROM SC_products  WHERE in_stock = 100';
     $res = mysql_query($query) or die(mysql_error()."<br>$query");
-    
+
     $query
         = 'DELETE FROM `SC_shopping_cart_items`
             WHERE `productID` IS NULL';
@@ -563,9 +567,7 @@ TAG
         = 'OPTIMIZE TABLE `SC_auth_log`, `SC_categories`, `SC_category_product`, `SC_currency_types`, `SC_customers`, 
             `SC_customer_addresses`, `SC_customer_reg_fields_values`, `SC_ordered_carts`, `SC_orders`, 
             `SC_order_status_changelog`, `SC_products`, `SC_product_list_item`, `SC_product_pictures`, 
-            `SC_shopping_carts`, `SC_shopping_cart_items`, `SC_subscribers`, `Search_products`, 
-            `Conc__kindermarket`, `Conc__divoland`, `Conc__dreamtoys`, `Conc__mixtoys`, `Conc_search__kindermarket`, 
-            `Conc_search__divoland`, `Conc_search__dreamtoys`, `Conc_search__mixtoys`';
+            `SC_shopping_carts`, `SC_shopping_cart_items`, `SC_subscribers`, `Search_products`';
     $res = mysql_query($query) or die(mysql_error()."<br>$query");
 
     /*
@@ -575,9 +577,6 @@ TAG
     $products_enabled = implode(',', $products_enabled);
     deleteRow($table, 'productID NOT IN ('.$products_enabled.')');
 
-    $query = "UPDATE $table SET kindermarket=NULL, divoland=NULL, dreamtoys=NULL, mixtoys=NULL, grandtoys=NULL";
-    $res = mysql_query($query) or die(mysql_error().$query);
-    
     $query = 'SELECT * FROM Conc__competitors';
     $res = mysql_query($query) or die(mysql_error()."<br>$query");
 
@@ -588,12 +587,16 @@ TAG
         $concs[] = $Currs->competitor;
     }
 
+    $delete_null = '';
+    $diff_conc = array();
+
     foreach ($concs as $unic_conc) {
 
-        //        $unic_conc = $conc;
-        //        $pattern = '/([^\d]+)\d*/i';
-        //        $replacement = '${1}';
-        //        $unic_conc = preg_replace($pattern, $replacement, $unic_conc);
+        $query = "UPDATE $table SET $unic_conc=NULL";
+        $res = mysql_query($query) or die(mysql_error().$query);
+
+        $delete_null .= 'AND '.$unic_conc.' IS NULL ';
+        $diff_conc[] = 'diff_'.$unic_conc;
 
         $query = "SELECT code, code_1c FROM Conc_search__$unic_conc";
         $res = mysql_query($query) or die(mysql_error().$query);
@@ -626,12 +629,16 @@ TAG
                 $res3 = mysql_query($query3) or die(mysql_error()."<br>$query");
             }
         }
+
+        optimizeTable('Conc__'.$unic_conc);
+        optimizeTable('Conc_search__'.$unic_conc);
     }
 
-    $query = "DELETE FROM $table WHERE (kindermarket IS NULL AND divoland IS NULL AND dreamtoys IS NULL AND mixtoys IS NULL AND grandtoys IS NULL)";
+    $query = "DELETE FROM $table WHERE 1 $delete_null";
     $res = mysql_query($query) or die(mysql_error().$query);
 
-    $query = "UPDATE $table SET max_diff = GREATEST(diff_kindermarket, diff_divoland, diff_dreamtoys, diff_mixtoys, diff_grandtoys)";
+    $diff_conc = implode(',', $diff_conc);
+    $query = "UPDATE $table SET max_diff = GREATEST($diff_conc)";
     $res = mysql_query($query) or die(mysql_error().$query);
 
     optimizeTable($table);

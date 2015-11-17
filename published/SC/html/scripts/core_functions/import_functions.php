@@ -147,7 +147,6 @@
     {
         $query = "OPTIMIZE TABLE $table";
         $res = mysql_query($query) or die(mysql_error()."<br>$query");
-        mysql_close();
     }
 
     function csvToArray($filename = '', $length = 0, $delimiter = ';')

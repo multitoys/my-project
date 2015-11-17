@@ -429,24 +429,11 @@
 
         protected function __updateAnalogs()
         {
-            //            ini_set('display_errors', true);
-            //            define('DIR_ROOT', $_SERVER['DOCUMENT_ROOT'].'/published/SC/html/scripts');
-            //            include_once(DIR_ROOT.'/includes/init.php');
-            //            include_once(DIR_CFG.'/connect.inc.wa.php');
-            //            include_once(DIR_FUNC.'/setting_functions.php');
             include(DIR_FUNC.'/import_functions.php');
-
-            //            $DB_tree = new DataBase();
-            //            $DB_tree->connect(
-            //                SystemSettings::get('DB_HOST'),
-            //                SystemSettings::get('DB_USER'),
-            //                SystemSettings::get('DB_PASS')
-            //            );
-            //            $DB_tree->selectDB(SystemSettings::get('DB_NAME'));
 
             $table = 'Conc__analogs';
 
-            $query = 'SELECT * FROM Conc__competitors';
+            $query = 'SELECT competitor, currency_value FROM Conc__competitors';
             $res = mysql_query($query) or die(mysql_error()."<br>$query");
 
             $competitors = array();

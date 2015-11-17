@@ -122,7 +122,7 @@ TAG
                 $name
                     = mysql_real_escape_string(trim(str_replace($replace_name, '', decodeCodepage($products[2][$j]))));
                 $price = (double)$products[3][$j];
-                $price_usd = $price / 20.51;
+                $price_usd = $price / 21.40;
                 $product_code = mysql_real_escape_string(trim($products[4][$j]));
                 $productID = getValue('productID', 'Conc__kindermarket', "code = '$code'");
 

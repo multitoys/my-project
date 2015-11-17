@@ -108,7 +108,7 @@
             'Куклы интерактивные'                          => '1132-Kukli-interaktivnie',
             'Одежда для кукол и пупсов'                    => '416-Odezhda-dlya-kukol-i-pupsov',
             'Посуда, кухни, быт.приборы,овощи-фрукты'      => '360-Posuda-kuhni-bitpriboriovoschi-frukti',
-            'Пупсы BABY BORN'   => '417-Pupsi-BABY-BORN',
+            'Пупсы BABY BORN' => '417-Pupsi-BABY-BORN',
             'Столики кухонные, туалетные'                  => '363-Stoliki-kuhonnie-tualetnie-doktora-instrumentalnie'
         ),
 
@@ -226,7 +226,8 @@
             'Новинки'       => 'page_size500?new=1',
             'Хиты'          => 'page_size500?bestseller=1',
             'Акция'         => 'page_size500?offer=1',
-            '16 ноября 2015' => 'shop/news/view/266?page_size=500'
+            '16 ноября 2015' => 'shop/news/view/266?page_size=500',
+            '17 ноября 2015' => 'shop/news/view/267?page_size=500'
         )
     );
 

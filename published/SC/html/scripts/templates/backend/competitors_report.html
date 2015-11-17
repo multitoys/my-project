@@ -1,4 +1,25 @@
 <link rel="stylesheet" href="/css/competitors.css">
+{literal}
+    <script>
+        function update() {
+            var xhttp;
+            if (window.XMLHttpRequest) {
+                xhttp = new XMLHttpRequest();
+            } else {
+                xhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            xhttp.onreadystatechange = function () {
+                if (xhttp.readyState == 4 && xhttp.status == 200) {
+                    document.getElementById("update").innerHTML = xhttp.responseText;
+                }
+            };
+            xhttp.open("GET", "/published/SC/html/scripts/frame.php?did=234&update=1", true);
+            xhttp.send();
+
+            return false;
+        }
+    </script>
+{/literal}
 <div class="za_body">
     <h3>Сравнение цен по конкурентам
         <small>({$search_word} {$TotalFound})</small>
@@ -113,6 +134,7 @@
             </div>
 
             <input id=ok type="submit" name="search" value="{"btn_find"|translate}">
+            <input id=update type="submit" name="update" value="Обновить данные" onclick="update()">
 
         </div>
     </form>

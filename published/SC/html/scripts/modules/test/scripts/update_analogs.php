@@ -49,11 +49,7 @@
         $query = "SELECT code, code_1c FROM Conc_search__$unic_conc";
         $res = mysql_query($query) or die(mysql_error().$query);
 
-        $usd_conc = $usd;
-
-        if (array_key_exists($unic_conc, $competitors)) {
-            $usd_conc = $competitors[$unic_conc];
-        }
+        $usd_conc = $competitors[$unic_conc];
 
         while ($Codes = mysql_fetch_object($res)) {
 

@@ -109,7 +109,7 @@ label, select, .input_message {
     margin-left: 5px;
 }
 
-#ok {
+#ok, #update {
     width: 80px;
     height: 70px;
     padding: 0;
@@ -123,14 +123,21 @@ label, select, .input_message {
     cursor: pointer;
 }
 
-#ok:hover {
+#ok:hover, #update:hover {
     background-color: #0288d1;
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.4);
 }
 
-#ok:active {
+#ok:active, #update:active {
     background-color: #03a9f4;
     box-shadow: 1px 2px 5px 0 rgba(0, 0, 0, 0.4);
+}
+
+#update {
+    width: 250px;
+    height: 40px;
+    margin-left: 30px;
+    background-color: #98A5BB;
 }
 
 .yellow_mark {

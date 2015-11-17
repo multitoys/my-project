@@ -232,7 +232,7 @@
 
     function str2Url($str)
     {
-        $str = Rus2Translit($str);
+        $str = rus2Translit($str);
         $str = strtolower($str);
         $str = preg_replace('~[^-a-z0-9_]+~u', '-', $str);
         $str = trim($str, '-');

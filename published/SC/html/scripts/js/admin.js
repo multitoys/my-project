@@ -51,6 +51,24 @@ function sc_submitAjaxForm(objForm){
 	} catch ( e ) { ; } finally {	;}
 	return false;
 }
+function updateAjaxAnalogs(objForm) {
+
+    var req = new JsHttpRequest();
+    req.onreadystatechange = function () {
+        if (req.readyState == 4) {
+            if (req.responseText)alert(req.responseText);
+        }
+    }
+    try {
+        req.open('POST', '/published/SC/html/scripts/frame.php?did=234' + "&caller=1&initscript=ajaxservice", true);
+        req.send({q: objForm, 'action': 'updateAnalogs'});
+    } catch (e) {
+        catchResult(e);
+    } finally {
+        ;
+    }
+    return false;
+}
 
 Behaviour.register({
 
@@ -97,6 +115,13 @@ Behaviour.register({
 			return false;
 		}
 	},
+    //'.update': function(e){
+    //	e.onsubmit = function(){
+    //
+    //       updateAjaxAnalogs(this);
+    //		return false;
+    //	}
+    //},
 	'tr.gridline': function(e){
 		e.onmouseover = function(){
 			this.style.background = '#f5f0bb';

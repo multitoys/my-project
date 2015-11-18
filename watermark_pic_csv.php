@@ -55,7 +55,7 @@
 
         $days = 0;
         if (isset($_GET['days'])) {
-            $days = (i$nt)$_GET['days'];
+            $days = (int)$_GET['days'];
         }
         echo("
 				Импорт фотографий ...<hr>

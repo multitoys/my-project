@@ -78,14 +78,12 @@
             $pics = $data[0];
             $num = $data[1];
             $num = ($num > 0)?$num:0;
-            // $pics       = mysql_real_escape_string($pics);
             $dopic = $pics;
             if ($num > 9) {
                 $dopic = substr($pics, 0, -3);
             } elseif ($num > 0) {
                 $dopic = substr($pics, 0, -2);
             }
-            //$dopic      = ($num > 0)?substr($pics, 0, -2):$pics;
             $pics_search = $pics.'_s.jpg';
             $pics_thm = $pics.'_thm.jpg';
             $pics_enl = $pics.'_enl.jpg';
@@ -106,7 +104,6 @@
                     unlink($file_name2);
                     make_thumbnail($file_name, $file_name2, false, 80);
                 }
-
                 $file_name2 = DIR_PRODUCTS_PICTURES.'/'.$pics_thm;
                 if (filemtime($file_name2) < time() - 86400 * $days) {
                     unlink($file_name2);
@@ -114,7 +111,6 @@
                 } else {
                     $last_modified--;
                 }
-
                 $file_name2 = DIR_PRODUCTS_PICTURES.'/'.$picture;
                 if (filemtime($file_name2) < time() - 86400 * $days) {
                     unlink($file_name2);
@@ -122,7 +118,6 @@
                 } else {
                     $last_modified--;
                 }
-
                 $file_name2 = DIR_PRODUCTS_PICTURES.'/'.$pics_enl;
                 if (filemtime($file_name2) < time() - 86400 * $days) {
                     unlink($file_name2);
@@ -130,24 +125,20 @@
                 } else {
                     $last_modified--;
                 }
-
                 if ($last_modified === 0) {
                     $not_modified++;
                 }
                 unlink($file_name);
 
                 $productID = GetValue('productID', 'SC_products', "code_1c = $dopic");
-
                 if (!$productID) {
                     echo("<span style='color: #FF8000;'>$picture - товара нет на сайте<br></span>");
                     $erorr++;
                 } else {
-
                     $pictureID = GetValue('default_picture', 'SC_products', "code_1c = $dopic");
                     $query = "DELETE FROM `SC_product_pictures` WHERE `filename`='$picture' AND `productID`!=$productID";
                     $res = mysql_query($query) or die(mysql_error()."<br>$query");
                     $pid = GetValue('PhotoID', 'SC_product_pictures', "filename = '$picture'");
-
                     if ($pid) {
                         $query = "UPDATE SC_product_pictures
 													SET 
@@ -161,13 +152,11 @@
                         $res = mysql_query($query) or die(mysql_error()."<br>$query");
                         $pid = mysql_insert_id();
                     }
-
                     if ($num === 0 || $pictureID === '') {
                         $query = "UPDATE SC_products SET default_picture = $pid
 													WHERE productID = $productID";
                         $res = mysql_query($query) or die(mysql_error()."<br>$query");
                     }
-
                     $progress = round(($no / ($rowcount) * 100), 0, PHP_ROUND_HALF_DOWN);
                     if ($progress > $percent) {
                         $percent = $progress.'%';
@@ -194,7 +183,7 @@
   <div id='end'>Импорт завершен!</div>
 ");
     Debugging($start);
-
+    
     // Функции
     function make_thumbnail($file_name, $fileout, $stamp, $max_size, $quality = 80)
     {
@@ -241,7 +230,6 @@
             $sx = imagesx($stamp);
             $sy = imagesy($stamp);
             // $im = imagecreatefromjpeg($main_img_obj);
-
             //		$image = imagecreatefromJPEG($fileout);
             imagecopy(
                 $thumb,
@@ -258,7 +246,7 @@
         // 		imagejpeg($thumb, $fileout);
         imagedestroy($thumb);
     }
-
+    
     function GetValue($what, $table, $condition)
     {
         $query = "SELECT $what FROM $table WHERE $condition LIMIT 1";
@@ -295,11 +283,9 @@
 
     function Debugging($start)
     {
-        // $memoscript = memory_get_usage(true)/1048576;
         $memoscript_peak = memory_get_peak_usage(true) / 1048576;
         $time = microtime(true) - $start;
         printf('<br>Скрипт выполнялся: %.2F сек.', $time);
-        // printf('<br>Использовано оперативной памяти: %.2F МБ.', $memoscript);
         printf('<br>Пик оперативной памяти: %.2F МБ.', $memoscript_peak);
 
         return;

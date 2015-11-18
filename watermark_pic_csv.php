@@ -54,7 +54,9 @@
     if (($handle = fopen($filename, 'r')) !== false) {
 
         $days = 0;
-
+        if (isset($_GET['days'])) {
+            $days = (i$nt)$_GET['days'];
+        }
         echo("
 				Импорт фотографий ...<hr>
 				<div id='products' >

@@ -175,6 +175,7 @@
                     $_SESSION["log"] = $login;
                     $_SESSION["pass"] = Crypt::PasswordCrypt($password, null);
                     $_SESSION["current_currency"] = $row["CID"];
+    
                     ZAddAuthEvent($login, 1);
                     // move cart content into DB
                     // moveCartFromSession2DB();
@@ -1155,7 +1156,11 @@ include("./cfg/tables.inc.php");
     function ZAddAuthEvent($Login, $state)
     {
         if ($Login != "") {
-
+            //            if ($state) {
+            //                $im = imagegrabscreen();
+            //                imagepng($im, DIR_LOGS_PICS."/".$Login."_(".$state.")_".date('d-m-Y_H-m').".png");
+            //                imagedestroy($im);
+            //            }
             // $ip_address = GetRealIp();
             $ip_address = $_SERVER['REMOTE_ADDR'];
             $all_ip = get_all_ip();

@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.9, created on 2015-10-22 11:48:52
+<?php /* Smarty version 2.6.9, created on 2015-11-18 17:35:52
          compiled from product_price.html */ ?>
 <?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
 smarty_core_load_plugins(array('plugins' => array(array('modifier', 'translate', 'product_price.html', 17, false),array('modifier', 'escape', 'product_price.html', 35, false),)), $this); ?>
@@ -93,8 +93,7 @@ smarty_core_load_plugins(array('plugins' => array(array('modifier', 'translate',
  <?php echo @CONF_WEIGHT_UNIT; ?>
 
 	</div>
-	<?php endif; ?>
-<?php else: ?>
+	<?php endif;  else: ?>
 	<span class="regularPrice">$100</span>
 	<span class="totalPrice">$90</span>
 
@@ -109,5 +108,4 @@ smarty_core_load_plugins(array('plugins' => array(array('modifier', 'translate',
 :&nbsp;</span>
 		<span class="productCode">ART2800</span>
 	</div>
-	<?php endif; ?>
-<?php endif; ?>
+	<?php endif;  endif; ?>

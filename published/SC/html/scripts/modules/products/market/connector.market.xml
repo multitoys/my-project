@@ -1,0 +1,9 @@
+<Connector>
+	<Class>
+        <Name>Market</Name>
+        <File>class.market.php</File>
+        <Title>Экспорт списка товаров для интернет-магазинов</Title>
+		<Description></Description>
+		<SingleInstallation>true</SingleInstallation>
+	</Class>
+</Connector>

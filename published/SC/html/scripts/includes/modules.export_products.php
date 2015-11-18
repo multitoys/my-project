@@ -34,7 +34,7 @@
              * Key category id, value checked or not
              * if isset() for category false category werent displayed
              */
-            session_unregister('checkedCategories');
+            //            session_unregister('checkedCategories');
             unset(
                 $_SESSION['checkedCategories'],
                 $_SESSION['explortExpandedIDs'],

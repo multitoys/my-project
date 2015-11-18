@@ -102,6 +102,167 @@
                 }
             }
         }
+    
+        protected function __updateAnalogs()
+        {
+            include(DIR_FUNC.'/import_functions.php');
+        
+            $table = 'Conc__analogs';
+        
+            $query = 'SELECT competitor, currency_value FROM Conc__competitors';
+            $res = mysql_query($query) or die(mysql_error()."<br>$query");
+        
+            $competitors = array();
+            $concs = array();
+        
+            while ($Currs = mysql_fetch_object($res)) {
+                $competitors[$Currs->competitor] = $Currs->currency_value;
+                $concs[] = $Currs->competitor;
+            }
+        
+            $delete_null = '';
+            $diff_conc = array();
+        
+            foreach ($concs as $unic_conc) {
+            
+                $query = 'UPDATE '.$table.' SET '.$unic_conc.'=NULL';
+                $res = mysql_query($query) or die(mysql_error().$query);
+            
+                $delete_null .= 'AND '.$unic_conc.' IS NULL ';
+                $diff_conc[] = 'diff_'.$unic_conc;
+            
+                $query = "SELECT code, code_1c FROM Conc_search__$unic_conc";
+                $res = mysql_query($query) or die(mysql_error().$query);
+            
+                $usd_conc = $competitors[$unic_conc];
+            
+                while ($Codes = mysql_fetch_object($res)) {
+                
+                    $query2
+                        = "SELECT
+                        price_uah
+                    FROM
+                        Conc__$unic_conc
+                    WHERE
+                        code = '$Codes->code' AND enabled=1";
+                    $res2 = mysql_query($query2) or die(mysql_error().$query2);
+                
+                    if ($analog = mysql_fetch_row($res2)) {
+                    
+                        $query3
+                            = "UPDATE $table
+                            SET    $unic_conc      = $analog[0],
+                                   usd_$unic_conc  = $analog[0]/$usd_conc,
+                                   diff_$unic_conc = ROUND((Price/$analog[0]-1)*100, 1)
+                            WHERE  code_1c         = '$Codes->code_1c'";
+                        $res3 = mysql_query($query3) or die(mysql_error()."<br>$query");
+                    }
+                }
+            
+                optimizeTable('Conc__'.$unic_conc);
+                optimizeTable('Conc_search__'.$unic_conc);
+            }
+        
+            $query = "DELETE FROM $table WHERE 1 $delete_null";
+            $res = mysql_query($query) or die(mysql_error().$query);
+        
+            $diff_conc = implode(',', $diff_conc);
+            $query = "UPDATE $table SET max_diff = GREATEST($diff_conc)";
+            $res = mysql_query($query) or die(mysql_error().$query);
+        
+            if ($res) {
+                optimizeTable($table);
+                /*                echo('Импорт завершен!');
+                                echo('<a href="/published/SC/html/scripts/frame.php?did=234">Вернуться</a>');
+                                die();*/
+            }
+        }
+    
+        protected function __setDisc_usd()
+        {
+            $this->disc_usd = (int)$_GET['disc_usd'];
+        }
+    
+        protected function __setDisc_ua()
+        {
+            $this->disc_ua = (int)$_GET['disc_ua'];
+        }
+    
+        protected function __setDisc_conc()
+        {
+            $this->disc_conc = (int)$_GET['disc_conc'];
+        }
+    
+        protected function __setCurrency()
+        {
+            $this->currency = 'usd_';
+        }
+    
+        protected function __getProductsList($field_for_list, $limit = 150)
+        {
+            $query = 'SELECT code_1c FROM SC_products WHERE enabled = 1 ORDER BY '.$field_for_list.' DESC LIMIT '.$limit;
+            $res = mysql_query($query) or die(mysql_error().$query);
+        
+            $ids = array();
+        
+            while ($row = mysql_fetch_object($res)) {
+                $ids[] = $row->code_1c;
+            }
+        
+            $ids = implode(',', $ids);
+        
+            $this->bestsellers = ' AND code_1c IN ('.$ids.')';
+        }
+    
+        protected function __getNewItemsPostup()
+        {
+            $query = "SELECT productID FROM SC_product_list_item
+                    WHERE list_id = 'newitemspostup'";
+            $res = mysql_query($query) or die(mysql_error().$query);
+        
+            $ids = array();
+        
+            while ($row = mysql_fetch_object($res)) {
+                $ids[] = $row->productID;
+            }
+        
+            $ids = implode(',', $ids);
+        
+            $this->new_items_postup = ' AND productID IN ('.$ids.')';
+        }
+    
+        protected function __setManufactured()
+        {
+            $made_in = '< 1';
+        
+            if (xEscapeSQLstring($_GET['manufactured']) === 'Ukraine') {
+                $made_in = '> 0';
+            }
+        
+            $this->manufactured = ' AND ukraine '.$made_in;
+        }
+    
+        protected function __setBrand()
+        {
+            $this->brand = ' AND brand = "'.xEscapeSQLstring($_GET['brand']).'"';
+        }
+    
+        protected function __setCategory()
+        {
+            $this->category = ' AND category = "'.xEscapeSQLstring($_GET['category']).'"';
+        }
+    
+        protected function __setCompetitor()
+        {
+            $this->conc = xEscapeSQLstring($_GET['competitor']);
+            $this->competitor = ' AND '.$this->conc;
+        }
+    
+        protected function __setSearch()
+        {
+            $search = xEscapeSQLstring(trim($_GET['searchstring']));
+            $this->search = ' AND (product_code LIKE "%'.$search.'%" OR code_1c="'.$search.'" OR name_ru LIKE "%'.$search.'%")';
+        }
 
         public function main()
         {
@@ -138,6 +299,7 @@
             $Grid->registerHeader('Артикул', 'product_code', false, 'ASC');
             $Grid->registerHeader('Фото');
             $Grid->registerHeader('Наименование', 'name_ru', true, 'ASC');
+            $Grid->registerHeader('Категория', 'category', false, 'ASC');
             $Grid->registerHeader('Бренд', 'brand', true, 'ASC');
             $Grid->registerHeader('Закупка', 'purchase', false, 'ASC', 'right');
             $Grid->registerHeader('Наценка', 'margin', false, 'ASC', 'right');
@@ -198,15 +360,16 @@
             if (isset($_GET['export'])) {
 
                 $headers = array(
-                    'num'               => '№',
-                    'code_1c'           => 'Код 1С',
-                    'product_code'      => 'Артикул',
-                    'name_ru'           => 'Наименование',
-                    'brand'             => 'Бренд',
-                    'purchase'          => 'Закупка',
-                    'margin'            => 'Наценка',
-                    'Price'             => 'Мультитойс',
-                    'max_diff'          => 'MAX-%',
+                    'num'          => '№',
+                    'code_1c'      => 'Код 1С',
+                    'product_code' => 'Артикул',
+                    'name_ru'      => 'Наименование',
+                    'category'     => 'Категория',
+                    'brand'        => 'Бренд',
+                    'purchase'     => 'Закупка',
+                    'margin'       => 'Наценка',
+                    'Price'        => 'Мультитойс',
+                    'max_diff'     => 'MAX-%',
                 );
 
                 foreach ($this->competitors_params as $params) {
@@ -233,109 +396,6 @@
 
             $smarty->display(DIR_TPLS.'/backend/competitors_report.html');
 
-        }
-
-        protected function __setDisc_usd()
-        {
-            $this->disc_usd = (int)$_GET['disc_usd'];
-        }
-
-        protected function __setDisc_ua()
-        {
-            $this->disc_ua = (int)$_GET['disc_ua'];
-        }
-
-        protected function __setDisc_conc()
-        {
-            $this->disc_conc = (int)$_GET['disc_conc'];
-        }
-
-        protected function __setCurrency()
-        {
-            $this->currency = 'usd_';
-        }
-
-        protected function __setManufactured()
-        {
-            $made_in = '< 1';
-
-            if (xEscapeSQLstring($_GET['manufactured']) === 'Ukraine') {
-                $made_in = '> 0';
-            }
-
-            $this->manufactured = ' AND ukraine '.$made_in;
-        }
-
-        protected function __setBrand()
-        {
-            $this->brand = ' AND brand = "'.xEscapeSQLstring($_GET['brand']).'"';
-        }
-
-        protected function __setCategory()
-        {
-            $this->category = ' AND category = "'.xEscapeSQLstring($_GET['category']).'"';
-        }
-
-        protected function __setCompetitor()
-        {
-            $this->conc = xEscapeSQLstring($_GET['competitor']);
-            $this->competitor = ' AND '.$this->conc;
-        }
-
-        protected function __setSearch()
-        {
-            $search = xEscapeSQLstring(trim($_GET['searchstring']));
-            $this->search = ' AND (product_code LIKE "%'.$search.'%" OR code_1c="'.$search.'" OR name_ru LIKE "%'.$search.'%")';
-        }
-
-        protected function __getCompetitorsParams()
-        {
-            $query = "SELECT * FROM $this->table_conc ORDER BY CCID";
-            $res = mysql_query($query) or die(mysql_error()."<br>$query");
-
-            while ($row = mysql_fetch_object($res)) {
-
-                $this->competitors_params[] = array(
-                    'conc' => $row->competitor,
-                    'diff' => 'diff_'.$row->competitor,
-                    'name' => $row->name_ru
-                );
-                $this->competitors_name[$row->competitor] = $row->name_ru;
-                $this->competitors_array[$row->competitor] = $row->competitor;
-            }
-        }
-
-        protected function __getProductsList($field_for_list, $limit = 150)
-        {
-            $query = 'SELECT code_1c FROM SC_products WHERE enabled = 1 ORDER BY '.$field_for_list.' DESC LIMIT '.$limit;
-            $res = mysql_query($query) or die(mysql_error().$query);
-
-            $ids = array();
-
-            while ($row = mysql_fetch_object($res)) {
-                $ids[] = $row->code_1c;
-            }
-
-            $ids = implode(',', $ids);
-
-            $this->bestsellers = ' AND code_1c IN ('.$ids.')';
-        }
-
-        protected function __getNewItemsPostup()
-        {
-            $query = "SELECT productID FROM SC_product_list_item
-                    WHERE list_id = 'newitemspostup'";
-            $res = mysql_query($query) or die(mysql_error().$query);
-
-            $ids = array();
-
-            while ($row = mysql_fetch_object($res)) {
-                $ids[] = $row->productID;
-            }
-
-            $ids = implode(',', $ids);
-
-            $this->new_items_postup = ' AND productID IN ('.$ids.')';
         }
 
         protected function __getBrandsArray()
@@ -384,7 +444,24 @@
             }
             sort($this->categories);
         }
-
+    
+        protected function __getCompetitorsParams()
+        {
+            $query = "SELECT * FROM $this->table_conc ORDER BY CCID";
+            $res = mysql_query($query) or die(mysql_error()."<br>$query");
+        
+            while ($row = mysql_fetch_object($res)) {
+            
+                $this->competitors_params[] = array(
+                    'conc' => $row->competitor,
+                    'diff' => 'diff_'.$row->competitor,
+                    'name' => $row->name_ru
+                );
+                $this->competitors_name[$row->competitor] = $row->name_ru;
+                $this->competitors_array[$row->competitor] = $row->competitor;
+            }
+        }
+        
         protected function __priceDiscount($Price, $ua)
         {
             $real_skidka = ($ua)?$this->disc_ua:$this->disc_usd;
@@ -392,21 +469,21 @@
 
             return number_format($outPrice, 2);
         }
-        
+
         protected function __priceConc($Price)
         {
             $outPrice = round($Price - ($Price * $this->disc_conc / 100), 2);
 
             return number_format($outPrice, 2, $dec_point = '.', $thousands_sep = '');
         }
-
+    
         protected function __priceDiff($Price, $price_conc, $decimals = 0)
         {
             $outDiff = round(($Price / $price_conc - 1) * 100, 1);
 
             return number_format($outDiff, $decimals, $dec_point = '.', $thousands_sep = '');
         }
-        
+    
         protected function __getExportXLS($headers, $rows)
         {
             if ($this->conc !== 'all' && in_array($this->conc, $this->competitors_array)) {
@@ -425,81 +502,6 @@
             $replace = array(' ', 'AND', 'category');
             $date = date('d-m-Y', time());
             new MakeXLS($headers, $rows, str_replace($replace, '-', $this->competitor.'-'.xEscapeSQLstring($_GET['manufactured']).'-'.$this->brand.'-'.$this->category).'-'.$date);
-        }
-
-        protected function __updateAnalogs()
-        {
-            include(DIR_FUNC.'/import_functions.php');
-
-            $table = 'Conc__analogs';
-
-            $query = 'SELECT competitor, currency_value FROM Conc__competitors';
-            $res = mysql_query($query) or die(mysql_error()."<br>$query");
-
-            $competitors = array();
-            $concs = array();
-
-            while ($Currs = mysql_fetch_object($res)) {
-                $competitors[$Currs->competitor] = $Currs->currency_value;
-                $concs[] = $Currs->competitor;
-            }
-
-            $delete_null = '';
-            $diff_conc = array();
-
-            foreach ($concs as $unic_conc) {
-
-                $query = 'UPDATE '.$table.' SET '.$unic_conc.'=NULL';
-                $res = mysql_query($query) or die(mysql_error().$query);
-
-                $delete_null .= 'AND '.$unic_conc.' IS NULL ';
-                $diff_conc[] = 'diff_'.$unic_conc;
-
-                $query = "SELECT code, code_1c FROM Conc_search__$unic_conc";
-                $res = mysql_query($query) or die(mysql_error().$query);
-
-                $usd_conc = $competitors[$unic_conc];
-
-                while ($Codes = mysql_fetch_object($res)) {
-
-                    $query2
-                        = "SELECT
-                        price_uah
-                    FROM
-                        Conc__$unic_conc
-                    WHERE
-                        code = '$Codes->code' AND enabled=1";
-                    $res2 = mysql_query($query2) or die(mysql_error().$query2);
-
-                    if ($analog = mysql_fetch_row($res2)) {
-
-                        $query3
-                            = "UPDATE $table
-                            SET    $unic_conc      = $analog[0],
-                                   usd_$unic_conc  = $analog[0]/$usd_conc,
-                                   diff_$unic_conc = ROUND((Price/$analog[0]-1)*100, 1)
-                            WHERE  code_1c         = '$Codes->code_1c'";
-                        $res3 = mysql_query($query3) or die(mysql_error()."<br>$query");
-                    }
-                }
-
-                optimizeTable('Conc__'.$unic_conc);
-                optimizeTable('Conc_search__'.$unic_conc);
-            }
-
-            $query = "DELETE FROM $table WHERE 1 $delete_null";
-            $res = mysql_query($query) or die(mysql_error().$query);
-
-            $diff_conc = implode(',', $diff_conc);
-            $query = "UPDATE $table SET max_diff = GREATEST($diff_conc)";
-            $res = mysql_query($query) or die(mysql_error().$query);
-
-            if ($res) {
-                optimizeTable($table);
-                /*                echo('Импорт завершен!');
-                                echo('<a href="/published/SC/html/scripts/frame.php?did=234">Вернуться</a>');
-                                die();*/
-            }
         }
     }
 

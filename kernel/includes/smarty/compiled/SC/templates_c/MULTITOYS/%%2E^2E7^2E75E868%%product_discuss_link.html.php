@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.9, created on 2015-10-22 11:48:52
+<?php /* Smarty version 2.6.9, created on 2015-11-18 17:35:52
          compiled from product_discuss_link.html */ ?>
 <?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
 smarty_core_load_plugins(array('plugins' => array(array('modifier', 'translate', 'product_discuss_link.html', 3, false),array('modifier', 'set_query_html', 'product_discuss_link.html', 9, false),array('modifier', 'escape', 'product_discuss_link.html', 15, false),array('modifier', 'linewrap', 'product_discuss_link.html', 15, false),array('modifier', 'nl2br', 'product_discuss_link.html', 19, false),array('modifier', 'replace', 'product_discuss_link.html', 27, false),)), $this); ?>

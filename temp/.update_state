@@ -1,1 +1,0 @@
-a:3:{s:5:"state";s:12:"unpack_error";s:9:"timeStart";i:1435928140;s:3:"msg";s:196:"a:2:{s:7:"errCode";s:11:"err_install";s:3:"msg";s:138:"<p><b>Unable to extract files</b><p> File /var/www/multitoy/data/www/multitoys.com.ua/index.php already exists and is write protected </p>";}";}

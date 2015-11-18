@@ -30,6 +30,7 @@
                 'code_1c',
                 'product_code',
                 'name_ru',
+                'category',
                 'brand'
             );
                 
@@ -72,27 +73,23 @@
                 readfile($filename);
             }
         }
-
-        protected function __destruct()
-        {
-            unlink($this->_filename.self::EXTENSION);
-        }
-
-        protected function _fileTitle($title)
-        {
-            $result = $this->_translitCyr($title);
-            $result = strtolower(trim($result));
-            $result = str_replace("'", '', $result);
-            $result = preg_replace('#[^a-z0-9_]+#', '-', $result);
-            $result = preg_replace('#\-{2,}#', '-', $result);
-            $result = preg_replace('#(^\-+|\-+$)#D', '', $result);
-            
-            $this->_filename = $result;
-        }
-
+    
         protected function _xlsBOF()
         {
             return pack("ssssss", 0x809, 0x8, 0x0, 0x10, 0x0, 0x0);
+        }
+    
+        protected function _xlsWriteLabel($Value)
+        {
+            $Value = $this->_utfToWin($Value);
+            $length = strlen($Value);
+    
+            return pack("ssssss", 0x204, 8 + $length, $this->_row, $this->_col, 0x0, $length).$Value;
+        }
+    
+        protected function _utfToWin($string)
+        {
+            return iconv('UTF-8', 'WINDOWS-1251//IGNORE', $string);
         }
 
         /**
@@ -121,10 +118,11 @@
         //
         //            return $header . $data . $unknown;
         //        }
-        
-        protected function _xlsEOF()
+        protected function _xlsWriteNumber($Value)
         {
-            return pack("ss", 0x0A, 0x00);
+            $Value = ($Value === '--')?0:$Value;
+    
+            return pack("sssss", 0x203, 14, $this->_row, $this->_col, 0x0).pack("d", (float)$Value);
         }
 
         //        protected function _storeEof()
@@ -136,24 +134,22 @@
         //
         //            return $header;
         //        }
-        
-        protected function _xlsWriteNumber($Value)
+    
+        protected function _xlsEOF()
         {
-            $Value = ($Value === '--')?0:$Value;
-            return pack("sssss", 0x203, 14, $this->_row, $this->_col, 0x0) . pack("d", (float)$Value);
+            return pack("ss", 0x0A, 0x00);
         }
-
-        protected function _xlsWriteLabel($Value)
+    
+        protected function _fileTitle($title)
         {
-            $Value = $this->_utfToWin($Value);
-            $length = strlen($Value);
-
-            return pack("ssssss", 0x204, 8 + $length, $this->_row, $this->_col, 0x0, $length).$Value;
-        }
-
-        protected function _utfToWin($string)
-        {
-            return iconv('UTF-8', 'WINDOWS-1251//IGNORE', $string);
+            $result = $this->_translitCyr($title);
+            $result = strtolower(trim($result));
+            $result = str_replace("'", '', $result);
+            $result = preg_replace('#[^a-z0-9_]+#', '-', $result);
+            $result = preg_replace('#\-{2,}#', '-', $result);
+            $result = preg_replace('#(^\-+|\-+$)#D', '', $result);
+    
+            $this->_filename = $result;
         }
 
         protected function _translitCyr($cyr_str)
@@ -177,5 +173,10 @@
             );
 
             return strtr($cyr_str, $tr);
+        }
+    
+        protected function __destruct()
+        {
+            unlink($this->_filename.self::EXTENSION);
         }
     }

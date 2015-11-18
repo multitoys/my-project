@@ -193,8 +193,8 @@
 			{
 				$direct_mode = isset($_GET['download'])?false:true;
 				$charset = 'windows-1251';
-				$fileToDownLoad = DIR_TEMP."/yandex.xml";
-				$fileToDownLoadShortName="yandex.xml";
+                $fileToDownLoad = DIR_TEMP."/market.xml";
+                $fileToDownLoadShortName = "market.xml";
 			}
 			else if ( preg_match('/GetCSVCatalog=(.+)$/u', $getFileParam, $sp) )
 			{

@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.9, created on 2015-11-17 22:38:05
+<?php /* Smarty version 2.6.9, created on 2015-11-18 13:22:57
          compiled from head.html */ ?>
 <?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
 smarty_core_load_plugins(array('plugins' => array(array('modifier', 'default', 'head.html', 3, false),array('modifier', 'escape', 'head.html', 3, false),)), $this); ?>
@@ -27,8 +27,7 @@ smarty_core_load_plugins(array('plugins' => array(array('modifier', 'default', '
         <script <?php echo ((is_array($_tmp=@$this->_tpl_vars['deffer'])) ? $this->_run_mod_handler('default', true, $_tmp, ' ') : smarty_modifier_default($_tmp, ' ')); ?>
  type="text/javascript" src="/source/jquery.fancybox.pack-1439062343154.js"></script>
         <link rel="stylesheet" type="text/css" href="/source/jquery.fancybox.css?v=2.1.5" media="screen"/>
-    <?php endif; ?>
-<?php endif; ?>
+    <?php endif;  endif; ?>
 <script <?php echo ((is_array($_tmp=@$this->_tpl_vars['deffer'])) ? $this->_run_mod_handler('default', true, $_tmp, ' ') : smarty_modifier_default($_tmp, ' ')); ?>
  src="<?php echo $this->_tpl_vars['URL_THEME_OFFSET']; ?>
 /main-min.js"></script>

@@ -2031,4 +2031,4 @@
         } else {
             return ucfirst($stri);
         }
-    } 
+    }

@@ -341,9 +341,10 @@ ORDER BY `cnt` DESC");
 
 
     // $smarty->assign('lang_list', $lang_list);
-    $cur_lang = LanguagesManager::getCurrentLanguage();
+    //    $cur_lang = LanguagesManager::getCurrentLanguage();
     /*@var $cur_lang Language*/
-    $smarty->assign('lang_iso2', $cur_lang->iso2);
+    //    $smarty->assign('lang_iso2', $cur_lang->iso2);
+    $smarty->assign('lang_iso2', 'ru');
 
     // if (isset($_SESSION['current_language'])) $smarty->assign('current_language', $_SESSION['current_language']);
     /*

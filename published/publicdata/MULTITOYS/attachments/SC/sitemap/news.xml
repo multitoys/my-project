@@ -1,1172 +1,1312 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
 			    http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
 
     <url>
-        <loc>http://multitoys.com.ua/blog/1/</loc>
+        <loc>http://my-project/blog/1/</loc>
         <lastmod>2008-04-18T13:20:48+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/4/</loc>
+        <loc>http://my-project/blog/4/</loc>
         <lastmod>2011-03-26T14:56:03+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/2/</loc>
+        <loc>http://my-project/blog/2/</loc>
         <lastmod>2010-07-07T13:23:37+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/3/</loc>
+        <loc>http://my-project/blog/3/</loc>
         <lastmod>2010-07-19T09:55:54+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/5/</loc>
+        <loc>http://my-project/blog/5/</loc>
         <lastmod>2011-05-12T06:12:40+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/6/</loc>
+        <loc>http://my-project/blog/6/</loc>
         <lastmod>2011-05-12T06:14:04+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/7/</loc>
+        <loc>http://my-project/blog/7/</loc>
         <lastmod>2011-05-12T06:15:00+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/17/</loc>
+        <loc>http://my-project/blog/17/</loc>
         <lastmod>2011-07-12T14:27:41+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/16/</loc>
+        <loc>http://my-project/blog/16/</loc>
         <lastmod>2011-06-27T17:32:41+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/18/</loc>
+        <loc>http://my-project/blog/18/</loc>
         <lastmod>2011-07-13T17:35:48+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/19/</loc>
+        <loc>http://my-project/blog/19/</loc>
         <lastmod>2011-07-22T15:49:56+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/20/</loc>
+        <loc>http://my-project/blog/20/</loc>
         <lastmod>2011-07-27T16:38:54+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/21/</loc>
+        <loc>http://my-project/blog/21/</loc>
         <lastmod>2011-08-10T12:14:52+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/22/</loc>
+        <loc>http://my-project/blog/22/</loc>
         <lastmod>2011-08-15T14:52:52+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/23/</loc>
+        <loc>http://my-project/blog/23/</loc>
         <lastmod>2011-08-22T18:42:47+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/24/</loc>
+        <loc>http://my-project/blog/24/</loc>
         <lastmod>2011-08-30T10:58:37+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/25/</loc>
+        <loc>http://my-project/blog/25/</loc>
         <lastmod>2011-09-05T19:31:02+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/28/</loc>
+        <loc>http://my-project/blog/28/</loc>
         <lastmod>2011-09-08T12:11:28+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/29/</loc>
+        <loc>http://my-project/blog/29/</loc>
         <lastmod>2011-09-09T10:15:12+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/30/</loc>
+        <loc>http://my-project/blog/30/</loc>
         <lastmod>2011-09-12T13:44:18+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/31/</loc>
+        <loc>http://my-project/blog/31/</loc>
         <lastmod>2011-10-11T13:46:39+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/32/</loc>
+        <loc>http://my-project/blog/32/</loc>
         <lastmod>2011-10-13T13:58:19+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/33/</loc>
+        <loc>http://my-project/blog/33/</loc>
         <lastmod>2011-10-17T12:48:31+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/34/</loc>
+        <loc>http://my-project/blog/34/</loc>
         <lastmod>2011-11-13T18:27:53+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/35/</loc>
+        <loc>http://my-project/blog/35/</loc>
         <lastmod>2011-11-13T18:29:45+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/36/</loc>
+        <loc>http://my-project/blog/36/</loc>
         <lastmod>2011-11-13T18:32:13+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/37/</loc>
+        <loc>http://my-project/blog/37/</loc>
         <lastmod>2011-11-13T18:33:23+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/38/</loc>
+        <loc>http://my-project/blog/38/</loc>
         <lastmod>2011-11-13T18:34:49+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/39/</loc>
+        <loc>http://my-project/blog/39/</loc>
         <lastmod>2011-11-13T18:36:01+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/40/</loc>
+        <loc>http://my-project/blog/40/</loc>
         <lastmod>2011-11-14T11:08:39+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/41/</loc>
+        <loc>http://my-project/blog/41/</loc>
         <lastmod>2011-11-17T11:39:06+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/42/</loc>
+        <loc>http://my-project/blog/42/</loc>
         <lastmod>2011-11-19T10:44:50+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/43/</loc>
+        <loc>http://my-project/blog/43/</loc>
         <lastmod>2011-11-22T11:01:31+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/46/</loc>
+        <loc>http://my-project/blog/46/</loc>
         <lastmod>2011-11-25T13:56:11+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/47/</loc>
+        <loc>http://my-project/blog/47/</loc>
         <lastmod>2011-11-30T12:12:23+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/45/</loc>
+        <loc>http://my-project/blog/45/</loc>
         <lastmod>2011-11-25T13:54:49+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/48/</loc>
+        <loc>http://my-project/blog/48/</loc>
         <lastmod>2011-12-26T09:26:45+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/49/</loc>
+        <loc>http://my-project/blog/49/</loc>
         <lastmod>2011-12-26T09:27:35+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/50/</loc>
+        <loc>http://my-project/blog/50/</loc>
         <lastmod>2011-12-26T09:29:01+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/51/</loc>
+        <loc>http://my-project/blog/51/</loc>
         <lastmod>2011-12-26T09:30:42+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/52/</loc>
+        <loc>http://my-project/blog/52/</loc>
         <lastmod>2011-12-26T09:36:28+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/53/</loc>
+        <loc>http://my-project/blog/53/</loc>
         <lastmod>2011-12-30T12:24:48+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/54/</loc>
+        <loc>http://my-project/blog/54/</loc>
         <lastmod>2012-01-17T11:55:00+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/55/</loc>
+        <loc>http://my-project/blog/55/</loc>
         <lastmod>2012-01-17T11:55:49+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/56/</loc>
+        <loc>http://my-project/blog/56/</loc>
         <lastmod>2012-01-23T12:55:29+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/57/</loc>
+        <loc>http://my-project/blog/57/</loc>
         <lastmod>2012-01-27T13:43:30+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/58/</loc>
+        <loc>http://my-project/blog/58/</loc>
         <lastmod>2012-01-27T17:07:54+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/64/</loc>
+        <loc>http://my-project/blog/64/</loc>
         <lastmod>2012-04-03T13:15:16+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/62/</loc>
+        <loc>http://my-project/blog/62/</loc>
         <lastmod>2012-04-03T13:12:02+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/63/</loc>
+        <loc>http://my-project/blog/63/</loc>
         <lastmod>2012-04-03T13:13:38+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/65/</loc>
+        <loc>http://my-project/blog/65/</loc>
         <lastmod>2012-04-03T13:16:20+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/66/</loc>
+        <loc>http://my-project/blog/66/</loc>
         <lastmod>2012-04-03T13:17:25+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/67/</loc>
+        <loc>http://my-project/blog/67/</loc>
         <lastmod>2012-04-03T13:18:18+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/68/</loc>
+        <loc>http://my-project/blog/68/</loc>
         <lastmod>2012-04-03T13:19:18+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/69/</loc>
+        <loc>http://my-project/blog/69/</loc>
         <lastmod>2012-04-03T13:20:17+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/70/</loc>
+        <loc>http://my-project/blog/70/</loc>
         <lastmod>2012-04-03T13:21:20+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/71/</loc>
+        <loc>http://my-project/blog/71/</loc>
         <lastmod>2012-04-03T13:22:18+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/72/</loc>
+        <loc>http://my-project/blog/72/</loc>
         <lastmod>2012-04-03T13:23:08+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/73/</loc>
+        <loc>http://my-project/blog/73/</loc>
         <lastmod>2012-04-03T13:24:30+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/74/</loc>
+        <loc>http://my-project/blog/74/</loc>
         <lastmod>2012-04-03T13:25:35+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/75/</loc>
+        <loc>http://my-project/blog/75/</loc>
         <lastmod>2012-04-03T13:26:19+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/76/</loc>
+        <loc>http://my-project/blog/76/</loc>
         <lastmod>2012-04-03T13:28:06+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/77/</loc>
+        <loc>http://my-project/blog/77/</loc>
         <lastmod>2012-04-03T13:31:45+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/78/</loc>
+        <loc>http://my-project/blog/78/</loc>
         <lastmod>2012-04-05T15:17:39+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/79/</loc>
+        <loc>http://my-project/blog/79/</loc>
         <lastmod>2012-04-12T12:31:49+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/80/</loc>
+        <loc>http://my-project/blog/80/</loc>
         <lastmod>2012-04-17T12:33:37+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/81/</loc>
+        <loc>http://my-project/blog/81/</loc>
         <lastmod>2012-05-15T10:05:24+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/82/</loc>
+        <loc>http://my-project/blog/82/</loc>
         <lastmod>2012-05-17T21:59:48+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/83/</loc>
+        <loc>http://my-project/blog/83/</loc>
         <lastmod>2012-07-26T17:00:51+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/84/</loc>
+        <loc>http://my-project/blog/84/</loc>
         <lastmod>2012-07-26T17:02:00+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/85/</loc>
+        <loc>http://my-project/blog/85/</loc>
         <lastmod>2012-07-26T17:03:37+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/86/</loc>
+        <loc>http://my-project/blog/86/</loc>
         <lastmod>2012-07-26T17:04:33+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/87/</loc>
+        <loc>http://my-project/blog/87/</loc>
         <lastmod>2012-07-26T17:05:25+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/88/</loc>
+        <loc>http://my-project/blog/88/</loc>
         <lastmod>2012-07-26T17:06:24+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/89/</loc>
+        <loc>http://my-project/blog/89/</loc>
         <lastmod>2012-07-26T17:07:24+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/90/</loc>
+        <loc>http://my-project/blog/90/</loc>
         <lastmod>2012-07-26T17:08:22+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/91/</loc>
+        <loc>http://my-project/blog/91/</loc>
         <lastmod>2012-07-26T17:09:39+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/92/</loc>
+        <loc>http://my-project/blog/92/</loc>
         <lastmod>2012-07-26T17:10:50+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/93/</loc>
+        <loc>http://my-project/blog/93/</loc>
         <lastmod>2012-07-26T17:11:37+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/94/</loc>
+        <loc>http://my-project/blog/94/</loc>
         <lastmod>2012-07-26T17:13:13+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/95/</loc>
+        <loc>http://my-project/blog/95/</loc>
         <lastmod>2012-07-26T17:14:00+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/96/</loc>
+        <loc>http://my-project/blog/96/</loc>
         <lastmod>2012-07-26T17:14:49+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/97/</loc>
+        <loc>http://my-project/blog/97/</loc>
         <lastmod>2012-07-26T17:16:01+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/98/</loc>
+        <loc>http://my-project/blog/98/</loc>
         <lastmod>2012-07-26T17:16:53+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/99/</loc>
+        <loc>http://my-project/blog/99/</loc>
         <lastmod>2012-07-30T14:14:03+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/100/</loc>
+        <loc>http://my-project/blog/100/</loc>
         <lastmod>2012-08-16T11:22:21+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/101/</loc>
+        <loc>http://my-project/blog/101/</loc>
         <lastmod>2012-08-16T11:23:20+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/102/</loc>
+        <loc>http://my-project/blog/102/</loc>
         <lastmod>2012-08-16T11:23:56+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/103/</loc>
+        <loc>http://my-project/blog/103/</loc>
         <lastmod>2012-08-30T18:23:07+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/104/</loc>
+        <loc>http://my-project/blog/104/</loc>
         <lastmod>2012-09-03T11:09:18+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/105/</loc>
+        <loc>http://my-project/blog/105/</loc>
         <lastmod>2012-09-06T17:53:11+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/106/</loc>
+        <loc>http://my-project/blog/106/</loc>
         <lastmod>2012-09-19T11:00:55+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/107/</loc>
+        <loc>http://my-project/blog/107/</loc>
         <lastmod>2012-09-24T14:54:59+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/108/</loc>
+        <loc>http://my-project/blog/108/</loc>
         <lastmod>2012-09-28T09:13:03+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/109/</loc>
+        <loc>http://my-project/blog/109/</loc>
         <lastmod>2012-10-03T16:10:54+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/110/</loc>
+        <loc>http://my-project/blog/110/</loc>
         <lastmod>2012-10-11T13:30:16+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/111/</loc>
+        <loc>http://my-project/blog/111/</loc>
         <lastmod>2012-10-23T14:18:45+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/112/</loc>
+        <loc>http://my-project/blog/112/</loc>
         <lastmod>2012-10-26T10:42:24+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/113/</loc>
+        <loc>http://my-project/blog/113/</loc>
         <lastmod>2012-11-01T09:55:29+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/114/</loc>
+        <loc>http://my-project/blog/114/</loc>
         <lastmod>2012-11-07T17:33:33+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/115/</loc>
+        <loc>http://my-project/blog/115/</loc>
         <lastmod>2012-11-30T10:11:11+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/116/</loc>
+        <loc>http://my-project/blog/116/</loc>
         <lastmod>2012-11-30T10:12:33+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/117/</loc>
+        <loc>http://my-project/blog/117/</loc>
         <lastmod>2012-11-30T10:13:37+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/118/</loc>
+        <loc>http://my-project/blog/118/</loc>
         <lastmod>2012-11-30T10:14:14+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/119/</loc>
+        <loc>http://my-project/blog/119/</loc>
         <lastmod>2012-12-10T08:33:45+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/120/</loc>
+        <loc>http://my-project/blog/120/</loc>
         <lastmod>2012-12-10T08:35:01+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/121/</loc>
+        <loc>http://my-project/blog/121/</loc>
         <lastmod>2012-12-10T08:36:29+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/122/</loc>
+        <loc>http://my-project/blog/122/</loc>
         <lastmod>2012-12-12T19:44:51+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/123/</loc>
+        <loc>http://my-project/blog/123/</loc>
         <lastmod>2012-12-12T19:54:31+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/124/</loc>
+        <loc>http://my-project/blog/124/</loc>
         <lastmod>2012-12-14T17:41:38+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/125/</loc>
+        <loc>http://my-project/blog/125/</loc>
         <lastmod>2012-12-17T11:37:11+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/126/</loc>
+        <loc>http://my-project/blog/126/</loc>
         <lastmod>2012-12-18T10:52:56+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/127/</loc>
+        <loc>http://my-project/blog/127/</loc>
         <lastmod>2012-12-24T18:10:32+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/128/</loc>
+        <loc>http://my-project/blog/128/</loc>
         <lastmod>2012-12-25T13:32:16+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/129/</loc>
+        <loc>http://my-project/blog/129/</loc>
         <lastmod>2012-12-26T17:33:33+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/130/</loc>
+        <loc>http://my-project/blog/130/</loc>
         <lastmod>2012-12-29T23:22:51+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/131/</loc>
+        <loc>http://my-project/blog/131/</loc>
         <lastmod>2013-01-21T17:57:24+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/132/</loc>
+        <loc>http://my-project/blog/132/</loc>
         <lastmod>2013-01-28T10:02:53+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/133/</loc>
+        <loc>http://my-project/blog/133/</loc>
         <lastmod>2013-02-01T10:03:45+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/134/</loc>
+        <loc>http://my-project/blog/134/</loc>
         <lastmod>2013-02-06T08:45:39+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/137/</loc>
+        <loc>http://my-project/blog/137/</loc>
         <lastmod>2013-02-06T10:54:09+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/136/</loc>
+        <loc>http://my-project/blog/136/</loc>
         <lastmod>2013-02-06T08:47:14+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/138/</loc>
+        <loc>http://my-project/blog/138/</loc>
         <lastmod>2013-02-08T11:09:18+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/139/</loc>
+        <loc>http://my-project/blog/139/</loc>
         <lastmod>2013-02-14T10:13:17+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/140/</loc>
+        <loc>http://my-project/blog/140/</loc>
         <lastmod>2013-02-21T10:45:50+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/141/</loc>
+        <loc>http://my-project/blog/141/</loc>
         <lastmod>2013-03-04T10:13:30+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/142/</loc>
+        <loc>http://my-project/blog/142/</loc>
         <lastmod>2013-03-11T16:12:18+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/143/</loc>
+        <loc>http://my-project/blog/143/</loc>
         <lastmod>2013-03-12T10:13:51+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/144/</loc>
+        <loc>http://my-project/blog/144/</loc>
         <lastmod>2013-03-25T16:28:02+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/145/</loc>
+        <loc>http://my-project/blog/145/</loc>
         <lastmod>2013-03-28T09:44:25+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/147/</loc>
+        <loc>http://my-project/blog/147/</loc>
         <lastmod>2013-04-04T21:06:24+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/148/</loc>
+        <loc>http://my-project/blog/148/</loc>
         <lastmod>2013-04-09T10:04:32+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/149/</loc>
+        <loc>http://my-project/blog/149/</loc>
         <lastmod>2013-04-12T16:38:01+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/150/</loc>
+        <loc>http://my-project/blog/150/</loc>
         <lastmod>2013-04-15T13:58:51+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/151/</loc>
+        <loc>http://my-project/blog/151/</loc>
         <lastmod>2013-04-18T17:07:51+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/152/</loc>
+        <loc>http://my-project/blog/152/</loc>
         <lastmod>2013-04-22T18:27:55+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/153/</loc>
+        <loc>http://my-project/blog/153/</loc>
         <lastmod>2013-04-30T17:21:26+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/155/</loc>
+        <loc>http://my-project/blog/155/</loc>
         <lastmod>2013-05-04T12:21:06+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/156/</loc>
+        <loc>http://my-project/blog/156/</loc>
         <lastmod>2013-05-08T09:42:09+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/157/</loc>
+        <loc>http://my-project/blog/157/</loc>
         <lastmod>2013-05-13T17:27:46+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/158/</loc>
+        <loc>http://my-project/blog/158/</loc>
         <lastmod>2013-05-30T15:58:38+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/159/</loc>
+        <loc>http://my-project/blog/159/</loc>
         <lastmod>2013-05-30T15:59:26+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/161/</loc>
+        <loc>http://my-project/blog/161/</loc>
         <lastmod>2013-05-31T11:12:47+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/162/</loc>
+        <loc>http://my-project/blog/162/</loc>
         <lastmod>2013-06-14T12:44:15+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/163/</loc>
+        <loc>http://my-project/blog/163/</loc>
         <lastmod>2013-06-25T13:08:04+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/164/</loc>
+        <loc>http://my-project/blog/164/</loc>
         <lastmod>2013-07-03T13:53:34+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/165/</loc>
+        <loc>http://my-project/blog/165/</loc>
         <lastmod>2013-07-11T12:26:16+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/166/</loc>
+        <loc>http://my-project/blog/166/</loc>
         <lastmod>2013-07-24T13:25:53+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/167/</loc>
+        <loc>http://my-project/blog/167/</loc>
         <lastmod>2013-08-07T17:38:51+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/171/</loc>
+        <loc>http://my-project/blog/171/</loc>
         <lastmod>2013-09-11T16:50:47+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/169/</loc>
+        <loc>http://my-project/blog/169/</loc>
         <lastmod>2013-09-11T16:44:35+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/170/</loc>
+        <loc>http://my-project/blog/170/</loc>
         <lastmod>2013-09-11T16:46:57+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/172/</loc>
+        <loc>http://my-project/blog/172/</loc>
         <lastmod>2013-09-25T12:15:32+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/173/</loc>
+        <loc>http://my-project/blog/173/</loc>
         <lastmod>2013-10-02T19:43:56+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/174/</loc>
+        <loc>http://my-project/blog/174/</loc>
         <lastmod>2013-10-08T12:27:23+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/175/</loc>
+        <loc>http://my-project/blog/175/</loc>
         <lastmod>2013-10-14T20:44:01+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/176/</loc>
+        <loc>http://my-project/blog/176/</loc>
         <lastmod>2013-10-23T19:20:23+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/177/</loc>
+        <loc>http://my-project/blog/177/</loc>
         <lastmod>2013-10-23T19:20:56+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/178/</loc>
+        <loc>http://my-project/blog/178/</loc>
         <lastmod>2013-11-18T18:49:11+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/179/</loc>
+        <loc>http://my-project/blog/179/</loc>
         <lastmod>2013-11-18T18:50:07+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/180/</loc>
+        <loc>http://my-project/blog/180/</loc>
         <lastmod>2013-11-18T18:50:29+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/181/</loc>
+        <loc>http://my-project/blog/181/</loc>
         <lastmod>2013-11-28T21:03:32+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/182/</loc>
+        <loc>http://my-project/blog/182/</loc>
         <lastmod>2013-11-28T21:04:01+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/183/</loc>
+        <loc>http://my-project/blog/183/</loc>
         <lastmod>2013-12-06T10:24:57+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/184/</loc>
+        <loc>http://my-project/blog/184/</loc>
         <lastmod>2013-12-06T10:26:01+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/186/</loc>
+        <loc>http://my-project/blog/186/</loc>
         <lastmod>2013-12-06T10:27:36+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/187/</loc>
+        <loc>http://my-project/blog/187/</loc>
         <lastmod>2013-12-09T13:31:50+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/188/</loc>
+        <loc>http://my-project/blog/188/</loc>
         <lastmod>2013-12-09T13:32:20+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/189/</loc>
+        <loc>http://my-project/blog/189/</loc>
         <lastmod>2014-01-08T13:02:31+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/190/</loc>
+        <loc>http://my-project/blog/190/</loc>
         <lastmod>2014-01-08T13:03:14+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/191/</loc>
+        <loc>http://my-project/blog/191/</loc>
         <lastmod>2014-01-08T13:04:14+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/192/</loc>
+        <loc>http://my-project/blog/192/</loc>
         <lastmod>2014-01-27T12:26:43+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/193/</loc>
+        <loc>http://my-project/blog/193/</loc>
         <lastmod>2014-01-27T12:27:40+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/194/</loc>
+        <loc>http://my-project/blog/194/</loc>
         <lastmod>2014-01-27T12:28:14+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/195/</loc>
+        <loc>http://my-project/blog/195/</loc>
         <lastmod>2014-01-29T10:01:33+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/196/</loc>
+        <loc>http://my-project/blog/196/</loc>
         <lastmod>2014-03-13T13:10:29+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/197/</loc>
+        <loc>http://my-project/blog/197/</loc>
         <lastmod>2014-03-27T13:14:59+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/198/</loc>
+        <loc>http://my-project/blog/198/</loc>
         <lastmod>2014-04-25T23:10:30+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/199/</loc>
+        <loc>http://my-project/blog/199/</loc>
         <lastmod>2014-04-30T14:10:00+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/200/</loc>
+        <loc>http://my-project/blog/200/</loc>
         <lastmod>2014-05-13T14:24:49+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/201/</loc>
+        <loc>http://my-project/blog/201/</loc>
         <lastmod>2014-05-16T14:08:01+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/202/</loc>
+        <loc>http://my-project/blog/202/</loc>
         <lastmod>2014-05-29T18:19:58+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/203/</loc>
+        <loc>http://my-project/blog/203/</loc>
         <lastmod>2014-05-29T18:21:35+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/204/</loc>
+        <loc>http://my-project/blog/204/</loc>
         <lastmod>2014-05-29T18:22:58+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/205/</loc>
+        <loc>http://my-project/blog/205/</loc>
         <lastmod>2014-06-20T16:09:10+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/206/</loc>
+        <loc>http://my-project/blog/206/</loc>
         <lastmod>2014-07-14T16:59:08+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/207/</loc>
+        <loc>http://my-project/blog/207/</loc>
         <lastmod>2014-07-17T16:33:05+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/208/</loc>
+        <loc>http://my-project/blog/208/</loc>
         <lastmod>2014-09-09T15:31:04+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/209/</loc>
+        <loc>http://my-project/blog/209/</loc>
         <lastmod>2014-09-09T15:32:19+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/210/</loc>
+        <loc>http://my-project/blog/210/</loc>
         <lastmod>2014-09-09T15:33:00+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/211/</loc>
+        <loc>http://my-project/blog/211/</loc>
         <lastmod>2014-09-09T15:33:42+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/212/</loc>
+        <loc>http://my-project/blog/212/</loc>
         <lastmod>2014-09-09T15:39:21+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/213/</loc>
+        <loc>http://my-project/blog/213/</loc>
         <lastmod>2014-09-16T11:41:28+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/215/</loc>
+        <loc>http://my-project/blog/215/</loc>
         <lastmod>2014-09-19T12:56:59+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/216/</loc>
+        <loc>http://my-project/blog/216/</loc>
         <lastmod>2014-09-23T13:58:27+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/217/</loc>
+        <loc>http://my-project/blog/217/</loc>
         <lastmod>2014-09-24T09:49:14+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/218/</loc>
+        <loc>http://my-project/blog/218/</loc>
         <lastmod>2014-10-14T12:13:15+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/219/</loc>
+        <loc>http://my-project/blog/219/</loc>
         <lastmod>2014-10-21T10:21:22+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/220/</loc>
+        <loc>http://my-project/blog/220/</loc>
         <lastmod>2014-10-29T13:25:08+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/221/</loc>
+        <loc>http://my-project/blog/221/</loc>
         <lastmod>2014-11-05T10:06:58+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/222/</loc>
+        <loc>http://my-project/blog/222/</loc>
         <lastmod>2014-11-20T17:45:10+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/223/</loc>
+        <loc>http://my-project/blog/223/</loc>
         <lastmod>2014-12-09T10:52:05+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/224/</loc>
+        <loc>http://my-project/blog/224/</loc>
         <lastmod>2014-12-09T10:53:37+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/225/</loc>
+        <loc>http://my-project/blog/225/</loc>
         <lastmod>2014-12-09T10:55:03+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/226/</loc>
+        <loc>http://my-project/blog/226/</loc>
         <lastmod>2014-12-09T10:56:10+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/227/</loc>
+        <loc>http://my-project/blog/227/</loc>
         <lastmod>2014-12-15T10:39:02+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/228/</loc>
+        <loc>http://my-project/blog/228/</loc>
         <lastmod>2014-12-15T10:40:20+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/230/</loc>
+        <loc>http://my-project/blog/230/</loc>
         <lastmod>2014-12-21T21:12:49+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/231/</loc>
+        <loc>http://my-project/blog/231/</loc>
         <lastmod>2014-12-21T21:13:36+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/232/</loc>
+        <loc>http://my-project/blog/232/</loc>
         <lastmod>2014-12-21T21:15:14+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/233/</loc>
+        <loc>http://my-project/blog/233/</loc>
         <lastmod>2014-12-21T21:16:00+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/234/</loc>
+        <loc>http://my-project/blog/234/</loc>
         <lastmod>2015-01-26T14:48:18+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/235/</loc>
+        <loc>http://my-project/blog/235/</loc>
         <lastmod>2015-01-26T14:49:38+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/236/</loc>
+        <loc>http://my-project/blog/236/</loc>
         <lastmod>2015-01-26T14:50:33+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/237/</loc>
+        <loc>http://my-project/blog/237/</loc>
         <lastmod>2015-01-26T14:51:59+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/238/</loc>
+        <loc>http://my-project/blog/238/</loc>
         <lastmod>2015-02-05T23:09:37+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/239/</loc>
+        <loc>http://my-project/blog/239/</loc>
         <lastmod>2015-03-27T09:52:28+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/240/</loc>
+        <loc>http://my-project/blog/240/</loc>
         <lastmod>2015-03-27T09:53:44+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/241/</loc>
+        <loc>http://my-project/blog/241/</loc>
         <lastmod>2015-03-27T09:54:33+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/242/</loc>
+        <loc>http://my-project/blog/242/</loc>
         <lastmod>2015-03-27T09:55:42+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/243/</loc>
+        <loc>http://my-project/blog/243/</loc>
         <lastmod>2015-03-27T09:56:33+02:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/244/</loc>
+        <loc>http://my-project/blog/244/</loc>
         <lastmod>2015-04-08T10:55:06+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/245/</loc>
+        <loc>http://my-project/blog/245/</loc>
         <lastmod>2015-04-08T10:55:43+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/246/</loc>
+        <loc>http://my-project/blog/246/</loc>
         <lastmod>2015-04-20T12:08:40+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/247/</loc>
+        <loc>http://my-project/blog/247/</loc>
         <lastmod>2015-04-27T09:43:47+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/248/</loc>
+        <loc>http://my-project/blog/248/</loc>
         <lastmod>2015-05-07T18:54:18+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/249/</loc>
+        <loc>http://my-project/blog/249/</loc>
         <lastmod>2015-05-11T15:56:33+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/250/</loc>
+        <loc>http://my-project/blog/250/</loc>
         <lastmod>2015-05-19T13:07:29+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/251/</loc>
+        <loc>http://my-project/blog/251/</loc>
         <lastmod>2015-05-19T13:09:03+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/252/</loc>
+        <loc>http://my-project/blog/252/</loc>
         <lastmod>2015-05-22T13:28:34+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/253/</loc>
+        <loc>http://my-project/blog/253/</loc>
         <lastmod>2015-05-22T13:28:35+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/254/</loc>
+        <loc>http://my-project/blog/254/</loc>
         <lastmod>2015-05-29T10:25:20+03:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://multitoys.com.ua/blog/255/</loc>
+        <loc>http://my-project/blog/255/</loc>
         <lastmod>2015-06-01T00:05:30+03:00</lastmod>
+        <priority>0.5</priority>
+    </url>
+    <url>
+        <loc>http://my-project/blog/256/</loc>
+        <lastmod>2015-06-15T08:48:38+03:00</lastmod>
+        <priority>0.5</priority>
+    </url>
+    <url>
+        <loc>http://my-project/blog/257/</loc>
+        <lastmod>2015-06-15T08:53:54+03:00</lastmod>
+        <priority>0.5</priority>
+    </url>
+    <url>
+        <loc>http://my-project/blog/258/</loc>
+        <lastmod>2015-06-29T10:49:23+03:00</lastmod>
+        <priority>0.5</priority>
+    </url>
+    <url>
+        <loc>http://my-project/blog/259/</loc>
+        <lastmod>2015-06-30T09:52:22+03:00</lastmod>
+        <priority>0.5</priority>
+    </url>
+    <url>
+        <loc>http://my-project/blog/260/</loc>
+        <lastmod>2015-07-06T00:14:44+03:00</lastmod>
+        <priority>0.5</priority>
+    </url>
+    <url>
+        <loc>http://my-project/blog/261/</loc>
+        <lastmod>2015-07-12T23:43:26+03:00</lastmod>
+        <priority>0.5</priority>
+    </url>
+    <url>
+        <loc>http://my-project/blog/262/</loc>
+        <lastmod>2015-07-20T08:56:08+03:00</lastmod>
+        <priority>0.5</priority>
+    </url>
+    <url>
+        <loc>http://my-project/blog/263/</loc>
+        <lastmod>2015-07-20T08:56:09+03:00</lastmod>
+        <priority>0.5</priority>
+    </url>
+    <url>
+        <loc>http://my-project/blog/264/</loc>
+        <lastmod>2015-08-02T23:58:48+03:00</lastmod>
+        <priority>0.5</priority>
+    </url>
+    <url>
+        <loc>http://my-project/blog/265/</loc>
+        <lastmod>2015-08-04T12:39:16+03:00</lastmod>
+        <priority>0.5</priority>
+    </url>
+    <url>
+        <loc>http://my-project/blog/266/</loc>
+        <lastmod>2015-08-05T10:38:43+03:00</lastmod>
+        <priority>0.5</priority>
+    </url>
+    <url>
+        <loc>http://my-project/blog/267/</loc>
+        <lastmod>2015-08-10T00:01:26+03:00</lastmod>
+        <priority>0.5</priority>
+    </url>
+    <url>
+        <loc>http://my-project/blog/268/</loc>
+        <lastmod>2015-08-10T09:17:15+03:00</lastmod>
+        <priority>0.5</priority>
+    </url>
+    <url>
+        <loc>http://my-project/blog/269/</loc>
+        <lastmod>2015-08-17T09:26:52+03:00</lastmod>
+        <priority>0.5</priority>
+    </url>
+    <url>
+        <loc>http://my-project/blog/270/</loc>
+        <lastmod>2015-08-24T23:00:18+03:00</lastmod>
+        <priority>0.5</priority>
+    </url>
+    <url>
+        <loc>http://my-project/blog/271/</loc>
+        <lastmod>2015-08-27T18:29:44+03:00</lastmod>
+        <priority>0.5</priority>
+    </url>
+    <url>
+        <loc>http://my-project/blog/272/</loc>
+        <lastmod>2015-08-31T08:49:15+03:00</lastmod>
+        <priority>0.5</priority>
+    </url>
+    <url>
+        <loc>http://my-project/blog/273/</loc>
+        <lastmod>2015-09-07T08:58:04+03:00</lastmod>
+        <priority>0.5</priority>
+    </url>
+    <url>
+        <loc>http://my-project/blog/274/</loc>
+        <lastmod>2015-09-13T22:26:02+03:00</lastmod>
+        <priority>0.5</priority>
+    </url>
+    <url>
+        <loc>http://my-project/blog/275/</loc>
+        <lastmod>2015-09-16T12:44:20+03:00</lastmod>
+        <priority>0.5</priority>
+    </url>
+    <url>
+        <loc>http://my-project/blog/276/</loc>
+        <lastmod>2015-09-21T10:28:36+03:00</lastmod>
+        <priority>0.5</priority>
+    </url>
+    <url>
+        <loc>http://my-project/blog/277/</loc>
+        <lastmod>2015-09-27T18:27:19+03:00</lastmod>
+        <priority>0.5</priority>
+    </url>
+    <url>
+        <loc>http://my-project/blog/278/</loc>
+        <lastmod>2015-10-01T11:54:09+03:00</lastmod>
+        <priority>0.5</priority>
+    </url>
+    <url>
+        <loc>http://my-project/blog/279/</loc>
+        <lastmod>2015-10-14T09:44:41+03:00</lastmod>
+        <priority>0.5</priority>
+    </url>
+    <url>
+        <loc>http://my-project/blog/280/</loc>
+        <lastmod>2015-10-26T14:37:11+02:00</lastmod>
+        <priority>0.5</priority>
+    </url>
+    <url>
+        <loc>http://my-project/blog/281/</loc>
+        <lastmod>2015-11-03T18:12:34+02:00</lastmod>
+        <priority>0.5</priority>
+    </url>
+    <url>
+        <loc>http://my-project/blog/283/</loc>
+        <lastmod>2015-11-17T11:30:52+02:00</lastmod>
+        <priority>0.5</priority>
+    </url>
+    <url>
+        <loc>http://my-project/blog/282/</loc>
+        <lastmod>2015-11-17T11:30:51+02:00</lastmod>
         <priority>0.5</priority>
     </url>
 </urlset>

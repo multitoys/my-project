@@ -544,7 +544,7 @@ TAG
     $query = "DELETE FROM `SC_auth_log` WHERE `Login` = 'sales'";
     $res = mysql_query($query) or die(mysql_error()."<br>$query");
     
-    $query = 'TRUNCATE TABLE  Search_products';
+    //    $query = 'TRUNCATE TABLE  Search_products';
     $res = mysql_query($query) or die(mysql_error()."<br>$query");
     
     $query = 'INSERT INTO Search_products (categoryID, code_1c, product_code, name_ru, Price,enabled)

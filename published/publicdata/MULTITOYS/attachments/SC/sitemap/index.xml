@@ -1,18 +1,26 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<sitemapindex xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
               xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
 	http://www.sitemaps.org/schemas/sitemap/0.9/siteindex.xsd">
     <sitemap>
-        <loc>http://multitoys.com.ua/sitemap.php?app=SC&amp;section=categories</loc>
-        <lastmod>2015-06-05T20:49:24+03:00</lastmod>
+        <loc>http://my-project/sitemap.php?app=SC&amp;section=pages</loc>
+        <lastmod>2015-11-19T18:20:33+02:00</lastmod>
     </sitemap>
     <sitemap>
-        <loc>http://multitoys.com.ua/sitemap.php?app=SC&amp;section=products</loc>
-        <lastmod>2015-06-05T20:49:27+03:00</lastmod>
+        <loc>http://my-project/sitemap.php?app=SC&amp;section=categories</loc>
+        <lastmod>2015-11-19T18:20:34+02:00</lastmod>
     </sitemap>
     <sitemap>
-        <loc>http://multitoys.com.ua/sitemap.php?app=SC&amp;section=news</loc>
-        <lastmod>2015-06-05T20:49:27+03:00</lastmod>
+        <loc>http://my-project/sitemap.php?app=SC&amp;section=products</loc>
+        <lastmod>2015-11-19T18:20:43+02:00</lastmod>
+    </sitemap>
+    <sitemap>
+        <loc>http://my-project/sitemap.php?app=SC&amp;section=auxpages</loc>
+        <lastmod>2015-11-19T18:20:43+02:00</lastmod>
+    </sitemap>
+    <sitemap>
+        <loc>http://my-project/sitemap.php?app=SC&amp;section=news</loc>
+        <lastmod>2015-11-19T18:20:43+02:00</lastmod>
     </sitemap>
 </sitemapindex>

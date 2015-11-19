@@ -1,5 +1,5 @@
 <?php
-ini_set('zend.ze1_compatibility_mode',0);
+    //ini_set('zend.ze1_compatibility_mode',0);
 
 if(file_exists('kernel/wbs.xml')){
 	$xml= simplexml_load_file('kernel/wbs.xml');

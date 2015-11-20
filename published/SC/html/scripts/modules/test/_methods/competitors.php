@@ -222,18 +222,18 @@
     
         protected function __getProductsList($field_for_list, $limit = 150)
         {
-            $query = 'SELECT code_1c FROM SC_products WHERE enabled = 1 ORDER BY '.$field_for_list.' DESC LIMIT '.$limit;
+            $query = 'SELECT productID FROM SC_products WHERE enabled = 1 ORDER BY '.$field_for_list.' DESC LIMIT '.$limit;
             $res = mysql_query($query) or die(mysql_error().$query);
         
             $ids = array();
         
             while ($row = mysql_fetch_object($res)) {
-                $ids[] = $row->code_1c;
+                $ids[] = $row->productID;
             }
         
             $ids = implode(',', $ids);
-        
-            $this->bestsellers = ' AND code_1c IN ('.$ids.')';
+    
+            $this->bestsellers = ' AND productID IN ('.$ids.')';
         }
     
         protected function __getNewItemsPostup()

@@ -232,10 +232,8 @@ TAG
     $query_time = 0;
     $query_conc = 0;
     if (($handle = fopen($filename, 'r')) !== false) {
-        $table_analogs = 'Conc__analogs';
-        $table_search = 'Search_products';
+        $table = 'Conc__analogs';
         $new_ua = array();
-        updateValue($table_search, 'enabled=0');
         while (($data = fgetcsv($handle, 1000, ';')) !== false) {
             set_time_limit(0);
             if ($row !== 0) {
@@ -352,11 +350,6 @@ TAG
                         ";
                         $res = mysql_query($query) or die(mysql_error()."<br>$query");
                         $productID = mysql_insert_id();
-                        
-                        $query = "INSERT INTO  $table_search
-                                          (categoryID, code_1c, product_code, name_ru, Price, enabled)
-                                  VALUES  ($catid, '$id', '$code', '$name', $price, 1)";
-                        $res = mysql_query($query) or die(mysql_error()."<br>$query");
                         $new_id++;
                         
                         // добавление товара в таблицу сравнения конкурентов
@@ -364,11 +357,12 @@ TAG
                             $margin = round((100 * ($price / $purchase) - 100), 0);
                             $query
                                 = "
-                                INSERT INTO $table_analogs
+                                INSERT INTO $table
                                        (productID, categoryID, category, code_1c, product_code, name_ru, brand, purchase, usd_purchase, margin, Price, usd_Price, ukraine)
                                 VALUES
                                        ($productID, $catid, '$categories[$catid]', '$id', '$code', '$name', '$brand', $purchase, ($purchase/$usd), $margin, $price, ($price/$usd), $ua)";
                             $res = mysql_query($query) or die(mysql_error()."<br>$query");
+                            $products_enabled[] = $productID;
                         }
                     } else {
                         $query
@@ -408,38 +402,27 @@ TAG
                         $query = "DELETE FROM SC_product_list_item WHERE productID = $productID";
                         $res = mysql_query($query) or die(mysql_error()."<br>$query");
                         
-                        $query = "
-                                    UPDATE $table_search
-                                    SET categoryID   = $catid,
-                                        product_code = '$code',
-                                        name_ru      = '$name',
-                                        Price        = $price,
-                                        enabled      = 1
-                                    WHERE
-                                        code_1c      = '$id'
-                                ";
-                        $res = mysql_query($query) or die(mysql_error()."<br>$query");
-                        
                         if ($ostatok !== 'под заказ') {
                             $margin = round((100 * ($price / $purchase) - 100), 0);
                             $query
                                 = "
-                                UPDATE $table_analogs
-                                SET categoryID   = $catid,
-                                    category     = '$categories[$catid]',
-                                    product_code = '$code',
-                                    name_ru      = '$name',
-                                    brand        = '$brand',
-                                    purchase     = $purchase,
-                                    usd_purchase = ($purchase/$usd),
-                                    margin       = $margin ,
-                                    Price        = $price,
-                                    usd_Price    = ($price/$usd),
-                                    ukraine      = $ua
+                                UPDATE $table
+                                SET categoryID              = $catid,
+                                    category                = '$categories[$catid]',
+                                    product_code            = '$code',
+                                    name_ru                 = '$name',
+                                    brand                   = '$brand',
+                                    purchase                = $purchase,
+                                    usd_purchase            = ($purchase/$usd),
+                                    margin                  = $margin ,
+                                    Price                   = $price,
+                                    usd_Price               = ($price/$usd),
+                                    ukraine                 = $ua
                                 WHERE
-                                    productID    = $productID
+                                    productID               = $productID
                             ";
                             $res = mysql_query($query) or die(mysql_error()."<br>$query");
+                            $products_enabled[] = $productID;
                         }
                     }
                     //if ($new === 7) {
@@ -522,15 +505,7 @@ TAG
     progressBar('products', $percent, false, true);
     echo('<span style="color:blue;"><br>Обработано '.($no - $error).' товаров</span><br><span style="color:green;">Новых '.$new_id.' товаров</span><br>');
     
-    $query = "SELECT productID FROM SC_products WHERE  in_stock =100";
-    $res = mysql_query($query) or die('Ошибка в запросе: '.mysql_error().'<br>'.$query);
-    $products_disabled = array();
-    while ($enabled = mysql_fetch_row($res)) {
-        $products_disabled[] = $enabled[0];
-    }
-    
-    //    $query = 'UPDATE SC_products SET enabled = FALSE, items_sold = 0 WHERE in_stock = 100';
-    $query = 'UPDATE SC_products SET enabled = FALSE, items_sold = 0 WHERE productID IN ('.$products_disabled.')';
+    $query = 'UPDATE SC_products SET enabled = FALSE, items_sold = 0 WHERE in_stock = 100';
     $res = mysql_query($query) or die(mysql_error()."<br>$query");
     
     $query = 'UPDATE SC_products SET in_stock =100 WHERE in_stock = 200';
@@ -569,6 +544,13 @@ TAG
     $query = "DELETE FROM `SC_auth_log` WHERE `Login` = 'sales'";
     $res = mysql_query($query) or die(mysql_error()."<br>$query");
     
+    $query = 'TRUNCATE TABLE  Search_products';
+    $res = mysql_query($query) or die(mysql_error()."<br>$query");
+    
+    $query = 'INSERT INTO Search_products (categoryID, code_1c, product_code, name_ru, Price,enabled)
+              SELECT  categoryID, code_1c, product_code, name_ru, Price, enabled FROM SC_products  WHERE in_stock = 100';
+    $res = mysql_query($query) or die(mysql_error()."<br>$query");
+    
     //    $query = 'DELETE FROM `SC_shopping_cart_items`
     //              WHERE `productID` IS NULL';
     //    $res = mysql_query($query) or die(mysql_error()."<br>$query");
@@ -583,7 +565,8 @@ TAG
     
     // добавление цен конкурентов в таблицу сравнения конкурентов
     
-    deleteRow($table_analogs, 'productID IN ('.$products_disabled.')');
+    $products_enabled = implode(',', $products_enabled);
+    deleteRow($table, 'productID NOT IN ('.$products_enabled.')');
     
     $query = 'SELECT * FROM Conc__competitors';
     $res = mysql_query($query) or die(mysql_error()."<br>$query");
@@ -597,7 +580,7 @@ TAG
     $diff_conc = array();
     
     foreach ($concs as $unic_conc) {
-        $query = "UPDATE $table_analogs SET $unic_conc=NULL";
+        $query = "UPDATE $table SET $unic_conc=NULL";
         $res = mysql_query($query) or die(mysql_error().$query);
         
         $delete_null .= 'AND '.$unic_conc.' IS NULL ';
@@ -622,7 +605,7 @@ TAG
             
             if ($analog = mysql_fetch_row($res2)) {
                 $query3
-                    = "UPDATE $table_analogs
+                    = "UPDATE $table
                             SET    $unic_conc      = $analog[0],
                                    usd_$unic_conc  = $analog[0]/$usd_conc,
                                    diff_$unic_conc = ROUND((Price/$analog[0]-1)*100, 1)
@@ -633,14 +616,14 @@ TAG
         optimizeTable('Conc__'.$unic_conc);
         optimizeTable('Conc_search__'.$unic_conc);
     }
-    $query = "DELETE FROM $table_analogs WHERE 1 $delete_null";
+    $query = "DELETE FROM $table WHERE 1 $delete_null";
     $res = mysql_query($query) or die(mysql_error().$query);
     
     $diff_conc = implode(',', $diff_conc);
-    $query = "UPDATE $table_analogs SET max_diff = GREATEST($diff_conc)";
+    $query = "UPDATE $table SET max_diff = GREATEST($diff_conc)";
     $res = mysql_query($query) or die(mysql_error().$query);
     
-    optimizeTable($table_analogs);
+    optimizeTable($table);
     mysql_close();
     
     // Удаление временных файлов

@@ -516,6 +516,9 @@ TAG
     $query = 'UPDATE SC_products SET enabled = FALSE, items_sold = 0 WHERE productID IN ('.$products_disabled.')';
     $res = mysql_query($query) or die(mysql_error()."<br>$query");
     
+    $query = "UPDATE $table SET enabled = 0 WHERE productID IN ($products_disabled)";
+    $res = mysql_query($query) or die(mysql_error()."<br>$query");
+    
     $query = 'UPDATE SC_products SET in_stock =100 WHERE in_stock = 200';
     $res = mysql_query($query) or die(mysql_error()."<br>$query");
     
@@ -582,9 +585,6 @@ TAG
         $competitors[$Currs->competitor] = $Currs->currency_value;
         $concs[] = $Currs->competitor;
     }
-    
-    $query = 'UPDATE '.$table.' SET enabled=0 WHERE productID IN ('.$products_disabled.')';
-    $res = mysql_query($query) or die(mysql_error().$query);
     
     $diff_conc = array();
     

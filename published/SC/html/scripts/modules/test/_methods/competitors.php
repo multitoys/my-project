@@ -32,7 +32,9 @@
             $this->DBHandler = &$Register->get(VAR_DBHANDLER);
 
             parent::__construct();
-
+    
+            $this->_setCompetitorsParams();
+            
             //контроллер выбора функций конструктора путем обхода массива $_GET
             foreach ($_GET as $get_key => $get_key) {
                 
@@ -103,11 +105,34 @@
             }
         }
     
+        protected function _setCompetitorsParams()
+        {
+            $query = "SELECT * FROM $this->table_conc ORDER BY CCID";
+            $res = mysql_query($query) or die(mysql_error()."<br>$query");
+        
+            $not_null = '';
+            while ($row = mysql_fetch_object($res)) {
+            
+                $this->competitors_params[] = array(
+                    'conc' => $row->competitor,
+                    'diff' => 'diff_'.$row->competitor,
+                    'name' => $row->name_ru
+                );
+                $this->competitors_name[$row->competitor] = $row->name_ru;
+                $this->competitors_array[$row->competitor] = $row->competitor;
+                if ($not_null == '') {
+                    $not_null .= ' AND (';
+                    $not_null .= $row->competitor.' IS NOT NULL';
+                } else {
+                    $not_null .= ' OR '.$row->competitor.' IS NOT NULL';
+                }
+            }
+            $this->competitor = $not_null.')';
+        }
+    
         protected function __updateAnalogs()
         {
             include(DIR_FUNC.'/import_functions.php');
-        
-            $table = 'Conc__analogs';
         
             $query = 'SELECT competitor, currency_value FROM Conc__competitors';
             $res = mysql_query($query) or die(mysql_error()."<br>$query");
@@ -119,16 +144,14 @@
                 $competitors[$Currs->competitor] = $Currs->currency_value;
                 $concs[] = $Currs->competitor;
             }
-        
-            $delete_null = '';
+    
+            $query = 'UPDATE '.$this->table.' SET enabled=1 WHERE enabled = 2';
+            $res = mysql_query($query) or die(mysql_error().$query);
+    
             $diff_conc = array();
-        
+    
             foreach ($concs as $unic_conc) {
-            
-                $query = 'UPDATE '.$table.' SET '.$unic_conc.'=NULL';
-                $res = mysql_query($query) or die(mysql_error().$query);
-            
-                $delete_null .= 'AND '.$unic_conc.' IS NULL ';
+                
                 $diff_conc[] = 'diff_'.$unic_conc;
             
                 $query = "SELECT code, code_1c FROM Conc_search__$unic_conc";
@@ -150,11 +173,13 @@
                     if ($analog = mysql_fetch_row($res2)) {
                     
                         $query3
-                            = "UPDATE $table
-                            SET    $unic_conc      = $analog[0],
+                            = "UPDATE $this->table
+                            SET    enabled         = 2,
+                                   $unic_conc      = $analog[0],
                                    usd_$unic_conc  = $analog[0]/$usd_conc,
                                    diff_$unic_conc = ROUND((Price/$analog[0]-1)*100, 1)
-                            WHERE  code_1c         = '$Codes->code_1c'";
+                            WHERE  code_1c         = '$Codes->code_1c'
+                                   AND enabled > 0";
                         $res3 = mysql_query($query3) or die(mysql_error()."<br>$query");
                     }
                 }
@@ -162,19 +187,16 @@
                 optimizeTable('Conc__'.$unic_conc);
                 optimizeTable('Conc_search__'.$unic_conc);
             }
-        
-            $query = "DELETE FROM $table WHERE 1 $delete_null";
-            $res = mysql_query($query) or die(mysql_error().$query);
+    
+            //            $query = "DELETE FROM $table WHERE 1 $delete_null";
+            //            $res = mysql_query($query) or die(mysql_error().$query);
         
             $diff_conc = implode(',', $diff_conc);
-            $query = "UPDATE $table SET max_diff = GREATEST($diff_conc)";
+            $query = "UPDATE $this->table SET max_diff = GREATEST($diff_conc) WHERE enabled = 2";
             $res = mysql_query($query) or die(mysql_error().$query);
         
             if ($res) {
-                optimizeTable($table);
-                /*                echo('Импорт завершен!');
-                                echo('<a href="/published/SC/html/scripts/frame.php?did=234">Вернуться</a>');
-                                die();*/
+                optimizeTable($this->table);
             }
         }
     
@@ -257,7 +279,7 @@
             $this->conc = xEscapeSQLstring($_GET['competitor']);
             $this->competitor = ' AND '.$this->conc;
         }
-    
+
         protected function __setSearch()
         {
             $search = xEscapeSQLstring(trim($_GET['searchstring']));
@@ -270,22 +292,21 @@
             /*@var $Register Register*/
             $smarty = &$Register->get(VAR_SMARTY);
             /*@var $smarty Smarty*/
-
+    
             $this->__getBrandsArray();
             $this->__getCategoriesArray();
-            $this->__getCompetitorsParams();
-
+    
             $Grid = new Grid();
             
             $Grid->query_total_rows_num = "
                 SELECT COUNT(*) FROM $this->table
-                WHERE 1
+                WHERE enabled = 2
                     $this->manufactured $this->brand $this->category $this->bestsellers 
                     $this->new $this->new_items_postup $this->competitor $this->search";
 
             $Grid->query_select_rows = "
                 SELECT * FROM $this->table
-                WHERE 1
+                WHERE enabled = 2
                     $this->manufactured $this->brand $this->category $this->bestsellers 
                     $this->new  $this->new_items_postup $this->competitor $this->search";
 
@@ -400,7 +421,7 @@
 
         protected function __getBrandsArray()
         {
-            $query = "SELECT DISTINCT brand FROM $this->table WHERE 1  $this->competitor";
+            $query = "SELECT DISTINCT brand FROM $this->table WHERE enabled = 2  $this->competitor";
             $res = mysql_query($query) or die(mysql_error().$query);
 
             while ($Brands = mysql_fetch_object($res)) {
@@ -410,7 +431,7 @@
             }
             sort($this->brands);
         }
-
+    
         protected function __getCategoriesArray()
         {
 //            $query = "
@@ -433,7 +454,7 @@
                           category 
                       FROM 
                           $this->table 
-                      WHERE 1 
+                      WHERE enabled = 2 
                           $this->competitor 
                           $this->manufactured
                      ";
@@ -443,23 +464,6 @@
                 $this->categories[] = $Categories->category;
             }
             sort($this->categories);
-        }
-    
-        protected function __getCompetitorsParams()
-        {
-            $query = "SELECT * FROM $this->table_conc ORDER BY CCID";
-            $res = mysql_query($query) or die(mysql_error()."<br>$query");
-        
-            while ($row = mysql_fetch_object($res)) {
-            
-                $this->competitors_params[] = array(
-                    'conc' => $row->competitor,
-                    'diff' => 'diff_'.$row->competitor,
-                    'name' => $row->name_ru
-                );
-                $this->competitors_name[$row->competitor] = $row->name_ru;
-                $this->competitors_array[$row->competitor] = $row->competitor;
-            }
         }
         
         protected function __priceDiscount($Price, $ua)
@@ -501,7 +505,7 @@
             
             $replace = array(' ', 'AND', 'category');
             $date = date('d-m-Y', time());
-            new MakeXLS($headers, $rows, str_replace($replace, '-', $this->competitor.'-'.xEscapeSQLstring($_GET['manufactured']).'-'.$this->brand.'-'.$this->category).'-'.$date);
+            new MakeXLS($headers, $rows, str_replace($replace, '-', $this->conc.'-'.xEscapeSQLstring($_GET['manufactured']).'-'.$this->brand.'-'.$this->category).'-'.$date);
         }
     }
 

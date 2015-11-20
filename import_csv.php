@@ -214,6 +214,7 @@ TAG
     $filename = $dest_dir.$filename0;
     $file = file($filename);
     $rowcount = count($file);
+    
     echo('<h1>Импорт товаров ...('.($rowcount - 1).')</h1><hr><br>');
     echo(<<<TAG
 		<div id='products' >
@@ -221,6 +222,7 @@ TAG
 		</div>
 TAG
     );
+    
     if (!$rowcount) {
         die(showError("CSV-файл ($filename0) не содержит данных! (rowcount = $rowcount)"));
     }
@@ -231,12 +233,18 @@ TAG
     $percent = 0;
     $query_time = 0;
     $query_conc = 0;
+    
     if (($handle = fopen($filename, 'r')) !== false) {
+        
         $table = 'Conc__analogs';
         $new_ua = array();
+        
         while (($data = fgetcsv($handle, 1000, ';')) !== false) {
+            
             set_time_limit(0);
+            
             if ($row !== 0) {
+                
                 $no++;
                 $ua = $data[0];
                 $id = $data[1];
@@ -269,6 +277,7 @@ TAG
                 if (!is_numeric($purchase)) {
                     $purchase = preg_replace('/[^0-9.]/', '', $purchase);
                 }
+                
                 $ua = ($ua > 1)?1:0;
                 $skidka = is_numeric($skidka)?$skidka:0;
                 $bonus = is_numeric($bonus)?$bonus:0;
@@ -287,9 +296,13 @@ TAG
                 $minorder = ($minorder > 0)?1:0;
                 $zakaz = ($zakaz > 0)?1:0;
                 $slug = str2Url("$name").'-'.$id;
+                
                 if (is_numeric($id) && strlen($id) > 4) {
+                    
                     $productID = getValue('productID', 'SC_products', "code_1c = '$id'");
+                    
                     if (!$productID) {
+                        
                         $query = "
                                 INSERT INTO SC_products
                                        (
@@ -353,16 +366,14 @@ TAG
                         $new_id++;
                         
                         // добавление товара в таблицу сравнения конкурентов
-                        //                        if ($ostatok !== 'под заказ') {
-                            $margin = round((100 * ($price / $purchase) - 100), 0);
-                            $query
-                                = "
-                                INSERT INTO $table
-                                       (productID, categoryID, category, code_1c, product_code, name_ru, brand, purchase, usd_purchase, margin, Price, usd_Price, ukraine)
-                                VALUES
-                                       ($productID, $catid, '$categories[$catid]', '$id', '$code', '$name', '$brand', $purchase, ($purchase/$usd), $margin, $price, ($price/$usd), $ua)";
-                            $res = mysql_query($query) or die(mysql_error()."<br>$query");
-                        //                        }
+                        $margin = round((100 * ($price / $purchase) - 100), 0);
+                        $query
+                            = "
+                            INSERT INTO $table
+                                   (productID, categoryID, category, code_1c, product_code, name_ru, brand, purchase, usd_purchase, margin, Price, usd_Price, ukraine)
+                            VALUES
+                                   ($productID, $catid, '$categories[$catid]', '$id', '$code', '$name', '$brand', $purchase, ($purchase/$usd), $margin, $price, ($price/$usd), $ua)";
+                        $res = mysql_query($query) or die(mysql_error()."<br>$query");
                     } else {
                         $query
                             = "
@@ -400,29 +411,27 @@ TAG
                         
                         $query = "DELETE FROM SC_product_list_item WHERE productID = $productID";
                         $res = mysql_query($query) or die(mysql_error()."<br>$query");
-    
-                        //                        if ($ostatok !== 'под заказ') {
-                            $margin = round((100 * ($price / $purchase) - 100), 0);
-                            $query
-                                = "
-                                UPDATE $table
-                                SET enabled                 = 1,
-                                    categoryID              = $catid,
-                                    category                = '$categories[$catid]',
-                                    product_code            = '$code',
-                                    name_ru                 = '$name',
-                                    brand                   = '$brand',
-                                    purchase                = $purchase,
-                                    usd_purchase            = ($purchase/$usd),
-                                    margin                  = $margin ,
-                                    Price                   = $price,
-                                    usd_Price               = ($price/$usd),
-                                    ukraine                 = $ua
-                                WHERE
-                                    productID               = $productID
-                            ";
-                            $res = mysql_query($query) or die(mysql_error()."<br>$query");
-                        //                        }
+                        
+                        $margin = round((100 * ($price / $purchase) - 100), 0);
+                        $query
+                            = "
+                            UPDATE $table
+                            SET enabled      = 1,
+                                categoryID   = $catid,
+                                category     = '$categories[$catid]',
+                                product_code = '$code',
+                                name_ru      = '$name',
+                                brand        = '$brand',
+                                purchase     = $purchase,
+                                usd_purchase = ($purchase/$usd),
+                                margin       = $margin ,
+                                Price        = $price,
+                                usd_Price    = ($price/$usd),
+                                ukraine      = $ua
+                            WHERE
+                                productID    = $productID
+                        ";
+                        $res = mysql_query($query) or die(mysql_error()."<br>$query");
                     }
                     //if ($new === 7) {
                     //    //$query = "INSERT INTO SC_category_product VALUES ($productID, ".CAT_NOVINKI_ID.", 1)";
@@ -512,7 +521,6 @@ TAG
     }
     $products_disabled = implode(',', $products_disabled);
     
-    //    $query = 'UPDATE SC_products SET enabled = FALSE, items_sold = 0 WHERE in_stock = 100';
     $query = 'UPDATE SC_products SET enabled = FALSE, items_sold = 0 WHERE productID IN ('.$products_disabled.')';
     $res = mysql_query($query) or die(mysql_error()."<br>$query");
     
@@ -573,8 +581,10 @@ TAG
                     `SC_order_status_changelog`, `SC_products`, `SC_product_list_item`, `SC_product_pictures`, 
                     `SC_shopping_carts`, `SC_shopping_cart_items`, `SC_subscribers`, `Search_products`';
     $res = mysql_query($query) or die(mysql_error()."<br>$query");
+    debugging($start);
     
     // добавление цен конкурентов в таблицу сравнения конкурентов
+    $start = microtime(true);
     $query = 'SELECT competitor, currency_value FROM Conc__competitors';
     $res = mysql_query($query) or die(mysql_error()."<br>$query");
     
@@ -624,11 +634,7 @@ TAG
     
         optimizeTable('Conc__'.$unic_conc);
         optimizeTable('Conc_search__'.$unic_conc);
-    }
-    
-    //            $query = "DELETE FROM $table WHERE 1 $delete_null";
-    //            $res = mysql_query($query) or die(mysql_error().$query);
-    
+    }    
     $diff_conc = implode(',', $diff_conc);
     $query = "UPDATE $table SET max_diff = GREATEST($diff_conc) WHERE enabled = 2";
     $res = mysql_query($query) or die(mysql_error().$query);

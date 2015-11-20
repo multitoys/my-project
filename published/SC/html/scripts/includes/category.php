@@ -64,7 +64,11 @@
     if (isset($_GET['sort'])) {
         $callBackParam['sort'] = $_GET['sort'];
         $smarty->assign('sort', $_GET['sort']);
+    } elseif ($callBackParam['categoryID'] == 66666) {
+        $callBackParam['sort'] = 'code_1c';
+        $callBackParam['direction'] = 'DESC';
     }
+    
     if (isset($_GET['direction'])) {
         $callBackParam['direction'] = $_GET['direction'];
         $smarty->assign('direction', $_GET['direction']);

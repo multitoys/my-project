@@ -746,14 +746,16 @@
             $order_by_clause = ' ORDER BY sort_order, '.LanguagesManager::sql_getSortField(PRODUCTS_TABLE, $sort_field);
 
             if (isset($callBackParam['sort']) && in_array($callBackParam['sort'], array('name', 'brief_description', 'in_stock', 'Price', 'Bonus', 'customer_votes', 'customers_rating',
-                    'list_price', 'sort_order', 'items_sold', 'product_code', 'shipping_freight'))
+                                                                                        'list_price', 'sort_order', 'items_sold', 'product_code', 'shipping_freight', 'code_1c'
+                ))
             ) {
 
                 $order_by_clause = ' ORDER BY '.LanguagesManager::sql_getSortField(PRODUCTS_TABLE, $callBackParam['sort']).' ASC ';
                 if (isset($callBackParam['direction']) && $callBackParam['direction'] === 'DESC') $order_by_clause = ' ORDER BY '.LanguagesManager::sql_getSortField(PRODUCTS_TABLE, $callBackParam['sort']).' DESC ';
             }
         } else {
-            $order_by_clause = ' ORDER BY categoryID, name_ru';
+            //            $order_by_clause = ' ORDER BY categoryID, name_ru';
+            $order_by_clause = ' ORDER BY name_ru';
         }
 
         /**

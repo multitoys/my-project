@@ -603,7 +603,7 @@ function ordGetOrderContent( $orderID )
 	while( $row=db_fetch_row($q) )
 	{
 		$productID = GetProductIdByItemId( $row["itemID"] );
-		$product   = GetProduct( $productID, true );
+        $product = GetProduct($productID);
 		if ( $product["eproduct_filename"] != null &&
 			 $product["eproduct_filename"] != null )
 		{

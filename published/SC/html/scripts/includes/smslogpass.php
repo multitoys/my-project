@@ -7,4 +7,4 @@
      */
 
     define('SMS_LOGIN', '380676330300');
-    define('SMS_PASSWORD', 'kaidash');
+    define('SMS_PASSWORD', '2511');

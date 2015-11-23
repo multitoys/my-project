@@ -42,8 +42,6 @@
         var $ActivationCode;
         var $skidka;
         var $skidka_ua;
-        //  var $is_special_price;
-        //  var $ignore_skidka;
         var $vip;
         /*   var $open; */
 
@@ -51,7 +49,23 @@
 
         var $__primary_key = 'customerID';
         var $__db_table    = CUSTOMERS_TABLE;
-
+    
+        /**
+         * @return Customer | null
+         */
+        static function getAuthedInstance()
+        {
+    
+            static $customerEntry = null;
+            if (!is_object($customerEntry) && isset($_SESSION['log']) && $_SESSION['log']) {
+        
+                $customerEntry = new Customer;
+                if (!$customerEntry->loadByLogin($_SESSION['log'])) return null;
+            }
+    
+            return $customerEntry;
+        }
+    
         function loadByID($customerID)
         {
             $res = parent::loadByID($customerID);
@@ -59,28 +73,8 @@
             $this->cust_password = Crypt::PasswordDeCrypt($this->cust_password, null);
 
             if (CONF_BACKEND_SAFEMODE) $this->Email = translate("msg_safemode_info_blocked");
-
+    
             return $res;
-        }
-
-        function loadByLogin($Login)
-        {
-
-            $Register = &Register::getInstance();
-            /*@var $Register Register*/
-            $DBHandler = &$Register->get(VAR_DBHANDLER);
-            /*@var $DBHandler DataBase*/
-
-            $DBRes = $DBHandler->ph_query('SELECT * FROM ?#CUSTOMERS_TABLE WHERE Login=?', $Login);
-            if (!$DBRes->getNumRows()) return false;
-
-            $this->loadFromArray($DBRes->fetchAssoc());
-
-            $this->cust_password = Crypt::PasswordDeCrypt($this->cust_password, null);
-
-            if (CONF_BACKEND_SAFEMODE) $this->Email = translate("msg_safemode_info_blocked");
-
-            return true;
         }
 
         /**
@@ -160,21 +154,25 @@
                 return PEAR::raiseError('err_input_all_required_fields', null, null, null, "_custom_fields[{$_field['reg_field_ID']}]");
             }
         }
-
-        /**
-         * @return Customer | null
-         */
-        static function getAuthedInstance()
+    
+        function loadByLogin($Login)
         {
-
-            static $customerEntry = null;
-            if (!is_object($customerEntry) && isset($_SESSION['log']) && $_SESSION['log']) {
-
-                $customerEntry = new Customer;
-                if (!$customerEntry->loadByLogin($_SESSION['log'])) return null;
-            }
-
-            return $customerEntry;
+    
+            $Register = &Register::getInstance();
+            /*@var $Register Register*/
+            $DBHandler = &$Register->get(VAR_DBHANDLER);
+            /*@var $DBHandler DataBase*/
+    
+            $DBRes = $DBHandler->ph_query('SELECT * FROM ?#CUSTOMERS_TABLE WHERE Login=?', $Login);
+            if (!$DBRes->getNumRows()) return false;
+    
+            $this->loadFromArray($DBRes->fetchAssoc());
+    
+            $this->cust_password = Crypt::PasswordDeCrypt($this->cust_password, null);
+    
+            if (CONF_BACKEND_SAFEMODE) $this->Email = translate("msg_safemode_info_blocked");
+    
+            return true;
         }
 
         function getAddressesNumber()

@@ -357,13 +357,15 @@
                 $row['PriceNoUnit'] = priceDiscount($row['Price'], $row['skidka'], $row['ukraine']);
                 $row['PriceWithUnit'] = show_price($row['PriceNoUnit']);
                 $row['Bonus'] = ($row['Bonus'])?(int)$row['PriceNoUnit']:'';
-                $row['list_priceWithUnit'] = show_price($row['list_price']);
+                $row['list_priceNoUnit'] = priceDiscount($row['list_price'], $row['skidka'], $row['ukraine']);
+                $row['list_priceWithUnit'] = show_price($row['list_priceNoUnit']);
                 // you save (value)
-                $row['SavePrice'] = show_price($row['list_price'] - $row['Price']);
+                $row['SavePrice'] = show_price($row['list_priceNoUnit'] - $row['PriceNoUnit']);
 
                 // you save (%)
                 if ($row['list_price'])
-                    $row['SavePricePercent'] = ceil(((($row['list_price'] - $row['Price']) / $row['list_price']) * 100));
+                    //                    $row['SavePricePercent'] = ceil(((($row['list_price'] - $row['Price']) / $row['list_price']) * 100));
+                    $row['SavePricePercent'] = $row['akcia_skidka'];
 
 
                 _setPictures($row);
@@ -418,13 +420,15 @@
                     $row['PriceNoUnit'] = priceDiscount($row['Price'], $row['skidka'], $row['ukraine']);
                     $row['PriceWithUnit'] = show_price($row['PriceNoUnit']);
                     $row['Bonus'] = ($row['Bonus'])?(int)$row['PriceNoUnit']:'';
-                    $row['list_priceWithUnit'] = show_price($row['list_price']);
+                    $row['list_priceNoUnit'] = priceDiscount($row['list_price'], $row['skidka'], $row['ukraine']);
+                    $row['list_priceWithUnit'] = show_price($row['list_priceNoUnit']);
                     // you save (value)
-                    $row['SavePrice'] = show_price($row['list_price'] - $row['Price']);
+                    $row['SavePrice'] = show_price($row['list_priceNoUnit'] - $row['PriceNoUnit']);
 
                     // you save (%)
                     if ($row['list_price'])
-                        $row['SavePricePercent'] = ceil(((($row['list_price'] - $row['Price']) / $row['list_price']) * 100));
+                        //                        $row['SavePricePercent'] = ceil(((($row['list_price'] - $row['Price']) / $row['list_price']) * 100));
+                        $row['SavePricePercent'] = $row['akcia_skidka'];
                     _setPictures($row);
                     _countPictures($row);
                     $row['product_extra'] = GetExtraParametrs($row['productID']);
@@ -834,11 +838,13 @@
             $_Product['PriceNoUnit'] = priceDiscount($_Product['Price'], $_Product['skidka'], $_Product['ukraine']);
             $_Product['PriceWithUnit'] = show_price($_Product['PriceNoUnit']);
             $_Product['Bonus'] = ($_Product['Bonus'])?(int)$_Product['PriceNoUnit']:'';
-            $_Product['list_priceWithUnit'] = show_price($_Product['list_price']);
+            $_Product['list_priceNoUnit'] = priceDiscount($_Product['list_price'], $_Product['skidka'], $_Product['ukraine']);
+            $_Product['list_priceWithUnit'] = show_price($_Product['list_priceNoUnit']);
             // you save (value)
-            $_Product['SavePrice'] = show_price($_Product['list_price'] - $_Product['Price']);
+            $_Product['SavePrice'] = show_price($_Product['list_priceNoUnit'] - $_Product['PriceNoUnit']);
             // you save (%)
-            if ($_Product['list_price']) $_Product['SavePricePercent'] = ceil(((($_Product['list_price'] - $_Product['Price']) / $_Product['list_price']) * 100));
+            //            if ($_Product['list_price']) $_Product['SavePricePercent'] = ceil(((($_Product['list_price'] - $_Product['Price']) / $_Product['list_price']) * 100));
+            if ($_Product['list_price']) $_Product['SavePricePercent'] = $_Product['akcia_skidka'];
             $_Product['PriceWithOutUnit'] = show_priceWithOutUnit($_Product['PriceNoUnit']);
             if (((float)$_Product['shipping_freight']) > 0)
                 $_Product['shipping_freightUC'] = show_price($_Product['shipping_freight']);

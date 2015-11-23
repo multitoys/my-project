@@ -2,8 +2,9 @@
 class Register extends Singleton {
 	
 	var $Variables;
-	
-	function Register(){
+    
+    protected function __construct()
+    {
 		
 		$this->Variables = array();
 	}

@@ -43,7 +43,7 @@
                 if ($res['slug'] === 'akcija' || $res['slug'] === 'akcija-bally') {
                     $a = 'style="color: red;text-shadow: 1px 1px 3px rgb(200, 104, 104),-1px -1px 3px rgb(255,255,255);"';
                 }
-                if ($res['slug'] !== 'novinki' && $res['slug'] !== 'akcija' && $res['slug'] !== 'akcija-bally') {
+                if ($res['slug'] !== 'novinki' && $res['slug'] !== 'akcija-bally') {
                     //                    if ($res['slug'] !== 'akcija-bally' || $count > 0) {
                         $disp .= '<li>';
                         if ($res['slug'] !== '')

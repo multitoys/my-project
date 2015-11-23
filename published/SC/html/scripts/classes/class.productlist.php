@@ -110,8 +110,9 @@ class ProductList extends DBObject {
             LanguagesManager::ml_fillFields(PRODUCTS_TABLE, $row);
 			if(!$row['thumbnail'] || !file_exists(DIR_PRODUCTS_PICTURES.'/'.$row['thumbnail']))unset($row['thumbnail']);
             $price = priceDiscount($row['Price'], $row['skidka'], $row['ukraine']);
-			$row["price_str"] = show_price($price);
-			$row["list_price_str"] = show_price($row["list_price"]);
+            $row['price_str'] = show_price($price);
+            $row['list_price'] = priceDiscount($row['list_price'], $row['skidka'], $row['ukraine']);
+            $row['list_price_str'] = show_price($row['list_price']);
 			$products[] = $row;
 		}
 		return $products;

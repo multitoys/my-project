@@ -26,6 +26,7 @@ function smarty_function_get_topproducts( $params, &$smarty )
         {
             $price = priceDiscount($row['Price'], $row['skidka'], $row['ukraine']);
             $row['price_str'] = show_price($price);
+            $row['list_price'] = priceDiscount($row['list_price'], $row['skidka'], $row['ukraine']);
             $row['list_price_str'] = show_price($row['list_price']);
             $products[] = $row;
         }

@@ -29,21 +29,24 @@
 
 <table cellpadding="0" cellspacing="0" width="100%">
 <tr>
-	<td {if $PAGE_VIEW eq 'noframe'}class="background_cart_top"{/if} id="cart_page_title">
+    <td {*if $PAGE_VIEW eq 'noframe'}class="background_cart_top"{/if*} id="cart_page_title">
 		<h1 style='margin:0;'>{$CurrentDivision.name|translate}</h1>
 	{*if $cart_content&&!$widget_view*}
-	<div>
-		<a id="my_closeLink" href='{"?ukey=home&view=frame"|set_query_html}' target="_parent" onclick="window.history.back()">
-			{lbl_goto_shopping}
-		</a>
-	</div>
+    </td>
+    <td>
+        <div>
+            <a id="my_closeLink" href='{"?ukey=home&view=frame"|set_query_html}' target="_parent"
+               onclick="window.history.back()">
+                {lbl_goto_shopping}
+            </a>
+        </div>
 	{*/if*}
 	</td>
-	{*if $cart_content}
-	<td {if $PAGE_VIEW eq 'noframe'}class="background_cart_top"{/if} id="cart_clear" style='text-align:right;'>
+    {if $cart_content}
+        <td {*if $PAGE_VIEW eq 'noframe'}class="background_cart_top"{/if*} id="cart_clear" style='text-align:right;'>
 	  <a href='{"clear_cart=yes"|set_query}'>{"cart_clear_cart"|translate}</a>
 	</td>
-	{/if*}
+    {/if}
 </tr>
 </table>
 
@@ -253,10 +256,27 @@
 {else}
 <h3>{"cart_cart_is_empty"|translate}</h3>
 {/if}
-<br>
+    {*<br>*}
   {*"coming_soon"|cs_load_auxpage*}
 </div>
-
+{*<script>*}
+{*{literal}*}
+{*function del_items() {*}
+{*$(".del_chkbtn:checked").each(function () {*}
+{*var id = $(this).attr('data-pid');*}
+{*var query = '?ukey=cart&view=noframe&remove=' + id;*}
+{*$.ajax({*}
+{*type: "GET",*}
+{*url: query,*}
+{*dataType: "html",*}
+{*async: false*}
+{*});*}
+{*});*}
+{*$('#recalculate').attr('name', 'recalculate');*}
+{*$('form').submit();*}
+{*}*}
+{*{/literal}*}
+{*</script>*}
 {*<script type="text/javascript" language="javascript">
 {if $PAGE_VIEW eq 'noframe' && !$smarty.get.external} { adjust cart window height }
 

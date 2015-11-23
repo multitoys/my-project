@@ -113,7 +113,8 @@ $Message = $Register->get(VAR_MESSAGE);
             $a["PriceNoUnit"] = priceDiscount($a['Price'], $a['skidka'], $a['ukraine']);
             $a["PriceWithUnit"] = show_price($a["PriceNoUnit"]);
             $a["Bonus"] = ($a["Bonus"])?(int)$a["PriceNoUnit"]:'';
-            $a["list_priceWithUnit"] = show_price($a["list_price"]);
+            $a["list_priceNoUnit"] = priceDiscount($a['list_price'], $a['skidka'], $a['ukraine']);
+            $a["list_priceWithUnit"] = show_price($a["list_priceNoUnit"]);
 			
 			$currencyEntry = Currency::getSelectedCurrencyInstance();
 			$a["price_incurr"] = $currencyEntry->convertUnits($a["Price"]);
@@ -226,11 +227,12 @@ $Message = $Register->get(VAR_MESSAGE);
 			
 			$a[12] = show_price( $a["Price"] );
 			$a[13] = show_price( $a["list_price"] );
-			$a[14] = show_price( $a["list_price"] - $a["Price"]); //you save (value)
+            $a[14] = show_price($a["list_priceNoUnit"] - $a["PriceNoUnit"]); //you save (value)
 			$a["PriceWithOutUnit"]=show_priceWithOutUnit( $a["Price"] );
-			if ( $a["list_price"] ) $a[15] =
-				ceil(((($a["list_price"]-$a["Price"])/
-					$a["list_price"])*100)); //you save (%)
+            if ($a["list_price"]) {
+                //                $a[15] = ceil(((($a["list_price"]-$a["Price"])/$a["list_price"])*100));//you save (%)
+                $a[15] = $a["akcia_skidka"];//you save (%)
+            } 
 
 			$all_product_pictures = array();
 			$dbres = db_phquery("SELECT * FROM ?#PRODUCT_PICTURES WHERE productID=? ORDER BY priority", $productID);

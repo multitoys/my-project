@@ -18,6 +18,7 @@
             'Конструкторы AUSINI, LIGAO' => '401-Konstruktori-AUSINI-LIGAO',
             'Конструкторы BELA'          => '415-Konstruktori-BELA',
             'Конструкторы Bela Friends'  => '1116-Konstruktori-Bela-Friends',
+            'Конструкторы BIONICLE' => '372-Konstruktori-BIONICLE-v-kolbah-i-korobkah',
             'Конструкторы BRICK'         => '405-Konstruktori-BRICK',
             'Конструкторы CHIMA'         => '403-Konstruktori-CHIMA',
             'Конструкторы COGO'          => '375-Konstruktori-COGO',
@@ -26,7 +27,7 @@
             'Конструкторы Jubilux'       => '1121-Konstruktori-Jubilux',
             'Конструкторы LELE'          => '1117-Konstruktori-LELE',
             'Конструкторы Minecraft'     => '1119-Konstruktori-Minecraft',
-            'Конструкторы NINJA'         => '373-Konstruktori-NINJA',
+            //            'Конструкторы NINJA'         => '373-Konstruktori-NINJA',
             'Конструкторы Play Smart'    => '1131-Konstruktori-Play-Smart',
             'Конструкторы QLT'           => '1120-Konstruktori-QLT',
             'Конструкторы Sluban'        => '371-Konstruktori-Sluban',
@@ -39,13 +40,16 @@
         'Летний ассортимент'      => array(
             'Ветрячки, воздушные змеи,вертушки,сачки,запускалки' => '60-Vetryachki-vozdushnie-zmeivertushkisachkizapuskalki',
             'Детские зонты, очки'                                => '37-Detskie-zonti-ochki',
+            'Мыльные пузыри' => '532-Milnie-puziri',
             'Песочные игры'                                      => '408-Pesochnie-igri'
         ),
 
         'Мягкие игрушки'          => array(
             'Брелки, магниты, мячи, копилки' => '162-Brelki-magniti-myachi',
+            'Куклы'                 => '159-Kukli',
             'Музыкальные'                    => '1135-Muzikalnie',
             'Размер см более 50'             => '158-Razmer-sm-bolee-50',
+            'Размер см до 19'       => '155-Razmer-sm-do-19',
             'Размер см от 19 до 30'          => '156-Razmer-sm-ot-19-do-30',
             'Размер см от 30 до 50' => '157-Razmer-sm-ot-30-do-50',
             'Сердца, подушки,маски'          => '161-Serdca-podushki'
@@ -70,24 +74,26 @@
             'Головоломки'                    => '350-Golovolomki',
             'Деревянные развивающие игрушки' => '351-Derevyannie-razvivayuschie-igrushki',
             'Доски для рисования,магнитные'  => '392-Doski-drisovaniya',
-            'Игры Yo-Yo, юла, колечки, калейдоскопы, радуги' => '369-Igri-Yo-Yo-yula-kolechki-kaleidoskopi-radugi-svetyashki',
+            'Игры Yo-Yo, юла, колечки, 
+             калейдоскопы, радуги'      => '369-Igri-Yo-Yo-yula-kolechki-kaleidoskopi-radugi-svetyashki',
             'Компьютеры, ноутбуки, планшеты' => '356-Kompyutera-noutbuki-plansheti',
             'Кубики'                         => '419-Kubiki',
+            'Машины муз. JoyToy'        => '58-Mashini-muz-JoyToy',
             'Мозаики'                        => '406-Mozaiki',
             'Мягкие кубики'                  => '926-Myagkie-kubiki',
             'Обучающие игры'                 => '358-Obuchayuschie-igri',
             'Оптические приборы'             => '762-Opticheskie-pribori',
-            'Сборные модели'                 => '345-Sbornie-modeli',
-            'Творчество'                     => '409-Tvorchestvo',
-            'Тетрисы, электронные игры'                      => '421-Tetrisi-elektronnie-igri',
+            //            'Сборные модели'                 => '345-Sbornie-modeli',
+            //            'Творчество'                     => '409-Tvorchestvo',
+            'Тетрисы, электронные игры' => '421-Tetrisi-elektronnie-igri',
             'Фомовые развивающие игрушки'    => '393-Fomovie-razvivayuschie-igrushki'
         ),
 
         'Творчество'              => array(
 //            'Зірка'         => '980-5Zirka',
-            'Ранок'         => '945-3Ranok'
+'Ранок' => '945-3Ranok',
 //            'Ранок Креатив' => '931-3Ranok',
-//            'Роса'          => '1001-6Rosa'
+'Роса'  => '1001-6Rosa'
         ),
 
         'Товары для девочек'      => array(
@@ -108,25 +114,21 @@
             'Куклы интерактивные'                          => '1132-Kukli-interaktivnie',
             'Одежда для кукол и пупсов'                    => '416-Odezhda-dlya-kukol-i-pupsov',
             'Посуда, кухни, быт.приборы,овощи-фрукты'      => '360-Posuda-kuhni-bitpriboriovoschi-frukti',
-            'Пупсы BABY BORN' => '417-Pupsi-BABY-BORN',
+            //            'Пупсы BABY BORN'                              => '417-Pupsi-BABY-BORN',
             'Столики кухонные, туалетные'                  => '363-Stoliki-kuhonnie-tualetnie-doktora-instrumentalnie'
         ),
 
         'Товары для детей'        => array(
             'Аксессуары для детей'                                  => '1094-Aksessuari-dlya-detei',
-            //            'Докторские наборы'                                     => '382-Doktora',
             'Животные'                                              => '44-Zhivotnie',
             'Заводные и музыкальные игрушки'                        => '411-Zavodnie-igrushki-krutie-bobi-muzikalnie',
             'Игровые центры'                                        => '1129-Kukla-Defa-Lucy',
-            //            'Игры Yo-Yo, юла, колечки, калейдоскопы, радуги'        => '369-Igri-Yo-Yo-yula-kolechki-kaleidoskopi-radugi-svetyashki',
             'Интерактивные игрушки'                                 => '368-Govoryaschie-homyaki-i-koti-Tomi',
             'Карусели на кроватку'                                  => '354-Karuseli-na-krovatku-mobili',
             'Каталки'                                               => '370-Katalki',
             'Коврики мягкие,музыкальные,для рисования'              => '355-Kovriki-myagkie-i-muzikalnie',
-            //            'Копилки, часы'                                         => '420-Kopilki-chasi',
             'Молоточки'                                             => '381-Molotochki',
             'Музыкальные инструменты'                               => '366-Muzikalnie-instrumenti',
-            //            'Мыльные пузыри'                                        => '532-Milnie-puziri',
             'Мячики-попрыгунчики резиновые, с наполнителем, лизуны' => '398-Priguni-rezinovie-s-napolnitelem-lizuni',
             'Ночники,светильники,проекторы'                         => '1137-Nochnikisvetilnikiproektori',
             'Палатки, корзины для игрушек'                          => '414-Palatki-korzini-dlya-igrushek',
@@ -136,7 +138,6 @@
             'Рыбалки'                                               => '361-Ribalki',
             'Светящиеся игрушки'                                    => '62-Svetyaschiesya-igrushki',
             'Телефоны, фотоаппараты'                                => '410-Telefoni-fotoapparati',
-            //            'Тетрисы, электронные игры'                             => '421-Tetrisi-elektronnie-igri',
             'Ходунки, кровати, стулья для кормления'                => '389-Hodunki-krovati-stulya-dkormleniya'
         ),
 
@@ -155,7 +156,7 @@
 
         'Украинский пластик'      => array(
             'Orion'                         => '1049-Orion',
-            'Автомобили толокары'           => '562-Avtomobili-kolyaski',
+            //            'Автомобили толокары'           => '562-Avtomobili-kolyaski',
             'Горшки'                        => '923-Gorshki',
             'Качели'                        => '925-Kacheli',
             'Конструкторы'                  => '553-Konstruktori',
@@ -177,7 +178,6 @@
         'Велосипеды'              => array(
             '2-х колесные'  => '979-2-h-kolesnie',
             '3-х колесные'  => '977-3-h-kolesnie',
-            'Санки'         => '1151-Sanki',
             'Электромобили' => '1142-Elektromobili'
         ),
 
@@ -185,7 +185,7 @@
             'Аксессуары для спорта'  => '1074-Aksessuari-dlya-sporta',
             'Бадминтоны'             => '734-Badmintoni',
             'Баскетбол'              => '796-Basketbol',
-            'Боксерские наборы'      => '535-Bokserskie-nabori',
+            //            'Боксерские наборы'      => '535-Bokserskie-nabori',
             'Дартс'                  => '541-Darts',
             'Защита, шлемы'          => '249-Zaschita-shlemi',
             'Мячи'                   => '544-Myachi',
@@ -204,7 +204,7 @@
         ),
 
         'Канцелярия'              => array(
-            'Офисная канцелярия'      => '423-Ofisnie-tovari',
+            //            'Офисная канцелярия'      => '423-Ofisnie-tovari',
             'Школьные принадлежности' => '422-Shkolnie-prinadlezhnosti'
         ),
 
@@ -226,8 +226,8 @@
             'Новинки'       => 'page_size500?new=1',
             'Хиты'          => 'page_size500?bestseller=1',
             'Акция'         => 'page_size500?offer=1',
-            '16 ноября 2015' => 'shop/news/view/266?page_size=500',
-            '17 ноября 2015' => 'shop/news/view/267?page_size=500'
+            '21 ноября 2015' => 'shop/news/view/275?page_size=500',
+            '22 ноября 2015' => 'shop/news/view/277?page_size=500'
         )
     );
 

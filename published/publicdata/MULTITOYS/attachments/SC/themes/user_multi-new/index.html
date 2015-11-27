@@ -113,7 +113,8 @@
                     </div>
 				</div>
                 <div id="center"
-                     {if $smarty.get.ukey eq 'auxpage_divoland' or $smarty.get.ukey eq 'auxpage_mixtoys' or $smarty.get.ukey eq 'auxpage_dreamtoys' or $smarty.get.ukey eq 'auxpage_kindermarket' or $smarty.get.ukey eq 'auxpage_grandtoys'}class=conc{/if}>
+                     {if $smarty.get.ukey eq 'cart'}style="right: 0"
+                     {elseif $smarty.get.ukey eq 'auxpage_divoland' or $smarty.get.ukey eq 'auxpage_mixtoys' or $smarty.get.ukey eq 'auxpage_dreamtoys' or $smarty.get.ukey eq 'auxpage_kindermarket' or $smarty.get.ukey eq 'auxpage_grandtoys'}class=conc{/if}>
 					{if $smarty.session.log}
 						{if $smarty.session.cs_may_order}
 							{cpt_maincontent}
@@ -144,6 +145,7 @@
 						{/if}
 					{/if}
 				</div>
+                {if $smarty.get.ukey ne 'cart'}    
                 <div id="right"
                      {if $smarty.get.ukey eq 'auxpage_divoland' or $smarty.get.ukey eq 'auxpage_mixtoys' or $smarty.get.ukey eq 'auxpage_dreamtoys' or $smarty.get.ukey eq 'auxpage_kindermarket' or $smarty.get.ukey eq 'auxpage_grandtoys'}class=conc{/if}>
 					<div class="cpt_maincolumns">
@@ -155,6 +157,7 @@
                         {/if}
 					</div>
 				</div>
+                {/if}
 			</div>
 		</div>
 </div>

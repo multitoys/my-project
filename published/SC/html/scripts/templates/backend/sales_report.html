@@ -21,7 +21,8 @@ translate.srep_this_p_year = "{'srep_this_p_year'|transcape}";
 	<option value='{"?ukey=sales_report&action=data_this_month&utime_begin=`$_period[0]`&utime_end=`$_period[1]`"|set_query_html}'{if $smarty.foreach.fr_ordermonths.first} selected="selected"{/if}>{$_title|escape:'html'}</option>
 	{/foreach}
 	</select>
-	<div id="this-month-container" style="height: 320px; margin-top:5px;">
+
+    <div id="this-month-container" style="height: 320px; width: 80%; margin-top:5px;">
 			<strong>You need to upgrade your Flash Player</strong>
 	</div>
 </div>
@@ -34,7 +35,8 @@ translate.srep_this_p_year = "{'srep_this_p_year'|transcape}";
 	<option value='{$_key}' {if $_key eq 'month'}selected="selected"{/if}>{$_period|translate}</option>
 	{/foreach}
 	</select>
-<div id="flashcontent" style="height: 320px; margin-top:5px;">
+
+    <div id="flashcontent" style="height: 320px; width: 80%; margin-top:5px;">
 	<div id="content_week">
 		<strong>You need to upgrade your Flash Player</strong>
 	</div>
@@ -50,7 +52,7 @@ translate.srep_this_p_year = "{'srep_this_p_year'|transcape}";
 	
 <h2>{lbl_srep_sreport_alltime}</h2>
 {if $srep_statistic}<p>{$srep_statistic}</p>{/if}
-<div class="blockquote" id="all-time-container" style="height: 320px; ">
+    <div class="blockquote" id="all-time-container" style="height: 320px; width: 80%; ">
 		<strong>You need to upgrade your Flash Player</strong>
 </div>
 

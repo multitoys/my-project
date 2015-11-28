@@ -371,9 +371,9 @@
 
                 asort($min, SORT_NUMERIC);
                 $min_diff = array_shift($min);
-
-                $rows[$k]['margin'] = $this->__priceDiff($rows[$k]['Price'], $rows[$k]['purchase'], 1);
-                $rows[$k]['max_diff'] = $this->__priceDiff($rows[$k]['Price'], $min_diff, 1);
+    
+                $rows[$k]['margin'] = $this->__priceDiff($rows[$k]['Price'], $rows[$k]['purchase'], 0);
+                $rows[$k]['max_diff'] = $this->__priceDiff($rows[$k]['Price'], $min_diff, 0);
             }
 
             $count_rows = array('100' => 100, '500' => 500, '1000' => 1000);

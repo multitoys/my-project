@@ -180,8 +180,8 @@
                 $cartEntry->cleanCurrentCart('erase');
         
                 //remove coupon from empty cart
-                ClassManager::includeClass('discount_coupon');
-                discount_coupon::remove();
+                //                ClassManager::includeClass('discount_coupon');
+                //                discount_coupon::remove();
         
                 RedirectSQ('clear_cart=');
             }

@@ -4,6 +4,25 @@
     {
 
         /**
+         * Get reference to new object of class
+         *
+         * @param string $ClassName
+         *
+         * @return mixed
+         */
+        static public function &getInstance($ClassName)
+        {
+        
+            $Object = null;
+        
+            if (ClassManager::includeClass($ClassName)) {
+                eval('$Object = new '.$ClassName.'();');
+            }
+        
+            return $Object;
+        }
+    
+        /**
          * Include class file
          *
          * @param string $ClassName
@@ -17,7 +36,7 @@
 
                 if (!file_exists(DIR_CLASSES.'/class.'.strtolower($ClassName).'.php')) {
                     return false;
-                    die('Class '.$ClassName.' doesnt exist!');
+                    //                    die('Class '.$ClassName.' doesnt exist!');
                 }
                 include_once(DIR_CLASSES.'/class.'.strtolower($ClassName).'.php');
 
@@ -30,24 +49,5 @@
             }
 
             return true;
-        }
-
-        /**
-         * Get reference to new object of class
-         *
-         * @param string $ClassName
-         *
-         * @return mixed
-         */
-        static public function &getInstance($ClassName)
-        {
-
-            $Object = null;
-
-            if (ClassManager::includeClass($ClassName)) {
-                eval('$Object = new '.$ClassName.'();');
-            }
-            
-            return $Object;
         }
     }

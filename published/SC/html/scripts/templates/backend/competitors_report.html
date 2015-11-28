@@ -22,7 +22,7 @@
 {/literal}
 <div class="za_body">
     <h3>Сравнение цен по конкурентам
-        <small>({$search_word} {$TotalFound})</small>
+        <small>({$search_word}{$TotalFound})</small>
     </h3>
     <form name="MainForm" method="get" action="{''|set_query}">
 
@@ -134,7 +134,8 @@
             </div>
 
             <input id=ok type="submit" name="search" value="{"btn_find"|translate}">
-            <input id=update type="submit" name="update" value="Обновить данные" onclick="update()">
+            {*<input id=update type="submit" name="update" value="Обновить данные" onclick="update()">*}
+            <a id=update type="submit" name="update" value="Обновить данные" onclick="update()">
 
         </div>
     </form>
@@ -153,7 +154,7 @@
                     <td class="brand">{$GridRows[i].category|escape:'html'}</td>
                     <td class="brand">{$GridRows[i].brand|escape:'html'}</td>
                     <td class="to_right choco">{$GridRows[i].purchase}</td>
-                    <td class="to_right choco{if $GridRows[i].margin < 10} red warning{/if}">{$GridRows[i].margin}%</td>
+                    <td class="to_right choco{if $GridRows[i].margin < 13} red warning{/if}">{$GridRows[i].margin}%</td>
                     <td class="to_right bold{if $GridRows[i].max_diff > 0} red{else} blue{/if}">{$GridRows[i].Price}</td>
                     <td class="to_right{if $GridRows[i].max_diff > 0} red{else} green{/if}">
                         <strong>{$GridRows[i].max_diff}%</strong>

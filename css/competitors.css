@@ -99,7 +99,7 @@ label, select, .input_message {
 }
 
 #selections select {
-    height: 18px;
+    /*height: 18px;*/
     margin-top: 3px;
     font-size: 12px;
     color: darkblue;

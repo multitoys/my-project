@@ -67,7 +67,7 @@
 
             if ($this->_content) {
                 //                header('Content-Type: application/xls');
-                header('Content-Type: application/vnd.ms-excel');
+                //                header('Content-Type: application/vnd.ms-excel');
                 header("Content-Disposition: attachment; filename=$filename");
                 header("Content-Transfer-Encoding: binary ");
                 readfile($filename);

@@ -90,17 +90,6 @@
             </div>
 
             <div id=selections>
-                <div>
-                    <label for="competitor" style="color: #FF0000">Конкуренты: </label>
-                    <select name="competitor" style="width:191px;" id="competitor">
-                        <option value='all'      {if $smarty.get.competitor eq 'all'} selected="selected"{/if}>Все конкуренты</option>
-                        {section name=i loop=$Competitors}
-                            <option value="{$Competitors[i].conc}" {if $smarty.get.competitor eq $Competitors[i].conc} selected="selected"{/if}>
-                                {$Competitors[i].name}
-                            </option>
-                        {/section}
-                    </select>
-                </div>
 
                 <div>
                     <label for="manufactured" style="color: #45AF10;">Производители:</label>
@@ -130,7 +119,19 @@
                         {/section}
                     </select>
                 </div>
-
+                <div>
+                    <label for="competitor" style="color: #FF0000">Конкуренты: </label>
+                    <select size={$cc} name="competitors[]" multiple style="width:191px;" id="competitor">
+                        <option disabled{*value='all' *}     {*if $smarty.get.competitor eq 'all'} selected="selected"{/if*}>
+                            Все конкуренты
+                        </option>
+                        {section name=i loop=$Competitors}
+                            <option value="{$Competitors[i].conc}" {*if $smarty.get.competitor eq $Competitors[i].conc} selected="selected"{/if*}>
+                                {$Competitors[i].name}
+                            </option>
+                        {/section}
+                    </select>
+                </div>
             </div>
 
             <input id=ok type="submit" name="search" value="{"btn_find"|translate}">
@@ -158,11 +159,14 @@
                     <td class="to_right{if $GridRows[i].max_diff > 0} red{else} green{/if}">
                         <strong>{$GridRows[i].max_diff}%</strong>
                     </td>
-                    {if $smarty.get.competitor ne 'all' and $smarty.get.competitor ne ''}
-                        {assign var=conc value=$smarty.get.competitor}
-                        {assign var=diff value="diff_$conc"}
-                        <td class="to_right border{if $GridRows[i].$diff > 0} red{else} green{/if}">{$GridRows[i].$conc}</td>
-                        <td class="to_right{if $GridRows[i].$diff > 0} red{else} green{/if}">{$GridRows[i].$diff}%</td>
+                    {if $smarty.get.competitors}
+                        {section name=x loop=$smarty.get.competitors}
+                            {assign var=conc value=$smarty.get.competitors[x]}
+                            {assign var=diff value="diff_$conc"}
+                            <td class="to_right border{if $GridRows[i].$diff > 0} red{else} green{/if}">{$GridRows[i].$conc}</td>
+                            <td class="to_right{if $GridRows[i].$diff > 0} red{else} green{/if}">{$GridRows[i].$diff}%
+                            </td>
+                        {/section}
                     {else}
                         {section name=x loop=$Competitors}
                             {assign var=conc value=$Competitors[x].conc}

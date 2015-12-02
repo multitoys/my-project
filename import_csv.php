@@ -120,11 +120,11 @@ TAG
         // Идентификатор категории "акция"
         define('CAT_AKCIA_ID', getValue('categoryID', 'SC_categories', "name_ru = 'Акция'"));
         // Идентификатор категории "акция "Баллы"
-        define('CAT_AKCIA_BALLY_ID', getValue('categoryID', 'SC_categories', "name_ru = 'Суперцена'"));
+        define('CAT_SUPER_PRICE_ID', getValue('categoryID', 'SC_categories', "name_ru = 'Суперцена'"));
         // Идентификатор категории "Все бонусные товары"
         define('CAT_BONUS_ID', getValue('categoryID', 'SC_categories', "name_ru = 'Все бонусные товары'"));
-        // Идентификатор категории "Все товары под заказ"
-        define('CAT_ZAKAZ_ID', getValue('categoryID', 'SC_categories', "name_ru = 'Все товары под заказ'"));
+        //        // Идентификатор категории "Все товары под заказ"
+        //        define('CAT_ZAKAZ_ID', getValue('categoryID', 'SC_categories', "name_ru = 'Все товары под заказ'"));
         
         $query = 'SELECT categoryID FROM SC_categories WHERE allow_products_comparison';
         $res = mysql_query($query) or die(mysql_error()."<br>$query");
@@ -137,7 +137,7 @@ TAG
         $query
             =
             "UPDATE SC_categories SET show_subcategories_products = 0 WHERE categoryID IN ($cids) AND parent IS NOT NULL AND categoryID NOT IN ("
-            .CAT_NOVINKI_ID.", ".CAT_AKCIA_ID.", ".CAT_BONUS_ID.", ".CAT_ZAKAZ_ID.", ".CAT_AKCIA_BALLY_ID.")";
+            .CAT_NOVINKI_ID.", ".CAT_AKCIA_ID.", ".CAT_BONUS_ID.", ".CAT_SUPER_PRICE_ID.")";
         $res = mysql_query($query) or die(mysql_error()."<br>$query");
         
         $no = 0;
@@ -457,7 +457,7 @@ TAG
                                   VALUES ('newitems', $productID, 1)";
                         $res = mysql_query($query) or die(mysql_error()."<br>$query");
                         $query = "INSERT INTO SC_category_product 
-                                  VALUES ($productID, ".CAT_AKCIA_BALLY_ID.", 1)";
+                                  VALUES ($productID, ".CAT_SUPER_PRICE_ID.", 1)";
                         $res = mysql_query($query) or die(mysql_error()."<br>$query");
                     }
                     if ($bonus) {
@@ -465,11 +465,11 @@ TAG
                                   VALUES ($productID, ".CAT_BONUS_ID.", 1)";
                         $res = mysql_query($query) or die(mysql_error()."<br>$query");
                     }
-                    if ($zakaz) {
-                        $query = "INSERT INTO SC_category_product 
-                                  VALUES ($productID, ".CAT_ZAKAZ_ID.", 1)";
-                        $res = mysql_query($query) or die(mysql_error()."<br>$query");
-                    }
+                    //                    if ($zakaz) {
+                    //                        $query = "INSERT INTO SC_category_product 
+                    //                                  VALUES ($productID, ".CAT_ZAKAZ_ID.", 1)";
+                    //                        $res = mysql_query($query) or die(mysql_error()."<br>$query");
+                    //                    }
                     if ($hit) {
                         $query = "INSERT INTO SC_product_list_item (list_id, productID, priority) 
                                   VALUES ('hitu', $productID, 1)";

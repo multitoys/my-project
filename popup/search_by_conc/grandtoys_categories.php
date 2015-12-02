@@ -27,7 +27,7 @@
             'Конструкторы Jubilux'       => '1121-Konstruktori-Jubilux',
             'Конструкторы LELE'          => '1117-Konstruktori-LELE',
             'Конструкторы Minecraft'     => '1119-Konstruktori-Minecraft',
-            //            'Конструкторы NINJA'         => '373-Konstruktori-NINJA',
+            'Конструкторы NINJA'    => '373-Konstruktori-NINJA',
             'Конструкторы Play Smart'    => '1131-Konstruktori-Play-Smart',
             'Конструкторы QLT'           => '1120-Konstruktori-QLT',
             'Конструкторы Sluban'        => '371-Konstruktori-Sluban',
@@ -83,17 +83,17 @@
             'Мягкие кубики'                  => '926-Myagkie-kubiki',
             'Обучающие игры'                 => '358-Obuchayuschie-igri',
             'Оптические приборы'             => '762-Opticheskie-pribori',
-            //            'Сборные модели'                 => '345-Sbornie-modeli',
-            //            'Творчество'                     => '409-Tvorchestvo',
+            'Сборные модели'            => '345-Sbornie-modeli',
+            'Творчество'                => '409-Tvorchestvo',
             'Тетрисы, электронные игры' => '421-Tetrisi-elektronnie-igri',
             'Фомовые развивающие игрушки'    => '393-Fomovie-razvivayuschie-igrushki'
         ),
 
         'Творчество'              => array(
-//            'Зірка'         => '980-5Zirka',
-'Ранок' => '945-3Ranok',
-//            'Ранок Креатив' => '931-3Ranok',
-'Роса'  => '1001-6Rosa'
+            'Зірка'         => '980-5Zirka',
+            'Ранок'         => '945-3Ranok',
+            'Ранок Креатив' => '931-3Ranok',
+            'Роса'          => '1001-6Rosa'
         ),
 
         'Товары для девочек'      => array(
@@ -114,7 +114,7 @@
             'Куклы интерактивные'                          => '1132-Kukli-interaktivnie',
             'Одежда для кукол и пупсов'                    => '416-Odezhda-dlya-kukol-i-pupsov',
             'Посуда, кухни, быт.приборы,овощи-фрукты'      => '360-Posuda-kuhni-bitpriboriovoschi-frukti',
-            //            'Пупсы BABY BORN'                              => '417-Pupsi-BABY-BORN',
+            'Пупсы BABY BORN' => '417-Pupsi-BABY-BORN',
             'Столики кухонные, туалетные'                  => '363-Stoliki-kuhonnie-tualetnie-doktora-instrumentalnie'
         ),
 
@@ -156,7 +156,7 @@
 
         'Украинский пластик'      => array(
             'Orion'                         => '1049-Orion',
-            //            'Автомобили толокары'           => '562-Avtomobili-kolyaski',
+            'Автомобили толокары' => '562-Avtomobili-kolyaski',
             'Горшки'                        => '923-Gorshki',
             'Качели'                        => '925-Kacheli',
             'Конструкторы'                  => '553-Konstruktori',
@@ -185,7 +185,7 @@
             'Аксессуары для спорта'  => '1074-Aksessuari-dlya-sporta',
             'Бадминтоны'             => '734-Badmintoni',
             'Баскетбол'              => '796-Basketbol',
-            //            'Боксерские наборы'      => '535-Bokserskie-nabori',
+            'Боксерские наборы' => '535-Bokserskie-nabori',
             'Дартс'                  => '541-Darts',
             'Защита, шлемы'          => '249-Zaschita-shlemi',
             'Мячи'                   => '544-Myachi',
@@ -227,7 +227,8 @@
             'Хиты'           => 'page_size500?bestseller=1',
             'Акция'          => 'page_size500?offer=1',
             '26 ноября 2015' => 'shop/news/view/283?page_size=500',
-            '28 ноября 2015' => 'shop/news/view/286?page_size=500'
+            '28 ноября 2015' => 'shop/news/view/286?page_size=500',
+            '1 декабря 2015' => 'shop/news/view/288?page_size=500'
         )
     );
 

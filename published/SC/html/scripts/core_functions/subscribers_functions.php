@@ -36,10 +36,15 @@ function subscrGetAllSubscriber( $callBackParam, &$count_row, $navigatorParams =
 		$offset = 0;
 		$CountRowOnPage = 0;
 	}
-
-	$sql = '
+    
+    //	$sql = '
+    //		SELECT mtbl.Email, mtbl.customerID, ctbl.ActivationCode FROM '.MAILING_LIST_TABLE.' as mtbl
+    //		LEFT JOIN '.CUSTOMERS_TABLE.' as ctbl ON ctbl.customerID = mtbl.customerID AND  ctbl.ActivationCode="" OR ctbl.ActivationCode IS NULL
+    //		ORDER BY mtbl.Email
+    //	';
+    $sql = '
 		SELECT mtbl.Email, mtbl.customerID, ctbl.ActivationCode FROM '.MAILING_LIST_TABLE.' as mtbl
-		LEFT JOIN '.CUSTOMERS_TABLE.' as ctbl ON ctbl.customerID = mtbl.customerID AND  ctbl.ActivationCode="" OR ctbl.ActivationCode IS NULL
+		LEFT JOIN '.CUSTOMERS_TABLE.' as ctbl ON ctbl.customerID = mtbl.customerID WHERE subscribed4news=1 AND (ctbl.unlimited_order=1 OR ctbl.token OR ctbl.1C>0)
 		ORDER BY mtbl.Email
 	';
 

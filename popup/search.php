@@ -19,8 +19,8 @@
 
     $DB_tree->selectDB(SystemSettings::get('DB_NAME'));
     define('VAR_DBHANDLER','DBHandler');
-
-    $vip = isset($_SESSION['cs_vip']) ? $_SESSION['cs_vip'] : '';
+    
+    //    $vip = isset($_SESSION['cs_vip']) ? $_SESSION['cs_vip'] : '';
     $usd = 1;
     $currency = ' грн.';
     
@@ -38,8 +38,6 @@
     if ($search === '') {
         exit;
     }
-    
-    $search_array = array(' ', '-', '/', '\\');
     //    $search_array = explode(' ', $search);
     
     $limit = 'LIMIT 100';
@@ -47,14 +45,15 @@
     $enabled = 't1.enabled AND';
     $close = '<button class=\'search_close blue-button\' onclick=document.getElementById(\'live_search\').innerHTML=\'\';>&times;</button>';
     $all_res = '<ul><li><label for=search_ok>Все результаты поиска</label>... '.$close.'</li>';
-
+    
     if (array_key_exists('conc', $_POST)) {
         $limit = '';
         $order = 't1.product_code';
         $enabled = '';
-        $all_res = '<ul><li>Результаты поиска</li>';
+        $search_array = array(' ', '-', '/', '\\');
         $search = mysql_real_escape_string(str_replace($search_array, '.?', $search));
         $condition = "(t1.product_code REGEXP '$search' OR  t1.name_ru REGEXP '$search' OR  t1.brand REGEXP '$search')";
+        $all_res = '<ul><li>Результаты поиска</li>';
     } else {
         $search = _searchPatternReplace($search);
         $search = mysql_real_escape_string($search);
@@ -92,16 +91,18 @@
             $picture = ($sql['filename'])?substr($sql['filename'], 0, -4).'_s':'no_photo';
             $picture .= '.jpg';
             $price = '';
+    
             if (isset($_POST['conc'])) {
                 $conc = (stripslashes(trim(strip_tags($_POST['conc']))));
                 $code = (stripslashes(trim(strip_tags($_POST['code']))));
                 $code1c = $sql['code_1c'];
                 $price_conc = (stripslashes(trim(strip_tags($_POST['priceConc']))));
                 $set_conc = "onclick=setAnalogs(\"$conc\",\"$code\",\"$code1c\",\"$price_conc\")";
+                $price = $sql['Price'];
             } else {
                 $price = round(priceDiscount($sql['Price'], $sql['skidka'], $sql['ukraine'])/$usd, 2);
-                $price = '<p><span style="color:#008DD9">цена: '.$price.$currency.'</span></p>';
             }
+            $price = '<p><span style="color:#008DD9">цена: '.$price.$currency.'</span></p>';
             //$price = ($vip)?'<p><span style="color:#008DD9">цена: '.$sql['Price'].'</span></p>':'';
             echo "
                 <li>

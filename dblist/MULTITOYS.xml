@@ -14,7 +14,7 @@
         <APPLICATION APP_ID="SC"/>
     </APPLICATIONS>
     <MODULES>
-        <ASSIGN CLASS="sms" ID="" DISABLED="1"/>
+        <ASSIGN CLASS="sms" ID="" DISABLED="0"/>
     </MODULES>
     <BALANCE>
         <VALUE ID="sms" VALUE="UNLIMITED"/>

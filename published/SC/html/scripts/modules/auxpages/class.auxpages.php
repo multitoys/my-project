@@ -401,7 +401,7 @@
                         <div>
                             <a class='blue-button fancybox fancybox.ajax find' title=''
                             href='/popup/search_by_conc/search_conc.php?mode=1&conc=$name_conc&code=$competitor_product->code&price=$competitor_product->price_uah' onclick=\"this.style.backgroundColor = 'lightgrey'\">Найти совпадения</a>
-                            <input type='text' class='input_message search-concs' rel='Поиск аналогов' value='Поиск аналогов' 
+                            <input type='text' class='search-concs' rel='Поиск аналогов' value='^' 
                             autocomplete='off' name='searchstring' data-conc=$name_conc data-code=$competitor_product->code data-price=$competitor_product->price_uah >
                         </div>
                     ";

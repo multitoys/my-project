@@ -477,14 +477,14 @@
                 $new_dir = 'ASC';
 
                 if (isset($_GET['sort'])) {
-                    $sort = $_GET['sort'];
+                    $sort = stripAll($_GET['sort']);
                     $ajax_sort = $sort;
                 } elseif (isset($_POST['sort'])) {
-                    $sort = $_POST['sort'];
+                    $sort = stripAll($_POST['sort']);
                 }
 
                 if (isset($_REQUEST['direction'])) {
-                    $direction = $_REQUEST['direction'];
+                    $direction = stripAll($_REQUEST['direction']);
                     // NEW DIRECTION
                     if ($direction === 'ASC') {
                         $new_dir = 'DESC';
@@ -530,6 +530,31 @@
                 } elseif (isset($_POST['date']) && (int)$_POST['date'] > 0) {
                     $date = (int)$_POST['date'];
                     $selected_date = " AND t2.date = $date";
+                }
+
+//TODO
+//                <
+//                div class=product_brief_head >
+//    <h3 id = cat_path >
+//        <table >
+//            <tbody >
+//            <tr >
+//                <td class=china ><a href = "/auxpage_new_items/0/china" > Китай & larr;</a ></td >
+//                <td style = "text-align: center" ><a href = "/auxpage_new_items/0/all" > Новые поступления </a ></td >
+//                <td class=ukraine ><a href = "/auxpage_new_items/0/ukraine" >&rarr; Украина </a ></td >
+//            </tr >
+//            </tbody >
+//        </table >
+//    </h3 >
+//    %new_list %
+                $manufactured = 'all';
+                $selected_manufactured = '';
+                if (isset($_GET['made_in']) && $_GET['made_in'] !== 'all') {
+                    $made_in = stripAll($_GET['made_in']);
+                    $selected_date = ' AND ukraine ' . $made_in;
+                } elseif (isset($_POST['made_in']) && $_POST['made_in'] !== 'all') {
+                    $made_in = stripAll($_GET['made_in']);
+                    $selected_date = ' AND ukraine ' . $made_in;
                 }
 
                 // Количество выводимых товаров на один запрос
@@ -602,6 +627,7 @@
                                     data-show        = 0
                                     data-page        = $start
                                     data-date        = $date
+                                    data-made        = $made_in
                                     data-sort        = $ajax_sort
                                     data-direction   = $direction_nav
                                 >$out</div>
@@ -867,10 +893,11 @@
                 //                                    data-sort        = $ajax_sort
                 //                                    data-direction   = $direction_nav
                 //                                >$out_end</div>";
-                $newitems_end = '</div><div style="text-align: right;">
-                                        <button
-                                            class="addall_pp blue-button" onclick="add_all2cart();">Заказать все</button>
-                                    </div>';
+//                $newitems_end = '</div><div style="text-align: right;">
+//                                        <button
+//                                            class="addall_pp blue-button" onclick="add_all2cart();">Заказать все</button>
+//                                    </div>';
+                $newitems_end = '</div>';
 
                 if (!$ajax) {
                     foreach ($text as $key => $oneline) {

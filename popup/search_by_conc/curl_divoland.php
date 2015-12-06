@@ -72,7 +72,7 @@ TAG
     $refferer = URL_COMPETITORS;
 //    postAuth($login_url, 'fdata[username]=' . LOGIN . '&fdata[password]=' . PASSWORD . '&fdata[city]=' . CITY . '&fdata[_csrf_token]=' . TOKEN, $headers);
 
-    updateValue('Conc__divoland0', 'enabled = 0');
+    updateValue('Conc__divoland', 'enabled = 0');
 
     $no = 0;
     $new = 0;
@@ -112,13 +112,13 @@ TAG
                 $name
                     = mysql_real_escape_string(trim(str_replace($replace_name, '', decodeCodepage($products[2][$i]))));
                 $price_usd = (double)$products[3][$i];
-                $price = $price_usd / $usd;
-                $productID = getValue('productID', 'Conc__divoland0', "code = '$code'");
+                $price = $price_usd * $usd;
+                $productID = getValue('productID', 'Conc__divoland', "code = '$code'");
 
                 if ($productID) {
                     $query
                         = "
-                                UPDATE  Conc__divoland0
+                                UPDATE  Conc__divoland
                                 SET     parent    = '$parent',
                                         category  = '$category',
                                         name      = '$name',
@@ -131,7 +131,7 @@ TAG
                 } else {
                     $query
                         = "
-                                INSERT INTO Conc__divoland0
+                                INSERT INTO Conc__divoland
                                          (parent, category, code, name, price_uah, price_usd)
                                 VALUES   ('$parent', '$category', '$code', '$name', $price, $price_usd)
                     ";
@@ -154,10 +154,10 @@ TAG
     echo('<hr><span style="color:blue;">Обработано ' . $no . ' товаров</span><br><br>Новых ' . $new . ' товаров</span><br>');
 
     // Оптимизация таблиц
-    $query = "UPDATE Conc__divoland0 SET parent='', category='' WHERE enabled=0";
+    $query = "UPDATE Conc__divoland SET parent='', category='' WHERE enabled=0";
     $res = mysql_query($query) or die(mysql_error() . "<br>$query");
 
-    $query = 'OPTIMIZE TABLE `Conc__divoland0`, `Conc_search__divoland`';
+    $query = 'OPTIMIZE TABLE `Conc__divoland`, `Conc_search__divoland`';
     $res = mysql_query($query) or die(mysql_error() . "<br>$query");
     mysql_close();
 

@@ -1226,6 +1226,22 @@
             if (!$Customer->token || !$Customer->cust_password || !isset($_SESSION['pass']) || strcmp($Customer->cust_password, $_SESSION['pass'])) //unauthorized access
             {
                 unset($_SESSION['log'], $_SESSION['pass'], $_SESSION['enter']);
+//                unset(
+//                    $_SESSION['log'],
+//                    $_SESSION['usd'],
+//                    $_SESSION['pass'],
+//                    $_SESSION['enter'],
+//                    $_SESSION['cs_id'],
+//                    $_SESSION['cs_vip'],
+//                    $_SESSION['newtree'],
+//                    $_SESSION['cs_skidka'],
+//                    $_SESSION['cs_skidka_ua'],
+//                    $_SESSION['cs_may_order'],
+//                    $_SESSION['cs_unlimited'],
+//                    $_SESSION['cs_last_name'],
+//                    $_SESSION['cs_first_name'],
+//                    $_SESSION['cs_may_order_until']
+//                );
                 //unset($_SESSION['pass']);
                 // session_unregister("log"); //calling session_unregister() is required since unset() may not work on some systems
                 // session_unregister("pass");
@@ -2032,3 +2048,8 @@
             return ucfirst($stri);
         }
     }
+
+function stripAll($data)
+{
+    return stripslashes(trim(strip_tags($data)));
+}

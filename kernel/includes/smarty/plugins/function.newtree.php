@@ -1,11 +1,11 @@
 <?php
     function smarty_function_newtree($params, &$smarty)
     {
-        if (isset($_SESSION['newtree'])) {
-            $disp = $_SESSION['newtree'];
-
-            return $disp;
-        }
+//        if (isset($_SESSION['newtree'])) {
+//            $disp = $_SESSION['newtree'];
+//
+//            return $disp;
+//        }
 
         $disp = '<ul id="navmenu-v">';
         if ((int)$_SESSION['cs_vip'] === 1) {
@@ -56,7 +56,7 @@
             }
             $disp .= '</li>
                       <li style="background: tomato">
-                        <a href="/auxpage_new_items/0/" 
+                        <a href="/auxpage_new_items/0" 
                             aria-haspopup=true 
                             style="color: floralwhite;
                             text-shadow: 1px 1px 1px rgba(0, 0, 0, .4) !important;
@@ -98,20 +98,37 @@
     function newItemsCategory()
     {
         $disp = '';
+
         $sql = "SELECT DISTINCT date
                 FROM SC_product_list_item
                 WHERE list_id = 'newitemspostup'
                 ORDER BY date ASC";
+
         if ($r = mysql_query($sql)) {
+
             if (mysql_num_rows($r) > 0) {
+
                 $disp .= '<ul class="animated slideInRight">';
+                $disp .= '<li aria-haspopup=true>';
+                $disp .= '<a href="/auxpage_new_items/0/china" aria-haspopup=true>Китай</a>';
+                $disp .= '</li>';
+                $disp .= '<li aria-haspopup=true>';
+                $disp .= '<a href="/auxpage_new_items/0/ukraine" aria-haspopup=true>Украина</a>';
+                $disp .= '</li>';
+                
                 while ($res = mysql_fetch_assoc($r)) {
+
                     $date = time() - (($res['date'] - 1) * 24 * 60 * 60);
                     $date_postup = date('d-m-Y', $date);
+
                     $disp .= '<li aria-haspopup=true>';
-                    $disp .= '<a href="/auxpage_new_items/'.$res['date'].'/" aria-haspopup=true>'.$date_postup.'</a>';
+                    $disp .= '<a href="/auxpage_new_items/' . $res['date'] . '/china" aria-haspopup=true>' . $date_postup . '</a>';
+                    $disp .= '</li>';
+                    $disp .= '<li aria-haspopup=true>';
+                    $disp .= '<a href="/auxpage_new_items/' . $res['date'] . '/ukraine" aria-haspopup=true>' . $date_postup . '</a>';
                     $disp .= '</li>';
                 }
+                
                 $disp .= '</ul>';
             }
         }

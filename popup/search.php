@@ -28,8 +28,7 @@
         $usd = isset($_SESSION['usd']) ? $_SESSION['usd'] : 1;
         $currency = ' у.е.';
     }
-
-    $search = (stripslashes(trim(strip_tags($_POST['search']))));
+$search = stripAll($_POST['search']);
 //    $search = addslashes($search);
 //    $search = htmlspecialchars($search);
 //    $search = stripslashes($search);
@@ -93,10 +92,10 @@
             $price = '';
     
             if (isset($_POST['conc'])) {
-                $conc = (stripslashes(trim(strip_tags($_POST['conc']))));
-                $code = (stripslashes(trim(strip_tags($_POST['code']))));
+                $conc = stripAll($_POST['conc']);
+                $code = stripAll($_POST['code']);
                 $code1c = $sql['code_1c'];
-                $price_conc = (stripslashes(trim(strip_tags($_POST['priceConc']))));
+                $price_conc = stripAll($_POST['priceConc']);
                 $set_conc = "onclick=setAnalogs(\"$conc\",\"$code\",\"$code1c\",\"$price_conc\")";
                 $price = $sql['Price'];
             } else {

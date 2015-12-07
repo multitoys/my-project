@@ -456,7 +456,7 @@
 
                 if (isset($_SESSION['cs_id'])) {
                     $buy_enabled = true;
-                    $CustomerID = $_SESSION['cs_id'];
+                    $CustomerID = (int)$_SESSION['cs_id'];
                 } else {
                     $buy_enabled = false;
                 }
@@ -531,30 +531,20 @@
                     $date = (int)$_POST['date'];
                     $selected_date = " AND t2.date = $date";
                 }
-
-//TODO
-//                <
-//                div class=product_brief_head >
-//    <h3 id = cat_path >
-//        <table >
-//            <tbody >
-//            <tr >
-//                <td class=china ><a href = "/auxpage_new_items/0/china" > Китай & larr;</a ></td >
-//                <td style = "text-align: center" ><a href = "/auxpage_new_items/0/all" > Новые поступления </a ></td >
-//                <td class=ukraine ><a href = "/auxpage_new_items/0/ukraine" >&rarr; Украина </a ></td >
-//            </tr >
-//            </tbody >
-//        </table >
-//    </h3 >
-//    %new_list %
-                $manufactured = 'all';
+    
+                $made = 'all';
                 $selected_manufactured = '';
-                if (isset($_GET['made_in']) && $_GET['made_in'] !== 'all') {
-                    $made_in = stripAll($_GET['made_in']);
-                    $selected_date = ' AND ukraine ' . $made_in;
-                } elseif (isset($_POST['made_in']) && $_POST['made_in'] !== 'all') {
-                    $made_in = stripAll($_GET['made_in']);
-                    $selected_date = ' AND ukraine ' . $made_in;
+                $manufactured = '';
+                if (isset($_GET['made']) && $_GET['made'] != 'all') {
+                    $made = stripAll($_GET['made']);
+                    $made_in = ($made == 'ukraine')?1:0;
+                    $selected_manufactured = ' AND t2.ukraine='.$made_in;
+                    $manufactured = ' AND ukraine='.$made_in;
+                } elseif (isset($_POST['made']) && $_POST['made'] != 'all') {
+                    $made = stripAll($_POST['made']);
+                    $made_in = ($made == 'ukraine')?1:0;
+                    $selected_manufactured = ' AND t2.ukraine='.$made_in;
+                    $manufactured = ' AND ukraine='.$made_in;
                 }
 
                 // Количество выводимых товаров на один запрос
@@ -593,7 +583,7 @@
                 $query = "
                     SELECT count(*) AS tov_all_count
                     FROM SC_product_list_item
-                    WHERE list_id = 'newitemspostup' $selected_date";
+                    WHERE list_id = 'newitemspostup' $selected_date $manufactured";
                 $res = mysql_query($query) or die(mysql_error().$query);
                 $product_list_item = mysql_fetch_object($res);
                 $tov_all_count = (int)($product_list_item->tov_all_count);
@@ -604,8 +594,8 @@
                     $start_row = (int)$_REQUEST['p'];
                     $start_row = ($start_row === -1)?0:$start_row;
                 }
-
-                $url = '/auxpage_new_items/'.$date.'/';
+    
+                $url = '/auxpage_new_items/'.$date.'/'.$made.'/';
 
                 $start = $start_row;
                 $direction_nav = 'ASC';
@@ -627,7 +617,7 @@
                                     data-show        = 0
                                     data-page        = $start
                                     data-date        = $date
-                                    data-made        = $made_in
+                                    data-made        = $made
                                     data-sort        = $ajax_sort
                                     data-direction   = $direction_nav
                                 >$out</div>
@@ -641,7 +631,7 @@
                                         <td>
                                             <div class='.$sort_class_name.'>
                                                 <div class="arbopr sort_name">
-                                                    <a href="/auxpage_new_items/'.$date.'/name_ru/'.$new_dir.'/">Наименование</a>
+                                                    <a href="'.$url.'name_ru/'.$new_dir.'/">Наименование</a>
                                                 </div>
                                                 <div class='.$arrow_name.'></div>
                                             </div>
@@ -649,7 +639,7 @@
                                         <td width=105px>
                                             <div class="'.$sort_class_pc.' ">
                                                 <div class=arbopr>
-                                                    <a href="/auxpage_new_items/'.$date.'/product_code/'.$new_dir.'/">Артикул</a>
+                                                    <a href="'.$url.'product_code/'.$new_dir.'/">Артикул</a>
                                                 </div>
                                                 <div class='.$arrow_product_code.'></div>
                                             </div>
@@ -657,7 +647,7 @@
                                         <td width=65px>
                                             <div class='.$sort_class_bonus.'>
                                                 <div class=arbopr>
-                                                    <a href="/auxpage_new_items/'.$date.'/Bonus/'.$new_dir.'/">Баллы</a>
+                                                    <a href="'.$url.'Bonus/'.$new_dir.'/">Баллы</a>
                                                 </div>
                                                 <div class='.$arrow_bonus.'></div>
                                             </div>
@@ -665,7 +655,7 @@
                                         <td width=125px>
                                             <div class='.$sort_class_price.'>
                                                 <div class=arbopr>
-                                                    <a href="/auxpage_new_items/'.$date.'/Price/'.$new_dir.'/">Цена</a>
+                                                    <a href="'.$url.'Price/'.$new_dir.'/">Цена</a>
                                                 </div>
                                                 <div class='.$arrow_price.'></div>
                                             </div>
@@ -731,7 +721,7 @@
                     FROM SC_products t1
                     LEFT JOIN SC_product_list_item t2  USING(productID)
                     LEFT JOIN SC_product_pictures t3 ON t1.default_picture = t3.photoID
-                    WHERE t2.list_id = 'newitemspostup' $selected_date
+                    WHERE t2.list_id = 'newitemspostup' $selected_date $selected_manufactured
                     ORDER BY $default_sort  t1.$sort $direction
                     LIMIT $start_row, $tov_count
                 ";
@@ -879,7 +869,7 @@
                         $newitems .= '<div class=delimiter></div>';
                     }
                 }
-                $out_end = SimpleNavigator($tov_all_count, $start, $tov_count, $url, $out_end);
+                //                $out_end = SimpleNavigator($tov_all_count, $start, $tov_count, $url, $out_end);
                 $newitems .= '
                                 </div>';
                 //            $newitems_end = "</div><div

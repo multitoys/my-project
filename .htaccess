@@ -39,8 +39,8 @@ RewriteRule (.*) published/SC/html/scripts/index.php?__furl_path=$1&frontend=1 [
 #RewriteCond %{REQUEST_URI} !\.
 #RewriteCond %{REQUEST_URI} !\/$
 #RewriteRule ^(.*[^/])$ /$1/ [R=301,L]
-RewriteRule .*?/([0-9]+)/$ &date=$1 [L]
-RewriteRule .*?/([0-9]+)/([A-Za-z_]+)/([A-Za-z_]+)/$ &date=$1&sort=$2&direction=$3 [L]
+RewriteRule .*?/([0-9]+)/([A-Za-z_]+)/$ &date=$1&made=$2 [L]
+RewriteRule .*?/([0-9]+)/([A-Za-z_]+)/([A-Za-z_]+)/([A-Za-z_]+)/$ &date=$1&made=$2&sort=$3&direction=$4 [L]
 
 
 

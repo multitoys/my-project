@@ -79,7 +79,7 @@ $(document).ready(function () {
             var show = parseInt(btn_more.attr("data-show"));
             var page = parseInt(btn_more.attr("data-page"));
             var date = parseInt(btn_more.attr("data-date"));
-            var madeIn = parseInt(btn_more.attr("data-made"));
+            var made = btn_more.attr("data-made");
             if (page == -1) {
                 page = 0;
             }
@@ -91,11 +91,11 @@ $(document).ready(function () {
                 notProgress = false;
                 scrollPane.addClass("loader");
                 $.ajax({
-                    url: "/auxpage_new_items/" + date + madeIn + "/",
+                    url: "/auxpage_new_items/" + date + "/" + made + "/",
                     type: "post",
                     dataType: "json",
                     cache: false,
-                    data: {count_show: count_show, sort: sort, direction: direction, date: date, date: date},
+                    data: {count_show: count_show, sort: sort, direction: direction, date: date, made: made},
                     success: function (data) {
                         if (data.result == "success") {
                             content.append(data.html);
@@ -145,9 +145,9 @@ $(document).ready(function () {
                 location.href = location.href.replace(/#page-(\d+)/, "") + page;
                 var sort = pageNavigator.attr("data-sort");
                 var date = pageNavigator.attr("data-date");
-                var madeIn = pageNavigator.attr("data-made");
+                var made = pageNavigator.attr("data-made");
                 var direction = pageNavigator.attr("data-direction");
-                var url = "/auxpage_new_items/" + date + madeIn + "/";
+                var url = "/auxpage_new_items/" + date + "/" + made + "/";
                 content.addClass("smoke");
                 scrollPane.addClass("loader");
                 if (notProgress) {
@@ -157,7 +157,7 @@ $(document).ready(function () {
                         type: "post",
                         dataType: "json",
                         cache: false,
-                        data: {p: p, sort: sort, direction: direction, date: date},
+                        data: {p: p, sort: sort, direction: direction, date: date, made: made},
                         success: function (data) {
                             if (data.result == "success") {
                                 content.html(data.html);

@@ -2048,8 +2048,8 @@
             return ucfirst($stri);
         }
     }
-
-function stripAll($data)
-{
-    return stripslashes(trim(strip_tags($data)));
-}
+    
+    function stripAll($data)
+    {
+        return stripslashes(trim(strip_tags($data)));
+    }

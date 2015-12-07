@@ -237,7 +237,7 @@ TAG
     if (($handle = fopen($filename, 'r')) !== false) {
         
         $table = 'Conc__analogs';
-        $new_ua = array();
+        //        $new_ua = array();
         
         while (($data = fgetcsv($handle, 1000, ';')) !== false) {
             
@@ -476,15 +476,16 @@ TAG
                         $res = mysql_query($query) or die(mysql_error()."<br>$query");
                     }
                     if ($new_postup) {
-                        if ($ua) {
-                            $new_ua[$productID] = $new_postup;
-                        } else {
-                            $query = "INSERT INTO SC_product_list_item (list_id, productID, priority, date) 
-                                  VALUES ('newitemspostup', $productID, 1, $new_postup)";
+                        //                        if ($ua) {
+                        //                            $new_ua[$productID] = $new_postup;
+                        //                        } else {
+                        $query = "INSERT INTO SC_product_list_item (list_id, productID, priority, date, ukraine) 
+                                  VALUES ('newitemspostup', $productID, 1, $new_postup, $ua)";
                             $res = mysql_query($query) or die(mysql_error()."<br>$query");
-                        }
+                        //                        }
                     }
-                    $progress = round(($no / ($rowcount - 2) * 100), -1, PHP_ROUND_HALF_DOWN);
+                    //                    $progress = round(($no / ($rowcount - 2) * 100), -1, PHP_ROUND_HALF_DOWN);
+                    $progress = round(($no / ($rowcount - 2) * 100), 0, PHP_ROUND_HALF_DOWN);
                     if ($progress > $percent) {
                         $percent = $progress.'%';
                         progressBar('products', $percent, false);
@@ -553,12 +554,12 @@ TAG
         $id = $ids[0];
         $query1 = "INSERT INTO SC_category_product VALUES (".$id.", ".CAT_NOVINKI_ID.", 0)";
         $result = mysql_query($query1) or die(mysql_error()."<br>$query1");
-        if ($new_ua[$id]) {
-            $query2
-                = "INSERT INTO SC_product_list_item (list_id, productID, priority, date) 
-                   VALUES ('newitemspostup', $id, 1, $new_ua[$id])";
-            $res2 = mysql_query($query2) or die(mysql_error()."<br>$query2");
-        }
+        //        if ($new_ua[$id]) {
+        //            $query2
+        //                = "INSERT INTO SC_product_list_item (list_id, productID, priority, date) 
+        //                   VALUES ('newitemspostup', $id, 1, $new_ua[$id])";
+        //            $res2 = mysql_query($query2) or die(mysql_error()."<br>$query2");
+        //        }
     }
     $query = "DELETE FROM `SC_auth_log` WHERE `Login` = 'sales'";
     $res = mysql_query($query) or die(mysql_error()."<br>$query");

@@ -535,14 +535,14 @@
                 $made = 'all';
                 $selected_manufactured = '';
                 $manufactured = '';
-                if (isset($_GET['made']) && $_GET['made'] != 'all') {
+                if (isset($_GET['made']) && $_GET['made'] !== 'all') {
                     $made = stripAll($_GET['made']);
-                    $made_in = ($made == 'ukraine')?1:0;
+                    $made_in = ($made === 'ukraine')?1:0;
                     $selected_manufactured = ' AND t2.ukraine='.$made_in;
                     $manufactured = ' AND ukraine='.$made_in;
-                } elseif (isset($_POST['made']) && $_POST['made'] != 'all') {
+                } elseif (isset($_POST['made']) && $_POST['made'] !== 'all') {
                     $made = stripAll($_POST['made']);
-                    $made_in = ($made == 'ukraine')?1:0;
+                    $made_in = ($made === 'ukraine')?1:0;
                     $selected_manufactured = ' AND t2.ukraine='.$made_in;
                     $manufactured = ' AND ukraine='.$made_in;
                 }

@@ -2,21 +2,23 @@
 {literal}
     <script>
         function update() {
-            var xhttp;
-            if (window.XMLHttpRequest) {
-                xhttp = new XMLHttpRequest();
-            } else {
-                xhttp = new ActiveXObject("Microsoft.XMLHTTP");
-            }
-            xhttp.onreadystatechange = function () {
-                if (xhttp.readyState == 4 && xhttp.status == 200) {
-                    document.getElementById("update").innerHTML = xhttp.responseText;
+            if (frame.confirm('Обновить данные?')) {
+                var xhttp;
+                if (window.XMLHttpRequest) {
+                    xhttp = new XMLHttpRequest();
+                } else {
+                    xhttp = new ActiveXObject("Microsoft.XMLHTTP");
                 }
-            };
-            xhttp.open("GET", "/published/SC/html/scripts/frame.php?did=234&update=1", true);
-            xhttp.send();
+                xhttp.onreadystatechange = function () {
+                    if (xhttp.readyState == 4 && xhttp.status == 200) {
+                        document.getElementById("update").innerHTML = xhttp.responseText;
+                    }
+                };
+                xhttp.open("GET", "/published/SC/html/scripts/frame.php?did=234&update=1", true);
+                xhttp.send();
 
-            return false;
+                return false;
+            }
         }
     </script>
 {/literal}
@@ -25,81 +27,72 @@
         <small>({$search_word}{$TotalFound})</small>
     </h3>
     <form name="MainForm" method="get" action="{''|set_query}">
-
         <input type="hidden" name="did" value="{$CurrentDivision.id}">
 
         <div id=form>
             {*<p>{"competitors_search_params"|translate}</p>*}
-
+            
             <div id=checkings>
                 <div>
                     <input type="checkbox" name="new_items_postup" value="1" id="new_items_postup"
                             {if $smarty.get.new_items_postup} checked="checked"{/if}>
-                    <label for="new_items_postup" style="color: darkviolet; font-style: italic">- только Новые Поступления</label>
+                    <label for="new_items_postup" style="color: darkviolet; font-style: italic">- только Новые
+                                                                                                Поступления</label>
                 </div>
-
-
                 <div>
                     <input type="checkbox" name="bestsellers" value="1" id="bestsellers"
                             {if $smarty.get.bestsellers} checked="checked"{/if}>
                     <label for="bestsellers" style="color: coral; font-style: italic">- только Хиты продаж</label>
                 </div>
-
                 <div>
                     <input type="checkbox" name="new" value="1" id="new"
                             {if $smarty.get.new} checked="checked"{/if}>
                     <label for="new" style="color: cornflowerblue; font-style: italic">- только Новинки</label>
                 </div>
-
                 <div>
                     <input type="checkbox" name="currency" value="1" id="currency"
                             {if $smarty.get.currency} checked="checked"{/if}>
                     <label for="currency" style="color: darkred; font-style: italic">- цены в $USD</label>
                 </div>
-
                 <div>
                     <input type="checkbox" name="export" value="1" id="export">
                     <label for="export" style="color: red; font-style: italic">- экспорт в <b>EXEL</b></label>
                 </div>
             </div>
-
+            
             <div id=discounts>
                 <div>
                     <label for="disc_usd">Скидка Китай:</label>
                     <input type="text" class="input_message" value="{$disc_usd}"
                            style="margin-left: 41px;" name="disc_usd" id="disc_usd">
                 </div>
-
                 <div>
                     <label for="disc_ua">Скидка Украина:</label>
                     <input type="text" class="input_message" value="{$disc_ua}"
                            style="margin-left: 26px;" name="disc_ua" id="disc_ua">
                 </div>
-
                 <div>
                     <label for="disc_conc">Скидка Конкурентов:</label>
                     <input type="text" class="input_message" value="{$disc_conc}"
                            name="disc_conc" id="disc_conc">
                 </div>
-
-                <div>
-                    <label for="searchstring" title="По артикулу, наименованию или Коду 1С" style="color: #45AF10;">Поиск товаров:</label>
-                    <input type="text" class="search" rel="Поиск товаров" value=""
-                           style="width:100px;" name="searchstring" id="searchstring">
-                </div>
             </div>
-
+            
             <div id=selections>
-
                 <div>
                     <label for="manufactured" style="color: #45AF10;">Производители:</label>
                     <select name="manufactured" style="width:171px;" id="manufactured">
-                        <option value='all'      {if $smarty.get.manufactured eq 'all'} selected="selected"{/if}>Все производители</option>
-                        <option value='Ukraine' {if $smarty.get.manufactured eq 'Ukraine'} selected="selected"{/if}>только Украина</option>
-                        <option value='China' {if $smarty.get.manufactured eq 'China'} selected="selected"{/if}>только Китай</option>
+                        <option value='all' {if $smarty.get.manufactured eq 'all'} selected="selected"{/if}>Все
+                                                                                                            производители
+                        </option>
+                        <option value='Ukraine' {if $smarty.get.manufactured eq 'Ukraine'} selected="selected"{/if}>
+                            только Украина
+                        </option>
+                        <option value='China' {if $smarty.get.manufactured eq 'China'} selected="selected"{/if}>
+                            только Китай
+                        </option>
                     </select>
                 </div>
-
                 <div>
                     <label for="brand" style="color: #C00DC1">Торговая марка: </label>
                     <select name="brand" style="width:165px;" id="brand">
@@ -109,7 +102,6 @@
                         {/section}
                     </select>
                 </div>
-
                 <div>
                     <label for="category" style="color: darkorange">Категория: </label>
                     <select name="category" style="width:200px;" id="category">
@@ -119,6 +111,14 @@
                         {/section}
                     </select>
                 </div>
+                <div>
+                    <label for="searchstring" title="По артикулу, наименованию или Коду 1С" style="color: #45AF10;">Поиск товаров:</label>
+                    <input type="text" class="search" rel="Поиск товаров" value=""
+                           style="width:100px;" name="searchstring" id="searchstring">
+                </div>
+            </div>
+
+            <div id=multi_select>
                 <div>
                     <label for="competitor" style="color: #FF0000">Конкуренты: </label>
                     <select size={$cc} name="competitors[]" multiple style="width:191px;" id="competitor">
@@ -133,11 +133,12 @@
                     </select>
                 </div>
             </div>
-
+            
             <input id=ok type="submit" name="search" value="{"btn_find"|translate}">
-            <input id=update type="submit" name="update" value="Обновить данные" onclick="update()">
-
+            <input id=update type="submit" name="update" value="Обновить" onclick="return update();">
+            
         </div>
+        
     </form>
     {if $GridRows}
         <table width="100%" border="0" cellpadding="0" cellspacing="0" class="grid">
@@ -149,7 +150,8 @@
                     <td class="to_right">{$GridRows[i].num}.</td>
                     <td>{$GridRows[i].code_1c}</td>
                     <td class="blue">{$GridRows[i].product_code|escape:'html'}</td>
-                    <td><img class="preview" width="80px" height="60px" src="{$GridRows[i].img|escape:'html'}" alt="Нет фото"></td>
+                    <td><img class="preview" width="80px" height="60px" src="{$GridRows[i].img|escape:'html'}"
+                             alt="Нет фото"></td>
                     <td {if $GridRows[i].max_diff > 0}class="red"{/if}>{$GridRows[i].name_ru|escape:'html'}</td>
                     <td class="brand">{$GridRows[i].category|escape:'html'}</td>
                     <td class="brand">{$GridRows[i].brand|escape:'html'}</td>

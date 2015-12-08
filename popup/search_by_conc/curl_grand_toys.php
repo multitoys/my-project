@@ -81,14 +81,14 @@ TAG
             $_GET['auth'] > 0
         ) {
             
-            //        define('LOGIN', 'Elenna');
-            //        define('PASSWORD', '0675230623');
+                    define('LOGIN', 'Elenna');
+                    define('PASSWORD', '0675230623');
             //        define('LOGIN', 'rusmol');
             //        define('PASSWORD', '333');
             //        define('LOGIN', '973846984');
             //        define('PASSWORD', '973846984');
-            define('LOGIN', '0632986207');
-            define('PASSWORD', '6207');
+//            define('LOGIN', '0632986207');
+//            define('PASSWORD', '6207');
             
             $price_number = '';
             //        switch (LOGIN) {

@@ -51,7 +51,7 @@ $search = stripAll($_POST['search']);
         $enabled = '';
         $search_array = array(' ', '-', '/', '\\');
         $search = mysql_real_escape_string(str_replace($search_array, '.?', $search));
-        $condition = "(t1.product_code REGEXP '$search' OR  t1.name_ru REGEXP '$search' OR  t1.brand REGEXP '$search')";
+        $condition = "(t1.product_code REGEXP '$search' OR  t1.name_ru REGEXP '$search' OR  t1.brand = '$search')";
         $all_res = '<ul><li>Результаты поиска</li>';
     } else {
         $search = _searchPatternReplace($search);

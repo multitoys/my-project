@@ -17,6 +17,7 @@
         protected $bestsellers = '';
         protected $new = '';
         protected $new_items_postup = '';
+        protected $akcia = '';
         protected $search = '';
         protected $disc_usd = 27;
         protected $disc_ua = 20;
@@ -68,9 +69,13 @@
                     case 'new':
                         $this->__getProductsList('code_1c', 500);
                         break;
+                     
+                    case 'akcia':
+                        $this->__getProductsFromLists('akcia');
+                        break;
                     
                     case 'new_items_postup':
-                        $this->__getNewItemsPostup();
+                        $this->__getProductsFromLists('newitemspostup');
                         break;
                     
                     case 'manufactured':
@@ -237,10 +242,10 @@
             $this->bestsellers = ' AND productID IN ('.$ids.')';
         }
     
-        protected function __getNewItemsPostup()
+        protected function __getProductsFromLists($list)
         {
             $query = "SELECT productID FROM SC_product_list_item
-                    WHERE list_id = 'newitemspostup'";
+                    WHERE list_id = $list";
             $res = mysql_query($query) or die(mysql_error().$query);
         
             $ids = array();

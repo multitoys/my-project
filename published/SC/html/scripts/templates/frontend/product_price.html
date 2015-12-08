@@ -32,7 +32,7 @@
     {if $product_info.product_code && $smarty.const.CONF_ENABLE_PRODUCT_SKU}
         <div>
             <span class="productCodeLabel">{"prdset_product_code"|translate}:&nbsp;</span>
-            <span class="productCode">{$product_info.product_code|escape:'html'}</span>
+            <span class="productCode" style="color: green">{$product_info.product_code|escape:'html'}</span>
         </div>
     {/if}
 

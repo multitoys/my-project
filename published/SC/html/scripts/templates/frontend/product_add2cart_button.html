@@ -1,6 +1,6 @@
 {if !$printable_version}
 	{if $product_info.ordering_available && $product_info.Price>0 && ( $smarty.const.CONF_SHOW_ADD2CART eq 1 ) && ( $smarty.const.CONF_CHECKSTOCK==0 || $product_info.in_stock > 0 ) }
-<table width='175px'>
+<table width='125px'>
 	<tbody>
 	<tr>
 		<td>
@@ -11,13 +11,13 @@
 			
 		</td>
 		<td style='vertical-align:middle;white-space:nowrap;'>
-			<div class="ostatok_div">
-				{if $product_info.ostatok eq 'под заказ'}
-					<span style='  color: red; font-style: italic;'>&nbsp;под&nbsp;заказ!</span>
-				{else}
-					&nbsp;{$product_info.ostatok}&nbsp;шт.
-				{/if}
-			</div>
+			{*<div class="ostatok_div">*}
+				{*{if $product_info.ostatok eq 'под заказ'}*}
+					{*<span style='  color: red; font-style: italic;'>&nbsp;под&nbsp;заказ!</span>*}
+				{*{else}*}
+					{*&nbsp;{$product_info.ostatok}&nbsp;шт.*}
+				{*{/if}*}
+			{*</div>*}
 		</td>
 		<td>
 			<td style='vertical-align:middle;'>

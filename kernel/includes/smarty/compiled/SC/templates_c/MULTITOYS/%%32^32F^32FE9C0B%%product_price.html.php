@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.9, created on 2015-11-18 17:35:52
+<?php /* Smarty version 2.6.9, created on 2015-12-08 18:55:58
          compiled from product_price.html */ ?>
 <?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
 smarty_core_load_plugins(array('plugins' => array(array('modifier', 'translate', 'product_price.html', 17, false),array('modifier', 'escape', 'product_price.html', 35, false),)), $this); ?>
@@ -39,7 +39,7 @@ smarty_core_load_plugins(array('plugins' => array(array('modifier', 'translate',
         <div>
             <span class="productCodeLabel"><?php echo ((is_array($_tmp='prdset_product_code')) ? $this->_run_mod_handler('translate', true, $_tmp) : smarty_modifier_translate($_tmp)); ?>
 :&nbsp;</span>
-            <span class="productCode"><?php echo ((is_array($_tmp=$this->_tpl_vars['product_info']['product_code'])) ? $this->_run_mod_handler('escape', true, $_tmp, 'html') : smarty_modifier_escape($_tmp, 'html')); ?>
+            <span class="productCode" style="color: green"><?php echo ((is_array($_tmp=$this->_tpl_vars['product_info']['product_code'])) ? $this->_run_mod_handler('escape', true, $_tmp, 'html') : smarty_modifier_escape($_tmp, 'html')); ?>
 </span>
         </div>
     <?php endif; ?>

@@ -108,6 +108,7 @@ error was encountered while trying to use an ErrorDocument to handle the request
         define('DIR_RSS', DIR_PUBLICDATA_SC.'/rss');
         define('DIR_THEMES', DIR_PUBLICDATA_SC.'/themes');
         define('DIR_PRODUCTS_PICTURES', DIR_PUBLICDATA_SC.'/products_pictures');
+        define('DIR_LOGS_PICS', DIR_PUBLICDATA_SC.'/img_logs');
         define('DIR_PRODUCTS_FILES', DIR_DATA_SC.'/products_files');
         define('DIR_COMPILEDTEMPLATES', str_replace('//', '/', WBS_DIR.'/kernel/includes/smarty/compiled/SC/templates_c/'.$DB_KEY));
         define('DIR_SMARTY_CACHE', realpath(WBS_DIR.'/kernel/includes/smarty/cache'));
@@ -119,7 +120,7 @@ error was encountered while trying to use an ErrorDocument to handle the request
         define('URL_FLAGS', URL_IMAGES.'/flags');
     }
 
-    define('ERR_SCLOG_FILE', sprintf('%s/sc-error_%s.log', DIR_TEMP, date('Y-m-d')));
+    define('ERR_SCLOG_FILE', sprintf('%ssc-error_%s.log', DIR_TEMP, date('Y-m-d')));
     /*
     function db_getConnectData($key = null){
         static $return;

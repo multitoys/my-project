@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.9, created on 2015-11-18 17:35:52
+<?php /* Smarty version 2.6.9, created on 2015-12-08 18:55:58
          compiled from product_info.html */ ?>
 <?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
 smarty_core_load_plugins(array('plugins' => array(array('function', 'component', 'product_info.html', 5, false),)), $this); ?>
@@ -24,14 +24,7 @@ smarty_core_load_plugins(array('plugins' => array(array('function', 'component',
             <div style="padding-left:10px; padding-top:10px; color:#000099;"><!-- cpt_container_start -->
                                                                              <?php echo smarty_function_component(array('cpt_id' => 'product_description'), $this);?>
 <!-- cpt_container_end --></div>
-            <div style="padding-left:10px; padding-top:10px; color:#000099;"><!-- cpt_container_start -->
-                                                                             <!-- cpt_container_end --></div>
-            <div style="padding-left:10px; padding-top:10px; color:#000099;"><!-- cpt_container_start -->
-                                                                             <?php echo smarty_function_component(array('cpt_id' => 'product_params_selectable'), $this);?>
-<!-- cpt_container_end --></div>
-                                   <!-- cpt_container_start --><?php echo smarty_function_component(array('cpt_id' => 'product_discuss_link'), $this);?>
-<!-- cpt_container_end -->
-        </div>
+                                                                    </div>
     </td>
   </tr>
 </table>

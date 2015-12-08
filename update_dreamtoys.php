@@ -43,8 +43,8 @@ TAG
         $DB_tree = new DataBase();
         $DB_tree->connect(SystemSettings::get('DB_HOST'), SystemSettings::get('DB_USER'), SystemSettings::get('DB_PASS'));
         $DB_tree->selectDB(SystemSettings::get('DB_NAME'));
-        
-        $usd = getValue('currency_value', 'Conc__currency', 'CCID = 2');
+    
+        $usd = getValue('currency_value', 'Conc__competitors', 'CCID = 2');
         $archive_dir = $_SERVER['DOCUMENT_ROOT'].'/upload/';
 
         //----------- Импорт товаров ----------- 

@@ -129,30 +129,31 @@ $(document).ready(function () {
 
     var china = $(".china").find("a");
     china.click(function () {
-        var btn_more = $("#light-pagination");
-        var itemsOnPage = parseInt(btn_more.attr("data-itemsOnPage"));
-        var items = parseInt(btn_more.attr("data-items"));
-        var show = parseInt(btn_more.attr("data-show"));
-        var page = parseInt(btn_more.attr("data-page"));
-        var date = parseInt(btn_more.attr("data-date"));
-        var made = btn_more.attr("data-made");
-        
-        if (made == "ukraine") {
+        btn_more = $("#light-pagination");
+        itemsOnPage = parseInt(btn_more.attr("data-itemsOnPage"));
+        items = parseInt(btn_more.attr("data-items"));
+        show = parseInt(btn_more.attr("data-show"));
+        page = parseInt(btn_more.attr("data-page"));
+        date = parseInt(btn_more.attr("data-date"));
+        made = btn_more.attr("data-made");
+
+        //if (made == "ukraine") {
             made = "china";
-        }
+        url = "/auxpage_new_items/" + date + "/" + made + "/";
+        //}
         if (page == -1) {
             page = 0;
         }
 
-        var add = 0;
-        var sort = btn_more.attr("data-sort");
-        var direction = btn_more.attr("data-direction");
-        var count_show = page + show + add;
-        location.href = location.href.replace(/ukraine/, "china");
+        add = 0;
+        sort = btn_more.attr("data-sort");
+        direction = btn_more.attr("data-direction");
+        count_show = page + show + add;
+        //location.href = location.href.replace(/ukraine/, "china");
         notProgress = false;
         scrollPane.addClass("loader");
         $.ajax({
-            url: "/auxpage_new_items/" + date + "/" + made + "/",
+            url: url,
             type: "post",
             dataType: "json",
             cache: false,
@@ -160,8 +161,8 @@ $(document).ready(function () {
             success: function (data) {
                 if (data.result == "success") {
                     content.html(data.html);
-                    btn_more.attr("data-show", count_show - page);
-                    $(".cart_product_quantity").siblings().remove();
+                    btn_more.attr("data-made", made);
+                    //$(".cart_product_quantity").siblings().remove();
                     $(".cart_product_quantity").spin({min: 0, max: 999});
                     $(".preview").tooltip({
                         delay: 0, showURL: false, bodyHandler: function () {
@@ -182,8 +183,47 @@ $(document).ready(function () {
                 notProgress = true;
             }
         });
+        if(url != window.location){
+            window.history.pushState(null, null, url);
+        }
         return false;
     });
+    $(window).bind('popstate', function() {
+        $.ajax({
+            url: location.pathname,
+            type: "post",
+            dataType: "json",
+            cache: false,
+            data: {count_show: count_show, sort: sort, direction: direction, date: date, made: 'ukraine'},
+            success: function (data) {
+                if (data.result == "success") {
+                    content.html(data.html);
+                    btn_more.attr("data-made", made);
+                    //$(".cart_product_quantity").siblings().remove();
+                    $(".cart_product_quantity").spin({min: 0, max: 999});
+                    $(".preview").tooltip({
+                        delay: 0, showURL: false, bodyHandler: function () {
+                            return $("<img/>").attr("src", $(this).attr("data-pid"));
+                        }
+                    });
+                    $(".controls").tooltip({
+                        delay: 0, showURL: false, bodyHandler: function () {
+                            return $("<img/>").attr("src", $(this).attr("data-pid"));
+                        }
+                    });
+                } else {
+                    if (data.result == "finish") {
+                    }
+                }
+                scrollPane.removeClass("loader");
+                scrollPane.getNiceScroll(0).doScrollLeft(0, 100);
+                notProgress = true;
+            }
+        });
+    });
+    
+    
+    
     var pageNavigator = $("#light-pagination");
     var itemsOnPage = parseInt(pageNavigator.attr("data-itemsOnPage"));
     var items = parseInt(pageNavigator.attr("data-items"));

@@ -11,12 +11,12 @@
             $this->Interfaces = array(
                 'export_page'     => array(
                     'name'   => 'Страница экспорта продуктов для интернет-магазинов',
-                    'method' => 'methodExport',
+                    'method' => 'methodExport'
                 ),
                 'xml_file_access' => array(
                     'name'   => 'Доступ к файлу Маркет',
-                    'method' => 'methodXMLFileAccess',
-                ),
+                    'method' => 'methodXMLFileAccess'
+                )
             );
         }
         

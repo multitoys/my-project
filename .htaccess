@@ -18,6 +18,9 @@ RewriteCond  %{REQUEST_FILENAME} !-f
 RewriteRule ^(imgval.php|wbs_messageserserver.php|get_file.php) published/SC/html/scripts/$1 [L]
 
 RewriteCond  %{REQUEST_FILENAME} !-f
+RewriteRule ^shop/(.*) shop/get_file.php$1 [L]
+
+RewriteCond  %{REQUEST_FILENAME} !-f
 RewriteRule ^shop(.*) published/SC/html/scripts/$1&frontend=1 [L]
 
 RewriteCond  %{REQUEST_FILENAME} !-f

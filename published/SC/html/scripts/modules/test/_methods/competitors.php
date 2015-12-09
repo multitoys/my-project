@@ -7,8 +7,7 @@
         protected $DBHandler;
         protected $manufactured = '';
         protected $competitor = '';
-        protected $conc = array();
-        protected $cc   = 1;
+        protected $conc = '';
         protected $currency = '';
         protected $brand = '';
         protected $brands = array();
@@ -17,7 +16,6 @@
         protected $bestsellers = '';
         protected $new = '';
         protected $new_items_postup = '';
-        protected $akcia = '';
         protected $search = '';
         protected $disc_usd = 27;
         protected $disc_ua = 20;
@@ -69,13 +67,9 @@
                     case 'new':
                         $this->__getProductsList('code_1c', 500);
                         break;
-                     
-                    case 'akcia':
-                        $this->__getProductsFromLists('akcia');
-                        break;
                     
                     case 'new_items_postup':
-                        $this->__getProductsFromLists('newitemspostup');
+                        $this->__getNewItemsPostup();
                         break;
                     
                     case 'manufactured':
@@ -95,11 +89,11 @@
                             $this->__setCategory();
                         }
                         break;
-    
-                    case 'competitors':
-                        //                        if ($_GET['competitors'][0] !== 'all') {
+                    
+                    case 'competitor':
+                        if ($_GET['competitor'] !== 'all') {
                             $this->__setCompetitor();
-                        //                        }
+                        }
                         break;
                     
                     case 'searchstring':
@@ -115,7 +109,8 @@
         {
             $query = "SELECT * FROM $this->table_conc ORDER BY CCID";
             $res = mysql_query($query) or die(mysql_error()."<br>$query");
-
+        
+//            $not_null = '';
             while ($row = mysql_fetch_object($res)) {
             
                 $this->competitors_params[] = array(
@@ -125,15 +120,14 @@
                 );
                 $this->competitors_name[$row->competitor] = $row->name_ru;
                 $this->competitors_array[$row->competitor] = $row->competitor;
-                $this->cc++;
-                //                if ($not_null == '') {
-                //                    $not_null .= ' AND (';
-                //                    $not_null .= $row->competitor.' IS NOT NULL';
-                //                } else {
-                //                    $not_null .= ' OR '.$row->competitor.' IS NOT NULL';
-                //                }
+//                if ($not_null == '') {
+//                    $not_null .= ' AND (';
+//                    $not_null .= $row->competitor.' IS NOT NULL';
+//                } else {
+//                    $not_null .= ' OR '.$row->competitor.' IS NOT NULL';
+//                }
             }
-            //            $this->competitor = $not_null.')';
+//            $this->competitor = $not_null.')';
         }
     
         protected function __updateAnalogs()
@@ -242,10 +236,10 @@
             $this->bestsellers = ' AND productID IN ('.$ids.')';
         }
     
-        protected function __getProductsFromLists($list)
+        protected function __getNewItemsPostup()
         {
             $query = "SELECT productID FROM SC_product_list_item
-                    WHERE list_id = $list";
+                    WHERE list_id = 'newitemspostup'";
             $res = mysql_query($query) or die(mysql_error().$query);
         
             $ids = array();
@@ -282,10 +276,8 @@
     
         protected function __setCompetitor()
         {
-            foreach ($_GET['competitors'] as $conc) {
-                $this->conc[] = $conc;
-            }
-            $this->competitor = ' AND '.xEscapeSQLstring(implode(' OR ', $this->conc));
+            $this->conc = xEscapeSQLstring($_GET['competitor']);
+            $this->competitor = ' AND '.$this->conc;
         }
 
         protected function __setSearch()
@@ -306,17 +298,22 @@
     
             $Grid = new Grid();
             
+            $margin = '';
+//            $margin = ' AND margin>55';
+                
             $Grid->query_total_rows_num = "
                 SELECT COUNT(*) FROM $this->table
                 WHERE enabled = 2
                     $this->manufactured $this->brand $this->category $this->bestsellers 
-                    $this->new $this->new_items_postup $this->competitor $this->search";
+                    $this->new $this->new_items_postup $this->competitor $this->search
+                    $margin";
 
             $Grid->query_select_rows = "
                 SELECT * FROM $this->table
                 WHERE enabled = 2
                     $this->manufactured $this->brand $this->category $this->bestsellers 
-                    $this->new  $this->new_items_postup $this->competitor $this->search";
+                    $this->new  $this->new_items_postup $this->competitor $this->search
+                    $margin";
 
             $Grid->show_rows_num_select = true;
             $Grid->default_sort_direction = 'DESC';
@@ -336,14 +333,9 @@
             $Grid->registerHeader('MAX-%', 'max_diff', false, 'ASC', 'right');
 
             if ($this->conc) {
-    
-                $diff_header = (count($this->conc) > 3)?'%':'Разница';
-    
-                foreach ($this->conc as $conc) {
-                    $Grid->registerHeader($this->competitors_name[$conc], $conc, false, 'ASC', 'right');
-                    $Grid->registerHeader($diff_header, 'diff_'.$conc, false, 'ASC', 'right');
-                }
-                
+
+                $Grid->registerHeader($this->competitors_name[$this->conc], $this->conc, false, 'ASC', 'right');
+                $Grid->registerHeader('Разница', 'diff_'.$this->conc, false, 'ASC', 'right');
             } else {
 
                 foreach ($this->competitors_name as $conc => $name) {
@@ -419,7 +411,6 @@
                 $smarty->assign('search_word', 'По запросу "'.xEscapeSQLstring(trim($_GET['searchstring'])).'"');
             }
             $smarty->assign('Competitors', $this->competitors_params);
-            $smarty->assign('cc', $this->cc);
             $smarty->assign('Brands', $this->brands);
             $smarty->assign('Categories', $this->categories);
             $smarty->assign('disc_usd', $this->disc_usd);
@@ -504,25 +495,22 @@
     
         protected function __getExportXLS($headers, $rows)
         {
-            if ($_GET['competitors']) {
-                foreach ($this->conc as $conc) {
-                    if (in_array($conc, $this->competitors_array)) {
-                
-                        unset($this->competitors_array[$conc]);
-                    }
-                }
+            if ($this->conc !== 'all' && in_array($this->conc, $this->competitors_array)) {
+
+                unset($this->competitors_array[$this->conc]);
+
                 foreach ($this->competitors_array as $competitor) {
-            
+
                     unset(
                         $headers[$competitor],
                         $headers['diff_'.$competitor]
                     );
                 }
             }
-    
+            
             $replace = array(' ', 'AND', 'category');
             $date = date('d-m-Y', time());
-            new MakeXLS($headers, $rows, str_replace($replace, '-', implode('-', $this->conc).'-'.$_GET['manufactured'].'-'.$this->brand.'-'.$this->category).'-'.$date);
+            new MakeXLS($headers, $rows, str_replace($replace, '-', $this->conc.'-'.xEscapeSQLstring($_GET['manufactured']).'-'.$this->brand.'-'.$this->category).'-'.$date);
         }
     }
 

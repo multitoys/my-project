@@ -69,7 +69,7 @@ tr.even:hover td {
     clear: both;
 }
 
-#checkings, #selections, #discounts, #multi_select {
+#checkings, #selections, #discounts {
     margin: 0 0 5px 5px;
 }
 
@@ -99,7 +99,7 @@ label, select, .input_message {
 }
 
 #selections select {
-    /*height: 18px;*/
+    height: 18px;
     margin-top: 3px;
     font-size: 12px;
     color: darkblue;
@@ -113,7 +113,7 @@ label, select, .input_message {
     width: 80px;
     height: 70px;
     padding: 0;
-    margin: 15px 0 0 5px;
+    margin: 7px 0 0 5px;
     background-color: cornflowerblue;
     border: 0;
     color: white;
@@ -134,9 +134,9 @@ label, select, .input_message {
 }
 
 #update {
-    width: 150px;
-    height: 70px;
-    margin-left: 20px;
+    width: 250px;
+    height: 40px;
+    margin-left: 30px;
     background-color: #98A5BB;
 }
 

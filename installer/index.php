@@ -1,5 +1,3 @@
 <?php
 
-    header("Location: ../published/wbsadmin/html/scripts/wbsadmin.php");
-
-?>
+	header( "Location: ../published/wbsadmin/html/scripts/wbsadmin.php" );

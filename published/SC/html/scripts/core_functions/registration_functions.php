@@ -1,5 +1,5 @@
 <?php
-
+    
     // *****************************************************************************
     // Purpose  add administrator login into database and set default address
     // Inputs   $admin_login - administrator login, $admin_pass - administrator password
@@ -8,17 +8,17 @@
     function regRegisterAdmin($admin_login, $admin_pass, $Update = false, $OldAdminLogin = '')
     {
         if ($Update && $OldAdminLogin) {
-
+            
             $CustomerInfo = regGetCustomerInfo2($OldAdminLogin);
             if (is_array($CustomerInfo)) {
-
+                
                 $sql = '
 				UPDATE '.CUSTOMERS_TABLE.'
 				SET Login="'.xEscapeSQLstring($admin_login).'",cust_password="'.Crypt::PasswordCrypt($admin_pass, null).'"
 				WHERE customerID="'.xEscapeSQLstring($CustomerInfo['customerID']).'"
 			';
                 db_query($sql);
-
+                
                 return true;
             }
         }
@@ -29,25 +29,25 @@
         // $count = $count[0];
         $OldID =
             db_query("DELETE FROM ".CUSTOMERS_TABLE." WHERE Login='".$admin_login."'");
-
+        
         if (CONF_DEFAULT_CUSTOMER_GROUP == '0')
             $custgroupID = "NULL";
         else
             $custgroupID = CONF_DEFAULT_CUSTOMER_GROUP;
-
+        
         $admin_pass = Crypt::PasswordCrypt($admin_pass, null);
-
+        
         $q = db_query("SELECT CID FROM ".CURRENCY_TYPES_TABLE);
         $currencyID = "NULL";
         if ($currency = db_fetch_row($q))
             $currencyID = $currency["CID"];
-
+        
         db_query("insert into ".CUSTOMERS_TABLE.
-            " (Login, cust_password, Email, first_name, last_name, subscribed4news, ".
-            " 	custgroupID, addressID, reg_datetime, CID ) values ".
-            "('".$admin_login."','".$admin_pass."', ".
-            " '-', '-', '-', 0, $custgroupID, NULL, ".
-            " '".Time::dateTime()."', ".$currencyID." )");
+                 " (Login, cust_password, Email, first_name, last_name, subscribed4news, ".
+                 " 	custgroupID, addressID, reg_datetime, CID ) values ".
+                 "('".$admin_login."','".$admin_pass."', ".
+                 " '-', '-', '-', 0, $custgroupID, NULL, ".
+                 " '".Time::dateTime()."', ".$currencyID." )");
         $errorCode = 0;
         $zoneID = "1";
         $state = "";
@@ -63,10 +63,10 @@
             $admin_login,
             $errorCode);
         regSetDefaultAddressIDByLogin($admin_login, $defaultAddressID);
-
+        
         return true;
     }
-
+    
     // *****************************************************************************
     // Purpose
     // Inputs   $login - login
@@ -76,10 +76,10 @@
     {
         $q = db_phquery('SELECT COUNT(Login) FROM ?#CUSTOMERS_TABLE WHERE Login=?', $login);
         $r = db_fetch_row($q);
-
+        
         return ($r[0] != 0);
     }
-
+    
     // *****************************************************************************
     // Purpose
     // Inputs   $customerID - custmer ID
@@ -89,30 +89,30 @@
     {
         $customerID = (int)$customerID;
         if ($customerID == 0) return false;
-
+        
         $q = db_query("SELECT Login FROM ".CUSTOMERS_TABLE." WHERE customerID=".$customerID);
         if (($r = db_fetch_row($q)))
             return $r["Login"];
         else
             return false;
     }
-
+    
     /**
      * @return int || null
      */
     function regGetIdByLogin($login)
     {
-
+        
         if (!$login) return null;
         static $cache = array();
-
+        
         if (!isset($cache[$login])) {
             $cache[$login] = db_phquery_fetch(DBRFETCH_FIRST, "SELECT customerID FROM ?#CUSTOMERS_TABLE WHERE Login=?", $login);
         }
-
+        
         return $cache[$login];
     }
-
+    
     // *****************************************************************************
     // Purpose  authenticate user
     // Inputs   $login - login, $password - password
@@ -121,36 +121,46 @@
     // Returns	false if authentication failure, true - otherwise
     function regAuthenticate($login, $password, $Redirect = true)
     {
-        $q = db_query("UPDATE ".CUSTOMERS_TABLE.
-            " SET logged = TIMESTAMP(0) WHERE 
-                  (NOT unlimited_order AND may_order_until < CURRENT_TIMESTAMP())
-                  OR (logged < CURRENT_TIMESTAMP()) OR token='';")
-        or die (db_error());
+        $q = db_query(
+                "UPDATE ".CUSTOMERS_TABLE."
+                 SET logged = TIMESTAMP(0) 
+                 WHERE 
+                 (NOT unlimited_order AND may_order_until < CURRENT_TIMESTAMP())
+                 OR (logged < CURRENT_TIMESTAMP()) OR token='';"
+        ) or die(/*db_error()*/);
+        
         $login = xEscapeSQLstring($login);
         $password = xEscapeSQLstring($password);
-        $q = db_query("SELECT token, cust_password, CID, ActivationCode, logged FROM ".CUSTOMERS_TABLE.
-            " WHERE Login='".$login."'") or die (db_error());
+        
+        $q = db_query("SELECT token, cust_password, CID, ActivationCode, logged 
+                       FROM ".CUSTOMERS_TABLE." 
+                       WHERE Login='".$login."'") or die (/*db_error()*/);
         $row = db_fetch_row($q);
-
+        
         if (CONF_ENABLE_REGCONFIRMATION && $row['ActivationCode']) {
             if ($Redirect) RedirectSQ('&ukey=act_customer&notact=1');
             else return false;
         }
-
+        
         // if ($row['logged'] != 0)
         // {
         // ZAddAuthEvent($login, 2);
         // if($Redirect)RedirectSQ('&ukey=act_customer&already=1');
         // else return false;
         // }
+        
         if ($row['logged'] != 0) {
+            
             $_SESSION["log"] = $login;
-            $_SESSION["pass"] = Crypt::PasswordCrypt($password, null);
+            $_SESSION["pass"] = Crypt::PasswordCrypt($password);
             $_SESSION["current_currency"] = $row["CID"];
-
+            
             if ($row['token'] !== xEscapeSQLstring($_SESSION['enter'])) {
+                
                 $token = xEscapeSQLstring($_SESSION['enter']);
-                db_query("UPDATE ".CUSTOMERS_TABLE." SET token = '$token' WHERE  Login='".$login."'") or die (db_error());
+                db_query("UPDATE ".CUSTOMERS_TABLE." SET token = '$token' 
+                          WHERE  Login='".$login."'") 
+                         or die (/*db_error()*/);
             }
             
             ZAddAuthEvent($login, 4);
@@ -159,40 +169,55 @@
             // file_put_contents('f:/1.txt', $login, GetRealIp());
             // if($Redirect)RedirectSQ('&ukey=act_customer&already=1');
             // else return false;
+            
         } else {
+            
             if ($row && strlen(trim($login)) > 0) {
+                
                 // $expire = ini_get('session.gc_maxlifetime'); //session_cache_expire();
                 $expire = 1800; //session_cache_expire();
-                if ($row["cust_password"] === Crypt::PasswordCrypt($password, null)) {
+                
+                if ($row["cust_password"] === Crypt::PasswordCrypt($password)) {
+                    
                     $query = "UPDATE ".CUSTOMERS_TABLE.
-                        " SET logged = TIMESTAMP(ADDTIME(CURRENT_TIMESTAMP, '$expire')) WHERE Login='".$login."'";
-                    $q = db_query($query) or die (db_error());
-
+                             " SET logged = TIMESTAMP(ADDTIME(CURRENT_TIMESTAMP, '$expire')) WHERE Login='".$login."'";
+                    $q = db_query($query) or die (/*db_error()*/);
+                    
                     $token = xEscapeSQLstring($_SESSION['enter']);
                     db_query("UPDATE ".CUSTOMERS_TABLE." SET token = '$token' WHERE  Login='".$login."'") or die (db_error());
-
+                    
                     // set session variables
                     $_SESSION["log"] = $login;
-                    $_SESSION["pass"] = Crypt::PasswordCrypt($password, null);
+                    $_SESSION["pass"] = Crypt::PasswordCrypt($password);
                     $_SESSION["current_currency"] = $row["CID"];
-    
-                    ZAddAuthEvent($login, 1);
-                    // move cart content into DB
-                    // moveCartFromSession2DB();
+                    
+                    if (!ZAddAuthEvent($login, 1)) {
+                        
+                        unset($_SESSION);
+                        
+                        return false;
+                    }
+                    
                     return true;
+                    
                 } else {
+                    
                     ZAddAuthEvent($login, 2);
-                    unset($_SESSION['log'], $_SESSION['pass'], $_SESSION['enter']);
+                    //                    unset($_SESSION['log'], $_SESSION['pass'], $_SESSION['enter']);
+                    unset($_SESSION);
+                    
                     return false;
                 }
             } else {
                 ZAddAuthEvent($login, 2);
-                unset($_SESSION['log'], $_SESSION['pass'], $_SESSION['enter']);
+                //                unset($_SESSION['log'], $_SESSION['pass'], $_SESSION['enter']);
+                unset($_SESSION);
+                
                 return false;
             }
         }
     }
-
+    
     // *****************************************************************************
     // Purpose  	sends password to customer email
     // Inputs
@@ -200,7 +225,7 @@
     // Returns	true if success
     function regSendPasswordToUser($login, &$smarty_mail)
     {
-
+        
         $sql = '
 		SELECT Login, cust_password, Email FROM '.CUSTOMERS_TABLE.'
 		WHERE (Login="'.xEscapeSQLstring($login).'" OR Email="'.xEscapeSQLstring($login).'")
@@ -214,12 +239,12 @@
             $smarty_mail->assign("user_login", $row['Login']);
             $html = $smarty_mail->fetch("remind_password.txt");
             ss_mail($row["Email"], translate("email_subject_forgot_password"), $html, true);
-
+            
             return true;
         } else
             return false;
     }
-
+    
     // *****************************************************************************
     // Purpose  determine administrator user
     // Inputs   $login - login
@@ -230,7 +255,7 @@
     {
         return (!strcmp($login, ADMIN_LOGIN));
     }
-
+    
     // *****************************************************************************
     // Purpose	register new customer
     // Inputs
@@ -257,41 +282,41 @@
         $last_name = xEscapeSQLstring($last_name);
         $affiliateLogin = xEscapeSQLstring($affiliateLogin);
         $affiliateID = 0;
-
+        
         if ($affiliateLogin) {
-
+            
             $sql = "
 			SELECT customerID  FROM ".CUSTOMERS_TABLE."
 			WHERE Login='{$affiliateLogin}'
 		";
             list($affiliateID) = db_fetch_row(db_query($sql));
         }
-
+        
         foreach ($additional_field_values as $key => $val)
             $additional_field_values[$key] = xEscapeSQLstring($val);
-
+        
         $q = db_query("SELECT CID FROM ".CURRENCY_TYPES_TABLE);
         $currencyID = db_fetch_row($q);
         $currencyID = $currencyID[0];
         if ($currencyID == null)
             $currencyID = "NULL";
-
+        
         $cust_password = Crypt::PasswordCrypt($cust_password0, null);
         // add customer to CUSTOMERS_TABLE
-
+        
         $custgroupID = CONF_DEFAULT_CUSTOMER_GROUP;
         if ($custgroupID == 0)
             $custgroupID = "NULL";
-
+        
         /**
          * Activation code
          */
         $ActivationCode = '';
         if (CONF_ENABLE_REGCONFIRMATION) {
-
+            
             $CodeExists = true;
             while ($CodeExists) {
-
+                
                 $ActivationCode = generateRndCode(16);
                 $sql = '
 				SELECT 1 FROM '.CUSTOMERS_TABLE.'
@@ -300,31 +325,31 @@
                 @list($CodeExists) = db_fetch_row(db_query($sql));
             }
         }
-
+        
         $sql = "insert into ".CUSTOMERS_TABLE.
-            "( Login, cust_password, Email, first_name, last_name, subscribed4news, reg_datetime, CID, custgroupID".
-            ", affiliateID".
-            ", ActivationCode)".
-            "values( '".$login."', '".$cust_password."', '".$Email."', ".
-            " '".$first_name."', '".$last_name."', '".$subscribed4news."', '".Time::dateTime()."', ".
-            $currencyID.", ".$custgroupID.
-            ", {$affiliateID}".
-            ",'{$ActivationCode}' )";
+               "( Login, cust_password, Email, first_name, last_name, subscribed4news, reg_datetime, CID, custgroupID".
+               ", affiliateID".
+               ", ActivationCode)".
+               "values( '".$login."', '".$cust_password."', '".$Email."', ".
+               " '".$first_name."', '".$last_name."', '".$subscribed4news."', '".Time::dateTime()."', ".
+               $currencyID.", ".$custgroupID.
+               ", {$affiliateID}".
+               ",'{$ActivationCode}' )";
         db_query($sql);
-
+        
         // add additional values to CUSTOMER_REG_FIELDS_TABLE
         foreach ($additional_field_values as $key => $val)
             SetRegField($key, $login, $val["additional_field"]);
-
+        
         $customerID = regGetIdByLogin($login);
         //db_query("update ".CUSTOMERS_TABLE." set addressID='".$addressID.
         //	"' where Login='".$login."'" );
-
+        
         if ($subscribed4news)
             subscrAddRegisteredCustomerEmail($customerID);
-
+        
         // начало: Письмо админу про регистрацию нового пользователя
-
+        
         $phone = $additional_field_values[1]['additional_field'];
         $addres = $_POST['address']['address'];
         $city = $_POST['address']['city'];
@@ -336,9 +361,9 @@
         $zoneID = $zoneID?$zoneID:0;
         $country = GetValue_reg('country_name_ru', 'SC_countries', "countryID = $countryID");
         $zone = GetValue_reg('zone_name_ru', 'SC_zones', "zoneID = $zoneID");
-
+        
         $news = $subscribed4news?'Да':'Нет';
-
+        
         $mail_from = GetValue_reg("settings_value", "SC_settings", "settings_constant_name = 'CONF_GENERAL_EMAIL'");;
         $email_to = GetValue_reg("settings_value", "SC_settings", "settings_constant_name = 'CONF_ORDERS_EMAIL'");
         $shop_url = GetValue_reg("settings_value", "SC_settings", "settings_constant_name = 'CONF_SHOP_URL'");
@@ -378,26 +403,26 @@
 
 <a href='$shop_url/published/SC/html/scripts/index.php?ukey=user_info&search=&userID=$customerID&rdid=22'>Перейти на страницу пользователя</a>
 ";
-
+        
         //  file_put_contents('d:/1.log', $body);
         //  file_put_contents('d:/2.log', $_POST['address']);
-
+        
         ss_mail($email_to, 'Регистрация нового покупателя', $body, true);
-
+        
         // конец: Письмо админу про регистрацию нового пользователя
-
+        
         return true;
     }
-
+    
     function GetValue_reg($what, $table, $condition)
     {
         $query = "SELECT $what FROM $table WHERE $condition LIMIT 1";
         $result = mysql_query($query) or die('Ошибка в запросе: '.mysql_error().'<br>'.$query);
         $row = mysql_fetch_row($result);
-
+        
         return $row[0];
     }
-
+    
     // *****************************************************************************
     // Purpose	send notification message to email
     // Inputs
@@ -426,28 +451,28 @@
         $smarty_mail->assign("Email", $Email);
         $additional_field_values = GetRegFieldsValues($login);
         $smarty_mail->assign("additional_field_values", $additional_field_values);
-
+        
         $addresses = regGetAllAddressesByLogin($login);
         for ($i = 0; $i < count($addresses); $i++)
             $addresses[$i]["addressStr"] = regGetAddressStr($addresses[$i]["addressID"], true);
         $smarty_mail->assign("addresses", $addresses);
-
+        
         if (CONF_ENABLE_REGCONFIRMATION) {
-
+            
             $sql = '
 			SELECT ActivationCode FROM '.CUSTOMERS_TABLE.'
 			WHERE Login="'.xEscapeSQLstring($login).'" AND cust_password="'.xEscapeSQLstring(Crypt::PasswordCrypt($cust_password, null)).'"
 		';
             @list($ActivationCode) = db_fetch_row(db_query($sql));
-
+            
             $smarty_mail->assign('ActURL', set_query('ukey=act_customer&act_code='.$ActivationCode, CONF_FULL_SHOP_URL.(substr(CONF_FULL_SHOP_URL, strlen(CONF_FULL_SHOP_URL) - 1, 1) == '/'?'':'/')));
             $smarty_mail->assign('ActCode', $ActivationCode);
         }
-
+        
         $html = $smarty_mail->fetch("register_successful.txt");
         ss_mail($Email, translate("email_subject_registration"), $html, true);
     }
-
+    
     // *****************************************************************************
     // Purpose	get customer info
     // Inputs
@@ -469,8 +494,8 @@
                                 & $countryID, & $zoneID, & $state, & $zip, & $city, & $address)
     {
         $q = db_query("select customerID, cust_password, Email, first_name, last_name, ".
-            " subscribed4news, custgroupID, addressID  from ".CUSTOMERS_TABLE.
-            " where Login='".$login."'");
+                      " subscribed4news, custgroupID, addressID  from ".CUSTOMERS_TABLE.
+                      " where Login='".$login."'");
         $r = db_fetch_row($q);
         $cust_password = Crypt::PasswordDeCrypt($r["cust_password"], null);
         if (CONF_BACKEND_SAFEMODE)
@@ -483,7 +508,7 @@
         $addressID = $r["addressID"];
         $customerID = $r["customerID"];
         $q = db_query("SELECT countryID, zoneID, zip, state, city, address FROM ".
-            CUSTOMER_ADDRESSES_TABLE." WHERE customerID='".$customerID."'");
+                      CUSTOMER_ADDRESSES_TABLE." WHERE customerID='".$customerID."'");
         $r = db_fetch_row($q);
         $countryID = $r["countryID"];
         $zoneID = $r["zoneID"];
@@ -493,7 +518,7 @@
         $address = $r["address"];
         $additional_field_values = GetRegFieldsValues($login);
     }
-
+    
     // *****************************************************************************
     // Purpose	get customer info
     // Inputs
@@ -502,43 +527,43 @@
     function regGetCustomerInfo2($login)
     {
         $q = db_query("select customerID, cust_password, Email, first_name, last_name, ".
-            " subscribed4news, custgroupID, addressID, Login, ActivationCode from ".CUSTOMERS_TABLE.
-            " where Login='".xEscapeSQLstring($login)."'");
+                      " subscribed4news, custgroupID, addressID, Login, ActivationCode from ".CUSTOMERS_TABLE.
+                      " where Login='".xEscapeSQLstring($login)."'");
         if ($row = db_fetch_row($q)) {
             if ($row["custgroupID"] != null) {
                 $q = db_phquery("SELECT * FROM ?#CUSTGROUPS_TABLE WHERE custgroupID=?", $row["custgroupID"]);
                 $custGroup = db_fetch_row($q);
                 LanguagesManager::ml_fillFields(CUSTGROUPS_TABLE, $custGroup);
-
+                
                 $row["custgroup_name"] = $custGroup["custgroup_name"];
             } else
                 $row["custgroup_name"] = "";
             $row["cust_password"] = Crypt::PasswordDeCrypt($row["cust_password"], null);
-
+            
             if (CONF_BACKEND_SAFEMODE) $row["Email"] = translate("msg_safemode_info_blocked");
-
+            
             $row["allowToDelete"] = regVerifyToDelete($row["customerID"]);
         }
-
+        
         return $row;
     }
-
+    
     // -----------------------------------------------
-
+    
     function regAddAddress($first_name, $last_name, $countryID, $zoneID, $state, $zip, $city, $address, $log, &$errorCode)
     {
-
+        
         $sql = 'SELECT COUNT(zoneID) FROM ?#ZONES_TABLE WHERE countryID=?';
         $q = db_phquery($sql, $countryID);
         $r = db_fetch_row($q);
         if (($r[0] != 0) && ($zoneID == 0) && (CONF_ADDRESSFORM_STATE == 0)) {
             $errorCode = "err_region_does_not_belong_to_country";
-
+            
             return false;
         }
-
+        
         $customerID = regGetIdByLogin($log);
-
+        
         if ($zoneID == 0) $zoneID = "NULL";
         $sql = '
 		INSERT ?#CUSTOMER_ADDRESSES_TABLE ( first_name, last_name, countryID, zoneID, zip, state, city, address, customerID)
@@ -548,13 +573,13 @@
 		"'.xEscapeSQLstring($city).'","'.xEscapeSQLstring($address).'",
 		"'.xEscapeSQLstring($customerID).'")';
         db_phquery($sql, $last_name, $countryID, $zoneID, $zip, $state, $city, $address, $customerID);
-
+        
         return db_insert_id();
     }
-
+    
     function redDeleteAddress($addressID)
     {
-
+        
         $sql = '
 		UPDATE ?#CUSTOMERS_TABLE SET addressID=NULL WHERE addressID=?
 	';
@@ -564,10 +589,10 @@
 	';
         db_phquery($sql, $addressID);
     }
-
+    
     function regGetAddress($addressID)
     {
-
+        
         if ($addressID != null) {
             // $customerID
             $sql = '
@@ -576,13 +601,13 @@
 		';
             $q = db_phquery($sql, $addressID);
             $row = db_fetch_row($q);
-
+            
             return $row;
         } else {
             return false;
         }
     }
-
+    
     function regGetAddressByLogin($addressID, $login)
     {
         $customerID = regGetIdByLogin($login);
@@ -592,19 +617,19 @@
         else
             return false;
     }
-
+    
     function regGetAllAddressesByID($customerID)
     {
-
+        
         $customerID = (int)$customerID;
         if ($customerID == 0) return null;
-
+        
         $q = db_query("select addressID, first_name, last_name, countryID, zoneID, zip, state, city, address ".
-            " from ".
-            CUSTOMER_ADDRESSES_TABLE." where customerID=$customerID order by addressID asc");
+                      " from ".
+                      CUSTOMER_ADDRESSES_TABLE." where customerID=$customerID order by addressID asc");
         $data = array();
         while ($row = db_fetch_row($q)) {
-
+            
             if ($row["countryID"] != null) {
                 $q1 = db_query("SELECT * FROM ".COUNTRIES_TABLE." WHERE countryID=".$row["countryID"]);
                 $country = db_fetch_assoc($q1);
@@ -612,36 +637,36 @@
                 $row["country"] = $country['country_name'];
             } else
                 $row["country"] = "-";
-
+            
             if ($row["zoneID"] != null) {
                 $q1 = db_query("SELECT * FROM ".ZONES_TABLE." WHERE zoneID=".$row["zoneID"]);
                 $zone = db_fetch_assoc($q1);
                 LanguagesManager::ml_fillFields(ZONES_TABLE, $zone);
                 $row["state"] = $zone['zone_name'];
             }
-
+            
             $data[] = $row;
         }
-
+        
         return $data;
     }
-
+    
     function regGetAllAddressesByLogin($log)
     {
-
+        
         return regGetAllAddressesByID(regGetIdByLogin($log));
     }
-
+    
     function regGetDefaultAddressIDByLogin($log)
     {
-
+        
         $q = db_phquery('SELECT addressID FROM ?#CUSTOMERS_TABLE WHERE Login=?', $log);
         if ($row = db_fetch_row($q))
             return $row[0];
         else
             return null;
     }
-
+    
     function regSetDefaultAddressIDByLogin($log, $defaultAddressID)
     {
         $sql = '
@@ -649,32 +674,32 @@
 	';
         db_phquery($sql, $defaultAddressID, $log);
     }
-
+    
     function _testStrInvalidSymbol($str)
     {
         $res = strstr($str, "'");
         if (is_string($res))
             return false;
-
+        
         $res = strstr($str, "\\");
         if (is_string($res))
             return false;
-
+        
         $res = strstr($str, '"');
         if (is_string($res))
             return false;
-
+        
         $res = strstr($str, "<");
         if (is_string($res))
             return false;
-
+        
         $res = strstr($str, ">");
         if (is_string($res))
             return false;
-
+        
         return true;
     }
-
+    
     function _testStrArrayInvalidSymbol($array)
     {
         foreach ($array as $str) {
@@ -682,10 +707,10 @@
             if (!$res)
                 return false;
         }
-
+        
         return true;
     }
-
+    
     // *****************************************************************************
     // Purpose	verify address input data
     // Inputs
@@ -701,7 +726,7 @@
     // Returns	empty string if success, error message otherwise
     function regVerifyAddress($first_name, $last_name, $countryID, $zoneID, $state, $zip, $city, $address)
     {
-
+        
         $error = '';
         if (trim($first_name) == '') {
             $error = translate("err_input_name");
@@ -716,14 +741,14 @@
         } elseif ((CONF_ADDRESSFORM_ZIP == 0) && (trim($zip) == '')) {
             $error = translate("err_input_zip");
         }
-
+        
         $sql = 'SELECT COUNT(*) FROM ?#ZONES_TABLE WHERE countryID=?';
         $q = db_phquery($sql, $countryID);
         $r = db_fetch_row($q);
         $countZone = $r[0];
-
+        
         if ($countZone != 0) {
-
+            
             $sql = 'SELECT COUNT(*) FROM ?#ZONES_TABLE WHERE zoneID=? AND countryID=?';
             $q = db_phquery($sql, $zoneID, $countryID);
             $r = db_fetch_row($q);
@@ -736,10 +761,10 @@
             }
             */
         }
-
+        
         return $error;
     }
-
+    
     function regGetContactInfo($login, &$cust_password, &$Email, &$first_name,
                                &$last_name, &$subscribed4news, &$additional_field_values)
     {
@@ -754,10 +779,10 @@
         $subscribed4news = $row["subscribed4news"];
         $additional_field_values = GetRegFieldsValues($login);
     }
-
+    
     function regVerifyContactInfo($login, $cust_password1, $cust_password2, $Email, $first_name, $last_name, $subscribed4news, $additional_field_values)
     {
-
+        
         $error = "";
         if (
         !_testStrArrayInvalidSymbol(
@@ -769,7 +794,7 @@
             if (trim($login) == "") $error = translate("err_input_login");
             else
                 if (!(((ord($login) >= ord("a")) && (ord($login) <= ord("z"))) ||
-                    ((ord($login) >= ord("A")) && (ord($login) <= ord("Z"))))
+                      ((ord($login) >= ord("A")) && (ord($login) <= ord("Z"))))
                 )
                     $error = translate("err_login_should_start_with_latin_symbol");
                 else
@@ -784,18 +809,18 @@
                                 else if (!eregi("^[_\.0-9a-zA-Z-]+@([0-9a-zA-Z-]+\.)+[a-zA-Z]{2,6}$", $Email)) { //e-mail validation
                                     $error = translate("err_input_email");
                                 }
-
+        
         $dbq = 'SELECT 1 FROM ?#CUSTOMERS_TABLE WHERE Email=? AND login<>"" AND login<>?';
-
+        
         $is_free_email = !db_phquery_fetch(DBRFETCH_FIRST, $dbq, $Email, $login);
         if (!$is_free_email) {
             return translate('err_occupied_email');
         }
-
+        
         if (isset($_POST['affiliationLogin']))
             if (!regIsRegister($_POST['affiliationLogin']) && $_POST['affiliationLogin'])
                 $error = translate('err_wrong_referrer');
-
+        
         //aux fields
         foreach ($_POST as $key => $val) {
             if (strstr($key, "additional_field_")) {
@@ -804,15 +829,15 @@
                     $error = translate('err_input_all_required_fields');
             }
         }
-
+        
         return $error;
     }
-
+    
     function regUpdateContactInfo($old_login, $login, $cust_password,
                                   $Email, $first_name, $last_name, $subscribed4news,
                                   $additional_field_values)
     {
-
+        
         $sql = '
 		UPDATE ?#CUSTOMERS_TABLE SET Login=?, cust_password=?, Email=?, first_name=?, last_name=?, subscribed4news=?
 		WHERE Login=?
@@ -820,7 +845,7 @@
         db_phquery($sql, $login, Crypt::PasswordCrypt($cust_password, null), $Email, $first_name, $last_name, $subscribed4news, $old_login);
         foreach ($additional_field_values as $key => $val)
             SetRegField($key, $login, $val["additional_field"]);
-
+        
         if (!strcmp($old_login, ADMIN_LOGIN) && false) //update administrator login (cfg/connect.inc.php)
         {
             $f = fopen("./cfg/connect.inc.php", "w");
@@ -843,15 +868,15 @@ include("./cfg/tables.inc.php");
             fputs($f, $s);
             fclose($f);
         }
-
+        
         $customerID = regGetIdByLogin($login);
-
+        
         if ($subscribed4news)
             subscrAddRegisteredCustomerEmail($customerID);
         else
             subscrUnsubscribeSubscriberByEmail(base64_encode($Email));
     }
-
+    
     // *****************************************************************************
     // Purpose	get address string by address ID
     // Inputs
@@ -859,10 +884,10 @@ include("./cfg/tables.inc.php");
     // Returns
     function regGetAddressStr($addressID, $NoTransform = false)
     {
-
+        
         $address = regGetAddress($addressID, $NoTransform);
         if (!is_array($address)) return '';
-
+        
         // countryID, zoneID, zip, state
         $country = cnGetCountryById($address["countryID"]);
         $country = $country["country_name"];
@@ -872,13 +897,13 @@ include("./cfg/tables.inc.php");
         } else {
             $zone = trim($address["state"]);
         }
-
+        
         if (!$NoTransform) {
             $address = xHtmlSpecialChars($address);
             $zone = xHtmlSpecialChars($zone);
             $country = xHtmlSpecialChars($country);
         }
-
+        
         if ($country != "") {
             $strAddress = $address["first_name"]."  ".$address["last_name"];
             if (strlen($address["address"]) > 0) $strAddress .= "<br>".$address["address"];
@@ -893,10 +918,10 @@ include("./cfg/tables.inc.php");
             if (strlen($zone) > 0) $strAddress .= " ".$zone;
             if (strlen($address["zip"]) > 0) $strAddress .= " ".$address["zip"];
         }
-
+        
         return $strAddress;
     }
-
+    
     // *****************************************************************************
     // Purpose	gets all customers
     // Inputs
@@ -911,43 +936,43 @@ include("./cfg/tables.inc.php");
             $offset = 0;
             $CountRowOnPage = 0;
         }
-
+        
         $where_clause = "";
         if (isset($callBackParam["Login"])) {
             $callBackParam["Login"] = xEscapeSQLstring($callBackParam["Login"]);
             $where_clause .= " Login LIKE '%".$callBackParam["Login"]."%' ";
         }
-
+        
         if (isset($callBackParam["first_name"])) {
             $callBackParam["first_name"] = xEscapeSQLstring($callBackParam["first_name"]);
             $callBackParam["first_name"] = str_replace('\\', '\\\\', $callBackParam["first_name"]);
             if ($where_clause != "") $where_clause .= " AND ";
             $where_clause .= " first_name LIKE '%".$callBackParam["first_name"]."%' ";
         }
-
+        
         if (isset($callBackParam["last_name"])) {
             $callBackParam["last_name"] = xEscapeSQLstring($callBackParam["last_name"]);
             $callBackParam["last_name"] = str_replace('\\', '\\\\', $callBackParam["last_name"]);
             if ($where_clause != "") $where_clause .= " AND ";
             $where_clause .= " last_name LIKE '%".$callBackParam["last_name"]."%' ";
         }
-
+        
         if (isset($callBackParam["email"])) {
             $callBackParam["email"] = xEscapeSQLstring($callBackParam["email"]);
             if ($where_clause != "") $where_clause .= " AND ";
             $where_clause .= " Email LIKE '%".$callBackParam["email"]."%' ";
         }
-
+        
         if (isset($callBackParam["groupID"])) {
             if ($callBackParam["groupID"] != 0) {
                 if ($where_clause != "") $where_clause .= " AND ";
                 $where_clause .= " custgroupID = ".$callBackParam["groupID"]." ";
             }
         }
-
+        
         if (isset($callBackParam["ActState"])) {
             switch ($callBackParam["ActState"]) {
-
+                
                 #activated
                 case 1:
                     if ($where_clause != "") $where_clause .= " AND ";
@@ -960,10 +985,10 @@ include("./cfg/tables.inc.php");
                     break;
             }
         }
-
+        
         if ($where_clause != "")
             $where_clause = " where ".$where_clause;
-
+        
         $order_clause = "";
         if (isset($callBackParam["sort"])) {
             $order_clause .= " order by ".$callBackParam["sort"]." ";
@@ -974,15 +999,15 @@ include("./cfg/tables.inc.php");
                     $order_clause .= " DESC ";
             }
         }
-
+        
         $sql = "select customerID, Login, cust_password, Email, first_name, last_name, subscribed4news, ".
-            " custgroupID, addressID, reg_datetime, ActivationCode ".
-            " from ".CUSTOMERS_TABLE." ".$where_clause." ".$order_clause;
+               " custgroupID, addressID, reg_datetime, ActivationCode ".
+               " from ".CUSTOMERS_TABLE." ".$where_clause." ".$order_clause;
         $q = db_query($sql);
         $data = array();
         $i = 0;
         while ($row = db_fetch_row($q)) {
-
+            
             if (($i >= $offset && $i < $offset + $CountRowOnPage) ||
                 $navigatorParams == null
             ) {
@@ -995,29 +1020,29 @@ include("./cfg/tables.inc.php");
             $i++;
         }
         $count_row = $i;
-
+        
         return $data;
     }
-
+    
     function regSetSubscribed4news($customerID, $value)
     {
         db_query("update ".CUSTOMERS_TABLE." set subscribed4news = ".$value.
-            " where customerID=".$customerID);
+                 " where customerID=".$customerID);
         if ($value > 0) {
             subscrAddRegisteredCustomerEmail($customerID);
         } else {
             subscrUnsubscribeSubscriberByCustomerId($customerID);
         }
     }
-
+    
     function regSetCustgroupID($customerID, $custgroupID)
     {
         $customerID = (int)$customerID;
         $custgroupID = (int)$custgroupID;
         db_query("update ".CUSTOMERS_TABLE." set custgroupID=".$custgroupID.
-            " where customerID=".$customerID);
+                 " where customerID=".$customerID);
     }
-
+    
     // *****************************************************************************
     // Purpose
     // Inputs
@@ -1029,15 +1054,15 @@ include("./cfg/tables.inc.php");
         if (!$customerID) return false;
         $addressID = (int)$addressID;
         if (!$addressID) return false;
-
+        
         $q_count = db_query("SELECT count(*) FROM ".CUSTOMER_ADDRESSES_TABLE.
-            " WHERE customerID=".$customerID." AND addressID=".$addressID);
+                            " WHERE customerID=".$customerID." AND addressID=".$addressID);
         $count = db_fetch_row($q_count);
         $count = $count[0];
-
+        
         return ($count != 0);
     }
-
+    
     // *****************************************************************************
     // Purpose
     // Inputs
@@ -1047,26 +1072,26 @@ include("./cfg/tables.inc.php");
     {
         $customerID = (int)$customerID;
         if (!$customerID) return 0;
-
+        
         $q = db_query("SELECT count(*) FROM ".CUSTOMERS_TABLE." WHERE customerID=".$customerID);
         $row = db_fetch_row($q);
-
+        
         if (regIsAdminiatrator(regGetLoginById($customerID)))
             return false;
-
+        
         return ($row[0] == 1);
     }
-
+    
     // Returns	true if customer has address specified by $addressID
     function regDeleteCustomer($customerID)
     {
-
+        
         if ($customerID == null || trim($customerID) == "")
             return false;
-
+        
         $customerID = (int)$customerID;
         if (!$customerID) return 0;
-
+        
         if (regVerifyToDelete($customerID)) {
             db_query("DELETE FROM ".SHOPPING_CARTS_TABLE." WHERE customerID=".$customerID) or die (db_error());
             db_query("DELETE FROM ".MAILING_LIST_TABLE." WHERE customerID=".$customerID) or die (db_error());
@@ -1074,15 +1099,15 @@ include("./cfg/tables.inc.php");
             db_query("DELETE FROM ".CUSTOMER_REG_FIELDS_VALUES_TABLE." WHERE customerID=".$customerID) or die (db_error());
             db_query("DELETE FROM ".CUSTOMERS_TABLE." WHERE customerID=".$customerID) or die (db_error());
             db_query("update ".ORDERS_TABLE." set customerID=NULL where customerID=".$customerID) or die (db_error());
-
+            
             return true;
         } else
             return false;
     }
-
+    
     function regActivateCustomer($_CustomerID)
     {
-
+        
         $sql = '
 		UPDATE '.CUSTOMERS_TABLE.'
 		SET ActivationCode = ""
@@ -1090,32 +1115,32 @@ include("./cfg/tables.inc.php");
 	';
         db_query($sql);
     }
-
+    
     function customerWithEmailExists($email)
     {
-
+        
         $dbres = db_phquery('SELECT 1 FROM ?#CUSTOMERS_TABLE WHERE Email=? AND Login<>""', $email);
-
+        
         return db_num_rows($dbres['resource']);
     }
-
+    
     function _addNewNoLoginCustomer($customer_info, $reg_fields, $address)
     {
         $customer_info = xStripSlashesGPC($customer_info);
         $address = xStripSlashesGPC($address);
         $reg_fields = xStripSlashesGPC($reg_fields);
-
+        
         $custgroupID = CONF_DEFAULT_CUSTOMER_GROUP;
         if ($custgroupID == 0)
             $custgroupID = "NULL";
-
+        
         $sql = "INSERT INTO ".CUSTOMERS_TABLE.
-            " (Email, first_name, last_name, subscribed4news, custgroupID, reg_datetime) ".
-            "VALUES (?, ?, ?, 0, ?, NOW())";
+               " (Email, first_name, last_name, subscribed4news, custgroupID, reg_datetime) ".
+               "VALUES (?, ?, ?, 0, ?, NOW())";
         db_phquery($sql, $customer_info['email'], $customer_info['first_name'], $customer_info['last_name'], $custgroupID);
-
+        
         $customer_id = db_insert_id();
-
+        
         if (!empty($reg_fields)) {
             $strs = array();
             foreach ($reg_fields as $rf_id => $rf_val) {
@@ -1125,34 +1150,34 @@ include("./cfg/tables.inc.php");
                     $strs[] = "({$rf_id}, {$customer_id}, '{$rf_val}')";
             };
             $sql = "INSERT INTO ".CUSTOMER_REG_FIELDS_VALUES_TABLE." (reg_field_ID, customerID, reg_field_value) VALUES ".implode(', ', $strs);
-
+            
             db_query($sql);
         };
-
+        
         $sql = "INSERT INTO ".CUSTOMER_ADDRESSES_TABLE.
-            " (customerID, first_name, last_name, countryID, zoneID, zip, state, city, address)".
-            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+               " (customerID, first_name, last_name, countryID, zoneID, zip, state, city, address)".
+               "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         db_phquery($sql,
-            $customer_id, $customer_info['first_name'], $customer_info['last_name'],
-            $address['country_id'], ($address['state_id']?$address['state_id']:'NULL'),
-            $address['zip'], $address['state'], $address['city'], $address['address']);
+                   $customer_id, $customer_info['first_name'], $customer_info['last_name'],
+                   $address['country_id'], ($address['state_id']?$address['state_id']:'NULL'),
+                   $address['zip'], $address['state'], $address['city'], $address['address']);
         $address_id = db_insert_id();
-
+        
         $sql = "UPDATE ?#CUSTOMERS_TABLE set addressID = ? where customerID = ?";
         db_phquery($sql, $address_id, $customer_id);
-
+        
         return $customer_id;
     }
-
+    
     function _getBaseCustomerInfo($customer_id)
     {
         $sql = "select * from ".CUSTOMERS_TABLE." where customerID = {$customer_id}";
         $res = db_query($sql);
         $row = db_fetch_assoc($res);
-
+        
         return $row;
     }
-
+    
     function ZAddAuthEvent($Login, $state)
     {
         if ($Login != "") {
@@ -1165,46 +1190,79 @@ include("./cfg/tables.inc.php");
             $ip_address = $_SERVER['REMOTE_ADDR'];
             $all_ip = get_all_ip();
             $user_agent = getUserAgent();
+            
             if (preg_match("#^([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})$#", $ip_address, $matches)) {
+                
                 $findip = sprintf("%u\n", ip2long($ip_address));
                 $query = "SELECT country, city_id FROM geo__base WHERE long_ip1<".$findip." AND long_ip2>".$findip;
                 $res = db_query($query);
                 $row = db_fetch_assoc($res);
+                
                 if ($row) {
+                    
                     $country = $row["country"];
                     $city_id = intval($row["city_id"]);
                 }
+                
                 if ($city_id > 0) {
+                    
                     $query = "SELECT * FROM geo__cities WHERE city_id=".$city_id;
                     $res = db_query($query);
                     $row = db_fetch_assoc($res);
                     $region = $row["region"];
                     $city = $row["city"];
                 } elseif ($country) {
+                    
                     $region = $country;
                     $city = $country;
                 } else {
+                    
                     $region = 'Нет данных';
                     $city = 'Нет данных';
                 }
+                
                 $query = "SELECT customerID, Login, first_name, last_name FROM SC_customers sc WHERE sc.Login='".$Login."'";
                 $res = db_query($query);
                 $row = db_fetch_assoc($res);
+                
                 $customerID = $row['customerID'];
                 $first_name = $row['first_name'];
                 $last_name = $row['last_name'];
                 $reg_datetime = $row['reg_datetime'];
                 // $may_order_until = $row['may_order_until'];
                 // $logged = $row['logged'];
+                
                 if ($customerID && intval($customerID) > 0) {
-                    $query = "INSERT INTO SC_auth_log (customerID, Login, first_name, last_name, user_agent, IP_address, region, city, type_event, date_event, all_ip_info)
-						VALUES (".$customerID.", '".str_replace("'", "\'", $Login)."', '".str_replace("'", "\'", $first_name)."', '".str_replace("'", "\'", $last_name)."', '".str_replace("'", "\'", $user_agent)."', '".str_replace("'", "\'", $ip_address)."', '".str_replace("'", "\'", $region)."', '".str_replace("'", "\'", $city)."', ".$state.", NOW(), '".str_replace("'", "\'", $all_ip)."')";
+                    
+                    $query = "INSERT INTO SC_auth_log (
+                                    customerID, Login, first_name, last_name, 
+                                    user_agent, IP_address, region, city, 
+                                    type_event, date_event, all_ip_info
+                              )
+						      VALUES (
+                                  ".$customerID.", '".str_replace("'", "\'", $Login)."', 
+                                  '".str_replace("'", "\'", $first_name)."', 
+                                  '".str_replace("'", "\'", $last_name)."', 
+                                  '".str_replace("'", "\'", $user_agent)."', 
+                                  '".str_replace("'", "\'", $ip_address)."', 
+                                  '".str_replace("'", "\'", $region)."', 
+                                  '".str_replace("'", "\'", $city)."', 
+                                  ".$state.", NOW(), '".str_replace("'", "\'", $all_ip)."'
+						      )";
                     db_query($query);
                 }
             }
         }
+        
+        if ($state === 1) {
+            if ($user_agent === 'Неопределён!') {
+                return false;
+            } else {
+                return true;
+            }
+        }
     }
-
+    
     function GetRealIp()
     {
         if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
@@ -1214,21 +1272,24 @@ include("./cfg/tables.inc.php");
         } else {
             $ip = $_SERVER['REMOTE_ADDR'];
         }
-
+        
         return $ip;
     }
-
+    
     function get_all_ip()
     {
         $ip_pattern = "#(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)#";
         $ret = "";
+        
         foreach ($_SERVER as $k => $v) {
-            if (substr($k, 0, 5) == "HTTP_" AND preg_match($ip_pattern, $v)) $ret .= $k.": ".$v."\n";
+            if (substr($k, 0, 5) == "HTTP_" AND preg_match($ip_pattern, $v)) {
+                $ret .= $k.": ".$v."\n";
+            }
         }
-
+        
         return $ret;
     }
-
+    
     function getUserAgent()
     {
         if (!empty($_SERVER['HTTP_USER_AGENT'])) {
@@ -1237,8 +1298,8 @@ include("./cfg/tables.inc.php");
             $user_agent = 'Неопределён!';
         }
         
-        $replace = array('AppleWebKit/537.36', '(KHTML, like Gecko)', 'Safari/537.36');
-//        $user_agent = str_replace($replace, '', $user_agent);
-            
+        //        $replace = array('AppleWebKit/537.36', '(KHTML, like Gecko)', 'Safari/537.36');
+        //        $user_agent = str_replace($replace, '', $user_agent);
+        
         return $user_agent;
     }

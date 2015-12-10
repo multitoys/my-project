@@ -484,6 +484,7 @@ ORDER BY `cnt` DESC");
     $smarty_mail->template_dir = DIR_TPLS.'/email';
 
     if ($admin_mode) {
+        
         include(DIR_FUNC.'/serialization_functions.php');
         include(DIR_FUNC.'/xml_parser.php');
         include(DIR_FUNC.'/xml_installer/xml_installer.php');
@@ -528,30 +529,39 @@ ORDER BY `cnt` DESC");
         $smarty->assign('admin_main_content_template', 'nav2level.tpl.html');
 
         $smarty->template_dir = DIR_TPLS;
+        
     } else {
 
-        $enter = md5(uniqid('multi', true).$_SESSION['remote'].$_SERVER['HTTP_USER_AGENT'].mt_rand(1, 100));
+//        $enter = md5(uniqid('multi', true).$_SESSION['remote'].$_SERVER['HTTP_USER_AGENT'].mt_rand(1, 100));
+//        $enter = md5($_SESSION['remote'].$_SERVER['HTTP_USER_AGENT']);
+        $enter = md5($_SESSION['remote']);
         $smarty->assign('enter', $enter);
 
         $themeEntry = &ClassManager::getInstance('theme');
         /*@var $themeEntry Theme*/
         $res = $themeEntry->load(CONF_CURRENT_THEME);
+        
         if (PEAR::isError($res)) {
             RedirectSQ('demo_theme_id='._getSettingOptionValue('CONF_CURRENT_THEME'));
         }
+        
         $Register->set('CURRENT_THEME_ENTRY', $themeEntry);
         $smarty->assign('PAGE_VIEW', isset($GetVars['view']) ? $GetVars['view'] : '');
         $smarty->assign('main_content_template', 'home.html');
 
         include(DIR_ROOT.'/includes/authorization.php');
+        
         if (!isset($_SESSION['log'])) {
             $_SESSION['enter'] = $enter;
         }
+        
         $smarty->assign('categoryID', isset($_GET['categoryID']) ? (int)$_GET['categoryID'] : 0);
         $smarty->template_dir = DIR_FTPLS;
     }
+    
     $InheritableInterfaces = $CurrDivision->getInheritableInterfaces();
     $Interfaces = $CurrDivision->getInterfaces();
+    
     if (!$error404) {
         foreach ($InheritableInterfaces as $_Interface) {
             ModulesFabric::callInterface($_Interface);
@@ -579,6 +589,7 @@ ORDER BY `cnt` DESC");
 
     $smarty->assign('Warnings', $Warnings);
     $smarty->assign('https_connection_flag', $urlEntry->getScheme() === 'https');
+    
     // $smarty->assign('show_powered_by',SystemSettings::get('SHOW_POWERED_BY')&&!in_array($CurrDivision->UnicKey,array('cart','checkout','invoice')));
     // $smarty->assign('show_powered_by_link',SystemSettings::get('SHOW_POWERED_BY')&&($CurrDivision->UnicKey == 'TitlePage'));
 
@@ -602,39 +613,15 @@ ORDER BY `cnt` DESC");
         }
     }
 */
-
-    if (isset($_SESSION['log'])) {
-        if ($_SESSION['log'] === 'sales') {
-            $get_sales = $_GET['sales'];
-            switch ($get_sales) {
-                case 'session':
-                    showMeDump($_SESSION, $get_sales);
-                    break;
-                case 'server':
-                    showMeDump($_SERVER, $get_sales);
-                    break;
-                case 'request':
-                    showMeDump($_REQUEST, $get_sales);
-                    break;
-                case 'globals':
-                    showMeDump($GLOBALS, $get_sales);
-                    break;
-                case 'files':
-                    showMeDump($_FILES, $get_sales);
-                    break;
-                case 'cookie':
-                    showMeDump($_COOKIE, $get_sales);
-                    break;
-                case 'env':
-                    showMeDump($_ENV, $get_sales);
-                    break;
-            }
-        }
+    
+    if (isset($_GET['sales'])) {
+        salesDebug();
     }
-
+    
     if ($error404) {
         $smarty->assign('page_title', '404 '.translate('err_cant_find_required_page').' ― '.CONF_SHOP_NAME);
     }
+    
     if ($CurrDivision->MainTemplate && !detectPDA() && (!isset($_GET['view']) || $GetVars['view'] !== 'mobile')) {
 
         if (isset($GetVars['view']) && ($GetVars['view'] === 'noframe' || $GetVars['view'] === 'printable')) {
@@ -647,21 +634,29 @@ ORDER BY `cnt` DESC");
         // }
 
         $themeEntry = &$Register->get('CURRENT_THEME_ENTRY');
+        
         if (!$admin_mode && is_object($themeEntry)) {
             $smarty->assign('URL_THEME_OFFSET', $themeEntry->getURLOffset());
             $smarty->assign('overridestyles', file_exists($themeEntry->getPath().'/overridestyles.css'));
         }
+        
         $currencyEntry = Currency::getSelectedCurrencyInstance();
+        
         if (is_object($currencyEntry)) {
             $smarty->assign('current_currency_js', $currencyEntry->getJSCurrencyInstance());
         }
+        
         print $smarty->fetch($CurrDivision->MainTemplate);
+        
     } elseif (!$admin_mode) {
+        
         $themeEntry = &$Register->get('CURRENT_THEME_ENTRY');
+        
         if (!$admin_mode && is_object($themeEntry)) {
             $smarty->assign('URL_THEME_OFFSET', $themeEntry->getURLOffset());
             $smarty->assign('overridestyles', file_exists($themeEntry->getPath().'/overridestyles.css'));
         }
+        
         define('PDA_VERSION', 1);
 //         $smarty->assign('PAGE_VIEW', 'mobile');
         $main_body_tpl = $smarty->get_template_vars('main_content_template') ? $smarty->get_template_vars('main_content_template') : 'home.html';
@@ -671,7 +666,9 @@ ORDER BY `cnt` DESC");
     }
 
     //DEBUG futures
-    if (isset($_GET['debug']) && ($_GET['debug'] === 'time' || $_GET['debug'] === 'total_time')) {
-
+    if (isset($_GET['debug']) && 
+        ($_GET['debug'] === 'time' || 
+         $_GET['debug'] === 'total_time')
+    ) {
         print 'time: <strong>'.$T->timerStop().'</strong><br />';
     }

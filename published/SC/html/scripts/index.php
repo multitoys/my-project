@@ -335,7 +335,6 @@ ORDER BY `cnt` DESC");
 //    }
 
     if (isset($_SESSION['xPOST']['g01j'])) {
-
         $smarty->assign('xpostdata', $_SESSION['xPOST']['g01j']);
     }
 

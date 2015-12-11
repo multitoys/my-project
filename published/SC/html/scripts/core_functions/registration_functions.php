@@ -1188,25 +1188,25 @@ include("./cfg/tables.inc.php");
             //            }
             // $ip_address = GetRealIp();
             $ip_address = $_SERVER['REMOTE_ADDR'];
-            $all_ip = get_all_ip();
-            $user_agent = getUserAgent();
+            $all_ip = getAllUserIps();
+            $user_agent = userAgent();
             
             if (preg_match("#^([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})$#", $ip_address, $matches)) {
                 
                 $findip = sprintf("%u\n", ip2long($ip_address));
-                $query = "SELECT country, city_id FROM geo__base WHERE long_ip1<".$findip." AND long_ip2>".$findip;
+                $query = "SELECT country, city_id FROM geo__base WHERE long_ip1<$findip AND long_ip2>$findip";
                 $res = db_query($query);
                 $row = db_fetch_assoc($res);
                 
                 if ($row) {
                     
                     $country = $row["country"];
-                    $city_id = intval($row["city_id"]);
+                    $city_id = (int)$row["city_id"];
                 }
                 
                 if ($city_id > 0) {
                     
-                    $query = "SELECT * FROM geo__cities WHERE city_id=".$city_id;
+                    $query = "SELECT * FROM geo__cities WHERE city_id=$city_id";
                     $res = db_query($query);
                     $row = db_fetch_assoc($res);
                     $region = $row["region"];
@@ -1276,7 +1276,7 @@ include("./cfg/tables.inc.php");
         return $ip;
     }
     
-    function get_all_ip()
+    function getAllUserIps()
     {
         $ip_pattern = "#(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)#";
         $ret = "";
@@ -1290,16 +1290,13 @@ include("./cfg/tables.inc.php");
         return $ret;
     }
     
-    function getUserAgent()
+    function userAgent()
     {
         if (!empty($_SERVER['HTTP_USER_AGENT'])) {
             $user_agent = $_SERVER['HTTP_USER_AGENT'];
         } else {
             $user_agent = 'Неопределён!';
         }
-        
-        //        $replace = array('AppleWebKit/537.36', '(KHTML, like Gecko)', 'Safari/537.36');
-        //        $user_agent = str_replace($replace, '', $user_agent);
         
         return $user_agent;
     }

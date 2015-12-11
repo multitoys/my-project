@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.9, created on 2015-12-08 19:22:17
+<?php /* Smarty version 2.6.9, created on 2015-12-10 11:57:01
          compiled from product_add2cart_button.html */ ?>
 <?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
 smarty_core_load_plugins(array('plugins' => array(array('function', 'z_shopping_count', 'product_add2cart_button.html', 14, false),array('modifier', 'translate', 'product_add2cart_button.html', 35, false),)), $this); ?>
@@ -32,4 +32,5 @@ smarty_core_load_plugins(array('plugins' => array(array('function', 'z_shopping_
 	<?php elseif (@CONF_SHOW_ADD2CART == 1 && @CONF_CHECKSTOCK && ! $this->_tpl_vars['product_info']['in_stock'] && $this->_tpl_vars['product_info']['ordering_available']): ?>
         <div class="prd_out_of_stock"><?php echo ((is_array($_tmp='prd_out_of_stock')) ? $this->_run_mod_handler('translate', true, $_tmp) : smarty_modifier_translate($_tmp)); ?>
 </div>
-	<?php endif;  endif; ?>
+	<?php endif; ?>
+<?php endif; ?>

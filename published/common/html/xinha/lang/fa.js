@@ -1,4 +1,4 @@
-// I18N constants
+﻿// I18N constants
 // LANG: "fa", ENCODING: UTF-8
 {
   "Bold": "ضخیم",

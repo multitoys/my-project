@@ -34,10 +34,13 @@
             
             <div id=checkings>
                 <div>
-                    <input type="checkbox" name="new_items_postup" value="1" id="new_items_postup"
-                            {if $smarty.get.new_items_postup} checked="checked"{/if}>
-                    <label for="new_items_postup" style="color: darkviolet; font-style: italic">- только Новые
-                                                                                                Поступления</label>
+                    <input type="text" name="date" value="{$date}" id="new_items_postup" size=2>
+                    <label for="new_items_postup" style="color: darkviolet; font-style: italic">- только Новые Поступления</label>
+                </div>
+                <div>
+                    <input type="checkbox" name="akcia" value="1" id="akcia"
+                            {if $smarty.get.akcia} checked="checked"{/if}>
+                    <label for="akcia" style="color: darkviolet; font-style: italic">- только Акция</label>
                 </div>
                 <div>
                     <input type="checkbox" name="bestsellers" value="1" id="bestsellers"

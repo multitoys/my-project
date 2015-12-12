@@ -16,7 +16,7 @@
         protected $categories = array();
         protected $bestsellers = '';
         protected $new = '';
-        protected $new_items_postup = '';
+        protected $list_items = '';
         protected $akcia = '';
         protected $search = '';
         protected $disc_usd = 27;
@@ -74,7 +74,7 @@
                         $this->__getProductsFromLists('akcia');
                         break;
                     
-                    case 'new_items_postup':
+                    case 'date':
                         $this->__getProductsFromLists('newitemspostup');
                         break;
                     
@@ -244,8 +244,14 @@
     
         protected function __getProductsFromLists($list)
         {
+            $date = '';
+            
+            if (isset($_GET['date']) && (int)$_GET['date'] > 0) {
+                $date = ' AND date < '.(int)$_GET['date'];
+            }
+            
             $query = "SELECT productID FROM SC_product_list_item
-                    WHERE list_id = $list";
+                    WHERE list_id = '$list' $date";
             $res = mysql_query($query) or die(mysql_error().$query);
         
             $ids = array();
@@ -255,8 +261,10 @@
             }
         
             $ids = implode(',', $ids);
-        
-            $this->new_items_postup = ' AND productID IN ('.$ids.')';
+    
+            if ($ids) {
+                $this->list_items = ' AND productID IN ('.$ids.')';
+            }
         }
     
         protected function __setManufactured()
@@ -305,22 +313,25 @@
             $this->__getCategoriesArray();
     
             $Grid = new Grid();
+    
+            $margin ='';
+            $margin = ' AND margin > 55';
             
             $Grid->query_total_rows_num = "
                 SELECT COUNT(*) FROM $this->table
                 WHERE enabled = 2
                     $this->manufactured $this->brand $this->category $this->bestsellers 
-                    $this->new $this->new_items_postup $this->competitor $this->search";
-
+                    $this->new $this->list_items $this->competitor $this->search $margin";
+    
             $Grid->query_select_rows = "
                 SELECT * FROM $this->table
                 WHERE enabled = 2
                     $this->manufactured $this->brand $this->category $this->bestsellers 
-                    $this->new  $this->new_items_postup $this->competitor $this->search";
+                    $this->new  $this->list_items $this->competitor $this->search $margin";
 
             $Grid->show_rows_num_select = true;
             $Grid->default_sort_direction = 'DESC';
-            $Grid->rows_num = 100;
+            $Grid->rows_num = 1000;
 
             //выбор и установка заголовков для таблицы отчета
             $Grid->registerHeader('№');
@@ -425,6 +436,7 @@
             $smarty->assign('disc_usd', $this->disc_usd);
             $smarty->assign('disc_ua', $this->disc_ua);
             $smarty->assign('disc_conc', $this->disc_conc);
+            $smarty->assign('date', (int)$_GET['date']);
             $smarty->assign('GridRows', $rows);
             $smarty->assign('rows', $count_rows);
             $smarty->assign('TotalFound', str_replace('{N}', $Grid->total_rows_num, 'Найдено товаров: {N}'));
@@ -459,7 +471,7 @@
 //                          $this->category 
 //                          $this->bestsellers 
 //                          $this->new 
-//                          $this->new_items_postup 
+//                          $this->list_items 
 //                          $this->competitor 
 //                          $this->search
 //                     ";

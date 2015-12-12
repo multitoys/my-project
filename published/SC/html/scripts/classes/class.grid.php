@@ -20,8 +20,8 @@
 		var $__debug = false;
 		var $__row_handler = '';
 		
-		function setRowHandler($func_code){
-			
+		function setRowHandler($func_code)
+        {
 			$this->__row_handler = $func_code;
 		}
 		
@@ -89,11 +89,12 @@
 				print '<br />'.$DBHandler->last_sql;
 			}
 			
-			if($this->__row_handler)$func = create_function('$row', $this->__row_handler);
+			if ($this->__row_handler) {
+                $func = create_function('$row', $this->__row_handler);
+            }
 			
 			$GridRows = array();
 			while($_row = $DBRes->fetchAssoc()){
-				
 				if(isset($func))$_row = call_user_func($func, $_row);
 				$GridRows[] = $_row;
 			}

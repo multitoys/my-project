@@ -1,21 +1,26 @@
 <?php
     if (!isset($_SERVER['REQUEST_URI'])) {
+        
         $_SERVER['REQUEST_URI'] = substr($_SERVER['PHP_SELF'], 1);
+        
         if (isset($_SERVER['QUERY_STRING']) && strlen($_SERVER['QUERY_STRING'])) {
             $_SERVER['REQUEST_URI'] .= '?'.$_SERVER['QUERY_STRING'];
         }
     }
+    
     $_SERVER['REQUEST_URI'] = preg_replace('/["\'\<\>]{1,}/', '', $_SERVER['REQUEST_URI']);
     $_SESSION['timestamp'] = time();
-    if (!isset($_SESSION['remote'])) {
-        if ($_SERVER['REMOTE_ADDR'] != '91.223.223.243')
+    
+    if (!isset($_SESSION['remote']) && $_SERVER['REMOTE_ADDR'] != '217.24.175.108') {
             $_SESSION['remote'] = $_SERVER['REMOTE_ADDR'];
     }
+    
     //    if (!isset($_SESSION['enter'])) {
     //        $_SESSION['enter'] = md5(time());
     //    }    
 
     $WBSPath = DIR_ROOT."/../../../../";
+    
     if (!defined("WBS_DIR")) {
         define("WBS_DIR", realpath($WBSPath)."/");
     }
@@ -23,7 +28,6 @@
     if (!function_exists('sc_getSessionData')) {
         function sc_getSessionData($key)
         {//needed
-
             return isset($_SESSION['__WBS_SC_DATA'][$key])?$_SESSION['__WBS_SC_DATA'][$key]:'';
         }
     }
@@ -31,7 +35,6 @@
 
         function sc_setSessionData($key, $val)
         {//needed
-
             $_SESSION['__WBS_SC_DATA'][$key] = $val;
         }
     }
@@ -40,15 +43,15 @@
         if (SystemSettings::is_hosted()) {
             header("HTTP/1.0 404 Not Found");
             die("<!DOCTYPE HTML PUBLIC \"-//IETF//DTD HTML 2.0//EN\">
-<html><head>
-<title>404 Not Found</title>
-</head><body>
-<h1>Not Found</h1>
-<p>The requested URL {$_SERVER['REQUEST_URI']} was not found on this server.</p>
-<p>Additionally, a 404 Not Found
-error was encountered while trying to use an ErrorDocument to handle the request.</p>
-<hr>
-</body></html>");
+                    <html><head>
+                    <title>404 Not Found</title>
+                    </head><body>
+                    <h1>Not Found</h1>
+                    <p>The requested URL {$_SERVER['REQUEST_URI']} was not found on this server.</p>
+                    <p>Additionally, a 404 Not Found
+                    error was encountered while trying to use an ErrorDocument to handle the request.</p>
+                    <hr>
+                    </body></html>");
         }
         $url = 'http://'.str_replace('//', '/', ($_SERVER['SERVER_NAME'].WBS_INSTALL_PATH.'/'));
         print '<html><head><title>Error</title>

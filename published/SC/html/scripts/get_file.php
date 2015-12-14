@@ -104,7 +104,7 @@
 		RedirectSQ('lang=');
 	}
 	
-	checkLogin();
+	checkLogin($a);
 	
 //	$smarty->assign('lang_list', $lang_list);
 //	if (isset($_SESSION['current_language'])) $smarty->assign('current_language', $_SESSION['current_language']);

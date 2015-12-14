@@ -1200,16 +1200,18 @@
             }
             
             $Customer = GetCustomerByCustomerLogin($_SESSION['log']);
-
+    
+            $cust_may_order = 1;
+            
             if (!$Customer->unlimited_order) {
                 $cust_may_order = (strtotime($Customer->may_order_until) > $_SERVER['REQUEST_TIME']) ? 1 : 0;
-            } else {
-                $cust_may_order = 1;
             }
+            
             if ($Customer->token && $Customer->token !== xEscapeSQLstring($_SESSION['enter'])) {
                 unset($_SESSION['log'], $_SESSION['pass'], $_SESSION['enter']);
                 db_query("UPDATE SC_customers SET token = '', logged = TIMESTAMP(0) WHERE Login='$Customer->Login'");
             }
+            
             $_SESSION['cs_id'] = $Customer->customerID;
             $_SESSION['cs_first_name'] = $Customer->first_name;
             $_SESSION['cs_last_name'] = $Customer->last_name;
@@ -1892,8 +1894,6 @@
         echo '<pre><b>'.strtoupper($get_sales).'=></b>';
         print_r($see);
         echo '</pre><br/>';
-
-        return;
     }
 
     function get_shop_counts($CustomerID)
@@ -2052,4 +2052,36 @@
     function stripAll($data)
     {
         return stripslashes(trim(strip_tags($data)));
+    }
+    
+    function salesDebug()
+    {
+        if (isset($_SESSION['log']) && $_SESSION['log'] === 'sales') {
+            
+            $get_sales = stripAll($_GET['sales']);
+            
+            switch ($get_sales) {
+                
+                case 'session':
+                    showMeDump($_SESSION, $get_sales);
+                    break;
+                case 'server':
+                    showMeDump($_SERVER, $get_sales);
+                    break;
+                case 'request':
+                    showMeDump($_REQUEST, $get_sales);
+                    break;
+                case 'files':
+                    showMeDump($_FILES, $get_sales);
+                    break;
+                case 'cookie':
+                    showMeDump($_COOKIE, $get_sales);
+                    break;
+                case 'env':
+                    showMeDump($_ENV, $get_sales);
+                    break;
+                default:
+                    showMeDump($GLOBALS, $get_sales);
+            }
+        }
     }

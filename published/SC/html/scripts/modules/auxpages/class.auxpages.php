@@ -518,8 +518,8 @@
                 if ($sort === 'name') {
                     $ajax_sort = $sort;
                     $sort = 'name_ru';
-                    $default_sort = 't1.sort_order, t1.categoryID,';
-                    //                $default_sort = 't1.sort_order, t1.ukraine, t1.categoryID,';
+//                    $default_sort = 't1.sort_order, t1.categoryID,';
+                    $default_sort = 't1.sort_order, t1.ukraine, t1.categoryID,';
                 }
 
                 $date = 0;
@@ -716,8 +716,8 @@
                 $query = "
                     SELECT
                           t1.productID, t1.categoryID, t1.product_code,  t1.code_1c, t1.sort_order, t1.Price,
-                          t1.list_price, t1.skidka, t1.ukraine, t1.name_ru, t1.default_picture, t1.ostatok,
-                          t1.Bonus, t1.zakaz, t1.slug, t3.filename, t3.thumbnail
+                          t1.list_price, t1.skidka, t1.ukraine, t1.eproduct_available_days, t1.name_ru, 
+                          t1.default_picture, t1.ostatok, t1.Bonus, t1.zakaz, t1.slug, t3.filename, t3.thumbnail
                     FROM SC_products t1
                     LEFT JOIN SC_product_list_item t2  USING(productID)
                     LEFT JOIN SC_product_pictures t3 ON t1.default_picture = t3.photoID
@@ -775,7 +775,13 @@
                     /**********************************************************************************************************/
                     $bonus = ($Product->Bonus)?(int)$price_without_unit:'';
                     $category = $category_name[$Product->categoryID];
-                    $label_new = ($new[$Product->productID])?'<div class="corner color_newitem"><span></span>Новинка!</div>':'';
+    
+                    $label = '';
+                    if ($Product->eproduct_available_days == 7) {
+                        $label = '<div class="corner color_superprice"><span></span>Суперцена!</div>';
+                    } elseif ($new[$Product->productID]) {
+                        $label = '<div class="corner color_newitem"><span></span>Новинка!</div>';
+                    }
                     //$label_new = '<div class="corner color_newitemspostup"><span></span>Новинка!</div>';
                     //$zakaz = $Product->zakaz;
 
@@ -820,11 +826,11 @@
                                 <div class="label next_pic" onclick="changePic('.$Product->code_1c.', 1)"></div>
                             </div>
                             <img id=pic'.$Product->code_1c.' data-pics='.$pics_for_slider.' data-current=0 src='.URL_PRODUCTS_PICTURES.'/'.$Product->thumbnail.' />
-                            '.$label_new.'
+                            '.$label.'
                         </div>';
                     } else {
                         $pictures = ((strlen($Product->thumbnail) > 4) && (strlen($Product->filename) > 4))?"
-                            <div class=visual><a href='/product/$Product->slug'><img width=160 height=120 class=preview  alt='$Product->name_ru' src='".URL_PRODUCTS_PICTURES."/$Product->thumbnail' data-pid='".URL_PRODUCTS_PICTURES."/$Product->filename'></a>$label_new</div>":"<div class=visual><a href='/product/$Product->slug'><img width=153 height=117 alt='no foto' src='/img/nophoto.jpg'></a>$label_new</div>";
+                            <div class=visual><a href='/product/$Product->slug'><img width=160 height=120 class=preview  alt='$Product->name_ru' src='".URL_PRODUCTS_PICTURES."/$Product->thumbnail' data-pid='".URL_PRODUCTS_PICTURES."/$Product->filename'></a>$label</div>":"<div class=visual><a href='/product/$Product->slug'><img width=153 height=117 alt='no foto' src='/img/nophoto.jpg'></a>$label</div>";
                     }
                     //$pictures = '<div class=div_izobrag><img width=153 height=117 alt=\'no foto\' src=\'/img/nophoto.jpg\' /></div>';
                     //if ($zakaz === 1) {

@@ -92,8 +92,8 @@
             <div id=selections>
                 <div>
                     <label for="competitor" style="color: #FF0000">Конкуренты: </label>
-                    <select name="competitor" style="width:191px;" id="competitor">
-                        <option value='all'      {if $smarty.get.competitor eq 'all'} selected="selected"{/if}>Все конкуренты</option>
+                    <select name="competitor[]" style="width:191px;" id="competitor">
+                        <option value='all' {if $smarty.get.competitor[i] eq 'all'} selected="selected"{/if}>Все конкуренты</option>
                         {section name=i loop=$Competitors}
                             <option value="{$Competitors[i].conc}" {if $smarty.get.competitor eq $Competitors[i].conc} selected="selected"{/if}>
                                 {$Competitors[i].name}

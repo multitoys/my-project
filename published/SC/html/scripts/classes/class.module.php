@@ -17,38 +17,38 @@ class Module{
 
 	/* @var $dbHandler DataBase */
 
-	var $Interfaces = array();
-	var $Settings = array();
-	var $Version = 1.00;
-	var $ConfigID = 0;
-	var $ID = 0;
-	var $SingleInstallation = false;
-	var $GenerateConstants = false;
-	var $ConfigKey = '';
-	var $ConfigTitle = '';
-	var $ConfigDescr = '';
-	var $InitType = '';
-	var $dbHandler;
-	var $ModuleDir='';
+	public $Interfaces = array();
+	public $Settings = array();
+	public $Version = 1.00;
+	public $ConfigID = 0;
+	public $ID = 0;
+	public $SingleInstallation = false;
+	public $GenerateConstants = false;
+	public $ConfigKey = '';
+	public $ConfigTitle = '';
+	public $ConfigDescr = '';
+	public $InitType = '';
+	public $dbHandler;
+	public $ModuleDir='';
 
-	var $__instarface_stack = array();
+	public $__instarface_stack = array();
 
-	function __clearInterfaceStack(){
+	public function __clearInterfaceStack(){
 
 		$this->__instarface_stack = array();
 	}
 
-	function __pushToStack($key, $data){
+	public function __pushToStack($key, $data){
 
 		$this->__instarface_stack[$key] = $data;
 	}
 
-	function __getFromStack($key){
+	public function __getFromStack($key){
 
 		return $this->__instarface_stack[$key];
 	}
 
-	function __construct( $_ConfigID = 0 ){
+	public function __construct( $_ConfigID = 0 ){
 		$this_class_name = get_class($this);
 		$this->dbHandler = &Core::getdbHandler();
 
@@ -103,12 +103,12 @@ class Module{
 	 * abstract methods
 	 */
 
-	function initInterfaces()
+	public function initInterfaces()
 	{
 		;
 	}
 
-	function __registerInterface($key, $name, $type = INTCALLER, $method = ''){
+	public function __registerInterface($key, $name, $type = INTCALLER, $method = ''){
 
 		$this->Interfaces[$key] = array(
 		'name' => $name,
@@ -117,11 +117,11 @@ class Module{
 		);
 	}
 
-	function __prepend_interface($interface_key, &$params){
+	public function __prepend_interface($interface_key, &$params){
 
 	}
 
-	function initSettings(){
+	public function initSettings(){
 
 		$sql = '
 			SELECT SettingName, SettingValue FROM ?#TBL_CONFIG_SETTINGS
@@ -134,14 +134,14 @@ class Module{
 		}
 	}
 
-	function callFromInstallConfig(){;}
+	public function callFromInstallConfig(){;}
 
-	function callFromUninstallConfig(){;}
+	public function callFromUninstallConfig(){;}
 	/*
 	 * general methods
 	 */
 
-	function installConfig( $FilePath, $_Key,$_Title, $_Descr, $_InitType ){
+	public function installConfig( $FilePath, $_Key,$_Title, $_Descr, $_InitType ){
 
 		if($this->InitType)$_InitType = $this->InitType;
 		$ModuleID = 0;
@@ -181,7 +181,7 @@ class Module{
 		$this->callFromInstallConfig();
 	}
 
-	function uninstallConfig(){
+	public function uninstallConfig(){
 
 		$this->callFromUninstallConfig();
 
@@ -194,7 +194,7 @@ class Module{
 		DivisionModule::disconnectInterfaces(array($this->getConfigID()=>array_keys($this->getInterfacesParams())));
 	}
 
-	function getInstalledConfigsInfo(){
+	public function getInstalledConfigsInfo(){
 
 		/* @var $Result DBResource */
 		/* @var $dbHandler DataBase */
@@ -214,7 +214,7 @@ class Module{
 	 * @param string $interface_key
 	 * @return mixed
 	 */
-	function getInterface(){
+	public function getInterface(){
 		global $ConnectedModules;
 		/**
 		 * @features My
@@ -365,7 +365,7 @@ class Module{
 		return $Results;
 	}
 
-	function getInterfacesParams($_Type = 0){
+	public function getInterfacesParams($_Type = 0){
 
 		if(!$_Type)return $this->Interfaces;
 
@@ -377,49 +377,49 @@ class Module{
 		return $Interfaces;
 	}
 
-	function getInterfaceParams($_int){
+	public function getInterfaceParams($_int){
 
 		if(isset($this->Interfaces[$_int]))return $this->Interfaces[$_int];
 		return null;
 	}
 
-	function getSettings(){
+	public function getSettings(){
 
 		return $this->Settings;
 	}
 
-	function getSettingValue($_Key){
+	public function getSettingValue($_Key){
 
 		if(isset($this->Settings[$_Key]))return $this->Settings[$_Key]['value'];
 		else return '';
 	}
 
-	function getConfigID(){
+	public function getConfigID(){
 
 		return $this->ConfigID;
 	}
 
-	function getConfigKey(){
+	public function getConfigKey(){
 
 		return $this->ConfigKey;
 	}
 
-	function getConfigTitle(){
+	public function getConfigTitle(){
 
 		return $this->ConfigTitle;
 	}
 
-	function getConfigDescr(){
+	public function getConfigDescr(){
 
 		return $this->ConfigDescr;
 	}
 
-	function getInitType(){
+	public function getInitType(){
 
 		return $this->InitType;
 	}
 
-	function saveConfigKey( $_ConfigKey){
+	public function saveConfigKey( $_ConfigKey){
 
 		$this->ConfigKey = $_ConfigKey;
 
@@ -431,7 +431,7 @@ class Module{
 		$this->dbHandler->ph_query($sql, $this->ConfigKey, $this->ConfigID);
 	}
 
-	function saveConfigDescr( $_ConfigDescr){
+	public function saveConfigDescr( $_ConfigDescr){
 
 		$this->ConfigDescr = $_ConfigDescr;
 
@@ -443,7 +443,7 @@ class Module{
 		$this->dbHandler->ph_query($sql, $this->ConfigDescr, $this->ConfigID);
 	}
 
-	function saveInitType( $_InitType ){
+	public function saveInitType( $_InitType ){
 
 		$this->InitType = $_InitType;
 
@@ -463,7 +463,7 @@ class Module{
 	 * @param string $_InterfaceCalled
 	 * @param integer $_Priority
 	 */
-	function registerInterface2Interface($_InterfaceCaller, $_InterfaceCalledModConfID, $_InterfaceCalled, $_Priority=0){
+	public function registerInterface2Interface($_InterfaceCaller, $_InterfaceCalledModConfID, $_InterfaceCalled, $_Priority=0){
 
 		$sql = '
 			INSERT ?#TBL_INTERFACE_INTERFACES (xInterfaceCaller,xInterfaceCalled,xPriority)
@@ -472,7 +472,7 @@ class Module{
 		$this->dbHandler->ph_query($sql, $this->getConfigID().'_'.$_InterfaceCaller, $_InterfaceCalledModConfID.'_'.$_InterfaceCalled, $_Priority);
 	}
 
-	function getInterfaceInterfaces($_Interface){
+	public function getInterfaceInterfaces($_Interface){
 
 		$cache_key_part = 'interfaces_interfaces_15112007::';
 		$cache_key = $cache_key_part.$this->getConfigID().'_'.$_Interface;
@@ -504,23 +504,22 @@ class Module{
 		return CCache::get($cache_key);
 	}
 
-	function getTemplatePath($_Tpl){
+	public function getTemplatePath($_Tpl){
 
 		return DIR_TPLS.'/'.$_Tpl;
 	}
 
-	function assignSubTemplate($_SubTemplate){
+	public function assignSubTemplate($_SubTemplate){
 
 		/* @var $smarty Smarty */
 		$smarty = &Core::getSmarty();
 		$smarty->assign('sub_template',$this->getTemplatePath($_SubTemplate));
 	}
 
-	function assign2template($_Var, $_Value){
+	public function assign2template($_Var, $_Value){
 
 		/* @var $smarty Smarty */
 		$smarty = &Core::getSmarty();
 		$smarty->assign($_Var, $_Value);
 	}
 }
-?>

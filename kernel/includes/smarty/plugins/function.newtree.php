@@ -16,11 +16,11 @@
                             font-size: 16px;
                             ">Конкуренты</a>
                         <ul class="animated slideInRight">
-                            <li><a href="/auxpage_divoland" aria-haspopup=true>Диволенд</a></li>
-                            <li><a href="/auxpage_mixtoys" aria-haspopup=true>Микстойс</a></li>
-                            <li><a href="/auxpage_dreamtoys" aria-haspopup=true>Веселка</a></li>
-                            <li><a href="/auxpage_kindermarket" aria-haspopup=true>Киндер-Маркет</a></li>
-                            <li><a href="/auxpage_grandtoys" aria-haspopup=true>Гранд-Тойс</a></li>
+                            <li><a href="/auxpage_divoland" aria-haspopup="true">Диволенд</a></li>
+                            <li><a href="/auxpage_mixtoys" aria-haspopup="true">Микстойс</a></li>
+                            <li><a href="/auxpage_dreamtoys" aria-haspopup="true">Веселка</a></li>
+                            <li><a href="/auxpage_kindermarket" aria-haspopup="true">Киндер-Маркет</a></li>
+                            <li><a href="/auxpage_grandtoys" aria-haspopup="true">Гранд-Тойс</a></li>
                         </ul>
                     </li>
                     <li><a href="/category/novinki" aria-haspopup=true>Новинки</a></li>';
@@ -105,33 +105,62 @@
                 ORDER BY date ASC";
     
         if ($r = mysql_query($sql)) {
-        
             if (mysql_num_rows($r) > 0) {
-            
-                $disp .= '<ul class="animated slideInRight">';
+                $disp .= '<ul id=newmenu class="animated slideInRight">';
                 $disp .= '<li aria-haspopup=true>';
                 $disp .= '<a href="/auxpage_new_items/0/china/" aria-haspopup=true>Китай</a>';
+    
+                $sqlC = "SELECT DISTINCT date
+                FROM SC_product_list_item
+                WHERE list_id = 'newitemspostup' AND ukraine=0
+                ORDER BY date ASC";
+                
+                if ($rC = mysql_query($sqlC)) {
+                    if (mysql_num_rows($rC) > 0) {
+                        $disp .= '<ul>';
+                        while ($resC = mysql_fetch_assoc($rC)) {
+                            $date_postup = calcDate($resC['date']);
+                            $disp .= '<li aria-haspopup=true>';
+                            $disp .= '<a href="/auxpage_new_items/'.$resC['date'].'/china/" aria-haspopup=true>'.$date_postup.'</a>';
+                            $disp .= '</li>';
+                        }
+                        $disp .= '</ul>';
+                    }
+                }
                 $disp .= '</li>';
+                
                 $disp .= '<li aria-haspopup=true>';
                 $disp .= '<a href="/auxpage_new_items/0/ukraine/" aria-haspopup=true>Украина</a>';
-                $disp .= '</li>';
+    
+                $sqlC = "SELECT DISTINCT date
+                FROM SC_product_list_item
+                WHERE list_id = 'newitemspostup' AND ukraine=1
+                ORDER BY date ASC";
                 
-                while ($res = mysql_fetch_assoc($r)) {
-    
-                    $date = time() - (($res['date'] - 1) * 24 * 60 * 60);
-                    $date_postup = date('d-m-Y', $date);
-    
-                    $disp .= '<li aria-haspopup=true>';
-                    $disp .= '<a href="/auxpage_new_items/'.$res['date'].'/china/" aria-haspopup=true>'.$date_postup.'</a>';
-                    $disp .= '</li>';
-                    $disp .= '<li aria-haspopup=true>';
-                    $disp .= '<a href="/auxpage_new_items/'.$res['date'].'/ukraine/" aria-haspopup=true>'.$date_postup.'</a>';
-                    $disp .= '</li>';
+                if ($rC = mysql_query($sqlC)) {
+                    if (mysql_num_rows($rC) > 0) {
+                        $disp .= '<ul>';
+                        while ($resC = mysql_fetch_assoc($rC)) {
+                            $date_postup = calcDate($resC['date']);
+                            $disp .= '<li aria-haspopup=true>';
+                            $disp .= '<a href="/auxpage_new_items/'.$resC['date'].'/ukraine/" aria-haspopup=true>'.$date_postup.'</a>';
+                            $disp .= '</li>';
+                        }
+                        $disp .= '</ul>';
+                    }
                 }
-                
+                $disp .= '</li>';
                 $disp .= '</ul>';
             }
         }
     
         return $disp;
+    }
+    
+    function calcDate($date_num)
+    {
+        $date = time() - (($date_num - 1) * 24 * 60 * 60);
+        $date_num = date('d-m-Y', $date);
+        
+        return $date_num;
     }

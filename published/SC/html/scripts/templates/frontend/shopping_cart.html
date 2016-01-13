@@ -60,9 +60,9 @@
 	{if $make_more_exact_cart_content}
 	<p>{"cart_items_left_from_prev_session"|translate}</p>
 	{/if}
-	{*if $cart_amount lt $smarty.const.CONF_MINIMAL_ORDER_AMOUNT & $cart_error_show eq 1 & !$MessageBlock*}
-	<div class='error_block'><span class="error_flag" style="font-size: 150%; color: red;">{"cart_min_order_amount_not_reached"|translate} {$cart_min}</span></div>
-	{*/if*}
+	{if $cart_amount lt $smarty.const.CONF_MINIMAL_ORDER_AMOUNT & $cart_error_show eq 1 & !$MessageBlock}
+	<div class='error_block'><span {*class="error_flag"*} style="font-size: 150%; color: red;">{"cart_min_order_amount_not_reached"|translate} {$cart_min}</span></div>
+	{/if}
 
 	<form action="{''|set_query_html}" name="ShoppingCartForm" method="post" target="_self">
 	<input type="hidden" name="update" value="1" />

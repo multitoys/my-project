@@ -39,7 +39,7 @@
 
     //support for old auxpages urls
     if (!SystemSettings::is_backend() && isset($_GET['show_aux_page'])) {
-        $_GET['ukey'] = 'auxpage_'.intval($_GET['show_aux_page']);
+        $_GET['ukey'] = 'auxpage_'.(int)$_GET['show_aux_page'];
         unset($_GET['show_aux_page']);
     }
 
@@ -57,9 +57,9 @@
         $T = new Timer();
         $T->timerStart();
     }
+
     $DB_tree = new DataBase();
     $DB_tree->connect(SystemSettings::get('DB_HOST'), SystemSettings::get('DB_USER'), SystemSettings::get('DB_PASS'));
-
     $DB_tree->selectDB(SystemSettings::get('DB_NAME'));
     define('VAR_DBHANDLER', 'DBHandler');
 
@@ -87,47 +87,47 @@
         //Functions::register($fileEntry, 'file_exists', 'exists');
     }
 
-    if (!__USE_OLD_UPDATE) {
-        //DEBUG:||true
-        if (SystemSettings::is_hosted()) {
-            $update = false;
-            // If cannot load dbkey settings
-            try {
-                //	@session_start();
-                if (!defined('GET_DBKEY_FROM_URL')) {
-                    define('GET_DBKEY_FROM_URL', 1);
-                }
-
-                if (Wbs::loadCurrentDBKey()) {
-                    $update = true;
-                }
-
-            } catch (Exception $ex) {
-                trigger_error($ex->getMessage(), E_USER_ERROR);
-                var_dump($ex);
-            }
-
-            if ($update) {
-                try {
-                    $updater = new WbsUpdater('SC');
-                    $updater->check();
-                } catch (Exception $e) {
-                    var_dump($ex);
-                    //....
-                }
-            }
-        }
-    }
+//    if (!__USE_OLD_UPDATE) {
+//        //DEBUG:||true
+//        if (SystemSettings::is_hosted()) {
+//            $update = false;
+//            // If cannot load dbkey settings
+//            try {
+//                //	@session_start();
+//                if (!defined('GET_DBKEY_FROM_URL')) {
+//                    define('GET_DBKEY_FROM_URL', 1);
+//                }
+//
+//                if (Wbs::loadCurrentDBKey()) {
+//                    $update = true;
+//                }
+//
+//            } catch (Exception $ex) {
+//                trigger_error($ex->getMessage(), E_USER_ERROR);
+//                var_dump($ex);
+//            }
+//
+//            if ($update) {
+//                try {
+//                    $updater = new WbsUpdater('SC');
+//                    $updater->check();
+//                } catch (Exception $e) {
+//                    var_dump($ex);
+//                    //....
+//                }
+//            }
+//        }
+//    }
 
     $Register = &Register::getInstance();
 
-    if (isset($_GET['widgets'])) {
-        renderURL('view=noframe&external=1', '', true);
-    }
-    if (isset($_GET['view']) && $_GET['view'] === 'noframe' && isset($_GET['external'])) {
-        $widgets = 1;
-        $Register->set('widgets', $widgets);
-    }
+//    if (isset($_GET['widgets'])) {
+//        renderURL('view=noframe&external=1', '', true);
+//    }
+//    if (isset($_GET['view']) && $_GET['view'] === 'noframe' && isset($_GET['external'])) {
+//        $widgets = 1;
+//        $Register->set('widgets', $widgets);
+//    }
 
     $Register->set(VAR_DBHANDLER, $DB_tree);
 
@@ -329,6 +329,9 @@ ORDER BY `cnt` DESC");
         $smarty->assign('deffer', 'deffer');
     }
 
+    if (detectIOS()) {
+        $smarty->assign('ios', 'ios');
+    }
 //    if (detectPDA()) {
 //        $GetVars['view'] = 'mobile';
 //        $smarty->assign('PAGE_VIEW', 'mobile');

@@ -1,10 +1,10 @@
 <?php
 	class ComponentModule extends AbstractModule {
 
-		var $cpt_settings = array();
-		var $cpt_settings_vdescription = array();
+		public $cpt_settings = array();
+		public $cpt_settings_vdescription = array();
 
-		function __registerComponent($id, $name, $allowed_templates = array(), $method = null, $local_settings = array()){
+		public function __registerComponent($id, $name, $allowed_templates = array(), $method = null, $local_settings = array()){
 			
 			$this->Interfaces[$id] = array(
 					'id' => $id,
@@ -17,7 +17,7 @@
 				);
 		}
 		
-		function __prepend_interface($interface_key, &$params){
+		public function __prepend_interface($interface_key, &$params){
 			
 			$interface_params = $this->getInterfaceParams($interface_key);
 
@@ -51,7 +51,7 @@
 			}
 		}
 		
-		function getComponentSettings($component_id){
+		public function getComponentSettings($component_id){
 			
 			$general_settings = array(
 				'overridestyle' => array( 'type' => 'overridestyle', 'params' => array('name' => 'overridestyle')),
@@ -128,7 +128,7 @@
 			return null;
 		}
 	
-		function getComponentVDescription($component_id, $settings_visibility){
+		public function getComponentVDescription($component_id, $settings_visibility){
 			
 			$general_settings = array(
 				'overridestyle' => array( 'type' => 'overridestyle', 'params' => array('name' => 'overridestyle')),
@@ -165,4 +165,3 @@
 			return array_merge($this->cpt_settings_vdescription[$settings_visibility][$component_id], $general_settings);
 		}
 	}
-?>

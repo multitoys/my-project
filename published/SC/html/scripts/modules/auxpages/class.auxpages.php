@@ -34,7 +34,7 @@
     class AuxAdministrationController extends ActionsController
     {
 
-        function save_order()
+        public function save_order()
         {
             $scan_result = scanArrayKeysForID($_POST, 'priority');
             $sql = 'UPDATE ?#AUX_PAGES_TABLE SET aux_page_priority=? WHERE aux_page_ID=?';
@@ -48,7 +48,7 @@
             die;
         }
 
-        function main()
+        public function main()
         {
             $moduleEntry = &$this->__params['module'];
             /*@var $moduleEntry AuxPages*/
@@ -149,7 +149,7 @@
     class AuxPages extends ComponentModule
     {
 
-        function getInterface()
+        public function getInterface()
         {
             $Args = func_get_args();
             $_InterfaceName = array_shift($Args);
@@ -205,7 +205,7 @@
          *
          * @return array|string
          */
-        function auxpgGetAuxPage($aux_page_ID)
+        public function auxpgGetAuxPage($aux_page_ID)
         {
             $sql = 'SELECT * FROM ?#AUX_PAGES_TABLE WHERE aux_page_ID=?';
             $q = db_phquery($sql, $aux_page_ID);
@@ -455,7 +455,17 @@
             if ($may_order) {
 
                 if (isset($_SESSION['cs_id'])) {
-                    $buy_enabled = true;
+                    $query = '
+                        SELECT settings_value
+                        FROM SC_settings
+                        WHERE settings_constant_name=\'CONF_SHOW_ADD2CART\'';
+                    $res = mysql_query($query) or die();
+                    $settings = mysql_fetch_row($res);
+
+                    if ($settings[0] == 1) {
+                        $buy_enabled = true;
+                    }
+                    
                     $CustomerID = (int)$_SESSION['cs_id'];
                 } else {
                     $buy_enabled = false;
@@ -588,6 +598,10 @@
                 $product_list_item = mysql_fetch_object($res);
                 $tov_all_count = (int)($product_list_item->tov_all_count);
 
+                if (detectIOS()) {
+                    $tov_count = $p_count = 100;
+                }
+                
                 $start_row = 0;
 
                 if (isset($_REQUEST['p'])) {
@@ -734,6 +748,7 @@
     
                     $tab++;
                     $price_without_unit = priceDiscount($Product->Price, $Product->skidka, $Product->ukraine);
+//                    $price = ($buy_enabled)?show_price($price_without_unit):'';
                     $price = show_price($price_without_unit);
 
                     /**********************************************************************************************************/
@@ -899,7 +914,7 @@
                     foreach ($text as $key => $oneline) {
                         $text[$key] = str_replace('%new_list%', $newitems_start.$newitems.$newitems_end, $oneline);
                     }
-                    if ($buy_enabled) {
+                    if ($may_order) {
                         return $text;
                     } else {
                         return '</div>';
@@ -910,7 +925,7 @@
             }
         }
     
-        function initInterfaces()
+        public function initInterfaces()
         {
             $this->Interfaces = array(
                 'fauxpage' => array(
@@ -945,7 +960,7 @@
                                        ));
         }
     
-        function cpt_auxpages_navigation()
+        public function cpt_auxpages_navigation()
         {
             list($local_settings) = $this->__getFromStack('call_params');
             if (isset($local_settings['local_settings'])) $local_settings = $local_settings['local_settings'];
@@ -964,7 +979,7 @@
             print '</ul>';
         }
     
-        function __getEnabledPages()
+        public function __getEnabledPages()
         {
             $sql = 'SELECT '.LanguagesManager::sql_prepareField('aux_page_name').' AS name, `aux_page_ID` AS `id`, `aux_page_slug` FROM ?#AUX_PAGES_TABLE WHERE aux_page_enabled=1 ORDER BY `aux_page_priority` ASC';
             //		return db_phquery_array($sql);
@@ -979,12 +994,12 @@
             return $pages;
         }
     
-        function methodBAuxPage()
+        public function methodBAuxPage()
         {
             ActionsController::exec('AuxAdministrationController', array(ACTCTRL_POST, ACTCTRL_GET, ACTCTRL_AJAX, ACTCTRL_CUST), array('module' => &$this));
         }
     
-        function methodFAuxPage()
+        public function methodFAuxPage()
         {
             global $smarty;
             $aux_page = $this->auxpgGetAuxPage($_GET['show_aux_page']);
@@ -999,7 +1014,7 @@
             }
         }
     
-        function auxpgGetAllPageAttributes()
+        public function auxpgGetAllPageAttributes()
         {
             $sql = '
 			SELECT * FROM ?#AUX_PAGES_TABLE ORDER BY aux_page_priority ASC
@@ -1015,7 +1030,7 @@
             return $data;
         }
     
-        function auxpgUpdateAuxPage($aux_page_ID, $aux_page_name, $aux_page_text, $meta_keywords, $meta_description, $aux_page_enabled, $aux_page_slug)
+        public function auxpgUpdateAuxPage($aux_page_ID, $aux_page_name, $aux_page_text, $meta_keywords, $meta_description, $aux_page_enabled, $aux_page_slug)
         {
             $fields = '';
             $name_inj = LanguagesManager::sql_prepareFields('aux_page_name', $aux_page_name);
@@ -1030,7 +1045,7 @@
             db_phquery_array($sql, $name_inj['values'], $text_inj['values'], $mkeywords_inj['values'], $mdescription_inj['values'], $aux_page_enabled, $aux_page_slug, $aux_page_ID);
         }
     
-        function auxpgAddAuxPage($aux_page_name, $aux_page_text, $meta_keywords, $meta_description, $aux_page_enabled, $aux_page_priority, $aux_page_slug)
+        public function auxpgAddAuxPage($aux_page_name, $aux_page_text, $meta_keywords, $meta_description, $aux_page_enabled, $aux_page_priority, $aux_page_slug)
         {
         
             $name_inj = LanguagesManager::sql_prepareFields('aux_page_name', $aux_page_name, true);
@@ -1051,7 +1066,7 @@
             return db_insert_id();
         }
     
-        function auxpgDeleteAuxPage($aux_page_ID)
+        public function auxpgDeleteAuxPage($aux_page_ID)
         {
             $DivIDs = DivisionModule::getDivisionIDsWithInterface($this->getConfigID().'_auxpage_'.$_GET['delete']);
             DivisionModule::disconnectInterfaces(array($this->getConfigID() => array('auxpage_'.$_GET['delete'])));
@@ -1071,12 +1086,12 @@
             }
         }
     
-        function getAuxPageLocalID($aux_page_ID)
+        public function getAuxPageLocalID($aux_page_ID)
         {
             return "pgn_ap_{$aux_page_ID}";
         }
     
-        function updateAuxPageNameLocal($aux_page_ID, $data)
+        public function updateAuxPageNameLocal($aux_page_ID, $data)
         {
             $divisionID = DivisionModule::getDivisionIDByName('pgn_ap_'.$aux_page_ID);
             if ($divisionID) {
@@ -1094,7 +1109,7 @@
             }
         }
     
-        function addAuxPageNameLocal($aux_page_ID, $data)
+        public function addAuxPageNameLocal($aux_page_ID, $data)
         {
             $languages = LanguagesManager::getLanguages();
             foreach ($languages as $languageEntry) {

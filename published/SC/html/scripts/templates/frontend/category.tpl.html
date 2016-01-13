@@ -190,12 +190,17 @@
 						{if $products_to_show[i1].akcia && $products_to_show[i1].list_price}
 						
 						<td width=80>
-							<div class='akcia'>{$products_to_show[i1].PriceWithUnit}<br /><span class='list_price'>{$products_to_show[i1].list_priceWithUnit}</span>
+							<div class='akcia'>
+                            {if $smarty.const.CONF_SHOW_ADD2CART eq 1}
+                                {$products_to_show[i1].PriceWithUnit}<br /><span class='list_price'>{$products_to_show[i1].list_priceWithUnit}</span>
+                            {/if} 
 							</div>
 						</td>
 						{else}
 						<td width=80>
+                        {*{if $smarty.const.CONF_SHOW_ADD2CART eq 1}*}
                             <div class="price">{$products_to_show[i1].PriceWithUnit}</div>
+                        {*{/if}*}
 						</td>
 						{/if}
 						<td>

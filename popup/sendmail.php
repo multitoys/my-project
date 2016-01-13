@@ -231,6 +231,8 @@ AND ($mod)
         $mailer->CharSet = 'utf-8';
         $mailer->IsHTML(true);
 
+        $res = false;
+        
         if (strlen($file_content) > 5) {
             $mailer->AddStringAttachment($file_content, $filename);
 
@@ -252,7 +254,8 @@ AND ($mod)
             
             }*/
 
-            $res = $mailer->Send();
+            $mailer->Send();
+            $res = true;
         } //else echo('result: not sended - no content!<br>');
         // echo('result: '.$res.'<br>');
         // print_r($mailer->ErrorInfo);

@@ -8,10 +8,10 @@ class DBResource{
 	
 	function DBResource($_Result, $_Type, $_Link, $_SQL){
 		
-		$this->Result 	= $_Result;
-		$this->Type 	= $_Type;
-		$this->Link 	= $_Link;
-		$this->SQL = $_SQL;
+		$this->Result = $_Result;
+		$this->Type   = $_Type;
+		$this->Link   = $_Link;
+		$this->SQL    = $_SQL;
 	}
 	
 	function fetchRow($i = null){

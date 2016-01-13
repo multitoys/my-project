@@ -588,7 +588,7 @@
 				return $item;
             ');
             
-            $RSSFeed->limit = 20;
+            $RSSFeed->limit = 50;
             $RSSFeed->generateFeed(DIR_RSS."/blog-news.xml");
         }
     }

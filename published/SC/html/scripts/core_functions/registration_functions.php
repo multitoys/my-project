@@ -165,7 +165,8 @@
             
             ZAddAuthEvent($login, 4);
             RedirectSQ('&ukey=act_customer&already=1');
-            //            return false;
+            
+            // return false;
             // file_put_contents('f:/1.txt', $login, GetRealIp());
             // if($Redirect)RedirectSQ('&ukey=act_customer&already=1');
             // else return false;

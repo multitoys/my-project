@@ -1,9 +1,9 @@
 <?php
 class AbstractModule extends Module {
 	
-	var $SingleInstallation = true;
+	public $SingleInstallation = true;
 		
-	function getInterfacesParams(){
+	public function getInterfacesParams(){
 		
 		if(!file_exists(DIR_MODULES.'/'.$this->ModuleDir.'/_methods'))return $this->Interfaces;
 		
@@ -28,7 +28,7 @@ class AbstractModule extends Module {
 		return $this->Interfaces;
 	}
 	
-	function getInterfaceParams($_int){
+	public function getInterfaceParams($_int){
 		
 		$params = parent::getInterfaceParams($_int);
 		if(!is_null($params))return $params;
@@ -54,4 +54,3 @@ class AbstractModule extends Module {
 		return null;
 	}
 }
-?>

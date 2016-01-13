@@ -30,6 +30,7 @@
                 <p><a href='{"?productID=`$_top.productID`&product_slug=`$_top.slug`"|set_query_html}'>{$_top.name}</a></p>
             </div>
             <div class=topview-price>
+                {*{if $smarty.const.CONF_SHOW_ADD2CART eq 1}*}
 				{if $_top.list_price > 0}
 					старая цена&nbsp;<span class=list_price>{$_top.list_price_str}</span><br>
 					<span style="color: blue;">новая цена&nbsp;</span>
@@ -37,6 +38,7 @@
                 {elseif $_top.Price}
 					{$_top.price_str}
 				{/if}
+                {*{/if}*}
             </div>
         </li>
         {/foreach}

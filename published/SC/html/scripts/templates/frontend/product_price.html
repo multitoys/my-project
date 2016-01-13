@@ -1,23 +1,25 @@
 {if !$CPT_CONSTRUCTOR_MODE}
 	{if $currencies_count ne 0 && $product_info.Price > 0}
 		{* show list price? *}
-		{if $product_info.list_price > 0 && $product_info.list_price > $product_info.Price && $product_info.Price > 0}
-        Старая цена: 
-		<span class="regularPrice">{$product_info.list_priceWithUnit}</span>
-        <div class="my_totalPrice">Новая цена: 
-		{else}
-		<div class="my_totalPrice">Цена: 
-        {/if}
-        <span class="productPrice">{$product_info.PriceWithUnit}</span>
-        </div>
-
-		{* you save *}
-		{if $product_info.list_price > 0 && $product_info.list_price > $product_info.Price && $product_info.Price > 0}
-		<div>
-			<span class="youSaveLabel">{"str_you_save"|translate}:</span>
-			<span class="youSavePrice">{$product_info[14]} ({$product_info[15]}%)</span>
-		</div>
-		{/if}
+		{*{if $smarty.const.CONF_SHOW_ADD2CART eq 1}*}
+			{if $product_info.list_price > 0 && $product_info.list_price > $product_info.Price && $product_info.Price > 0}
+			Старая цена: 
+			<span class="regularPrice">{$product_info.list_priceWithUnit}</span>
+			<div class="my_totalPrice">Новая цена: 
+			{else}
+			<div class="my_totalPrice">Цена: 
+			{/if}
+			<span class="productPrice">{$product_info.PriceWithUnit}</span>
+			</div>
+	
+			{* you save *}
+			{if $product_info.list_price > 0 && $product_info.list_price > $product_info.Price && $product_info.Price > 0}
+			<div>
+				<span class="youSaveLabel">{"str_you_save"|translate}:</span>
+				<span class="youSavePrice">{$product_info[14]} ({$product_info[15]}%)</span>
+			</div>
+			{/if}
+		{*{/if}*}
 	{/if}
 
     {* Bonus *}
@@ -37,12 +39,14 @@
     {/if}
 
 	<div>
+		{if $smarty.const.CONF_SHOW_ADD2CART eq 1}
 		<span class="productCodeLabel">На остатке:&nbsp;</span>
 		<span class="productCode">{$product_info.ostatok|escape:'html'}&nbsp;шт.</span>
+        {/if}
 	</div>
 
 	{* in stock info *}
-	{if $smarty.const.CONF_CHECKSTOCK == '1'}
+	{if $smarty.const.CONF_CHECKSTOCK == '1' && $smarty.const.CONF_SHOW_ADD2CART eq 1}
 		{if $product_info.in_stock > 0}
 		<div>
 			{"str_in_stock"|translate}:

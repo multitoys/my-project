@@ -6,6 +6,24 @@
     class ShoppingCartController extends ActionsController
     {
     
+        function _detect_cart_view()
+        {
+
+            $Register = &Register::getInstance();
+            /*@var $Register Register*/
+            $smarty = &$Register->get(VAR_SMARTY);
+            /*@var $smarty Smarty*/
+            if ($smarty->get_template_vars('PAGE_VIEW') !== 'noframe') return CARTVIEW_FRAME;
+            if ($Register->is_set('widgets') && $Register->get('widgets')) {
+                $smarty->assign('widget_view', true);
+
+                return CARTVIEW_WIDGET;
+            }
+            if ($smarty->get_template_vars('PAGE_VIEW') == 'noframe') return CARTVIEW_FADE;
+
+            return CARTVIEW_FRAME;
+        }
+
         function add_product()
         {
         
@@ -180,8 +198,8 @@
                 $cartEntry->cleanCurrentCart('erase');
         
                 //remove coupon from empty cart
-                //                ClassManager::includeClass('discount_coupon');
-                //                discount_coupon::remove();
+                ClassManager::includeClass('discount_coupon');
+                discount_coupon::remove();
         
                 RedirectSQ('clear_cart=');
             }
@@ -242,24 +260,6 @@
             }
             $smarty->assign('main_content_template', 'shopping_cart.html');
             $smarty->assign('main_body_style', 'style="'.(((CONF_SHOPPING_CART_VIEW == 2) || ($cart_view == CARTVIEW_FRAME))?'':'background:#FFFFFF;').'min-width:auto;width:auto;_width:auto;"');
-        }
-    
-        function _detect_cart_view()
-        {
-
-            $Register = &Register::getInstance();
-            /*@var $Register Register*/
-            $smarty = &$Register->get(VAR_SMARTY);
-            /*@var $smarty Smarty*/
-            if ($smarty->get_template_vars('PAGE_VIEW') !== 'noframe') return CARTVIEW_FRAME;
-            if ($Register->is_set('widgets') && $Register->get('widgets')) {
-                $smarty->assign('widget_view', true);
-        
-                return CARTVIEW_WIDGET;
-            }
-            if ($smarty->get_template_vars('PAGE_VIEW') == 'noframe') return CARTVIEW_FADE;
-    
-            return CARTVIEW_FRAME;
         }
     
         //        function _detect_cart_view()

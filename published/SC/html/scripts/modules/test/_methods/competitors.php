@@ -283,6 +283,10 @@
         protected function __setCompetitor()
         {
             foreach ($_GET['competitors'] as $conc) {
+                if ($conc === 'all') {
+                    $this->competitor = '';
+                    return;
+                }
                 $this->conc[] = $conc;
             }
             $this->competitor = ' AND '.xEscapeSQLstring(implode(' OR ', $this->conc));

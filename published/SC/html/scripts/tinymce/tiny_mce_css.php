@@ -40,7 +40,7 @@
                 $file = str_replace('/shop/css', '/published/SC/html/scripts/css', $file);
             }
             $file = WBS_DIR.$file;
-            $content .= getFileContents($file);
+            $content = getFileContents($file);
             if (file_exists($file)) {
                 $mtime = max($mtime, filemtime($file));
             }

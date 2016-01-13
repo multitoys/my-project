@@ -26,6 +26,7 @@
                     </div>
                 <p><a href='{"?productID=`$_product.productID`&product_slug=`$_product.slug`"|set_query_html}'>{$_product.name_ru}</a></p>
             </div>
+        {*{if $smarty.const.CONF_SHOW_ADD2CART eq 1}*}
         {if $smarty.session.cs_may_order}
             <div class=topview-price>
                 {if $_product.list_price > 0}старая цена&nbsp;<span class=list_price>{$_product.list_price_str}</span>{/if}
@@ -34,6 +35,7 @@
                 {if $_product.Price}<span class=price-right-list>{$_product.price_str}</span>{/if}
             </div>
         {/if}
+        {*{/if}*}
         </li>
         {/if}
         {/foreach}

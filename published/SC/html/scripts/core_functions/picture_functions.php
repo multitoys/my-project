@@ -383,8 +383,8 @@ class ns_image{
 			$res = @imagecopyresized ( $dst_img, $src_img, 0, 0, 0, 0, $width, $height, $src_width, $src_height );
 
 		if ( !$res ) {
-			@imagedestroy( $srcIm );
-			@imagedestroy( $destImg );
+			@imagedestroy( $src_img );
+			@imagedestroy( $dst_img );
 
 			return PEAR::raiseError( 'Error copy resized image', 1 );
 //			return PEAR::raiseError( 7, 1 );
@@ -407,8 +407,8 @@ class ns_image{
 			return PEAR::raiseError('Error write image', 1);
 //			return PEAR::raiseError(8, 1);
 
-		@imagedestroy( $destImg );
-		@imagedestroy( $srcIm );
+		@imagedestroy( $dst_img );
+		@imagedestroy( $src_img );
 	}
 	
 	function addWatermark($image,$watermark_file = null,$position = 'right', $alpha_level = 100)

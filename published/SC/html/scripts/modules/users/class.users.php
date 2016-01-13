@@ -14,7 +14,7 @@
                 'users_per_page' => array(
                     'type'  => SETTING_NUMBER,
                     'descr' => 'Количество пользователей на странице',
-                    'value' => 50,
+                    'value' => 100,
                 ),
             );
         }
@@ -205,5 +205,3 @@
             }
         }
     }
-
-?>

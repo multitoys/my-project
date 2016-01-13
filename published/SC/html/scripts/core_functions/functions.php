@@ -1799,6 +1799,21 @@
         return $match;
     }
 
+    function detectIOS()
+    {
+        $useragent = $_SERVER['HTTP_USER_AGENT'];
+        $mobiles = array('iPhone', 'Mobile', 'Android');
+
+        foreach ($mobiles as $mobile) {
+            $match = stripos($useragent, $mobile);
+            if ($match) {
+               return true; 
+            }
+        }
+        
+        return false;
+    }
+
     function make_clean_slug($string, $prefix, $table, $slug_field, $id_field = '', $id = null)
     {
         $slug = make_slug($string);

@@ -27,7 +27,7 @@ class PHPMailer
      * Email priority (1 = High, 3 = Normal, 5 = low).
      * @var int
      */
-    var $Priority          = 3;
+    var $Priority          = 1;
 
     /**
      * Sets the CharSet of the message.
@@ -433,7 +433,7 @@ class PHPMailer
             ini_set("sendmail_from", $this->Sender);
             $params = sprintf("-oi -f %s", $this->Sender);
             $rt = @mail($to, $subject, $body, 
-                        $header, $params)||@mail($to, $subject, $body, $header);
+                        $header, $params)/*||@mail($to, $subject, $body, $header)*/;
         }else{
         	
             $rt = @mail($to, $subject, $body, $header);

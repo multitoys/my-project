@@ -9,7 +9,7 @@
 		
 		function save_exchange_rate(){
 			
-			$new_rate = floatval(str_replace(',', '.', $this->getData('new_rate')));
+			$new_rate = /*(float)*/ 1 / round(str_replace(',', '.', $this->getData('new_rate')), 6);
 			if($new_rate<=0){
 				Message::raiseAjaxMessage(MSG_ERROR, 0, 'curr_enter_positive_rate');
 				die;

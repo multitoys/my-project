@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.9, created on 2015-12-09 18:59:23
+<?php /* Smarty version 2.6.9, created on 2016-01-12 12:13:14
          compiled from head.html */ ?>
 <?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
 smarty_core_load_plugins(array('plugins' => array(array('modifier', 'default', 'head.html', 3, false),array('modifier', 'escape', 'head.html', 3, false),)), $this); ?>
@@ -13,22 +13,27 @@ smarty_core_load_plugins(array('plugins' => array(array('modifier', 'default', '
 '; ?>
 
 <link rel="stylesheet" href="<?php echo $this->_tpl_vars['URL_THEME_OFFSET']; ?>
-/main-1449472878257.css" type="text/css">
+/main.css" type="text/css">
     <script <?php echo ((is_array($_tmp=@$this->_tpl_vars['deffer'])) ? $this->_run_mod_handler('default', true, $_tmp, ' ') : smarty_modifier_default($_tmp, ' ')); ?>
  src='<?php echo @URL_JS; ?>
 /jquery.1.9.1.js'></script>
-<script <?php echo ((is_array($_tmp=@$this->_tpl_vars['deffer'])) ? $this->_run_mod_handler('default', true, $_tmp, ' ') : smarty_modifier_default($_tmp, ' ')); ?>
+<?php if ($this->_tpl_vars['ios'] != 'ios'): ?>
+    <script <?php echo ((is_array($_tmp=@$this->_tpl_vars['deffer'])) ? $this->_run_mod_handler('default', true, $_tmp, ' ') : smarty_modifier_default($_tmp, ' ')); ?>
  src='<?php echo @URL_JS; ?>
 /jquery.nicescroll.min-1437563245003.js'></script>
-<?php if ($_SESSION['log']): ?>
+<?php endif;  if ($_SESSION['log']): ?>
     <?php if ($_GET['ukey'] == 'auxpage_divoland' || $_GET['ukey'] == 'auxpage_mixtoys' || $_GET['ukey'] == 'auxpage_dreamtoys' || $_GET['ukey'] == 'auxpage_kindermarket' || $_GET['ukey'] == 'auxpage_grandtoys'): ?>
         <script <?php echo ((is_array($_tmp=@$this->_tpl_vars['deffer'])) ? $this->_run_mod_handler('default', true, $_tmp, ' ') : smarty_modifier_default($_tmp, ' ')); ?>
  type="text/javascript" src="/lib/jquery.mousewheel-3.0.6.pack.js"></script>
         <script <?php echo ((is_array($_tmp=@$this->_tpl_vars['deffer'])) ? $this->_run_mod_handler('default', true, $_tmp, ' ') : smarty_modifier_default($_tmp, ' ')); ?>
  type="text/javascript" src="/source/jquery.fancybox.pack-1439062343154.js"></script>
         <link rel="stylesheet" type="text/css" href="/source/jquery.fancybox.css?v=2.1.5" media="screen"/>
-    <?php endif; ?>
-<?php endif; ?>
-<script <?php echo ((is_array($_tmp=@$this->_tpl_vars['deffer'])) ? $this->_run_mod_handler('default', true, $_tmp, ' ') : smarty_modifier_default($_tmp, ' ')); ?>
+    <?php endif;  endif;  if ($this->_tpl_vars['ios'] != 'ios'): ?>
+    <script <?php echo ((is_array($_tmp=@$this->_tpl_vars['deffer'])) ? $this->_run_mod_handler('default', true, $_tmp, ' ') : smarty_modifier_default($_tmp, ' ')); ?>
  src="<?php echo $this->_tpl_vars['URL_THEME_OFFSET']; ?>
-/head-1449487930938.js"></script>
+/head-1449487930938.js"></script>
+<?php else: ?>
+    <script <?php echo ((is_array($_tmp=@$this->_tpl_vars['deffer'])) ? $this->_run_mod_handler('default', true, $_tmp, ' ') : smarty_modifier_default($_tmp, ' ')); ?>
+ src="<?php echo $this->_tpl_vars['URL_THEME_OFFSET']; ?>
+/head-m-1449487930938.js"></script>
+<?php endif; ?>

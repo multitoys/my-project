@@ -21,9 +21,9 @@
 		</div>
 	{/if}
 		<div class="header{if $smarty.session.log} inlog{/if}">
-            {if $smarty.session.log && $smarty.session.cs_may_order > 0}
+		{if $smarty.session.cs_may_order > 0}
 			<div>
-			  {welcome}, <span> {$smarty.session.cs_first_name} {$smarty.session.cs_last_name}</span>!
+			  {welcome}, <span> {$smarty.session.cs_first_name} {$smarty.session.cs_last_name}</span>!&nbsp;
 			  {*if $smarty.session.log|cs_bonus>0}У Вас <span>{$smarty.session.log|cs_bonus} баллов</span>!{/if*}
 			  {if $smarty.session.cs_unlimited > 0}
 				 Вам открыт постоянный доступ!
@@ -53,6 +53,7 @@
                     <div id="live_search"></div>
                 </div>
 			{/if}
+			{*{if $smarty.session.cs_may_order && $smarty.const.CONF_SHOW_ADD2CART eq 1}*}
 			{if $smarty.session.cs_may_order}
 				<a href="/cart"><div id='my__cart'></div></a>
 			{/if}
@@ -116,6 +117,20 @@
                      {if $smarty.get.ukey eq 'cart'}style="right: 0"
                      {elseif $smarty.get.ukey eq 'auxpage_divoland' or $smarty.get.ukey eq 'auxpage_mixtoys' or $smarty.get.ukey eq 'auxpage_dreamtoys' or $smarty.get.ukey eq 'auxpage_kindermarket' or $smarty.get.ukey eq 'auxpage_grandtoys'}class=conc{/if}>
 					{if $smarty.session.log}
+					    {*if $smarty.const.CONF_SHOW_ADD2CART ne 1}
+                            <div id="parent_popup" onclick="document.getElementById('parent_popup').style.display='none';">
+                                <div id="popup" class="animated bounceInDown">
+                                    <h1 style="text-align: center; font-size: 26px;">Уважаемые клиенты! <br />В связи с проведением налоговой проверки<br />
+                                    сегодня  склад - НЕ РАБОТАЕТ!</h1>
+                                    <a class="close" title="Закрыть"
+                                       onclick="document.getElementById('parent_popup').style.display='none';">&times;</a>
+                                </div>
+                            </div>
+                            <script type="text/javascript">
+                                var delay_popup = 200;
+                                setTimeout("document.getElementById('parent_popup').style.display='block'", delay_popup);
+                            </script>
+						{/if*}
 						{if $smarty.session.cs_may_order}
 							{cpt_maincontent}
 						{else}
@@ -126,19 +141,18 @@
 									Для получения доступа к полному перечню товаров,<br>
 									Вам необходимо связаться с нашим представителем
 								</p><br>
-                                {cpt_product_lists list_id='hitu' limit='30'}
+								{cpt_product_lists list_id='hitu' limit='25'}
 							{/if}
 						{/if}
 					{else}
 						{if $CurrentDivision.ukey|isauthpage}
 							{cpt_maincontent}
 						{else}
-                            {*{if $smarty.get.already == 1}*}
-                            {if $MessageBlock}
+							{if $smarty.get.already == 1}
                                 {$MessageBlock}
 								{include file="remind_password.html"}
-                                {*{elseif $smarty.get.ukey=="act_customer"}*}
-                                {*{include file="login.html"}*}
+							{elseif $smarty.get.ukey=="act_customer"}
+								{include file="login.html"}
 							{else}
 								{cs_show_main_page}
 							{/if}

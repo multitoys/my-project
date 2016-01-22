@@ -62,16 +62,16 @@ error was encountered while trying to use an ErrorDocument to handle the request
         if (true) {
             define('URL_IMAGES', URL_ROOT.'/images');
             define('URL_THEMES', URL_ROOT.'/themes');
-            define('URL_PRODUCTS_PICTURES', URL_ROOT.'/products_pictures');
+            define('URL_PRODUCTS_PICTURES', '/pictures');
         } else {
             define('URL_IMAGES', WBS_INSTALL_PATH.'/images');
             define('URL_THEMES', WBS_INSTALL_PATH.'/themes');
-            define('URL_PRODUCTS_PICTURES', WBS_INSTALL_PATH.'/products_pictures');
+            define('URL_PRODUCTS_PICTURES', '/pictures');
         }
     } else {
         define('URL_PUBDATA_ROOT', str_replace('//', '/', WBS_INSTALL_PATH.'/published/publicdata'));
         $DB_KEY = db_getConnectData('DB_KEY');
-        foreach (array('products_pictures', 'images', 'themes') as $fld) {
+        foreach (array('images', 'themes') as $fld) {
             /*if(file_exists(DIR_ROOT.'/../../../..'.URL_PUBDATA_ROOT.'/'.$DB_KEY.'/attachments/SC/'.$fld))
             {*/
             define('URL_'.strtoupper($fld), file_exists(WBS_DIR."/kernel/hosting_plans.php")?$fld:URL_PUBDATA_ROOT.'/'.$DB_KEY.'/attachments/SC/'.$fld);
@@ -98,7 +98,7 @@ error was encountered while trying to use an ErrorDocument to handle the request
         define('DIR_DATA_SC', $WBSPath.'/data/'.$DB_KEY.'/attachments/SC');
         define('DIR_IMG', DIR_PUBLICDATA_SC.'/images');
         define('DIR_THEMES', DIR_PUBLICDATA_SC.'/themes');
-        define('DIR_PRODUCTS_PICTURES', DIR_PUBLICDATA_SC.'/products_pictures');
+        define('DIR_PRODUCTS_PICTURES', '/pictures');
         define('DIR_PRODUCTS_FILES', DIR_DATA_SC.'/products_files');
         define('DIR_COMPILEDTEMPLATES', DIR_ROOT.'/../../../../kernel/includes/smarty/compiled/SC/templates_c/'.$DB_KEY);
         define('DIR_TEMP', DIR_DATA_SC.'/temp');

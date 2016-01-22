@@ -73,16 +73,16 @@
         if (true) {
             define('URL_IMAGES', URL_ROOT.'/images');
             define('URL_THEMES', URL_ROOT.'/themes');
-            define('URL_PRODUCTS_PICTURES', URL_ROOT.'/products_pictures');
+            define('URL_PRODUCTS_PICTURES', '/pictures');
         } else {
             define('URL_IMAGES', WBS_INSTALL_PATH.'/images');
             define('URL_THEMES', WBS_INSTALL_PATH.'/themes');
-            define('URL_PRODUCTS_PICTURES', WBS_INSTALL_PATH.'/products_pictures');
+            define('URL_PRODUCTS_PICTURES', '/pictures');
         }
     } else {
         define('URL_PUBDATA_ROOT', str_replace('//', '/', WBS_INSTALL_PATH.'/published/publicdata'));
         $DB_KEY = SystemSettings::get('DB_KEY');
-        foreach (array('products_pictures', 'images', 'themes', 'rss') as $fld) {
+        foreach (array('images', 'themes', 'rss') as $fld) {
             /*if(file_exists(DIR_ROOT.'/../../../..'.URL_PUBDATA_ROOT.'/'.$DB_KEY.'/attachments/SC/'.$fld))
                 {*/
             define('URL_'.strtoupper($fld), file_exists(WBS_DIR."/kernel/hosting_plans.php")?$fld:URL_PUBDATA_ROOT.'/'.$DB_KEY.'/attachments/SC/'.$fld);
@@ -92,6 +92,7 @@
                 define('URL_'.strtoupper($fld), URL_PUBDATA_ROOT.'/__DEFAULT/attachments/SC/'.$fld);
                 };*/
         };
+        define('URL_PRODUCTS_PICTURES', '/pictures');
         define('URL_IMAGES_DEF', WBS_INSTALL_PATH.'/published/SC/html/scripts/images');
     }
     // Copy general images to user directory

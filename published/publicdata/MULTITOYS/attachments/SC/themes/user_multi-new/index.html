@@ -92,7 +92,7 @@
                         {elseif $smarty.get.ukey eq 'auxpage_grandtoys'}
                             {conc_tree auxpage='grandtoys'}
                         {else}
-                            {newtree login=$smarty.session.log}
+                            {newtree haspopup=$haspopup}
                         {/if}
                         {if $smarty.session.cs_may_order}
                         {if $smarty.session.log}

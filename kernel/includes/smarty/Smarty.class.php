@@ -929,7 +929,6 @@
          * @param string $cache_id   name of cache_id
          * @param string $compile_id name of compile_id
          * @param string $exp_time   expiration time
-         *
          * @return boolean
          */
         function clear_cache($tpl_file = null, $cache_id = null, $compile_id = null, $exp_time = null)
@@ -962,7 +961,6 @@
          * clear the entire contents of cache (all templates)
          *
          * @param string $exp_time expire time
-         *
          * @return boolean results of {@link smarty_core_rm_auto()}
          */
         function clear_all_cache($exp_time = null)
@@ -976,7 +974,6 @@
          * @param string $tpl_file name of template file
          * @param string $cache_id
          * @param string $compile_id
-         *
          * @return string|false results of {@link _read_cache_file()}
          */
         function is_cached($tpl_file, $cache_id = null, $compile_id = null)
@@ -1014,7 +1011,6 @@
          * @param string $tpl_file
          * @param string $compile_id
          * @param string $exp_time
-         *
          * @return boolean results of {@link smarty_core_rm_auto()}
          */
         function clear_compiled_tpl($tpl_file = null, $compile_id = null, $exp_time = null)
@@ -1036,7 +1032,6 @@
          * Checks whether requested template exists.
          *
          * @param string $tpl_file
-         *
          * @return boolean
          */
         function template_exists($tpl_file)
@@ -1051,7 +1046,6 @@
          *
          * @param string $name
          * @param string $type
-         *
          * @return array
          */
         function &get_template_vars($name = null)
@@ -1069,7 +1063,6 @@
          *
          * @param string $name
          * @param string $type
-         *
          * @return array
          */
         function &get_config_vars($name = null)
@@ -1331,7 +1324,6 @@
          * return a reference to a registered object
          *
          * @param string $name
-         *
          * @return object
          */
         function &get_registered_object($name)
@@ -1366,7 +1358,6 @@
          *
          * @param string $type
          * @param string $name
-         *
          * @return string|false
          */
         function _get_plugin_filepath($type, $name)
@@ -1382,7 +1373,6 @@
          *
          * @param string $resource_name
          * @param string $compile_path
-         *
          * @return boolean
          */
         function _is_compiled($resource_name, $compile_path)
@@ -1416,7 +1406,6 @@
          *
          * @param string $resource_name
          * @param string $compile_path
-         *
          * @return boolean
          */
         function _compile_resource($resource_name, $compile_path)
@@ -1454,7 +1443,6 @@
          * @param string $resource_name
          * @param string $source_content
          * @param string $compiled_content
-         *
          * @return boolean
          */
         function _compile_source($resource_name, &$source_content, &$compiled_content, $cache_include_path = null)
@@ -1516,7 +1504,6 @@
          * Get the compile path for this resource
          *
          * @param string $resource_name
-         *
          * @return string results of {@link _get_auto_filename()}
          */
         function _get_compile_path($resource_name)
@@ -1531,13 +1518,11 @@
          *
          * sets $source_content to the source of the template, and
          * $resource_timestamp to its time stamp
-         *
          * @param string  $resource_name
          * @param string  $source_content
          * @param integer $resource_timestamp
          * @param boolean $get_source
          * @param boolean $quiet
-         *
          * @return boolean
          */
 
@@ -1627,7 +1612,6 @@
          * @param string $resource_name
          * @param string $resource_type
          * @param string $resource_name
-         *
          * @return boolean
          */
 
@@ -1710,7 +1694,6 @@
          *
          * @param string|null $modifier_name
          * @param array|null  $map_array
-         *
          * @return string result of modifiers
          */
         function _run_mod_handler()
@@ -1733,7 +1716,6 @@
          * Remove starting and ending quotes from the string
          *
          * @param string $string
-         *
          * @return string
          */
         function _dequote($string)
@@ -1750,7 +1732,6 @@
          * read in a file
          *
          * @param string $filename
-         *
          * @return string
          */
         function _read_file($filename)
@@ -1771,7 +1752,6 @@
          * @param string $auto_base
          * @param string $auto_source
          * @param string $auto_id
-         *
          * @return string
          * @staticvar string|null
          * @staticvar string|null
@@ -1824,7 +1804,6 @@
          *
          * @param string $cache_id
          * @param string $compile_id
-         *
          * @return string|null
          */
         function _get_auto_id($cache_id = null, $compile_id = null)

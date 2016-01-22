@@ -25,14 +25,14 @@
 {if $smarty.session.log}
     {if $smarty.get.ukey eq 'auxpage_divoland' or $smarty.get.ukey eq 'auxpage_mixtoys' or $smarty.get.ukey eq 'auxpage_dreamtoys' or $smarty.get.ukey eq 'auxpage_kindermarket' or $smarty.get.ukey eq 'auxpage_grandtoys'}
         <script {$deffer|default:' '} type="text/javascript" src="/lib/jquery.mousewheel-3.0.6.pack.js"></script>
-        <script {$deffer|default:' '} type="text/javascript" src="/source/jquery.fancybox.pack-1439062343154.js"></script>
+        <script {$deffer|default:' '} type="text/javascript" src="/source/jquery.fancybox.pack-1453308851238.js"></script>
         <link rel="stylesheet" type="text/css" href="/source/jquery.fancybox.css?v=2.1.5" media="screen"/>
     {/if}
 {/if}
 {*<script {$deffer|default:' '} src="/js/ajax_nav.js"></script>*}
 {if $ios ne 'ios'}
-    <script {$deffer|default:' '} src="{$URL_THEME_OFFSET}/head-1449487930938.js"></script>
+    <script {$deffer|default:' '} src="{$URL_THEME_OFFSET}/head-dev.js"></script>
 {else}
-    <script {$deffer|default:' '} src="{$URL_THEME_OFFSET}/head-m-1449487930938.js"></script>
+    <script {$deffer|default:' '} src="{$URL_THEME_OFFSET}/head-m-dev.js"></script>
 {/if}
 {*<script async src="https://cdn.onthe.io/io.js?1jYvC3MBBBks"></script>*}

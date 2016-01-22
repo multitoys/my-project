@@ -69,126 +69,9 @@ $(document).ready(function () {
     if (quantity.spin) {
         quantity.spin({min: 0, max: 999});
     }
-    scrollPane.niceScroll({cursorcolor: "coral", cursoropacitymin: 1, cursorwidth: 8});
-    productLists.niceScroll({cursorcolor: "coral", horizrailenabled: false, cursoropacitymin: 1, cursorwidth: 3});
-    var notProgress = true;
-    scrollPane.scroll(function () {
-        if (scrollPane.scrollTop() + scrollPane.height() >= content.height() && notProgress) {
-            var btn_more = $("#light-pagination");
-            var itemsOnPage = parseInt(btn_more.attr("data-itemsOnPage"));
-            var items = parseInt(btn_more.attr("data-items"));
-            var show = parseInt(btn_more.attr("data-show"));
-            var page = parseInt(btn_more.attr("data-page"));
-            var date = parseInt(btn_more.attr("data-date"));
-            var made = btn_more.attr("data-made");
-            if (page == -1) {
-                page = 0;
-            }
-            var add = parseInt(btn_more.attr("data-add"));
-            var sort = btn_more.attr("data-sort");
-            var direction = btn_more.attr("data-direction");
-            var count_show = page + show + add;
-            if ((show + add) < itemsOnPage && count_show <= items) {
-                notProgress = false;
-                scrollPane.addClass("loader");
-                $.ajax({
-                    url: "/auxpage_new_items/" + date + "/" + made + "/",
-                    type: "post",
-                    dataType: "json",
-                    cache: false,
-                    data: {count_show: count_show, sort: sort, direction: direction, date: date, made: made},
-                    success: function (data) {
-                        if (data.result == "success") {
-                            content.append(data.html);
-                            btn_more.attr("data-show", count_show - page);
-                            $(".cart_product_quantity").siblings().remove();
-                            $(".cart_product_quantity").spin({min: 0, max: 999});
-                            $(".preview").tooltip({
-                                delay: 0, showURL: false, bodyHandler: function () {
-                                    return $("<img/>").attr("src", $(this).attr("data-pid"));
-                                }
-                            });
-                            $(".controls").tooltip({
-                                delay: 0, showURL: false, bodyHandler: function () {
-                                    return $("<img/>").attr("src", $(this).attr("data-pid"));
-                                }
-                            });
-                        } else {
-                            if (data.result == "finish") {
-                            }
-                        }
-                        scrollPane.removeClass("loader");
-                        scrollPane.getNiceScroll(0).doScrollLeft(0, 100);
-                        notProgress = true;
-                    }
-                });
-            }
-        }
-    });
-    var pageNavigator = $("#light-pagination");
-    var itemsOnPage = parseInt(pageNavigator.attr("data-itemsOnPage"));
-    var items = parseInt(pageNavigator.attr("data-items"));
-    if (items > itemsOnPage) {
-        pageNavigator.pagination({
-            items: parseInt(pageNavigator.attr("data-items")),
-            itemsOnPage: parseInt(pageNavigator.attr("data-itemsOnPage")),
-            cssStyle: "compact-theme",
-            prevText: "&larr;",
-            nextText: "&rarr;",
-            hrefTextPrefix: location.href + "#page-",
-            onPageClick: function (pageNumber, event) {
-                var itemsOnPage = pageNavigator.attr("data-itemsOnPage");
-                var p = (pageNumber - 1) * itemsOnPage;
-                var page = "#page-" + (pageNumber + 1);
-                if (pageNumber == 1) {
-                    p = -1;
-                }
-                location.href = location.href.replace(/#page-(\d+)/, "") + page;
-                var sort = pageNavigator.attr("data-sort");
-                var date = pageNavigator.attr("data-date");
-                var made = pageNavigator.attr("data-made");
-                var direction = pageNavigator.attr("data-direction");
-                var url = "/auxpage_new_items/" + date + "/" + made + "/";
-                content.addClass("smoke");
-                scrollPane.addClass("loader");
-                if (notProgress) {
-                    notProgress = false;
-                    $.ajax({
-                        url: url,
-                        type: "post",
-                        dataType: "json",
-                        cache: false,
-                        data: {p: p, sort: sort, direction: direction, date: date, made: made},
-                        success: function (data) {
-                            if (data.result == "success") {
-                                content.html(data.html);
-                                pageNavigator.attr("data-show", 0);
-                                pageNavigator.attr("data-page", p);
-                                scrollPane.removeClass("loader");
-                                content.removeClass("smoke");
-                                $(".cart_product_quantity").spin({min: 0, max: 999});
-                                $(".preview").tooltip({
-                                    delay: 0, showURL: false, bodyHandler: function () {
-                                        return $("<img/>").attr("src", $(this).attr("data-pid"));
-                                    }
-                                });
-                                $(".controls").tooltip({
-                                    delay: 0, showURL: false, bodyHandler: function () {
-                                        return $("<img/>").attr("src", $(this).attr("data-pid"));
-                                    }
-                                });
-                                notProgress = true;
-                            }
-                        }
-                    });
-                }
-                scrollPane.getNiceScroll(0).doScrollTop(0, 1000);
-                productLists.getNiceScroll(0).doScrollTop(0, 1000);
-            }
-        });
-    }
     load_cart();
 });
+
 function zakcia(seconds) {
     var _date = new Date();
     _date.setSeconds(seconds);
@@ -293,14 +176,6 @@ $(function () {
                     }
                 });
             }
-            live_search.niceScroll({
-                cursorcolor: "#03A9F4",
-                cursorborderradius: 2,
-                cursorbordercolor: "#03A9F4",
-                horizrailenabled: false,
-                cursoropacitymin: 1,
-                cursorwidth: 5
-            });
             return searchOk.removeClass("search_loader");
         } else {
             live_search.html("");
@@ -318,7 +193,7 @@ function changePic(id, direction) {
     var element = document.getElementById("pic" + id);
     var picNums = Number(element.getAttribute("data-pics"));
     var currPic = Number(element.getAttribute("data-current"));
-    var startOfSrc = "/published/publicdata/MULTITOYS/attachments/SC/products_pictures/";
+    var startOfSrc = "/pictures/";
     var newPic;
     var endOfSrc;
     var ext = "_thm.jpg";

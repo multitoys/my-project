@@ -1,3 +1,4 @@
+var searchCache = [];
 $(document).ready(function () {
     var preview = $(".preview");
     var controls = $(".controls");
@@ -161,15 +162,20 @@ $(function () {
         var search;
         search = $("#searchstring").val();
         if (search.length > 2) {
-            $.ajax({
-                type: "POST",
-                url: "/popup/search.php",
-                data: {search: search},
-                cache: false,
-                success: function (response) {
-                    live_search.html(response);
-                }
-            });
+            if (searchCache[search]) {
+                live_search.html(searchCache[search]);
+            } else {
+                $.ajax({
+                    type: "POST",
+                    url: "/popup/search.php",
+                    data: {search: search},
+                    cache: true,
+                    success: function (response) {
+                        live_search.html(response);
+                        searchCache[search] = response;
+                    }
+                });
+            }
             return searchOk.removeClass("search_loader");
         } else {
             live_search.html("");

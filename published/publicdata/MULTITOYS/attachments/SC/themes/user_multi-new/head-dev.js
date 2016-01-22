@@ -188,7 +188,49 @@ $(document).ready(function () {
         });
     }
     load_cart();
+
+    $('a[href^=\\/]').on('click', function () {
+        var url = $(this).attr('href');
+        $('#center').load(url + ' #center > *', function () {
+            $(".scroll-pane1").niceScroll({cursorcolor: "coral", cursoropacitymin: 1, cursorwidth: 8});
+            setTimeout(ResizeCatalog, 300);
+        });
+        if (url != window.location) {
+            window.history.pushState(null, null, url);
+        }
+        
+        return false;
+    });
+
+    $('body').on('click', 'a[href^=\\/]', function () {
+
+        var url = $(this).attr('href');
+
+        $('#center').load(url + ' #center > *', function () {
+            $(".scroll-pane1").niceScroll({cursorcolor: "coral", cursoropacitymin: 1, cursorwidth: 8});
+            setTimeout(ResizeCatalog, 300);
+        });
+        //scrollPane.getNiceScroll(0).doScrollTop(0, 1000);
+        if (url != window.location) {
+            window.history.pushState(null, null, url);
+        }
+        
+        return false;
+
+    });
+
+    $(window).bind('popstate', function () {
+        var url = location.pathname;
+        $('#center').load(url + ' #center > *', function(){
+            $(".scroll-pane1").niceScroll({cursorcolor: "coral", cursoropacitymin: 1, cursorwidth: 8});
+        });
+    });
+    
+    $(document).change(function () {
+        
+    });
 });
+
 function zakcia(seconds) {
     var _date = new Date();
     _date.setSeconds(seconds);
@@ -318,7 +360,7 @@ function changePic(id, direction) {
     var element = document.getElementById("pic" + id);
     var picNums = Number(element.getAttribute("data-pics"));
     var currPic = Number(element.getAttribute("data-current"));
-    var startOfSrc = "/published/publicdata/MULTITOYS/attachments/SC/products_pictures/";
+    var startOfSrc = "/pictures/";
     var newPic;
     var endOfSrc;
     var ext = "_thm.jpg";

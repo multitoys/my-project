@@ -49,8 +49,8 @@ function _getOrder()
 	$res = cartGetCartContent();
 	$order["orderContent"]	= $res["cart_content"];
 
-	$d = oaGetDiscountValue( $res, $_SESSION["log"] );
-	$order["order_amount"] = $res["total_price"] - $d;
+//	$d = oaGetDiscountValue( $res, $_SESSION["log"] );
+	$order["order_amount"] = $res["total_price"]/* - $d*/;
 
 	return $order;
 }
@@ -147,4 +147,3 @@ $smarty->assign( "shipping_costs",		$shipping_costs );
 $smarty->assign( "shipping_methods",	$shipping_methods );		
 $smarty->assign( "shipping_methods_count",  count($shipping_methods) );
 $smarty->assign( "main_content_template", "order2_shipping.tpl.html" );
-?>

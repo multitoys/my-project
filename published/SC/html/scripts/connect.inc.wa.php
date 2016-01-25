@@ -63,11 +63,11 @@ if(MOD_REWRITE_SUPPORT&&false)
 	if(true){
 		define('URL_IMAGES', URL_ROOT.'/images');
 		define('URL_THEMES', URL_ROOT.'/themes');
-		define('URL_PRODUCTS_PICTURES', URL_ROOT.'/products_pictures');
+		define('URL_PRODUCTS_PICTURES', '/pictures');
 	}else{
 		define('URL_IMAGES',WBS_INSTALL_PATH.'/images');
 		define('URL_THEMES', WBS_INSTALL_PATH.'/themes');
-		define('URL_PRODUCTS_PICTURES', WBS_INSTALL_PATH.'/products_pictures');
+		define('URL_PRODUCTS_PICTURES', '/pictures');
 	}
 }else{
 	define('URL_PUBDATA_ROOT', str_replace('//','/',WBS_INSTALL_PATH.'/published/publicdata'));

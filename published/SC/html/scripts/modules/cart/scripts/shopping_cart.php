@@ -129,7 +129,7 @@
         {
     
             $Register = &Register::getInstance();
-            $smarty = &$Register->get(VAR_SMARTY);
+            $smarty = $Register->get(VAR_SMARTY);
             /*@var $smarty Smarty*/
             // shopping cart
     

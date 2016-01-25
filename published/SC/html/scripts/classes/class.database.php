@@ -138,7 +138,7 @@
                 $_t = preg_replace('/(\[function\]\s+\=\>\s+)([^\n]+)/msi', '$1<span style=color:red;>$2</span>', '<pre>'.xHtmlSpecialChars(ob_get_contents()).'</pre>');
                 ob_end_clean();
                 ?>
-                <div id="sqldebug__<?php print $cnt; ?>" style="/*display:none;*/">
+	<div id="sqldebug__<?php print $cnt;?>" style="display:none;">
                     <?php
                         echo $_t;
                     ?>

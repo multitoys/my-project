@@ -6,24 +6,24 @@
         
             return $disp;
         }
-        
+        $haspopup = $params['haspopup'];
         $disp = '<ul id="navmenu-v">';
         if ((int)$_SESSION['cs_vip'] === 1) {
             $disp .= '<li style="background: tomato">
-                        <a href="#" aria-haspopup=true style="
+                        <a href="#" '.$haspopup.' style="
                             color: floralwhite;
                             text-shadow: 1px 1px 1px rgba(0, 0, 0, .4) !important;
                             font-size: 16px;
                             ">Конкуренты</a>
                         <ul class="animated slideInRight">
-                            <li><a href="/auxpage_divoland" aria-haspopup="true">Диволенд</a></li>
-                            <li><a href="/auxpage_mixtoys" aria-haspopup="true">Микстойс</a></li>
-                            <li><a href="/auxpage_dreamtoys" aria-haspopup="true">Веселка</a></li>
-                            <li><a href="/auxpage_kindermarket" aria-haspopup="true">Киндер-Маркет</a></li>
-                            <li><a href="/auxpage_grandtoys" aria-haspopup="true">Гранд-Тойс</a></li>
+                            <li><a href="/auxpage_divoland" '.$haspopup.'>Диволенд</a></li>
+                            <li><a href="/auxpage_mixtoys" '.$haspopup.'>Микстойс</a></li>
+                            <li><a href="/auxpage_dreamtoys" '.$haspopup.'>Веселка</a></li>
+                            <li><a href="/auxpage_kindermarket" '.$haspopup.'>Киндер-Маркет</a></li>
+                            <li><a href="/auxpage_grandtoys" '.$haspopup.'>Гранд-Тойс</a></li>
                         </ul>
                     </li>
-                    <li><a href="/category/novinki" aria-haspopup=true>Новинки</a></li>';
+                    <li><a href="/category/novinki" '.$haspopup.'>Новинки</a></li>';
         }
         $query = '
                     SELECT count(*) AS tov_all_count
@@ -43,26 +43,26 @@
                 if ($res['slug'] === 'akcija' || $res['slug'] === 'akcija-bally') {
                     $a = 'style="color: red;text-shadow: 1px 1px 3px rgb(200, 104, 104),-1px -1px 3px rgb(255,255,255);"';
                 }
-                if ($res['slug'] !== 'novinki') {
+                if ($res['slug'] !== 'novinki' && $res['slug'] !== 'akcija') {
                     if ($res['slug'] !== 'akcija-bally' || $count > 0) {
                         $disp .= '<li>';
                         if ($res['slug'] !== '')
-                            $disp .= '<a '.$a.' href="/category/'.$res['slug'].'" aria-haspopup=true>'.$res['name'].'</a>';
+                            $disp .= '<a '.$a.' href="/category/'.$res['slug'].'" '.$haspopup.'>'.$res['name'].'</a>';
                         else
                             $disp .= '<a href="?categoryID='.$res['categoryID'].'">'.$res['name'].'</a>';
-                        $disp .= subcat($res['categoryID']).'';
+                        $disp .= subcat($res['categoryID'], $haspopup).'';
                     }
                 }
             }
             $disp .= '</li>
                       <li style="background: tomato">
                         <a href="/auxpage_new_items/0/all/" 
-                            aria-haspopup=true 
+                            '.$haspopup.' 
                             style="color: floralwhite;
                             text-shadow: 1px 1px 1px rgba(0, 0, 0, .4) !important;
                             font-size: 16px;
                             ">Новые поступления</a>
-                            '.newItemsCategory().'
+                            '.newItemsCategory($haspopup).'
                       </li>
                     </ul>';
         }
@@ -74,7 +74,7 @@
         return $disp;
     }
     
-    function subcat($parid)
+    function subcat($parid, $haspopup = '')
     {
         $sql = 'SELECT categoryID, slug, name_ru AS name FROM SC_categories WHERE parent='.$parid.' ORDER BY sort_order, name';
         $disp = '';
@@ -82,12 +82,12 @@
         if (mysql_num_rows($r) > 0) {
             $disp .= '<ul class="animated slideInRight">';
             while ($res = mysql_fetch_assoc($r)) {
-                $disp .= '<li aria-haspopup=true>';
+                $disp .= '<li '.$haspopup.'>';
                 if ($res['slug'] != '')
                     $disp .= '<a href="/category/'.$res['slug'].'">'.$res['name'].'</a>';
                 else
                     $disp .= '<a href="?categoryID='.$res['categoryID'].'">'.$res['name'].'</a>';
-                $disp .= subcat($res['categoryID']).'';
+                $disp .= subcat($res['categoryID'], $haspopup).'';
             }
             $disp .= '</li></ul>';
         }
@@ -95,7 +95,7 @@
         return $disp;
     }
     
-    function newItemsCategory()
+    function newItemsCategory($haspopup = '')
     {
         $disp = '';
     
@@ -107,8 +107,8 @@
         if ($r = mysql_query($sql)) {
             if (mysql_num_rows($r) > 0) {
                 $disp .= '<ul id=newmenu class="animated slideInRight">';
-                $disp .= '<li aria-haspopup=true>';
-                $disp .= '<a href="/auxpage_new_items/0/china/" aria-haspopup=true>Китай</a>';
+                $disp .= '<li '.$haspopup.'>';
+                $disp .= '<a href="/auxpage_new_items/0/china/" '.$haspopup.'>Китай</a>';
     
                 $sqlC = "SELECT DISTINCT date
                 FROM SC_product_list_item
@@ -120,8 +120,8 @@
                         $disp .= '<ul>';
                         while ($resC = mysql_fetch_assoc($rC)) {
                             $date_postup = calcDate($resC['date']);
-                            $disp .= '<li aria-haspopup=true>';
-                            $disp .= '<a href="/auxpage_new_items/'.$resC['date'].'/china/" aria-haspopup=true>'.$date_postup.'</a>';
+                            $disp .= '<li '.$haspopup.'>';
+                            $disp .= '<a href="/auxpage_new_items/'.$resC['date'].'/china/" '.$haspopup.'>'.$date_postup.'</a>';
                             $disp .= '</li>';
                         }
                         $disp .= '</ul>';
@@ -129,8 +129,8 @@
                 }
                 $disp .= '</li>';
                 
-                $disp .= '<li aria-haspopup=true>';
-                $disp .= '<a href="/auxpage_new_items/0/ukraine/" aria-haspopup=true>Украина</a>';
+                $disp .= '<li '.$haspopup.'>';
+                $disp .= '<a href="/auxpage_new_items/0/ukraine/" '.$haspopup.'>Украина</a>';
     
                 $sqlC = "SELECT DISTINCT date
                 FROM SC_product_list_item
@@ -142,8 +142,8 @@
                         $disp .= '<ul>';
                         while ($resC = mysql_fetch_assoc($rC)) {
                             $date_postup = calcDate($resC['date']);
-                            $disp .= '<li aria-haspopup=true>';
-                            $disp .= '<a href="/auxpage_new_items/'.$resC['date'].'/ukraine/" aria-haspopup=true>'.$date_postup.'</a>';
+                            $disp .= '<li '.$haspopup.'>';
+                            $disp .= '<a href="/auxpage_new_items/'.$resC['date'].'/ukraine/" '.$haspopup.'>'.$date_postup.'</a>';
                             $disp .= '</li>';
                         }
                         $disp .= '</ul>';

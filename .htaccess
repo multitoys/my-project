@@ -13,6 +13,8 @@ RewriteRule ^shop/(imgval.php|wbs_messageserserver.php) published/SC/html/script
 
 RewriteCond  %{REQUEST_FILENAME} !-f
 RewriteRule ^(repo_themes|js|3rdparty|images_common|products_pictures|images|themes|css)/(.*)$ published/SC/html/scripts/$1/$2?frontend=1 [L]
+RewriteRule ^(pictures)/(.*)$ published/publicdata/MULTITOYS/attachments/SC/products_$1/$2?frontend=1 [L]
+RewriteRule ^(search_pictures)/(.*)$ published/publicdata/MULTITOYS/attachments/SC/$1/$2?frontend=1 [L]
 
 RewriteCond  %{REQUEST_FILENAME} !-f
 RewriteRule ^(imgval.php|wbs_messageserserver.php|get_file.php) published/SC/html/scripts/$1 [L]
@@ -44,54 +46,3 @@ RewriteRule (.*) published/SC/html/scripts/index.php?__furl_path=$1&frontend=1 [
 #RewriteRule ^(.*[^/])$ /$1/ [R=301,L]
 RewriteRule .*?/([0-9]+)/([A-Za-z_]+)/$ &date=$1&made=$2 [L]
 RewriteRule .*?/([0-9]+)/([A-Za-z_]+)/([A-Za-z_]+)/([A-Za-z_]+)/$ &date=$1&made=$2&sort=$3&direction=$4 [L]
-
-
-
-#FileETag MTime Size
-#<ifmodule mod_expires.c>
-#<filesmatch ".(jpg|jpeg|gif|png|ico|css|js)$">
-#ExpiresActive on
-#ExpiresDefault "access plus 1 year"
-#</filesmatch>
-#</ifmodule>
-#
-#<IfModule mod_setenvif.c>
-#BrowserMatch "MSIE" force-no-vary
-#BrowserMatch "Mozilla/4.[0-9]{2}" force-no-vary
-#</IfModule>
-#
-#<IfModule mod_expires.c>
-#ExpiresActive On
-#ExpiresDefault "access 7 days"
-#ExpiresByType application/javascript "access plus 1 year"
-#ExpiresByType text/javascript "access plus 1 year"
-#ExpiresByType text/css "access plus 1 year"
-##ExpiresByType text/html "access plus 7 day"
-#ExpiresByType text/x-javascript "access 1 year"
-#ExpiresByType image/gif "access plus 1 year"
-#ExpiresByType image/jpeg "access plus 1 year"
-#ExpiresByType image/png "access plus 1 year"
-#ExpiresByType image/jpg "access plus 1 year"
-#ExpiresByType image/x-icon "access 1 year"
-#ExpiresByType application/x-shockwave-flash "access 1 year"
-#</IfModule>
-#
-#<ifModule mod_headers.c>
-#<filesMatch "\.(ico|pdf|flv|jpg|jpeg|png|gif|swf)$">
-#Header set Cache-Control "max-age=2592000, public"
-#</filesMatch>
-#<filesMatch "\.(css|js)$">
-#Header set Cache-Control "max-age=2592000, public"
-#</filesMatch>
-#<filesMatch "\.(xml|txt)$">
-#Header set Cache-Control "max-age=172800, public, must-revalidate"
-#</filesMatch>
-##<filesMatch "\.(html|htm|php)$">
-##Header set Cache-Control "max-age=172800, private, must-revalidate"
-##</filesMatch>
-#</ifModule>
-#
-#<IfModule mod_setenvif.c>
-#BrowserMatch "MSIE" force-no-vary
-#BrowserMatch "Mozilla/4.[0-9]{2}" force-no-vary
-#</IfModule>

@@ -412,7 +412,7 @@
                     <hr style='border-color: coral;'>
                     <div class=cs_product_info style='height: auto'>
                         <div class='productname newpostup'>
-                                $name <small>&laquo;$category_conc&raquo;</small><span style='color:dodgerblue; font-size: x-small'> $date_added</span><br>
+                                <span>$name</span> <small>&laquo;$category_conc&raquo;</small><span style='color:dodgerblue; font-size: x-small'> $date_added</span><br>
                                 <small>арт.: </small><span class='search-product-code blue-button' style='color: white;background-color: lightcoral;' onclick=\"this.style.boxShadow = 'none'; this.style.backgroundColor = 'transparent'; this.style.color = '#008BFF';\">$product_code</span><br>
                                 <small>цена: </small><span class=totalPrice>$competitor_product->price_uah&nbsp;&#8372;</span>
                         </div>
@@ -836,16 +836,16 @@
                     if ($pics_for_slider > 0) {
                         $pictures = '
                         <div class="slider visual">
-                            <div class=controls  data-pid='.URL_PRODUCTS_PICTURES.'/'.$Product->filename.'>
+                            <div class=controls  data-pid="/pictures/'. $Product->filename.'">
                                 <div class="label prev_pic" onclick="changePic('.$Product->code_1c.',-1)"></div>
                                 <div class="label next_pic" onclick="changePic('.$Product->code_1c.', 1)"></div>
                             </div>
-                            <img id=pic'.$Product->code_1c.' data-pics='.$pics_for_slider.' data-current=0 src='.URL_PRODUCTS_PICTURES.'/'.$Product->thumbnail.' />
+                            <img id=pic'.$Product->code_1c.' data-pics='.$pics_for_slider.' data-current=0 src="/pictures/'.$Product->thumbnail.'" />
                             '.$label.'
                         </div>';
                     } else {
                         $pictures = ((strlen($Product->thumbnail) > 4) && (strlen($Product->filename) > 4))?"
-                            <div class=visual><a href='/product/$Product->slug'><img width=160 height=120 class=preview  alt='$Product->name_ru' src='".URL_PRODUCTS_PICTURES."/$Product->thumbnail' data-pid='".URL_PRODUCTS_PICTURES."/$Product->filename'></a>$label</div>":"<div class=visual><a href='/product/$Product->slug'><img width=153 height=117 alt='no foto' src='/img/nophoto.jpg'></a>$label</div>";
+                            <div class=visual><a href='/product/$Product->slug'><img width=160 height=120 class=preview  alt='$Product->name_ru' src='/pictures/".$Product->thumbnail."' data-pid='/pictures/".$Product->filename."'></a>$label</div>":"<div class=visual><a href='/product/$Product->slug'><img width=153 height=117 alt='no foto' src='/img/nophoto.jpg'></a>$label</div>";
                     }
                     //$pictures = '<div class=div_izobrag><img width=153 height=117 alt=\'no foto\' src=\'/img/nophoto.jpg\' /></div>';
                     //if ($zakaz === 1) {

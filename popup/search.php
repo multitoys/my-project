@@ -97,6 +97,8 @@ if ($may_order) {
 
     if (mysql_num_rows($query) > 0) {
         echo $all_res;
+        $data = '';
+        
         while ($sql = mysql_fetch_array($query)) {
 
             $too_long = false;
@@ -125,6 +127,7 @@ if ($may_order) {
                 $code = stripAll($_POST['code']);
                 $code1c = $sql['code_1c'];
                 $price_conc = stripAll($_POST['priceConc']);
+                $data = " data-code1c=$code1c";
                 $set_conc = "onclick=setAnalogs(\"$conc\",\"$code\",\"$code1c\",\"$price_conc\")";
                 $price = $sql['Price'];
             } else {
@@ -137,10 +140,10 @@ if ($may_order) {
             }
             //$price = ($vip)?'<p><span style="color:#008DD9">цена: '.$sql['Price'].'</span></p>':'';
             echo "
-                    <li>
+                    <li$data>
                         <a $set_conc>
                             <img width=80px height=60px
-                                  src='/published/publicdata/MULTITOYS/attachments/SC/search_pictures/{$picture}'
+                                  src='/search_pictures/{$picture}'
                                   alt='{$sql['name_ru']}'>
                             <span>{$name_ru}</span>
                             <p>арт. {$product_code}</p>$price

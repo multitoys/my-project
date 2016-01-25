@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.9, created on 2016-01-21 17:22:59
+<?php /* Smarty version 2.6.9, created on 2016-01-25 17:37:10
          compiled from head.html */ ?>
 <?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
 smarty_core_load_plugins(array('plugins' => array(array('modifier', 'default', 'head.html', 3, false),array('modifier', 'escape', 'head.html', 3, false),)), $this); ?>
@@ -31,9 +31,9 @@ smarty_core_load_plugins(array('plugins' => array(array('modifier', 'default', '
     <?php endif;  endif;  if ($this->_tpl_vars['ios'] != 'ios'): ?>
     <script <?php echo ((is_array($_tmp=@$this->_tpl_vars['deffer'])) ? $this->_run_mod_handler('default', true, $_tmp, ' ') : smarty_modifier_default($_tmp, ' ')); ?>
  src="<?php echo $this->_tpl_vars['URL_THEME_OFFSET']; ?>
-/head-dev.js"></script>
+/head-1453123179214.js"></script>
 <?php else: ?>
     <script <?php echo ((is_array($_tmp=@$this->_tpl_vars['deffer'])) ? $this->_run_mod_handler('default', true, $_tmp, ' ') : smarty_modifier_default($_tmp, ' ')); ?>
  src="<?php echo $this->_tpl_vars['URL_THEME_OFFSET']; ?>
-/head-m-dev.js"></script>
+/head-m-1453123179214.js"></script>
 <?php endif; ?>

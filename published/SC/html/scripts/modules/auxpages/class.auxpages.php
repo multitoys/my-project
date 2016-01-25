@@ -770,7 +770,9 @@
 
                                 if ($M_Product = mysql_fetch_object($res3)) {
 
-                                    $price_diff = round(($price / $M_Product->price_uah - 1) * 100, 1);
+                                    if ($M_Product->price_uah != 0) {
+                                        $price_diff = round(($price / $M_Product->price_uah - 1) * 100, 1);
+                                    }
                                     //                                $price_diff = round(($Product->Price / $M_Product->price_uah - 1) * 100, 1);
                                     $marked = ($price_diff > 0)?'red':'green';
                                     $mark_conc = ($price_diff > 0)?'font-weight:bold;background:yellow; box-shadow:

@@ -49,7 +49,7 @@
         } else {
             $str_redirect = 'Location: %s';
         }
-        if (!strpos($_SERVER['HTTP_REFERER'], 'auxpage_new_items')) {
+        if (!strpos($_SERVER['HTTP_REFERER'], 'auxpage_new_items') || $_GET['ukey'] == 'logout') {
             header(sprintf($str_redirect, escapeCRLF($url)));
         }
         exit(1);

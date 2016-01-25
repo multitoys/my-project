@@ -81,12 +81,12 @@ TAG
             $_GET['auth'] > 0
         ) {
             
-                    define('LOGIN', 'Elenna');
-                    define('PASSWORD', '0675230623');
+//                    define('LOGIN', 'Elenna');
+//                    define('PASSWORD', '0675230623');
             //        define('LOGIN', 'rusmol');
             //        define('PASSWORD', '333');
-            //        define('LOGIN', '973846984');
-            //        define('PASSWORD', '973846984');
+        define('LOGIN', '973846984');
+        define('PASSWORD', '973846984');
 //            define('LOGIN', '0632986207');
 //            define('PASSWORD', '6207');
             
@@ -114,12 +114,13 @@ TAG
         $part = 0;
         $percent = 0;
         $products_cnt = 1000;
-        $replace_name = array('&laquo;', '&raquo;', '&rdquo;', '&ldquo;', '&quot;', '&#039;', '\'', '.', '"', '„');
+        $replace_name = array('&laquo;', '&raquo;', '&rdquo;', '&ldquo;', '&quot;', '&#039;', '\'', '.', '"', '„', '&amp;');
 
         foreach ($categories as $parent => $cats) {
 
             set_time_limit(0);
             $category_urls = $cats;
+            $refferer = 'shop/products/index?new=1';
 
             foreach ($category_urls as $category => $url) {
 
@@ -129,7 +130,8 @@ TAG
                 $filename = DIR_COMPETITORS.'/'.$filename.EXT;
                 $products = '';
 
-                readUrl($category_url, $filename, '', $headers);
+                readUrl($category_url, $filename, URL_COMPETITORS.URL_PREFIX.$refferer, $headers);
+                $refferer = $category_url;
 
                 $html = file_get_contents($filename);
                 preg_match_all(

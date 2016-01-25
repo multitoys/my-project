@@ -175,11 +175,11 @@
             'Фламинго'                      => '955-4Flamingo'
         ),
 
-        'Велосипеды'              => array(
-            '2-х колесные'  => '979-2-h-kolesnie',
-            '3-х колесные'  => '977-3-h-kolesnie',
-            'Электромобили' => '1142-Elektromobili'
-        ),
+//        'Велосипеды'              => array(
+//            '2-х колесные'  => '979-2-h-kolesnie',
+//            '3-х колесные'  => '977-3-h-kolesnie',
+//            'Электромобили' => '1142-Elektromobili'
+//        ),
 
         'Спорттовары'             => array(
             'Аксессуары для спорта'  => '1074-Aksessuari-dlya-sporta',
@@ -203,32 +203,33 @@
             'INTEX'        => '1059-04INTEX'
         ),
 
-        'Канцелярия'              => array(
-            //            'Офисная канцелярия'      => '423-Ofisnie-tovari',
-            'Школьные принадлежности' => '422-Shkolnie-prinadlezhnosti'
-        ),
+//        'Канцелярия'              => array(
+//            //            'Офисная канцелярия'      => '423-Ofisnie-tovari',
+//            'Школьные принадлежности' => '422-Shkolnie-prinadlezhnosti'
+//        ),
 
-        'Печатная продукция'      => array(
-            'Книги' => '426-Knigi'
-        ),
+//        'Печатная продукция'      => array(
+//            'Книги' => '426-Knigi'
+//        ),
 
         'Другие товары для детей' => array(
             'Мебель для детей' => '1016-11Mebel-dlya-detei'
         ),
 
-        'Сувенирная продукция'    => array(
-            'Небесные фонарики' => '1136-Nebesnie-fonariki',
+//        'Сувенирная продукция'    => array(
+//            'Небесные фонарики' => '1136-Nebesnie-fonariki',
             //            'Открытки'          => '1078-Otkritki',
-            'Подарочные пакеты' => '1139-Podarochnie-paketi'
-        ),
+//            'Подарочные пакеты' => '1139-Podarochnie-paketi'
+//        ),
 
-        'Новинки, Хиты, Акция'    => array(
-            'Новинки'        => 'page_size500?new=1',
-            'Хиты'           => 'page_size500?bestseller=1',
-            'Акция'          => 'page_size500?offer=1',
-            '5 декабря 2015' => 'shop/news/view/296?page_size=500',
-            '7 декабря 2015' => 'shop/news/view/301?page_size=500',
-            '8 декабря 2015' => 'shop/news/view/303?page_size=500'
+        'Новинки, Хиты, Акция' => array(
+            'Новинки' => 'page_size500?new=1',
+            'Хиты' => 'page_size500?bestseller=1',
+            'Акция' => 'page_size500?offer=1',
+            '6 января 2016' => 'shop/news/view/343?page_size=500',
+            '8 января 2016' => 'shop/news/view/344?page_size=500',
+            '12 января 2016' => 'shop/news/view/347?page_size=500',
+            '13 января 2016' => 'shop/news/view/349?page_size=500'
         )
     );
 

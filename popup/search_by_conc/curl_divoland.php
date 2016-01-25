@@ -46,7 +46,7 @@ if ($a) {
 TAG
     );
 //    $usd = getValue('currency_value', 'Conc__competitors', 'CCID = 1');
-    $usd = 22.00;
+    $usd = 21.90;
 
     define('CODE_PATTERN', '<a[^<>]*?class="zoom[\s]+nyroModal"[\s]+href="/prodimages/normal/[\w]+/([\w]+?)\.jpg"[^<>]*?>[^<>]*?</a>[^<>]*?</div>[^<>]*?');
     define('NAME_PATTERN', '<a[\s]+class="name"[^<>]*?>(.*)</a>[^<>]*?');

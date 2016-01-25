@@ -11,9 +11,10 @@
             'Новинки'        => 'page_size500?new=1',
             'Хиты'           => 'page_size500?bestseller=1',
             'Акция'          => 'page_size500?offer=1',
-            '5 декабря 2015' => 'shop/news/view/296?page_size=500',
-            '7 декабря 2015' => 'shop/news/view/301?page_size=500',
-            '8 декабря 2015' => 'shop/news/view/303?page_size=500'
+            '6 января 2016' => 'shop/news/view/343?page_size=500',
+            '8 января 2016' => 'shop/news/view/344?page_size=500',
+            '12 января 2016' => 'shop/news/view/347?page_size=500',
+            '13 января 2016' => 'shop/news/view/349?page_size=500'
         )
     );
     

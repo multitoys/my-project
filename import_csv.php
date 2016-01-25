@@ -123,8 +123,8 @@ TAG
         define('CAT_SUPER_PRICE_ID', getValue('categoryID', 'SC_categories', "name_ru = 'Суперцена'"));
         // Идентификатор категории "Все бонусные товары"
         define('CAT_BONUS_ID', getValue('categoryID', 'SC_categories', "name_ru = 'Все бонусные товары'"));
-        //        // Идентификатор категории "Все товары под заказ"
-        //        define('CAT_ZAKAZ_ID', getValue('categoryID', 'SC_categories', "name_ru = 'Все товары под заказ'"));
+//        // Идентификатор категории "Все товары под заказ"
+//        define('CAT_ZAKAZ_ID', getValue('categoryID', 'SC_categories', "name_ru = 'Все товары под заказ'"));
         
         $query = 'SELECT categoryID FROM SC_categories WHERE allow_products_comparison';
         $res = mysql_query($query) or die(mysql_error()."<br>$query");
@@ -237,7 +237,7 @@ TAG
     if (($handle = fopen($filename, 'r')) !== false) {
         
         $table = 'Conc__analogs';
-        //        $new_ua = array();
+//        $new_ua = array();
         
         while (($data = fgetcsv($handle, 1000, ';')) !== false) {
             
@@ -287,8 +287,11 @@ TAG
                 $akcia = ($akcia > 0)?1:0;
                 $akcia_skidka = ($akcia > 0)?(1 - $price / $oldprice) * 100:0;
                 $akcia_skidka = is_numeric($akcia_skidka)?$akcia_skidka:0;
-                $akcia_bally = $bonus / $price;
-                $akcia_bally = is_numeric($akcia_bally)?$akcia_bally:0;
+                $akcia_bally = 0;
+                if ($price > 0) {
+                    $akcia_bally = (int)($bonus / $price);
+                }
+//                $akcia_bally = is_numeric($akcia_bally)?$akcia_bally:0;
                 $akcia_bally = ($akcia_bally > 2)?1:0;
                 $doza = is_numeric($doza)?$doza:0;
                 $box = is_numeric($box)?$box:0;
@@ -300,9 +303,13 @@ TAG
                 if (is_numeric($id) && strlen($id) > 4) {
                     
                     $productID = getValue('productID', 'SC_products', "code_1c = '$id'");
-                    
+                    $margin = 0;
+                    if ($purchase > 0) {
+                        $margin = round((100 * ($price / $purchase) - 100), 0);
+                    }
+
                     if (!$productID) {
-                        
+
                         $query = "
                                 INSERT INTO SC_products
                                        (
@@ -364,9 +371,8 @@ TAG
                         $res = mysql_query($query) or die(mysql_error()."<br>$query");
                         $productID = mysql_insert_id();
                         $new_id++;
-                        
+
                         // добавление товара в таблицу сравнения конкурентов
-                        $margin = round((100 * ($price / $purchase) - 100), 0);
                         $query
                             = "
                             INSERT INTO $table
@@ -412,7 +418,7 @@ TAG
                         $query = "DELETE FROM SC_product_list_item WHERE productID = $productID";
                         $res = mysql_query($query) or die(mysql_error()."<br>$query");
                         
-                        $margin = round((100 * ($price / $purchase) - 100), 0);
+//                        $margin = round((100 * ($price / $purchase) - 100), 0);
                         $query
                             = "
                             UPDATE $table
@@ -465,26 +471,26 @@ TAG
                                   VALUES ($productID, ".CAT_BONUS_ID.", 1)";
                         $res = mysql_query($query) or die(mysql_error()."<br>$query");
                     }
-                    //                    if ($zakaz) {
-                    //                        $query = "INSERT INTO SC_category_product 
-                    //                                  VALUES ($productID, ".CAT_ZAKAZ_ID.", 1)";
-                    //                        $res = mysql_query($query) or die(mysql_error()."<br>$query");
-                    //                    }
+//                    if ($zakaz) {
+//                        $query = "INSERT INTO SC_category_product 
+//                                  VALUES ($productID, ".CAT_ZAKAZ_ID.", 1)";
+//                        $res = mysql_query($query) or die(mysql_error()."<br>$query");
+//                    }
                     if ($hit) {
                         $query = "INSERT INTO SC_product_list_item (list_id, productID, priority) 
                                   VALUES ('hitu', $productID, 1)";
                         $res = mysql_query($query) or die(mysql_error()."<br>$query");
                     }
                     if ($new_postup) {
-                        //                        if ($ua) {
-                        //                            $new_ua[$productID] = $new_postup;
-                        //                        } else {
-                        $query = "INSERT INTO SC_product_list_item (list_id, productID, priority, date, ukraine) 
+//                        if ($ua) {
+//                            $new_ua[$productID] = $new_postup;
+//                        } else {
+                            $query = "INSERT INTO SC_product_list_item (list_id, productID, priority, date, ukraine) 
                                   VALUES ('newitemspostup', $productID, 1, $new_postup, $ua)";
                             $res = mysql_query($query) or die(mysql_error()."<br>$query");
-                        //                        }
+//                        }
                     }
-                    //                    $progress = round(($no / ($rowcount - 2) * 100), -1, PHP_ROUND_HALF_DOWN);
+//                    $progress = round(($no / ($rowcount - 2) * 100), -1, PHP_ROUND_HALF_DOWN);
                     $progress = round(($no / ($rowcount - 2) * 100), 0, PHP_ROUND_HALF_DOWN);
                     if ($progress > $percent) {
                         $percent = $progress.'%';
@@ -554,12 +560,12 @@ TAG
         $id = $ids[0];
         $query1 = "INSERT INTO SC_category_product VALUES (".$id.", ".CAT_NOVINKI_ID.", 0)";
         $result = mysql_query($query1) or die(mysql_error()."<br>$query1");
-        //        if ($new_ua[$id]) {
-        //            $query2
-        //                = "INSERT INTO SC_product_list_item (list_id, productID, priority, date) 
-        //                   VALUES ('newitemspostup', $id, 1, $new_ua[$id])";
-        //            $res2 = mysql_query($query2) or die(mysql_error()."<br>$query2");
-        //        }
+//        if ($new_ua[$id]) {
+//            $query2
+//                = "INSERT INTO SC_product_list_item (list_id, productID, priority, date) 
+//                   VALUES ('newitemspostup', $id, 1, $new_ua[$id])";
+//            $res2 = mysql_query($query2) or die(mysql_error()."<br>$query2");
+//        }
     }
     $query = "DELETE FROM `SC_auth_log` WHERE `Login` = 'sales'";
     $res = mysql_query($query) or die(mysql_error()."<br>$query");

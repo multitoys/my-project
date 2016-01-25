@@ -49,7 +49,9 @@
         } else {
             $str_redirect = 'Location: %s';
         }
-        header(sprintf($str_redirect, escapeCRLF($url)));
+        if (!strpos($_SERVER['HTTP_REFERER'], 'auxpage_new_items')) {
+            header(sprintf($str_redirect, escapeCRLF($url)));
+        }
         exit(1);
         //header("location: ".escapeCRLF($url), true, 302);
         //exit(1);
@@ -1782,7 +1784,7 @@
         , 'WAP', 'PlayStation Portable', 'LG', 'MMP', 'OPWV', 'Symbian', 'EPOC');
         $pda = false;
         foreach ($useragents as $useragent) {
-            if (!eregi($useragent, $container)) continue;
+            if (!stripos($useragent, $container)) continue;
             $pda = true;
             break;
         }

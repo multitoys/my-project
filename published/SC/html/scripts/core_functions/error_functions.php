@@ -42,7 +42,7 @@ function log_error( $errno, $errstr, $errfile, $errline )
 		$errfile,
 		$errline,
 		$errno);
-		#error_log ($errorMessage, 3, $errorLogName, "\n");
+		error_log ($errorMessage, 3, $errorLogName, "\n");
 	}
 }
 /**
@@ -76,10 +76,9 @@ function handlePEARError( $error )
 }
 function getErrorLogName()
 {
-	if(defined('ERR_SCLOG_FILE')&&file_exists(dirname(constant('ERR_SCLOG_FILE')))){
-		return constant('ERR_SCLOG_FILE');
-	}else{
+//	if(defined('ERR_SCLOG_FILE')&&file_exists(dirname(constant('ERR_SCLOG_FILE')))){
+//		return constant('ERR_SCLOG_FILE');
+//	}else{
 		return sprintf('%s/kernel/sc-error.log',WBS_DIR);
-	}
+//	}
 }
-?>

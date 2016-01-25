@@ -311,7 +311,8 @@
         //$query         = "SELECT skidka FROM SC_customers WHERE customerID = $customerEntry->customerID";
         //$skidka        = mysql_fetch_object(mysql_query($query))->skidka;
 
-        if (isset($_SESSION['log'])) {
+//        if (isset($_SESSION['log'])) {
+        if (!is_null($customerEntry)) {
 
             $skidka = (int)$_SESSION['cs_skidka'];
 
@@ -375,7 +376,7 @@
                     //'doza'  => $cart_item['doza'],
                     'Bonus'             => $Bonus * $cart_item['Quantity'],
                     'cost'              => show_price($cart_item['Quantity'] * $costUC),
-                    'product_code'      => $cart_item['product_code'],
+                    'product_code'      => $cart_item['product_code']
                 );
 
                 if ($tmp['thumbnail_url']) {
@@ -397,103 +398,104 @@
 
                 $cart_content[] = $tmp;
             }
-        } else { //unauthorized user - get cart from session vars
-
-            $total_price = 0; //total cart value
-            $cart_content = array();
-
-            //shopping cart items count
-
-            if (isset($_SESSION['gids']))
-
-                for ($j = 0; $j < count($_SESSION['gids']); $j++) {
-
-                    if ($_SESSION['gids'][$j]) {
-
-                        $session_items[] = CodeItemInClient($_SESSION['configurations'][$j], $_SESSION['gids'][$j]);
-
-                        $q = db_phquery("SELECT t1.*, p1.thumbnail FROM ?#PRODUCTS_TABLE t1 LEFT JOIN ?#PRODUCT_PICTURES p1 ON t1.default_picture=p1.photoID WHERE t1.productID=?", $_SESSION['gids'][$j]);
-
-                        if ($r = db_fetch_row($q)) {
-
-                            LanguagesManager::ml_fillFields(PRODUCTS_TABLE, $r);
-
-                            $costUC = GetPriceProductWithOption(
-
-                                $_SESSION['configurations'][$j],
-
-                                $_SESSION['gids'][$j])/* * $_SESSION["counts"][$j]*/
-                            ;
-
-                            $id = $_SESSION['gids'][$j];
-
-                            if (count($_SESSION['configurations'][$j]) > 0) {
-
-                                for ($tmp1 = 0; $tmp1 < count($_SESSION['configurations'][$j]); $tmp1++) $id .= '_'.$_SESSION['configurations'][$j][$tmp1];
-                            }
-
-                            $tmp = array(
-
-                                'productID'         => $_SESSION['gids'][$j],
-
-                                'slug'              => $r['slug'],
-
-                                'id'                => $id, //$_SESSION['gids'][$j],
-
-                                'name'              => $r['name'],
-
-                                'thumbnail_url'     => $r['thumbnail'] && file_exists(DIR_PRODUCTS_PICTURES.'/'.$r['thumbnail'])?URL_PRODUCTS_PICTURES.'/'.$r['thumbnail']:'',
-
-                                'brief_description' => $r['brief_description'],
-
-                                'quantity'          => $_SESSION['counts'][$j],
-
-                                'free_shipping'     => $r['free_shipping'],
-
-                                'costUC'            => $costUC,
-
-                                'cost'              => show_price($costUC * $_SESSION['counts'][$j])
-
-                            );
-
-                            if ($tmp['thumbnail_url']) {
-
-                                list($thumb_width, $thumb_height) = getimagesize(DIR_PRODUCTS_PICTURES.'/'.$r['thumbnail']);
-
-                                list($tmp['thumbnail_width'], $tmp['thumbnail_height']) = shrink_size($thumb_width, $thumb_height, round(CONF_PRDPICT_THUMBNAIL_SIZE / 2), round(CONF_PRDPICT_THUMBNAIL_SIZE / 2));
-                            }
-
-                            $strOptions = GetStrOptions($_SESSION['configurations'][$j]);
-
-                            if (trim($strOptions) !== '')
-
-                                $tmp['name'] .= "  (".$strOptions.")";
-
-                            $q_product = db_query("SELECT min_order_amount, shipping_freight FROM ".PRODUCTS_TABLE.
-
-                                                  " WHERE productID=".
-
-                                                  $_SESSION['gids'][$j]);
-
-                            $product = db_fetch_row($q_product);
-
-                            if ($product['min_order_amount'] > $_SESSION['counts'][$j])
-
-                                $tmp['min_order_amount'] = $product['min_order_amount'];
-
-                            $freight_cost += $_SESSION['counts'][$j] * $product['shipping_freight'];
-
-                            $cart_content[] = $tmp;
-
-                            $total_price += GetPriceProductWithOption(
-
-                                                $_SESSION['configurations'][$j],
-
-                                                $_SESSION['gids'][$j]) * $_SESSION['counts'][$j];
-                        }
-                    }
-                }
-        }
+        } 
+//        else { //unauthorized user - get cart from session vars
+//
+//            $total_price = 0; //total cart value
+//            $cart_content = array();
+//
+//            //shopping cart items count
+//
+//            if (isset($_SESSION['gids']))
+//
+//                for ($j = 0; $j < count($_SESSION['gids']); $j++) {
+//
+//                    if ($_SESSION['gids'][$j]) {
+//
+//                        $session_items[] = CodeItemInClient($_SESSION['configurations'][$j], $_SESSION['gids'][$j]);
+//
+//                        $q = db_phquery("SELECT t1.*, p1.thumbnail FROM ?#PRODUCTS_TABLE t1 LEFT JOIN ?#PRODUCT_PICTURES p1 ON t1.default_picture=p1.photoID WHERE t1.productID=?", $_SESSION['gids'][$j]);
+//
+//                        if ($r = db_fetch_row($q)) {
+//
+//                            LanguagesManager::ml_fillFields(PRODUCTS_TABLE, $r);
+//
+//                            $costUC = GetPriceProductWithOption(
+//
+//                                $_SESSION['configurations'][$j],
+//
+//                                $_SESSION['gids'][$j])/* * $_SESSION["counts"][$j]*/
+//                            ;
+//
+//                            $id = $_SESSION['gids'][$j];
+//
+//                            if (count($_SESSION['configurations'][$j]) > 0) {
+//
+//                                for ($tmp1 = 0; $tmp1 < count($_SESSION['configurations'][$j]); $tmp1++) $id .= '_'.$_SESSION['configurations'][$j][$tmp1];
+//                            }
+//
+//                            $tmp = array(
+//
+//                                'productID'         => $_SESSION['gids'][$j],
+//
+//                                'slug'              => $r['slug'],
+//
+//                                'id'                => $id, //$_SESSION['gids'][$j],
+//
+//                                'name'              => $r['name'],
+//
+//                                'thumbnail_url'     => $r['thumbnail'] && file_exists(DIR_PRODUCTS_PICTURES.'/'.$r['thumbnail'])?URL_PRODUCTS_PICTURES.'/'.$r['thumbnail']:'',
+//
+//                                'brief_description' => $r['brief_description'],
+//
+//                                'quantity'          => $_SESSION['counts'][$j],
+//
+//                                'free_shipping'     => $r['free_shipping'],
+//
+//                                'costUC'            => $costUC,
+//
+//                                'cost'              => show_price($costUC * $_SESSION['counts'][$j])
+//
+//                            );
+//
+//                            if ($tmp['thumbnail_url']) {
+//
+//                                list($thumb_width, $thumb_height) = getimagesize(DIR_PRODUCTS_PICTURES.'/'.$r['thumbnail']);
+//
+//                                list($tmp['thumbnail_width'], $tmp['thumbnail_height']) = shrink_size($thumb_width, $thumb_height, round(CONF_PRDPICT_THUMBNAIL_SIZE / 2), round(CONF_PRDPICT_THUMBNAIL_SIZE / 2));
+//                            }
+//
+//                            $strOptions = GetStrOptions($_SESSION['configurations'][$j]);
+//
+//                            if (trim($strOptions) !== '')
+//
+//                                $tmp['name'] .= "  (".$strOptions.")";
+//
+//                            $q_product = db_query("SELECT min_order_amount, shipping_freight FROM ".PRODUCTS_TABLE.
+//
+//                                                  " WHERE productID=".
+//
+//                                                  $_SESSION['gids'][$j]);
+//
+//                            $product = db_fetch_row($q_product);
+//
+//                            if ($product['min_order_amount'] > $_SESSION['counts'][$j])
+//
+//                                $tmp['min_order_amount'] = $product['min_order_amount'];
+//
+//                            $freight_cost += $_SESSION['counts'][$j] * $product['shipping_freight'];
+//
+//                            $cart_content[] = $tmp;
+//
+//                            $total_price += GetPriceProductWithOption(
+//
+//                                                $_SESSION['configurations'][$j],
+//
+//                                                $_SESSION['gids'][$j]) * $_SESSION['counts'][$j];
+//                        }
+//                    }
+//                }
+//        }
 
         return array(
             'cart_content' => $cart_content,

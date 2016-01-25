@@ -4,7 +4,7 @@ $smarty = &Core::getSmarty();
 
 set_query('safemode=', '', true);
 
-$page = isset($_GET['page'])?intval($_GET['page']):1;
+$page = isset($_GET['page'])?(int)$_GET['page']:1;
 if ($page<1)$page=1;
 //orders list 
 $order_statuses = ost_getOrderStatuses();
@@ -17,7 +17,8 @@ if(!isset($_GET['search']) && !$changeStatusIsPressed && !isset($_GET['export_to
 	}else{
 		renderURL('order_search_type=SearchByStatusID&search=Show'.
 		'&checkbox_order_status_'.CONF_ORDSTATUS_PENDING.'=1'.
-		'&checkbox_order_status_'.CONF_ORDSTATUS_PROCESSING.'=1'.
+//		'&checkbox_order_status_'.CONF_ORDSTATUS_PROCESSING.'=1'.
+		'&checkbox_order_status_'.CONF_ORDSTATUS_DELIVERED.'=1'.
 		'&checkbox_order_status_'.CONF_ORDSTATUS_CHARGED.'=1', '', true);
 	}
 }
@@ -75,9 +76,9 @@ if ( isset($_GET['search']) || $changeStatusIsPressed || isset($_GET['export_to_
 	if ( !isset($_GET['direction']) )$_GET['direction'] = 'DESC';
 	$callBackParam['direction'] = $_GET['direction'];
 
-	if ( $_GET['order_search_type'] == 'SearchByOrderID' ){
+	if ( $_GET['order_search_type'] === 'SearchByOrderID' ){
 		$callBackParam['orderID'] = (int)preg_replace('/^'.CONF_ORDERID_PREFIX.'/u', '', $_GET['orderID_textbox']);
-	}elseif ( $_GET['order_search_type'] == 'SearchByStatusID' ){
+	}elseif ( $_GET['order_search_type'] === 'SearchByStatusID' ){
 		$orderStatuses = array();			
 		foreach($order_statuses as $i=>$_status){
 			if ( $_status['selected']){
@@ -86,6 +87,8 @@ if ( isset($_GET['search']) || $changeStatusIsPressed || isset($_GET['export_to_
 			}
 		}
 		$callBackParam['orderStatuses'] = $orderStatuses;
+	}elseif ( $_GET['order_search_type'] === 'SearchByCustomer' ){
+		$callBackParam['Customer'] = xEscapeSQLstring($_GET['Customer_textbox']);
 	}
 	$orders = array();
 	$count = 0;
@@ -116,11 +119,11 @@ if ( isset($_GET['search']) || $changeStatusIsPressed || isset($_GET['export_to_
 			'ascsort' => array('getvars'=>'&sort=billing_firstname&direction=ASC'),
 			'descsort' => array('getvars'=>'&sort=billing_firstname&direction=DESC'),
 			),
-		array(
-			'header_name' => translate('payment'),
-			'ascsort' => array('getvars'=>'&sort=payment_type&direction=ASC'),
-			'descsort' => array('getvars'=>'&sort=payment_type&direction=DESC'),
-			),
+//		array(
+//			'header_name' => translate('payment'),
+//			'ascsort' => array('getvars'=>'&sort=payment_type&direction=ASC'),
+//			'descsort' => array('getvars'=>'&sort=payment_type&direction=DESC'),
+//			),
 		array(
 			'header_name' => translate('shipping'),
 			'ascsort' => array('getvars'=>'&sort=shipping_type&direction=ASC'),
@@ -130,6 +133,11 @@ if ( isset($_GET['search']) || $changeStatusIsPressed || isset($_GET['export_to_
 			'header_name' => translate("ordr_order_total"),
 			'ascsort' => array('getvars'=>'&sort=order_amount&direction=ASC'),
 			'descsort' => array('getvars'=>'&sort=order_amount&direction=DESC'),
+			),
+		array(
+			'header_name' => translate("ordr_customer_ip"),
+			'ascsort' => array('getvars'=>'&sort=customer_ip&direction=ASC'),
+			'descsort' => array('getvars'=>'&sort=customer_ip&direction=DESC'),
 			),
 		array(
 			'header_name' => translate("str_status")
@@ -174,10 +182,10 @@ if ( isset($_GET['search']) || $changeStatusIsPressed || isset($_GET['export_to_
 		$smarty->assign('TotalFound', str_replace( "{N}",	''/*$TotalRows*/,translate("msg_n_orders_found")));
 		$smarty->assign('TotalCount', $TotalRows);
 		$smarty->assign('total_statuses_amount',$defaultCurrency->getView($total_statuses_amount));
-		$smarty->hassign( 'orders', $orders );	
-		$smarty->assign( 'order_statuses', $order_statuses );
+		$smarty->hassign('orders', $orders);	
+		$smarty->assign('order_statuses', $order_statuses);
 		$smarty->assign('page_enabled','1');
-		if ( $export_to_excel&&!isset($_GET['search'])){
+		if ($export_to_excel&&!isset($_GET['search'])) {
 			$currencyEntry = Currency::getDefaultCurrencyInstance();
 			/* @var $currencyEntry Currency*/
 			$currencyISO3 = $currencyEntry->currency_iso_3;
@@ -282,14 +290,13 @@ if ( isset($_GET['search']) || $changeStatusIsPressed || isset($_GET['export_to_
 				.'<br><br><a href="get_file.php?getFileParam='.Crypt::FileParamCrypt( 'GetOrdersExcelSqlScript', null ).'">'.translate('btn_download').'</a>'.sprintf(' (%3.2f Kb)',filesize( $exportData->fileName )/1024).'</span></div>');
 				$smarty->assign( 'orders_has_been_exported_succefully', 1 );
 			}
-		}else{
+		} else {
 			global $file_encoding_charsets;
 			$smarty->assign('charsets', $file_encoding_charsets);
 			$smarty->assign('default_charset', translate('prdine_default_charset'));
 		}
-	}elseif ($messageClient->getResult('msg')==''){
+	} elseif ($messageClient->getResult('msg')==''){
 		$smarty->assign('MessageBlock',"<div class='error_block' ><span class='error_message'>UNKNOWN ERROR:<br><pre>".var_export($messageClient,true).'</pre></span></div>');
-		
 	}
 }
 
@@ -301,5 +308,5 @@ $olist_url = set_query();
 setcookie('olist_url',base64_encode(gzdeflate($olist_url, 9)));
 
 $smarty->assign('ocrt_url', $ocrt_url);
+$smarty->assign('Customer', $callBackParam['Customer']);
 $smarty->assign('sub_template', $this->getTemplatePath('backend/orders_list.html'));
-?>

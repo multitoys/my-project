@@ -50,7 +50,11 @@ class ActionsController {
 		$this->registerSource(ACTCTRL_GET, $Register->get(VAR_GET));
 	}
 	
-	static public function exec($controller_name, array $sources = array(ACTCTRL_POST, ACTCTRL_GET, ACTCTRL_AJAX, ACTCTRL_CUST), array $params){
+	static public function exec(
+		$controller_name, 
+        array $sources = array(ACTCTRL_POST, ACTCTRL_GET, ACTCTRL_AJAX, ACTCTRL_CUST), 
+        $params = array()
+    ){
 		$controller = new $controller_name;
 		/*@var $controller ActionsController*/
 		$controller->__params = $params;

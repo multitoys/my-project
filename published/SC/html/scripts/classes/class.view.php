@@ -30,8 +30,8 @@ class View extends Smarty {
 		$this->template_dir = DIR_TPLS;
 		
 		$this->cache_dir = DIR_SMARTY_CACHE;
-		$this->caching = true;
+		$this->caching = false;
 
-		return $this;
+//		return $this;
 	}
 }

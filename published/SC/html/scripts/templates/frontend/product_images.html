@@ -1,5 +1,5 @@
-{if !$CPT_CONSTRUCTOR_MODE}
-    {strip}
+{strip}
+	{if !$CPT_CONSTRUCTOR_MODE}
     <script type="text/javascript" src="{$smarty.const.URL_ROOT}/3rdparty/highslide/highslide.js"></script>
 	<script type="text/javascript">
 	    hs.graphicsDir = '{$smarty.const.URL_ROOT}/3rdparty/highslide/graphics/';
@@ -92,13 +92,13 @@
 		<a href="#" class="next" onclick="return hs.next(this)"></a>
 	    <a href="#" class="close" onclick="return hs.close(this)"></a>
 	</div>
-{else}
-	<div style="text-align:center">
-		<img border=0 src="{$smarty.const.URL_DEMOPRD_IMAGES}/picture1.jpg" alt="{'demoprd_name'|translate|escape:'html'}">
-		<br>
-		<table align="center"><tr><td><img src="{$smarty.const.URL_IMAGES}/enlarge.gif"></td><td>
-			<a class="olive" href="#">{"str_enlarge_picture"|translate}</a>
-		</td></tr></table>
-	</div>
-{/strip}
+{*{else}*}
+	{*<div style="text-align:center">*}
+		{*<img border=0 src="{$smarty.const.URL_DEMOPRD_IMAGES}/picture1.jpg" alt="{'demoprd_name'|translate|escape:'html'}">*}
+		{*<br>*}
+		{*<table align="center"><tr><td><img src="{$smarty.const.URL_IMAGES}/enlarge.gif"></td><td>*}
+			{*<a class="olive" href="#">{"str_enlarge_picture"|translate}</a>*}
+		{*</td></tr></table>*}
+	{*</div>*}
 {/if}
+{/strip}

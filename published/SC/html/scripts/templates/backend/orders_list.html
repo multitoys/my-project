@@ -29,6 +29,12 @@
 							<input type="text" name="orderID_textbox" value="{$orderID}" />
 						</div>
 					</td>
+					<td valign="top">
+						<input class="inlradio" type="radio" name="order_search_type" value="SearchByCustomer" {if $order_search_type == 'SearchByCustomer'} checked="checked" {/if}	onclick="order_search_typeClickHandler()" id="id_order_search_type3" /><label for="id_order_search_type3">Поиск заказа по Фамилии:</label>:
+						<div style="margin-left:20px;margin-top:3px;margin-bottom:3px;">
+							<input type="text" name="Customer_textbox" value="{$Customer}" />
+						</div>
+					</td>
 				</tr>
 				<tr>
 					<td valign="top" colspan="2">
@@ -47,6 +53,15 @@
 							document.MainForm.checkbox_order_status_{$_status.statusID}.disabled = true;
 						{/foreach}
 						document.MainForm.orderID_textbox.disabled = false;
+						document.MainForm.Customer_textbox.disabled = true;
+					{literal}}{/literal}
+					else if ( document.MainForm.order_search_type[2].checked )
+					{literal}{{/literal}
+						{foreach from=$order_statuses item=_status}
+							document.MainForm.checkbox_order_status_{$_status.statusID}.disabled = true;
+						{/foreach}
+						document.MainForm.orderID_textbox.disabled = true;
+						document.MainForm.Customer_textbox.disabled = false;
 					{literal}}{/literal}
 					else if ( document.MainForm.order_search_type[0].checked )
 					{literal}{{/literal}
@@ -54,6 +69,7 @@
 							document.MainForm.checkbox_order_status_{$_status.statusID}.disabled = false;
 						{/foreach}
 						document.MainForm.orderID_textbox.disabled = true;
+						document.MainForm.Customer_textbox.disabled = true;
 					{literal}}{/literal}
 				{literal}}{/literal}
 			
@@ -72,10 +88,11 @@
 				<tr class="{cycle values="gridline1,gridline"}">
 					<td><a href='{$order_url}' style="{$order_statuses[$order_statusID]._style}">{$orders[i].orderID_view}</a></td>
 					<td><a href='{$order_url}' style="{$order_statuses[$order_statusID]._style}">{$orders[i].order_time}</a></td>
-					<td><a href='{$order_url}' style="{$order_statuses[$order_statusID]._style}">{$orders[i].customer_firstname} {$orders[i].customer_lastname}</a></td>
-					<td><a href='{$order_url}' style="{$order_statuses[$order_statusID]._style}">{$orders[i].payment_type|default:'&nbsp;'}</a></td>
+					<td><a href='{$order_url}' style="{$order_statuses[$order_statusID]._style}">{$orders[i].customer_lastname} {$orders[i].customer_firstname}</a></td>
+					{*<td><a href='{$order_url}' style="{$order_statuses[$order_statusID]._style}">{$orders[i].payment_type|default:'&nbsp;'}</a></td>*}
 					<td><a href='{$order_url}' style="{$order_statuses[$order_statusID]._style}">{$orders[i].shipping_type|default:'&nbsp;'}{if $orders[i].shippingServiceInfo} ({$orders[i].shippingServiceInfo}){/if}</a></td>
 					<td><a href='{$order_url}' style="{$order_statuses[$order_statusID]._style}">{$orders[i].order_amount}</a></td>
+					<td><a href='{$order_url}' style="{$order_statuses[$order_statusID]._style}">{$orders[i].customer_ip}</a></td>
 					<td class="endgrid"><a href='{$order_url}' style="{$order_statuses[$order_statusID]._style}">{$orders[i].OrderStatus|default:'&nbsp;'}</a></td>
 				</tr>
 			{/section}
@@ -99,19 +116,19 @@
 			</tr>
 		</table>
 		<p>* <small>{"ordr_msg_about_prices"|translate}</small></p>			
-<!--		{if $orders_has_been_exported_succefully != 1}
-		<br>
-		<p>{"export_orderlist_to_csv"|translate}</p>
-		<p>{lbl_prdimport_file_charset}
-			<select name="charset">
-				{foreach from=$charsets item=_charset}
-					<option value="{$_charset|escape:'html'}" {if $default_charset eq $_charset}selected="selected"{/if}>{$_charset|escape:'html'}</option>
-				{/foreach}
-			</select>
-			<input type=submit name='export_to_excel' value='{"btn_export"|translate}'>
-			</p>
--->			
-		{/if}
+		{*{if $orders_has_been_exported_succefully != 1}*}
+		{*<br>*}
+		{*<p>{"export_orderlist_to_csv"|translate}</p>*}
+		{*<p>{lbl_prdimport_file_charset}*}
+			{*<select name="charset">*}
+				{*{foreach from=$charsets item=_charset}*}
+					{*<option value="{$_charset|escape:'html'}" {if $default_charset eq $_charset}selected="selected"{/if}>{$_charset|escape:'html'}</option>*}
+				{*{/foreach}*}
+			{*</select>*}
+			{*<input type=submit name='export_to_excel' value='{"btn_export"|translate}'>*}
+			{*</p>*}
+		{**}
+		{*{/if}*}
 		</div>
 	{else}
 		<div><p>{"srch_no_matches_found"|translate}</p></div>

@@ -74,7 +74,7 @@
                 }
             }
 
-            Wbs::loadCurrentDBKey();
+            Wbs::loadCurrentDbKey();
             $fileEntry = new WbsFiles('SC');
             Functions::register($fileEntry, 'file_move_uploaded', 'move_upload');
         } else {
@@ -251,15 +251,15 @@
     require_once(DIR_FUNC.'/tax_function.php');//*
     require_once(DIR_CLASSES.'/class.virtual.shippingratecalculator.php');
     //require_once(DIR_CLASSES.'/class.virtual.paymentmodule.php');
-    if (false) {//SMARTY SC
-        require_once(DIR_ROOT.'/smarty/smarty.class.php');
-        require_once(DIR_ROOT.'/smarty/resources/resource.rfile.php');
-        require_once(DIR_ROOT.'/smarty/resources/resource.register.php');
-    } else {//USE MERGED SMARTY
+//    if (false) {//SMARTY SC
+//        require_once(DIR_ROOT.'/smarty/smarty.class.php');
+//        require_once(DIR_ROOT.'/smarty/resources/resource.rfile.php');
+//        require_once(DIR_ROOT.'/smarty/resources/resource.register.php');
+//    } else {//USE MERGED SMARTY
         require_once($_SERVER['DOCUMENT_ROOT'].'/kernel/includes/smarty/Smarty.class.php');
         require_once($_SERVER['DOCUMENT_ROOT'].'/kernel/includes/smarty/resources/resource.rfile.php');
         require_once($_SERVER['DOCUMENT_ROOT'].'/kernel/includes/smarty/resources/resource.register.php');
-    }
+//    }
 
     require_once(DIR_FUNC.'/search_function.php');
 
@@ -331,6 +331,7 @@ ORDER BY `cnt` DESC");
 
     if (detectIOS()) {
         $smarty->assign('ios', 'ios');
+        $smarty->assign('haspopup', 'aria-haspopup=true');
     }
 //    if (detectPDA()) {
 //        $GetVars['view'] = 'mobile';

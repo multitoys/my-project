@@ -803,8 +803,6 @@ function unsetAnalogs(name, code, code1c, price) {
         $("#conc_" + code).load("/popup/search_by_conc/search_conc.php?mode=3&conc=" + name + "&code=" + code + "&code1c=" + code1c + "&price=" + price);
     }
 }
-
-
 $(function () {
     var searchCache = [];
     var searchOk = $("#search_ok");
@@ -812,8 +810,6 @@ $(function () {
     var search;
     $(".search-concs").keyup(throttle(function () {
         searchOk.addClass("search_loader");
-        //var live_search = $("#right");
-        //var search;
         search = $(this).val();
         var conc = $(this).attr("data-conc");
         var code = $(this).attr("data-code");
@@ -849,23 +845,14 @@ $(function () {
             }
         }
     }, 1500));
-
     $(".search-product-code").click(function () {
         searchOk.addClass("search_loader");
-        /*var live_search = $("#right");
-         var */
         search = $(this).text();
-        //console.log(search);
         var sibling = $(this).parent().next().next().find("input");
-        //console.log(sibling);
-        //sibling.value(search);
         var conc = sibling.attr("data-conc");
         var code = sibling.attr("data-code");
         var priceConc = sibling.attr("data-price");
         if (search.length > 1) {
-            //if (searchCache[search]) {
-            //    live_search.html(searchCache[search]);
-            //} else {
             $.ajax({
                 type: "POST",
                 url: "/popup/search.php",
@@ -873,10 +860,8 @@ $(function () {
                 cache: false,
                 success: function (response) {
                     live_search.html(response);
-                   //searchCache[search] = response;
                 }
             });
-            //}
             live_search.niceScroll({
                 cursorcolor: "#03A9F4",
                 cursorborderradius: 2,
@@ -894,7 +879,6 @@ $(function () {
         }
     });
     $(".productname").mouseup(function () {
-    //var lastSelection = function (evt) {
         var mSelect = window.getSelection().toString();
         console.log("selected " + mSelect);
         if (mSelect.length > 2) {
@@ -908,6 +892,12 @@ $(function () {
             if (search.length > 2) {
                 if (searchCache[search]) {
                     live_search.html(searchCache[search]);
+                    live_search.find("li").each(function() {
+                        var code1c = $(this).attr("data-code1c");
+                        if (code1c) {
+                            find("a").attr(setAnalogs("", code, code1c, ""));
+                        }
+                    });
                 } else {
                     $.ajax({
                         type: "POST",
@@ -937,7 +927,5 @@ $(function () {
                 }
             }
         }
-    //};
-    //window.addEventListener('mouseup', lastSelection, false);
     });
 });

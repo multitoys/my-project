@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.9, created on 2016-01-19 17:45:56
+<?php /* Smarty version 2.6.9, created on 2016-01-26 11:26:44
          compiled from index.html */ ?>
 <?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
 smarty_core_load_plugins(array('plugins' => array(array('function', 'component', 'index.html', 6, false),array('function', 'welcome', 'index.html', 26, false),array('function', 'conc_tree', 'index.html', 85, false),array('function', 'newtree', 'index.html', 95, false),array('function', 'cs_show_main_page', 'index.html', 157, false),array('modifier', 'isauthpage', 'index.html', 137, false),)), $this); ?>
@@ -15,3 +15,4 @@ $this->_smarty_include(array('smarty_include_tpl_file' => "login.html", 'smarty_
 $this->_tpl_vars = $_smarty_tpl_vars;
 unset($_smarty_tpl_vars);
   echo '';  else:  echo '';  echo smarty_function_cs_show_main_page(array(), $this); echo '';  endif;  echo '';  endif;  echo '';  endif;  echo '</div>';  if ($_GET['ukey'] != 'cart'):  echo '<div id="right"';  if ($_GET['ukey'] == 'auxpage_divoland' || $_GET['ukey'] == 'auxpage_mixtoys' || $_GET['ukey'] == 'auxpage_dreamtoys' || $_GET['ukey'] == 'auxpage_kindermarket' || $_GET['ukey'] == 'auxpage_grandtoys'):  echo 'class=conc';  endif;  echo '><div class="cpt_maincolumns">';  if ($_GET['ukey'] == 'auxpage_divoland' || $_GET['ukey'] == 'auxpage_mixtoys' || $_GET['ukey'] == 'auxpage_dreamtoys' || $_GET['ukey'] == 'auxpage_kindermarket' || $_GET['ukey'] == 'auxpage_grandtoys'):  echo '';  else:  echo '<!-- cpt_container_start -->';  echo smarty_function_component(array('cpt_id' => 'product_lists','list_id' => 'hitu','limit' => '10'), $this); echo '<!-- cpt_container_end -->';  endif;  echo '</div></div>';  endif;  echo '</div></div></div>'; ?>
+

@@ -78,3 +78,5 @@ published/publicdata/MULTITOYS/attachments/SC/themes/user_multi-new/temp_overrid
 popup/search_by_conc/divoland/**/*.html
 popup/search_by_conc/**/*.html
 popup/search_by_conc/mixtoys.xls
+kernel/includes/smarty/compiled/SC/templates_c/MULTITOYS/%%60^60D^60D1254C%%head.html.php
+kernel/includes/smarty/compiled/SC/templates_c/MULTITOYS/%%77^774^774BE9C9%%index.html.php

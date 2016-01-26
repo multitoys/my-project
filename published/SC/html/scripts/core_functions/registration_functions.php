@@ -780,57 +780,79 @@
         $subscribed4news = $row["subscribed4news"];
         $additional_field_values = GetRegFieldsValues($login);
     }
-    
+
     function regVerifyContactInfo($login, $cust_password1, $cust_password2, $Email, $first_name, $last_name, $subscribed4news, $additional_field_values)
     {
-        
+
         $error = "";
-        if (
-        !_testStrArrayInvalidSymbol(
-            array($login, $cust_password1, $cust_password2)
-        )
-        )
+        if (!_testStrArrayInvalidSymbol(array($login, $cust_password1, $cust_password2))) {
+
             $error = translate("err_invalid_symbols_in_login_or_password");
-        else
-            if (trim($login) == "") $error = translate("err_input_login");
-            else
-                if (!(((ord($login) >= ord("a")) && (ord($login) <= ord("z"))) ||
-                      ((ord($login) >= ord("A")) && (ord($login) <= ord("Z"))))
-                )
-                    $error = translate("err_login_should_start_with_latin_symbol");
-                else
-                    if ($cust_password1 == "" || $cust_password2 == "" || $cust_password1 != $cust_password2)
-                        $error = translate("err_password_confirm_failed");
-                    else
-                        if (trim($first_name) == "") $error = translate("err_input_name");
-                        else
-                            if (trim($last_name) == "") $error = translate("err_input_name");
-                            else
-                                if (trim($Email) == "") $error = translate("err_input_email");
-                                else if (!eregi("^[_\.0-9a-zA-Z-]+@([0-9a-zA-Z-]+\.)+[a-zA-Z]{2,6}$", $Email)) { //e-mail validation
-                                    $error = translate("err_input_email");
-                                }
-        
+
+        } elseif (trim($login) == "") {
+
+            $error = translate("err_input_login");
+
+        } elseif (!(
+            ((ord($login) >= ord("a")) && (ord($login) <= ord("z"))) ||
+            ((ord($login) >= ord("A")) && (ord($login) <= ord("Z")))
+        )
+        ) {
+
+            $error = translate("err_login_should_start_with_latin_symbol");
+
+        } elseif ($cust_password1 == "" || $cust_password2 == "" || $cust_password1 != $cust_password2) {
+
+            $error = translate("err_password_confirm_failed");
+
+        } elseif (trim($first_name) == "") {
+
+            $error = translate("err_input_name");
+
+        } elseif (trim($last_name) == "") {
+
+            $error = translate("err_input_name");
+
+        } elseif (trim($Email) == "") {
+
+            $error = translate("err_input_email");
+
+        } elseif (!eregi("^[_\.0-9a-zA-Z-]+@([0-9a-zA-Z-]+\.)+[a-zA-Z]{2,6}$", $Email)) {//e-mail validation
+
+            $error = translate("err_input_email");
+
+        }
+
         $dbq = 'SELECT 1 FROM ?#CUSTOMERS_TABLE WHERE Email=? AND login<>"" AND login<>?';
-        
+
         $is_free_email = !db_phquery_fetch(DBRFETCH_FIRST, $dbq, $Email, $login);
+
         if (!$is_free_email) {
             return translate('err_occupied_email');
         }
-        
-        if (isset($_POST['affiliationLogin']))
-            if (!regIsRegister($_POST['affiliationLogin']) && $_POST['affiliationLogin'])
+
+        if (isset($_POST['affiliationLogin'])) {
+
+            if (!regIsRegister($_POST['affiliationLogin']) && $_POST['affiliationLogin']) {
+
                 $error = translate('err_wrong_referrer');
-        
-        //aux fields
-        foreach ($_POST as $key => $val) {
-            if (strstr($key, "additional_field_")) {
-                $id = (int)str_replace("additional_field_", "", $key);
-                if (GetIsRequiredRegField($id) && strlen(trim($val)) == 0)
-                    $error = translate('err_input_all_required_fields');
             }
         }
-        
+
+        //aux fields
+        foreach ($_POST as $key => $val) {
+
+            if (strstr($key, "additional_field_")) {
+
+                $id = (int)str_replace("additional_field_", "", $key);
+
+                if (GetIsRequiredRegField($id) && strlen(trim($val)) == 0) {
+
+                    $error = translate('err_input_all_required_fields');
+                }
+            }
+        }
+
         return $error;
     }
     

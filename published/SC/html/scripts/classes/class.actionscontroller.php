@@ -52,8 +52,8 @@ class ActionsController {
 	
 	static public function exec(
 		$controller_name, 
-        array $sources = array(ACTCTRL_POST, ACTCTRL_GET, ACTCTRL_AJAX, ACTCTRL_CUST), 
-        $params = array()
+        array $sources = array(ACTCTRL_POST, ACTCTRL_GET, ACTCTRL_AJAX, ACTCTRL_CUST),
+		array $params = null
     ){
 		$controller = new $controller_name;
 		/*@var $controller ActionsController*/
@@ -78,7 +78,7 @@ class ActionsController {
 
             if (!method_exists($this, $this->__action_sources[$source]['action'])) {
                 pear_dump('No action handler');
-                die;
+                die();
             }
 
             $this->__current_data = &$this->__action_sources[$source];

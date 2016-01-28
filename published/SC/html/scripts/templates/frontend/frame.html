@@ -15,17 +15,17 @@
 <!-- Head start -->
 {include file="head.html"}
 <!-- Head end -->
-{if $smarty.session.log}
-<script>
-{*{if $smarty.const.CONF_WAROOT_URL}		var WAROOT_URL = '{$smarty.const.CONF_WAROOT_URL}';{/if}*}
-{*if $smarty.const.CONF_WAROOT_URL*}var WAROOT_URL = '{$smarty.const.BASE_WA_URL}';{*/if*}
-{*if $smarty.const.CONF_ON_WEBASYST}		var CONF_ON_WEBASYST = '{$smarty.const.CONF_ON_WEBASYST}';{/if*}
-</script>
-{*if $overridestyles}	<link rel="stylesheet" href="{$URL_THEME_OFFSET}/overridestyles.css" type="text/css">{/if*}
-{*<link rel="stylesheet" href="{$smarty.const.URL_CSS}/general.css" type="text/css">*}
-{if !$page_not_found404}{*if $smarty.get.ukey ne 'category' && $smarty.get.ukey ne 'product' && $smarty.get.ukey ne ''}
+    <script {$deffer|default:' '} src="{$smarty.const.URL_JS}/functions-1437581122255.js"></script>
+    {if $smarty.session.log}
+    <script>
+    {*{if $smarty.const.CONF_WAROOT_URL}		var WAROOT_URL = '{$smarty.const.CONF_WAROOT_URL}';{/if}*}
+    {*if $smarty.const.CONF_WAROOT_URL*}var WAROOT_URL = '{$smarty.const.BASE_WA_URL}';{*/if*}
+    {*if $smarty.const.CONF_ON_WEBASYST}		var CONF_ON_WEBASYST = '{$smarty.const.CONF_ON_WEBASYST}';{/if*}
+    </script>
+    {*if $overridestyles}	<link rel="stylesheet" href="{$URL_THEME_OFFSET}/overridestyles.css" type="text/css">{/if*}
+    {*<link rel="stylesheet" href="{$smarty.const.URL_CSS}/general.css" type="text/css">*}
+    {if !$page_not_found404}{*if $smarty.get.ukey ne 'category' && $smarty.get.ukey ne 'product' && $smarty.get.ukey ne ''}
 <script defer src="{$smarty.const.URL_JS}/widget_checkout.js"></script>{/if*}
-<script {$deffer|default:' '} src="{$smarty.const.URL_JS}/functions-1437581122255.js"></script>
 {*<script defer src="{$smarty.const.URL_JS}/behavior.js"></script>*}
 {*<script defer src="{$smarty.const.URL_JS}/frame.js"></script>*}
     {if $smarty.get.step eq 'shipping'}

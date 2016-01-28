@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.9, created on 2016-01-26 11:26:44
+<?php /* Smarty version 2.6.9, created on 2016-01-26 17:00:29
          compiled from head.html */ ?>
 <?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
 smarty_core_load_plugins(array('plugins' => array(array('modifier', 'default', 'head.html', 3, false),array('modifier', 'escape', 'head.html', 3, false),)), $this); ?>

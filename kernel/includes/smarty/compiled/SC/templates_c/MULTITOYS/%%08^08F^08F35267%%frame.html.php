@@ -1,12 +1,12 @@
-<?php /* Smarty version 2.6.9, created on 2016-01-19 17:45:56
+<?php /* Smarty version 2.6.9, created on 2016-01-26 17:05:23
          compiled from frame.html */ ?>
 <?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
-smarty_core_load_plugins(array('plugins' => array(array('modifier', 'default', 'frame.html', 28, false),)), $this); ?>
+smarty_core_load_plugins(array('plugins' => array(array('modifier', 'default', 'frame.html', 18, false),)), $this); ?>
 <?php echo '';  echo '<!DOCTYPE html>';  echo '';  echo '<html><head><meta http-equiv="Content-Language" content="ru"><link rel="shortcut icon" href="/favicon.ico"><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><base href="';  echo @CONF_FULL_SHOP_URL;  echo '">';  if ($this->_tpl_vars['rss_link']):  echo '	<link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="';  echo @URL_ROOT;  echo '/';  echo $this->_tpl_vars['rss_link'];  echo '">';  endif;  echo '<!-- Head start -->';  $_smarty_tpl_vars = $this->_tpl_vars;
 $this->_smarty_include(array('smarty_include_tpl_file' => "head.html", 'smarty_include_vars' => array()));
 $this->_tpl_vars = $_smarty_tpl_vars;
 unset($_smarty_tpl_vars);
-  echo '<!-- Head end -->';  if ($_SESSION['log']):  echo '<script>';  echo '';  echo 'var WAROOT_URL = \'';  echo @BASE_WA_URL;  echo '\';';  echo '';  echo '</script>';  echo '';  echo '';  if (! $this->_tpl_vars['page_not_found404']):  echo '';  echo '<script ';  echo ((is_array($_tmp=@$this->_tpl_vars['deffer'])) ? $this->_run_mod_handler('default', true, $_tmp, ' ') : smarty_modifier_default($_tmp, ' '));  echo ' src="';  echo @URL_JS;  echo '/functions-1437581122255.js"></script>';  echo '';  echo '';  if ($_GET['step'] == 'shipping'):  echo '';  echo '';  endif;  echo '';  echo '';  endif;  echo '';  endif;  echo '';  echo '
+  echo '<!-- Head end --><script ';  echo ((is_array($_tmp=@$this->_tpl_vars['deffer'])) ? $this->_run_mod_handler('default', true, $_tmp, ' ') : smarty_modifier_default($_tmp, ' '));  echo ' src="';  echo @URL_JS;  echo '/functions-1437581122255.js"></script>';  if ($_SESSION['log']):  echo '<script>';  echo '';  echo 'var WAROOT_URL = \'';  echo @BASE_WA_URL;  echo '\';';  echo '';  echo '</script>';  echo '';  echo '';  if (! $this->_tpl_vars['page_not_found404']):  echo '';  echo '';  echo '';  echo '';  if ($_GET['step'] == 'shipping'):  echo '';  echo '';  endif;  echo '';  echo '';  endif;  echo '';  endif;  echo '';  echo '
     <script>
         (function (i, s, o, g, r, a, m) {
             i[\'GoogleAnalyticsObject\'] = r;

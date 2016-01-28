@@ -817,7 +817,8 @@
 
             $error = translate("err_input_email");
 
-        } elseif (!eregi("^[_\.0-9a-zA-Z-]+@([0-9a-zA-Z-]+\.)+[a-zA-Z]{2,6}$", $Email)) {//e-mail validation
+//        } elseif (!eregi("^[_\.0-9a-zA-Z-]+@([0-9a-zA-Z-]+\.)+[a-zA-Z]{2,6}$", $Email)) {//e-mail validation
+        } elseif (!filter_var($Email, FILTER_VALIDATE_EMAIL)) {
 
             $error = translate("err_input_email");
 

@@ -28,12 +28,12 @@
 			return db_phquery_fetch(DBRFETCH_FIRST, 'SELECT COUNT(*) FROM ?#PRODUCTS_TABLE WHERE `in_stock`<=0');
 		}
 		
-		function ProductsReportController(){
+		function __construct(){
 			
 			$Register = &Register::getInstance();
 			$this->DBHandler = &$Register->get(VAR_DBHANDLER);
 			
-			parent::ActionsController();
+			parent::__construct();
 		}
 		
 		function main(){
@@ -50,7 +50,7 @@
 			$gridEntry->query_select_rows = 'SELECT *, '.LanguagesManager::sql_prepareField('name').' AS name FROM ?#PRODUCTS_TABLE';
 			
 			$gridEntry->default_sort_direction = 'DESC';
-			$gridEntry->rows_num = 50;
+			$gridEntry->rows_num = 100;
 			
 			$gridEntry->registerHeader(translate("prdset_product_name"), 'name', false, 'asc','left');
 			$gridEntry->registerHeader(translate("str_in_stock"), 'in_stock', false, 'asc','right');
@@ -77,4 +77,3 @@
 	}
 	
 	ActionsController::exec('ProductsReportController');
-?>

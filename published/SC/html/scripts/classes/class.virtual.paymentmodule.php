@@ -29,7 +29,7 @@ class PaymentModule extends virtualModule {
 		parent::_initVars();
 	}
 
-	function PaymentModule($_ModuleConfigID = 0){
+	function __construct($_ModuleConfigID = 0){
 
 		$this->LanguageDir = DIR_MODULES.'/payment/languages/';
 		$this->ModuleType = PAYMENT_MODULE;

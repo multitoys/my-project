@@ -38,7 +38,7 @@ class ListNode{
 	 * @param mixed $Data - node data
 	 * @return ListNode
 	 */
-	function ListNode($Key = '', $Data = null){
+	function __construct($Key = '', $Data = null){
 		
 		$this->setData($Data);
 		$this->setKey($Key);

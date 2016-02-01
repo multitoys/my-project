@@ -58,7 +58,8 @@
         $T->timerStart();
     }
 
-    $DB_tree = new DataBase();
+    $DB_tree = ClassManager::getInstance('DataBase');
+//    $DB_tree = new DataBase();
     $DB_tree->connect(SystemSettings::get('DB_HOST'), SystemSettings::get('DB_USER'), SystemSettings::get('DB_PASS'));
     $DB_tree->selectDB(SystemSettings::get('DB_NAME'));
     define('VAR_DBHANDLER', 'DBHandler');
@@ -134,7 +135,8 @@
     settingDefineConstants();
 
     define('FURL_ENABLED', 1);
-    $urlEntry = new URL();
+    $urlEntry = ClassManager::getInstance('URL');
+//    $urlEntry = new URL();
     $urlEntry->loadFromServerInfo();
 
     define('VAR_URL', 'URL');

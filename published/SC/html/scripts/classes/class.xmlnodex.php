@@ -17,7 +17,7 @@ class xmlNodeX{
 	var $ParserResource;
 	var $parsingNode;
 	
-	function xmlNodeX($_Name = '', $_Attributes = array(), $_Data = '' ){
+	function __construct($_Name = '', $_Attributes = array(), $_Data = '' ){
 		
 		$this->Name 		= $_Name;
 		$this->Attributes 	= is_array($_Attributes)?$_Attributes:array();

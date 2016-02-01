@@ -129,7 +129,7 @@
 			}
 			$request = str_replace('?', '', $request);
 			
-			$urlEntry = $Register->get(VAR_URL);
+			$urlEntry = &$Register->get(VAR_URL);
 			/*@var $urlEntry URL*/
 			if((strpos($request, 'http') === 0 && $urlEntry->getHost() == preg_replace('/https?:\/\/([^\/]*).*$/u', '$1', $request)
 				|| strpos($request, 'http') === false)
@@ -295,7 +295,7 @@
 						switch ($part_value){
 							case 'referral':
 								$this->__path_settings['get'] = '&refid='.array_shift($path_parts);
-								continue;
+								continue 2;
 							case 'category':
 								$this->__path_settings['category_slug'] = str_replace('.html', '', array_shift($path_parts));
 								$this->__path_settings['category_search'] = false;
@@ -303,13 +303,13 @@
 									$this->__path_settings['category_search'] = true;
 								}
 								$this->__path_settings['update_sys_handler'] = 'category';
-								continue;												
+								continue 2;												
 							case 'product_widget':
 								$this->__path_settings['product_widget'] = true;
 							case 'product':
 								$this->__path_settings['update_sys_handler'] = 'product';
 								$this->__path_settings['product_slug'] = str_replace('.html', '', array_shift($path_parts)); 
-								continue;
+								continue 2;
 							case 'blog':
 								$part_value = 'news';
 							case 'news':
@@ -322,18 +322,18 @@
 								{
 								    $this->__path_settings['get'] = '&blog_id='.intval($path_parts[0]);
 								}
-								continue;
+								continue 2;
 							case 'compare':
 								$this->__path_settings['ukey'] = 'product_comparison';
 								$this->__path_settings['update_sys_handler'] = '';
-								continue;
+								continue 2;
 							case 'myaccount':
 								$this->__path_settings['ukey'] = 'office';
-								continue;
+								continue 2;
 							case 'transaction':
 								$this->__path_settings['ukey'] = 'transaction_result';
 								$this->__path_settings['get'] .= '&transaction_result='.array_shift($path_parts);
-								continue;
+								continue 2;
 							default:
 								if(strpos($part_value, 'page')===0){
 									
@@ -350,7 +350,7 @@
 									
 									$this->__path_settings['ukey'] = str_replace(array('.html','.php'), '', $part_value);
 								}
-								continue;
+								continue 2;
 						}
 						
 						break;
@@ -358,4 +358,3 @@
 			}
 		}
 	}
-?>

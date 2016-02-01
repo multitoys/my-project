@@ -47,7 +47,7 @@ class JsHttpRequest
      * to script output buffer. As a result - script will always return
      * correct JavaScript code, even in case of fatal errors.
      */
-    function JsHttpRequest($enc)
+    function __construct($enc)
     {
         // QUERY_STRING is in form of: PHPSESSID=<sid>&a=aaa&b=bbb&JsHttpRequest=<id>-<loader>
         // where <id> is a request ID, <loader> is a loader name, <sid> - a session ID (if present), 

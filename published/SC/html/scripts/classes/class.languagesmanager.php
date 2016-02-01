@@ -35,7 +35,7 @@
 			return $languagesManager;
 		}
 
-		function LanguagesManager(){
+		function __construct(){
 
 			$this->languages = &$this->getLanguages();
 

@@ -12,7 +12,7 @@ class IValidator{
 	var $RndLength = 6;
 	var $SPrefix = 'SS_';
 	
-	function IValidator(){
+	function __construct(){
 		
 		$this->Themes = array (
 			array(

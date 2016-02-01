@@ -1,10 +1,10 @@
 <?php
 	class Timer{
 		var $timers;
-		function Timer(){
-			$timers=array();
-			$timers['start']=array();
-			$timers['stop']=array();
+		function __construct(){
+			$this->timers=array();
+			$this->timers['start']=array();
+			$this->timers['stop']=array();
 		}
 		function timerStart($name='default'){
 			$time_portions=explode(' ',microtime());
@@ -21,4 +21,3 @@
 			return function_exists('bcsub')?bcsub($this->timers['stop'][$name],$this->timers['start'][$name],6):(sprintf('%0.6f',$this->timers['stop'][$name]-$this->timers['start'][$name]));
 		}
 	}
-?>

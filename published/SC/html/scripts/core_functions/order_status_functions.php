@@ -69,14 +69,14 @@ function _correctOrderStatusName( &$orderStatus ){
 function ostGetOtherStatus( $statusID ){
 
 	/* @var $dbHandler DataBase */
-	$dbHandler = Core::getdbHandler();
+	$dbHandler = &Core::getdbHandler();
 	
 	$sql = '
 		SELECT * FROM ?#ORDER_STATUSES_TABLE
 		WHERE statusID<>? AND statusID<>?
 	';
 	$Result = $dbHandler->query($sql);
-	if( $_Row = db_fetch_row($q) ){
+	if( $_Row = db_fetch_row($Result) ){
 		
 		LanguagesManager::ml_fillFields(ORDER_STATUSES_TABLE, $_Row);
 		_correctOrderStatusName( $_Row );

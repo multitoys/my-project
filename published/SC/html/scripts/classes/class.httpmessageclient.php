@@ -8,7 +8,7 @@
 
 		var $debug = false;
 
-		function HttpMessageClient($server_url){
+		function __construct($server_url){
 
 			$this->__server_url = $server_url;
 		}

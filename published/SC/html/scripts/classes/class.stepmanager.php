@@ -14,7 +14,7 @@
 		var $default_step = 'default';
 		var $allowed_steps = array();
 		
-		function StepManager(){
+		function __construct(){
 			
 			$this->StepChain = null;
 		}

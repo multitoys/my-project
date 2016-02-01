@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.9, created on 2016-01-26 17:00:29
+<?php /* Smarty version 2.6.9, created on 2016-01-29 11:44:25
          compiled from head.html */ ?>
 <?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
 smarty_core_load_plugins(array('plugins' => array(array('modifier', 'default', 'head.html', 3, false),array('modifier', 'escape', 'head.html', 3, false),)), $this); ?>
@@ -21,17 +21,14 @@ smarty_core_load_plugins(array('plugins' => array(array('modifier', 'default', '
     <script <?php echo ((is_array($_tmp=@$this->_tpl_vars['deffer'])) ? $this->_run_mod_handler('default', true, $_tmp, ' ') : smarty_modifier_default($_tmp, ' ')); ?>
  src='<?php echo @URL_JS; ?>
 /jquery.nicescroll.min-1437563245003.js'></script>
-<?php endif; ?>
-<?php if ($_SESSION['log']): ?>
+<?php endif;  if ($_SESSION['log']): ?>
     <?php if ($_GET['ukey'] == 'auxpage_divoland' || $_GET['ukey'] == 'auxpage_mixtoys' || $_GET['ukey'] == 'auxpage_dreamtoys' || $_GET['ukey'] == 'auxpage_kindermarket' || $_GET['ukey'] == 'auxpage_grandtoys'): ?>
         <script <?php echo ((is_array($_tmp=@$this->_tpl_vars['deffer'])) ? $this->_run_mod_handler('default', true, $_tmp, ' ') : smarty_modifier_default($_tmp, ' ')); ?>
  type="text/javascript" src="/lib/jquery.mousewheel-3.0.6.pack.js"></script>
         <script <?php echo ((is_array($_tmp=@$this->_tpl_vars['deffer'])) ? $this->_run_mod_handler('default', true, $_tmp, ' ') : smarty_modifier_default($_tmp, ' ')); ?>
  type="text/javascript" src="/source/jquery.fancybox.pack-1453308851238.js"></script>
         <link rel="stylesheet" type="text/css" href="/source/jquery.fancybox.css?v=2.1.5" media="screen"/>
-    <?php endif; ?>
-<?php endif; ?>
-<?php if ($this->_tpl_vars['ios'] != 'ios'): ?>
+    <?php endif;  endif;  if ($this->_tpl_vars['ios'] != 'ios'): ?>
     <script <?php echo ((is_array($_tmp=@$this->_tpl_vars['deffer'])) ? $this->_run_mod_handler('default', true, $_tmp, ' ') : smarty_modifier_default($_tmp, ' ')); ?>
  src="<?php echo $this->_tpl_vars['URL_THEME_OFFSET']; ?>
 /head-1453123179214.js"></script>
@@ -39,4 +36,4 @@ smarty_core_load_plugins(array('plugins' => array(array('modifier', 'default', '
     <script <?php echo ((is_array($_tmp=@$this->_tpl_vars['deffer'])) ? $this->_run_mod_handler('default', true, $_tmp, ' ') : smarty_modifier_default($_tmp, ' ')); ?>
  src="<?php echo $this->_tpl_vars['URL_THEME_OFFSET']; ?>
 /head-m-1453123179214.js"></script>
-<?php endif; ?>
+<?php endif; ?>

@@ -31,10 +31,10 @@
             $this->user = $_user;
             switch ($this->type) {
                 case 'mysql':
-                    $this->link = mysql_pconnect($_host, $_user, $_pass);
-                    if (is_null($this->link)) {//use non persistent connection if another not allowed
+//                    $this->link = mysql_pconnect($_host, $_user, $_pass);
+//                    if (is_null($this->link)) {//use non persistent connection if another not allowed
                         $this->link = mysql_connect($_host, $_user, $_pass);
-                    }
+//                    }
                     if (!$this->link) {
                         //log unsuccesfull connection
                         if (SystemSettings::is_hosted()) {

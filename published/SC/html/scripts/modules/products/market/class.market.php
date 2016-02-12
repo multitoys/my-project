@@ -3,7 +3,7 @@
     
     class Market extends Module
     {
-        const MARKET_FILE = "/market.xml";
+        const MARKET_FILE = "/yandex.xml";
         
         function initInterfaces()
         {
@@ -63,15 +63,15 @@
             if (!isset($_POST["market_export"])) $_POST["market_export"] = '';
             if ($_POST["market_export"]) //save payment gateways_settings
             {
-                $rurrate = (float)$_POST["market_rur_rate"];
+                $uah_rate = (float)$_POST["market_uah_rate"];
                 $market_export_product_name = isset($_POST['market_export_product_name'])?$_POST['market_export_product_name']:'only_name';
                 
-                if ($rurrate <= 0) {
-                    $smarty->assign("market_errormsg", "Курс рубля указан неверно. Пожалуйста, вводите положительное число");
+                if ($uah_rate <= 0) {
+                    $smarty->assign("market_errormsg", "Курс гривны указан неверно. Пожалуйста, вводите положительное число");
                 } else {//экспортировать товары
                     $f = @fopen(DIR_TEMP.Market::MARKET_FILE, "wb");
                     if ($f) {
-                        $this->_exportToMarket($f, $rurrate, $market_export_product_name);
+                        $this->_exportToMarket($f, $uah_rate, $market_export_product_name);
                         fclose($f);
                         iconv_file('utf-8', 'cp1251', DIR_TEMP.Market::MARKET_FILE, true);
                         RedirectSQ('market_export_successful=yes');
@@ -109,6 +109,10 @@
             export_exportSubcategories(0, $exportCategories, $spArray);
             $this->_exportBegin($f);
             $this->_exportAllCategories($f, $spArray['exprtUNIC']['expProducts']);
+            $local_delivery_cost = isset($_POST['market_export_local_delivery_cost']) ? floatval(str_replace(',', '.', $_POST['market_export_local_delivery_cost'])) : false;
+            if (isset($_POST['market_export_local_delivery_cost_enabled']) && $_POST['market_export_local_delivery_cost_enabled']) {
+                fputs($f, "				<local_delivery_cost>" . $local_delivery_cost . "</local_delivery_cost>\n");
+            }
             $this->_exportProducts($f, $rate, $export_product_name, $spArray['exprtUNIC']['expProducts']);
             $this->_exportEnd($f);
         }
@@ -116,15 +120,16 @@
         function _exportBegin($f)
         {
             fputs($f, "<?xml version=\"1.0\" encoding=\"windows-1251\"?>\n");
-            fputs($f, "	<!DOCTYPE catalog SYSTEM \"shops.dtd\">\n");
-            fputs($f, "		<catalog date=\"".date("Y-m-d H:i")."\">\n");
+            fputs($f, "	<!DOCTYPE yml_catalog SYSTEM \"shops.dtd\">\n");
+            fputs($f, "		<yml_catalog date=\"".date("Y-m-d H:i")."\">\n");
             fputs($f, "			<shop>\n");
             fputs($f, "				<name>".$this->_deleteHTML_Elements(CONF_SHOP_NAME)."</name>\n");
             fputs($f, "				<company>".$this->_deleteHTML_Elements(CONF_SHOP_NAME)."</company>\n");
             fputs($f, "				<url>".$this->getStoreUrl()."</url>\n");
             fputs($f, "				<currencies>\n");
             fputs($f, "					<currency id=\"UAH\" rate=\"1\"/>\n");
-            fputs($f, " 					<currency id=\"USD\" rate=\"CBRF\"/>\n");
+            fputs($f, "					<currency id=\"USD\" rate=\"CB\"/>\n");
+            fputs($f, "					<currency id=\"EUR\" rate=\"CB\"/>\n");
             fputs($f, "				</currencies>\n");
         }
         
@@ -205,68 +210,72 @@
             
             fputs($f, "				</categories>\n");
         }
-        
+
         function _exportProducts($f, $rate, $export_product_name, &$_ProductIDs)
         {
-            
-            fputs($f, "				<products>\n");
-            
+
+            fputs($f, "				<offers>\n");
+
             //товары с нулевым остатком на складе
-            //            $clause = isset($_POST["market_dont_export_negative_stock"])?" and in_stock>0":"";
-            $clause = " and in_stock>0";
+            $clause = isset($_POST["market_dont_export_negative_stock"]) ? " and in_stock>0" : "";
             //комментарии к товарам
-            $sales_notes = isset($_POST['market_export_sales_notes'])?$this->_deleteHTML_Elements($_POST['market_export_sales_notes'], false):false;
+            $sales_notes = isset($_POST['market_export_sales_notes']) ? $this->_deleteHTML_Elements($_POST['market_export_sales_notes'], false) : false;
+            //
+            $local_delivery_cost_enabled = (isset($_POST['market_export_local_delivery_cost_override']) && $_POST['market_export_local_delivery_cost_override']) ? true : false;
             //какое описание экспортировать
             if ($_POST["market_export_description"] == 1) {
                 $dsc = "description";
-                $dsc_q = ", ".LanguagesManager::sql_prepareField($dsc)." as ".$dsc;
+                $dsc_q = ", " . LanguagesManager::sql_prepareField($dsc) . " as " . $dsc;
             } else if ($_POST["market_export_description"] == 2) {
                 $dsc = "brief_description";
-                $dsc_q = ", ".LanguagesManager::sql_prepareField($dsc)." as ".$dsc;
+                $dsc_q = ", " . LanguagesManager::sql_prepareField($dsc) . " as " . $dsc;
             } else {
                 $dsc = "";
                 $dsc_q = "";
             }
-            
+
             //выбрать товары
             $proCount = count($_ProductIDs);
+            $chunk_size = 100;
             $iter = 0;
-            for (; $iter < $proCount; $iter += 100) {
-                
-                $sql = "select productID, ".LanguagesManager::sql_prepareField('name')." AS name, Price, categoryID, default_picture".$dsc_q.", in_stock, slug from ".PRODUCTS_TABLE."
-					where ".(count($_ProductIDs)?"productID IN(".implode(", ", array_slice($_ProductIDs, $iter, 100)).") AND ":"")."enabled=1".$clause;
-                
+            for (; $iter < $proCount; $iter += $chunk_size) {
+
+                $sql = "select productID, product_code, " . LanguagesManager::sql_prepareField('name') . " AS name, Price, categoryID, default_picture" . $dsc_q . ", in_stock, slug, eproduct_filename, min_order_amount" . ($local_delivery_cost_enabled ? ', free_shipping, shipping_freight' : '') . " from " . PRODUCTS_TABLE . "
+					where " . (count($_ProductIDs) ? "productID IN(" . implode(", ", array_slice($_ProductIDs, $iter, $chunk_size)) . ") AND " : "") . "enabled=1 AND ordering_available>0 " . $clause;
+
                 $q = db_query($sql);
-                
+
                 $store_url = $this->getStoreUrl();
-                
+
                 //$picture_url = (MOD_REWRITE_SUPPORT&&false)?$store_url.'products_pictures/':BASE_URL.URL_PRODUCTS_PICTURES.'/';
-                $picture_url = (SystemSettings::is_hosted())?$store_url.'products_pictures/':BASE_URL.URL_PRODUCTS_PICTURES.'/';
-                
+                $picture_url = (SystemSettings::is_hosted()) ? $store_url . 'products_pictures/' : $store_url . URL_PRODUCTS_PICTURES . '/';
+                $picture_url = preg_replace('@([^:]{1})//@', '\\1/', $picture_url);
+
                 while ($product = db_fetch_row($q)) {
-                    
-                    //                    fputs($f, "					<product available=\"".(($product['in_stock'] || !CONF_CHECKSTOCK)?'true':'false')."\" id=\"".$product["productID"]."\">\n");
-                    fputs($f, "					<product id=\"".$product["productID"]."\">\n");
-                    fputs($f, "						<url>".str_replace('&', '&amp;', set_query('ukey=product&furl_enable=1&product_slug='.$product['slug'].'&productID='.$product['productID'], $store_url))."</url>\n");
-                    fputs($f, "						<price>".RoundFloatValueStr($product["Price"] * $rate)."</price>\n");
+
+                    fputs($f, "					<offer available=\"" . (($product['in_stock'] || !CONF_CHECKSTOCK) ? 'true' : 'false') . "\" id=\"" . $product["productID"] . "\">\n");
+                    fputs($f, "						<url>".str_replace('&', '&amp;', set_query('ukey=product'.(MOD_REWRITE_SUPPORT ?'&furl_enable=1':'').'&product_slug='.$product['slug'].'&productID='.$product['productID'], $store_url))."</url>\n");
+                    fputs($f, "						<price>" . RoundFloatValueStr($product["Price"] * $rate) . "</price>\n");
                     fputs($f, "						<currencyId>UAH</currencyId>\n");
-                    fputs($f, "						<categoryId>".$product["categoryID"]."</categoryId>\n");
-                    
+                    fputs($f, "						<categoryId>" . $product["categoryID"] . "</categoryId>\n");
+
                     if ($product["default_picture"] != null) {
-                        $pic_clause = " and photoID=".((int)$product["default_picture"]);
+                        $pic_clause = " and photoID=" . ((int)$product["default_picture"]);
                     } else
                         $pic_clause = "";
-                    
-                    $q1 = db_query("SELECT filename, thumbnail FROM ".PRODUCT_PICTURES." WHERE productID=".$product["productID"].$pic_clause.' ORDER BY priority');//.' ORDER BY priority');
+
+                    $q1 = db_query("select filename, thumbnail from " . PRODUCT_PICTURES . " where productID=" . $product["productID"] . $pic_clause . ' ORDER BY priority');//.' ORDER BY priority');
                     $pic_row = db_fetch_row($q1);
                     if ($pic_row) {
-                        if (strlen($pic_row["filename"]) && file_exists(DIR_PRODUCTS_PICTURES."/".$pic_row["filename"]))
-                            fputs($f, "						<picture>".$picture_url.str_replace(' ', '%20', $this->_deleteHTML_Elements($pic_row["filename"]))."</picture>\n");
+                        if (strlen($pic_row["filename"]) && file_exists(DIR_PRODUCTS_PICTURES . "/" . $pic_row["filename"]))
+                            fputs($f, "						<picture>" . $picture_url . str_replace(' ', '%20', $this->_deleteHTML_Elements($pic_row["filename"])) . "</picture>\n");
                         else
-                            if (strlen($pic_row["thumbnail"]) && file_exists(DIR_PRODUCTS_PICTURES."/".$pic_row["thumbnail"]))
-                                fputs($f, "						<picture>".$picture_url.str_replace(' ', '%20', $this->_deleteHTML_Elements($pic_row["thumbnail"]))."</picture>\n");
+                            if (strlen($pic_row["thumbnail"]) && file_exists(DIR_PRODUCTS_PICTURES . "/" . $pic_row["thumbnail"]))
+                                fputs($f, "						<picture>" . $picture_url . str_replace(' ', '%20', $this->_deleteHTML_Elements($pic_row["thumbnail"])) . "</picture>\n");
+
                     }
-                    
+
+
                     switch ($export_product_name) {
                         default:
                         case 'only_name':
@@ -277,35 +286,55 @@
                             $_t = catCalculatePathToCategory($product['categoryID']);
                             foreach ($_t as $__t)
                                 if ($__t['categoryID'] != 1)
-                                    $_NameAddi .= $__t['name'].':';
+                                    $_NameAddi .= $__t['name'] . ':';
                             break;
                     }
-                    $product["name"] = $this->_deleteHTML_Elements($_NameAddi.$product["name"]);
+
+//				fputs( $f, "                        <delivery>true</delivery>\n" );
+                    if ($local_delivery_cost_enabled && ($product['free_shipping'] || $product['shipping_freight'])) {
+
+                        fputs($f, "						<local_delivery_cost>" . ($product['free_shipping'] ? '0' : (float)$product['shipping_freight']) . "</local_delivery_cost>\n");
+                    }
+
+                    $product["name"] = $this->_deleteHTML_Elements($_NameAddi . $product["name"]);
+
+                    fputs($f, "						<name>" . $product["name"] . "</name>\n");
+
+                    $product["product_code"] = $product["product_code"] = $this->_deleteHTML_Elements($product["product_code"]);
                     
-                    fputs($f, "						<name>".$product["name"]."</name>\n");
-                    
+                    fputs($f, "						<vendorCode>" . $product["product_code"] . "</vendorCode>\n");
+
                     if (strlen($dsc) > 0) {
                         $product[$dsc] = $this->_deleteHTML_Elements($product[$dsc]);
-                        fputs($f, "						<description>".$product[$dsc]."</description>\n");
+                        fputs($f, "						<description>" . $product[$dsc] . "</description>\n");
+                    } else {
+                        fputs($f, "						<description></description>\n");
                     }
-                    //                    else {
-                    //                        fputs($f, "						<description></description>\n");
-                    //                    }
-                    
-                    //                    if ($sales_notes) {
-                    //                        fputs($f, "						<sales_notes>".$sales_notes."</sales_notes>\n");
-                    //                    }
-                    
-                    fputs($f, "					</product>\n");
+
+//                    if ($sales_notes) {
+//                        fputs($f, "						<sales_notes>" . $sales_notes . "</sales_notes>\n");
+//                    } elseif ($product["min_order_amount"] > 1) {
+//                        fputs($f, "						<sales_notes>Минимальный заказ: " . $product["min_order_amount"] . " шт.</sales_notes>\n");
+//                    }
+//                    if (trim($product["eproduct_filename"]) != "") {
+//
+//                        fputs($f, "						<downloadable>true</downloadable>\n");
+//                    } else {
+//                        fputs($f, "						<downloadable>false</downloadable>\n");
+//                    }
+                    fputs($f, "					</offer>\n");
+
                 }
+                db_free_result($q);
+
             }
-            fputs($f, "				</products>\n");
+            fputs($f, "				</offers>\n");
         }
         
         function _exportEnd($f)
         {
             fputs($f, "			</shop>\n");
-            fputs($f, "		</catalog>\n");
+            fputs($f, "		</yml_catalog>\n");
         }
     }
 

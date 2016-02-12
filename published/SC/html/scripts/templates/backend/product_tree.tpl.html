@@ -95,12 +95,13 @@ function checkAllProducts(_ProdNum){
 				<td>{"prdset_product_name"|translate}</td>
 				<td>{"str_price"|translate},&nbsp;{"str_universal_currency"|translate}</td>
 			</tr>
-			{counter start=0 skip=1 print=false}
+			{counter start=0 skip=1 print=false assign=counter_value}
 			{foreach from=$Products item=_Product}
+			{counter}
 			<tr class="{cycle values='gridline,gridline1'}">
-				<td><input name="PRODUCTS[{$_Product.productID}]" value="1" id="prod{counter}" type="checkbox"
+				<td><input name="PRODUCTS[{$_Product.productID}]" value="1" id="prod{$counter_value}" type="checkbox"
 						{if $session_selectedProducts[$showProducts][$_Product.productID]}checked="checked"{/if} /></td>
-				<td><label for="prod{counter}">{$_Product.name|escape:'html'}</label></td>
+				<td><label for="prod{$counter_value}">{$_Product.name|escape:'html'}</label></td>
 				<td align="right">
 				{if $_Product.Price}
 					{$_Product.Price}

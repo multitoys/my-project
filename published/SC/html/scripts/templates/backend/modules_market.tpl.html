@@ -14,7 +14,7 @@
 <li>
 Прямой доступ (URL): <b><a target="_blank" href="{$smarty.const.BASE_WA_URL}{if !$smarty.const.MOD_REWRITE_SUPPORT||true}{if !$smarty.const.CONF_ON_WEBASYST}published/{/if}SC/html/scripts/{/if}get_file.php?getFileParam=R2V0WWFuZGV4">{$smarty.const.BASE_WA_URL}{if !$smarty.const.MOD_REWRITE_SUPPORT||true}{if !$smarty.const.CONF_ON_WEBASYST}published/{/if}SC/html/scripts/{/if}get_file.php?getFileParam=R2V0WWFuZGV4</a></b>
 </li>
-{if false&& $base_url && base_url!=$smarty.const.BASE_WA_URL}
+{if false&& $base_url && $base_url!=$smarty.const.BASE_WA_URL}
 <li>
 Прямой доступ (с учетом указанного адреса главной страницы)(URL): <b><a target="_blank" href="{$base_url}{if !$smarty.const.CONF_ON_WEBASYST}published/SC/html/scripts/{/if}get_file.php?getFileParam=R2V0WWFuZGV4">{$base_url}{if !$smarty.const.CONF_ON_WEBASYST}published/SC/html/scripts/{/if}get_file.php?getFileParam=R2V0WWFuZGV4</a></b>
 </li>
@@ -47,16 +47,14 @@
         
         <p>Цены на товары в магазине, экспортируемые в XML-файл для интернет-магазинов, указываются в гривнах (UAH).
 	<br>
-           Пожалуйста, укажите курс гривны в Вашем магазине - введите сколько условных единиц (у.е.) в магазине
-           составляет 1 гривна.
+           Пожалуйста, укажите курс гривны в Вашем магазине - введите сколько условных единиц (у.е.) в магазине составляет 1 гривна.
 	<br>
            Например, если Вы введете 5, то это будет означать, что 1 гривна = 5 у.е. магазина.
 	<br>
-           Рекомендуется вводить тот курс, который Вы указали для валюты "Гривна" (если таковая определена) в разделе
-           "Настройки->Валюты".
+           Рекомендуется вводить тот курс, который Вы указали для валюты "Гривна" (если таковая определена) в разделе "Настройки->Валюты".
 	</p>
         
-        <p>1 гривна = <input type=text name=market_rur_rate value=1> у.е.</p>
+        <p>1 гривна = <input type=text name=market_uah_rate value=1> у.е.</p>
 
 	<p>
 	Какие описания товаров экспортировать в файл?<br>
@@ -72,8 +70,7 @@
 	{if $smarty.const.CONF_CHECKSTOCK eq 1}
 	<p>
         <input type="checkbox" name="market_dont_export_negative_stock" value="1" id="id_yenstock"
-               class="checknomarging" checked="checked"/><label for="id_yenstock"> Не экспортировать товары с нулевым
-                                                                                   остатком на складе</label><br>
+               class="checknomarging" checked="checked"/><label for="id_yenstock"> Не экспортировать товары с нулевым остатком на складе</label><br>
 	</p>
 	{/if}
 	<p>Экспорт названий товаров:
@@ -83,10 +80,13 @@
 		<option value="path_and_name">путь к категории товара + название товара</option>
 	</select>
 	</p>
-        {*<p>&lt;sales_notes&gt;:*}
-        {*<br />*}
-        {*<input type="text" name="market_export_sales_notes" value="">*}
-        {*</p>*}
+	<p>&lt;sales_notes&gt; (если указана, добавится к каждому продукту):
+	<br />
+		<input type="text" name="market_export_sales_notes" value="">
+	<p>&lt;local_delivery_cost&gt; (общая стоимость доставки для своего региона):
+	<br /><label><input type="checkbox" name="market_export_local_delivery_cost_enabled" value="1"> Единая по умолчанию</label>: <input type="text" name="market_export_local_delivery_cost" value="0.0">
+	<br /><label><input type="checkbox" name="yandex_export_local_delivery_cost_override" value="1"> Установить равной стоимости упаковки продукта</label> (если та указана в свойствах продукта)
+	
 	</li>
 	</ol>
 	<p>

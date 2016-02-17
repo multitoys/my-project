@@ -8,40 +8,42 @@
     ini_set('display_errors', true);
     $start = microtime(true);
 
-    define('DIR_ROOT', $_SERVER['DOCUMENT_ROOT'].'/published/SC/html/scripts');
-    define('DIR_COMPETITORS', $_SERVER['DOCUMENT_ROOT'].'/popup/search_by_conc');
+    define('DIR_ROOT', $_SERVER['DOCUMENT_ROOT'] . '/published/SC/html/scripts');
+    define('DIR_COMPETITORS', $_SERVER['DOCUMENT_ROOT'] . '/popup/search_by_conc');
+    define('DIR_CURL', $_SERVER['DOCUMENT_ROOT'] . '/curl');
 
-    include_once(DIR_ROOT.'/includes/init.php');
-    include_once(DIR_CFG.'/connect.inc.wa.php');
-    include(DIR_FUNC.'/setting_functions.php');
-    include_once(DIR_COMPETITORS.'/curl_competitors.php');
-    
-    $a = false;
-    
+    include_once(DIR_ROOT . '/includes/init.php');
+    include_once(DIR_CFG . '/connect.inc.wa.php');
+    include(DIR_FUNC . '/setting_functions.php');
+    include_once(DIR_COMPETITORS . '/curl_competitors.php');
+
+    $auth_multi = false;
+
     if (isset($_SESSION) &&
         array_key_exists('log', $_SESSION) &&
         $_SESSION['log'] === 'sales'
     ) {
-        $a = true;
+        $auth_multi = true;
     }
-    
-    if (!$a) {
+
+    if (!$auth_multi) {
         //        var_dump($_SESSION);
         die('NO LOGIN SESSION');
+        
     } else {
-        
-        $b = false;
+
+        $only_new = false;
         $cat_file = 'categories';
-        
+
         if (isset($_GET) &&
             array_key_exists('new', $_GET) &&
             $_GET['new'] > 0
         ) {
-            $b = true;
+            $only_new = true;
             $cat_file = 'new';
         }
-        include(DIR_COMPETITORS.'/grandtoys_'.$cat_file.'.php');
-        
+        include(DIR_COMPETITORS . '/grandtoys_' . $cat_file . '.php');
+
         $DB_tree = new DataBase();
         $DB_tree->connect(SystemSettings::get('DB_HOST'), SystemSettings::get('DB_USER'), SystemSettings::get('DB_PASS'));
         $DB_tree->selectDB(SystemSettings::get('DB_NAME'));
@@ -59,6 +61,7 @@
 
 TAG
         );
+
         $usd = getValue('currency_value', 'Conc__competitors', 'CCID = 4');
 
         define('SLASH', '|');
@@ -70,26 +73,26 @@ TAG
         (
             ''
         );
-        
+
         define('URL_COMPETITORS', 'http://gtoys.com.ua');
         define('URL_POSTFIX', '/page_size');
         define('URL_PREFIX', '/ru/');
         define('EXT', '.html');
-        
+
         if (isset($_GET) &&
             array_key_exists('auth', $_GET) &&
             $_GET['auth'] > 0
         ) {
-            
-//                    define('LOGIN', 'Elenna');
-//                    define('PASSWORD', '0675230623');
-            //        define('LOGIN', 'rusmol');
-            //        define('PASSWORD', '333');
-        define('LOGIN', '973846984');
-        define('PASSWORD', '973846984');
-//            define('LOGIN', '0632986207');
-//            define('PASSWORD', '6207');
-            
+
+            define('LOGIN', 'Elenna');
+            define('PASSWORD', 'Elenna');
+//      define('LOGIN', 'rusmol');
+//      define('PASSWORD', '333');
+//        define('LOGIN', '973846984');
+//        define('PASSWORD', '973846984');
+//      define('LOGIN', '0632986207');
+//      define('PASSWORD', '6207');
+
             $price_number = '';
             //        switch (LOGIN) {
             //            case 'rusmol':
@@ -99,17 +102,13 @@ TAG
             //                $price_number = 3;
             //                break;
             //        }
-            
-            $login_url = URL_COMPETITORS.URL_PREFIX.'user/login';
+
+            $login_url = URL_COMPETITORS . URL_PREFIX . 'user/login';
             $refferer = URL_COMPETITORS;
-            postAuth($login_url, 'UserLogin[username]='.LOGIN.'&UserLogin[password]='.PASSWORD, $headers);
+            postAuth($login_url, 'UserLogin[username]=' . LOGIN . '&UserLogin[password]=' . PASSWORD, $headers);
         }
-        
-        if (!$b) {
-            updateValue('Conc__grandtoys', 'enabled = 0');
-        }
-        
         $no = 0;
+
         $new = 0;
         $part = 0;
         $percent = 0;
@@ -124,83 +123,97 @@ TAG
 
             foreach ($category_urls as $category => $url) {
 
-                $url_postfix = (strpos($url, 'page_size') === false) ? URL_POSTFIX.$products_cnt : '';
-                $category_url = URL_COMPETITORS.URL_PREFIX.$url.$url_postfix;
+                $url_postfix = (strpos($url, 'page_size') === false) ? URL_POSTFIX . $products_cnt : '';
+                $category_url = URL_COMPETITORS . URL_PREFIX . $url . $url_postfix;
                 $filename = rus2Translit(trim($category));
-                $filename = DIR_COMPETITORS.'/'.$filename.EXT;
+                $filename = DIR_CURL . '/' . $filename . EXT;
                 $products = '';
 
-                readUrl($category_url, $filename, URL_COMPETITORS.URL_PREFIX.$refferer, $headers);
+                readUrl($category_url, $filename, $refferer, $headers);
                 $refferer = $category_url;
 
                 $html = file_get_contents($filename);
+
                 preg_match_all(
-                    SLASH.NAME_PATTERN.PRICE_PATTERN.CODE_PATTERN.SLASH.'U',
+                    SLASH . NAME_PATTERN . PRICE_PATTERN . CODE_PATTERN . SLASH . 'U',
                     $html,
                     $products,
                     PREG_PATTERN_ORDER
                 );
 
+
                 $rowcount = count($products[1]);
-                echo('<p>обновление цен категории <b>&laquo;'.$category.'&raquo;</b>...(<i>'.$rowcount.' товаров</i>)</p>');
-                buferOut();
 
-                $category = mysql_real_escape_string($category);
+                if (!$rowcount) {
 
-                for ($j = 0; $j < $rowcount; $j++) {
-                    set_time_limit(0);
-                    $name = mysql_real_escape_string(preg_replace('/\s\s+/', ' ', trim(str_replace($replace_name, ' ', decodeCodepage($products[1][$j])))));
-                    $price = (double)$products[3][$j];
-                    $code = mysql_real_escape_string(decodeCodepage($products[5][$j]));
-                    $productID = getValue('productID', 'Conc__grandtoys', "code = '$code'");
-                    $price_usd = $price / $usd;
+                    showError($html - 'error');
 
-                    if ($productID) {
-                        $query
-                            = "
-                                        UPDATE  Conc__grandtoys
-                                        SET     parent       = '$parent',
-                                                category     = '$category',
-                                                name         = '$name',
-                                                price_uah$price_number    =  $price,
-                                                price_usd$price_number    =  $price_usd,
-                                                enabled      =  1
-                                        WHERE   productID    =  $productID
-                            ";
-                        $res = mysql_query($query) or die(mysql_error()."<br>$query");
-                    } else {
-                        $query
-                            = "
-                                    INSERT INTO Conc__grandtoys
-                                                (parent, category, code, name, price_uah$price_number, price_usd$price_number)
-                                    VALUES      ('$parent', '$category', $code, '$name', $price, $price_usd)
-                                  ";
-                        $res = mysql_query($query) or die(mysql_error()."<br>$query");
-                        $new++;
+                } else {
+
+                    if (!$only_new) {
+                        updateValue('Conc__grandtoys', 'enabled = 0', "parent = '$parent' AND category = '$category'");
                     }
-                    $no++;
+                    
+                    echo('<p>обновление цен категории <b>&laquo;' . $category . '&raquo;</b>...(<i>' . $rowcount . ' товаров</i>)</p>');
+                    buferOut();
+
+                    $category = mysql_real_escape_string($category);
+
+                    for ($j = 0; $j < $rowcount; $j++) {
+                        set_time_limit(0);
+                        $name = mysql_real_escape_string(preg_replace('/\s\s+/', ' ', trim(str_replace($replace_name, ' ', decodeCodepage($products[1][$j])))));
+                        $price = (double)$products[3][$j];
+                        $code = mysql_real_escape_string(decodeCodepage($products[5][$j]));
+                        $productID = getValue('productID', 'Conc__grandtoys', "code = '$code'");
+                        $price_usd = $price / $usd;
+
+                        if ($productID) {
+                            $query
+                                = "
+                                            UPDATE  Conc__grandtoys
+                                            SET     parent       = '$parent',
+                                                    category     = '$category',
+                                                    name         = '$name',
+                                                    price_uah$price_number    =  $price,
+                                                    price_usd$price_number    =  $price_usd,
+                                                    enabled      =  1
+                                            WHERE   productID    =  $productID
+                                ";
+                            $res = mysql_query($query) or die(mysql_error() . "<br>$query");
+                        } else {
+                            $query
+                                = "
+                                        INSERT INTO Conc__grandtoys
+                                                    (parent, category, code, name, price_uah$price_number, price_usd$price_number)
+                                        VALUES      ('$parent', '$category', $code, '$name', $price, $price_usd)
+                                      ";
+                            $res = mysql_query($query) or die(mysql_error() . "<br>$query");
+                            $new++;
+                        }
+                        $no++;
+                    }
+                    unlink($filename);
+                    buferOut(2, 10);
                 }
-				unlink($filename);
-                buferOut(10000);
             }
             $part++;
             $progress = round(($part / $parts * 100), 0, PHP_ROUND_HALF_DOWN);
 
             if ($progress > $percent) {
-                $percent = $progress.'%';
+                $percent = $progress . '%';
                 progressBar('products', $percent);
                 buferOut();
             }
         }
         progressBar('products', $percent, true);
-        echo('<hr><span style="color:blue;">Обработано '.$no.' товаров</span><br><br>Новых '.$new.' товаров</span><br>');
+        echo('<hr><span style="color:blue;">Обработано ' . $no . ' товаров</span><br><br>Новых ' . $new . ' товаров</span><br>');
 
         // Оптимизация таблиц
         $query = "UPDATE Conc__grandtoys SET parent='', category='' WHERE enabled=0";
-        $res = mysql_query($query) or die(mysql_error()."<br>$query");
+        $res = mysql_query($query) or die(mysql_error() . "<br>$query");
 
         $query = 'OPTIMIZE TABLE `Conc__grandtoys`, `Conc_search__grandtoys`';
-        $res = mysql_query($query) or die(mysql_error()."<br>$query");
+        $res = mysql_query($query) or die(mysql_error() . "<br>$query");
         mysql_close();
 
         echo('

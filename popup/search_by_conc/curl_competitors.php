@@ -24,18 +24,18 @@
         curl_setopt($curl, CURLOPT_POST, 1);
         curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);
         curl_setopt($curl, CURLOPT_POSTFIELDS, $auth_data);
-        //        curl_setopt($curl, CURLOPT_USERAGENT, 'Mozilla/4.0 (Windows; U; Windows NT 5.0; En; rv:1.8.0.2) Gecko/20070306 Firefox/1.0.0.4');
-        curl_setopt($curl, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.85 Safari/537.36');
+        curl_setopt($curl, CURLOPT_USERAGENT, 'Mozilla/4.0 (Windows; U; Windows NT 5.0; En; rv:1.8.0.2) Gecko/20070306 Firefox/1.0.0.4');
+        //        curl_setopt($curl, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.85 Safari/537.36');
         //        curl_setopt($ch, CURLOPT_USERAGENT, "SuperBot!!!");
         curl_setopt($curl, CURLOPT_HEADER, 1);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 
         //сохранять полученные COOKIE в файл
-        curl_setopt($curl, CURLOPT_COOKIEJAR, $_SERVER['DOCUMENT_ROOT'].'/popup/cookie.txt');
+        curl_setopt($curl, CURLOPT_COOKIEJAR, $_SERVER['DOCUMENT_ROOT'].'/curl/cookie.txt');
         $html = curl_exec($curl);
 
         // Убеждаемся что произошло перенаправление после авторизации
-        //        if (strpos($result, "Location: home.php") === false) die('Login incorrect');
+//        if (strpos($curl, "Location: ru/user/login") == false) die('Login incorrect');
 
         curl_close($curl);
 
@@ -66,10 +66,11 @@
         }
         //запрещаем делать запрос с помощью POST и соответственно разрешаем с помощью GET
         curl_setopt($curl, CURLOPT_POST, 0);
-        curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);
+//        curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);
         //отсылаем серверу COOKIE полученные от него при авторизации
-        curl_setopt($curl, CURLOPT_COOKIEFILE, $_SERVER['DOCUMENT_ROOT'].'/popup/cookie.txt');
-        curl_setopt($curl, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.85 Safari/537.36');
+        curl_setopt($curl, CURLOPT_COOKIEFILE, $_SERVER['DOCUMENT_ROOT'].'/curl/cookie.txt');
+//        curl_setopt($curl, CURLOPT_USERAGENT, 'Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.0; WOW64; Trident/4.0; SLCC1)');
+        curl_setopt($curl, CURLOPT_USERAGENT, 'Mozilla/4.0 (Windows; U; Windows NT 5.0; En; rv:1.8.0.2) Gecko/20070306 Firefox/1.0.0.4');
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 
         $html = curl_exec($curl);
@@ -236,6 +237,7 @@
         $str = strtolower($str);
         $str = preg_replace('~[^-a-z0-9_]+~u', '-', $str);
         $str = str_replace("'", '', $str);
+        $str = str_replace(" ", '-', $str);
         $str = preg_replace('~\-{2,}~', '-', $str);
         $str = trim($str, '-');
 
@@ -252,19 +254,33 @@
         ";
     }
 
-    function buferOut($delay = 0)
+    function buferOut($delay_min = 0, $delay_max = 0)
     {
         echo str_repeat(' ', 1024 * 128);
         flush();
-        usleep($delay);
+
+        $delay = 0;
+
+        if ($delay_min > 0) {
+
+            $delay = $delay_min;
+
+            if ($delay_max > $delay_min) {
+
+                $delay = mt_rand($delay_min, $delay_max);
+            }
+        }
+
+        if ($delay) {
+            sleep($delay);
+        }
     }
 
     function debugging($start)
     {
-        // $memoscript = memory_get_usage(true)/1048576;
-        $memoscript_peak = memory_get_peak_usage(true) / 1048576;
+        $memoscript = memory_get_usage(true) / 1048576;
+//        $memoscript = memory_get_peak_usage(true) / 1048576;
         $time = microtime(true) - $start;
-        printf('<br>Скрипт выполнялся: %.2F сек.', $time);
-        // printf('<br>Использовано оперативной памяти: %.2F МБ.', $memoscript);
-        printf('<br>Пик оперативной памяти: %.2F МБ.', $memoscript_peak);
+        printf('<br>Time: %.2F seconds', $time);
+        printf('<br>Memory: %.2F MB.', $memoscript);
     }

@@ -11,7 +11,8 @@
 
     define('DIR_ROOT', $_SERVER['DOCUMENT_ROOT'].'/published/SC/html/scripts');
     define('DIR_COMPETITORS', $_SERVER['DOCUMENT_ROOT'].'/popup/search_by_conc');
-
+//    define('DIR_CURL', $_SERVER['DOCUMENT_ROOT'] . '/curl');
+    
     include_once(DIR_ROOT.'/includes/init.php');
     include_once(DIR_CFG.'/connect.inc.wa.php');
     include(DIR_FUNC.'/setting_functions.php');
@@ -59,13 +60,13 @@ TAG
 
         $login_url = 'http://kr-kindermarket.com.ua/auth';
         $refferer = 'http://kr-kindermarket.com.ua/';
-        postAuth($login_url, 'email=alenkiselev%40mail.ru&password=bondarenko&login=', $headers);
+//        postAuth($login_url, 'email=alenkiselev%40mail.ru&password=bondarenko&login=', $headers);
 
         $url = 'http://kr-kindermarket.com.ua/category';
         $filename = DIR_COMPETITORS.'/category.html';
         readUrl($url, $filename, $refferer, $headers);
 
-        updateValue('Conc__kindermarket', 'enabled = 0');
+//        updateValue('Conc__kindermarket', 'enabled = 0');
 
         $html = file_get_contents($filename);
 

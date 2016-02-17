@@ -146,7 +146,7 @@ TAG
 
                 if (!$rowcount) {
 
-                    showError($filename);
+                    showError($category);
 
                 } else {
 

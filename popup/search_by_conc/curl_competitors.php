@@ -144,7 +144,7 @@
     /*--------- Функции ---------*/
     function showError($msg)
     {
-        return "<div style='color:red; font-size:16px;'>$msg</div>";
+        return print("<div style='color:red; font-size:16px;'>$msg</div>");
     }
 
     function removeDir($directory)

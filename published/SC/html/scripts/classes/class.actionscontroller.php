@@ -9,10 +9,9 @@ class ActionsController {
 	public $__action_sources;
 	public $__current_data;
 	public $__action_source;
-	public $__action;
-	
-	public $__params = array();
-	
+    public $__action;
+    public $__params = array();
+    
 	public function preAction($action){
 		
 		safeMode($action !== 'main');
@@ -55,10 +54,14 @@ class ActionsController {
         array $sources = array(ACTCTRL_POST, ACTCTRL_GET, ACTCTRL_AJAX, ACTCTRL_CUST),
 		array $params = null
     ){
+        $time = microtime(true);
+        
 		$controller = new $controller_name;
 		/*@var $controller ActionsController*/
 		$controller->__params = $params;
 		$controller->__exec($sources);
+        
+//        self::debugging($time);
 	}
 	
 	public function __exec_cust($data){
@@ -131,6 +134,14 @@ class ActionsController {
 	public function setData($key, $value){
 		
 		$this->__current_data[$key] = $value;
+	}
+
+	public function debugging($start)
+	{
+		$memoscript_peak = memory_get_peak_usage(true) / 1048576;
+		$time = microtime(true) - $start;
+		printf('<div style="position: fixed; top: 0; left: 0;"><br>Время: %.4F сек.', $time);
+		printf('<br>Память: %.4F МБ.<br></div>', $memoscript_peak);
 	}
 
 	public function main(){

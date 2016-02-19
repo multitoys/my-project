@@ -132,8 +132,8 @@
     {
         $memoscript_peak = memory_get_peak_usage(true) / 1048576;
         $time = microtime(true) - $start;
-        printf('<br>Скрипт выполнялся: %.4F сек.', $time);
-        printf('<br>Пик оперативной памяти: %.4F МБ.<br>', $memoscript_peak);
+        printf('<br>Time: %.4F sec.', $time);
+        printf('<br>Memory: %.4F MB.<br>', $memoscript_peak);
     }
 
     function deleteRow($table, $condition = '')

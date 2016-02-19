@@ -151,31 +151,31 @@ if ( isset($_GET['search']) || $changeStatusIsPressed || isset($_GET['export_to_
 	}
 
 	$db_key=$_SESSION["wbs_dbkey"];
-	if(SystemSettings::is_hosted()){
-		$session_id = session_id();
-		session_write_close();
-		
-	
-		$messageClient = new WbsHttpMessageClient(strtoupper($db_key), 'wbs_msgserver.php');
-		$messageClient->putData('action', 'ALLOW_VIEW_ORDER_DETAILS');
-		$messageClient->putData('language',(LanguagesManager::getCurrentLanguage()->iso2));
-		$res=$messageClient->send();
-	
-		session_id($session_id);
-		session_start();
-	
-
-		if($res&&$messageClient->getResult('msg')!=''){
-			$msg_type=$messageClient->getResult('msg_type');
-			if($msg_type=='error'){
-				$smarty->assign('MessageBlock',"<div class='error_block' ><span class='error_message'>".$messageClient->getResult('msg').'</span></div>');
-			}else{
-				$smarty->assign('MessageBlock',"<div class='comment_block' ><span class='success_message'>".$messageClient->getResult('msg').'</span></div>');
-			}
-		}
-	}else{
+//	if(SystemSettings::is_hosted()){
+//		$session_id = session_id();
+//		session_write_close();
+//		
+//	
+//		$messageClient = new WbsHttpMessageClient(strtoupper($db_key), 'wbs_msgserver.php');
+//		$messageClient->putData('action', 'ALLOW_VIEW_ORDER_DETAILS');
+//		$messageClient->putData('language',(LanguagesManager::getCurrentLanguage()->iso2));
+//		$res=$messageClient->send();
+//	
+//		session_id($session_id);
+//		session_start();
+//	
+//
+//		if($res&&$messageClient->getResult('msg')!=''){
+//			$msg_type=$messageClient->getResult('msg_type');
+//			if($msg_type=='error'){
+//				$smarty->assign('MessageBlock',"<div class='error_block' ><span class='error_message'>".$messageClient->getResult('msg').'</span></div>');
+//			}else{
+//				$smarty->assign('MessageBlock',"<div class='comment_block' ><span class='success_message'>".$messageClient->getResult('msg').'</span></div>');
+//			}
+//		}
+//	}else{
 		$res = false;
-	}
+//	}
 
 	if(!$res||$messageClient->getResult('success')===true){
 		$smarty->assign('GridHeaders', $GridHeaders);

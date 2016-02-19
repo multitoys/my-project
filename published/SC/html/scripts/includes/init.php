@@ -34,9 +34,9 @@
     }
 
     include_once(DIR_ROOT.'/includes/constants.php');
-    if (SystemSettings::is_hosted()) {
-        include_once(DIR_INCLUDES.'/init.wa.php');
-    }
+//    if (SystemSettings::is_hosted()) {
+//        include_once(DIR_INCLUDES.'/init.wa.php');
+//    }
 
     ini_set('include_path', '.'.PATH_DELIMITER.WBS_DIR.'/kernel/includes/pear');
     include_once(WBS_DIR.'/kernel/includes/pear/PEAR.php');

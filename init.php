@@ -32,9 +32,9 @@ if(__USE_OLD_UPDATE){
 }
 
 include_once(DIR_ROOT.'/includes/constants.php');
-if(SystemSettings::is_hosted()){
-	include_once(DIR_INCLUDES.'/init.wa.php');
-}
+//if(SystemSettings::is_hosted()){
+//	include_once(DIR_INCLUDES.'/init.wa.php');
+//}
 
 
 

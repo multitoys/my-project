@@ -18,7 +18,7 @@
 
         public function __construct()
         {
-            $this->Items = new xmlNodeX('items');
+//            $this->Items = new xmlNodeX('items');
         }
 
         function loadCurrentCartFromSession()

@@ -2,16 +2,18 @@
 
 $MOD=@$_GET['mod'];
 $TYPE=@$_GET['type'];
-if($TYPE=="")$TYPE="json";
+$TYPE = ($TYPE!="")? $TYPE:"xml";
 
 //$TOKEN=@$_GET['cid'];
 $TOKEN= Toys::GetToken();
 
 /*Защита токеном*/
-if(!Api::TestToken($TOKEN))
-{  echo json_encode(array("error"=>"token no sucsses")); die();}
+if(!API::TestToken($TOKEN))
+{  echo json_encode(array("error"=>"token no sucsess")); die();}
 
-
+$Cat = '';
+$Tov = '';
+    
 switch($MOD)
 {
   /*
@@ -20,19 +22,19 @@ switch($MOD)
   case 'GCAT': 
     $idcat=(int)@$_GET['idcat'];
 	if($idcat<1)$idcat=1;
-    $Cat=Api::GetCategory($idcat);
-	Api::OutFormat($Cat,$TYPE,'cat');
+    $Cat=API::GetCategory($idcat);
+	API::OutFormat($Cat, $Tov, $TYPE, 'cat');
   break; 
  
   case 'GTOV': 
     $idcat=(int)@$_GET['idcat'];
 	if($idcat<1)$idcat=1;
-    $Cat=Api::GetProductByCat($idcat);
-	Api::OutFormat($Cat,$TYPE,'tov');
+    $Tov=API::GetProductByCat($idcat);
+	API::OutFormat($Cat, $Tov, $TYPE, 'tov');
   break; 
   
   case 'GTOVA':
-      $fname="cahe/".date("Y-m-d")."_".((int)(date("H")/4)).".".$TYPE;
+      $fname="cache/".date("Y-m-d")."_".((int)(date("H")/4)).".".$TYPE;
 	  
 	  if((file_exists($fname)))
 	  {
@@ -47,9 +49,9 @@ switch($MOD)
 	  }
 	  else
 	  {
-       $Cat->tov=Api::GetProductTovarAll();
-	   $Cat->cat=Api::GetCategoryAll();
-	   Api::OutFormat($Cat,$TYPE,'all');
+       $Tov=API::GetProductTovarAll();
+	   $Cat=API::GetCategoryAll();
+	   API::OutFormat($Cat, $Tov, $TYPE, 'all');
 	  }
   break;
   

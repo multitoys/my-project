@@ -37,19 +37,19 @@
 //                    }
                     if (!$this->link) {
                         //log unsuccesfull connection
-                        if (SystemSettings::is_hosted()) {
-                            $fpath = WBS_DIR.'/kernel/error_db_connect.log';
-                            $data = array();
-                            $data[] = date('Y-m-d H:i:s');
-                            $data[] = sprintf("%s@%s", $_user, $_pass);
-                            $data[] = SystemSettings::get('DB_KEY');
-                            $data[] = getenv("REMOTE_ADDR");
-                            $data[] = "SC";
-                            if ($fp = fopen($fpath, 'a')) {
-                                fwrite($fp, sprintf("%s\n", implode(";", $data)));
-                                fclose($fp);
-                            }
-                        }
+//                        if (SystemSettings::is_hosted()) {
+//                            $fpath = WBS_DIR.'/kernel/error_db_connect.log';
+//                            $data = array();
+//                            $data[] = date('Y-m-d H:i:s');
+//                            $data[] = sprintf("%s@%s", $_user, $_pass);
+//                            $data[] = SystemSettings::get('DB_KEY');
+//                            $data[] = getenv("REMOTE_ADDR");
+//                            $data[] = "SC";
+//                            if ($fp = fopen($fpath, 'a')) {
+//                                fwrite($fp, sprintf("%s\n", implode(";", $data)));
+//                                fclose($fp);
+//                            }
+//                        }
                         die("Error connect to mysql");
                     }
                     $ServerVersion = $this->getServerVersion();
@@ -321,10 +321,10 @@
 
         function printMessage($url, $msg = '')
         {
-            if (SystemSettings::is_hosted()) {
-                header("HTTP/1.0 404 Not Found");
-                die($msg);
-            }
+//            if (SystemSettings::is_hosted()) {
+//                header("HTTP/1.0 404 Not Found");
+//                die($msg);
+//            }
             print '<html><head><title>Error</title>
 					<meta http-equiv="Content-Type" content="text/html; charset=UTF-8;"></head><body>';
             if ($msg) print "<p>{$msg}</p>";

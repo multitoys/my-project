@@ -15,4 +15,3 @@ $aTov=Toys::getTovar($id);
 $qTov=Toys::$query;
 
 include('view.php');
-?>

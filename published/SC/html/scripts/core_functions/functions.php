@@ -1222,6 +1222,7 @@
             $_SESSION['cs_skidka_ua'] = $Customer->skidka_ua;
             $_SESSION['cs_may_order'] = $cust_may_order;
             $_SESSION['cs_unlimited'] = $Customer->unlimited_order;
+            $_SESSION['cs_api_access'] = $Customer->api_access;
             $_SESSION['cs_vip'] = $Customer->vip;
             //            $_SESSION['cs_bonus'] = $Customer->1C;
 
@@ -1359,9 +1360,9 @@
     function storePOST($_VarName, $_VarData)
     {
 
-        if (!isset($_SESSION['xPOST']))
-            //session_register('xPOST');
-        $_SESSION['xPOST'][$_VarName] = $_VarData;
+        if (!isset($_SESSION['xPOST'][$_VarName])) {
+            $_SESSION['xPOST'][$_VarName] = $_VarData;
+        }
     }
 
     function loadPOST($_VarName)
@@ -1372,11 +1373,11 @@
         return $_SESSION['xPOST'][$_VarName];
     }
 
-    function unsetPOST()
+    function unsetPOST($_VarName)
     {
 
-        if (isset($_SESSION['xPOST']))
-            unset($_SESSION['xPOST']);
+        if (isset($_SESSION['xPOST'][$_VarName]))
+            unset($_SESSION['xPOST'][$_VarName]);
     }
 
     /**

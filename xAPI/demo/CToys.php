@@ -9,8 +9,8 @@ email: jktu@ua.fm
 class Toys
 {
   static $login="sales";
-  static $pass="2405";
-  static $type="json";
+  static $pass="172Multi092091";
+  static $type="xml";
   static $query="";
   static $token;
  
@@ -35,7 +35,7 @@ class Toys
   
   static function getCategory($id=1)
   {
-    $url="http://toysi.com.ua/xAPI/index.php?mod=GCAT&idcat={$id}";
+    $url=$_SERVER['HTTP_HOST']."/xAPI/index.php?mod=GCAT&idcat={$id}";
 	$aCat=json_decode(self::GetURL($url));
 	
 	return $aCat;
@@ -43,7 +43,7 @@ class Toys
   
   static function getTovar($id=1)
   {
-    $url="http://toysi.com.ua/xAPI/index.php?mod=GTOV&idcat={$id}";
+    $url=$_SERVER['HTTP_HOST']."/xAPI/index.php?mod=GTOV&idcat={$id}";
 	$aTov=json_decode(self::GetURL($url));
 	
 	return $aTov;
@@ -52,7 +52,7 @@ class Toys
   
   static function getAll($id=1)
   {
-    $url="http://toysi.com.ua/xAPI/index.php?mod=GCAT&idcat={$id}";
+    $url=$_SERVER['HTTP_HOST']."/xAPI/index.php?mod=GCAT&idcat={$id}";
 	$aCat=json_decode(self::GetURL($url));
 	if($aCat!="")
 	for($i=0;$i<count($aCat);$i++)
@@ -62,7 +62,4 @@ class Toys
 	
 	return $aCat;
   }
-  
-  
 }
-?>

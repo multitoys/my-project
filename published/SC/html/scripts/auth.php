@@ -1,6 +1,6 @@
 <?php
 	require_once( "../../../common/html/includes/httpinit.php" );
-	require_once( WBS_DIR."/published/SC/sc.php" );
+	require_once("../../sc.php" );
 	//
 	// Authorization
 	//

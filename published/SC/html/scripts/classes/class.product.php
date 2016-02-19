@@ -1,111 +1,123 @@
 <?php
-class Product extends DBObject {
 
-	var $productID;
-	var $categoryID;
-	var $customers_rating;
-	var $Price;
-	var $SpecialPrice;
-	var $in_stock;
-	var $customer_votes;
-	var $items_sold;
-	var $enabled = 1;
-	var $list_price;
-	var $product_code;
-	var $sort_order;
-	var $default_picture;
-	var $date_added;
-	var $date_modified;
-	var $viewed_times;
-	var $eproduct_filename;
-	var $eproduct_available_days;
-	var $eproduct_download_times;
-	var $weight;
-	var $free_shipping;
-	var $min_order_amount = 1;
-	var $shipping_freight;
-	var $classID;
-	var $name;
-	var $brief_description;
-	var $description;
-	var $meta_title;
-	var $meta_description;
-	var $meta_keywords;
-	var $ordering_available;
-	var $slug;
-	var $add2cart_counter;
-  var $skidka;
-  var $ostatok;
+    class Product extends DBObject
+    {
 
-	var $__primary_key = 'productID';
-	var $__db_table = PRODUCTS_TABLE;
-	var $__className = 'product';
+        var $productID;
+        var $categoryID;
+        var $customers_rating;
+        var $Price;
+        var $SpecialPrice;
+        var $in_stock;
+        var $customer_votes;
+        var $items_sold;
+        var $enabled = 1;
+        var $list_price;
+        var $product_code;
+        var $sort_order;
+        var $default_picture;
+        var $date_added;
+        var $date_modified;
+        var $viewed_times;
+        var $eproduct_filename;
+        var $eproduct_available_days;
+        var $eproduct_download_times;
+        var $weight;
+        var $free_shipping;
+        var $min_order_amount = 1;
+        var $shipping_freight;
+        var $classID;
+        var $name;
+        var $brief_description;
+        var $description;
+        var $meta_title;
+        var $meta_description;
+        var $meta_keywords;
+        var $ordering_available;
+        var $slug;
+        var $add2cart_counter;
+        var $skidka;
+        var $ostatok;
 
-	function save($force_insert = false){
+        var $__primary_key = 'productID';
+        var $__db_table = PRODUCTS_TABLE;
+        var $__className = 'product';
 
-		if(!$this->{$this->__primary_key}){
+        function save($force_insert = false)
+        {
 
-			$this->date_added = date('Y-m-d H:i:s');
-			$this->date_modified = date('Y-m-d H:i:s');
-		}else{
+            if (!$this->{$this->__primary_key}) {
 
-			$this->date_modified = date('Y-m-d H:i:s');
-		}
+                $this->date_added = date('Y-m-d H:i:s');
+                $this->date_modified = date('Y-m-d H:i:s');
+            } else {
 
-		parent::save($force_insert);
-	}
+                $this->date_modified = date('Y-m-d H:i:s');
+            }
 
-	function __isAvailableSlug($slug){
+            parent::save($force_insert);
+        }
 
-		return !intval(db_phquery_fetch(DBRFETCH_FIRST, 'SELECT 1 FROM ?#PRODUCTS_TABLE WHERE slug=? AND productID<>?', $slug, $this->productID));
-	}
+        function __isAvailableSlug($slug)
+        {
 
-	function checkInfo($scheme = null){
+            return !intval(db_phquery_fetch(DBRFETCH_FIRST, 'SELECT 1 FROM ?#PRODUCTS_TABLE WHERE slug=? AND productID<>?', $slug, $this->productID));
+        }
 
-		if($this->slug && !$this->__isAvailableSlug($this->slug))
-			return PEAR::raiseError('msg_occupied_slug');
-	}
+        function checkInfo($scheme = null)
+        {
 
-	function loadBySlug($slug){
-		if($this->getRegisteredByID($slug)) return;
-		$product = db_phquery_fetch(DBRFETCH_ASSOC, 'SELECT * FROM ?#PRODUCTS_TABLE WHERE slug=?', $slug);
-		LanguagesManager::ml_fillFields($this->__db_table, $product);
-		$this->loadFromArray($product);
-		$this->registerByID($product['productID']);
-		$this->registerByID($product['slug']);
-		$this->SetSpecialPrice();
-	}
+            if ($this->slug && !$this->__isAvailableSlug($this->slug))
+                return PEAR::raiseError('msg_occupied_slug');
+        }
 
-	function loadByID($id){
+        function loadBySlug($slug)
+        {
+            if ($this->getRegisteredByID($slug)) return;
+            $product = db_phquery_fetch(DBRFETCH_ASSOC, 'SELECT * FROM ?#PRODUCTS_TABLE WHERE slug=?', $slug);
+            LanguagesManager::ml_fillFields($this->__db_table, $product);
+            $this->loadFromArray($product);
+            $this->registerByID($product['productID']);
+            $this->registerByID($product['slug']);
+            $this->SetSpecialPrice();
+        }
 
-		$res = parent::loadByID($id);
-		$this->SetSpecialPrice();
-		if($res){
-			$this->registerByID($this->slug);
-		}
-		return $res;
-	}
+        function loadByID($id)
+        {
 
-	function correctFieldData($field, $data){
+            $res = parent::loadByID($id);
+            $this->SetSpecialPrice();
+            if ($res) {
+                $this->registerByID($this->slug);
+            }
 
-		if(in_array($field, array('Price', 'list_price', 'weight', 'shipping_freight', 'min_order_amount'))){
-			$data = str_replace(',', '.', $data);
-		}
-		return $data;
-	}
+            return $res;
+        }
 
-	function SetSpecialPrice() {
+        function correctFieldData($field, $data)
+        {
 
-		if(isset($_SESSION["log"])) $log = $_SESSION["log"];
-		else return;
+            if (in_array($field, array('Price', 'list_price', 'weight', 'shipping_freight', 'min_order_amount'))) {
+                $data = str_replace(',', '.', $data);
+            }
 
-		// GetCustomer
-		$q = db_query("SELECT * FROM SC_customers WHERE Login='".$log."'");
-		if ( $customer=db_fetch_assoc($q)){
+            return $data;
+        }
 
-			if(intval($customer["is_special_price"])==1) $this->Price = $this->SpecialPrice;
-		}
-	}
+        function SetSpecialPrice()
+        {
 
-}
+            if (isset($_SESSION["log"])) $log = $_SESSION["log"];
+            else return;
+
+            // GetCustomer
+            $q = db_query("SELECT * FROM SC_customers WHERE Login='" . $log . "'");
+            if ($customer = db_fetch_assoc($q)) {
+
+                if (intval($customer["is_special_price"]) == 1) $this->Price = $this->SpecialPrice;
+            }
+        }
+
+    }
+
 ?>

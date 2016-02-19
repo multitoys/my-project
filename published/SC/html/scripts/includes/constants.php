@@ -63,17 +63,17 @@
 
     include_once(DIR_FUNC.'/functions.php');
 
-    if (SystemSettings::is_hosted() && !isset($_COOKIE[ini_get('session.name')]) && !strpos(ini_get('session.name'), '_SC')) {
-        $session_dir = ini_get('session.save_path').'/SC_session';
-        if (!is_dir($session_dir)) {
-            @mkdir($session_dir);
-        }
-        if (is_dir($session_dir)) {
-            ini_set('session.name', ini_get('session.name').'_SC');
-            ini_set('session.save_path', $session_dir);
-            ini_set('session.gc_maxlifetime', (3600 * 1));
-        }
-    }
+//    if (SystemSettings::is_hosted() && !isset($_COOKIE[ini_get('session.name')]) && !strpos(ini_get('session.name'), '_SC')) {
+//        $session_dir = ini_get('session.save_path').'/SC_session';
+//        if (!is_dir($session_dir)) {
+//            @mkdir($session_dir);
+//        }
+//        if (is_dir($session_dir)) {
+//            ini_set('session.name', ini_get('session.name').'_SC');
+//            ini_set('session.save_path', $session_dir);
+//            ini_set('session.gc_maxlifetime', (3600 * 1));
+//        }
+//    }
 
     ini_set('session.cookie_lifetime', 2592000);
     session_set_cookie_params(2592000);

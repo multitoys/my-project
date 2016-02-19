@@ -71,12 +71,12 @@
 
 						$url = $this->switchRealURL($serverURL->getURI());
 						//print SystemSettings::is_hosted()?'HOSTED':'LOCAL';
-						if (!SystemSettings::is_hosted()) {
+//						if (!SystemSettings::is_hosted()) {
 							$url = preg_replace("@SC/html/@", (defined('WBS_INSTALL_PATH')?WBS_INSTALL_PATH:'')."published/SC/html/", $url);
 							if(isset($this->__data['dbkey']))$url .= "&DB_KEY=" .$this->__data['dbkey'];
-						} else {
-							$url = preg_replace('/(https?:\/\/)[^\.]+\./', '$1webasyst.', $url);
-						}
+//						} else {
+//							$url = preg_replace('/(https?:\/\/)[^\.]+\./', '$1webasyst.', $url);
+//						}
  				}else{
 						$url = $serverURL->getURI();
 						

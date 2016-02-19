@@ -2,9 +2,7 @@
 ini_set('display_errors',"0");
 include('function.php');
 include('demo/CToys.php');
-/*
-DB_PASSWORD="e9cywzwg" DB_USER="toysi"
-*/
+
 if(file_exists("../dblist/MULTITOYS.xml")){
 	$xml= simplexml_load_file("../dblist/MULTITOYS.xml");
 	$DB_NAME=(string)$xml->DBSETTINGS['DB_NAME'];
@@ -21,9 +19,3 @@ if(file_exists("../dblist/MULTITOYS.xml")){
 }
 
 include('router.php');
-
-
-
-
-
-?>

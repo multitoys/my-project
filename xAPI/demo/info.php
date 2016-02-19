@@ -27,102 +27,85 @@
     <script src="js/docs.js"></script>
     <script src="js/github.info.js"></script>
 
-    <title>xAPI Toysi</title>
+    <title>xAPI multitoys</title>
 </head>
 <body class="metro">
     
     <div class="container">
                 <h1>
                     <a href="javascript:history.back(1);"><i class="icon-arrow-left-3 fg-darker smaller"></i></a>
-                    Toysi<small class="on-right">PHP Class</small>
+                    multitoys<small class="on-right">PHP Class</small>
                 </h1>
 
                
              <pre class="prettyprint linenums">
  /*
-PHP Class 
-from work Toys API JSON
-Created by Oleg Abramov
-email: jktu@ua.fm
+PHP Class
 */
 
-class Toys
-{
-  static $login="demo";
-  static $pass="demo";
-  static $type="json";
-  static $token;
- 
-  
-  static function GetToken()
-  {
-     if(self::$token=="")
-	 {
-	   self::$token=md5(self::$login."_".base64_encode(self::$pass));
-	 }
-	 return self::$token;
-  }
-  
-  static function GetURL($url)
-  {
-    $token=self::GetToken();
-	$url.="&type=".self::$type."&cid=".$token;
-	$data=file_get_contents($url);
-	return $data;
-  }
-  
-  static function getCategory($id=1)
-  {
-    $url="http://toysi.com.ua/xAPI/index.php?mod=GCAT&idcat={$id}";
-	$aCat=json_decode(self::GetURL($url));
-	
-	return $aCat;
-  }
-  
-  static function getTovar($id=1)
-  {
-    $url="http://toysi.com.ua/xAPI/index.php?mod=GTOV&idcat={$id}";
-	$aTov=json_decode(self::GetURL($url));
-	
-	return $aTov;
-  }
-  
-  static function getAlls()
-  {
-    $url="http://toysi.com.ua/xAPI/index.php?mod=GTOVA";
-	$aAll=json_decode(self::GetURL($url));
-	
-	return $aAll;
-  }
-  
-  static function getAll($id=1)
-  {
-    $url="http://toysi.com.ua/xAPI/index.php?mod=GCAT&idcat={$id}";
-	$aCat=json_decode(self::GetURL($url));
-	if($aCat!="")
-	for($i=0;$i<count($aCat);$i++)
-	{
-	  $aCat[$i]->c_cat=getAll($aCat[$i]->categoryID);
-	}
-	
-	return $aCat;
-  }
-  
-  
-}
-
-             </pre>
-               
-
-
-                
-
-              
-
-
-               
-
-              
+    class Toys
+    {
+      static $login="demo";
+      static $pass="demo";
+      static $type="json";
+      static $token;
+     
+      
+      static function GetToken()
+      {
+         if(self::$token=="") {
+           self::$token=md5(self::$login."_".base64_encode(self::$pass));
+         }
+                     
+         return self::$token;
+      }
+      
+      static function GetURL($url)
+      {
+        $token=self::GetToken();
+        $url.="&type=".self::$type."&cid=".$token;
+        $data=file_get_contents($url);
+                     
+        return $data;
+      }
+      
+      static function getCategory($id=1)
+      {
+        $url="http://multitoys.com.ua/xAPI/index.php?mod=GCAT&idcat={$id}";
+        $aCat=json_decode(self::GetURL($url));
+        
+        return $aCat;
+      }
+      
+      static function getTovar($id=1)
+      {
+        $url="http://multitoys.com.ua/xAPI/index.php?mod=GTOV&idcat={$id}";
+        $aTov=json_decode(self::GetURL($url));
+        
+        return $aTov;
+      }
+      
+      static function getAlls()
+      {
+        $url="http://multitoys.com.ua/xAPI/index.php?mod=GTOVA";
+        $aAll=json_decode(self::GetURL($url));
+        
+        return $aAll;
+      }
+      
+      static function getAll($id=1)
+      {
+        $url="http://multitoys.com.ua/xAPI/index.php?mod=GCAT&idcat={$id}";
+        $aCat=json_decode(self::GetURL($url));
+        if($aCat!="") {
+            for($i=0;$i<count($aCat);$i++) {
+              $aCat[$i]->c_cat=getAll($aCat[$i]->categoryID);
+            }
+        }
+                     
+        return $aCat;
+      }
+    }</pre>             
     </div>
 
     <script src="js/hitua.js"></script>

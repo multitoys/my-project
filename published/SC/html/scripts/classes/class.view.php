@@ -19,12 +19,12 @@ class View extends Smarty {
 		$this->secure_dir = array(DIR_THEMES, DIR_TPLS, DIR_REPOTHEMES, DIR_MODULES.'/shipping/templates');
 		$this->php_handling = SMARTY_PHP_QUOTE;
 		$compile_dir = DIR_COMPILEDTEMPLATES;
-		if(SystemSettings::is_hosted()){//&&!is_backend()){
-			$demo_theme_id = sc_getSessionData('demo_theme_id');
-			if(strlen($demo_theme_id)){
-				$compile_dir .= '/'.$demo_theme_id;
-			}
-		}
+//		if(SystemSettings::is_hosted()){//&&!is_backend()){
+//			$demo_theme_id = sc_getSessionData('demo_theme_id');
+//			if(strlen($demo_theme_id)){
+//				$compile_dir .= '/'.$demo_theme_id;
+//			}
+//		}
 		checkPath($compile_dir);
 		$this->compile_dir = $compile_dir;
 		$this->template_dir = DIR_TPLS;

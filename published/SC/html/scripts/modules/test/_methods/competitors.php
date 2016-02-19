@@ -304,7 +304,9 @@
             /*@var $Register Register*/
             $smarty = &$Register->get(VAR_SMARTY);
             /*@var $smarty Smarty*/
-    
+
+            $time = microtime(true);
+                
             $this->__getBrandsArray();
             $this->__getCategoriesArray();
     
@@ -326,6 +328,8 @@
             $Grid->default_sort_direction = 'DESC';
             $Grid->rows_num = 100;
 
+//            $smarty->assign('debug', $this->debugging($time));
+            
             //выбор и установка заголовков для таблицы отчета
             $Grid->registerHeader('№');
             $Grid->registerHeader('Код 1С', 'code_1c', false, 'ASC');
@@ -483,13 +487,13 @@
             }
             sort($this->categories);
         }
-        
+
         protected function __priceDiscount($Price, $ua)
         {
-            $real_skidka = ($ua)?$this->disc_ua:$this->disc_usd;
+            $real_skidka = ($ua) ? $this->disc_ua : $this->disc_usd;
             $outPrice = round($Price - ($Price * $real_skidka / 100), 2);
 
-            return number_format($outPrice, 2);
+            return number_format($outPrice, 2, $dec_point = '.', $thousands_sep = '');
         }
 
         protected function __priceConc($Price)
@@ -498,15 +502,15 @@
 
             return number_format($outPrice, 2, $dec_point = '.', $thousands_sep = '');
         }
-    
+
         protected function __priceDiff($Price, $price_conc, $decimals = 0)
         {
             $outDiff = round(($Price / $price_conc - 1) * 100, 1);
 
             return number_format($outDiff, $decimals, $dec_point = '.', $thousands_sep = '');
         }
-    
-        protected function __getExportXLS($headers, $rows)
+
+        private function __getExportXLS($headers, $rows)
         {
             if ($_GET['competitors']) {
                 foreach ($this->conc as $conc) {

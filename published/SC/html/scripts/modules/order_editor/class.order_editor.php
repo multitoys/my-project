@@ -184,15 +184,15 @@ class order_editor extends Module
         $sql = "insert into ?#ORDER_STATUS_CHANGE_LOG_TABLE (orderID, status_change_time, status_comment) ".
                "values (?, now(), ?)";
         db_phquery($sql,$order_id,str_replace('{0}', $_SESSION['wbs_username'], translate($msg_name)));
-    	if(SystemSettings::is_hosted()&&file_exists(WBS_DIR.'/kernel/classes/class.metric.php')){
-			include_once(WBS_DIR.'/kernel/classes/class.metric.php');
-			
-			$DB_KEY=SystemSettings::get('DB_KEY');
-			$U_ID = sc_getSessionData('U_ID');
-			
-			$metric = metric::getInstance();
-			$metric->addAction($DB_KEY, $U_ID,'SC', 'EDITORDER', 'ACCOUNT', '');
-		}
+//    	if(SystemSettings::is_hosted()&&file_exists(WBS_DIR.'/kernel/classes/class.metric.php')){
+//			include_once(WBS_DIR.'/kernel/classes/class.metric.php');
+//			
+//			$DB_KEY=SystemSettings::get('DB_KEY');
+//			$U_ID = sc_getSessionData('U_ID');
+//			
+//			$metric = metric::getInstance();
+//			$metric->addAction($DB_KEY, $U_ID,'SC', 'EDITORDER', 'ACCOUNT', '');
+//		}
     }
 };
 

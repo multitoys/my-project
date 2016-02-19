@@ -57,9 +57,10 @@
                 
                 $prod = mysql_fetch_array($nResult, MYSQL_ASSOC);
                 $prod['pic'] = self::GetPhotoTovar($prod['productID']);
+                $prod = array_map('self::_deleteHTML_Elements', $prod);
                 $row[] = $prod;
             }
-            
+
             return $row;
         }
         
@@ -92,7 +93,7 @@
         {
             
             $BASE = "../published/publicdata/MULTITOYS/attachments/SC/products_pictures/";
-            $BASE_URL = "http://toysi.com.ua/published/publicdata/MULTITOYS/attachments/SC/products_pictures/";
+            $BASE_URL = $_SERVER['HTTP_HOST']."/published/publicdata/MULTITOYS/attachments/SC/products_pictures/";
             $sSQl = "select filename,thumbnail,enlarged from `SC_product_pictures` where productID=$ID";
             $nResult = mysql_query($sSQl) or die($sSQl);
             $nCols = mysql_num_rows($nResult);
@@ -115,15 +116,16 @@
         }
         
         
-        public static function OutFormat($data, $format = "json", $type = 'tov')
+        public static function OutFormat($Cat = '', $Tov = '', $format = "xml", $type = 'tov')
         {
             
             switch ($format) {
                 case 'json':
-                    self::OutJSON($data);
+                    self::OutJSON($Cat);
+                    self::OutJSON($Tov);
                     break;
                 case 'xml':
-                    self::OutXML($data, $type);
+                    self::OutXML($Cat, $Tov, $type);
                     break;
             }
         }
@@ -140,7 +142,7 @@
             echo json_encode($data);
         }
         
-        public static function OutXML($data, $type = "tov")
+        public static function OutXML($Cat = '', $Tov = '', $type = "tov")
         {
             
             header("Content-Type: text/xml");
@@ -151,84 +153,88 @@
             header("Cache-Control: max-age=0");
             header("Pragma: no-cache");
             
-            $sOut = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>";
-            $sOut .= "<doc>";
+//            $data = self::_deleteHTML_Elements($data);
+            $sOut = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n";
+            $sOut .= "<doc>\n";
             if ($type == 'tov') {
-                for ($i = 0; $i < count($data); $i++) {
-                    $sOut .= "<item>";
-                    foreach ($data[$i] as $key => $value) {
+                for ($i = 0; $i < count($Tov); $i++) {
+                    $sOut .= "<item>\n";
+                    foreach ($Tov[$i] as $key => $value) {
                         if ($key != "pic") {
-                            $sOut .= "<".$key.">".$value."</".$key.">";
+                            $sOut .= "<".$key.">".$value."</".$key.">\n";
                         }
                     }
                     
-                    $sOut .= "<pic>";
-                    for ($j = 0; $j < count($data[$i]['pic']); $j++) {
+                    $sOut .= "<pic>\n";
+                    for ($j = 0; $j < count($Tov[$i]['pic']); $j++) {
                         
-                        $sOut .= "<image>";
-                        foreach ($data[$i]['pic'][$j] as $key => $value) {
-                            $sOut .= "<".$key.">".$value."</".$key.">";
+                        $sOut .= "<image>\n";
+                        foreach ($Tov[$i]['pic'][$j] as $key => $value) {
+                            $sOut .= "<".$key.">".$value."</".$key.">\n";
                         }
-                        $sOut .= "</image>";
+                        $sOut .= "</image>\n";
                     }
-                    $sOut .= "</pic>";
-                    $sOut .= "</item>";
+                    $sOut .= "</pic>\n";
+                    $sOut .= "</item>\n";
                 }
             }
             
             if ($type == 'cat') {
-                for ($i = 0; $i < count($data); $i++) {
-                    $sOut .= "<item>";
-                    foreach ($data[$i] as $key => $value) {
+                for ($i = 0; $i < count($Cat); $i++) {
+                    $sOut .= "<item>\n";
+                    foreach ($Cat[$i] as $key => $value) {
                         if ($key != "pic") {
-                            $sOut .= "<".$key.">".$value."</".$key.">";
+                            $sOut .= "<".$key.">".$value."</".$key.">\n";
                         }
                     }
-                    $sOut .= "</item>";
+                    $sOut .= "</item>\n";
                 }
                 //print_r($data);
             }
             
             if ($type == 'all') {
-                $fname = "cahe/".date("Y-m-d")."_".((int)(date("H") / 4)).".xml";
-                $sOut .= "<category>";
-                $cat = $data->cat;
+                $fname = "cache/".date("Y-m-d")."_".((int)(date("H") / 4)).".xml";
+                $sOut .= "<category>\n";
+                $cat = $Cat;
                 for ($i = 0; $i < count($cat); $i++) {
-                    $sOut .= "<item>";
+                    $sOut .= "\t<item>\n";
                     foreach ($cat[$i] as $key => $value) {
                         if ($key != "pic") {
-                            $sOut .= "<".$key.">".$value."</".$key.">";
+                            $sOut .= "\t\t<".$key.">".$value."</".$key.">\n";
                         }
                     }
-                    $sOut .= "</item>";
+                    $sOut .= "</item>\n";
                 }
-                $sOut .= "</category>";
+                $sOut .= "</category>\n";
+//                unset($cat);
                 
-                $tov = $data->tov;
-                $sOut .= "<tovar>";
+                $tov = $Tov;
+                $sOut .= "<tovar>\n";
                 for ($i = 0; $i < count($tov); $i++) {
-                    $sOut .= "<item>";
+                    $sOut .= "\t<item>\n";
                     foreach ($tov[$i] as $key => $value) {
                         if ($key != "pic") {
-                            $sOut .= "<".$key.">".$value."</".$key.">";
+                            $sOut .= "\t\t<".$key.">".$value."</".$key.">\n";
                         }
                     }
                     
-                    $sOut .= "<pic>";
+                    $sOut .= "<pic>\n";
                     for ($j = 0; $j < count($tov[$i]['pic']); $j++) {
                         
-                        $sOut .= "<image>";
+                        $sOut .= "\t<image>\n";
                         foreach ($tov[$i]['pic'][$j] as $key => $value) {
-                            $sOut .= "<".$key.">".$value."</".$key.">";
+                            $sOut .= "\t\t<".$key.">".$value."</".$key.">\n";
                         }
-                        $sOut .= "</image>";
+                        $sOut .= "\t</image>\n";
                     }
-                    $sOut .= "</pic>";
-                    $sOut .= "</item>";
+                    $sOut .= "</pic>\n";
+                    $sOut .= "\t</item>\n";
                 }
-                $sOut .= "</tovar>";
+                $sOut .= "</tovar>\n";
             }
-            $sOut .= "</doc>";
+            $sOut .= "</doc>\n";
+//            unset($tov);
+            
             //echo "</doc>";
             if ($type == 'all') {
                 file_put_contents($fname, $sOut);
@@ -236,7 +242,20 @@
             echo $sOut;
         }
         
+        protected static function _deleteHTML_Elements($str/*, $strip_tags = true*/)
+        {
+//            if ($strip_tags) {
+                $str = strip_tags($str);
+//            }
+            $str = str_replace('&nbsp;', ' ', $str);
+            $str = str_replace("&", "&amp;", $str);
+            $str = str_replace("<", "&lt;", $str);
+            $str = str_replace(">", "&gt;", $str);
+            $str = str_replace("\"", "&quot;", $str);
+            $str = str_replace("'", "&apos;", $str);
+            $str = str_replace("\r", "", $str);
+
+            return $str;
+        }
         
     }
-
-?>

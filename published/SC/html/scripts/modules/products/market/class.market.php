@@ -1,37 +1,37 @@
 <?php
-    require_once(DIR_FUNC.'/export_products_function.php');
-    
+    require_once(DIR_FUNC . '/export_products_function.php');
+
     class Market extends Module
     {
-        const MARKET_FILE = "/yandex.xml";
-        
+        const MARKET_FILE = "yandex.xml";
+
         function initInterfaces()
         {
-            
+
             $this->Interfaces = array(
-                'export_page'     => array(
-                    'name'   => 'Страница экспорта продуктов для интернет-магазинов',
+                'export_page' => array(
+                    'name' => 'Страница экспорта продуктов для интернет-магазинов',
                     'method' => 'methodExport'
                 ),
                 'xml_file_access' => array(
-                    'name'   => 'Доступ к файлу Маркет',
+                    'name' => 'Доступ к файлу Маркет',
                     'method' => 'methodXMLFileAccess'
                 )
             );
         }
-        
+
         function methodXMLFileAccess()
         {
-            
+
             //доступ к файлу для Яндекс.Маркет
-            $fileToDownLoad = DIR_TEMP.Market::MARKET_FILE;
-            
+            $fileToDownLoad = DIR_TEMP . "/" . date("Y-m-d") . "_" . ((int)(date("H") / 4)) . "_".Market::MARKET_FILE;
+
             if (file_exists($fileToDownLoad)) {
                 if (isset($_GET["download"])) {
                     header('Content-type: application/force-download');
                     header('Content-Transfer-Encoding: Binary');
-                    header('Content-length: '.filesize($fileToDownLoad));
-                    header('Content-disposition: attachment; filename='.basename($fileToDownLoad));
+                    header('Content-length: ' . filesize($fileToDownLoad));
+                    header('Content-disposition: attachment; filename=' . basename($fileToDownLoad));
                     readfile($fileToDownLoad);
                 } else {
                     echo implode("", file($fileToDownLoad));
@@ -41,16 +41,16 @@
                 if (function_exists('error404page')) error404page();
             }
         }
-        
+
         function methodExport()
         {
-            
+
             global $smarty;
             //show successful save confirmation message
-            if (file_exists(DIR_TEMP.Market::MARKET_FILE)) {
+            if (file_exists(DIR_TEMP . "/" . date("Y-m-d") . "_" . ((int)(date("H") / 4)) . "_" . Market::MARKET_FILE)) {
                 $file_info = array(
-                    'size'  => (string)round(filesize(DIR_TEMP.Market::MARKET_FILE) / 1024),
-                    'mtime' => Time::standartTime(filemtime(DIR_TEMP.Market::MARKET_FILE)),
+                    'size' => (string)round(filesize(DIR_TEMP . "/" . date("Y-m-d") . "_" . ((int)(date("H") / 4)) . "_" . Market::MARKET_FILE) / 1024),
+                    'mtime' => Time::standartTime(filemtime(DIR_TEMP . "/" . date("Y-m-d") . "_" . ((int)(date("H") / 4)) . "_" . Market::MARKET_FILE)),
                 );
                 $smarty->assign("market_file", $file_info);
                 if (isset($_GET["market_export_successful"])) {
@@ -59,49 +59,49 @@
                     $smarty->assign('base_url', $this->getStoreUrl());
                 }
             }
-            
+
             if (!isset($_POST["market_export"])) $_POST["market_export"] = '';
             if ($_POST["market_export"]) //save payment gateways_settings
             {
                 $uah_rate = (float)$_POST["market_uah_rate"];
-                $market_export_product_name = isset($_POST['market_export_product_name'])?$_POST['market_export_product_name']:'only_name';
-                
+                $market_export_product_name = isset($_POST['market_export_product_name']) ? $_POST['market_export_product_name'] : 'only_name';
+
                 if ($uah_rate <= 0) {
                     $smarty->assign("market_errormsg", "Курс гривны указан неверно. Пожалуйста, вводите положительное число");
                 } else {//экспортировать товары
-                    $f = @fopen(DIR_TEMP.Market::MARKET_FILE, "wb");
+                    $f = @fopen(DIR_TEMP . "/" . date("Y-m-d") . "_" . ((int)(date("H") / 4)) . "_" . Market::MARKET_FILE, "wb");
                     if ($f) {
                         $this->_exportToMarket($f, $uah_rate, $market_export_product_name);
                         fclose($f);
-                        iconv_file('utf-8', 'cp1251', DIR_TEMP.Market::MARKET_FILE, true);
+                        iconv_file('utf-8', 'cp1251', DIR_TEMP . "/" . date("Y-m-d") . "_" . ((int)(date("H") / 4)) . "_" . Market::MARKET_FILE, true);
                         RedirectSQ('market_export_successful=yes');
                     } else {
-                        $smarty->assign("market_errormsg", "Ошибка при создании файла ".Market::MARKET_FILE);
+                        $smarty->assign("market_errormsg", "Ошибка при создании файла " . Market::MARKET_FILE);
                     }
                 }
             }
-            
-            require(DIR_ROOT.'/includes/modules.export_products.php');
-            
+
+            require(DIR_ROOT . '/includes/modules.export_products.php');
+
             $smarty->assign("admin_sub_dpt", "modules_market.tpl.html");
         }
-        
+
         private function getStoreUrl()
         {
             static $store_url = null;
             if (!is_null($store_url)) {
                 return $store_url;
             }
-            $store_url = correct_URL(isset($_POST['base_url'])?$_POST['base_url']:CONF_FULL_SHOP_URL);
-            
+            $store_url = correct_URL(isset($_POST['base_url']) ? $_POST['base_url'] : CONF_FULL_SHOP_URL);
+
             return $store_url;
         }
-        
+
         function _exportToMarket($f, $rate, $export_product_name)
         {
             $spArray = array(
                 'exprtUNIC' => array(
-                    'mode'        => 'toarrays',
+                    'mode' => 'toarrays',
                     'expProducts' => array()
                 )
             );
@@ -116,23 +116,23 @@
             $this->_exportProducts($f, $rate, $export_product_name, $spArray['exprtUNIC']['expProducts']);
             $this->_exportEnd($f);
         }
-        
+
         function _exportBegin($f)
         {
             fputs($f, "<?xml version=\"1.0\" encoding=\"windows-1251\"?>\n");
             fputs($f, "	<!DOCTYPE yml_catalog SYSTEM \"shops.dtd\">\n");
-            fputs($f, "		<yml_catalog date=\"".date("Y-m-d H:i")."\">\n");
+            fputs($f, "		<yml_catalog date=\"" . date("Y-m-d H:i") . "\">\n");
             fputs($f, "			<shop>\n");
-            fputs($f, "				<name>".$this->_deleteHTML_Elements(CONF_SHOP_NAME)."</name>\n");
-            fputs($f, "				<company>".$this->_deleteHTML_Elements(CONF_SHOP_NAME)."</company>\n");
-            fputs($f, "				<url>".$this->getStoreUrl()."</url>\n");
+            fputs($f, "				<name>" . $this->_deleteHTML_Elements(CONF_SHOP_NAME) . "</name>\n");
+            fputs($f, "				<company>" . $this->_deleteHTML_Elements(CONF_SHOP_NAME) . "</company>\n");
+            fputs($f, "				<url>" . $this->getStoreUrl() . "</url>\n");
             fputs($f, "				<currencies>\n");
             fputs($f, "					<currency id=\"UAH\" rate=\"1\"/>\n");
             fputs($f, "					<currency id=\"USD\" rate=\"CB\"/>\n");
             fputs($f, "					<currency id=\"EUR\" rate=\"CB\"/>\n");
             fputs($f, "				</currencies>\n");
         }
-        
+
         function _deleteHTML_Elements($str, $strip_tags = true)
         {
             if ($strip_tags) {
@@ -145,69 +145,70 @@
             $str = str_replace("\"", "&quot;", $str);
             $str = str_replace("'", "&apos;", $str);
             $str = str_replace("\r", "", $str);
-            
+
             return $str;
         }
-        
+
         function _exportAllCategories($f, &$_ProductIDs)
         {
             if (!count($_ProductIDs)) return 0;
             $Cats = array();
             $execCats = array();
             $sql = "
-					SELECT catt.categoryID, ".LanguagesManager::sql_prepareField('catt.name')." AS name, catt.parent, catt.slug FROM ".CATEGORIES_TABLE." as catt
-					LEFT JOIN ".PRODUCTS_TABLE." as prot ON catt.categoryID=prot.categoryID
-					WHERE prot.productID IN (".implode(", ", $_ProductIDs).")
+					SELECT catt.categoryID, " . LanguagesManager::sql_prepareField('catt.name') . " AS name, catt.parent AS parent, catt.slug FROM " . CATEGORIES_TABLE . " as catt
+					LEFT JOIN " . PRODUCTS_TABLE . " as prot ON catt.categoryID=prot.categoryID
+					WHERE prot.productID IN (" . implode(", ", $_ProductIDs) . ")
 					GROUP BY prot.categoryID
+					ORDER BY parent, name
 				";
             $q = db_query($sql);
             fputs($f, "				<categories>\n");
             while ($row = db_fetch_row($q)) {
                 if (!in_array($row[0], $execCats)) {
-                    
+
                     $execCats[] = $row[0];
                 }
                 if (!in_array($row[2], $Cats) && $row[2] > 1) {
-                    
+
                     $Cats[] = $row[2];
                 }
                 $row[1] = $this->_deleteHTML_Elements($row[1]);
                 if ($row[2] <= 1) {
-                    fputs($f, "					<category id=\"".$row[0]."\">".$row[1].
-                              "</category>\n");
+                    fputs($f, "					<category id=\"" . $row[0] . "\">" . $row[1] .
+                        "</category>\n");
                 } else {
-                    fputs($f, "					<category id=\"".$row[0]."\" parentId=\"".$row[2]."\">".$row[1]."</category>\n");
+                    fputs($f, "					<category id=\"" . $row[0] . "\" parentId=\"" . $row[2] . "\">" . $row[1] . "</category>\n");
                 }
             }
-            
+
             while (count($Cats)) {
-                
+
                 $sql = "
-						SELECT categoryID, ".LanguagesManager::sql_prepareField('name')." AS name, parent FROM ".CATEGORIES_TABLE." WHERE categoryID IN (".implode(", ", $Cats).")
+						SELECT categoryID, " . LanguagesManager::sql_prepareField('name') . " AS name, parent FROM " . CATEGORIES_TABLE . " WHERE categoryID IN (" . implode(", ", $Cats) . ")
 						";
                 $q = db_query($sql);
                 $Cats = array();
                 while ($row = db_fetch_row($q)) {
                     $Disp = false;
                     if (!in_array($row[0], $execCats)) {
-                        
+
                         $execCats[] = $row[0];
                         $Disp = true;
                     }
                     if (!in_array($row[2], $execCats) && !in_array($row[2], $Cats) && $row[2] > 1) {
-                        
+
                         $Cats[] = $row[2];
                     }
                     $row[1] = $this->_deleteHTML_Elements($row[1]);
                     if ($row[2] <= 1 && $Disp) {
-                        fputs($f, "					<category id=\"".$row[0]."\">".$row[1].
-                                  "</category>\n");
+                        fputs($f, "					<category id=\"" . $row[0] . "\">" . $row[1] .
+                            "</category>\n");
                     } elseif ($Disp) {
-                        fputs($f, "					<category id=\"".$row[0]."\" parentId=\"".$row[2]."\">".$row[1]."</category>\n");
+                        fputs($f, "					<category id=\"" . $row[0] . "\" parentId=\"" . $row[2] . "\">" . $row[1] . "</category>\n");
                     }
                 }
             }
-            
+
             fputs($f, "				</categories>\n");
         }
 
@@ -221,7 +222,7 @@
             //комментарии к товарам
             $sales_notes = isset($_POST['market_export_sales_notes']) ? $this->_deleteHTML_Elements($_POST['market_export_sales_notes'], false) : false;
             //
-            $local_delivery_cost_enabled = (isset($_POST['market_export_local_delivery_cost_override']) && $_POST['market_export_local_delivery_cost_override']) ? true : false;
+            $local_delivery_cost_enabled = (isset($_POST['market_export_local_delivery_cost_override']) && $_POST['market_export_local_delivery_cost_override']);
             //какое описание экспортировать
             if ($_POST["market_export_description"] == 1) {
                 $dsc = "description";
@@ -254,7 +255,7 @@
                 while ($product = db_fetch_row($q)) {
 
                     fputs($f, "					<offer available=\"" . (($product['in_stock'] || !CONF_CHECKSTOCK) ? 'true' : 'false') . "\" id=\"" . $product["productID"] . "\">\n");
-                    fputs($f, "						<url>".str_replace('&', '&amp;', set_query('ukey=product'.(MOD_REWRITE_SUPPORT ?'&furl_enable=1':'').'&product_slug='.$product['slug'].'&productID='.$product['productID'], $store_url))."</url>\n");
+                    fputs($f, "						<url>" . str_replace('&', '&amp;', set_query('ukey=product' . (MOD_REWRITE_SUPPORT ? '&furl_enable=1' : '') . '&product_slug=' . $product['slug'] . '&productID=' . $product['productID'], $store_url)) . "</url>\n");
                     fputs($f, "						<price>" . RoundFloatValueStr($product["Price"] * $rate) . "</price>\n");
                     fputs($f, "						<currencyId>UAH</currencyId>\n");
                     fputs($f, "						<categoryId>" . $product["categoryID"] . "</categoryId>\n");
@@ -264,7 +265,7 @@
                     } else
                         $pic_clause = "";
 
-                    $q1 = db_query("select filename, thumbnail from " . PRODUCT_PICTURES . " where productID=" . $product["productID"] . $pic_clause . ' ORDER BY priority');//.' ORDER BY priority');
+                    $q1 = db_query("SELECT filename, thumbnail FROM " . PRODUCT_PICTURES . " WHERE productID=" . $product["productID"] . $pic_clause . ' ORDER BY priority');//.' ORDER BY priority');
                     $pic_row = db_fetch_row($q1);
                     if ($pic_row) {
                         if (strlen($pic_row["filename"]) && file_exists(DIR_PRODUCTS_PICTURES . "/" . $pic_row["filename"]))
@@ -301,7 +302,7 @@
                     fputs($f, "						<name>" . $product["name"] . "</name>\n");
 
                     $product["product_code"] = $product["product_code"] = $this->_deleteHTML_Elements($product["product_code"]);
-                    
+
                     fputs($f, "						<vendorCode>" . $product["product_code"] . "</vendorCode>\n");
 
                     if (strlen($dsc) > 0) {
@@ -330,7 +331,7 @@
             }
             fputs($f, "				</offers>\n");
         }
-        
+
         function _exportEnd($f)
         {
             fputs($f, "			</shop>\n");

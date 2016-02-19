@@ -96,15 +96,15 @@
 	';
 
         $DBRes = $DBHandler->ph_query($dbq);
-        if (SystemSettings::is_hosted() && file_exists(WBS_DIR.'/kernel/classes/class.metric.php')) {
-            include_once(WBS_DIR.'/kernel/classes/class.metric.php');
-
-            $DB_KEY = SystemSettings::get('DB_KEY');
-            $U_ID = sc_getSessionData('U_ID');
-
-            $metric = metric::getInstance();
-            $metric->addAction($DB_KEY, $U_ID, 'SC', 'ADDPRODUCT', 'ACCOUNT', '');
-        }
+//        if (SystemSettings::is_hosted() && file_exists(WBS_DIR.'/kernel/classes/class.metric.php')) {
+//            include_once(WBS_DIR.'/kernel/classes/class.metric.php');
+//
+//            $DB_KEY = SystemSettings::get('DB_KEY');
+//            $U_ID = sc_getSessionData('U_ID');
+//
+//            $metric = metric::getInstance();
+//            $metric->addAction($DB_KEY, $U_ID, 'SC', 'ADDPRODUCT', 'ACCOUNT', '');
+//        }
 
         return $DBRes->getInsertID();
     }

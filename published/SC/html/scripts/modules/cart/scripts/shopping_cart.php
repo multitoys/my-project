@@ -203,18 +203,18 @@
         
                 RedirectSQ('clear_cart=');
             }
-            if (isset($_POST['checkout'])) {
-        
-                if (SystemSettings::is_hosted() && file_exists(WBS_DIR.'/kernel/classes/class.metric.php')) {
-                    include_once(WBS_DIR.'/kernel/classes/class.metric.php');
-            
-                    $DB_KEY = SystemSettings::get('DB_KEY');
-                    $U_ID = sc_getSessionData('U_ID');
-            
-                    $metric = metric::getInstance();
-                    $metric->addAction($DB_KEY, $U_ID, 'SC', 'CHECKOUT', isset($_GET['widgets'])?'WIDGET':'STOREFRONT', '');
-                }
-            }
+//            if (isset($_POST['checkout'])) {
+//        
+//                if (SystemSettings::is_hosted() && file_exists(WBS_DIR.'/kernel/classes/class.metric.php')) {
+//                    include_once(WBS_DIR.'/kernel/classes/class.metric.php');
+//            
+//                    $DB_KEY = SystemSettings::get('DB_KEY');
+//                    $U_ID = sc_getSessionData('U_ID');
+//            
+//                    $metric = metric::getInstance();
+//                    $metric->addAction($DB_KEY, $U_ID, 'SC', 'CHECKOUT', isset($_GET['widgets'])?'WIDGET':'STOREFRONT', '');
+//                }
+//            }
     
             // Zerg [14.04.13]
             if (isset($_GET['sort'])) $sort = $_GET['sort']; else $sort = 'name';

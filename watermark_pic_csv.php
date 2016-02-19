@@ -40,7 +40,7 @@
     echo("<div id='extract'>Файлы ($zip->numFiles) успешно извлечены!<br><br>");
 
     $watermark_dir = $_SERVER['DOCUMENT_ROOT'].'/img/';
-    $searh_dir = $_SERVER['DOCUMENT_ROOT'].'/published/publicdata/MULTITOYS/attachments/SC/search_pictures/';
+    $search_dir = $_SERVER['DOCUMENT_ROOT'].'/published/publicdata/MULTITOYS/attachments/SC/search_pictures/';
 
     $filename = $dest_dir.'pics.csv';
 
@@ -99,7 +99,7 @@
                 echo("<span style='color: #E9967A;'>$picture - фото не загружено! (строка $row)<br></span>");
                 $erorr++;
             } else {
-                $file_name2 = $searh_dir.$pics_search;
+                $file_name2 = $search_dir.$pics_search;
                 if (filemtime($file_name2) < time() - 86400 * $days) {
                     unlink($file_name2);
                     make_thumbnail($file_name, $file_name2, false, 80);
@@ -135,15 +135,18 @@
                     echo("<span style='color: #FF8000;'>$picture - товара нет на сайте<br></span>");
                     $erorr++;
                 } else {
-                    $pictureID = GetValue('default_picture', 'SC_products', "code_1c = $dopic");
-                    $query = "DELETE FROM `SC_product_pictures` WHERE `filename`='$picture' AND `productID`!=$productID";
-                    $res = mysql_query($query) or die(mysql_error()."<br>$query");
+                    $pictureID = GetValue('default_picture', 'SC_products', "productID = $productID");
+                    $pictures_num = GetCount('SC_product_pictures', "productID=$productID AND filename = '$picture'");
+                    if ($empty_pictureID) {
+                        $query = "DELETE FROM `SC_product_pictures` WHERE `PhotoID`=$empty_pictureID";
+                        $res = mysql_query($query) or die(mysql_error() . "<br>$query");
+                    }
                     $pid = GetValue('PhotoID', 'SC_product_pictures', "filename = '$picture'");
                     if ($pid) {
                         $query = "UPDATE SC_product_pictures
 													SET 
 													priority = $num
-													WHERE filename = '$picture'";
+													WHERE PhotoID = $pid";
                         $res = mysql_query($query) or die(mysql_error()."<br>$query");
                     } else {
                         $query = "INSERT INTO SC_product_pictures
@@ -152,7 +155,7 @@
                         $res = mysql_query($query) or die(mysql_error()."<br>$query");
                         $pid = mysql_insert_id();
                     }
-                    if ($num === 0 || $pictureID === '') {
+                    if ($num == 0 && $pictureID != '') {
                         $query = "UPDATE SC_products SET default_picture = $pid
 													WHERE productID = $productID";
                         $res = mysql_query($query) or die(mysql_error()."<br>$query");
@@ -250,6 +253,15 @@
     function GetValue($what, $table, $condition)
     {
         $query = "SELECT $what FROM $table WHERE $condition LIMIT 1";
+        $result = mysql_query($query) or die('Ошибка в запросе: '.mysql_error().'<br>'.$query);
+        $row = mysql_fetch_row($result);
+
+        return $row[0];
+    }
+    
+    function GetCount($table, $condition)
+    {
+        $query = "SELECT COUNT(*) FROM $table WHERE $condition";
         $result = mysql_query($query) or die('Ошибка в запросе: '.mysql_error().'<br>'.$query);
         $row = mysql_fetch_row($result);
 

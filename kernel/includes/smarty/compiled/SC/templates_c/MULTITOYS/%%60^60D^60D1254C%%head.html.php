@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.9, created on 2016-01-29 11:44:25
+<?php /* Smarty version 2.6.9, created on 2016-02-05 12:57:56
          compiled from head.html */ ?>
 <?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
 smarty_core_load_plugins(array('plugins' => array(array('modifier', 'default', 'head.html', 3, false),array('modifier', 'escape', 'head.html', 3, false),)), $this); ?>
@@ -26,7 +26,7 @@ smarty_core_load_plugins(array('plugins' => array(array('modifier', 'default', '
         <script <?php echo ((is_array($_tmp=@$this->_tpl_vars['deffer'])) ? $this->_run_mod_handler('default', true, $_tmp, ' ') : smarty_modifier_default($_tmp, ' ')); ?>
  type="text/javascript" src="/lib/jquery.mousewheel-3.0.6.pack.js"></script>
         <script <?php echo ((is_array($_tmp=@$this->_tpl_vars['deffer'])) ? $this->_run_mod_handler('default', true, $_tmp, ' ') : smarty_modifier_default($_tmp, ' ')); ?>
- type="text/javascript" src="/source/jquery.fancybox.pack-1453308851238.js"></script>
+ type="text/javascript" src="/source/jquery.fancybox.pack-1454601305626.js"></script>
         <link rel="stylesheet" type="text/css" href="/source/jquery.fancybox.css?v=2.1.5" media="screen"/>
     <?php endif;  endif;  if ($this->_tpl_vars['ios'] != 'ios'): ?>
     <script <?php echo ((is_array($_tmp=@$this->_tpl_vars['deffer'])) ? $this->_run_mod_handler('default', true, $_tmp, ' ') : smarty_modifier_default($_tmp, ' ')); ?>

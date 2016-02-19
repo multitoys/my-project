@@ -29,19 +29,19 @@ if(!function_exists('sc_setSessionData')){
 }
 
 if(!SystemSettings::get('SC_INSTALLED')){
-	if(SystemSettings::is_hosted()){
-		header("HTTP/1.0 404 Not Found");
-		die("<!DOCTYPE HTML PUBLIC \"-//IETF//DTD HTML 2.0//EN\">
-<html><head>
-<title>404 Not Found</title>
-</head><body>
-<h1>Not Found</h1>
-<p>The requested URL {$_SERVER['REQUEST_URI']} was not found on this server.</p>
-<p>Additionally, a 404 Not Found
-error was encountered while trying to use an ErrorDocument to handle the request.</p>
-<hr>
-</body></html>");
-	}
+//	if(SystemSettings::is_hosted()){
+//		header("HTTP/1.0 404 Not Found");
+//		die("<!DOCTYPE HTML PUBLIC \"-//IETF//DTD HTML 2.0//EN\">
+//<html><head>
+//<title>404 Not Found</title>
+//</head><body>
+//<h1>Not Found</h1>
+//<p>The requested URL {$_SERVER['REQUEST_URI']} was not found on this server.</p>
+//<p>Additionally, a 404 Not Found
+//error was encountered while trying to use an ErrorDocument to handle the request.</p>
+//<hr>
+//</body></html>");
+//	}
 	$url = 'http://'.str_replace('//','/',($_SERVER['SERVER_NAME'].WBS_INSTALL_PATH.'/'));
 	print '<html><head><title>Error</title>
 				<meta http-equiv="Content-Type" content="text/html; charset=UTF-8;"></head><body>';

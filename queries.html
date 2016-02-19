@@ -1,0 +1,472 @@
+<br/><span
+        onclick="document.getElementById('sqldebug_1').style.display=document.getElementById('sqldebug_1').style.display!='block'?'block':'none'">+</span>001 -
+<strong>0.001318</strong>[m:2677824] - SHOW VARIABLES LIKE &quot;VERSION&quot;<br/><span
+        onclick="document.getElementById('sqldebug_2').style.display=document.getElementById('sqldebug_2').style.display!='block'?'block':'none'">+</span>002 -
+<strong>0.000555</strong>[m:2695352] - SET SESSION sql_mode=0<br/><span
+        onclick="document.getElementById('sqldebug_3').style.display=document.getElementById('sqldebug_3').style.display!='block'?'block':'none'">+</span>003 -
+<strong>0.000441</strong>[m:2693816] - SET NAMES UTF8<br/><span
+        onclick="document.getElementById('sqldebug_4').style.display=document.getElementById('sqldebug_4').style.display!='block'?'block':'none'">+</span>004 -
+<strong>0.000481</strong>[m:2694288] - set character_set_client=&#039;UTF8&#039;<br/><span
+        onclick="document.getElementById('sqldebug_5').style.display=document.getElementById('sqldebug_5').style.display!='block'?'block':'none'">+</span>005 -
+<strong>0.000464</strong>[m:2694312] - set character_set_results=&#039;UTF8&#039;<br/><span
+        onclick="document.getElementById('sqldebug_6').style.display=document.getElementById('sqldebug_6').style.display!='block'?'block':'none'">+</span>006 -
+<strong>0.000424</strong>[m:2694408] - set collation_connection=&#039;UTF8_general_ci&#039;<br/><span
+        onclick="document.getElementById('sqldebug_7').style.display=document.getElementById('sqldebug_7').style.display!='block'?'block':'none'">+</span>007 -
+<strong>0.001212</strong>[m:2698664] - SELECT 1 FROM `SC_divisions` LIMIT 1<br/><span
+        onclick="document.getElementById('sqldebug_8').style.display=document.getElementById('sqldebug_8').style.display!='block'?'block':'none'">+</span>008 -
+<strong>0.002799</strong>[m:2700816] - SELECT settings_constant_name, settings_value FROM SC_settings<br/><span
+        onclick="document.getElementById('sqldebug_9').style.display=document.getElementById('sqldebug_9').style.display!='block'?'block':'none'">+</span>009 -
+<strong>0.001602</strong>[m:3225728] -
+SELECT * FROM SC_language ORDER BY `priority` ASC, `name` ASC
+<br/><span
+        onclick="document.getElementById('sqldebug_10').style.display=document.getElementById('sqldebug_10').style.display!='block'?'block':'none'">+</span>010 -
+<strong>0.001772</strong>[m:7102200] -
+SELECT * FROM SC_modules
+LEFT JOIN SC_module_configs ON SC_modules.ModuleID=SC_module_configs.ModuleID
+WHERE SC_module_configs.ConfigInit=1001
+<br/><span
+        onclick="document.getElementById('sqldebug_11').style.display=document.getElementById('sqldebug_11').style.display!='block'?'block':'none'">+</span>011 -
+<strong>0.000889</strong>[m:7124928] -
+SELECT ModuleID, ConfigKey, ConfigTitle, ConfigDescr, ConfigInit FROM SC_module_configs
+WHERE ModuleConfigID=42
+<br/><span
+        onclick="document.getElementById('sqldebug_12').style.display=document.getElementById('sqldebug_12').style.display!='block'?'block':'none'">+</span>012 -
+<strong>0.000900</strong>[m:7126408] -
+SELECT ModuleClassFile FROM SC_modules WHERE LOWER(ModuleClassName)=&#039;localization&#039;
+<br/><span
+        onclick="document.getElementById('sqldebug_13').style.display=document.getElementById('sqldebug_13').style.display!='block'?'block':'none'">+</span>013 -
+<strong>0.001351</strong>[m:7132184] -
+SELECT SettingName, SettingValue FROM SC_config_settings
+WHERE ModuleConfigID=42
+<br/><span
+        onclick="document.getElementById('sqldebug_14').style.display=document.getElementById('sqldebug_14').style.display!='block'?'block':'none'">+</span>014 -
+<strong>0.000836</strong>[m:7113288] - SELECT xID FROM SC_divisions WHERE xUnicKey=&#039;TitlePage&#039;<br/><span
+        onclick="document.getElementById('sqldebug_15').style.display=document.getElementById('sqldebug_15').style.display!='block'?'block':'none'">+</span>015 -
+<strong>0.001121</strong>[m:7119416] -
+SELECT * FROM SC_divisions WHERE xID=1
+<br/><span
+        onclick="document.getElementById('sqldebug_16').style.display=document.getElementById('sqldebug_16').style.display!='block'?'block':'none'">+</span>016 -
+<strong>0.000783</strong>[m:7114624] - SELECT xID FROM SC_divisions WHERE xUnicKey=&#039;admin&#039;<br/><span
+        onclick="document.getElementById('sqldebug_17').style.display=document.getElementById('sqldebug_17').style.display!='block'?'block':'none'">+</span>017 -
+<strong>0.000828</strong>[m:7240936] -
+SELECT * FROM SC_language WHERE id=1
+<br/><span
+        onclick="document.getElementById('sqldebug_18').style.display=document.getElementById('sqldebug_18').style.display!='block'?'block':'none'">+</span>018 -
+<strong>0.001182</strong>[m:7408552] -
+SELECT xSettingID, xName, xKey, xValue FROM SC_division_custom_settings WHERE xDivisionID=1
+<br/><span
+        onclick="document.getElementById('sqldebug_19').style.display=document.getElementById('sqldebug_19').style.display!='block'?'block':'none'">+</span>019 -
+<strong>0.001253</strong>[m:7622968] -
+SELECT xInterface,xInheritable,xPriority FROM SC_division_interface WHERE xDivisionID=0
+AND xInheritable=1
+ORDER BY xPriority DESC, xInterface ASC
+<br/><span
+        onclick="document.getElementById('sqldebug_20').style.display=document.getElementById('sqldebug_20').style.display!='block'?'block':'none'">+</span>020 -
+<strong>0.000671</strong>[m:7619416] -
+SELECT xInterface,xInheritable,xPriority FROM SC_division_interface WHERE xDivisionID=1
+
+ORDER BY xPriority DESC, xInterface ASC
+<br/><span
+        onclick="document.getElementById('sqldebug_21').style.display=document.getElementById('sqldebug_21').style.display!='block'?'block':'none'">+</span>021 -
+<strong>0.000750</strong>[m:7629432] -
+SELECT SC_modules.* FROM SC_modules
+LEFT JOIN SC_module_configs ON SC_modules.ModuleID=SC_module_configs.ModuleID
+WHERE SC_module_configs.ModuleConfigID=25
+<br/><span
+        onclick="document.getElementById('sqldebug_22').style.display=document.getElementById('sqldebug_22').style.display!='block'?'block':'none'">+</span>022 -
+<strong>0.000922</strong>[m:7683800] -
+SELECT ModuleID, ConfigKey, ConfigTitle, ConfigDescr, ConfigInit FROM SC_module_configs
+WHERE ModuleConfigID=25
+<br/><span
+        onclick="document.getElementById('sqldebug_23').style.display=document.getElementById('sqldebug_23').style.display!='block'?'block':'none'">+</span>023 -
+<strong>0.000828</strong>[m:7685232] -
+SELECT ModuleClassFile FROM SC_modules WHERE LOWER(ModuleClassName)=&#039;sc_abstract&#039;
+<br/><span
+        onclick="document.getElementById('sqldebug_24').style.display=document.getElementById('sqldebug_24').style.display!='block'?'block':'none'">+</span>024 -
+<strong>0.000998</strong>[m:7688448] -
+SELECT SettingName, SettingValue FROM SC_config_settings
+WHERE ModuleConfigID=25
+<br/><span
+        onclick="document.getElementById('sqldebug_25').style.display=document.getElementById('sqldebug_25').style.display!='block'?'block':'none'">+</span>025 -
+<strong>0.000856</strong>[m:7680656] -
+SELECT SC_modules.* FROM SC_modules
+LEFT JOIN SC_module_configs ON SC_modules.ModuleID=SC_module_configs.ModuleID
+WHERE SC_module_configs.ModuleConfigID=1
+<br/><span
+        onclick="document.getElementById('sqldebug_26').style.display=document.getElementById('sqldebug_26').style.display!='block'?'block':'none'">+</span>026 -
+<strong>0.000936</strong>[m:8187704] -
+SELECT ModuleID, ConfigKey, ConfigTitle, ConfigDescr, ConfigInit FROM SC_module_configs
+WHERE ModuleConfigID=1
+<br/><span
+        onclick="document.getElementById('sqldebug_27').style.display=document.getElementById('sqldebug_27').style.display!='block'?'block':'none'">+</span>027 -
+<strong>0.000923</strong>[m:8189120] -
+SELECT ModuleClassFile FROM SC_modules WHERE LOWER(ModuleClassName)=&#039;test&#039;
+<br/><span
+        onclick="document.getElementById('sqldebug_28').style.display=document.getElementById('sqldebug_28').style.display!='block'?'block':'none'">+</span>028 -
+<strong>0.008167</strong>[m:8517792] -
+SELECT SettingName, SettingValue FROM SC_config_settings
+WHERE ModuleConfigID=1
+<br/><span
+        onclick="document.getElementById('sqldebug_29').style.display=document.getElementById('sqldebug_29').style.display!='block'?'block':'none'">+</span>029 -
+<strong>0.005805</strong>[m:8429072] -
+SELECT xInterfaceCaller,xInterfaceCalled FROM SC_interface_interfaces ORDER BY xPriority DESC
+<br/><span
+        onclick="document.getElementById('sqldebug_30').style.display=document.getElementById('sqldebug_30').style.display!='block'?'block':'none'">+</span>030 -
+<strong>0.009339</strong>[m:8872216] - SELECT * FROM SC_currency_types WHERE CID=9<br/><span
+        onclick="document.getElementById('sqldebug_31').style.display=document.getElementById('sqldebug_31').style.display!='block'?'block':'none'">+</span>031 -
+<strong>0.008674</strong>[m:8868528] - SELECT *,`Name_ru` AS `Name` FROM SC_currency_types ORDER BY sort_order, `Name`
+<br/><span
+        onclick="document.getElementById('sqldebug_32').style.display=document.getElementById('sqldebug_32').style.display!='block'?'block':'none'">+</span>032 -
+<strong>0.009013</strong>[m:8870296] - select count(*) from SC_categories where categoryID=1 <br/><span
+        onclick="document.getElementById('sqldebug_33').style.display=document.getElementById('sqldebug_33').style.display!='block'?'block':'none'">+</span>033 -
+<strong>0.009057</strong>[m:8872952] - SELECT categoryID, slug, parent, `name_ru` AS name FROM SC_categories
+WHERE categoryID=&#039;1&#039;<br/><span
+        onclick="document.getElementById('sqldebug_34').style.display=document.getElementById('sqldebug_34').style.display!='block'?'block':'none'">+</span>034 -
+<strong>0.012355</strong>[m:8872104] - select categoryID, slug, parent, `name_ru` AS name from SC_categories where parent=1  order by sort_order, name
+<br/><span
+        onclick="document.getElementById('sqldebug_35').style.display=document.getElementById('sqldebug_35').style.display!='block'?'block':'none'">+</span>035 -
+<strong>0.006785</strong>[m:9154160] -
+SELECT SC_modules.*,SC_module_configs.ModuleConfigID FROM SC_modules
+LEFT JOIN SC_module_configs ON SC_modules.ModuleID=SC_module_configs.ModuleID
+WHERE SC_module_configs.ConfigKey=&#039;cptmanager&#039;
+<br/><span
+        onclick="document.getElementById('sqldebug_36').style.display=document.getElementById('sqldebug_36').style.display!='block'?'block':'none'">+</span>036 -
+<strong>0.007337</strong>[m:9253376] -
+SELECT ModuleID, ConfigKey, ConfigTitle, ConfigDescr, ConfigInit FROM SC_module_configs
+WHERE ModuleConfigID=51
+<br/><span
+        onclick="document.getElementById('sqldebug_37').style.display=document.getElementById('sqldebug_37').style.display!='block'?'block':'none'">+</span>037 -
+<strong>0.006023</strong>[m:9254864] -
+SELECT ModuleClassFile FROM SC_modules WHERE LOWER(ModuleClassName)=&#039;cptmanager&#039;
+<br/><span
+        onclick="document.getElementById('sqldebug_38').style.display=document.getElementById('sqldebug_38').style.display!='block'?'block':'none'">+</span>038 -
+<strong>0.008590</strong>[m:9279088] -
+SELECT SettingName, SettingValue FROM SC_config_settings
+WHERE ModuleConfigID=51
+<br/><span
+        onclick="document.getElementById('sqldebug_39').style.display=document.getElementById('sqldebug_39').style.display!='block'?'block':'none'">+</span>039 -
+<strong>0.009912</strong>[m:9342472] -
+SELECT xInterfaceCalled FROM SC_interface_interfaces WHERE xInterfaceCaller=&#039;51_cpt_connector&#039;
+<br/><span
+        onclick="document.getElementById('sqldebug_40').style.display=document.getElementById('sqldebug_40').style.display!='block'?'block':'none'">+</span>040 -
+<strong>0.010232</strong>[m:9363104] -
+SELECT SC_modules.* FROM SC_modules
+LEFT JOIN SC_module_configs ON SC_modules.ModuleID=SC_module_configs.ModuleID
+WHERE SC_module_configs.ModuleConfigID=51
+<br/><span
+        onclick="document.getElementById('sqldebug_41').style.display=document.getElementById('sqldebug_41').style.display!='block'?'block':'none'">+</span>041 -
+<strong>0.009719</strong>[m:9368208] -
+SELECT ModuleID, ConfigKey, ConfigTitle, ConfigDescr, ConfigInit FROM SC_module_configs
+WHERE ModuleConfigID=51
+<br/><span
+        onclick="document.getElementById('sqldebug_42').style.display=document.getElementById('sqldebug_42').style.display!='block'?'block':'none'">+</span>042 -
+<strong>0.010958</strong>[m:9369472] -
+SELECT ModuleClassFile FROM SC_modules WHERE LOWER(ModuleClassName)=&#039;cptmanager&#039;
+<br/><span
+        onclick="document.getElementById('sqldebug_43').style.display=document.getElementById('sqldebug_43').style.display!='block'?'block':'none'">+</span>043 -
+<strong>0.010934</strong>[m:9393680] -
+SELECT SettingName, SettingValue FROM SC_config_settings
+WHERE ModuleConfigID=51
+<br/><span
+        onclick="document.getElementById('sqldebug_44').style.display=document.getElementById('sqldebug_44').style.display!='block'?'block':'none'">+</span>044 -
+<strong>0.010907</strong>[m:9449784] - SELECT * FROM SC_product_list WHERE `id`=&#039;hitu&#039;<br/><span
+        onclick="document.getElementById('sqldebug_45').style.display=document.getElementById('sqldebug_45').style.display!='block'?'block':'none'">+</span>045 -
+<strong>0.019854</strong>[m:9454536] -
+SELECT t1.productID, t1.name_ru,  t1.enabled, t1.Price, t1.items_sold, t1.list_price, t1.akcia_skidka, t1.akcia, t1.items_sold, t1.sort_order, t1.skidka, t1.ukraine, t1.default_picture, t1.slug, t1.zakaz, t3.thumbnail, t3.filename FROM SC_products t1 LEFT JOIN SC_product_list_item t2 ON t1.productID=t2.productID
+LEFT JOIN SC_product_pictures t3 ON t1.default_picture=t3.photoID
+WHERE t1.enabled=1 AND t1.categoryID != 1 AND t2.list_id=&#039;hitu&#039; ORDER BY RAND() LIMIT 10<br/><span
+        onclick="document.getElementById('sqldebug_1').style.display=document.getElementById('sqldebug_1').style.display!='block'?'block':'none'">+</span>001 -
+<strong>0.001493</strong>[m:2680632] - SHOW VARIABLES LIKE &quot;VERSION&quot;<br/><span
+        onclick="document.getElementById('sqldebug_2').style.display=document.getElementById('sqldebug_2').style.display!='block'?'block':'none'">+</span>002 -
+<strong>0.000715</strong>[m:2698160] - SET SESSION sql_mode=0<br/><span
+        onclick="document.getElementById('sqldebug_3').style.display=document.getElementById('sqldebug_3').style.display!='block'?'block':'none'">+</span>003 -
+<strong>0.000560</strong>[m:2696624] - SET NAMES UTF8<br/><span
+        onclick="document.getElementById('sqldebug_4').style.display=document.getElementById('sqldebug_4').style.display!='block'?'block':'none'">+</span>004 -
+<strong>0.000531</strong>[m:2697096] - set character_set_client=&#039;UTF8&#039;<br/><span
+        onclick="document.getElementById('sqldebug_5').style.display=document.getElementById('sqldebug_5').style.display!='block'?'block':'none'">+</span>005 -
+<strong>0.000592</strong>[m:2697120] - set character_set_results=&#039;UTF8&#039;<br/><span
+        onclick="document.getElementById('sqldebug_6').style.display=document.getElementById('sqldebug_6').style.display!='block'?'block':'none'">+</span>006 -
+<strong>0.000482</strong>[m:2697216] - set collation_connection=&#039;UTF8_general_ci&#039;<br/><span
+        onclick="document.getElementById('sqldebug_7').style.display=document.getElementById('sqldebug_7').style.display!='block'?'block':'none'">+</span>007 -
+<strong>0.000601</strong>[m:2701472] - SELECT 1 FROM `SC_divisions` LIMIT 1<br/><span
+        onclick="document.getElementById('sqldebug_8').style.display=document.getElementById('sqldebug_8').style.display!='block'?'block':'none'">+</span>008 -
+<strong>0.001610</strong>[m:2703624] - SELECT settings_constant_name, settings_value FROM SC_settings<br/><span
+        onclick="document.getElementById('sqldebug_9').style.display=document.getElementById('sqldebug_9').style.display!='block'?'block':'none'">+</span>009 -
+<strong>0.000896</strong>[m:3228528] -
+SELECT * FROM SC_language ORDER BY `priority` ASC, `name` ASC
+<br/><span
+        onclick="document.getElementById('sqldebug_10').style.display=document.getElementById('sqldebug_10').style.display!='block'?'block':'none'">+</span>010 -
+<strong>0.000694</strong>[m:7105272] -
+SELECT * FROM SC_modules
+LEFT JOIN SC_module_configs ON SC_modules.ModuleID=SC_module_configs.ModuleID
+WHERE SC_module_configs.ConfigInit=1001
+<br/><span
+        onclick="document.getElementById('sqldebug_11').style.display=document.getElementById('sqldebug_11').style.display!='block'?'block':'none'">+</span>011 -
+<strong>0.000605</strong>[m:7127992] -
+SELECT ModuleID, ConfigKey, ConfigTitle, ConfigDescr, ConfigInit FROM SC_module_configs
+WHERE ModuleConfigID=42
+<br/><span
+        onclick="document.getElementById('sqldebug_12').style.display=document.getElementById('sqldebug_12').style.display!='block'?'block':'none'">+</span>012 -
+<strong>0.000525</strong>[m:7129480] -
+SELECT ModuleClassFile FROM SC_modules WHERE LOWER(ModuleClassName)=&#039;localization&#039;
+<br/><span
+        onclick="document.getElementById('sqldebug_13').style.display=document.getElementById('sqldebug_13').style.display!='block'?'block':'none'">+</span>013 -
+<strong>0.000664</strong>[m:7135256] -
+SELECT SettingName, SettingValue FROM SC_config_settings
+WHERE ModuleConfigID=42
+<br/><span
+        onclick="document.getElementById('sqldebug_14').style.display=document.getElementById('sqldebug_14').style.display!='block'?'block':'none'">+</span>014 -
+<strong>0.000442</strong>[m:7116360] - SELECT xID FROM SC_divisions WHERE xUnicKey=&#039;TitlePage&#039;<br/><span
+        onclick="document.getElementById('sqldebug_15').style.display=document.getElementById('sqldebug_15').style.display!='block'?'block':'none'">+</span>015 -
+<strong>0.000501</strong>[m:7122488] -
+SELECT * FROM SC_divisions WHERE xID=1
+<br/><span
+        onclick="document.getElementById('sqldebug_16').style.display=document.getElementById('sqldebug_16').style.display!='block'?'block':'none'">+</span>016 -
+<strong>0.000337</strong>[m:7117696] - SELECT xID FROM SC_divisions WHERE xUnicKey=&#039;admin&#039;<br/><span
+        onclick="document.getElementById('sqldebug_17').style.display=document.getElementById('sqldebug_17').style.display!='block'?'block':'none'">+</span>017 -
+<strong>0.000712</strong>[m:7244000] -
+SELECT * FROM SC_language WHERE id=1
+<br/><span
+        onclick="document.getElementById('sqldebug_18').style.display=document.getElementById('sqldebug_18').style.display!='block'?'block':'none'">+</span>018 -
+<strong>0.000594</strong>[m:7411616] -
+SELECT xSettingID, xName, xKey, xValue FROM SC_division_custom_settings WHERE xDivisionID=1
+<br/><span
+        onclick="document.getElementById('sqldebug_19').style.display=document.getElementById('sqldebug_19').style.display!='block'?'block':'none'">+</span>019 -
+<strong>0.049413</strong>[m:7628960] - UPDATE SC_customers
+SET logged = TIMESTAMP(0)
+WHERE
+(NOT unlimited_order AND may_order_until &lt; CURRENT_TIMESTAMP())
+OR (logged &lt; CURRENT_TIMESTAMP()) OR token=&#039;&#039;;<br/><span
+        onclick="document.getElementById('sqldebug_20').style.display=document.getElementById('sqldebug_20').style.display!='block'?'block':'none'">+</span>020 -
+<strong>0.000842</strong>[m:7630968] - SELECT token, cust_password, CID, ActivationCode, logged
+FROM SC_customers
+WHERE Login=&#039;sales&#039;<br/><span
+        onclick="document.getElementById('sqldebug_21').style.display=document.getElementById('sqldebug_21').style.display!='block'?'block':'none'">+</span>021 -
+<strong>0.001052</strong>[m:7648576] - UPDATE SC_customers SET logged = TIMESTAMP(ADDTIME(CURRENT_TIMESTAMP, &#039;1800&#039;)) WHERE Login=&#039;sales&#039;
+<br/><span
+        onclick="document.getElementById('sqldebug_22').style.display=document.getElementById('sqldebug_22').style.display!='block'?'block':'none'">+</span>022 -
+<strong>0.000860</strong>[m:7646464] - UPDATE SC_customers SET token = &#039;f528764d624db129b32c21fbca0cb8d6&#039; WHERE  Login=&#039;sales&#039;
+<br/><span
+        onclick="document.getElementById('sqldebug_23').style.display=document.getElementById('sqldebug_23').style.display!='block'?'block':'none'">+</span>023 -
+<strong>0.067608</strong>[m:7649768] - SELECT country, city_id FROM geo__base WHERE long_ip1&lt;2130706433
+AND long_ip2&gt;2130706433
+<br/><span
+        onclick="document.getElementById('sqldebug_24').style.display=document.getElementById('sqldebug_24').style.display!='block'?'block':'none'">+</span>024 -
+<strong>0.001748</strong>[m:7652888] - SELECT customerID, Login, first_name, last_name FROM SC_customers sc WHERE sc.Login=&#039;sales&#039;
+<br/><span
+        onclick="document.getElementById('sqldebug_25').style.display=document.getElementById('sqldebug_25').style.display!='block'?'block':'none'">+</span>025 -
+<strong>0.001801</strong>[m:7655680] - INSERT INTO SC_auth_log (
+customerID, Login, first_name, last_name,
+user_agent, IP_address, region, city,
+type_event, date_event, all_ip_info
+)
+VALUES (
+1000000464, &#039;sales&#039;,
+&#039;Евгений&#039;,
+&#039;Гололобов&#039;,
+&#039;Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.103 Safari/537.36&#039;,
+&#039;127.0.0.1&#039;,
+&#039;Нет данных&#039;,
+&#039;Нет данных&#039;,
+1, NOW(), &#039;HTTP_X_REAL_IP: 127.0.0.1
+&#039;
+)<br/><span
+        onclick="document.getElementById('sqldebug_1').style.display=document.getElementById('sqldebug_1').style.display!='block'?'block':'none'">+</span>001 -
+<strong>0.001457</strong>[m:2677824] - SHOW VARIABLES LIKE &quot;VERSION&quot;<br/><span
+        onclick="document.getElementById('sqldebug_2').style.display=document.getElementById('sqldebug_2').style.display!='block'?'block':'none'">+</span>002 -
+<strong>0.000629</strong>[m:2695352] - SET SESSION sql_mode=0<br/><span
+        onclick="document.getElementById('sqldebug_3').style.display=document.getElementById('sqldebug_3').style.display!='block'?'block':'none'">+</span>003 -
+<strong>0.000812</strong>[m:2693816] - SET NAMES UTF8<br/><span
+        onclick="document.getElementById('sqldebug_4').style.display=document.getElementById('sqldebug_4').style.display!='block'?'block':'none'">+</span>004 -
+<strong>0.000532</strong>[m:2694288] - set character_set_client=&#039;UTF8&#039;<br/><span
+        onclick="document.getElementById('sqldebug_5').style.display=document.getElementById('sqldebug_5').style.display!='block'?'block':'none'">+</span>005 -
+<strong>0.000390</strong>[m:2694312] - set character_set_results=&#039;UTF8&#039;<br/><span
+        onclick="document.getElementById('sqldebug_6').style.display=document.getElementById('sqldebug_6').style.display!='block'?'block':'none'">+</span>006 -
+<strong>0.000449</strong>[m:2694408] - set collation_connection=&#039;UTF8_general_ci&#039;<br/><span
+        onclick="document.getElementById('sqldebug_7').style.display=document.getElementById('sqldebug_7').style.display!='block'?'block':'none'">+</span>007 -
+<strong>0.000516</strong>[m:2698664] - SELECT 1 FROM `SC_divisions` LIMIT 1<br/><span
+        onclick="document.getElementById('sqldebug_8').style.display=document.getElementById('sqldebug_8').style.display!='block'?'block':'none'">+</span>008 -
+<strong>0.001462</strong>[m:2700816] - SELECT settings_constant_name, settings_value FROM SC_settings<br/><span
+        onclick="document.getElementById('sqldebug_9').style.display=document.getElementById('sqldebug_9').style.display!='block'?'block':'none'">+</span>009 -
+<strong>0.000629</strong>[m:3225728] -
+SELECT * FROM SC_language ORDER BY `priority` ASC, `name` ASC
+<br/><span
+        onclick="document.getElementById('sqldebug_10').style.display=document.getElementById('sqldebug_10').style.display!='block'?'block':'none'">+</span>010 -
+<strong>0.000679</strong>[m:7102536] -
+SELECT * FROM SC_modules
+LEFT JOIN SC_module_configs ON SC_modules.ModuleID=SC_module_configs.ModuleID
+WHERE SC_module_configs.ConfigInit=1001
+<br/><span
+        onclick="document.getElementById('sqldebug_11').style.display=document.getElementById('sqldebug_11').style.display!='block'?'block':'none'">+</span>011 -
+<strong>0.000666</strong>[m:7125256] -
+SELECT ModuleID, ConfigKey, ConfigTitle, ConfigDescr, ConfigInit FROM SC_module_configs
+WHERE ModuleConfigID=42
+<br/><span
+        onclick="document.getElementById('sqldebug_12').style.display=document.getElementById('sqldebug_12').style.display!='block'?'block':'none'">+</span>012 -
+<strong>0.000634</strong>[m:7126744] -
+SELECT ModuleClassFile FROM SC_modules WHERE LOWER(ModuleClassName)=&#039;localization&#039;
+<br/><span
+        onclick="document.getElementById('sqldebug_13').style.display=document.getElementById('sqldebug_13').style.display!='block'?'block':'none'">+</span>013 -
+<strong>0.000814</strong>[m:7132520] -
+SELECT SettingName, SettingValue FROM SC_config_settings
+WHERE ModuleConfigID=42
+<br/><span
+        onclick="document.getElementById('sqldebug_14').style.display=document.getElementById('sqldebug_14').style.display!='block'?'block':'none'">+</span>014 -
+<strong>0.000452</strong>[m:7113624] - SELECT xID FROM SC_divisions WHERE xUnicKey=&#039;TitlePage&#039;<br/><span
+        onclick="document.getElementById('sqldebug_15').style.display=document.getElementById('sqldebug_15').style.display!='block'?'block':'none'">+</span>015 -
+<strong>0.000559</strong>[m:7119752] -
+SELECT * FROM SC_divisions WHERE xID=1
+<br/><span
+        onclick="document.getElementById('sqldebug_16').style.display=document.getElementById('sqldebug_16').style.display!='block'?'block':'none'">+</span>016 -
+<strong>0.000410</strong>[m:7114960] - SELECT xID FROM SC_divisions WHERE xUnicKey=&#039;admin&#039;<br/><span
+        onclick="document.getElementById('sqldebug_17').style.display=document.getElementById('sqldebug_17').style.display!='block'?'block':'none'">+</span>017 -
+<strong>0.000735</strong>[m:7241272] -
+SELECT * FROM SC_language WHERE id=1
+<br/><span
+        onclick="document.getElementById('sqldebug_18').style.display=document.getElementById('sqldebug_18').style.display!='block'?'block':'none'">+</span>018 -
+<strong>0.000545</strong>[m:7408904] -
+SELECT xSettingID, xName, xKey, xValue FROM SC_division_custom_settings WHERE xDivisionID=1
+<br/><span
+        onclick="document.getElementById('sqldebug_19').style.display=document.getElementById('sqldebug_19').style.display!='block'?'block':'none'">+</span>019 -
+<strong>0.000683</strong>[m:7623304] -
+SELECT xInterface,xInheritable,xPriority FROM SC_division_interface WHERE xDivisionID=0
+AND xInheritable=1
+ORDER BY xPriority DESC, xInterface ASC
+<br/><span
+        onclick="document.getElementById('sqldebug_20').style.display=document.getElementById('sqldebug_20').style.display!='block'?'block':'none'">+</span>020 -
+<strong>0.000454</strong>[m:7619752] -
+SELECT xInterface,xInheritable,xPriority FROM SC_division_interface WHERE xDivisionID=1
+
+ORDER BY xPriority DESC, xInterface ASC
+<br/><span
+        onclick="document.getElementById('sqldebug_21').style.display=document.getElementById('sqldebug_21').style.display!='block'?'block':'none'">+</span>021 -
+<strong>0.000585</strong>[m:7629768] -
+SELECT SC_modules.* FROM SC_modules
+LEFT JOIN SC_module_configs ON SC_modules.ModuleID=SC_module_configs.ModuleID
+WHERE SC_module_configs.ModuleConfigID=25
+<br/><span
+        onclick="document.getElementById('sqldebug_22').style.display=document.getElementById('sqldebug_22').style.display!='block'?'block':'none'">+</span>022 -
+<strong>0.000758</strong>[m:7684144] -
+SELECT ModuleID, ConfigKey, ConfigTitle, ConfigDescr, ConfigInit FROM SC_module_configs
+WHERE ModuleConfigID=25
+<br/><span
+        onclick="document.getElementById('sqldebug_23').style.display=document.getElementById('sqldebug_23').style.display!='block'?'block':'none'">+</span>023 -
+<strong>0.000647</strong>[m:7685576] -
+SELECT ModuleClassFile FROM SC_modules WHERE LOWER(ModuleClassName)=&#039;sc_abstract&#039;
+<br/><span
+        onclick="document.getElementById('sqldebug_24').style.display=document.getElementById('sqldebug_24').style.display!='block'?'block':'none'">+</span>024 -
+<strong>0.000727</strong>[m:7688784] -
+SELECT SettingName, SettingValue FROM SC_config_settings
+WHERE ModuleConfigID=25
+<br/><span
+        onclick="document.getElementById('sqldebug_25').style.display=document.getElementById('sqldebug_25').style.display!='block'?'block':'none'">+</span>025 -
+<strong>0.000588</strong>[m:7680992] -
+SELECT SC_modules.* FROM SC_modules
+LEFT JOIN SC_module_configs ON SC_modules.ModuleID=SC_module_configs.ModuleID
+WHERE SC_module_configs.ModuleConfigID=1
+<br/><span
+        onclick="document.getElementById('sqldebug_26').style.display=document.getElementById('sqldebug_26').style.display!='block'?'block':'none'">+</span>026 -
+<strong>0.000890</strong>[m:8188056] -
+SELECT ModuleID, ConfigKey, ConfigTitle, ConfigDescr, ConfigInit FROM SC_module_configs
+WHERE ModuleConfigID=1
+<br/><span
+        onclick="document.getElementById('sqldebug_27').style.display=document.getElementById('sqldebug_27').style.display!='block'?'block':'none'">+</span>027 -
+<strong>0.000691</strong>[m:8189472] -
+SELECT ModuleClassFile FROM SC_modules WHERE LOWER(ModuleClassName)=&#039;test&#039;
+<br/><span
+        onclick="document.getElementById('sqldebug_28').style.display=document.getElementById('sqldebug_28').style.display!='block'?'block':'none'">+</span>028 -
+<strong>0.007920</strong>[m:8518144] -
+SELECT SettingName, SettingValue FROM SC_config_settings
+WHERE ModuleConfigID=1
+<br/><span
+        onclick="document.getElementById('sqldebug_29').style.display=document.getElementById('sqldebug_29').style.display!='block'?'block':'none'">+</span>029 -
+<strong>0.005364</strong>[m:8429424] -
+SELECT xInterfaceCaller,xInterfaceCalled FROM SC_interface_interfaces ORDER BY xPriority DESC
+<br/><span
+        onclick="document.getElementById('sqldebug_30').style.display=document.getElementById('sqldebug_30').style.display!='block'?'block':'none'">+</span>030 -
+<strong>0.009051</strong>[m:8881648] - SELECT * FROM SC_customers WHERE Login=&#039;sales&#039;<br/><span
+        onclick="document.getElementById('sqldebug_31').style.display=document.getElementById('sqldebug_31').style.display!='block'?'block':'none'">+</span>031 -
+<strong>0.008459</strong>[m:8896952] - SELECT * FROM SC_currency_types WHERE CID=9<br/><span
+        onclick="document.getElementById('sqldebug_32').style.display=document.getElementById('sqldebug_32').style.display!='block'?'block':'none'">+</span>032 -
+<strong>0.008321</strong>[m:8890192] - SELECT *,`Name_ru` AS `Name` FROM SC_currency_types ORDER BY sort_order, `Name`
+<br/><span
+        onclick="document.getElementById('sqldebug_33').style.display=document.getElementById('sqldebug_33').style.display!='block'?'block':'none'">+</span>033 -
+<strong>0.008576</strong>[m:8891960] - select count(*) from SC_categories where categoryID=1 <br/><span
+        onclick="document.getElementById('sqldebug_34').style.display=document.getElementById('sqldebug_34').style.display!='block'?'block':'none'">+</span>034 -
+<strong>0.008468</strong>[m:8894624] - SELECT categoryID, slug, parent, `name_ru` AS name FROM SC_categories
+WHERE categoryID=&#039;1&#039;<br/><span
+        onclick="document.getElementById('sqldebug_35').style.display=document.getElementById('sqldebug_35').style.display!='block'?'block':'none'">+</span>035 -
+<strong>0.008322</strong>[m:8893776] - select categoryID, slug, parent, `name_ru` AS name from SC_categories where parent=1  order by sort_order, name
+<br/><span
+        onclick="document.getElementById('sqldebug_36').style.display=document.getElementById('sqldebug_36').style.display!='block'?'block':'none'">+</span>036 -
+<strong>0.005550</strong>[m:9176184] -
+SELECT SC_modules.*,SC_module_configs.ModuleConfigID FROM SC_modules
+LEFT JOIN SC_module_configs ON SC_modules.ModuleID=SC_module_configs.ModuleID
+WHERE SC_module_configs.ConfigKey=&#039;cptmanager&#039;
+<br/><span
+        onclick="document.getElementById('sqldebug_37').style.display=document.getElementById('sqldebug_37').style.display!='block'?'block':'none'">+</span>037 -
+<strong>0.005960</strong>[m:9275400] -
+SELECT ModuleID, ConfigKey, ConfigTitle, ConfigDescr, ConfigInit FROM SC_module_configs
+WHERE ModuleConfigID=51
+<br/><span
+        onclick="document.getElementById('sqldebug_38').style.display=document.getElementById('sqldebug_38').style.display!='block'?'block':'none'">+</span>038 -
+<strong>0.006190</strong>[m:9276888] -
+SELECT ModuleClassFile FROM SC_modules WHERE LOWER(ModuleClassName)=&#039;cptmanager&#039;
+<br/><span
+        onclick="document.getElementById('sqldebug_39').style.display=document.getElementById('sqldebug_39').style.display!='block'?'block':'none'">+</span>039 -
+<strong>0.006204</strong>[m:9301112] -
+SELECT SettingName, SettingValue FROM SC_config_settings
+WHERE ModuleConfigID=51
+<br/><span
+        onclick="document.getElementById('sqldebug_40').style.display=document.getElementById('sqldebug_40').style.display!='block'?'block':'none'">+</span>040 -
+<strong>0.007930</strong>[m:9364600] -
+SELECT xInterfaceCalled FROM SC_interface_interfaces WHERE xInterfaceCaller=&#039;51_cpt_connector&#039;
+<br/><span
+        onclick="document.getElementById('sqldebug_41').style.display=document.getElementById('sqldebug_41').style.display!='block'?'block':'none'">+</span>041 -
+<strong>0.022002</strong>[m:9925256] - SELECT text_ru, TIME_TO_SEC(TIMEDIFF(`end_date`, Now())) as act_time from SC_akcia where end_date &gt; now() and enabled
+= 1<br/><span
+        onclick="document.getElementById('sqldebug_42').style.display=document.getElementById('sqldebug_42').style.display!='block'?'block':'none'">+</span>042 -
+<strong>0.022587</strong>[m:9928304] -
+SELECT productID, name_ru AS name,
+Price, list_price, items_sold, sort_order, akcia, akcia_skidka, skidka, ukraine, default_picture, slug FROM SC_products
+WHERE enabled != 0 AND categoryID &gt; 1 AND akcia &gt; 0 AND zakaz &lt;&gt; 1
+ORDER BY  RAND() LIMIT 30
+<br/><span
+        onclick="document.getElementById('sqldebug_43').style.display=document.getElementById('sqldebug_43').style.display!='block'?'block':'none'">+</span>043 -
+<strong>0.023235</strong>[m:9931944] -
+SELECT productID, name_ru AS name,
+Price, list_price, items_sold, sort_order, akcia, akcia_skidka, skidka, ukraine, default_picture, slug FROM SC_products
+WHERE enabled != 0 AND categoryID &gt; 1 AND items_sold &gt; 0 AND zakaz &lt;&gt; 1
+ORDER BY  RAND() LIMIT 30
+<br/><span
+        onclick="document.getElementById('sqldebug_44').style.display=document.getElementById('sqldebug_44').style.display!='block'?'block':'none'">+</span>044 -
+<strong>0.022691</strong>[m:10057872] -
+SELECT photoID,filename, thumbnail, enlarged FROM SC_product_pictures WHERE photoID IN(413597,386187,410350,411517,389982,392915,388643,404492,390555,406871,387802,389060,412694,390536,408258,390323,386790,412698,385766,387518,413542,413499,386282,404563,386618,391476,387650,388633,405926,394558)
+<br/><span
+        onclick="document.getElementById('sqldebug_45').style.display=document.getElementById('sqldebug_45').style.display!='block'?'block':'none'">+</span>045 -
+<strong>0.016298</strong>[m:9771592] -
+SELECT SC_modules.* FROM SC_modules
+LEFT JOIN SC_module_configs ON SC_modules.ModuleID=SC_module_configs.ModuleID
+WHERE SC_module_configs.ModuleConfigID=51
+<br/><span
+        onclick="document.getElementById('sqldebug_46').style.display=document.getElementById('sqldebug_46').style.display!='block'?'block':'none'">+</span>046 -
+<strong>0.015005</strong>[m:9776696] -
+SELECT ModuleID, ConfigKey, ConfigTitle, ConfigDescr, ConfigInit FROM SC_module_configs
+WHERE ModuleConfigID=51
+<br/><span
+        onclick="document.getElementById('sqldebug_47').style.display=document.getElementById('sqldebug_47').style.display!='block'?'block':'none'">+</span>047 -
+<strong>0.015285</strong>[m:9777960] -
+SELECT ModuleClassFile FROM SC_modules WHERE LOWER(ModuleClassName)=&#039;cptmanager&#039;
+<br/><span
+        onclick="document.getElementById('sqldebug_48').style.display=document.getElementById('sqldebug_48').style.display!='block'?'block':'none'">+</span>048 -
+<strong>0.015358</strong>[m:9802168] -
+SELECT SettingName, SettingValue FROM SC_config_settings
+WHERE ModuleConfigID=51
+<br/><span
+        onclick="document.getElementById('sqldebug_49').style.display=document.getElementById('sqldebug_49').style.display!='block'?'block':'none'">+</span>049 -
+<strong>0.016073</strong>[m:9858256] - SELECT * FROM SC_product_list WHERE `id`=&#039;hitu&#039;<br/><span
+        onclick="document.getElementById('sqldebug_50').style.display=document.getElementById('sqldebug_50').style.display!='block'?'block':'none'">+</span>050 -
+<strong>0.021016</strong>[m:9863008] -
+SELECT t1.productID, t1.name_ru,  t1.enabled, t1.Price, t1.items_sold, t1.list_price, t1.akcia_skidka, t1.akcia, t1.items_sold, t1.sort_order, t1.skidka, t1.ukraine, t1.default_picture, t1.slug, t1.zakaz, t3.thumbnail, t3.filename FROM SC_products t1 LEFT JOIN SC_product_list_item t2 ON t1.productID=t2.productID
+LEFT JOIN SC_product_pictures t3 ON t1.default_picture=t3.photoID
+WHERE t1.enabled=1 AND t1.categoryID != 1 AND t2.list_id=&#039;hitu&#039; ORDER BY RAND() LIMIT 10

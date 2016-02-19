@@ -548,15 +548,15 @@
         _CLIENT_ - FLASH/JAVA/etc.. (default WA)
         _DATA_ - данные поясняющие действие.
          */
-        if (SystemSettings::is_hosted() && file_exists(WBS_DIR.'/kernel/classes/class.metric.php')) {
-            include_once(WBS_DIR.'/kernel/classes/class.metric.php');
-
-            $DB_KEY = strtoupper(SystemSettings::get('DB_KEY'));
-            $U_ID = sc_getSessionData('U_ID');
-
-            $metric = metric::getInstance();
-            $metric->addAction($DB_KEY, $U_ID, 'SC', 'ADD2CART', isset($_GET['widgets'])?'WIDGET':'STOREFRONT', '');
-        }
+//        if (SystemSettings::is_hosted() && file_exists(WBS_DIR.'/kernel/classes/class.metric.php')) {
+//            include_once(WBS_DIR.'/kernel/classes/class.metric.php');
+//
+//            $DB_KEY = strtoupper(SystemSettings::get('DB_KEY'));
+//            $U_ID = sc_getSessionData('U_ID');
+//
+//            $metric = metric::getInstance();
+//            $metric->addAction($DB_KEY, $U_ID, 'SC', 'ADD2CART', isset($_GET['widgets'])?'WIDGET':'STOREFRONT', '');
+//        }
     }
 
     function cartMinimizeCart()

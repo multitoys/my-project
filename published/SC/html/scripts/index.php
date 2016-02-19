@@ -66,22 +66,22 @@
 
     if (isset($_SESSION['__WBS_SC_DATA']) && isset($_SESSION['__WBS_SC_DATA']['U_ID'])) {
 
-        if (SystemSettings::is_hosted()) {
-            class CurrentUser
-            {
-                function getId()
-                {
-                    return '';
-                }
-            }
-
-            Wbs::loadCurrentDbKey();
-            $fileEntry = new WbsFiles('SC');
-            Functions::register($fileEntry, 'file_move_uploaded', 'move_upload');
-        } else {
+//        if (SystemSettings::is_hosted()) {
+//            class CurrentUser
+//            {
+//                function getId()
+//                {
+//                    return '';
+//                }
+//            }
+//
+//            Wbs::loadCurrentDbKey();
+//            $fileEntry = new WbsFiles('SC');
+//            Functions::register($fileEntry, 'file_move_uploaded', 'move_upload');
+//        } else {
             $fileEntry = new FileWBS();
             Functions::register($fileEntry, 'file_move_uploaded', 'move_uploaded');
-        }
+//        }
         Functions::register($fileEntry, 'file_copy', 'copy');
         Functions::register($fileEntry, 'file_move', 'move');
         Functions::register($fileEntry, 'file_remove', 'remove');
@@ -149,7 +149,8 @@
 
     if (strpos($furl_path, '/') === 0) {//it's not work properly on apache 1.xx when string start on '/' so it deleted
         $furl_path = substr($furl_path, 1);
-        if (!SystemSettings::is_hosted()) $_GET['__furl_path'] = $furl_path;
+//        if (!SystemSettings::is_hosted()) 
+            $_GET['__furl_path'] = $furl_path;
     }
     $Register->set('FURL_PATH', $furl_path);
 
@@ -171,7 +172,8 @@
     $_furl_path = substr($_furl_path, strlen(WBS_INSTALL_PATH));
     if (strpos($_furl_path, '/') === 0) {//it's not work properly on apache 1.xx when string start on '/' so it deleted
         $_furl_path = substr($_furl_path, 1);
-        if (!SystemSettings::is_hosted()) $_GET['__furl_path'] = $_furl_path;
+//        if (!SystemSettings::is_hosted()) 
+            $_GET['__furl_path'] = $_furl_path;
     }
     while (!strpos($_furl_path, '//') === false) {
         $_furl_path = str_replace('//', '/', $_furl_path);
@@ -183,12 +185,12 @@
         $_furl_path = '/';
     }
 
-    if (SystemSettings::is_hosted()) {
-        $_furl_path = '/shop/';
-        $_urlEntry->setPath('/shop/');
-    } else {
+//    if (SystemSettings::is_hosted()) {
+//        $_furl_path = '/shop/';
+//        $_urlEntry->setPath('/shop/');
+//    } else {
         $_urlEntry->setPath(str_replace('//', '/', WBS_INSTALL_PATH.$_furl_path));
-    }
+//    }
 
     $_urlEntry->setQuery('?');
     $__url = preg_replace('/\/[^\/]+$/', '', $_urlEntry->getURI());
@@ -196,12 +198,12 @@
     $CONF_FULL_SHOP_URL = $__url.(SystemSettings::is_hosted() || (SystemSettings::get('FRONTEND') !== 'SC') ? 'shop/' : '');
 
     $__wa_url = $__url;
-    if (SystemSettings::is_hosted()) {
-        $matches = null;
-        if (preg_match('/^(.+)shop\/$/', $__url, $matches)) {
-            $__wa_url = $matches[1];
-        }
-    }
+//    if (SystemSettings::is_hosted()) {
+//        $matches = null;
+//        if (preg_match('/^(.+)shop\/$/', $__url, $matches)) {
+//            $__wa_url = $matches[1];
+//        }
+//    }
 //	define('WIDGET_SHOP_URL', preg_replace('/\/[^\/]+$/', '', $_urlEntry->getURI().(SystemSettings::is_hosted()?'':'shop/')));
 //	$_base_url = substr($__url,0,strlen($__url)-strlen(WBS_INSTALL_PATH));
 
@@ -321,6 +323,7 @@ ORDER BY `cnt` DESC");
         RedirectSQ('lang_iso2=');
     }
 
+    $a = '';
     if (isset($_SESSION['enter'])) {
         $a = $_SESSION['enter'];
     }
@@ -424,7 +427,7 @@ ORDER BY `cnt` DESC");
     }
     if ($admin_mode && !wbs_auth()) {
 
-        $CurrDivision = DivisionModule::getDivisionByUnicKey('TitlePage');
+        $CurrDivision = &DivisionModule::getDivisionByUnicKey('TitlePage');
 
         $admin_mode = $AdminChild = false;
     }
@@ -619,10 +622,13 @@ ORDER BY `cnt` DESC");
     }
 */
     
+    if (isset($_GET['market'])) {
+        $smarty->assign('market_link', 'market');
+    }
     if (isset($_GET['sales'])) {
         salesDebug();
     }
-    
+
     if ($error404) {
         $smarty->assign('page_title', '404 '.translate('err_cant_find_required_page').' ― '.CONF_SHOP_NAME);
     }

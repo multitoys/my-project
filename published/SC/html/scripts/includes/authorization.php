@@ -10,7 +10,7 @@
             } else {
                 
                 Message::raiseMessageRedirectSQ(
-                    MSG_ERROR, '', 'err_wrong_password', '', array('Data' => $_POST)
+                    MSG_ERROR, 'ukey=remind_password', 'err_wrong_password', '', array('Data' => $_POST)
                 );
                 
                 unset($_SESSION);

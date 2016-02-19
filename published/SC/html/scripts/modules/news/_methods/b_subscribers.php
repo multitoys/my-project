@@ -20,10 +20,10 @@ if(isset($_POST['fACTION'])){
 			
 			$UploadError = false;
 			do{
-				if(SystemSettings::is_hosted()){
-					$UploadError=true;
-					break;
-				}
+//				if(SystemSettings::is_hosted()){
+//					$UploadError=true;
+//					break;
+//				}
 				if (!isset($_FILES['fSubscribersListFile']['tmp_name'])){
 					$UploadError=true;
 					break;

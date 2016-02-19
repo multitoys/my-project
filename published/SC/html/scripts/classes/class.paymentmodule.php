@@ -327,11 +327,11 @@ class PaymentModule extends virtualModule {
 		/*if(strpos($scURL,'published/SC/html/scripts/')===false){
 			$scURL .= 'published/SC/html/scripts/';
 		}*/
-		if(SystemSettings::is_hosted()){
-			$scURL .= 'shop/';
-		}else{
+//		if(SystemSettings::is_hosted()){
+//			$scURL .= 'shop/';
+//		}else{
 			$scURL .= 'published/SC/html/scripts/';
-		}
+//		}
 		$scURL = "http://".$scURL.'callbackhandlers/paymenthandler.php';
 
 		if(count($params)){

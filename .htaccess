@@ -35,6 +35,9 @@ RewriteCond  %{REQUEST_FILENAME} !-f
 RewriteRule ^published/$ published/index.php [L]
 
 RewriteCond  %{REQUEST_FILENAME} !-f
+RewriteRule ^published/SC/html/scripts/.*$ index.php [L]
+
+RewriteCond  %{REQUEST_FILENAME} !-f
 RewriteCond  %{REQUEST_URI} !^published
 RewriteRule (.*) published/SC/html/scripts/index.php?__furl_path=$1&frontend=1 [QSA]
 
@@ -44,5 +47,5 @@ RewriteRule (.*) published/SC/html/scripts/index.php?__furl_path=$1&frontend=1 [
 #RewriteCond %{REQUEST_URI} !\.
 #RewriteCond %{REQUEST_URI} !\/$
 #RewriteRule ^(.*[^/])$ /$1/ [R=301,L]
-RewriteRule .*?/([0-9]+)/([A-Za-z_]+)/$ &date=$1&made=$2 [L]
-RewriteRule .*?/([0-9]+)/([A-Za-z_]+)/([A-Za-z_]+)/([A-Za-z_]+)/$ &date=$1&made=$2&sort=$3&direction=$4 [L]
+RewriteRule .*?/([A-Za-z_]+)/([0-9]+)/$ &made=$1&date=$2 [L]
+RewriteRule .*?/([A-Za-z_]+)/([0-9]+)/([A-Za-z_]+)/([A-Za-z_]+)/$ &made=$1&date=$2&sort=$3&direction=$4 [L]

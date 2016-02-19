@@ -460,19 +460,19 @@
 
         $smarty_mail->assign("content", $content);
         //check account settings
-        if (SystemSettings::is_hosted()) {
-            $session_id = session_id();
-            session_write_close();
-
-            $messageClient = new WbsHttpMessageClient($db_key, 'wbs_msgserver.php');
-            $messageClient->putData('action', 'ALLOW_VIEW_ORDER_DETAILS');
-            //$messageClient->putData('language',(LanguagesManager::getCurrentLanguage()->iso2));
-            $res = $messageClient->send();
-            session_id($session_id);
-            session_start();
-        } else {
+//        if (SystemSettings::is_hosted()) {
+//            $session_id = session_id();
+//            session_write_close();
+//
+//            $messageClient = new WbsHttpMessageClient($db_key, 'wbs_msgserver.php');
+//            $messageClient->putData('action', 'ALLOW_VIEW_ORDER_DETAILS');
+//            //$messageClient->putData('language',(LanguagesManager::getCurrentLanguage()->iso2));
+//            $res = $messageClient->send();
+//            session_id($session_id);
+//            session_start();
+//        } else {
             $res = false;
-        }
+//        }
 
         $mailTemplate = 'admin_order_notification.txt';
         if ($res && $messageClient->getResult('success') !== true) {

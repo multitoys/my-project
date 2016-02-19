@@ -220,25 +220,25 @@
 
         db_phquery($dbq, array_keys($order_info), $order_info);
 
-        if (SystemSettings::is_hosted() && file_exists(WBS_DIR.'/kernel/classes/class.metric.php')) {
-            include_once(WBS_DIR.'/kernel/classes/class.metric.php');
-
-            $DB_KEY = SystemSettings::get('DB_KEY');
-            $U_ID = sc_getSessionData('U_ID');
-
-            $metric_data = array(/*
-				$order_info['currency_code'],
-				$order_info['order_amount'],
-				$order_info['payment_type'],
-				$order_info['shipping_type'],
-				$order_info['shipping_country'],
-				$order_info['shipping_state'],
-				$order_info['shipping_city'],*/
-            );
-
-            $metric = metric::getInstance();
-            $metric->addAction($DB_KEY, $U_ID, 'SC', 'ORDER', isset($_GET['widgets']) ? 'WIDGET' : 'STOREFRONT', implode(':', $metric_data));
-        }
+//        if (SystemSettings::is_hosted() && file_exists(WBS_DIR.'/kernel/classes/class.metric.php')) {
+//            include_once(WBS_DIR.'/kernel/classes/class.metric.php');
+//
+//            $DB_KEY = SystemSettings::get('DB_KEY');
+//            $U_ID = sc_getSessionData('U_ID');
+//
+//            $metric_data = array(/*
+//				$order_info['currency_code'],
+//				$order_info['order_amount'],
+//				$order_info['payment_type'],
+//				$order_info['shipping_type'],
+//				$order_info['shipping_country'],
+//				$order_info['shipping_state'],
+//				$order_info['shipping_city'],*/
+//            );
+//
+//            $metric = metric::getInstance();
+//            $metric->addAction($DB_KEY, $U_ID, 'SC', 'ORDER', isset($_GET['widgets']) ? 'WIDGET' : 'STOREFRONT', implode(':', $metric_data));
+//        }
 
         $orderID = db_insert_id(ORDERS_TABLE);
         stChangeOrderStatus($orderID, $order_info['statusID']);

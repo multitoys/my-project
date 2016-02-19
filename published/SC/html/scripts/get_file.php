@@ -103,9 +103,29 @@
 		LanguagesManager::setCurrentLanguage($_GET['lang']);
 		RedirectSQ('lang=');
 	}
-	
-	checkLogin($a);
-	
+    
+    function TestToken() {
+        if (!isset($_SESSION['cs_api_access']) || !$_SESSION['cs_api_access']) {
+            die('нет доступа!');
+        }
+        
+        $token = md5($_SESSION['log'].'_'.$_SESSION['pass']);
+        $sSql = "SELECT count(*) 
+                 FROM `SC_customers`
+                 where MD5(concat(Login,'_',cust_password))='{$token}'"
+        ;
+
+        $nResult = mysql_query($sSql) or die($sSql);
+        $nCols = mysql_num_rows($nResult);
+        
+        if (mysql_result($nResult, 0, 0) == 0) {
+            die('нет авторизации!');
+        }
+
+        return true;
+    }
+
+    TestToken();
 //	$smarty->assign('lang_list', $lang_list);
 //	if (isset($_SESSION['current_language'])) $smarty->assign('current_language', $_SESSION['current_language']);
 
@@ -193,8 +213,11 @@
 			{
 				$direct_mode = isset($_GET['download'])?false:true;
 				$charset = 'windows-1251';
-                $fileToDownLoad = DIR_TEMP."/market.xml";
-                $fileToDownLoadShortName = "market.xml";
+                $fileToDownLoad = DIR_TEMP."/". date("Y-m-d") . "_" . ((int)(date("H") / 4)) . "_yandex.xml";
+                $fileToDownLoadShortName = "yandex.xml";
+                if (!file_exists($fileToDownLoad)) {
+                    Redirect(set_query('did=73'));
+                }
 			}
 			else if ( preg_match('/GetCSVCatalog=(.+)$/u', $getFileParam, $sp) )
 			{

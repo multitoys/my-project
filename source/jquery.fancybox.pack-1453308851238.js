@@ -791,22 +791,26 @@ $(document).ready(function () {
         }, {href: "3_b.jpg"}], {helpers: {thumbs: {width: 75, height: 50}}});
     });
 });
-function loadAnalogs(name, code, price) {
-    $("#conc_" + code).load("/popup/search_by_conc/search_conc.php?mode=1&conc=" + name + "&code=" + code + "&price=" + price);
-}
+
 function setAnalogs(name, code, code1c, price) {
+    if (code == 0) {
+        var live_code = $("#right");
+        code = live_code.attr("data-code");
+    }
     $("#conc_" + code).load("/popup/search_by_conc/search_conc.php?mode=2&conc=" + name + "&code=" + code + "&code1c=" + code1c + "&price=" + price);
     document.getElementById("live_search").innerHTML = "";
 }
+
 function unsetAnalogs(name, code, code1c, price) {
     if (confirm("Удалить это соответствие?")) {
         $("#conc_" + code).load("/popup/search_by_conc/search_conc.php?mode=3&conc=" + name + "&code=" + code + "&code1c=" + code1c + "&price=" + price);
     }
 }
+
 $(function () {
+    var live_search = $("#right");
     var searchCache = [];
     var searchOk = $("#search_ok");
-    var live_search = $("#right");
     var search;
     $(".search-concs").keyup(throttle(function () {
         searchOk.addClass("search_loader");
@@ -814,6 +818,7 @@ $(function () {
         var conc = $(this).attr("data-conc");
         var code = $(this).attr("data-code");
         var priceConc = $(this).attr("data-price");
+        live_search.attr({"data-code": code});
         if (search.length > 2) {
             if (searchCache[search]) {
                 live_search.html(searchCache[search]);
@@ -845,6 +850,53 @@ $(function () {
             }
         }
     }, 1500));
+
+    $(".productname").mouseup(function () {
+        var mSelect = window.getSelection().toString();
+        console.log("selected " + mSelect);
+        if (mSelect.length > 2) {
+            searchOk.addClass("search_loader");
+            var live_search = $("#right");
+            var search = mSelect;
+            var sibling = $(this).next().next().find("input");
+            var conc = sibling.attr("data-conc");
+            var code = sibling.attr("data-code");
+            var priceConc = sibling.attr("data-price");
+            live_search.attr({"data-code": code});
+            if (search.length > 2) {
+                if (searchCache[search]) {
+                    live_search.html(searchCache[search]);
+                } else {
+                    $.ajax({
+                        type: "POST",
+                        url: "/popup/search.php",
+                        data: {search: search, conc: conc, code: code, priceConc: priceConc},
+                        cache: false,
+                        success: function (response) {
+                            live_search.html(response);
+                            searchCache[search] = response;
+                        }
+                    });
+                }
+                live_search.niceScroll({
+                    cursorcolor: "#03A9F4",
+                    cursorborderradius: 2,
+                    cursorbordercolor: "#03A9F4",
+                    horizrailenabled: false,
+                    cursoropacitymin: 1,
+                    cursorwidth: 5
+                });
+                sibling.val(search);
+                return searchOk.removeClass("search_loader");
+            } else {
+                live_search.html("");
+                if (!search.length) {
+                    searchOk.removeClass("search_loader");
+                }
+            }
+        }
+    });
+
     $(".search-product-code").click(function () {
         searchOk.addClass("search_loader");
         search = $(this).text();
@@ -875,56 +927,6 @@ $(function () {
             live_search.html("");
             if (!search.length) {
                 searchOk.removeClass("search_loader");
-            }
-        }
-    });
-    $(".productname").mouseup(function () {
-        var mSelect = window.getSelection().toString();
-        console.log("selected " + mSelect);
-        if (mSelect.length > 2) {
-            searchOk.addClass("search_loader");
-            var live_search = $("#right");
-            var search = mSelect;
-            var sibling = $(this).next().next().find("input");
-            var conc = sibling.attr("data-conc");
-            var code = sibling.attr("data-code");
-            var priceConc = sibling.attr("data-price");
-            if (search.length > 2) {
-                if (searchCache[search]) {
-                    live_search.html(searchCache[search]);
-                    live_search.find("li").each(function() {
-                        var code1c = $(this).attr("data-code1c");
-                        if (code1c) {
-                            find("a").attr(setAnalogs("", code, code1c, ""));
-                        }
-                    });
-                } else {
-                    $.ajax({
-                        type: "POST",
-                        url: "/popup/search.php",
-                        data: {search: search, conc: conc, code: code, priceConc: priceConc},
-                        cache: false,
-                        success: function (response) {
-                            live_search.html(response);
-                            searchCache[search] = response;
-                        }
-                    });
-                }
-                live_search.niceScroll({
-                    cursorcolor: "#03A9F4",
-                    cursorborderradius: 2,
-                    cursorbordercolor: "#03A9F4",
-                    horizrailenabled: false,
-                    cursoropacitymin: 1,
-                    cursorwidth: 5
-                });
-                sibling.val(search);
-                return searchOk.removeClass("search_loader");
-            } else {
-                live_search.html("");
-                if (!search.length) {
-                    searchOk.removeClass("search_loader");
-                }
             }
         }
     });

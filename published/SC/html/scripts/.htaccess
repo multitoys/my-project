@@ -11,3 +11,8 @@ RewriteRule (auth.php(/{0,1})){0,1}(.*) auth$3
 
 RewriteCond  %{REQUEST_FILENAME} !-f
 RewriteRule (.*) index.php?__furl_path=$1&frontend=1 [QSA]
+
+#<Files get_file.php>
+# order allow,deny
+# deny from all
+#</Files>

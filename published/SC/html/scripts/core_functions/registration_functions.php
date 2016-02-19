@@ -206,7 +206,7 @@
                     ZAddAuthEvent($login, 2);
                     //                    unset($_SESSION['log'], $_SESSION['pass'], $_SESSION['enter']);
                     unset($_SESSION);
-                    
+//                    ActionsController::exec('RemindPasswordController');
                     return false;
                 }
             } else {
@@ -230,7 +230,6 @@
         $sql = '
 		SELECT Login, cust_password, Email FROM '.CUSTOMERS_TABLE.'
 		WHERE (Login="'.xEscapeSQLstring($login).'" OR Email="'.xEscapeSQLstring($login).'")
-		AND (ActivationCode="" OR ActivationCode IS NULL)
 	';
         $q = db_query($sql) or die (db_error());
         if ($row = db_fetch_row($q)) //send password

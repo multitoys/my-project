@@ -151,5 +151,3 @@ $preproc->assign('multiDBKEY',file_exists('dblist.php')&&file_exists('sqlservers
 
 $preproc->assign( "mainTemplate","wbsadmin.htm" );
 $preproc->display( "main.htm" );
-
-?>

@@ -65,7 +65,7 @@ TAG
         $usd = getValue('currency_value', 'Conc__competitors', 'CCID = 4');
 
         define('SLASH', '|');
-        define('NAME_PATTERN', '<div\s+class="block[0-9]*?"[^<>]*?>[^<>]*?<div\s+class="product-title"[^<>]*?>[^<>]*?<a[^<>]*?>[\s]*([^<>]+?)[\s]*</a>[^<>]*?</div>[^<>]*?<div\s+class="block_border"[^<>]*?>[^<>]*?<div\s+class="product-overview-image"[^<>]*?>[^<>]*?<div\s+id="img-radius"[^<>]*?>[^<>]*?<a[^<>]*?>[^<>]*?</a>[^<>]*?</div>[^<>]*?</div>[^<>]*?(<div[^<>]*?>[^<>]*?<img[^<>]*?>[^<>]*?</div>[^<>]*?)?');
+        define('NAME_PATTERN', '<div\s+class="block[0-9]*?"[^<>]*?>[^<>]*?<div\s+class="product-title"[^<>]*?>[^<>]*?<a[^<>]*?>[\s]*([^<>]+?)[\s]*</a>[^<>]*?</div>[^<>]*?<div\s+class="block_border"[^<>]*?>[^<>]*?<div\s+class="product-overview-image"[^<>]*?>[^<>]*?<div\s+id="img-radius"[^<>]*?>[^<>]*?<a[^<>]*?>(<img[^<>]*?>[^<>]*?)?[^<>]*?</a>[^<>]*?</div>[^<>]*?</div>[^<>]*?(<div[^<>]*?>[^<>]*?<img[^<>]*?>[^<>]*?</div>[^<>]*?)?');
         define('PRICE_PATTERN', '<div\s+class="product-price"[^<>]*?>[\s]+([0-9.]+?)[^<>]*?<br>[^<>]*?(<span\s+class="price_usd">[^<>]*?</span>)?');
         define('CODE_PATTERN', '<div\s+class="[^"]*?"[^<>]*?>[^<>]*?</div>[^<>]*?<form[^<>]*?>[^<>]*?<input\s+type="[^"]*?"\s+value="([0-9]+?)"[^<>]*?>');
 
@@ -129,7 +129,7 @@ TAG
                 $filename = DIR_CURL . '/' . $filename . EXT;
                 $products = '';
 
-                readUrl($category_url, $filename, $refferer, $headers);
+//                readUrl($category_url, $filename, $refferer, $headers);
                 $refferer = $category_url;
 
                 $html = file_get_contents($filename);
@@ -162,8 +162,8 @@ TAG
                     for ($j = 0; $j < $rowcount; $j++) {
                         set_time_limit(0);
                         $name = mysql_real_escape_string(preg_replace('/\s\s+/', ' ', trim(str_replace($replace_name, ' ', decodeCodepage($products[1][$j])))));
-                        $price = (double)$products[3][$j];
-                        $code = mysql_real_escape_string(decodeCodepage($products[5][$j]));
+                        $price = (double)$products[4][$j];
+                        $code = mysql_real_escape_string(decodeCodepage($products[6][$j]));
                         $productID = getValue('productID', 'Conc__grandtoys', "code = '$code'");
                         $price_usd = $price / $usd;
 
@@ -193,7 +193,7 @@ TAG
                         $no++;
                     }
                     unlink($filename);
-                    buferOut(2, 10);
+                    buferOut();
                 }
             }
             $part++;

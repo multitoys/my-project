@@ -22,13 +22,13 @@
             'Конструкторы BRICK'         => '405-Konstruktori-BRICK',
             'Конструкторы CHIMA'         => '403-Konstruktori-CHIMA',
             'Конструкторы COGO'          => '375-Konstruktori-COGO',
-            'Конструкторы Hero Factory'  => '1118-Konstruktori-Hero-Factory',
+//            'Конструкторы Hero Factory'  => '1118-Konstruktori-Hero-Factory',
             'Конструкторы JLB'           => '1108-JLB',
-            'Конструкторы Jubilux'       => '1121-Konstruktori-Jubilux',
+//            'Конструкторы Jubilux'       => '1121-Konstruktori-Jubilux',
             'Конструкторы LELE'          => '1117-Konstruktori-LELE',
             'Конструкторы Minecraft'     => '1119-Konstruktori-Minecraft',
-            'Конструкторы NINJA'    => '373-Konstruktori-NINJA',
-            'Конструкторы Play Smart'    => '1131-Konstruktori-Play-Smart',
+//            'Конструкторы NINJA'    => '373-Konstruktori-NINJA',
+//            'Конструкторы Play Smart'    => '1131-Konstruktori-Play-Smart',
             'Конструкторы QLT'           => '1120-Konstruktori-QLT',
             'Конструкторы Sluban'        => '371-Konstruktori-Sluban',
             'Конструкторы Tondge'        => '1130-Kukla-Sofia',
@@ -74,19 +74,18 @@
             'Головоломки'                    => '350-Golovolomki',
             'Деревянные развивающие игрушки' => '351-Derevyannie-razvivayuschie-igrushki',
             'Доски для рисования,магнитные'  => '392-Doski-drisovaniya',
-            'Игры Yo-Yo, юла, колечки, 
-             калейдоскопы, радуги'      => '369-Igri-Yo-Yo-yula-kolechki-kaleidoskopi-radugi-svetyashki',
+            'Игры Yo-Yo, юла, колечки, калейдоскопы, радуги'      => '369-Igri-Yo-Yo-yula-kolechki-kaleidoskopi-radugi-svetyashki',
             'Компьютеры, ноутбуки, планшеты' => '356-Kompyutera-noutbuki-plansheti',
             'Кубики'                         => '419-Kubiki',
-            'Машины муз. JoyToy'        => '58-Mashini-muz-JoyToy',
+//            'Машины муз. JoyToy'        => '58-Mashini-muz-JoyToy',
             'Мозаики'                        => '406-Mozaiki',
             'Мягкие кубики'                  => '926-Myagkie-kubiki',
             'Обучающие игры'                 => '358-Obuchayuschie-igri',
             'Оптические приборы'             => '762-Opticheskie-pribori',
-            'Сборные модели'            => '345-Sbornie-modeli',
+//            'Сборные модели'            => '345-Sbornie-modeli',
             'Творчество'                => '409-Tvorchestvo',
             'Тетрисы, электронные игры' => '421-Tetrisi-elektronnie-igri',
-            'Фомовые развивающие игрушки'    => '393-Fomovie-razvivayuschie-igrushki'
+//            'Фомовые развивающие игрушки'    => '393-Fomovie-razvivayuschie-igrushki'
         ),
 
         'Творчество'              => array(
@@ -114,7 +113,7 @@
             'Куклы интерактивные'                          => '1132-Kukli-interaktivnie',
             'Одежда для кукол и пупсов'                    => '416-Odezhda-dlya-kukol-i-pupsov',
             'Посуда, кухни, быт.приборы,овощи-фрукты'      => '360-Posuda-kuhni-bitpriboriovoschi-frukti',
-            'Пупсы BABY BORN' => '417-Pupsi-BABY-BORN',
+//            'Пупсы BABY BORN' => '417-Pupsi-BABY-BORN',
             'Столики кухонные, туалетные'                  => '363-Stoliki-kuhonnie-tualetnie-doktora-instrumentalnie'
         ),
 
@@ -226,9 +225,11 @@
             'Новинки' => 'page_size500?new=1',
             'Хиты' => 'page_size500?bestseller=1',
             'Акция' => 'page_size500?offer=1',
-            '10 февраля 2016' => 'shop/news/view/400?page_size=500',
-            '11 февраля 2016' => 'shop/news/view/405?page_size=500',
-            '13 февраля 2016' => 'shop/news/view/407?page_size=500'
+            '27 февраля 2016' => 'shop/news/view/430?page_size=500',
+            '29 февраля 2016' => 'shop/news/view/433?page_size=500',
+            '1 марта 2016' => 'shop/news/view/437?page_size=500',
+            '2 марта 2016' => 'shop/news/view/439?page_size=500',
+            '3 марта 2016' => 'shop/news/view/441?page_size=500'
         )
     );
 

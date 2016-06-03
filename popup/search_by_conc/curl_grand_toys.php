@@ -29,7 +29,7 @@
     if (!$auth_multi) {
         //        var_dump($_SESSION);
         die('NO LOGIN SESSION');
-        
+
     } else {
 
         $only_new = false;
@@ -42,12 +42,12 @@
             $only_new = true;
             $cat_file = 'new';
         }
-        include(DIR_COMPETITORS . '/grandtoys_' . $cat_file . '.php');
+
 
         $DB_tree = new DataBase();
         $DB_tree->connect(SystemSettings::get('DB_HOST'), SystemSettings::get('DB_USER'), SystemSettings::get('DB_PASS'));
         $DB_tree->selectDB(SystemSettings::get('DB_NAME'));
-
+        $TABLE_CONC = 'Conc__grandtoys';
         echo(<<<TAG
 
 			<html>
@@ -65,8 +65,8 @@ TAG
         $usd = getValue('currency_value', 'Conc__competitors', 'CCID = 4');
 
         define('SLASH', '|');
-        define('NAME_PATTERN', '<div\s+class="block[0-9]*?"[^<>]*?>[^<>]*?<div\s+class="product-title"[^<>]*?>[^<>]*?<a[^<>]*?>[\s]*([^<>]+?)[\s]*</a>[^<>]*?</div>[^<>]*?<div\s+class="block_border"[^<>]*?>[^<>]*?<div\s+class="product-overview-image"[^<>]*?>[^<>]*?<div\s+id="img-radius"[^<>]*?>[^<>]*?<a[^<>]*?>(<img[^<>]*?>[^<>]*?)?[^<>]*?</a>[^<>]*?</div>[^<>]*?</div>[^<>]*?(<div[^<>]*?>[^<>]*?<img[^<>]*?>[^<>]*?</div>[^<>]*?)?');
-        define('PRICE_PATTERN', '<div\s+class="product-price"[^<>]*?>[\s]+([0-9.]+?)[^<>]*?<br>[^<>]*?(<span\s+class="price_usd">[^<>]*?</span>)?');
+        define('NAME_PATTERN', '<div\s+class="block[0-9]*?"[^<>]*?>[^<>]*?<span\s+class="sticker"[^<>]*?>[^<>]*?</span>[^<>]*?<div\s+class="product-overview-image"[^<>]*?>[^<>]*?<div\s+id="img-radius"[^<>]*?>[^<>]*?<a[^<>]*?>(<img[^<>]*?>[^<>]*?)?[^<>]*?</a>[^<>]*?</div>[^<>]*?</div>[^<>]*?(<div[^<>]*?>[^<>]*?<img[^<>]*?>[^<>]*?</div>[^<>]*?)?<div\s+class="product-title"[^<>]*?>[^<>]*?<a[^<>]*?>[\s]*([^<>]+?)[\s]*</a>[^<>]*?</div>[^<>]*?<div\s+class="block_border"[^<>]*?>[^<>]*?');
+        define('PRICE_PATTERN', '<div\s+class="product-price"[^<>]*?>[^<>]*?<h2>([0-9.]+?)[^<>]*?</h2>[^<>]*?(<span\s+class="price_usd">[^<>]*?</span>)?');
         define('CODE_PATTERN', '<div\s+class="[^"]*?"[^<>]*?>[^<>]*?</div>[^<>]*?<form[^<>]*?>[^<>]*?<input\s+type="[^"]*?"\s+value="([0-9]+?)"[^<>]*?>');
 
         $headers = array
@@ -84,10 +84,10 @@ TAG
             $_GET['auth'] > 0
         ) {
 
-            define('LOGIN', 'Elenna');
-            define('PASSWORD', 'Elenna');
-//      define('LOGIN', 'rusmol');
-//      define('PASSWORD', '333');
+//            define('LOGIN', 'Elenna');
+//            define('PASSWORD', 'Elenna');
+            define('LOGIN', 'rusmol');
+            define('PASSWORD', '333');
 //        define('LOGIN', '973846984');
 //        define('PASSWORD', '973846984');
 //      define('LOGIN', '0632986207');
@@ -114,7 +114,11 @@ TAG
         $percent = 0;
         $products_cnt = 1000;
         $replace_name = array('&laquo;', '&raquo;', '&rdquo;', '&ldquo;', '&quot;', '&#039;', '\'', '.', '"', '„', '&amp;');
+        $categories = include(DIR_COMPETITORS . '/grandtoys_' . $cat_file . '.php');
+        $parts = count($categories);
 
+        updateValue($TABLE_CONC, 'enabled = 0');
+        
         foreach ($categories as $parent => $cats) {
 
             set_time_limit(0);
@@ -129,7 +133,7 @@ TAG
                 $filename = DIR_CURL . '/' . $filename . EXT;
                 $products = '';
 
-//                readUrl($category_url, $filename, $refferer, $headers);
+                readUrl($category_url, $filename, $refferer, $headers);
                 $refferer = $category_url;
 
                 $html = file_get_contents($filename);
@@ -150,10 +154,11 @@ TAG
 
                 } else {
 
-                    if (!$only_new) {
-                        updateValue('Conc__grandtoys', 'enabled = 0', "parent = '$parent' AND category = '$category'");
-                    }
-                    
+//                    if (!$only_new) {
+////                        updateValue($TABLE_CONC, 'enabled = 0', "parent = '$parent' AND category = '$category'");
+//                        updateValue($TABLE_CONC, 'enabled = 0');
+//                    }
+
                     echo('<p>обновление цен категории <b>&laquo;' . $category . '&raquo;</b>...(<i>' . $rowcount . ' товаров</i>)</p>');
                     buferOut();
 
@@ -161,31 +166,38 @@ TAG
 
                     for ($j = 0; $j < $rowcount; $j++) {
                         set_time_limit(0);
-                        $name = mysql_real_escape_string(preg_replace('/\s\s+/', ' ', trim(str_replace($replace_name, ' ', decodeCodepage($products[1][$j])))));
+                        $name = mysql_real_escape_string(preg_replace('/\s\s+/', ' ', trim(str_replace($replace_name, ' ', decodeCodepage($products[3][$j])))));
                         $price = (double)$products[4][$j];
                         $code = mysql_real_escape_string(decodeCodepage($products[6][$j]));
-                        $productID = getValue('productID', 'Conc__grandtoys', "code = '$code'");
                         $price_usd = $price / $usd;
+//                        $productID = getValue('productID', $TABLE_CONC, "code = '$code'");
+                        $values = 'productID, price_uah, price_usd';
+                        $dataDB = getValues($values, $TABLE_CONC, "code = '$code'");
+                        $date_modified = date("Y-m-d");
 
-                        if ($productID) {
+                        if ($dataDB->productID) {
+
+                            $date_modified = ($dataDB->price_uah == $price || $dataDB->price_usd == $price_usd) ? '' : ", date_modified='$date_modified'";
+
                             $query
                                 = "
-                                            UPDATE  Conc__grandtoys
+                                            UPDATE  $TABLE_CONC
                                             SET     parent       = '$parent',
                                                     category     = '$category',
                                                     name         = '$name',
                                                     price_uah$price_number    =  $price,
                                                     price_usd$price_number    =  $price_usd,
                                                     enabled      =  1
-                                            WHERE   productID    =  $productID
+                                                    $date_modified
+                                            WHERE   productID    =  $dataDB->productID
                                 ";
                             $res = mysql_query($query) or die(mysql_error() . "<br>$query");
                         } else {
                             $query
                                 = "
-                                        INSERT INTO Conc__grandtoys
-                                                    (parent, category, code, name, price_uah$price_number, price_usd$price_number)
-                                        VALUES      ('$parent', '$category', $code, '$name', $price, $price_usd)
+                                        INSERT INTO $TABLE_CONC
+                                                    (parent, category, code, name, price_uah$price_number, price_usd$price_number, date_modified)
+                                        VALUES      ('$parent', '$category', '$code', '$name', $price, $price_usd, '$date_modified')
                                       ";
                             $res = mysql_query($query) or die(mysql_error() . "<br>$query");
                             $new++;
@@ -193,7 +205,7 @@ TAG
                         $no++;
                     }
                     unlink($filename);
-                    buferOut();
+                    buferOut(2, 5);
                 }
             }
             $part++;
@@ -209,10 +221,10 @@ TAG
         echo('<hr><span style="color:blue;">Обработано ' . $no . ' товаров</span><br><br>Новых ' . $new . ' товаров</span><br>');
 
         // Оптимизация таблиц
-        $query = "UPDATE Conc__grandtoys SET parent='', category='' WHERE enabled=0";
+        $query = "UPDATE $TABLE_CONC SET parent='', category='' WHERE enabled=0";
         $res = mysql_query($query) or die(mysql_error() . "<br>$query");
 
-        $query = 'OPTIMIZE TABLE `Conc__grandtoys`, `Conc_search__grandtoys`';
+        $query = "OPTIMIZE TABLE $TABLE_CONC, `Conc_search__grandtoys`";
         $res = mysql_query($query) or die(mysql_error() . "<br>$query");
         mysql_close();
 

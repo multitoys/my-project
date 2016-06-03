@@ -7,8 +7,9 @@
         protected $DBHandler;
         protected $manufactured = '';
         protected $competitor = '';
+        protected $competitors_where = '';
         protected $conc = array();
-        protected $cc   = 1;
+        protected $cc = 1;
         protected $currency = '';
         protected $brand = '';
         protected $brands = array();
@@ -23,19 +24,31 @@
         protected $disc_ua = 20;
         protected $disc_conc = 0;
         protected $table = 'Conc__analogs';
-        protected $table_conc       = 'Conc__competitors';
+        protected $table_conc = 'Conc__competitors';
         protected $competitors_name = array();
         protected $competitors_array = array();
         protected $competitors_params = array();
-
+    
+        private function _updatePrice($id, $price)
+        {
+            //safeMode(true);
+            db_query( "UPDATE ".$this->table." SET Price='$price' "." WHERE productID=".$id );
+        }
+        
         public function __construct()
         {
             $Register = &Register::getInstance();
             $this->DBHandler = &$Register->get(VAR_DBHANDLER);
-
-            parent::__construct();
     
-            $this->_setCompetitorsParams();
+//            if (isset($_POST['price']) && count($_POST['price'])) {
+//                foreach ($_POST['price'] as $id => $new_price) {
+//                    $this->_updatePrice($id, $new_price);
+//                }
+//                unset($_POST['price']);
+//                Redirect($_SERVER['HTTP_REFERER']);
+//            }
+    
+            parent::__construct();
             
             //контроллер выбора функций конструктора путем обхода массива $_GET
             foreach ($_GET as $get_key => $get_key) {
@@ -109,23 +122,44 @@
                         break;
                 }
             }
+//            unset($_GET);
+            $this->_setCompetitorsParams();
         }
     
         protected function _setCompetitorsParams()
         {
+            
+            
             $query = "SELECT * FROM $this->table_conc ORDER BY CCID";
             $res = mysql_query($query) or die(mysql_error()."<br>$query");
 
             while ($row = mysql_fetch_object($res)) {
-            
+//
+//                if (in_array($row->competitor, $_GET['competitors'])) {
                 $this->competitors_params[] = array(
                     'conc' => $row->competitor,
-                    'diff' => 'diff_'.$row->competitor,
-                    'name' => $row->name_ru
+                    'diff' => 'diff_' . $row->competitor,
+                    'name' => $row->name_ru,
+                    'included' => ($this->competitor)?(in_array($row->competitor, $this->conc))?1:0:1
                 );
+//                if (isset($_GET['competitors'])) {
+//                    $this->competitors_params[]['included'] = (in_array($row->competitor, $this->conc))?1:0;
+//                } else {
+//                    $this->competitors_params[]['included'] = 1;
+//                }
                 $this->competitors_name[$row->competitor] = $row->name_ru;
                 $this->competitors_array[$row->competitor] = $row->competitor;
                 $this->cc++;
+//                }
+//                foreach ($_GET['competitors'] as $conc) {
+//                    if ($conc === 'all') {
+//                        $this->competitor = '';
+//                        return;
+//                    }
+//                    $this->conc[] = $conc;
+//                    unset($this->competitors_name[$conc], $this->competitors_array[$conc]);
+                    
+//                }
                 //                if ($not_null == '') {
                 //                    $not_null .= ' AND (';
                 //                    $not_null .= $row->competitor.' IS NOT NULL';
@@ -282,14 +316,18 @@
     
         protected function __setCompetitor()
         {
+            $this->competitor = '';
+            
             foreach ($_GET['competitors'] as $conc) {
                 if ($conc === 'all') {
-                    $this->competitor = '';
                     return;
                 }
                 $this->conc[] = $conc;
             }
-            $this->competitor = ' AND '.xEscapeSQLstring(implode(' OR ', $this->conc));
+
+            if (count($this->conc)) {
+                $this->competitor = ' AND ' . xEscapeSQLstring(implode(' OR ', $this->conc));
+            }
         }
 
         protected function __setSearch()
@@ -303,14 +341,16 @@
             $Register = &Register::getInstance();
             /*@var $Register Register*/
             $smarty = &$Register->get(VAR_SMARTY);
+//            $smarty = &Core::getSmarty();
             /*@var $smarty Smarty*/
 
-            $time = microtime(true);
+//            $time = microtime(true);
                 
             $this->__getBrandsArray();
             $this->__getCategoriesArray();
     
             $Grid = new Grid();
+            $Grid->__debug = true;
             
             $Grid->query_total_rows_num = "
                 SELECT COUNT(*) FROM $this->table
@@ -363,7 +403,7 @@
 
             $Grid->prepare();
 
-            $rows = $smarty->get_template_vars('GridRows');
+            $rows = &$smarty->get_template_vars('GridRows');
 
             for ($k = count($rows) - 1; $k >= 0; $k--) {
 
@@ -456,21 +496,6 @@
     
         protected function __getCategoriesArray()
         {
-//            $query = "
-//                      SELECT DISTINCT 
-//                          category 
-//                      FROM 
-//                          $this->table 
-//                      WHERE 1 
-//                          $this->manufactured 
-//                          $this->brand 
-//                          $this->category 
-//                          $this->bestsellers 
-//                          $this->new 
-//                          $this->new_items_postup 
-//                          $this->competitor 
-//                          $this->search
-//                     ";
             $query = "
                       SELECT DISTINCT 
                           category 

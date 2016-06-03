@@ -1,44 +1,51 @@
 {strip}
 <div class=product_topview_area>
-    <ul>
-        {foreach from=$__products item=_product}
-        {if $_product.thumbnail || $_product.picture}
-        <li>
-            <div class=topview-pict>
-                {if $_product.thumbnail || $_product.picture}
-                    <a href='{"?productID=`$_product.productID`&product_slug=`$_product.slug`"|set_query_html}'>
-                        <img width=160 height=120 src="{$smarty.const.URL_PRODUCTS_PICTURES}/{if $_product.thumbnail}{$_product.thumbnail|escape:'url'}{else}{$_product.picture|escape:'url'}{/if}" alt="{$_product.name_ru|escape:'html'}" title="{$_product.name_ru|escape:'html'}">
-                    </a>
-                {else}
-                    <img width=153 height=117 src='/img/nophoto.jpg'>
-                {/if}
-                    <div class="corner right_list color_hit"><span></span>Хит продаж
-                        {*if $_product.akcia}
-                            _akcia"><span></span>Акция{if $_product.akcia_skidka > 0} - {$_product.akcia_skidka}%{/if}
-                        {elseif $_product.sort_order*}
-                          {*_newitemspostup"><span></span>Новое поступление*}
-                         {*   _newitemspostup"><span></span>Новинка!
-                        {elseif $_product.items_sold}
-                            _hit"><span></span>Хит продаж
-                        {else}
-                            ">
-                        {/if*}
-                    </div>
-                <p><a href='{"?productID=`$_product.productID`&product_slug=`$_product.slug`"|set_query_html}'>{$_product.name_ru}</a></p>
-            </div>
-        {*{if $smarty.const.CONF_SHOW_ADD2CART eq 1}*}
-        {if $smarty.session.cs_may_order}
-            <div class=topview-price>
-                {if $_product.list_price > 0}старая цена&nbsp;<span class=list_price>{$_product.list_price_str}</span>{/if}
-            </div>
-            <div class=topview-price>{if $_product.list_price > 0}<span style="color: blue;">новая цена&nbsp;</span>{/if}
-                {if $_product.Price}<span class=price-right-list>{$_product.price_str}</span>{/if}
-            </div>
-        {/if}
-        {*{/if}*}
-        </li>
-        {/if}
-        {/foreach}
-    </ul>
+    <div class=scroller>
+            <ul>
+            {foreach from=$__products item=_product}
+            {if $_product.thumbnail || $_product.picture}
+            <li>
+                <div class=topview-pict>
+                    {if $_product.thumbnail || $_product.picture}
+                        <a href='{"?productID=`$_product.productID`&product_slug=`$_product.slug`"|set_query_html}'>
+                            <img width=160 height=120 src="{$smarty.const.URL_PRODUCTS_PICTURES}/{if $_product.thumbnail}{$_product.thumbnail|escape:'url'}{else}{$_product.picture|escape:'url'}{/if}" alt="{$_product.name_ru|escape:'html'}" title="{$_product.name_ru|escape:'html'}">
+                        </a>
+                    {else}
+                        <img width=153 height=117 src='/img/nophoto.jpg'>
+                    {/if}
+                        <div class="corner right_list color_hit"><span></span>Хит продаж
+                            {*if $_product.akcia}
+                                _akcia"><span></span>Акция{if $_product.akcia_skidka > 0} - {$_product.akcia_skidka}%{/if}
+                            {elseif $_product.sort_order*}
+                              {*_newitemspostup"><span></span>Новое поступление*}
+                             {*   _newitemspostup"><span></span>Новинка!
+                            {elseif $_product.items_sold}
+                                _hit"><span></span>Хит продаж
+                            {else}
+                                ">
+                            {/if*}
+                        </div>
+                    <p><a href='{"?productID=`$_product.productID`&product_slug=`$_product.slug`"|set_query_html}'>{$_product.name_ru}</a></p>
+                </div>
+            {*{if $smarty.const.CONF_SHOW_ADD2CART eq 1}*}
+            {if $smarty.session.cs_may_order}
+                <div class=topview-price>
+                    {if $_product.list_price > 0}старая цена&nbsp;<span class=list_price>{$_product.list_price_str}</span>{/if}
+                </div>
+                <div class=topview-price>{if $_product.list_price > 0}<span style="color: blue;">новая цена&nbsp;</span>{/if}
+                    {if $_product.Price}<span class=price-right-list>{$_product.price_str}</span>{/if}
+                </div>
+            {/if}
+            {*{/if}*}
+            </li>
+            {/if}
+            {/foreach}
+        </ul>
+    </div>
+    <div class="baron__track">
+        <div class="baron__free">
+            <div class="baron__bar"></div>
+        </div>
+    </div>
 </div>
 {/strip}

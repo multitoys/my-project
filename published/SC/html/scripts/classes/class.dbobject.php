@@ -186,4 +186,3 @@ class DBObject extends Object {
 		return $object->{$object->__primary_key}>0;
 	}
 }
-?>

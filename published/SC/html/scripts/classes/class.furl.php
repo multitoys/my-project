@@ -263,7 +263,7 @@
 			$request = str_replace('TitlePage/', '', $request);
 			$request = str_replace(array('home/', 'page1/', 'offset0/'), '', $request);
 			//DEBUG:
-			if(/*false&&*/($fp = fopen(DIR_TEMP.'/request.log','a'))){
+			if(false&&($fp = fopen(DIR_TEMP.'/request.log','a'))){
 				fwrite($fp,"{$request}\t".str_replace('/',"\t",$request)."\n");
 				fclose($fp);
 			}

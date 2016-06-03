@@ -23,6 +23,7 @@
 
     $archive_dir = $_SERVER['DOCUMENT_ROOT'].'/upload/';
     $dest_dir = $_SERVER['DOCUMENT_ROOT'].'/temp/import/';
+    $final_dir = $_SERVER['DOCUMENT_ROOT'].'/products_pictures/';
 
     $zip = new ZipArchive();
     $fileName = $archive_dir.'pics.zip';
@@ -53,10 +54,10 @@
     }
     if (($handle = fopen($filename, 'r')) !== false) {
 
-        $days = 0;
-        if (isset($_GET['days'])) {
-            $days = (int)$_GET['days'];
-        }
+//        $days = 0;
+//        if (isset($_GET['days'])) {
+//            $days = (int)$_GET['days'];
+//        }
         echo("
 				Импорт фотографий ...<hr>
 				<div id='products' >
@@ -68,11 +69,11 @@
         $row = 0;
         $erorr = 0;
         $percent = 0;
-        $not_modified = 0;
+//        $not_modified = 0;
 
         while (($data = fgetcsv($handle, 25, ';')) !== false) {
             set_time_limit(0);
-            $last_modified = 3;
+//            $last_modified = 3;
             $no++;
             $row++;
             $pics = $data[0];
@@ -100,35 +101,36 @@
                 $erorr++;
             } else {
                 $file_name2 = $search_dir.$pics_search;
-                if (filemtime($file_name2) < time() - 86400 * $days) {
+//                if (filemtime($file_name2) < time() - 86400 * $days) {
                     unlink($file_name2);
                     make_thumbnail($file_name, $file_name2, false, 80);
-                }
+//                }
                 $file_name2 = DIR_PRODUCTS_PICTURES.'/'.$pics_thm;
-                if (filemtime($file_name2) < time() - 86400 * $days) {
+//                if (filemtime($file_name2) < time() - 86400 * $days) {
                     unlink($file_name2);
                     make_thumbnail($file_name, $file_name2, false, 160);
-                } else {
-                    $last_modified--;
-                }
+//                } else {
+//                    $last_modified--;
+//                }
                 $file_name2 = DIR_PRODUCTS_PICTURES.'/'.$picture;
-                if (filemtime($file_name2) < time() - 86400 * $days) {
+//                if (filemtime($file_name2) < time() - 86400 * $days) {
                     unlink($file_name2);
                     make_thumbnail($file_name, $file_name2, $stamp400, 400);
-                } else {
-                    $last_modified--;
-                }
+//                } else {
+//                    $last_modified--;
+//                }
                 $file_name2 = DIR_PRODUCTS_PICTURES.'/'.$pics_enl;
-                if (filemtime($file_name2) < time() - 86400 * $days) {
+//                if (filemtime($file_name2) < time() - 86400 * $days) {
                     unlink($file_name2);
                     make_thumbnail($file_name, $file_name2, $stamp600, 600, 85);
-                } else {
-                    $last_modified--;
-                }
-                if ($last_modified === 0) {
-                    $not_modified++;
-                }
-                unlink($file_name);
+//                } else {
+//                    $last_modified--;
+//                }
+//                if ($last_modified === 0) {
+//                    $not_modified++;
+//                }
+//                unlink($file_name);
+                rename($file_name, $final_dir.$picture);
 
                 $productID = GetValue('productID', 'SC_products', "code_1c = $dopic");
                 if (!$productID) {
@@ -136,12 +138,12 @@
                     $erorr++;
                 } else {
                     $pictureID = GetValue('default_picture', 'SC_products', "productID = $productID");
-                    $pictures_num = GetCount('SC_product_pictures', "productID=$productID AND filename = '$picture'");
-                    if ($empty_pictureID) {
-                        $query = "DELETE FROM `SC_product_pictures` WHERE `PhotoID`=$empty_pictureID";
-                        $res = mysql_query($query) or die(mysql_error() . "<br>$query");
-                    }
-                    $pid = GetValue('PhotoID', 'SC_product_pictures', "filename = '$picture'");
+                    $pictures_num = GetCount('SC_product_pictures', "productID=$productID AND filename = '$picture' AND thumbnail = '$pics_thm'");
+                    //if ($empty_pictureID) {
+                    //    $query = "DELETE FROM `SC_product_pictures` WHERE `PhotoID`=$empty_pictureID";
+                    //    $res = mysql_query($query) or die(mysql_error() . "<br>$query");
+                    //}
+                    $pid = GetValue('PhotoID', 'SC_product_pictures', "filename = '$picture' AND thumbnail = '$pics_thm'");
                     if ($pid) {
                         $query = "UPDATE SC_product_pictures
 													SET 
@@ -149,13 +151,14 @@
 													WHERE PhotoID = $pid";
                         $res = mysql_query($query) or die(mysql_error()."<br>$query");
                     } else {
+                        deleteRow('SC_product_pictures', "productID=$productID");
                         $query = "INSERT INTO SC_product_pictures
 												 (productID , filename, thumbnail, enlarged, priority)
 												 VALUES ($productID, '$picture', '$pics_thm', '$pics_enl', $num)";
                         $res = mysql_query($query) or die(mysql_error()."<br>$query");
                         $pid = mysql_insert_id();
                     }
-                    if ($num == 0 && $pictureID != '') {
+                    if ($num == 0/* && $pictureID != ''*/) {
                         $query = "UPDATE SC_products SET default_picture = $pid
 													WHERE productID = $productID";
                         $res = mysql_query($query) or die(mysql_error()."<br>$query");
@@ -171,9 +174,10 @@
         }
         fclose($handle);
     }
-    $pics = $no - $erorr - $not_modified;
-    echo('<span style="color:blue;"><br>Обработано '.$pics.' изображений<br>
-            Не модифицировано '.$not_modified.' изображений</span>');
+    $pics = $no - $erorr/* - $not_modified*/;
+//    echo('<span style="color:blue;"><br>Обработано '.$pics.' изображений<br>
+//            Не модифицировано '.$not_modified.' изображений</span>');    
+    echo('<span style="color:blue;"><br>Обработано '.$pics.' изображений</span>');
 
     $query = 'OPTIMIZE TABLE `SC_products`, `SC_product_pictures`';
     $res = mysql_query($query) or die(mysql_error()."<br>$query");
@@ -191,6 +195,8 @@
     function make_thumbnail($file_name, $fileout, $stamp, $max_size, $quality = 80)
     {
         $image_info = getimagesize($file_name);
+        list($width, $height, $type, $attr) = getimagesize($image_info);
+        
         $image = imagecreatefromjpeg($file_name);
 
         $image_width = imagesx($image);
@@ -268,6 +274,13 @@
         return $row[0];
     }
 
+    function deleteRow($table, $condition = '')
+    {
+        $condition = ($condition)?"WHERE $condition":"";
+        $query = "DELETE FROM $table $condition";
+        $result = mysql_query($query) or die('Ошибка в запросе: '.mysql_error().'<br>'.$query);
+    }
+    
     function ProgressBar($import_items, $percent, $start = false, $full = false)
     {
         $end = '';

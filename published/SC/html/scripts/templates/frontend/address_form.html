@@ -6,13 +6,13 @@
 <tr class="row_{cycle name="__afcyycle`$__af_cnt`" values='odd,even'}">
 	<td><span class="asterisk">*</span>{lbl_usr_custinfo_first_name}</td>
 	<td>
-		<input name='{$name_space}[first_name]' value='{$address.first_name|escape:"html"}' type="text" rel="chk_first_name" class="autofill address_elem inputtext" />
+		<input name='{$name_space}[first_name]' value='{$address.first_name|escape:"html"}' type="text" rel="chk_first_name" class="autofill address_elem inputtext" required/>
 	</td>
 </tr>
 <tr class="row_{cycle name="__afcyycle`$__af_cnt`" values='odd,even'}">
 	<td><span class="asterisk">*</span>{lbl_usr_custinfo_last_name}</td>
 	<td>
-		<input name='{$name_space}[last_name]' value='{$address.last_name|escape:"html"}' type="text" rel="chk_last_name" class="autofill address_elem inputtext" />
+		<input name='{$name_space}[last_name]' value='{$address.last_name|escape:"html"}' type="text" rel="chk_last_name" class="autofill address_elem inputtext" required/>
 	</td>
 </tr>
 {/if}

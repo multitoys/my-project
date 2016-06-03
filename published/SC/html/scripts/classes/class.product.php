@@ -79,14 +79,14 @@
             $this->loadFromArray($product);
             $this->registerByID($product['productID']);
             $this->registerByID($product['slug']);
-            $this->SetSpecialPrice();
+            //$this->SetSpecialPrice();
         }
 
         function loadByID($id)
         {
 
             $res = parent::loadByID($id);
-            $this->SetSpecialPrice();
+            //$this->SetSpecialPrice();
             if ($res) {
                 $this->registerByID($this->slug);
             }
@@ -104,20 +104,18 @@
             return $data;
         }
 
-        function SetSpecialPrice()
-        {
-
-            if (isset($_SESSION["log"])) $log = $_SESSION["log"];
-            else return;
-
-            // GetCustomer
-            $q = db_query("SELECT * FROM SC_customers WHERE Login='" . $log . "'");
-            if ($customer = db_fetch_assoc($q)) {
-
-                if (intval($customer["is_special_price"]) == 1) $this->Price = $this->SpecialPrice;
-            }
-        }
+        //function SetSpecialPrice()
+        //{
+        //
+        //    if (isset($_SESSION["log"])) $log = $_SESSION["log"];
+        //    else return;
+        //
+        //    // GetCustomer
+        //    $q = db_query("SELECT * FROM SC_customers WHERE Login='" . $log . "'");
+        //    if ($customer = db_fetch_assoc($q)) {
+        //
+        //        if (intval($customer["is_special_price"]) == 1) $this->Price = $this->SpecialPrice;
+        //    }
+        //}
 
     }
-
-?>

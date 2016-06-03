@@ -27,9 +27,6 @@
 					<link rel='stylesheet' type='text/css' href='css/import.css'>
 				</head>
 				<body>
-                <div id='products'>
-                    <div style='width:0;'>&nbsp;</div>
-                </div>
 
 TAG
         );
@@ -38,6 +35,8 @@ TAG
         $DB_tree->connect(SystemSettings::get('DB_HOST'), SystemSettings::get('DB_USER'), SystemSettings::get('DB_PASS'));
         $DB_tree->selectDB(SystemSettings::get('DB_NAME'));
 
+//        define('TABLE_CONC', 'Conc__mixtoys');
+        $TABLE_CONC = 'Conc__mixtoys';
         $usd = getValue('currency_value', 'Conc__competitors', 'CCID = 3');
         $archive_dir = $_SERVER['DOCUMENT_ROOT'].'/upload/';
         //$dest_dir = $_SERVER['DOCUMENT_ROOT'].'/temp/import/';
@@ -66,8 +65,8 @@ TAG
         $replace_pcode = array('Техно ', 'ПЦ ', 'BANBAO ', 'DEFA ', 'JIXIN ', 'JT ', 'PS ', 'T ', 'Дів ', 'Збр', 'Звi ', 'КВ ', 'Кон ', 'Лял ', 'Маш ', 'Муз ', 'Мяк ', 'Мяч ', 'Нас ', 'Нем ', 'ОР ', 'Різ ', 'Ст ', 'Хло ', 'ЮН ', 'ЯБ ');
         $replace_name = array('\'', '"');
         if (($handle = fopen($filename, 'r')) !== false) {
-            //        DeleteRow('Conc__mixtoys');
-            updateValue('Conc__mixtoys', 'enabled = 0');
+            //        DeleteRow($TABLE_CONC);
+            updateValue($TABLE_CONC, 'enabled = 0');
 
             while (($data = fgetcsv($handle, 1000, ';')) !== false) {
                 set_time_limit(0);
@@ -115,21 +114,28 @@ TAG
                     $price = preg_replace('/[^0-9.]/', '', $price);
                 }
                 $price_usd = $price / $usd;
-
-                $productID = getValue('productID', 'Conc__mixtoys', "code = '$code'");
-
-                if (!$productID) {
+                
+                $values = 'productID, price_uah, price_usd';
+                $dataDB = getValues($values, $TABLE_CONC, "code = '$code'");
+                $date_modified = date("Y-m-d");
+                
+                if (!$dataDB->productID) {
+                    
                     $query = "
-                        INSERT INTO Conc__mixtoys
-                                    (parent, category, code, product_code, name, price_uah, price_usd)
-                        VALUES      ('$parent', '$category', '$code', '$product_code', '$name', $price, $price_usd)
+                        INSERT INTO $TABLE_CONC
+                                    (parent, category, code, product_code, name, price_uah, price_usd, date_modified)
+                        VALUES      ('$parent', '$category', '$code', '$product_code', '$name', $price, $price_usd, '$date_modified')
                       ";
                     $res = mysql_query($query) or die(mysql_error()."<br>$query");
                     $no++;
+                    
                 } else {
+                    
+                    $date_modified = ($dataDB->price_uah == $price || $dataDB->price_usd == $price_usd )? '' : ", date_modified='$date_modified'";
+                    
                     $query = "
                             UPDATE
-                                    Conc__mixtoys
+                                    $TABLE_CONC
 
                             SET
                                     parent = '$parent',
@@ -139,9 +145,10 @@ TAG
                                     price_uah = $price,
                                     price_usd = $price_usd,
                                     enabled   = 1
+                                    $date_modified
 
                             WHERE
-                                    productID = $productID
+                                    productID = $dataDB->productID
                           ";
                     $res = mysql_query($query) or die(mysql_error()."<br>$query");
                 }
@@ -162,11 +169,11 @@ TAG
         ');
 
         // Оптимизация таблиц
-        //DeleteRow('Conc__mixtoys', 'price_uah = 0.00');
-        $query = "UPDATE `Conc__mixtoys` SET parent='', category='' WHERE enabled=0";
+        //DeleteRow($TABLE_CONC, 'price_uah = 0.00');
+        $query = "UPDATE $TABLE_CONC SET parent='', category='' WHERE enabled=0";
         $res = mysql_query($query) or die(mysql_error()."<br>$query");
 
-        $query = 'OPTIMIZE TABLE Conc__mixtoys';
+        $query = "OPTIMIZE TABLE $TABLE_CONC";
         $res = mysql_query($query) or die(mysql_error()."<br>$query");
         mysql_close();
 

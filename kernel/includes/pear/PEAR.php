@@ -284,7 +284,7 @@
          * @access  public
          * @return  bool    true if parameter is an error
          */
-        function isError($data, $code = null)
+        static function isError($data, $code = null)
         {
             if (is_a($data, 'PEAR_Error')) {
                 if (is_null($code)) {
@@ -341,11 +341,12 @@
          * @since  PHP 4.0.5
          */
 
-        function setErrorHandling($mode = null, $options = null)
+        static function setErrorHandling($mode = null, $options = null)
         {
-            if (isset($this) && is_a($this, 'PEAR')) {
-                $setmode = &$this->_default_error_mode;
-                $setoptions = &$this->_default_error_options;
+            $pear = new PEAR;
+            if (isset($pear) && is_a($pear, 'PEAR')) {
+                $setmode = &$pear->_default_error_mode;
+                $setoptions = &$pear->_default_error_options;
             } else {
                 $setmode = &$GLOBALS['_PEAR_default_error_mode'];
                 $setoptions = &$GLOBALS['_PEAR_default_error_options'];

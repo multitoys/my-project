@@ -1,5 +1,5 @@
 <?php
-    Error_Reporting(E_ALL & ~E_NOTICE);
+    error_reporting(E_ALL & ~E_NOTICE);
     /**
      * Project:     Smarty: the PHP compiling template engine
      * File:        Smarty.class.php
@@ -146,7 +146,7 @@
          *
          * @var boolean
          */
-        var $force_compile = false;
+        var $force_compile = true;
 
         /**
          * This enables template caching.
@@ -175,7 +175,7 @@
          *
          * @var integer
          */
-        var $cache_lifetime = 3600;
+        var $cache_lifetime = 0;
 
         /**
          * Only used when $caching is enabled. If true, then If-Modified-Since headers

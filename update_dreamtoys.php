@@ -2,12 +2,12 @@
 
     $start = microtime(true);
     ini_set('display_errors', true);
-    define('DIR_ROOT', $_SERVER['DOCUMENT_ROOT'].'/published/SC/html/scripts');
+    define('DIR_ROOT', $_SERVER['DOCUMENT_ROOT'] . '/published/SC/html/scripts');
 
-    include_once(DIR_ROOT.'/includes/init.php');
-    include_once(DIR_CFG.'/connect.inc.wa.php');
-    include(DIR_FUNC.'/setting_functions.php');
-    include(DIR_FUNC.'/import_functions.php');
+    include_once(DIR_ROOT . '/includes/init.php');
+    include_once(DIR_CFG . '/connect.inc.wa.php');
+    include(DIR_FUNC . '/setting_functions.php');
+    include(DIR_FUNC . '/import_functions.php');
 
     $a = false;
 
@@ -21,8 +21,8 @@
     $b = false;
 
     if (isset($_GET) &&
-        array_key_exists('new', $_GET) &&
-        $_GET['new'] > 0
+        array_key_exists('update', $_GET) &&
+        $_GET['update'] > 0
     ) {
         $b = true;
     }
@@ -43,30 +43,33 @@ TAG
         $DB_tree = new DataBase();
         $DB_tree->connect(SystemSettings::get('DB_HOST'), SystemSettings::get('DB_USER'), SystemSettings::get('DB_PASS'));
         $DB_tree->selectDB(SystemSettings::get('DB_NAME'));
-    
-        $usd = getValue('currency_value', 'Conc__competitors', 'CCID = 2');
-        $archive_dir = $_SERVER['DOCUMENT_ROOT'].'/upload/';
+        $TABLE_CONC = 'Conc__dreamtoys';
+
+//        $values = 'currency_value, currency_value_old';
+        $values = 'currency_value';
+        $usd = getValues($values, 'Conc__competitors', 'CCID = 2');
+        $archive_dir = $_SERVER['DOCUMENT_ROOT'] . '/upload/';
 
         //----------- Импорт товаров ----------- 
-        if ($b) {
-            switch ($_GET['new']) {
-                case '3':
-                    $filename = $archive_dir . 'dreamtoys_akcia.csv';
-                    break;
-                case '2':
+        if (!$b) {
+//            switch ($_GET['update']) {
+//                case '3':
+//                    $filename = $archive_dir . 'dreamtoys_akcia.csv';
+//                    break;
+//                case '2':
                     $filename = $archive_dir . 'dreamtoys_new_postup.csv';
-                    break;
-                case '1':
-                    $filename = $archive_dir . 'dreamtoys_new.csv';
-                    break;
-            }
+//                    break;
+//                case '1':
+//                    $filename = $archive_dir . 'dreamtoys_new.csv';
+//                    break;
+//            }
         } else {
-            $filename = $archive_dir.'dreamtoys.csv';
+        $filename = $archive_dir . 'dreamtoys.csv';
         }
         $file = file($filename);
         $rowcount = count($file);
 
-        echo('<h1>Импорт товаров ...('.$rowcount.')</h1><hr><br>');
+        echo('<h1>Импорт товаров ...(' . $rowcount . ')</h1><hr><br>');
         echo(<<<'TAG'
 
             <div id='products' >
@@ -89,31 +92,34 @@ TAG
         );
         if (($handle = fopen($filename, 'r')) !== false) {
 
-            if (!$b) {
-                updateValue('Conc__dreamtoys', 'enabled = 0');
+            if ($b) {
+                updateValue($TABLE_CONC, 'enabled = 0');
             }
 
             while (($data = fgetcsv($handle, 1000, ';')) !== false) {
+                
                 set_time_limit(0);
 
                 if ($row === 0) {
+                    
                     for ($i = 0; $i <= 6; $i++) {
+                        
                         $column = decodeCodepage1251($data[$i]);
 
                         switch ($column) {
-                            case  'категория':
+                            case 'категория':
                                 $pa = $i;
                                 break;
-                            case   'Группа':
+                            case 'Группа':
                                 $ca = $i;
                                 break;
-                            case   'Код':
+                            case 'Код':
                                 $co = $i;
                                 break;
-                            case   'наименование':
+                            case 'наименование':
                                 $na = $i;
                                 break;
-                            case   'цена':
+                            case 'цена':
                                 $pr = $i;
                                 break;
                         }
@@ -125,16 +131,19 @@ TAG
                 $category = mysql_real_escape_string(decodeCodepage1251($data[$ca]));
                 $pos = strpos($parent, 'ТМ ');
                 $parent = mysql_real_escape_string($parent);
+                
                 if ($pos !== false && $parent) {
                     $category = $parent;
                     $parent = mysql_real_escape_string('По Брендам');
                 }
+                
                 $code = mysql_real_escape_string(decodeCodepage1251($data[$co]));
                 $name_pr_code = explode('|', decodeCodepage1251($data[$na]));
                 $non_name = $name_pr_code[0];
                 $name = '';
                 $product_code = '';
                 $price = (double)$data[$pr];
+                
                 if ($non_name[0] !== '<') {
                     $name = mysql_real_escape_string(trim(str_replace($replace_name, '', $name_pr_code[0])));
                     $product_code = mysql_real_escape_string(trim($name_pr_code[1]));
@@ -145,23 +154,33 @@ TAG
                     if (!is_numeric($price)) {
                         $price = preg_replace('/[^0-9.]/', '', $price);
                     }
-                    $price_usd = $price / $usd;
+                    $price_usd = $price / $usd->currency_value;
 
-                    $productID = getValue('productID', 'Conc__dreamtoys', "code = '$code'");
-
-                    if (!$productID) {
+                    $values = 'productID, price_uah, price_usd';
+                    $data_old = getValues($values, $TABLE_CONC, "code = '$code'");
+                    $date_modified = date("Y-m-d");
+                    $category = $category?:$parent;
+                    
+                    if (!$data_old->productID) {
                         $query
                             = "
-                            INSERT INTO Conc__dreamtoys
-                                        (parent, category, code, product_code, name, price_uah, price_usd)
-                            VALUES      ('$parent', '$category', '$code', '$product_code', '$name', $price, $price_usd)
+                                INSERT INTO $TABLE_CONC
+                                            (parent, category, code, product_code, name, price_uah, price_usd, date_modified)
+                                VALUES      ('$parent', '$category', '$code', '$product_code', '$name', $price, $price_usd, '$date_modified')
                           ";
-                        $res = mysql_query($query) or die(mysql_error()."<br>$query");
+                        $res = mysql_query($query) or die(mysql_error() . "<br>$query");
                         $no++;
                     } else {
+
+                        $date_modified = (abs(($data_old->price_uah / $price) - 1) * 100 <= 3 || 
+                                          abs(($data_old->price_usd / $price_usd) - 1) * 100 <= 3) 
+                                          ? '' : ", date_modified='$date_modified'"
+                        ;
+                        
                         $query
                             = "
-                            UPDATE  Conc__dreamtoys
+                            UPDATE
+                                    $TABLE_CONC
 
                             SET     parent = '$parent',
                                     category = '$category',
@@ -170,15 +189,16 @@ TAG
                                     price_uah = $price,
                                     price_usd = $price_usd,
                                     enabled   = 1
+                                    $date_modified
 
-                            WHERE  productID = $productID";
-                        $res = mysql_query($query) or die(mysql_error()."<br>$query");
+                            WHERE  productID = $data_old->productID";
+                        $res = mysql_query($query) or die(mysql_error() . "<br>$query");
                     }
                 }
                 $row++;
                 $progress = round(($row / ($rowcount - 1) * 100), 0, PHP_ROUND_HALF_DOWN);
                 if ($progress > $percent) {
-                    $percent = $progress.'%';
+                    $percent = $progress . '%';
                     progressBar('products', $percent, $start2);
                     buferOut();
                 }
@@ -187,16 +207,17 @@ TAG
         }
         echo(
             '<span style="color:blue;">
-         <br>Обработано '.$row.' товаров</span><br>
-         <br>Новых '.$no.' товаров</span><br>
+         <br>Обработано ' . $row . ' товаров</span><br>
+         <br>Новых ' . $no . ' товаров</span><br>
         ');
 
         // Оптимизация таблиц
-        $query = "UPDATE Conc__dreamtoys SET parent='', category='' WHERE enabled=0";
-        $res = mysql_query($query) or die(mysql_error()."<br>$query");
+        //DeleteRow($TABLE_CONC, 'price_uah = 0.00');
+        $query = "UPDATE $TABLE_CONC SET parent='', category='' WHERE enabled=0";
+        $res = mysql_query($query) or die(mysql_error() . "<br>$query");
 
-        $query = 'OPTIMIZE TABLE Conc__dreamtoys';
-        $res = mysql_query($query) or die(mysql_error()."<br>$query");
+        $query = "OPTIMIZE TABLE $TABLE_CONC";
+        $res = mysql_query($query) or die(mysql_error() . "<br>$query");
         mysql_close();
 
         progressBar('products', $percent, true);

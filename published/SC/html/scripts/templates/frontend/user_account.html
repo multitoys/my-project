@@ -7,3 +7,7 @@
 {/if}
 {/section}
 </table>
+
+{if $smarty.session.cs_api_access}
+    {include file="market.html"}
+{/if}

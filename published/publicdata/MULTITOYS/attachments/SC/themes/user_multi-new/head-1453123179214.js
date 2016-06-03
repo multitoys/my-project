@@ -1,4 +1,5 @@
-var searchCache = [];
+var mainScroll,
+    searchCache = [];
 $(document).ready(function () {
     var preview = $(".preview");
     var controls = $(".controls");
@@ -6,52 +7,147 @@ $(document).ready(function () {
     var scrollPane = $(".scroll-pane1");
     var productLists = $(".cpt_product_lists");
     var content = $("#content");
-    var pageNavigator = $("#light-pagination");
-    var itemsOnPage = parseInt(pageNavigator.attr("data-itemsOnPage"));
-    var items = parseInt(pageNavigator.attr("data-items"));
-    var sort = pageNavigator.attr("data-sort");
-    var date = pageNavigator.attr("data-date");
-    var made = pageNavigator.attr("data-made");
-    var direction = pageNavigator.attr("data-direction");
-    var url = "/auxpage_new_items/" + date + "/" + made + "/";
-    var catPath = $("#cat_path");
-    
-    document.body.onkeydown = function () {
-        console.log(event.keyCode);
-    }
-    
-    var x = new Date();
-    var d = {
-        day: (x.getDate() - date - 1),
-        month: (x.getMonth() + 1),
-        year: x.getFullYear(),
-        hour: x.getHours(),
-        minute: x.getMinutes(),
-        second: x.getSeconds()
-    };
-    var D = {};
-    D.day = (parseInt(d.day, 10) < 10 ) ? ('0' + d.day) : (d.day);
-    D.month = (parseInt(d.month, 10) < 10 ) ? ('0' + d.month) : (d.month);
-    var z = D.day + '.' + D.month + '.' + D.year;
-    var dateNewPostup = $("#date");
-    var dateNewChina = catPath.find(".china a");
-    var dateNewUkraine = catPath.find(".ukraine a");
-    dateNewPostup.html(z);
-    dateNewPostup.attr("href", "/auxpage_new_items/all/" + date + "/");
-    dateNewChina.attr("href", "/auxpage_new_items/china/" + date + "/");
-    dateNewUkraine.attr("href", "/auxpage_new_items/ukraine/" + date + "/");
-    
-    $.scrollUp({
-        scrollName: "scrollUp",
-        topDistance: "200",
-        topSpeed: 1000,
-        animation: "fade",
-        animationInSpeed: 1000,
-        animationOutSpeed: 1000,
-        scrollText: "Наверх",
-        activeOverlay: false
-    });
+    var slideMenu = $('#slidemenu');
 
+
+    
+    slideMenu.multiSlideMenu({
+        autoHeightMenu: true,
+        scrollToTopSpeed: 200,
+        loadContainer: "#center",
+        afterLoadDone: function() {
+            var preview = $(".preview"),
+                controls = $(".controls"),
+                quantity = $(".cart_product_quantity");
+            ResizeCatalog();
+            try {
+                mainScroll = baron({
+                    root: '.cpt_maincontent',
+                    scroller: '.scroll-pane1',
+                    bar: '.baron__bar',
+                    scrollingCls: '_scrolling'
+                }).autoUpdate().controls({
+                    track: '.baron__track'
+                });
+            } catch (e) {
+                console.log( e.name );
+                console.log( e.message );
+                console.log( e.stack );
+            }
+
+            if (preview.tooltip) {
+                preview.tooltip({
+                    delay: 0, bodyHandler: function () {
+                        return $("<img/>").attr("src", $(this).attr("data-pid"));
+                    }
+                });
+            }
+            if (controls.tooltip) {
+                controls.tooltip({
+                    delay: 1, bodyHandler: function () {
+                        return $("<img/>").attr("src", $(this).attr("data-pid"));
+                    }
+                });
+            }
+            if (quantity.spin) {
+                quantity.spin({min: 0, max: 999});
+            }
+            $('a.page-link').click(navigation);
+        }
+    });
+    
+    function RealMarginLi() {
+        var idCenter = $("#center").find(".product_topview_area");
+        var product_topview_area_width = idCenter.width();
+        var centerLi = idCenter.find("ul li");
+        var li_width = centerLi.width() + 6;
+        var liNum = Math.floor(product_topview_area_width / li_width);
+        var margin = Math.round((product_topview_area_width - li_width * liNum) / (liNum + 1));
+        centerLi.css({"margin-left": margin, "margin-bottom": margin});
+    }
+
+    function RealResizeCatalog() {
+        var header_height = $("#header").height() + $(".header").height() + 8;
+        var maincontent_height = $(window).height() - header_height;
+        var columns_height = $(document).height() - header_height;
+        var delta = $(".product_brief_head").height() + $(".navigator").height();
+        scrollPane.height(maincontent_height - delta);
+        $("#columns").height(columns_height);
+        productLists.height(columns_height);
+    }
+
+    function ResizeCatalog() {
+        scrollPane.height(1);
+        $("#columns").height(1);
+        productLists.height(1);
+        setTimeout(RealResizeCatalog, 500);
+    }
+
+    function navigation() {
+        var url = $(this).attr('href'),
+            scrollPaine = $(".scroll-pane1");
+        $('#center').addClass("smoke");
+        scrollPaine.addClass("loader");
+        $(".cpt_maincontent").baron().dispose();
+        $.ajax({
+            url: url + '?ajax=1',
+            success: function (data) {
+                $('#center').html(data).removeClass("smoke");
+                var preview = $(".preview"),
+                    controls = $(".controls"),
+                    quantity = $(".cart_product_quantity");
+                scrollPaine.removeClass("loader");
+                try {
+                    mainScroll = baron({
+                        root: '.cpt_maincontent',
+                        scroller: '.scroll-pane1',
+                        bar: '.baron__bar',
+                        scrollingCls: '_scrolling'
+                    }).autoUpdate().controls({
+                        track: '.baron__track'
+                    });
+                } catch (e) {
+                    console.log( e.name );
+                    console.log( e.message );
+                    console.log( e.stack );
+                }
+                $('a.page-link').click(navigation);
+
+                preview.tooltip({
+                    delay: 0, bodyHandler: function () {
+                        return $("<img/>").attr("src", $(this).attr("data-pid"));
+                    }
+                });
+
+                controls.tooltip({
+                    delay: 1, bodyHandler: function () {
+                        return $("<img/>").attr("src", $(this).attr("data-pid"));
+                    }
+                });
+
+                quantity.spin({min: 0, max: 999});
+
+                ResizeCatalog();
+            }
+        });
+        if (url != window.location) {
+            window.history.pushState(null, null, url);
+        }
+        return false;
+    }
+
+    $(function () {
+        $.scrollUp({
+            scrollName: "scrollUp",
+            topDistance: "200",
+            topSpeed: 1000,
+            animation: "fade",
+            animationInSpeed: 1000,
+            animationOutSpeed: 1000,
+            scrollText: "Наверх",
+            activeOverlay: false
+        });
+    });
     RealMarginLi();
     ResizeCatalog();
     $(window).resize(function () {
@@ -67,7 +163,7 @@ $(document).ready(function () {
     }
     if (controls.tooltip) {
         controls.tooltip({
-            delay: 1, bodyHandler: function () {
+            delay: 0, bodyHandler: function () {
                 return $("<img/>").attr("src", $(this).attr("data-pid"));
             }
         });
@@ -96,7 +192,6 @@ $(document).ready(function () {
             var count_show = page + show + add;
             if ((show + add) < itemsOnPage && count_show <= items) {
                 notProgress = false;
-                content.addClass("smoke");
                 scrollPane.addClass("loader");
                 $.ajax({
                     url: "/auxpage_new_items/" + date + "/" + made + "/",
@@ -108,9 +203,8 @@ $(document).ready(function () {
                         if (data.result == "success") {
                             content.append(data.html);
                             btn_more.attr("data-show", count_show - page);
-                            var cartQuantity = $(".cart_product_quantity");
-                            cartQuantity.siblings().remove();
-                            cartQuantity.spin({min: 0, max: 999});
+                            $(".cart_product_quantity").siblings().remove();
+                            $(".cart_product_quantity").spin({min: 0, max: 999});
                             $(".preview").tooltip({
                                 delay: 0, showURL: false, bodyHandler: function () {
                                     return $("<img/>").attr("src", $(this).attr("data-pid"));
@@ -125,7 +219,6 @@ $(document).ready(function () {
                             if (data.result == "finish") {
                             }
                         }
-                        content.removeClass("smoke");
                         scrollPane.removeClass("loader");
                         scrollPane.getNiceScroll(0).doScrollLeft(0, 100);
                         notProgress = true;
@@ -134,7 +227,9 @@ $(document).ready(function () {
             }
         }
     });
-
+    var pageNavigator = $("#light-pagination");
+    var itemsOnPage = parseInt(pageNavigator.attr("data-itemsOnPage"));
+    var items = parseInt(pageNavigator.attr("data-items"));
     if (items > itemsOnPage) {
         pageNavigator.pagination({
             items: parseInt(pageNavigator.attr("data-items")),
@@ -144,13 +239,18 @@ $(document).ready(function () {
             nextText: "&rarr;",
             hrefTextPrefix: location.href + "#page-",
             onPageClick: function (pageNumber, event) {
+                var itemsOnPage = pageNavigator.attr("data-itemsOnPage");
                 var p = (pageNumber - 1) * itemsOnPage;
                 var page = "#page-" + (pageNumber + 1);
                 if (pageNumber == 1) {
                     p = -1;
                 }
                 location.href = location.href.replace(/#page-(\d+)/, "") + page;
-
+                var sort = pageNavigator.attr("data-sort");
+                var date = pageNavigator.attr("data-date");
+                var made = pageNavigator.attr("data-made");
+                var direction = pageNavigator.attr("data-direction");
+                var url = "/auxpage_new_items/" + date + "/" + made + "/";
                 content.addClass("smoke");
                 scrollPane.addClass("loader");
                 if (notProgress) {
@@ -190,97 +290,68 @@ $(document).ready(function () {
         });
     }
     load_cart();
-
-    function RealMarginLi() {
-        var idCenter = $("#center").find(".product_topview_area");
-        var product_topview_area_width = idCenter.width();
-        var centerLi = idCenter.find("ul li");
-        var li_width = centerLi.width() + 6;
-        var liNum = Math.floor(product_topview_area_width / li_width);
-        var margin = Math.round((product_topview_area_width - li_width * liNum) / (liNum + 1));
-        centerLi.css({"margin-left": margin, "margin-bottom": margin});
-    }
-
-    function RealResizeCatalog() {
-        var header_height = $("#header").height() + $(".header").height() + 5;
-        var maincontent_height = $(window).height() - header_height;
-        var columns_height = $(document).height() - header_height;
-        var delta = $(".product_brief_head").height() + $(".navigator").height();
-        scrollPane.height(maincontent_height - delta);
-        $("#columns").height(columns_height);
-        productLists.height(columns_height);
-    }
-
-    function ResizeCatalog() {
-        scrollPane.height(1);
-        $("#columns").height(1);
-        productLists.height(1);
-        setTimeout(RealResizeCatalog, 500);
-    }
-
-    function zakcia(seconds) {
-        var _date = new Date();
-        _date.setSeconds(seconds);
-        $("#z_counter").countdown({image: "/img/_digits.png", startTime: _date});
-    }
-
-    function load_cart() {
-        $("#my__cart").load("/popup/show_cart.php");
-    }
-
-    $("[name=add2cart]").click(function () {
-        var id = $(this).attr("data-id");
-        $("[data-id=" + id + "]").val("0");
+    baron({
+        root: 'body',
+        cssGuru: true
     });
-    function update_cient_info(id, qt) {
-        var zpid = $("#zpid_" + id);
-        var old_val = Number(zpid.text());
-        var new_val = old_val + Number(qt);
-        zpid.html('<div class="animated fadeInDownBig">' + new_val + "</div>");
-    }
-
-    function add_all2cart() {
-        var myCart = $("#my__cart");
-        myCart.html('<div style="float:right"><p style="font-size:14px;line-height:37px;color:white">Загрузка товаров...</p></div>');
-        $("[name=product_qty]").each(function () {
-            var id = $(this).attr("data-id");
-            var qt = $(this).val();
-            var query = "?ukey=cart&view=noframe&action=add_product&force=yes&productID=" + id + "&product_qty=" + qt;
-            if (qt > 0) {
-                $.ajax({
-                    type: "GET", url: query, dataType: "html", async: true, success: function () {
-                        update_cient_info(id, qt);
-                    }
-                });
-                $(this).val("");
-            }
-        });
-        setTimeout(load_cart, 300);
-    }
-
-    function add_2cart(who) {
-        var myCart = $("#my__cart");
-        myCart.html('<div style="float:right"><p style="font-size:14px;line-height:37px;color:white">Загрузка товаров...</p></div>');
-        $(who).each(function () {
-            var id = $(this).attr("data-id");
-            var qt = $(this).val();
-            if (qt == "") {
-                qt = 1;
-            }
-            var query = "?ukey=cart&view=noframe&action=add_product&force=yes&productID=" + id + "&product_qty=" + qt;
-            if (qt > 0) {
-                $.ajax({
-                    type: "GET", url: query, dataType: "html", async: true, success: function () {
-                        update_cient_info(id, qt);
-                    }
-                });
-            }
-        });
-        $(who).val("");
-        setTimeout(load_cart, 250);
-    }
 });
-
+function zakcia(seconds) {
+    var _date = new Date();
+    _date.setSeconds(seconds);
+    $("#z_counter").countdown({image: "/img/_digits.png", startTime: _date});
+}
+function load_cart() {
+    $("#my__cart").load("/popup/show_cart.php");
+}
+$("[name=add2cart]").click(function () {
+    var id = $(this).attr("data-id");
+    $("[data-id=" + id + "]").val("0");
+});
+function update_cient_info(id, qt) {
+    var zpid = $("#zpid_" + id);
+    var old_val = Number(zpid.text());
+    var new_val = old_val + Number(qt);
+    zpid.html('<div class="animated fadeInDownBig">' + new_val + "</div>");
+}
+function add_all2cart() {
+    var myCart = $("#my__cart");
+    myCart.html('<div style="float:right"><p style="font-size:14px;line-height:37px;color:white">Загрузка товаров...</p></div>');
+    $("[name=product_qty]").each(function () {
+        var id = $(this).attr("data-id");
+        var qt = $(this).val();
+        var query = "?ukey=cart&view=noframe&action=add_product&force=yes&productID=" + id + "&product_qty=" + qt;
+        if (qt > 0) {
+            $.ajax({
+                type: "GET", url: query, dataType: "html", async: true, success: function () {
+                    update_cient_info(id, qt);
+                }
+            });
+            $(this).val("");
+        }
+    });
+    setTimeout(load_cart, 300);
+}
+function add_2cart(who) {
+    var myCart = $("#my__cart");
+    myCart.html('<div style="float:right"><p style="font-size:14px;line-height:37px;color:white">Загрузка товаров...</p></div>');
+    $(who).each(function () {
+        var id = $(this).attr("data-id");
+        var qt = $(this).val();
+        if (qt == "") {
+            qt = 1;
+        }
+        var query = "?ukey=cart&view=noframe&action=add_product&force=yes&productID=" + id + "&product_qty=" + qt;
+        if (qt > 0) {
+            $.ajax({
+                type: "GET", url: query, dataType: "html", async: true, success: function () {
+                    update_cient_info(id, qt);
+                }
+            });
+        }
+    });
+    $(who).val("");
+    setTimeout(load_cart, 250);
+}
 function _changeCurrency() {
     document.ChangeCurrencyForm.submit();
 }
@@ -328,14 +399,14 @@ $(function () {
                     }
                 });
             }
-            live_search.niceScroll({
-                cursorcolor: "#03A9F4",
-                cursorborderradius: 2,
-                cursorbordercolor: "#03A9F4",
-                horizrailenabled: false,
-                cursoropacitymin: 1,
-                cursorwidth: 5
-            });
+            // live_search.niceScroll({
+            //     cursorcolor: "#03A9F4",
+            //     cursorborderradius: 2,
+            //     cursorbordercolor: "#03A9F4",
+            //     horizrailenabled: false,
+            //     cursoropacitymin: 1,
+            //     cursorwidth: 5
+            // });
             return searchOk.removeClass("search_loader");
         } else {
             live_search.html("");
@@ -353,7 +424,7 @@ function changePic(id, direction) {
     var element = document.getElementById("pic" + id);
     var picNums = Number(element.getAttribute("data-pics"));
     var currPic = Number(element.getAttribute("data-current"));
-    var startOfSrc = "/pictures/";
+    var startOfSrc = "/published/publicdata/MULTITOYS/attachments/SC/products_pictures/";
     var newPic;
     var endOfSrc;
     var ext = "_thm.jpg";
@@ -432,7 +503,6 @@ function changePic(id, direction) {
         });
     };
 })(jQuery);
-
 (function ($) {
     var helper = {}, current, title, tID, track = false;
     $.tooltip = {

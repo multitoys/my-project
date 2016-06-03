@@ -1,538 +1,572 @@
-<table cellpadding="0" cellspacing="0" width="98%" style="height: 98%; width: 98%;">
-    <tr>
-        <td id="content">
-            <h1>Экспорт товаров для интернет-магазинов</h1>
+{*<table cellpadding="0" cellspacing="0" width="98%" style="height: 98%; width: 98%;">*}
+    {*<tr>*}
+        {*<td id="content">*}
+            <h3>Экспорт товаров в XML</h3>
 
-            <div style="background-color: #fafae7;padding: 20px;margin: 10px 0;">
-                Файл для интернет-магазинов (5237 КБ; обновлен 16.02.2016 16:19:30):<br>
-                <ol style="list-style-type:none;padding-left: 10px;">
-                    <li>
-                        Прямой доступ (URL): <b><a target="_blank"
-                                                   href="http://my-project/published/SC/html/scripts/get_file.php?getFileParam=R2V0WWFuZGV4">http://my-project/published/SC/html/scripts/get_file.php?getFileParam=R2V0WWFuZGV4</a></b>
-                    </li>
-                    <li>
-                        <a target="_blank"
-                           href='http://my-project/published/SC/html/scripts/get_file.php?getFileParam=R2V0WWFuZGV4&amp;download=1'>Скачать
-                            файл</a>
-                    </li>
-                </ol>
+            <div style="background-color: #fafae7;padding: 20px;margin: 10px 0;text-align: center;font-size: 14px;">
+                {if $yandex_info}
+                    Файл <span class=bold>с базовыми ценами</span> для интернет-магазина (обновлен {$yandex_info.mtime}):<br>
+                    {*<ol style="list-style-type:none;padding-left: 10px;">*}
+                        {*<li>*}
+                            {*Прямой доступ (URL): <b><a target="_blank"*}
+                                                       {*href="/published/SC/html/scripts/get_file.php?getFileParam=R2V0WWFuZGV4">http://my-project/published/SC/html/scripts/get_file.php?getFileParam=R2V0WWFuZGV4</a></b>*}
+                        {*</li>*}
+                        {*<li>*}
+                            <a id=download target="_blank"
+                               href='/published/SC/html/scripts/get_file.php?getFileParam=R2V0WWFuZGV4&download=1'>Скачать
+                                файл ({$yandex_info.size} КБ)</a>
+                        {*</li>*}
+                    {*</ol>*}
+                {else}
+                    {*<ol style="list-style-type:none;padding-left: 10px;">*}
+                        {*<li>*}
+                            <a id=download target="_blank"
+                               href='/published/SC/html/scripts/get_file.php?getFileParam=R2V0WWFuZGV4&download=1'>Обновить и скачать
+                                файл с базовыми ценами для интернет-магазина</a>
+                        {*</li>*}
+                    {*</ol>*}
+                {/if}
             </div>
-            <h2>Обновить файл для интернет-магазинов</h2>
+            <div style="background-color: #fafae7;padding: 20px;margin: 10px 0;text-align: center;font-size: 14px;">
+                {if $yandex_info_discount}
+                    Файл <span class=bold>с учетом Вашей скидки</span> для интернет-магазина (обновлен {$yandex_info_discount.mtime}):<br>
+                    {*<ol style="list-style-type:none;padding-left: 10px;">*}
+                        {*<li>*}
+                            {*Прямой доступ (URL): <b><a target="_blank"*}
+                                                       {*href="/published/SC/html/scripts/get_file.php?getFileParam=R2V0WWFuZGV4">http://my-project/published/SC/html/scripts/get_file.php?getFileParam=R2V0WWFuZGV4</a></b>*}
+                        {*</li>*}
+                        {*<li>*}
+                            <a id=download target="_blank"
+                               href='/published/SC/html/scripts/get_file.php?getFileParam=R2V0WWFuZGV4&discount=1&download=1'>Скачать
+                                файл ({$yandex_info_discount.size} КБ)</a>
+                        {*</li>*}
+                    {*</ol>*}
+                {else}
+                    {*<ol style="list-style-type:none;padding-left: 10px;">*}
+                        {*<li>*}
+                            <a id=download target="_blank"
+                               href='/published/SC/html/scripts/get_file.php?getFileParam=R2V0WWFuZGV4&discount=1&download=1'>Обновить и скачать
+                                файл с учетом Вашей скидки для интернет-магазина</a>
+                        {*</li>*}
+                    {*</ol>*}
+                {/if}
+            </div>
+            {*<h2>Обновить и скачать файл для интернет-магазинов</h2>*}
 
-            <form action="" method=post name="form_export">
-                <input type="hidden" name="market_export" value=""/>
-                <ol style="1">
-                    <li>
-                        <p><b class="header2">Адрес главной страницы интернет-магазина:</b>
-                            <br/>
-                            <input name="base_url" type="text" value="http://my-project/" size="40">
-                    </li>
-                    <li>
-                        <b class="header2">Выберите категории и товары</b>
+            {*<form action="" method=post name="form_export">*}
+                {*<input type="hidden" name="market_export" value=""/>*}
+                {*<ol style="1">*}
+                    {*<li>*}
+                        {*<p><b class="header2">Адрес главной страницы интернет-магазина:</b>*}
+                            {*<br/>*}
+                            {*<input name="base_url" type="text" value="http://my-project/" size="40">*}
+                    {*</li>*}
+                    {*<li>*}
+                        {*<b class="header2">Выберите категории и товары</b>*}
 
-                        <script language="javascript" type="text/javascript">
-                            {literal}
-                            <!--
-                            function checkAllProducts(_ProdNum)
-                            {
-                               var checkbox;
-                               var group_checkbox = document.getElementById('id_checkallprod');
-                               if (group_checkbox)
-                                   for (var i = 1; i <= _ProdNum; i++) {
-                                       if (checkbox = document.getElementById('prod' + i))
-                                           checkbox.checked = group_checkbox.checked;
-                                   }
-                           }
-                            //-->
-                            {/literal}
-                        </script>
+                        {*<script language="javascript" type="text/javascript">*}
+                            {*{literal}*}
 
-                        <input name="expandID" type="hidden"/>
-                        <input name="unexpandID" type="hidden"/>
-                        <input name="showProducts" type="hidden"/>
-                        <input name="updateCategory" value="" type="hidden"/>
-                        <input name="clear_session" value="Очистить" type="submit"/>
-                        <table>
-                            <tr>
-                                <td style="padding-left:0">
-                                    <img src="images_common/plus.gif" border="0" style="visibility:hidden;"/>
+                            {*function checkAllProducts(_ProdNum)*}
+                            {*{*}
+                               {*var checkbox;*}
+                               {*var group_checkbox = document.getElementById('id_checkallprod');*}
+                               {*if (group_checkbox)*}
+                                   {*for (var i = 1; i <= _ProdNum; i++) {*}
+                                       {*if (checkbox = document.getElementById('prod' + i))*}
+                                           {*checkbox.checked = group_checkbox.checked;*}
+                                   {*}*}
+                           {*}*}
 
+                            {*{/literal}*}
+                        {*</script>*}
 
-                                    <input name="CHECKED_CATEGORIES[100002]"
-                                           type="checkbox" class="checknomarging" value="1"
-                                           onclick="
-							document.form_export.elements['updateCategory'].value = 100002;
-							document.form_export.submit();
-							return false;"
-                                           id="category100002"
-                                           checked="checked"/>
-                                    <label for="100002">Акция</label>
-                                    (
-                                    0
-                                    /
-                                    0
-                                    )
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding-left:0">
-                                    <img src="images_common/plus.gif" border="0" style="visibility:hidden;"/>
-
-
-                                    <input name="CHECKED_CATEGORIES[100003]"
-                                           type="checkbox" class="checknomarging" value="1"
-                                           onclick="
-							document.form_export.elements['updateCategory'].value = 100003;
-							document.form_export.submit();
-							return false;"
-                                           id="category100003"
-                                           checked="checked"/>
-                                    <a class="standard" href="javascript:void(0)"
-                                       onclick="
-					document.form_export.elements['showProducts'].value = 100003;
-					document.form_export.submit();
-					return false;
-					">Суперцена</a>
-                                    (
-                                    62
-                                    /
-                                    62
-                                    )
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding-left:0">
-                                    <img src="images_common/plus.gif" border="0" style="visibility:hidden;"/>
+                        {*<input name="expandID" type="hidden"/>*}
+                        {*<input name="unexpandID" type="hidden"/>*}
+                        {*<input name="showProducts" type="hidden"/>*}
+                        {*<input name="updateCategory" value="" type="hidden"/>*}
+                        {*<input name="clear_session" value="Очистить" type="reset"/>*}
+                        {*<table>*}
+                            {*<tr>*}
+                                {*<td style="padding-left:0">*}
+                                    {*<img src="images_common/plus.gif" border="0" style="visibility:hidden;"/>*}
 
 
-                                    <input name="CHECKED_CATEGORIES[77777]"
-                                           type="checkbox" class="checknomarging" value="1"
-                                           onclick="
-							document.form_export.elements['updateCategory'].value = 77777;
-							document.form_export.submit();
-							return false;"
-                                           id="category77777"
-                                           checked="checked"/>
-                                    <a class="standard" href="javascript:void(0)"
-                                       onclick="
-					document.form_export.elements['showProducts'].value = 77777;
-					document.form_export.submit();
-					return false;
-					">Все бонусные товары</a>
-                                    (
-                                    6865
-                                    /
-                                    6865
-                                    )
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding-left:0">
-                                    <img src="images_common/plus.gif" border="0" style="visibility:hidden;"/>
+                                    {*<input name="CHECKED_CATEGORIES[100002]"*}
+                                           {*type="checkbox" class="checknomarging" value="1"*}
+                                           {*onclick="*}
+							{*document.form_export.elements['updateCategory'].value = 100002;*}
+							{*document.form_export.submit();*}
+							{*return false;"*}
+                                           {*id="category100002"*}
+                                           {*checked="checked"/>*}
+                                    {*<label for="100002">Акция</label>*}
+                                    {*(*}
+                                    {*0*}
+                                    {*/*}
+                                    {*0*}
+                                    {*)*}
+                                {*</td>*}
+                            {*</tr>*}
+                            {*<tr>*}
+                                {*<td style="padding-left:0">*}
+                                    {*<img src="images_common/plus.gif" border="0" style="visibility:hidden;"/>*}
 
 
-                                    <input name="CHECKED_CATEGORIES[66666]"
-                                           type="checkbox" class="checknomarging" value="1"
-                                           onclick="
-							document.form_export.elements['updateCategory'].value = 66666;
-							document.form_export.submit();
-							return false;"
-                                           id="category66666"
-                                           checked="checked"/>
-                                    <a class="standard" href="javascript:void(0)"
-                                       onclick="
-					document.form_export.elements['showProducts'].value = 66666;
-					document.form_export.submit();
-					return false;
-					">Новинки</a>
-                                    (
-                                    500
-                                    /
-                                    500
-                                    )
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding-left:0">
-                                    <img src="images_common/plus.gif" border="0" style="visibility:hidden;"/>
+                                    {*<input name="CHECKED_CATEGORIES[100003]"*}
+                                           {*type="checkbox" class="checknomarging" value="1"*}
+                                           {*onclick="*}
+							{*document.form_export.elements['updateCategory'].value = 100003;*}
+							{*document.form_export.submit();*}
+							{*return false;"*}
+                                           {*id="category100003"*}
+                                           {*checked="checked"/>*}
+                                    {*<a class="standard" href="javascript:void(0)"*}
+                                       {*onclick="*}
+					{*document.form_export.elements['showProducts'].value = 100003;*}
+					{*document.form_export.submit();*}
+					{*return false;*}
+					{*">Суперцена</a>*}
+                                    {*(*}
+                                    {*62*}
+                                    {*/*}
+                                    {*62*}
+                                    {*)*}
+                                {*</td>*}
+                            {*</tr>*}
+                            {*<tr>*}
+                                {*<td style="padding-left:0">*}
+                                    {*<img src="images_common/plus.gif" border="0" style="visibility:hidden;"/>*}
 
 
-                                    <input name="CHECKED_CATEGORIES[22699]"
-                                           type="checkbox" class="checknomarging" value="1"
-                                           onclick="
-							document.form_export.elements['updateCategory'].value = 22699;
-							document.form_export.submit();
-							return false;"
-                                           id="category22699"
-                                           checked="checked"/>
-                                    <a class="standard" href="javascript:void(0)"
-                                       onclick="
-					document.form_export.elements['showProducts'].value = 22699;
-					document.form_export.submit();
-					return false;
-					">Батарейки</a>
-                                    (
-                                    21
-                                    /
-                                    58
-                                    )
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding-left:0">
-                                    <a href="javascript:void(0)"
-                                       onclick="document.form_export.elements['expandID'].value = 41041;
-							document.form_export.submit();
-							return false;"><img src="images_common/plus.gif" border="0"/></a>
+                                    {*<input name="CHECKED_CATEGORIES[77777]"*}
+                                           {*type="checkbox" class="checknomarging" value="1"*}
+                                           {*onclick="*}
+							{*document.form_export.elements['updateCategory'].value = 77777;*}
+							{*document.form_export.submit();*}
+							{*return false;"*}
+                                           {*id="category77777"*}
+                                           {*checked="checked"/>*}
+                                    {*<a class="standard" href="javascript:void(0)"*}
+                                       {*onclick="*}
+					{*document.form_export.elements['showProducts'].value = 77777;*}
+					{*document.form_export.submit();*}
+					{*return false;*}
+					{*">Все бонусные товары</a>*}
+                                    {*(*}
+                                    {*6865*}
+                                    {*/*}
+                                    {*6865*}
+                                    {*)*}
+                                {*</td>*}
+                            {*</tr>*}
+                            {*<tr>*}
+                                {*<td style="padding-left:0">*}
+                                    {*<img src="images_common/plus.gif" border="0" style="visibility:hidden;"/>*}
 
 
-                                    <input name="CHECKED_CATEGORIES[41041]"
-                                           type="checkbox" class="checknomarging" value="1"
-                                           onclick="
-							document.form_export.elements['updateCategory'].value = 41041;
-							document.form_export.submit();
-							return false;"
-                                           id="category41041"
-                                           checked="checked"/>
-                                    <a class="standard" href="javascript:void(0)"
-                                       onclick="
-					document.form_export.elements['showProducts'].value = 41041;
-					document.form_export.submit();
-					return false;
-					">Детская литература</a>
-                                    (
-                                    0
-                                    /
-                                    2130
-                                    )
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding-left:0">
-                                    <a href="javascript:void(0)"
-                                       onclick="document.form_export.elements['expandID'].value = 42229;
-							document.form_export.submit();
-							return false;"><img src="images_common/plus.gif" border="0"/></a>
+                                    {*<input name="CHECKED_CATEGORIES[66666]"*}
+                                           {*type="checkbox" class="checknomarging" value="1"*}
+                                           {*onclick="*}
+							{*document.form_export.elements['updateCategory'].value = 66666;*}
+							{*document.form_export.submit();*}
+							{*return false;"*}
+                                           {*id="category66666"*}
+                                           {*checked="checked"/>*}
+                                    {*<a class="standard" href="javascript:void(0)"*}
+                                       {*onclick="*}
+					{*document.form_export.elements['showProducts'].value = 66666;*}
+					{*document.form_export.submit();*}
+					{*return false;*}
+					{*">Новинки</a>*}
+                                    {*(*}
+                                    {*500*}
+                                    {*/*}
+                                    {*500*}
+                                    {*)*}
+                                {*</td>*}
+                            {*</tr>*}
+                            {*<tr>*}
+                                {*<td style="padding-left:0">*}
+                                    {*<img src="images_common/plus.gif" border="0" style="visibility:hidden;"/>*}
 
 
-                                    <input name="CHECKED_CATEGORIES[42229]"
-                                           type="checkbox" class="checknomarging" value="1"
-                                           onclick="
-							document.form_export.elements['updateCategory'].value = 42229;
-							document.form_export.submit();
-							return false;"
-                                           id="category42229"
-                                           checked="checked"/>
-                                    <label for="42229">Канцтовары</label>
-                                    (
-                                    0
-                                    /
-                                    1782
-                                    )
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding-left:0">
-                                    <a href="javascript:void(0)"
-                                       onclick="document.form_export.elements['expandID'].value = 10775;
-							document.form_export.submit();
-							return false;"><img src="images_common/plus.gif" border="0"/></a>
+                                    {*<input name="CHECKED_CATEGORIES[22699]"*}
+                                           {*type="checkbox" class="checknomarging" value="1"*}
+                                           {*onclick="*}
+							{*document.form_export.elements['updateCategory'].value = 22699;*}
+							{*document.form_export.submit();*}
+							{*return false;"*}
+                                           {*id="category22699"*}
+                                           {*checked="checked"/>*}
+                                    {*<a class="standard" href="javascript:void(0)"*}
+                                       {*onclick="*}
+					{*document.form_export.elements['showProducts'].value = 22699;*}
+					{*document.form_export.submit();*}
+					{*return false;*}
+					{*">Батарейки</a>*}
+                                    {*(*}
+                                    {*21*}
+                                    {*/*}
+                                    {*58*}
+                                    {*)*}
+                                {*</td>*}
+                            {*</tr>*}
+                            {*<tr>*}
+                                {*<td style="padding-left:0">*}
+                                    {*<a href="javascript:void(0)"*}
+                                       {*onclick="document.form_export.elements['expandID'].value = 41041;*}
+							{*document.form_export.submit();*}
+							{*return false;"><img src="images_common/plus.gif" border="0"/></a>*}
 
 
-                                    <input name="CHECKED_CATEGORIES[10775]"
-                                           type="checkbox" class="checknomarging" value="1"
-                                           onclick="
-							document.form_export.elements['updateCategory'].value = 10775;
-							document.form_export.submit();
-							return false;"
-                                           id="category10775"
-                                           checked="checked"/>
-                                    <label for="10775">Крупногабарит</label>
-                                    (
-                                    0
-                                    /
-                                    798
-                                    )
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding-left:0">
-                                    <a href="javascript:void(0)"
-                                       onclick="document.form_export.elements['expandID'].value = 14951;
-							document.form_export.submit();
-							return false;"><img src="images_common/plus.gif" border="0"/></a>
+                                    {*<input name="CHECKED_CATEGORIES[41041]"*}
+                                           {*type="checkbox" class="checknomarging" value="1"*}
+                                           {*onclick="*}
+							{*document.form_export.elements['updateCategory'].value = 41041;*}
+							{*document.form_export.submit();*}
+							{*return false;"*}
+                                           {*id="category41041"*}
+                                           {*checked="checked"/>*}
+                                    {*<a class="standard" href="javascript:void(0)"*}
+                                       {*onclick="*}
+					{*document.form_export.elements['showProducts'].value = 41041;*}
+					{*document.form_export.submit();*}
+					{*return false;*}
+					{*">Детская литература</a>*}
+                                    {*(*}
+                                    {*0*}
+                                    {*/*}
+                                    {*2130*}
+                                    {*)*}
+                                {*</td>*}
+                            {*</tr>*}
+                            {*<tr>*}
+                                {*<td style="padding-left:0">*}
+                                    {*<a href="javascript:void(0)"*}
+                                       {*onclick="document.form_export.elements['expandID'].value = 42229;*}
+							{*document.form_export.submit();*}
+							{*return false;"><img src="images_common/plus.gif" border="0"/></a>*}
 
 
-                                    <input name="CHECKED_CATEGORIES[14951]"
-                                           type="checkbox" class="checknomarging" value="1"
-                                           onclick="
-							document.form_export.elements['updateCategory'].value = 14951;
-							document.form_export.submit();
-							return false;"
-                                           id="category14951"
-                                           checked="checked"/>
-                                    <label for="14951">Летний ассортимент</label>
-                                    (
-                                    0
-                                    /
-                                    389
-                                    )
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding-left:0">
-                                    <a href="javascript:void(0)"
-                                       onclick="document.form_export.elements['expandID'].value = 14044;
-							document.form_export.submit();
-							return false;"><img src="images_common/plus.gif" border="0"/></a>
+                                    {*<input name="CHECKED_CATEGORIES[42229]"*}
+                                           {*type="checkbox" class="checknomarging" value="1"*}
+                                           {*onclick="*}
+							{*document.form_export.elements['updateCategory'].value = 42229;*}
+							{*document.form_export.submit();*}
+							{*return false;"*}
+                                           {*id="category42229"*}
+                                           {*checked="checked"/>*}
+                                    {*<label for="42229">Канцтовары</label>*}
+                                    {*(*}
+                                    {*0*}
+                                    {*/*}
+                                    {*1782*}
+                                    {*)*}
+                                {*</td>*}
+                            {*</tr>*}
+                            {*<tr>*}
+                                {*<td style="padding-left:0">*}
+                                    {*<a href="javascript:void(0)"*}
+                                       {*onclick="document.form_export.elements['expandID'].value = 10775;*}
+							{*document.form_export.submit();*}
+							{*return false;"><img src="images_common/plus.gif" border="0"/></a>*}
 
 
-                                    <input name="CHECKED_CATEGORIES[14044]"
-                                           type="checkbox" class="checknomarging" value="1"
-                                           onclick="
-							document.form_export.elements['updateCategory'].value = 14044;
-							document.form_export.submit();
-							return false;"
-                                           id="category14044"
-                                           checked="checked"/>
-                                    <label for="14044">Мягкие игрушки</label>
-                                    (
-                                    0
-                                    /
-                                    360
-                                    )
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding-left:0">
-                                    <a href="javascript:void(0)"
-                                       onclick="document.form_export.elements['expandID'].value = 6086;
-							document.form_export.submit();
-							return false;"><img src="images_common/plus.gif" border="0"/></a>
+                                    {*<input name="CHECKED_CATEGORIES[10775]"*}
+                                           {*type="checkbox" class="checknomarging" value="1"*}
+                                           {*onclick="*}
+							{*document.form_export.elements['updateCategory'].value = 10775;*}
+							{*document.form_export.submit();*}
+							{*return false;"*}
+                                           {*id="category10775"*}
+                                           {*checked="checked"/>*}
+                                    {*<label for="10775">Крупногабарит</label>*}
+                                    {*(*}
+                                    {*0*}
+                                    {*/*}
+                                    {*798*}
+                                    {*)*}
+                                {*</td>*}
+                            {*</tr>*}
+                            {*<tr>*}
+                                {*<td style="padding-left:0">*}
+                                    {*<a href="javascript:void(0)"*}
+                                       {*onclick="document.form_export.elements['expandID'].value = 14951;*}
+							{*document.form_export.submit();*}
+							{*return false;"><img src="images_common/plus.gif" border="0"/></a>*}
 
 
-                                    <input name="CHECKED_CATEGORIES[6086]"
-                                           type="checkbox" class="checknomarging" value="1"
-                                           onclick="
-							document.form_export.elements['updateCategory'].value = 6086;
-							document.form_export.submit();
-							return false;"
-                                           id="category6086"
-                                           checked="checked"/>
-                                    <label for="6086">Пазлы</label>
-                                    (
-                                    0
-                                    /
-                                    236
-                                    )
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding-left:0">
-                                    <a href="javascript:void(0)"
-                                       onclick="document.form_export.elements['expandID'].value = 569;
-							document.form_export.submit();
-							return false;"><img src="images_common/plus.gif" border="0"/></a>
+                                    {*<input name="CHECKED_CATEGORIES[14951]"*}
+                                           {*type="checkbox" class="checknomarging" value="1"*}
+                                           {*onclick="*}
+							{*document.form_export.elements['updateCategory'].value = 14951;*}
+							{*document.form_export.submit();*}
+							{*return false;"*}
+                                           {*id="category14951"*}
+                                           {*checked="checked"/>*}
+                                    {*<label for="14951">Летний ассортимент</label>*}
+                                    {*(*}
+                                    {*0*}
+                                    {*/*}
+                                    {*389*}
+                                    {*)*}
+                                {*</td>*}
+                            {*</tr>*}
+                            {*<tr>*}
+                                {*<td style="padding-left:0">*}
+                                    {*<a href="javascript:void(0)"*}
+                                       {*onclick="document.form_export.elements['expandID'].value = 14044;*}
+							{*document.form_export.submit();*}
+							{*return false;"><img src="images_common/plus.gif" border="0"/></a>*}
 
 
-                                    <input name="CHECKED_CATEGORIES[569]"
-                                           type="checkbox" class="checknomarging" value="1"
-                                           onclick="
-							document.form_export.elements['updateCategory'].value = 569;
-							document.form_export.submit();
-							return false;"
-                                           id="category569"
-                                           checked="checked"/>
-                                    <label for="569">Пазлы Castorland </label>
-                                    (
-                                    0
-                                    /
-                                    676
-                                    )
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding-left:0">
-                                    <a href="javascript:void(0)"
-                                       onclick="document.form_export.elements['expandID'].value = 10773;
-							document.form_export.submit();
-							return false;"><img src="images_common/plus.gif" border="0"/></a>
+                                    {*<input name="CHECKED_CATEGORIES[14044]"*}
+                                           {*type="checkbox" class="checknomarging" value="1"*}
+                                           {*onclick="*}
+							{*document.form_export.elements['updateCategory'].value = 14044;*}
+							{*document.form_export.submit();*}
+							{*return false;"*}
+                                           {*id="category14044"*}
+                                           {*checked="checked"/>*}
+                                    {*<label for="14044">Мягкие игрушки</label>*}
+                                    {*(*}
+                                    {*0*}
+                                    {*/*}
+                                    {*360*}
+                                    {*)*}
+                                {*</td>*}
+                            {*</tr>*}
+                            {*<tr>*}
+                                {*<td style="padding-left:0">*}
+                                    {*<a href="javascript:void(0)"*}
+                                       {*onclick="document.form_export.elements['expandID'].value = 6086;*}
+							{*document.form_export.submit();*}
+							{*return false;"><img src="images_common/plus.gif" border="0"/></a>*}
 
 
-                                    <input name="CHECKED_CATEGORIES[10773]"
-                                           type="checkbox" class="checknomarging" value="1"
-                                           onclick="
-							document.form_export.elements['updateCategory'].value = 10773;
-							document.form_export.submit();
-							return false;"
-                                           id="category10773"
-                                           checked="checked"/>
-                                    <label for="10773">Развивающие игры</label>
-                                    (
-                                    0
-                                    /
-                                    2086
-                                    )
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding-left:0">
-                                    <a href="javascript:void(0)"
-                                       onclick="document.form_export.elements['expandID'].value = 10774;
-							document.form_export.submit();
-							return false;"><img src="images_common/plus.gif" border="0"/></a>
+                                    {*<input name="CHECKED_CATEGORIES[6086]"*}
+                                           {*type="checkbox" class="checknomarging" value="1"*}
+                                           {*onclick="*}
+							{*document.form_export.elements['updateCategory'].value = 6086;*}
+							{*document.form_export.submit();*}
+							{*return false;"*}
+                                           {*id="category6086"*}
+                                           {*checked="checked"/>*}
+                                    {*<label for="6086">Пазлы</label>*}
+                                    {*(*}
+                                    {*0*}
+                                    {*/*}
+                                    {*236*}
+                                    {*)*}
+                                {*</td>*}
+                            {*</tr>*}
+                            {*<tr>*}
+                                {*<td style="padding-left:0">*}
+                                    {*<a href="javascript:void(0)"*}
+                                       {*onclick="document.form_export.elements['expandID'].value = 569;*}
+							{*document.form_export.submit();*}
+							{*return false;"><img src="images_common/plus.gif" border="0"/></a>*}
 
 
-                                    <input name="CHECKED_CATEGORIES[10774]"
-                                           type="checkbox" class="checknomarging" value="1"
-                                           onclick="
-							document.form_export.elements['updateCategory'].value = 10774;
-							document.form_export.submit();
-							return false;"
-                                           id="category10774"
-                                           checked="checked"/>
-                                    <label for="10774">Спорттовары</label>
-                                    (
-                                    0
-                                    /
-                                    129
-                                    )
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding-left:0">
-                                    <a href="javascript:void(0)"
-                                       onclick="document.form_export.elements['expandID'].value = 7767;
-							document.form_export.submit();
-							return false;"><img src="images_common/plus.gif" border="0"/></a>
+                                    {*<input name="CHECKED_CATEGORIES[569]"*}
+                                           {*type="checkbox" class="checknomarging" value="1"*}
+                                           {*onclick="*}
+							{*document.form_export.elements['updateCategory'].value = 569;*}
+							{*document.form_export.submit();*}
+							{*return false;"*}
+                                           {*id="category569"*}
+                                           {*checked="checked"/>*}
+                                    {*<label for="569">Пазлы Castorland </label>*}
+                                    {*(*}
+                                    {*0*}
+                                    {*/*}
+                                    {*676*}
+                                    {*)*}
+                                {*</td>*}
+                            {*</tr>*}
+                            {*<tr>*}
+                                {*<td style="padding-left:0">*}
+                                    {*<a href="javascript:void(0)"*}
+                                       {*onclick="document.form_export.elements['expandID'].value = 10773;*}
+							{*document.form_export.submit();*}
+							{*return false;"><img src="images_common/plus.gif" border="0"/></a>*}
 
 
-                                    <input name="CHECKED_CATEGORIES[7767]"
-                                           type="checkbox" class="checknomarging" value="1"
-                                           onclick="
-							document.form_export.elements['updateCategory'].value = 7767;
-							document.form_export.submit();
-							return false;"
-                                           id="category7767"
-                                           checked="checked"/>
-                                    <label for="7767">Товары для девочек</label>
-                                    (
-                                    0
-                                    /
-                                    804
-                                    )
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding-left:0">
-                                    <a href="javascript:void(0)"
-                                       onclick="document.form_export.elements['expandID'].value = 10772;
-							document.form_export.submit();
-							return false;"><img src="images_common/plus.gif" border="0"/></a>
+                                    {*<input name="CHECKED_CATEGORIES[10773]"*}
+                                           {*type="checkbox" class="checknomarging" value="1"*}
+                                           {*onclick="*}
+							{*document.form_export.elements['updateCategory'].value = 10773;*}
+							{*document.form_export.submit();*}
+							{*return false;"*}
+                                           {*id="category10773"*}
+                                           {*checked="checked"/>*}
+                                    {*<label for="10773">Развивающие игры</label>*}
+                                    {*(*}
+                                    {*0*}
+                                    {*/*}
+                                    {*2086*}
+                                    {*)*}
+                                {*</td>*}
+                            {*</tr>*}
+                            {*<tr>*}
+                                {*<td style="padding-left:0">*}
+                                    {*<a href="javascript:void(0)"*}
+                                       {*onclick="document.form_export.elements['expandID'].value = 10774;*}
+							{*document.form_export.submit();*}
+							{*return false;"><img src="images_common/plus.gif" border="0"/></a>*}
 
 
-                                    <input name="CHECKED_CATEGORIES[10772]"
-                                           type="checkbox" class="checknomarging" value="1"
-                                           onclick="
-							document.form_export.elements['updateCategory'].value = 10772;
-							document.form_export.submit();
-							return false;"
-                                           id="category10772"
-                                           checked="checked"/>
-                                    <label for="10772">Товары для детей</label>
-                                    (
-                                    0
-                                    /
-                                    1185
-                                    )
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding-left:0">
-                                    <a href="javascript:void(0)"
-                                       onclick="document.form_export.elements['expandID'].value = 2427;
-							document.form_export.submit();
-							return false;"><img src="images_common/plus.gif" border="0"/></a>
+                                    {*<input name="CHECKED_CATEGORIES[10774]"*}
+                                           {*type="checkbox" class="checknomarging" value="1"*}
+                                           {*onclick="*}
+							{*document.form_export.elements['updateCategory'].value = 10774;*}
+							{*document.form_export.submit();*}
+							{*return false;"*}
+                                           {*id="category10774"*}
+                                           {*checked="checked"/>*}
+                                    {*<label for="10774">Спорттовары</label>*}
+                                    {*(*}
+                                    {*0*}
+                                    {*/*}
+                                    {*129*}
+                                    {*)*}
+                                {*</td>*}
+                            {*</tr>*}
+                            {*<tr>*}
+                                {*<td style="padding-left:0">*}
+                                    {*<a href="javascript:void(0)"*}
+                                       {*onclick="document.form_export.elements['expandID'].value = 7767;*}
+							{*document.form_export.submit();*}
+							{*return false;"><img src="images_common/plus.gif" border="0"/></a>*}
 
 
-                                    <input name="CHECKED_CATEGORIES[2427]"
-                                           type="checkbox" class="checknomarging" value="1"
-                                           onclick="
-							document.form_export.elements['updateCategory'].value = 2427;
-							document.form_export.submit();
-							return false;"
-                                           id="category2427"
-                                           checked="checked"/>
-                                    <label for="2427">Товары для мальчиков</label>
-                                    (
-                                    0
-                                    /
-                                    3141
-                                    )
-                                </td>
-                            </tr>
-                        </table>
-                    </li>
-                    <li>
-                        <b class="header2">Выберите параметры</b>
+                                    {*<input name="CHECKED_CATEGORIES[7767]"*}
+                                           {*type="checkbox" class="checknomarging" value="1"*}
+                                           {*onclick="*}
+							{*document.form_export.elements['updateCategory'].value = 7767;*}
+							{*document.form_export.submit();*}
+							{*return false;"*}
+                                           {*id="category7767"*}
+                                           {*checked="checked"/>*}
+                                    {*<label for="7767">Товары для девочек</label>*}
+                                    {*(*}
+                                    {*0*}
+                                    {*/*}
+                                    {*804*}
+                                    {*)*}
+                                {*</td>*}
+                            {*</tr>*}
+                            {*<tr>*}
+                                {*<td style="padding-left:0">*}
+                                    {*<a href="javascript:void(0)"*}
+                                       {*onclick="document.form_export.elements['expandID'].value = 10772;*}
+							{*document.form_export.submit();*}
+							{*return false;"><img src="images_common/plus.gif" border="0"/></a>*}
 
-                        <p>Цены на товары в магазине, экспортируемые в XML-файл для интернет-магазинов, указываются в
-                            гривнах (UAH).
-                            <br>
-                            Пожалуйста, укажите курс гривны в Вашем магазине - введите сколько условных единиц (у.е.) в
-                            магазине составляет 1 гривна.
-                            <br>
-                            Например, если Вы введете 5, то это будет означать, что 1 гривна = 5 у.е. магазина.
-                            <br>
-                            Рекомендуется вводить тот курс, который Вы указали для валюты "Гривна" (если таковая
-                            определена) в разделе "Настройки->Валюты".
-                        </p>
 
-                        <p>1 гривна = <input type=text name=market_uah_rate value=1> у.е.</p>
+                                    {*<input name="CHECKED_CATEGORIES[10772]"*}
+                                           {*type="checkbox" class="checknomarging" value="1"*}
+                                           {*onclick="*}
+							{*document.form_export.elements['updateCategory'].value = 10772;*}
+							{*document.form_export.submit();*}
+							{*return false;"*}
+                                           {*id="category10772"*}
+                                           {*checked="checked"/>*}
+                                    {*<label for="10772">Товары для детей</label>*}
+                                    {*(*}
+                                    {*0*}
+                                    {*/*}
+                                    {*1185*}
+                                    {*)*}
+                                {*</td>*}
+                            {*</tr>*}
+                            {*<tr>*}
+                                {*<td style="padding-left:0">*}
+                                    {*<a href="javascript:void(0)"*}
+                                       {*onclick="document.form_export.elements['expandID'].value = 2427;*}
+							{*document.form_export.submit();*}
+							{*return false;"><img src="images_common/plus.gif" border="0"/></a>*}
 
-                        <p>
-                            Какие описания товаров экспортировать в файл?<br>
-                            ВАЖНО: Описание не должно содержать HTML-тэгов и по размеру не может быть более 255 символов<br>(если
-                            описание выходит за пределы допустимого значения,то текст обрезается и в конце проставляется
-                            многоточие)<br>
-                        </p>
-                        <select name="market_export_description">
-                            <option value=0 selected>Не экспортировать описания</option>
-                            <option value=1>Полное описание</option>
-                            <option value=2>Краткое описание</option>
-                        </select>
 
-                        <p>Экспорт названий товаров:
-                            <br/>
-                            <select name="market_export_product_name">
-                                <option value="only_name">только название товара</option>
-                                <option value="path_and_name">путь к категории товара + название товара</option>
-                            </select>
-                        </p>
-                        <p>&lt;sales_notes&gt; (если указана, добавится к каждому продукту):
-                            <br/>
-                            <input type="text" name="market_export_sales_notes" value="">
+                                    {*<input name="CHECKED_CATEGORIES[2427]"*}
+                                           {*type="checkbox" class="checknomarging" value="1"*}
+                                           {*onclick="*}
+							{*document.form_export.elements['updateCategory'].value = 2427;*}
+							{*document.form_export.submit();*}
+							{*return false;"*}
+                                           {*id="category2427"*}
+                                           {*checked="checked"/>*}
+                                    {*<label for="2427">Товары для мальчиков</label>*}
+                                    {*(*}
+                                    {*0*}
+                                    {*/*}
+                                    {*3141*}
+                                    {*)*}
+                                {*</td>*}
+                            {*</tr>*}
+                        {*</table>*}
+                    {*</li>*}
+                    {*<li>*}
+                        {*<b class="header2">Выберите параметры</b>*}
 
-                        <p>&lt;local_delivery_cost&gt; (общая стоимость доставки для своего региона):
-                            <br/><label><input type="checkbox" name="market_export_local_delivery_cost_enabled"
-                                               value="1"> Единая по умолчанию</label>: <input type="text"
-                                                                                              name="market_export_local_delivery_cost"
-                                                                                              value="0.0">
-                            <br/><label><input type="checkbox" name="yandex_export_local_delivery_cost_override"
-                                               value="1"> Установить равной стоимости упаковки продукта</label> (если та
-                            указана в свойствах продукта)
+                        {*<p>Цены на товары в магазине, экспортируемые в XML-файл для интернет-магазинов, указываются в*}
+                            {*гривнах (UAH).*}
+                            {*<br>*}
+                            {*Пожалуйста, укажите курс гривны в Вашем магазине - введите сколько условных единиц (у.е.) в*}
+                            {*магазине составляет 1 гривна.*}
+                            {*<br>*}
+                            {*Например, если Вы введете 5, то это будет означать, что 1 гривна = 5 у.е. магазина.*}
+                            {*<br>*}
+                            {*Рекомендуется вводить тот курс, который Вы указали для валюты "Гривна" (если таковая*}
+                            {*определена) в разделе "Настройки->Валюты".*}
+                        {*</p>*}
 
-                    </li>
-                </ol>
-                <p>
-                    <input type=button
-                           onclick="document.form_export.elements['market_export'].value='market_export';document.form_export.submit(); return false;"
-                           value="Экспортировать товары в XML-файл">
-                    <input type=hidden name=dpt value=modules>
-                    <input type=hidden name=sub value=market>
-                    <input type=hidden name=_export value=""/>
-                </p>
-            </form>
-        </td>
-    </tr>
-</table>
+                        {*<p>1 гривна = <input type=text name=market_uah_rate value=1> у.е.</p>*}
+
+                        {*<p>*}
+                            {*Какие описания товаров экспортировать в файл?<br>*}
+                            {*ВАЖНО: Описание не должно содержать HTML-тэгов и по размеру не может быть более 255 символов<br>(если*}
+                            {*описание выходит за пределы допустимого значения,то текст обрезается и в конце проставляется*}
+                            {*многоточие)<br>*}
+                        {*</p>*}
+                        {*<select name="market_export_description">*}
+                            {*<option value=0 selected>Не экспортировать описания</option>*}
+                            {*<option value=1>Полное описание</option>*}
+                            {*<option value=2>Краткое описание</option>*}
+                        {*</select>*}
+
+                        {*<p>Экспорт названий товаров:*}
+                            {*<br/>*}
+                            {*<select name="market_export_product_name">*}
+                                {*<option value="only_name">только название товара</option>*}
+                                {*<option value="path_and_name">путь к категории товара + название товара</option>*}
+                            {*</select>*}
+                        {*</p>*}
+                        {*<p>&lt;sales_notes&gt; (если указана, добавится к каждому продукту):*}
+                            {*<br/>*}
+                            {*<input type="text" name="market_export_sales_notes" value="">*}
+
+                        {*<p>&lt;local_delivery_cost&gt; (общая стоимость доставки для своего региона):*}
+                            {*<br/><label><input type="checkbox" name="market_export_local_delivery_cost_enabled"*}
+                                               {*value="1"> Единая по умолчанию</label>: <input type="text"*}
+                                                                                              {*name="market_export_local_delivery_cost"*}
+                                                                                              {*value="0.0">*}
+                            {*<br/><label><input type="checkbox" name="yandex_export_local_delivery_cost_override"*}
+                                               {*value="1"> Установить равной стоимости упаковки продукта</label> (если та*}
+                            {*указана в свойствах продукта)*}
+
+                    {*</li>*}
+                {*</ol>*}
+                {*<p>*}
+                    {*<input type=button*}
+                           {*onclick="document.form_export.elements['market_export'].value='market_export';document.form_export.submit(); return false;"*}
+                           {*value="Экспортировать товары в XML-файл">*}
+                    {*<input type=hidden name=dpt value=modules>*}
+                    {*<input type=hidden name=sub value=market>*}
+                    {*<input type=hidden name=_export value=""/>*}
+                {*</p>*}
+            {*</form>*}
+        {*</td>*}
+    {*</tr>*}
+{*</table>*}

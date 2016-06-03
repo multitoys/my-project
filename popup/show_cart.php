@@ -56,27 +56,31 @@
     $cartsum = $esumma * $currency_value;
     $csumma = str_replace('{value}', number_format($cartsum, 2, ',', ' '), $display_template_ru);
 
-    if ($no != 0) {
-        
-        $quantity = $csumma;
-        $quantity2 = "$no товар(ов):";
-        
-    } else {
-        
-        $quantity2 = 'В корзине';
-        $quantity = 'нет товаров';
-    }
-    
-    $link2cart = "<a href='/cart' >";
+//    if (!detectMobile()) {
+        if ($no != 0) {
 
-    $cartin = "<div class='cpt_shopping_cart_info' id='cart_not_empty'>
-                <div id='shpcrtgc'>$link2cart$quantity2</a></div>
-                <div  class='shpcrtca'>$link2cart$quantity</a></div>
-                </div>";
-    $cart = "
-            <a href='/cart' class='my-button'>
-            $cartin
-            </a>
-            ";
-    
-    echo $cartin;
+            $quantity = $csumma;
+            $quantity2 = "$no товар(ов):";
+
+        } else {
+
+            $quantity2 = 'В корзине';
+            $quantity = 'нет товаров';
+        }
+
+        $link2cart = "<a href='/cart' >";
+
+        $cartin = "<div class='cpt_shopping_cart_info' id='cart_not_empty'>
+                    <div id='shpcrtgc'>$link2cart$quantity2</a></div>
+                    <div  class='shpcrtca'>$link2cart$quantity</a></div>
+                    </div>";
+        $cart = "
+                <a href='/cart' class='my-button'>
+                $cartin
+                </a>
+                ";
+
+        echo $cartin;
+//    } else {
+//        echo $no;
+//    }

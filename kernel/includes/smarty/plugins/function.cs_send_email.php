@@ -16,7 +16,7 @@ function smarty_function_cs_send_email($params, &$smarty)
 
     //} else {
 
-    $defer = deffer();
+    $defer = defer();
 
     $text = "<script $defer src='/published/SC/html/scripts/js/send_email.js'></script>
 <div id='my_log' style=''>Отправка заказа ... Пожалуйста, дождитесь результата...</div>
@@ -35,7 +35,7 @@ function smarty_function_cs_send_email($params, &$smarty)
     return $text;
 }
 
-function deffer()
+function defer()
 {
     $defer = 'defer';
     $useragent = $_SERVER['HTTP_USER_AGENT'];

@@ -149,9 +149,6 @@
     class AuxPages extends ComponentModule
     {
 
-        private $_disp = '';
-        private $_date_num = '';
-    
         public function getInterface()
         {
             $Args = func_get_args();
@@ -220,17 +217,21 @@
                 $row['aux_page_slug'] = $row['aux_page_ID'];
             }
             global $smarty;
-            $a = $smarty->get_template_vars('CurrentDivision');
+            $a = &$smarty->get_template_vars('CurrentDivision');
             $ajax = false;
 
-            if ('auxpage' === substr($a['ukey'], 0, 7)) {
+//            if ('auxpage' === substr($a['ukey'], 0, 7)) {
+            if (0 === strpos($a['ukey'], 'auxpage')) {
                 
-                if (array_key_exists('count_show', $_POST) || $_POST['count_show'] || $_POST['p']) {
-                    $ajax = true;
-                }
+//                if (array_key_exists('count_show', $_POST) || $_POST['count_show'] || $_POST['p']) {
+//                    $ajax = true;
+//                }
                 
-                if (array_key_exists('ajax', $_POST)) {
-                    $ajax = (int)$_POST['ajax'];
+//                if (array_key_exists('ajax', $_POST)) {
+//                    $ajax = (int)$_POST['ajax'];
+//                }                
+                if (array_key_exists('ajax', $_GET)) {
+                    $ajax = (int)$_GET['ajax'];
                 }
                 
                 switch ($a['ukey']) {
@@ -242,7 +243,11 @@
                         $row = $this->transform_auxpage_conc($a['ukey'], $row);
                         break;
                     default:
-                        $row = $this->transform_auxpage($a['ukey'], $row, $ajax);
+                        if (detectMobile()) {
+                            $row = $this->transform_auxpage_mobile($a['ukey'], $row, $ajax);
+                        } else {
+                            $row = $this->transform_auxpage($a['ukey'], $row, $ajax);
+                        }
                 }
             }
             
@@ -316,7 +321,7 @@
             $url = '/'.$name.'/';
     
             //$pag_content = pagination($tov_all_count, $tov_count, 50, $start_row, $cat_div, $url, $selected_category);
-            $out = SimpleNavigator($tov_all_count, $start_row, $tov_count, $url, $out);
+            $out = AuxpageNavigator($tov_all_count, $start_row, $tov_count, $url, $out);
             $newitems = "<div class='simple-pagination compact-theme'>$out</div>";
             $newitems .= '</div>
                     <div class=scroll-pane1 style="background-color: whitesmoke;">';
@@ -415,12 +420,12 @@
                     <hr style='border-color: coral;'>
                     <div class=cs_product_info style='height: auto'>
                         <div class='productname newpostup'>
-                                <span>$name</span> <small>&laquo;$category_conc&raquo;</small><span style='color:dodgerblue; font-size: x-small'> $date_added</span><br>
+                                $name <small>&laquo;$category_conc&raquo;</small><span style='color:dodgerblue; font-size: x-small'> $date_added</span><br>
                                 <small>арт.: </small><span class='search-product-code blue-button' style='color: white;background-color: lightcoral;' onclick=\"this.style.boxShadow = 'none'; this.style.backgroundColor = 'transparent'; this.style.color = '#008BFF';\">$product_code</span><br>
-                                <small>цена: </small><span class=totalPrice>$competitor_product->price_uah&nbsp;&#8372;</span>
+                                <small>цена: </small><span id=drag_$competitor_product->code draggable='true' ondragstart='drag(event)' class=totalPrice>$competitor_product->price_uah&nbsp;&#8372;</span>
                         </div>
                         <div class=delimiter></div>
-                        <div id=conc_$competitor_product->code style='display: flex;'>
+                        <div id=conc_$competitor_product->code ondrop='drop(event)' ondragover='allowDrop(event)' style='display: flex;'>
                             $analog
                         </div>
                     </div>
@@ -489,15 +494,46 @@
                 $arrow_price = 'z_sort_asc';
                 $new_dir = 'ASC';
 
+
+                $date = 0;
+                $selected_date = '';
+                if (isset($_GET['date']) && (int)$_GET['date'] > 0) {
+                    $date = (int)$_GET['date'];
+                    $selected_date = " AND date = $date";
+                } elseif (isset($_POST['date']) && (int)$_POST['date'] > 0) {
+                    $date = (int)$_POST['date'];
+                    $selected_date = " AND t2.date = $date";
+                }
+
+                $made = 'all';
+                $selected_manufactured = '';
+                $manufactured = '';
+                if (isset($_GET['made']) && $_GET['made'] !== 'all') {
+                    $made = stripAll($_GET['made']);
+                    $made_in = ($made === 'ukraine')?1:0;
+                    $selected_manufactured = ' AND t2.ukraine='.$made_in;
+                    $manufactured = ' AND ukraine='.$made_in;
+                } elseif (isset($_POST['made']) && $_POST['made'] !== 'all') {
+                    $made = stripAll($_POST['made']);
+                    $made_in = ($made === 'ukraine')?1:0;
+                    $selected_manufactured = ' AND t2.ukraine='.$made_in;
+                    $manufactured = ' AND ukraine='.$made_in;
+                }
+
+                $url_pagination = $url = '/auxpage_new_items/'.$made.'/'.$date.'/';
+                
                 if (isset($_GET['sort'])) {
                     $sort = stripAll($_GET['sort']);
                     $ajax_sort = $sort;
+                    $url_pagination .= $sort.'/';
                 } elseif (isset($_POST['sort'])) {
                     $sort = stripAll($_POST['sort']);
+                    $url_pagination .= $sort.'/';
                 }
 
                 if (isset($_REQUEST['direction'])) {
                     $direction = stripAll($_REQUEST['direction']);
+                    $url_pagination .= $direction.'/';
                     // NEW DIRECTION
                     if ($direction === 'ASC') {
                         $new_dir = 'DESC';
@@ -535,30 +571,6 @@
                     $default_sort = 't1.sort_order, t1.ukraine, t1.categoryID,';
                 }
 
-                $date = 0;
-                $selected_date = '';
-                if (isset($_GET['date']) && (int)$_GET['date'] > 0) {
-                    $date = (int)$_GET['date'];
-                    $selected_date = " AND date = $date";
-                } elseif (isset($_POST['date']) && (int)$_POST['date'] > 0) {
-                    $date = (int)$_POST['date'];
-                    $selected_date = " AND t2.date = $date";
-                }
-    
-                $made = 'all';
-                $selected_manufactured = '';
-                $manufactured = '';
-                if (isset($_GET['made']) && $_GET['made'] !== 'all') {
-                    $made = stripAll($_GET['made']);
-                    $made_in = ($made === 'ukraine')?1:0;
-                    $selected_manufactured = ' AND t2.ukraine='.$made_in;
-                    $manufactured = ' AND ukraine='.$made_in;
-                } elseif (isset($_POST['made']) && $_POST['made'] !== 'all') {
-                    $made = stripAll($_POST['made']);
-                    $made_in = ($made === 'ukraine')?1:0;
-                    $selected_manufactured = ' AND t2.ukraine='.$made_in;
-                    $manufactured = ' AND ukraine='.$made_in;
-                }
 
                 // Количество выводимых товаров на один запрос
                 //$add_count = 0;
@@ -571,16 +583,16 @@
                 //    $add_count = (int)$_POST['count_add'];
                 //}
 
-                $query1 = '
-                        SELECT settings_value
-                        FROM SC_settings
-                        WHERE settings_constant_name=\'CONF_PRODUCTS_PER_PAGE\'';
-                $res1 = mysql_query($query1) or die(mysql_error().$query1);
-                $settings1 = mysql_fetch_object($res1);
-
-                if ($settings1) {
-                    $tov_count = (int)($settings1->settings_value);
-                }
+//                $query1 = '
+//                        SELECT settings_value
+//                        FROM SC_settings
+//                        WHERE settings_constant_name=\'CONF_PRODUCTS_PER_PAGE\'';
+//                $res1 = mysql_query($query1) or die(mysql_error().$query1);
+//                $settings1 = mysql_fetch_object($res1);
+//
+//                if ($settings1) {
+//                    $tov_count = (int)($settings1->settings_value);
+//                }
 
                 $query2 = 'SELECT settings_value
                   FROM SC_settings
@@ -601,10 +613,10 @@
                 $product_list_item = mysql_fetch_object($res);
                 $tov_all_count = (int)($product_list_item->tov_all_count);
 
-                if (detectIOS()) {
-                    $tov_count = $p_count = 100;
-                }
-                
+//                if (detectIOS()) {
+//                    $tov_count = $p_count = 100;
+//                }
+                $tov_count = $p_count;  
                 $start_row = 0;
 
                 if (isset($_REQUEST['p'])) {
@@ -612,7 +624,7 @@
                     $start_row = ($start_row === -1)?0:$start_row;
                 }
     
-                $url = '/auxpage_new_items/'.$made.'/'.$date.'/';
+                
 
                 $start = $start_row;
                 $direction_nav = 'ASC';
@@ -620,63 +632,64 @@
                     $direction_nav = $direction;
                 }
                 $out = '';
+
+//                $p_count = 10;
+                
                 if ($tov_all_count > $p_count) {
-                    $out = SimpleNavigator($tov_all_count, $start_row, $p_count, $url, $out);
+                    $out = SimpleNavigator($tov_all_count, $start_row, $p_count, $url_pagination, $out);
                 }
 
                 $newitems_start = "
-                                <div
-                                    id='light-pagination'
-                                    class='simple-pagination compact-theme'
-                                    data-items       = $tov_all_count
-                                    data-itemsOnPage = $p_count
-                                    data-add         = $tov_count
-                                    data-show        = 0
-                                    data-page        = $start
-                                    data-date        = $date
-                                    data-made        = $made
-                                    data-sort        = $ajax_sort
-                                    data-direction   = $direction_nav
-                                >$out</div>
-                                ";
+                        <div
+                            id='light-pagination'
+                            class='simple-pagination compact-theme'
+                            data-items       = $tov_all_count
+                            data-itemsOnPage = $p_count
+                            data-add         = $tov_count
+                            data-show        = 0
+                            data-page        = $start
+                            data-date        = $date
+                            data-made        = $made
+                            data-sort        = $ajax_sort
+                            data-direction   = $direction_nav
+                        >$out</div>
+                ";
 
-                if ($tov_all_count) {
-                    
-                    $newitems_start .= '
+                $newitems_start .= '
                         <div class=shapka>
                             <table class=cs_product_info  style="padding-left: 5px">
                                 <tbody>
                                     <tr>
                                         <td>
-                                            <div class=' . $sort_class_name . '>
+                                            <div class='.$sort_class_name.'>
                                                 <div class="arbopr sort_name">
-                                                    <a href="' . $url . 'name_ru/' . $new_dir . '/">Наименование</a>
+                                                    <a href="'.$url.'name_ru/'.$new_dir.'/0/">Наименование</a>
                                                 </div>
-                                                <div class=' . $arrow_name . '></div>
+                                                <div class='.$arrow_name.'></div>
                                             </div>
                                         </td>
                                         <td width=105px>
-                                            <div class="' . $sort_class_pc . ' ">
+                                            <div class="'.$sort_class_pc.' ">
                                                 <div class=arbopr>
-                                                    <a href="' . $url . 'product_code/' . $new_dir . '/">Артикул</a>
+                                                    <a href="'.$url.'product_code/'.$new_dir.'/0/">Артикул</a>
                                                 </div>
-                                                <div class=' . $arrow_product_code . '></div>
+                                                <div class='.$arrow_product_code.'></div>
                                             </div>
                                         </td>
                                         <td width=65px>
-                                            <div class=' . $sort_class_bonus . '>
+                                            <div class='.$sort_class_bonus.'>
                                                 <div class=arbopr>
-                                                    <a href="' . $url . 'Bonus/' . $new_dir . '/">Баллы</a>
+                                                    <a href="'.$url.'Bonus/'.$new_dir.'/0/">Баллы</a>
                                                 </div>
-                                                <div class=' . $arrow_bonus . '></div>
+                                                <div class='.$arrow_bonus.'></div>
                                             </div>
                                         </td>
                                         <td width=125px>
-                                            <div class=' . $sort_class_price . '>
+                                            <div class='.$sort_class_price.'>
                                                 <div class=arbopr>
-                                                    <a href="' . $url . 'Price/' . $new_dir . '/">Цена</a>
+                                                    <a href="'.$url.'Price/'.$new_dir.'/0/">Цена</a>
                                                 </div>
-                                                <div class=' . $arrow_price . '></div>
+                                                <div class='.$arrow_price.'></div>
                                             </div>
                                         </td>
                                         <td width=65px>
@@ -690,223 +703,233 @@
                     <div class=scroll-pane1>
                         <div id=content>
             ';
-                    //                                        <td width=110px>
-                    //                                            <div class=ost>Остаток</div>
-                    //                                        </td>
-                    if ($vip) {
-                        $newitems_start .= '<hr style=\'border-color: coral\'>';
-                    } else {
-                        $newitems_start .= '<div class=delimiter></div>';
-                    }
 
-                    /**************************************************************************************************************/
-                    if ($vip) {
-                        $auxpages = array('divoland', 'mixtoys', 'dreamtoys', 'kindermarket', 'grandtoys');
+                if ($vip) {
+                    $newitems_start .= '<hr style=\'border-color: coral\'>';
+                } else {
+                    $newitems_start .= '<div class=delimiter></div>';
+                }
 
-                        foreach ($auxpages as $aux) {
-                            $query = "SELECT code, code_1c FROM Conc_search__$aux";
-                            $res = mysql_query($query) or die(mysql_error() . $query);
-                            $codes_multi[$aux] = array();
+                /**************************************************************************************************************/
+                $auxpages = array();
+                if ($vip) {
+                    $auxpages = array('divoland', 'mixtoys', 'dreamtoys', /*'kindermarket',*/ 'grandtoys');
 
-                            while ($Codes = mysql_fetch_object($res)) {
-                                $codes_multi[$aux][$Codes->code_1c] = $Codes->code;
-                            }
+                    foreach ($auxpages as $aux) {
+                        $query = "SELECT code, code_1c FROM Conc_search__$aux";
+                        $res = mysql_query($query) or die(mysql_error().$query);
+                        $codes_multi[$aux] = array();
+
+                        while ($Codes = mysql_fetch_object($res)) {
+                            $codes_multi[$aux][$Codes->code_1c] = $Codes->code;
                         }
                     }
-                    /**************************************************************************************************************/
-                    $query = 'SELECT categoryID, name_ru FROM SC_categories';
-                    $res = mysql_query($query) or die(mysql_error() . $query);
-                    $category_name = array();
-                    while ($Categories = mysql_fetch_object($res)) {
-                        $category_name[$Categories->categoryID] = $Categories->name_ru;
-                    }
+                }
+                /**************************************************************************************************************/
+                $query = 'SELECT categoryID, name_ru FROM SC_categories';
+                $res = mysql_query($query) or die(mysql_error().$query);
+                $category_name = array();
+                while ($Categories = mysql_fetch_object($res)) {
+                    $category_name[$Categories->categoryID] = $Categories->name_ru;
+                }
 
-                    $query = 'SELECT productID FROM SC_products WHERE enabled = 1 ORDER BY code_1c DESC LIMIT 500';
-                    $res = mysql_query($query) or die(mysql_error() . $query);
-                    $new = array();
-                    while ($New_items = mysql_fetch_object($res)) {
-                        $new[$New_items->productID] = $New_items->productID;
-                    }
+                $query = 'SELECT productID FROM SC_products WHERE enabled = 1 ORDER BY code_1c DESC LIMIT 500';
+                $res = mysql_query($query) or die(mysql_error().$query);
+                $new = array();
+                while ($New_items = mysql_fetch_object($res)) {
+                    $new[$New_items->productID] = $New_items->productID;
+                }
 
-                    if (isset($_POST['count_show'])) {
-                        $start_row = (int)$_POST['count_show'];
-                    }
+                if (isset($_POST['count_show'])) {
+                    $start_row = (int)$_POST['count_show'];
+                }
 
-                    $query = "
-                        SELECT
-                              t1.productID, t1.categoryID, t1.product_code,  t1.code_1c, t1.sort_order, t1.Price,
-                              t1.list_price, t1.skidka, t1.ukraine, t1.eproduct_available_days, t1.name_ru, 
-                              t1.default_picture, t1.ostatok, t1.Bonus, t1.zakaz, t1.slug, t3.filename, t3.thumbnail
-                        FROM SC_products t1
-                        LEFT JOIN SC_product_list_item t2  USING(productID)
-                        LEFT JOIN SC_product_pictures t3 ON t1.default_picture = t3.photoID
-                        WHERE t2.list_id = 'newitemspostup' $selected_date $selected_manufactured
-                        ORDER BY $default_sort  t1.$sort $direction
-                        LIMIT $start_row, $tov_count
-                    ";
-                    $res = mysql_query($query) or die(mysql_error() . $query);
+                $query = "
+                    SELECT
+                          t1.productID, t1.categoryID, t1.product_code,  t1.code_1c, t1.sort_order, t1.Price,
+                          t1.list_price, t1.skidka, t1.ukraine, t1.eproduct_available_days, t1.name_ru, 
+                          t1.default_picture, t1.ostatok, t1.Bonus, t1.zakaz, t1.slug, t3.filename, t3.thumbnail
+                    FROM SC_products t1
+                    LEFT JOIN SC_product_list_item t2  USING(productID)
+                    LEFT JOIN SC_product_pictures t3 ON t1.default_picture = t3.photoID
+                    WHERE t2.list_id = 'newitemspostup' $selected_date $selected_manufactured
+                    ORDER BY $default_sort  t1.$sort $direction
+                    LIMIT $start_row, $tov_count
+                ";
+                $res = mysql_query($query) or die(mysql_error().$query);
 
-                    if ($CustomerID) $shop_count_cart = get_shop_counts($CustomerID);
-                    $tab = 0;
+                if ($CustomerID) $shop_count_cart = get_shop_counts($CustomerID);
+                $tab = 0;
+                
+                while ($Product = mysql_fetch_object($res)) {
+    
+                    $tab++;
+                    $price_without_unit = priceDiscount($Product->Price, $Product->skidka, $Product->ukraine);
+//                    $price = ($buy_enabled)?show_price($price_without_unit):'';
+                    $price = show_price($price_without_unit);
 
-                    while ($Product = mysql_fetch_object($res)) {
+                    /**********************************************************************************************************/
+                    $add2cart_conc = '';
 
-                        $tab++;
-                        $price_without_unit = priceDiscount($Product->Price, $Product->skidka, $Product->ukraine);
-                        //                    $price = ($buy_enabled)?show_price($price_without_unit):'';
-                        $price = show_price($price_without_unit);
+                    if ($vip) {
+                        //$codes_multi = array();
+                        //$auxpages = array('divoland', 'mixtoys', 'dreamtoys', 'kindermarket', 'grandtoys');
+                        foreach ($auxpages as $aux) {
+                            if ($matched_product = $codes_multi[$aux][$Product->code_1c]) {
+                                $query3
+                                    = "SELECT
+                        category, code, product_code, name, price_uah
+                    FROM
+                        Conc__$aux
+                    WHERE
+                        code LIKE '$matched_product'";
+                                $res3 = mysql_query($query3) or die(mysql_error().$query3);
 
-                        /**********************************************************************************************************/
-                        $add2cart_conc = '';
+                                if ($M_Product = mysql_fetch_object($res3)) {
 
-                        if ($vip) {
-                            //$codes_multi = array();
-                            $auxpages = array('divoland', 'mixtoys', 'dreamtoys', 'kindermarket', 'grandtoys');
-                            foreach ($auxpages as $aux) {
-                                if ($matched_product = $codes_multi[$aux][$Product->code_1c]) {
-                                    $query3
-                                        = "SELECT
-                            category, code, product_code, name, price_uah
-                        FROM
-                            Conc__$aux
-                        WHERE
-                            code LIKE '$matched_product'";
-                                    $res3 = mysql_query($query3) or die(mysql_error() . $query3);
-
-                                    if ($M_Product = mysql_fetch_object($res3)) {
-
-                                        if ($M_Product->price_uah != 0) {
-                                            $price_diff = round(($price / $M_Product->price_uah - 1) * 100, 1);
-                                        }
-                                        //                                $price_diff = round(($Product->Price / $M_Product->price_uah - 1) * 100, 1);
-                                        $marked = ($price_diff > 0) ? 'red' : 'green';
-                                        $mark_conc = ($price_diff > 0) ? 'font-weight:bold;background:yellow; box-shadow:
-                                 2px 2px 4px #9999aa;' : '';
-                                        $add2cart_conc .= "
-                                                    <div style='font-size: 11px; padding-left: 5px;clear: both' id=$aux$M_Product->code>
-                                                        <div style='min-width: 75px !important;
-                                                        color:#03A9F4;$mark_conc;text-transform: capitalize; float: left'>$aux:</div>
-                                                        <div style='min-width: 95px; float: left'>цена <span style='color:$marked;'>$M_Product->price_uah</span> &#8372; | </div>
-                                                        <div style='float: left'>разница <span style='color:$marked;font-weight:700'>$price_diff%</span></div>
-                                                    </div>
-                                                ";
+                                    if ($M_Product->price_uah != 0) {
+                                        $price_diff = round(($price / $M_Product->price_uah - 1) * 100, 1);
                                     }
+                                    //                                $price_diff = round(($Product->Price / $M_Product->price_uah - 1) * 100, 1);
+                                    $marked = ($price_diff > 0)?'red':'green';
+                                    $mark_conc = ($price_diff > 0)?'font-weight:bold;background:yellow; box-shadow:
+                             2px 2px 4px #9999aa;':'';
+                                    $add2cart_conc .= "
+												<div style='font-size: 11px; padding-left: 5px;clear: both' id=$aux$M_Product->code>
+													<div style='min-width: 75px !important;
+													color:#03A9F4;$mark_conc;text-transform: capitalize; float: left'>$aux:</div>
+													<div style='min-width: 95px; float: left'>цена <span style='color:$marked;'>$M_Product->price_uah</span> &#8372; | </div>
+													<div style='float: left'>разница <span style='color:$marked;font-weight:700'>$price_diff%</span></div>
+												</div>
+											";
                                 }
                             }
                         }
-                        /**********************************************************************************************************/
-                        $bonus = ($Product->Bonus) ? (int)$price_without_unit : '';
-                        $category = $category_name[$Product->categoryID];
-
-                        $label = '';
-                        if ($Product->eproduct_available_days == 7) {
-                            $label = '<div class="corner color_superprice"><span></span>Суперцена!</div>';
-                        } elseif ($new[$Product->productID]) {
-                            $label = '<div class="corner color_newitem"><span></span>Новинка!</div>';
-                        }
-                        //$label_new = '<div class="corner color_newitemspostup"><span></span>Новинка!</div>';
-                        //$zakaz = $Product->zakaz;
-
-                        $shop_count = 0;
-                        if (($shop_count_cart[$Product->productID])) {
-                            $shop_count = $shop_count_cart[$Product->productID];
-                        }
-                        $add2cart = ($buy_enabled) ? "
-                                            <table width=110px>
-                                                <tbody>
-                                                    <tr>
-                                                        <td>
-                                                            <input class=cart_product_quantity id=qty$Product->productID name=product_qty title='Количество' type=text value='' size=2 data-id=$Product->productID onkeypress='if (event.keyCode == 13){add_2cart(\"#qty$Product->productID\")}' tabindex=$tab>
-                                                        </td>
-                                                        <td>
-                                                            <button class=z_add_cart title='добавить в корзину' onclick='add_2cart(\"#qty$Product->productID\")' type=button>
-                                                                <div id=zpid_$Product->productID  class=in_cart>
-                                                                    <div class='animated zoomInDown'>$shop_count</div>
-                                                                </div>
-                                                            </button>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                            " : '';
-                        //                                                    <td style='vertical-align:middle;white-space:nowrap;'>
-                        //                                                        <div class=ostatok_div>&nbsp;$Product->ostatok&nbsp;шт.</div>
-                        //                                                    </td>
-                        $q = '
-                        SELECT count(*) AS pics_all_count
-                        FROM SC_product_pictures
-                        WHERE productID = ' . $Product->productID;
-                        $r = mysql_query($q) or die(mysql_error() . $q);
-                        $pics_count = mysql_fetch_object($r);
-                        $pics_all_count = (int)($pics_count->pics_all_count);
-                        $pics_for_slider = $pics_all_count - 1;
-                        if ($pics_for_slider > 0) {
-                            $pictures = '
-                            <div class="slider visual">
-                                <div class=controls  data-pid="/pictures/' . $Product->filename . '">
-                                    <div class="label prev_pic" onclick="changePic(' . $Product->code_1c . ',-1)"></div>
-                                    <div class="label next_pic" onclick="changePic(' . $Product->code_1c . ', 1)"></div>
-                                </div>
-                                <img id=pic' . $Product->code_1c . ' data-pics=' . $pics_for_slider . ' data-current=0 src="/pictures/' . $Product->thumbnail . '" />
-                                ' . $label . '
-                            </div>';
-                        } else {
-                            $pictures = ((strlen($Product->thumbnail) > 4) && (strlen($Product->filename) > 4)) ? "
-                                <div class=visual><a href='/product/$Product->slug'><img width=160 height=120 class=preview  alt='$Product->name_ru' src='/pictures/" . $Product->thumbnail . "' data-pid='/pictures/" . $Product->filename . "'></a>$label</div>" : "<div class=visual><a href='/product/$Product->slug'><img width=153 height=117 alt='no foto' src='/img/nophoto.jpg'></a>$label</div>";
-                        }
-                        //$pictures = '<div class=div_izobrag><img width=153 height=117 alt=\'no foto\' src=\'/img/nophoto.jpg\' /></div>';
-                        //if ($zakaz === 1) {
-                        //    $akc = "<span style='color: red;font-size: 14px;'><i>под заказ!</i></span><br /><span style='color: grey;'><b>$price</b></span>";
-                        //} else {
-                        //    $akc = "<span class=totalPrice>$price</span>";
-                        //}
-
-                        $newitems .= "
-                                    <table class=cs_product_info>
-                                        <tbody>
-                                            <tr>
-                                                <td width=165px>
-                                                    $pictures
-                                                </td>
-                                                <td>
-                                                    <div class='productname newpostup'>
-                                                        <a href='/product/$Product->slug'>$Product->name_ru</a><br>
-                                                        <small>категория: &laquo;$category&raquo;</small>
-                                                    </div>
-                                                    $add2cart_conc
-                                                </td>
-                                                <td width=105px>
-                                                    <a href='/product/$Product->slug'>$Product->product_code</a>
-                                                </td>
-                                                <td width=65px>
-                                                    <div class='totalPrice bonus'>$bonus</div>
-                                                </td>
-                                                <td width=80px>
-                                                    <div class=totalPrice>$price</div>
-                                                </td>
-                                                <td width=110px>
-                                                    $add2cart
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                  ";
-                        if ($vip) {
-                            $newitems .= '<hr style=\'border-color: coral\'>';
-                        } else {
-                            $newitems .= '<div class=delimiter></div>';
-                        }
                     }
-                    //                $out_end = SimpleNavigator($tov_all_count, $start, $tov_count, $url, $out_end);
-                    $newitems .= '
-                                    </div>';
-                } else {
-                    $newitems = '<div class=scroll-pane1>
-                                    <div id=content>';
-                    $this->newItemsCategory();
-                    $newitems .= $this->_disp;
-                    $newitems .= '</div>';
+                    /**********************************************************************************************************/
+                    $bonus = ($Product->Bonus)?(int)$price_without_unit:'';
+                    $category = $category_name[$Product->categoryID];
+    
+                    $label = '';
+                    if ($Product->eproduct_available_days == 7) {
+                        $label = '<div class="corner color_superprice"><span></span>Суперцена!</div>';
+                    } elseif ($new[$Product->productID]) {
+                        $label = '<div class="corner color_newitem"><span></span>Новинка!</div>';
+                    }
+                    //$label_new = '<div class="corner color_newitemspostup"><span></span>Новинка!</div>';
+                    //$zakaz = $Product->zakaz;
+
+                    $shop_count = 0;
+                    if (($shop_count_cart[$Product->productID])) {
+                        $shop_count = $shop_count_cart[$Product->productID];
+                    }
+                    $add2cart = ($buy_enabled)?"
+                                        <table width=110px>
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <div class=counter>
+									                        <button class='count-control control-up' type=button onclick='increaseNumber($Product->productID)'>
+                                                            </button>
+									                        <input 
+									                            id=qty$Product->productID 
+									                            class=cart_product_quantity
+									                            type=text value=1 name=product_qty title=Количество 
+									                            size=2 data-id=$Product->productID 
+                                                                onkeyup='if (event.keyCode == 13){add2Cart(\"#qty$Product->productID\")}' 
+                                                                tabindex=$tab>
+									                        <button class='count-control control-down' type=button onclick='decreaseNumber($Product->productID)'>
+                                                            </button>
+								                        </div>
+                                                        <!-- <input class=cart_product_quantity id=qty$Product->productID name=product_qty 
+                                                            title='Количество' type=text value='' size=2 data-id=$Product->productID 
+                                                            onkeypress='if (event.keyCode == 13){add2Cart(\"#qty$Product->productID\")}' 
+                                                            tabindex=$tab> -->
+                                                    </td>
+                                                    <td>
+                                                        <button class=z_add_cart title='добавить в корзину' 
+                                                            onclick='add2Cart(\"#qty$Product->productID\")' type=button>
+                                                            <div id=zpid_$Product->productID  class=in_cart>
+                                                                <div class='animated zoomInDown'>$shop_count</div>
+                                                            </div>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        ":'';
+                    //                                                    <td style='vertical-align:middle;white-space:nowrap;'>
+                    //                                                        <div class=ostatok_div>&nbsp;$Product->ostatok&nbsp;шт.</div>
+                    //                                                    </td>
+                    $q = '
+                    SELECT count(*) AS pics_all_count
+                    FROM SC_product_pictures
+                    WHERE productID = '.$Product->productID;
+                    $r = mysql_query($q) or die(mysql_error().$q);
+                    $pics_count = mysql_fetch_object($r);
+                    $pics_all_count = (int)($pics_count->pics_all_count);
+                    $pics_for_slider = $pics_all_count - 1;
+                    if ($pics_for_slider > 0) {
+                        $pictures = '
+                        <div class="slider visual">
+                            <div class=controls>
+                                <div class="label prev_pic" onclick="changePic(\''.$Product->code_1c.'\',-1)"></div>
+                                <div class="label next_pic" onclick="changePic(\''.$Product->code_1c.'\', 1)"></div>
+                            </div>
+                            <img width=160 height=120 id=pic'.$Product->code_1c.' class=preview data-pics='.$pics_for_slider.' data-current=0 src='.URL_PRODUCTS_PICTURES.'/'.$Product->thumbnail.' data-pid='.URL_PRODUCTS_PICTURES.'/'.$Product->filename.' />
+                            '.$label.'
+                        </div>';
+                    } else {
+                        $pictures = ((strlen($Product->thumbnail) > 4) && (strlen($Product->filename) > 4))?"
+                            <div class=visual><a href='/product/$Product->slug'><img width=160 height=120 class=preview  alt='$Product->name_ru' src='".URL_PRODUCTS_PICTURES."/$Product->thumbnail' data-pid='".URL_PRODUCTS_PICTURES."/$Product->filename'></a>$label</div>":"<div class=visual><a href='/product/$Product->slug'><img width=153 height=117 alt='no foto' src='/img/nophoto.jpg'></a>$label</div>";
+                    }
+                    //$pictures = '<div class=div_izobrag><img width=153 height=117 alt=\'no foto\' src=\'/img/nophoto.jpg\' /></div>';
+                    //if ($zakaz === 1) {
+                    //    $akc = "<span style='color: red;font-size: 14px;'><i>под заказ!</i></span><br /><span style='color: grey;'><b>$price</b></span>";
+                    //} else {
+                    //    $akc = "<span class=totalPrice>$price</span>";
+                    //}
+
+                    $newitems .= "
+                                <table class=cs_product_info>
+                                    <tbody>
+                                        <tr>
+                                            <td width=165px>
+                                                $pictures
+                                            </td>
+                                            <td>
+                                                <div class='productname newpostup'>
+                                                    <a href='/product/$Product->slug'>$Product->name_ru</a><br>
+                                                    <small>категория: &laquo;$category&raquo;</small>
+                                                </div>
+                                                $add2cart_conc
+                                            </td>
+                                            <td width=105px>
+                                                <a href='/product/$Product->slug'>$Product->product_code</a>
+                                            </td>
+                                            <td width=65px>
+                                                <div class='totalPrice bonus'>$bonus</div>
+                                            </td>
+                                            <td width=80px>
+                                                <div class=totalPrice>$price</div>
+                                            </td>
+                                            <td width=110px>
+                                                $add2cart
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                              ";
+                    if ($vip) {
+                        $newitems .= '<hr style=\'border-color: coral\'>';
+                    } else {
+                        $newitems .= '<div class=delimiter></div>';
+                    }
                 }
+                //                $out_end = SimpleNavigator($tov_all_count, $start, $tov_count, $url, $out_end);
+                $newitems .= "<div class='simple-pagination compact-theme'>$out</div>";
+                $newitems .= '
+                                </div>';
                 //            $newitems_end = "</div><div
                 //                                    id='light-pagination'
                 //                                    class='simple-pagination compact-theme'
@@ -922,11 +945,387 @@
 //                                        <button
 //                                            class="addall_pp blue-button" onclick="add_all2cart();">Заказать все</button>
 //                                    </div>';
-                $newitems_end = '</div>';
+                $newitems_end = '
+                               
+                                    <div class="baron__track">
+                                        <div class="baron__free">
+                                            <div class="baron__bar"></div>
+                                        </div>
+                                    </div>
+                                    </div>
+                            ';
 
                 if (!$ajax) {
                     foreach ($text as $key => $oneline) {
                         $text[$key] = str_replace('%new_list%', $newitems_start.$newitems.$newitems_end, $oneline);
+                    }
+                    if ($may_order) {
+                        return $text;
+                    } else {
+                        return '</div>';
+                    }
+                } else {
+                    return $newitems;
+                }
+            }
+        }
+ 
+        protected function transform_auxpage_mobile($name, $text, $ajax)
+        {
+//            $Register = &Register::getInstance();
+//            /*@var $Register Register*/
+//            $smarty = &$Register->get(VAR_SMARTY);
+            
+            $log = isset($_SESSION['log'])?$_SESSION['log']:'';
+            $vip = isset($_SESSION['cs_vip'])?$_SESSION['cs_vip']:'';
+
+            $CustomerID = '';
+            $may_order = '';
+            $newitems = '';
+            $shop_count_cart = '';
+            if ($log !== '') {
+                $may_order = isset($_SESSION['cs_may_order'])?$_SESSION['cs_may_order']:'0';
+            }
+
+            if (array_key_exists('auxpage', $_SESSION)) {
+                unset($_SESSION['auxpage']);
+            }
+            $_SESSION['auxpage'] = substr($name, 8);
+            $auxpage = $_SESSION['auxpage'];
+
+            if ($may_order) {
+
+                if (isset($_SESSION['cs_id'])) {
+                    $query = '
+                        SELECT settings_value
+                        FROM SC_settings
+                        WHERE settings_constant_name=\'CONF_SHOW_ADD2CART\'';
+                    $res = mysql_query($query) or die();
+                    $settings = mysql_fetch_row($res);
+
+                    if ($settings[0] == 1) {
+                        $buy_enabled = true;
+                    }
+                    
+                    $CustomerID = (int)$_SESSION['cs_id'];
+                } else {
+                    $buy_enabled = false;
+                }
+
+                //Собираем правила сортировки
+                $default_sort = '';
+                $sort = 'name';
+                $ajax_sort = $sort;
+                $direction = '';
+                $sort_class_name = 'z_sort_inactive';
+                $sort_class_pc = 'z_sort_inactive';
+                $sort_class_bonus = 'z_sort_inactive';
+                $sort_class_price = 'z_sort_inactive';
+                $arrow_name = 'z_sort_asc';
+                $arrow_product_code = 'z_sort_asc';
+                $arrow_bonus = 'z_sort_asc';
+                $arrow_price = 'z_sort_asc';
+                $new_dir = 'ASC';
+
+
+                $date = 0;
+                $selected_date = '';
+                if (isset($_GET['date']) && (int)$_GET['date'] > 0) {
+                    $date = (int)$_GET['date'];
+                    $selected_date = " AND date = $date";
+                } elseif (isset($_POST['date']) && (int)$_POST['date'] > 0) {
+                    $date = (int)$_POST['date'];
+                    $selected_date = " AND t2.date = $date";
+                }
+
+                $made = 'all';
+                $selected_manufactured = '';
+                $manufactured = '';
+                if (isset($_GET['made']) && $_GET['made'] !== 'all') {
+                    $made = stripAll($_GET['made']);
+                    $made_in = ($made === 'ukraine')?1:0;
+                    $selected_manufactured = ' AND t2.ukraine='.$made_in;
+                    $manufactured = ' AND ukraine='.$made_in;
+                } elseif (isset($_POST['made']) && $_POST['made'] !== 'all') {
+                    $made = stripAll($_POST['made']);
+                    $made_in = ($made === 'ukraine')?1:0;
+                    $selected_manufactured = ' AND t2.ukraine='.$made_in;
+                    $manufactured = ' AND ukraine='.$made_in;
+                }
+
+                $url_pagination = $url = '/auxpage_new_items/'.$made.'/'.$date.'/';
+                
+                if (isset($_GET['sort'])) {
+                    $sort = stripAll($_GET['sort']);
+                    $ajax_sort = $sort;
+                    $url_pagination .= $sort.'/';
+                } elseif (isset($_POST['sort'])) {
+                    $sort = stripAll($_POST['sort']);
+                    $url_pagination .= $sort.'/';
+                }
+
+                if (isset($_REQUEST['direction'])) {
+                    $direction = stripAll($_REQUEST['direction']);
+                    $url_pagination .= $direction.'/';
+                    // NEW DIRECTION
+                    if ($direction === 'ASC') {
+                        $new_dir = 'DESC';
+                        $arrow_name = 'z_sort_desc';
+                        $arrow_product_code = 'z_sort_desc';
+                        $arrow_bonus = 'z_sort_desc';
+                        $arrow_price = 'z_sort_desc';
+                    }
+                }
+                // NAME
+
+                if ($sort === 'name_ru') {
+                    $sort_class_name = 'z_sort_active';
+                    $arrow_name = ($direction === 'DESC')?'z_sort_desc':'z_sort_asc';
+                }
+                // PRODUCT_CODE
+                if ($sort === 'product_code') {
+                    $sort_class_pc = 'z_sort_active';
+                    $arrow_product_code = ($direction === 'DESC')?'z_sort_desc':'z_sort_asc';
+                }
+                // BONUS
+                if ($sort === 'Bonus') {
+                    $arrow_bonus = ($direction === 'DESC')?'z_sort_desc':'z_sort_asc';
+                    $sort_class_bonus = 'z_sort_active';
+                }
+                // PRICE
+                if ($sort === 'Price') {
+                    $sort_class_price = 'z_sort_active';
+                    $arrow_price = ($direction === 'DESC')?'z_sort_desc':'z_sort_asc';
+                }
+                if ($sort === 'name') {
+                    $ajax_sort = $sort;
+                    $sort = 'name_ru';
+//                    $default_sort = 't1.sort_order, t1.categoryID,';
+                    $default_sort = 't1.sort_order, t1.ukraine, t1.categoryID,';
+                }
+
+
+                // Количество выводимых товаров на один запрос
+                //$add_count = 0;
+                $tov_count = 50;
+
+                // Количество выводимых товаров на странице
+                $p_count = 150;
+
+                //if (isset($_POST['count_add'])) {
+                //    $add_count = (int)$_POST['count_add'];
+                //}
+
+//                $query1 = '
+//                        SELECT settings_value
+//                        FROM SC_settings
+//                        WHERE settings_constant_name=\'CONF_PRODUCTS_PER_PAGE\'';
+//                $res1 = mysql_query($query1) or die(mysql_error().$query1);
+//                $settings1 = mysql_fetch_object($res1);
+//
+//                if ($settings1) {
+//                    $tov_count = (int)($settings1->settings_value);
+//                }
+
+                $query2 = 'SELECT settings_value
+                  FROM SC_settings
+                  WHERE settings_constant_name=\'CONF_NEWTOV_COUNT\'';
+                $res2 = mysql_query($query2) or die(mysql_error().$query2);
+                $settings2 = mysql_fetch_object($res2);
+
+                if ($settings2) {
+                    $p_count = (int)($settings2->settings_value);
+                }
+
+                // Общее количество товаров
+                $query = "
+                    SELECT count(*) AS tov_all_count
+                    FROM SC_product_list_item
+                    WHERE list_id = 'newitemspostup' $selected_date $manufactured";
+                $res = mysql_query($query) or die(mysql_error().$query);
+                $product_list_item = mysql_fetch_object($res);
+                $tov_all_count = (int)($product_list_item->tov_all_count);
+
+//                if (detectIOS()) {
+//                    $tov_count = $p_count = 100;
+//                }
+                $tov_count = $p_count;  
+                $start_row = 0;
+
+                if (isset($_REQUEST['p'])) {
+                    $start_row = (int)$_REQUEST['p'];
+                    $start_row = ($start_row === -1)?0:$start_row;
+                }
+    
+                
+
+                $start = $start_row;
+                $direction_nav = 'ASC';
+                if ($direction) {
+                    $direction_nav = $direction;
+                }
+                $out = '';
+
+//                $p_count = 10;
+                
+                if ($tov_all_count > $p_count) {
+                    $out = SimpleNavigator($tov_all_count, $start_row, $p_count, $url_pagination, $out);
+                }
+
+                $newitems_start = "
+                    <div class=product_brief_head>
+                        <div id=cat_path>
+                            <ul id=breadcrumbs-one>
+                                <li><a href='/'>Главная</a></li>
+                                ⪢
+                                <li><a href='/auxpage_new_items/all/0/0/'>Новые поступления</a></li>
+                            </ul>
+                        </div>
+                        <div
+                            id=light-pagination
+                            class='simple-pagination compact-theme'
+                            data-items       = $tov_all_count
+                            data-itemsOnPage = $p_count
+                            data-add         = $tov_count
+                            data-show        = 0
+                            data-page        = $start
+                            data-date        = $date
+                            data-made        = $made
+                            data-sort        = $ajax_sort
+                            data-direction   = $direction_nav
+                        >$out</div>
+                    </div>
+                ";
+
+                $newitems_start .= '
+                    <div class=scroll-pane1>
+                        <div id=content>
+                ';
+
+                $query = 'SELECT categoryID, name_ru FROM SC_categories';
+                $res = mysql_query($query) or die(mysql_error().$query);
+                
+                $category_name = array();
+                
+                while ($Categories = mysql_fetch_object($res)) {
+                    $category_name[$Categories->categoryID] = $Categories->name_ru;
+                }
+
+                $query = 'SELECT productID FROM SC_products WHERE enabled = 1 ORDER BY code_1c DESC LIMIT 500';
+                $res = mysql_query($query) or die(mysql_error().$query);
+                $new = array();
+                while ($New_items = mysql_fetch_object($res)) {
+                    $new[$New_items->productID] = $New_items->productID;
+                }
+
+                if (isset($_POST['count_show'])) {
+                    $start_row = (int)$_POST['count_show'];
+                }
+
+                $query = "
+                    SELECT
+                          t1.productID, t1.categoryID, t1.product_code,  t1.code_1c, t1.sort_order, t1.Price,
+                          t1.list_price, t1.skidka, t1.ukraine, t1.eproduct_available_days, t1.name_ru, 
+                          t1.default_picture, t1.ostatok, t1.Bonus, t1.zakaz, t1.slug, t3.filename, t3.thumbnail
+                    FROM SC_products t1
+                    LEFT JOIN SC_product_list_item t2  USING(productID)
+                    LEFT JOIN SC_product_pictures t3 ON t1.default_picture = t3.photoID
+                    WHERE t2.list_id = 'newitemspostup' $selected_date $selected_manufactured
+                    ORDER BY $default_sort  t1.$sort $direction
+                    LIMIT $start_row, $tov_count
+                ";
+                $res = mysql_query($query) or die(mysql_error().$query);
+
+                if ($CustomerID) $shop_count_cart = get_shop_counts($CustomerID);
+                $tab = 0;
+                
+                while ($Product = mysql_fetch_object($res)) {
+    
+                    $tab++;
+                    $price_without_unit = priceDiscount($Product->Price, $Product->skidka, $Product->ukraine);
+//                    $price = ($buy_enabled)?show_price($price_without_unit):'';
+                    $price = show_price($price_without_unit);
+                    $bonus = ($Product->Bonus)?(int)$price_without_unit:'';
+                    $category = $category_name[$Product->categoryID];
+    
+                    $label = '';
+                    if ($Product->eproduct_available_days == 7) {
+                        $label = '<div class="corner color_superprice"><span></span>Суперцена!</div>';
+                    } elseif ($new[$Product->productID]) {
+                        $label = '<div class="corner color_newitem"><span></span>Новинка!</div>';
+                    }
+                    //$label_new = '<div class="corner color_newitemspostup"><span></span>Новинка!</div>';
+                    //$zakaz = $Product->zakaz;
+
+                    $shop_count = 'Купить';
+                    if (($shop_count_cart[$Product->productID])) {
+                        $shop_count = $shop_count_cart[$Product->productID];
+                    }
+                    $add2cart = ($buy_enabled)?"
+                                                <div class=add_to_cart>
+                                                    <div class='counter new_postup'>
+                                                        <a class='count-control control-down'  href='javascript:void(0);' onclick='decreaseNumber(\"$Product->productID\")'>-</a>
+                                                        <input 
+									                            id=qty$Product->productID 
+									                            class=cart_product_quantity
+									                            type=text value=1 name=product_qty title=Количество 
+									                            size=2 data-id=$Product->productID 
+                                                                onkeyup='if (event.keyCode == 13){add2Cart(\"#qty$Product->productID\");}'>
+                                                        <a class='count-control control-up' href='javascript:void(0);' onclick='increaseNumber(\"$Product->productID\")'>+</a>
+                                                    </div>
+                                                    <button class=z_add_cart title='добавить в корзину' onclick='add2Cart(\"#qty$Product->productID\")' type=button>
+                                                        <div id=zpid_$Product->productID  class=in_cart>$shop_count</div>
+                                                    </button>
+                                                </div>
+                    ":'';
+                    
+                    $pictures = ((strlen($Product->thumbnail) > 4) && (strlen($Product->filename) > 4))?"<div class=visual><a href='/product/$Product->slug'><img class=preview  alt='$Product->name_ru' src='".URL_PRODUCTS_PICTURES."/$Product->thumbnail' data-pid='".URL_PRODUCTS_PICTURES."/$Product->filename'></a>$label</div>":"<div class=visual><a href='/product/$Product->slug'><img  alt='no foto' src='/img/nophoto.jpg'></a>$label</div>";
+
+                    //$pictures = '<div class=div_izobrag><img width=153 height=117 alt=\'no foto\' src=\'/img/nophoto.jpg\' /></div>';
+                    //if ($zakaz === 1) {
+                    //    $akc = "<span style='color: red;font-size: 14px;'><i>под заказ!</i></span><br /><span style='color: grey;'><b>$price</b></span>";
+                    //} else {
+                    //    $akc = "<span class=totalPrice>$price</span>";
+                    //}
+                    $product_code = $Product->product_code?"<div class=product_code>Артикул:&nbsp;<span class=productCode>$Product->product_code</span></div>":"";
+                    $product_bonus = $bonus?"<div><span class=totalPrice>$bonus баллов</span></div>":"";
+                    $newitems .= "
+                                <table class=cs_product_info>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <h2 class=productname>
+                                                    <a href='/product/$Product->slug'>$Product->name_ru</a>
+                                                </h2>
+                                                <div class=product>
+                                                    $pictures
+                                                    <div class=product_brief>
+                                                        $product_code
+                                                        <div class=after_code>
+                                                            <div class=wrapper>
+                                                                $product_bonus
+                                                                <div><span class=productPrice>$price</span></div>
+                                                            </div>
+                                                            $add2cart
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                           </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                              ";
+
+                }
+
+                $newitems .= "<div class='simple-pagination compact-theme'>$out</div>";
+                $newitems .= '</div>';
+
+                $newitems_end = '</div>';
+
+                if (!$ajax) {
+                    foreach ($text as $key => $oneline) {
+                        $text[$key] = str_replace($oneline, $newitems_start.$newitems.$newitems_end, $oneline);
                     }
                     if ($may_order) {
                         return $text;
@@ -1130,121 +1529,5 @@
                 /*@var $languageEntry Language*/
                 $languageEntry->addLocal($this->getAuxPageLocalID($aux_page_ID), isset($data['aux_page_name'.'_'.$languageEntry->iso2])?$data['aux_page_name'.'_'.$languageEntry->iso2]:'', LOCALTYPE_HIDDEN, 'lsgr_general');
             }
-        }
-
-        function newItemsCategory()
-        {
-//            '<table> <tbody> <tr> <td class="china"><a href="/auxpage_new_items/china/1/">Китай ←</a></td> <td style="text-align: center"><a id="date" href="/auxpage_new_items/all/1/">16.02.2016</a></td> <td class="ukraine"><a href="/auxpage_new_items/ukraine/1/">→ Украина</a></td> </tr> </tbody> </table>';
-            $disp = '';
-            $haspopup = '';
-            $sql = "SELECT DISTINCT date
-                FROM SC_product_list_item
-                WHERE list_id = 'newitemspostup'
-                ORDER BY date ASC";
-
-            if ($r = mysql_query($sql)) {
-
-                if (mysql_num_rows($r) > 0) {
-
-                    $disp .= '<table><tbody>';
-                    $disp .= '<tr><td class="china">';
-
-                    $sqlC = "SELECT DISTINCT date
-                         FROM SC_product_list_item
-                         WHERE list_id = 'newitemspostup' AND ukraine=0
-                         ORDER BY date ASC";
-
-                    if ($rC = mysql_query($sqlC)) {
-
-                        if (mysql_num_rows($rC) > 0) {
-
-                            $disp .= '<ul>';
-                            
-
-                            while ($resC = mysql_fetch_assoc($rC)) {
-
-                                $this->calcDate($resC['date']);
-                                $date_postup = $this->_date_num;
-//                                $disp .= '<tr>';
-                                $disp .= '<li>';
-                                $disp .= '<a href="/auxpage_new_items/china/' . $resC['date'] . '/" ' . $haspopup . '>' . $date_postup . '</a>';
-                                $disp .= '</li>';
-                            }
-
-                            $disp .= '</ul>';
-
-                        }
-                    }
-                    
-                    $disp .= '</td>';
-                    $disp .= '<td style="text-align: center"></td>';
-                    $disp .= '<td class="ukraine">';
-
-                    $sqlC = "SELECT DISTINCT date
-                         FROM SC_product_list_item
-                         WHERE list_id = 'newitemspostup' AND ukraine=1
-                         ORDER BY date ASC";
-
-                    if ($rC = mysql_query($sqlC)) {
-
-                        if (mysql_num_rows($rC) > 0) {
-
-                            $disp .= '<ul>';
-                            
-
-                            while ($resC = mysql_fetch_assoc($rC)) {
-
-                                $this->calcDate($resC['date']);
-                                $date_postup = $this->_date_num;
-                                $disp .= '<li>';
-                                $disp .= '<a href="/auxpage_new_items/ukraine/' . $resC['date'] . '/" ' . $haspopup . '>' . $date_postup . '</a>';
-                                $disp .= '</li>';
-                            }
-
-                            $disp .= '</ul>';
-                        }
-                    }
-
-                    $disp .= '</td></tr></tbody></table>';
-//                    $disp .= '<li ' . $haspopup . '>';
-//                    $disp .= '<a href="/auxpage_new_items/ukraine/0/" ' . $haspopup . '>Украина</a>';
-//
-//                    $sqlC = "SELECT DISTINCT date
-//                         FROM SC_product_list_item
-//                         WHERE list_id = 'newitemspostup' AND ukraine=1
-//                         ORDER BY date ASC";
-//
-//                    if ($rC = mysql_query($sqlC)) {
-//
-//                        if (mysql_num_rows($rC) > 0) {
-//
-//                            $disp .= '<ul>';
-//
-//                            while ($resC = mysql_fetch_assoc($rC)) {
-//
-//                                $this->calcDate($resC['date']);
-//                                $date_postup = $this->_date_num;
-//                                $disp .= '<li ' . $haspopup . '>';
-//                                $disp .= '<a href="/auxpage_new_items/ukraine/' . $resC['date'] . '/" ' . $haspopup . '>' . $date_postup . '</a>';
-//                                $disp .= '</li>';
-//                            }
-//
-//                            $disp .= '</ul>';
-//                        }
-//                    }
-//
-//                    $disp .= '</li></ul>';
-                }
-            }
-
-            $this->_disp = $disp;
-        }
-
-        function calcDate($date_num)
-        {
-            $date = time() - (($date_num - 1) * 24 * 60 * 60);
-            $date_num = date('d-m-Y', $date);
-
-            $this->_date_num = $date_num;
         }
     }

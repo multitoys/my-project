@@ -157,13 +157,13 @@
         {*</td>*}
 	{*</tr>*}
 
-	{*<tr>*}
-		{*<td><strong>Спеццена</strong></td>*}
-		{*<td>*}
-			{*<span id="is_special_price_txt">{if $customerInfo.is_special_price}{"str_answer_yes"|translate}{else}{"str_answer_no"|translate}{/if}</span>*}
-			{*<input id="is_special_price_inp" onchange="ZHandleCheckBox(this);" type="checkbox" {if $customerInfo.is_special_price}checked{/if} name = 'ci[is_special_price]' style="display: none;" value="1" />*}
-        {*</td>*}
-	{*</tr>*}
+	<tr>
+		<td><strong>Экспорт товаров</strong></td>
+		<td>
+			<span id="api_access_txt">{if $customerInfo.api_access}{"str_answer_yes"|translate}{else}{"str_answer_no"|translate}{/if}</span>
+			<input id="api_access_inp" {*onchange="ZHandleCheckBox(this);"*} type="checkbox" {if $customerInfo.api_access}checked{/if} name = 'ci[api_access]' style="display: none;" value="1" />
+        </td>
+	</tr>
 
 		<td valign="top">
 			<strong>Авторизация</strong>

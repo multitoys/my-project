@@ -58,4 +58,3 @@
 	$smarty->assign( "products_to_show_count", $countTotal );
 	$smarty->assign( "search_navigator", $navigatorHtml );
 	$smarty->assign( "main_content_template", "search_simple.html" );
-?>

@@ -236,9 +236,7 @@
         $q = db_query("SELECT Price, skidka, ukraine FROM ".PRODUCTS_TABLE." WHERE productID='".$productID."'");
         $r = db_fetch_row($q);
 
-        $full_price = priceDiscount($r["Price"], $r["skidka"], $r["ukraine"]);
-
-        return $full_price;
+        return priceDiscount($r["Price"], $r["skidka"], $r["ukraine"]);
     }
 
     function GetProductIdByItemId($itemID)
@@ -267,17 +265,22 @@
         $customerEntry = Customer::getAuthedInstance();
 
         if (!is_null($customerEntry)) {
+            
             if ($mode == 'erase') {
                 $itemIDs = db_phquery_fetch(DBRFETCH_FIRST_ALL, 'SELECT itemID FROM ?#SHOPPING_CARTS_TABLE WHERE customerID=?', $customerEntry->customerID);
+                
                 if (is_array($itemIDs) && count($itemIDs)) {
                     db_phquery("DELETE FROM ?#SHOPPING_CART_ITEMS_CONTENT_TABLE WHERE itemID IN (?@)", $itemIDs);
                     db_phquery("DELETE FROM ?#SHOPPING_CART_ITEMS_TABLE WHERE itemID IN (?@)", $itemIDs);
                 }
             }
-            if ($mode != 'recalculate')
+            
+            if ($mode != 'recalculate') {
                 db_phquery("DELETE FROM ?#SHOPPING_CARTS_TABLE WHERE customerID=?", $customerEntry->customerID);
-            else
+            } else {
                 db_phquery("UPDATE ?#SHOPPING_CARTS_TABLE SET Quantity=0 WHERE customerID=?", $customerEntry->customerID);
+            }
+            
         } else {
             if ($mode == 'recalculate' && isset($_SESSION["counts"]) && is_array($_SESSION["counts"])) {
                 $i = 0;
@@ -301,6 +304,7 @@
 
         $cart_content = array();
         $total_price = 0;
+        $total_bonus = 0;
         $freight_cost = 0;
         $variants = '';
 
@@ -338,7 +342,7 @@
             }
 
             $q = db_phquery('
-			SELECT t3.productID, t3.name_ru, t3.Price, t3.product_code, t3.Bonus, t3.ostatok,
+			SELECT t3.productID, t3.Price, t3.product_code, t3.Bonus, t3.min_order_amount, t3.name_ru, t3.slug, t3.ostatok,
 			       t1.itemID, t1.Quantity, t4.thumbnail, t4.filename 
 			    FROM ?#SHOPPING_CARTS_TABLE t1
 				LEFT JOIN ?#SHOPPING_CART_ITEMS_TABLE t2 ON t1.itemID=t2.itemID
@@ -358,7 +362,7 @@
 
                 $costUC = GetPriceProductWithOption($variants, $cart_item['productID']);
                 // $costUC = doubleval (str_replace(",", "", $costUC));
-                $Bonus = ($cart_item['Bonus'])?(int)$costUC:'';
+                $Bonus = ($cart_item['Bonus'])?$cart_item['Bonus']/(int)$cart_item['Price']:0;
 
                 $tmp = array(
                     'productID'         => $cart_item['productID'],
@@ -368,33 +372,43 @@
                     'thumbnail_url'     => $cart_item['thumbnail'] && file_exists(DIR_PRODUCTS_PICTURES.'/'.$cart_item['thumbnail'])?URL_PRODUCTS_PICTURES.'/'.$cart_item['thumbnail']:'',
                     'picture_url'       => $cart_item['filename'] && file_exists(DIR_PRODUCTS_PICTURES.'/'.$cart_item['filename'])?URL_PRODUCTS_PICTURES.'/'.$cart_item['filename']:'',
                     'ostatok'           => $cart_item['ostatok'],
-                    'brief_description' => $cart_item['brief_description'],
+                    //'brief_description' => $cart_item['brief_description'],
                     'quantity'          => $cart_item['Quantity'],
-                    'free_shipping'     => $cart_item['free_shipping'],
+                    //'free_shipping'     => $cart_item['free_shipping'],
                     'costUC'            => show_price($costUC),
+                    'Price'             => $costUC,
+                    'PriceX'            => show_priceWithOutUnit($costUC),
                     //'optprice'  => $cart_item['optprice'],
                     //'doza'  => $cart_item['doza'],
-                    'Bonus'             => $Bonus * $cart_item['Quantity'],
+                    'BonusX'            => (int)$Bonus,
+                    'Bonus'             => (int)$Bonus * (int)($cart_item['Quantity'] * $costUC),
                     'cost'              => show_price($cart_item['Quantity'] * $costUC),
+                    'min_order'         => $cart_item['min_order_amount']?:0,
                     'product_code'      => $cart_item['product_code']
                 );
 
                 if ($tmp['thumbnail_url']) {
-
                     list($thumb_width, $thumb_height) = getimagesize(DIR_PRODUCTS_PICTURES.'/'.$cart_item['thumbnail']);
-                    list($tmp['thumbnail_width'], $tmp['thumbnail_height']) = shrink_size($thumb_width, $thumb_height, round(CONF_PRDPICT_THUMBNAIL_SIZE / 2), round(CONF_PRDPICT_THUMBNAIL_SIZE / 2));
+                    list($tmp['thumbnail_width'], $tmp['thumbnail_height']) = shrink_size(
+                        $thumb_width, $thumb_height, round(CONF_PRDPICT_THUMBNAIL_SIZE / 2), 
+                        round(CONF_PRDPICT_THUMBNAIL_SIZE / 2))
+                    ;
                 }
 
-                $freight_cost += $cart_item['Quantity'] * $cart_item['shipping_freight'];
+                //$freight_cost += $cart_item['Quantity'] * $cart_item['shipping_freight'];
 
                 $strOptions = GetStrOptions(GetConfigurationByItemId($tmp['id']));
-                if (trim($strOptions) !== '')
+                
+                if (trim($strOptions) !== '') {
                     $tmp['name'] .= "  (".$strOptions.")";
-
-                if ($cart_item['min_order_amount'] > $cart_item['Quantity'])
+                }
+                
+                if ($cart_item['min_order_amount'] > $cart_item['Quantity']) {
                     $tmp['min_order_amount'] = $cart_item['min_order_amount'];
-
+                }
+                
                 $total_price += $cart_item['Quantity'] * $costUC;
+                $total_bonus += $tmp['Bonus'];
 
                 $cart_content[] = $tmp;
             }
@@ -500,7 +514,7 @@
         return array(
             'cart_content' => $cart_content,
             'total_price'  => $total_price,
-            'freight_cost' => $freight_cost
+            'total_bonus' => $total_bonus
         );
     }
 

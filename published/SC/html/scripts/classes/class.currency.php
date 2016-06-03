@@ -237,7 +237,7 @@ var defaultCurrency = {
 		$b = floor(($n - $a) / 10)*10;
 		$c = $n % 10;
 		if($b==10){
-			$b = $b+$c;
+			$b += $c;
 			$c = 0;
 		}
 		$s = "";
@@ -394,4 +394,3 @@ var defaultCurrency = {
 	}
 
 }
-?>

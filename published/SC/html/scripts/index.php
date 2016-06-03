@@ -1,8 +1,8 @@
 <?php
     // -------------------------INITIALIZATION-----------------------------//
-    ini_set('display_errors', false);
+    ini_set('display_errors', true);
     define('DIR_ROOT', str_replace("\\", '/', realpath(dirname(__FILE__))));
-    $DebugMode = false;
+    $DebugMode = true;
     $Warnings = array();
     include_once(DIR_ROOT.'/includes/init.php');
     include_once(DIR_CFG.'/connect.inc.wa.php');
@@ -16,7 +16,21 @@
             $_GET[$name] = preg_replace('/[\>\<"\']/si', '', $get);
         }
     }
-
+    //$greet = function($name)
+    //{
+    //    printf("Hello %s\r\n", $name);
+    //};
+    //
+    //$greet('World');
+    //$greet('PHP');
+//    echo mktime(13, 02, 03, 4, 27, 2016);
+//    echo '<br>'.date('F jS, Y g:i:s a', mktime(15, 23, 24, 4, 21, 2016));
+    $ajax = false;
+    if (isset($_GET['ajax'])) {
+        $ajax = true;
+        unset($_GET['ajax']);
+    }
+    
     //support for old urls
     //hack-like method
 
@@ -58,78 +72,22 @@
         $T->timerStart();
     }
 
-    $DB_tree = ClassManager::getInstance('DataBase');
 //    $DB_tree = new DataBase();
+    $DB_tree = ClassManager::getInstance('DataBase');
     $DB_tree->connect(SystemSettings::get('DB_HOST'), SystemSettings::get('DB_USER'), SystemSettings::get('DB_PASS'));
     $DB_tree->selectDB(SystemSettings::get('DB_NAME'));
     define('VAR_DBHANDLER', 'DBHandler');
 
-    if (isset($_SESSION['__WBS_SC_DATA']) && isset($_SESSION['__WBS_SC_DATA']['U_ID'])) {
-
-//        if (SystemSettings::is_hosted()) {
-//            class CurrentUser
-//            {
-//                function getId()
-//                {
-//                    return '';
-//                }
-//            }
-//
-//            Wbs::loadCurrentDbKey();
-//            $fileEntry = new WbsFiles('SC');
-//            Functions::register($fileEntry, 'file_move_uploaded', 'move_upload');
-//        } else {
-            $fileEntry = new FileWBS();
-            Functions::register($fileEntry, 'file_move_uploaded', 'move_uploaded');
-//        }
+    if (isset($_SESSION['__WBS_SC_DATA']['U_ID'])) {
+        $fileEntry = new FileWBS();
+        Functions::register($fileEntry, 'file_move_uploaded', 'move_uploaded');
         Functions::register($fileEntry, 'file_copy', 'copy');
         Functions::register($fileEntry, 'file_move', 'move');
         Functions::register($fileEntry, 'file_remove', 'remove');
         //Functions::register($fileEntry, 'file_exists', 'exists');
     }
 
-//    if (!__USE_OLD_UPDATE) {
-//        //DEBUG:||true
-//        if (SystemSettings::is_hosted()) {
-//            $update = false;
-//            // If cannot load dbkey settings
-//            try {
-//                //	@session_start();
-//                if (!defined('GET_DBKEY_FROM_URL')) {
-//                    define('GET_DBKEY_FROM_URL', 1);
-//                }
-//
-//                if (Wbs::loadCurrentDBKey()) {
-//                    $update = true;
-//                }
-//
-//            } catch (Exception $ex) {
-//                trigger_error($ex->getMessage(), E_USER_ERROR);
-//                var_dump($ex);
-//            }
-//
-//            if ($update) {
-//                try {
-//                    $updater = new WbsUpdater('SC');
-//                    $updater->check();
-//                } catch (Exception $e) {
-//                    var_dump($ex);
-//                    //....
-//                }
-//            }
-//        }
-//    }
-
     $Register = &Register::getInstance();
-
-//    if (isset($_GET['widgets'])) {
-//        renderURL('view=noframe&external=1', '', true);
-//    }
-//    if (isset($_GET['view']) && $_GET['view'] === 'noframe' && isset($_GET['external'])) {
-//        $widgets = 1;
-//        $Register->set('widgets', $widgets);
-//    }
-
     $Register->set(VAR_DBHANDLER, $DB_tree);
 
     settingDefineConstants();
@@ -149,8 +107,7 @@
 
     if (strpos($furl_path, '/') === 0) {//it's not work properly on apache 1.xx when string start on '/' so it deleted
         $furl_path = substr($furl_path, 1);
-//        if (!SystemSettings::is_hosted()) 
-            $_GET['__furl_path'] = $furl_path;
+        $_GET['__furl_path'] = $furl_path;
     }
     $Register->set('FURL_PATH', $furl_path);
 
@@ -167,45 +124,33 @@
             '</body></html>';
         die();
     };
+    
     //$_urlEntry->setPath('/');
     $_furl_path = $furl_path ? substr($_SERVER['REQUEST_URI'], 0, strpos($_SERVER['REQUEST_URI'], $furl_path)) : $_SERVER['REQUEST_URI'];
     $_furl_path = substr($_furl_path, strlen(WBS_INSTALL_PATH));
+    
     if (strpos($_furl_path, '/') === 0) {//it's not work properly on apache 1.xx when string start on '/' so it deleted
         $_furl_path = substr($_furl_path, 1);
-//        if (!SystemSettings::is_hosted()) 
-            $_GET['__furl_path'] = $_furl_path;
+        $_GET['__furl_path'] = $_furl_path;
     }
+    
     while (!strpos($_furl_path, '//') === false) {
         $_furl_path = str_replace('//', '/', $_furl_path);
     }
+    
     $_furl_path = explode('/', $_furl_path);
+    
     if ((isset($_furl_path[0]) && strcmp(strtolower($_furl_path[0]), 'shop') === 0)) {
         $_furl_path = '/shop/';
     } else {
         $_furl_path = '/';
     }
-
-//    if (SystemSettings::is_hosted()) {
-//        $_furl_path = '/shop/';
-//        $_urlEntry->setPath('/shop/');
-//    } else {
-        $_urlEntry->setPath(str_replace('//', '/', WBS_INSTALL_PATH.$_furl_path));
-//    }
-
+    
+    $_urlEntry->setPath(str_replace('//', '/', WBS_INSTALL_PATH.$_furl_path));
     $_urlEntry->setQuery('?');
     $__url = preg_replace('/\/[^\/]+$/', '', $_urlEntry->getURI());
-    //define('CONF_FULL_SHOP_URL', $__url.(SystemSettings::is_hosted()||(SystemSettings::get('FRONTEND')!='SC')?'shop/':''));
     $CONF_FULL_SHOP_URL = $__url.(SystemSettings::is_hosted() || (SystemSettings::get('FRONTEND') !== 'SC') ? 'shop/' : '');
-
     $__wa_url = $__url;
-//    if (SystemSettings::is_hosted()) {
-//        $matches = null;
-//        if (preg_match('/^(.+)shop\/$/', $__url, $matches)) {
-//            $__wa_url = $matches[1];
-//        }
-//    }
-//	define('WIDGET_SHOP_URL', preg_replace('/\/[^\/]+$/', '', $_urlEntry->getURI().(SystemSettings::is_hosted()?'':'shop/')));
-//	$_base_url = substr($__url,0,strlen($__url)-strlen(WBS_INSTALL_PATH));
 
     $pattern = '|^((http[s]{0,1}://([^/]+)/)'.substr(WBS_INSTALL_PATH, 1).')|msi';
     if (preg_match($pattern, $__url, $matches)) {
@@ -221,11 +166,6 @@
     unset($_base_url);
     define('CONF_WAROOT_URL', WBS_INSTALL_PATH);
     define('CONF_ON_WEBASYST', SystemSettings::is_hosted());
-
-    //DEBUG:
-    /*foreach(array('BASE_URL','BASE_WA_URL','WIDGET_SHOP_URL','CONF_FULL_SHOP_URL','CONF_WAROOT_URL') as $const){
-        print $const."=".constant($const)."<br>\n";
-    }*/
 
     require_once(DIR_CFG.'/language_list.php');
     require_once(DIR_FUNC.'/category_functions.php');
@@ -254,40 +194,22 @@
     require_once(DIR_FUNC.'/reg_fields_functions.php');//*
     require_once(DIR_FUNC.'/tax_function.php');//*
     require_once(DIR_CLASSES.'/class.virtual.shippingratecalculator.php');
-    //require_once(DIR_CLASSES.'/class.virtual.paymentmodule.php');
-//    if (false) {//SMARTY SC
-//        require_once(DIR_ROOT.'/smarty/smarty.class.php');
-//        require_once(DIR_ROOT.'/smarty/resources/resource.rfile.php');
-//        require_once(DIR_ROOT.'/smarty/resources/resource.register.php');
-//    } else {//USE MERGED SMARTY
-        require_once($_SERVER['DOCUMENT_ROOT'].'/kernel/includes/smarty/Smarty.class.php');
-        require_once($_SERVER['DOCUMENT_ROOT'].'/kernel/includes/smarty/resources/resource.rfile.php');
-        require_once($_SERVER['DOCUMENT_ROOT'].'/kernel/includes/smarty/resources/resource.register.php');
-//    }
+    require_once($_SERVER['DOCUMENT_ROOT'].'/kernel/includes/smarty/Smarty.class.php');
+    require_once($_SERVER['DOCUMENT_ROOT'].'/kernel/includes/smarty/resources/resource.rfile.php');
+    require_once($_SERVER['DOCUMENT_ROOT'].'/kernel/includes/smarty/resources/resource.register.php');
 
     require_once(DIR_FUNC.'/search_function.php');
 
     if (!file_exists(DIR_COMPILEDTEMPLATES)) {
         mkdir(DIR_COMPILEDTEMPLATES);
     }
-    /*
-    $products_res = db_query("SELECT COUNT( * ) AS 'cnt', `product_code`
-FROM `SC_products`
-GROUP BY `product_code`
-ORDER BY `cnt` DESC");
-    while($row = db_fetch_row($products_res)){
-        if($row['cnt']==1){
-            break;
-        }
-        db_phquery('DELETE FROM `SC_products` WHERE `product_code` =? LIMIT ?',$row['product_code'],($row['cnt']-1));
-    }
-    */
 
     /* init Smarty */
     $smarty = new View; //core smarty object
     $smarty_mail = new View; //for e-mails
 //	$smarty->debugging_ctrl = 'URL';
-    if (false || (0 && CONF_SMARTY_FORCE_COMPILE)) { //this forces Smarty to recompile templates each time someone runs index.php
+    
+    if (true || (0 && CONF_SMARTY_FORCE_COMPILE)) { //this forces Smarty to recompile templates each time someone runs index.php
         $smarty->force_compile = true;
         $smarty_mail->force_compile = true;
     } else {
@@ -329,25 +251,45 @@ ORDER BY `cnt` DESC");
     }
 
     checkLogin($a);
-
+    
+    $conc = false;
+    if (isset($_GET['__furl_path'])) {
+        $conc = str_replace('/', '', $_GET['__furl_path']);
+        switch ($conc) {
+            case 'auxpage_divoland':
+            case 'auxpage_mixtoys':
+            case 'auxpage_dreamtoys':
+            case 'auxpage_kindermarket':
+            case 'auxpage_grandtoys':
+            $conc = substr($conc, 8);
+            $ajax = false;
+            break;
+            default:
+                $conc = false;
+        }
+    }
+    $smarty->assign('ajax', $ajax);
+    $smarty->assign('conc', $conc);
+    
     if (!detectMSIE()) {
-        $smarty->assign('deffer', 'deffer');
+        $smarty->assign('defer', 'defer');
+    } else {
+        $smarty->assign('MSIE', 'MSIE');
     }
 
-    if (detectIOS()) {
-        $smarty->assign('ios', 'ios');
-        $smarty->assign('haspopup', 'aria-haspopup=true');
+    if (detectMobile()) {
+//        $smarty->assign('ios', 'ios');
+        $GetVars['view'] = 'mobile';
+        $smarty->assign('PAGE_VIEW', 'mobile');
     }
-//    if (detectPDA()) {
-//        $GetVars['view'] = 'mobile';
-//        $smarty->assign('PAGE_VIEW', 'mobile');
-//    }
 
     if (isset($_SESSION['xPOST']['g01j'])) {
         $smarty->assign('xpostdata', $_SESSION['xPOST']['g01j']);
     }
-
-
+    
+    $smarty->assign('yandex_info', yandexXMLexist());
+    $smarty->assign('yandex_info_discount', yandexXMLexist(true));
+    
     // $smarty->assign('lang_list', $lang_list);
     //    $cur_lang = LanguagesManager::getCurrentLanguage();
     /*@var $cur_lang Language*/
@@ -364,8 +306,10 @@ ORDER BY `cnt` DESC");
     if (!MOD_REWRITE_SUPPORT and array_key_exists('productID', $_GET) and !array_key_exists('ukey', $_GET) && !array_key_exists('did', $_GET)) {
         $_GET['ukey'] = 'product';
     };
+    
     $max_cnt = 200;
     $CurrDivision = null;
+    
     do {
         $did = isset($_GET['did']) ? $_GET['did'] : 0;
 
@@ -410,9 +354,8 @@ ORDER BY `cnt` DESC");
     }
 
     if ($CurrDivision->LinkDivisionUKey != '') {
-
         $CurrDivision = &DivisionModule::getDivisionByUnicKey($CurrDivision->LinkDivisionUKey);
-        set_query('&did='.$CurrDivision->getID().'&did=&ukey='.$CurrDivision->getUnicKey(), '', true);
+        set_query('&did='.$CurrDivision->getID().'&ukey='.$CurrDivision->getUnicKey(), '', true);
     }
 
     $Register->set(VAR_CURRENTDIVISION, $CurrDivision);
@@ -435,9 +378,6 @@ ORDER BY `cnt` DESC");
 
     $LanguageEntry = &LanguagesManager::getCurrentLanguage();
 
-    // $smarty->assign('button_add2cart_small', URL_IMAGES.'/add2cart_small_'.$LanguageEntry->iso2.'.gif');
-    // $smarty->assign('button_add2cart_big', URL_IMAGES.'/add2cart_'.$LanguageEntry->iso2.'.gif');
-    // $smarty->assign('button_viewcart', URL_IMAGES.'/viewcart_'.$LanguageEntry->iso2.'.gif');
     $smarty->assign('BREADCRUMB_DELIMITER', '&raquo;');
 
     if (($admin_mode || $CurrDivision->UnicKey == 'cpt_constructor') && sc_getSessionData('LANGUAGE_ID') && sc_getSessionData('LANGUAGE_ID') != $LanguageEntry->id) {
@@ -506,23 +446,24 @@ ORDER BY `cnt` DESC");
             RedirectSQ('demo_theme_id='._getSettingOptionValue('CONF_CURRENT_THEME'));
         }
         //$themeEntry->load(CONF_CURRENT_THEME);
-        $smarty->assign('url_current_theme_css', $themeEntry->getURLOffset().'/main.css');
+//        $smarty->assign('url_current_theme_css', $themeEntry->getURLOffset().'/main.css');
+        $smarty->assign('url_current_theme_css', 'css/main.css');
 
         $AdminDeps = array();
         $SubDivs = &DivisionModule::getBranchDivisions($AdminDivID, array('xEnabled' => 1));
+        
         foreach ($SubDivs as $_SubDiv) {
-
             $AdminDeps[] = array(
                 'id'   => $_SubDiv->ID,
                 'name' => $_SubDiv->Name,
             );
         }
+        
         $BreadDivs = $CurrDivision->getBreadsToID($AdminDivID);
+        
         if (count($BreadDivs) > 1) {
-
             $CurrDptID = $BreadDivs[1]->ID;
         } else {
-
             $CurrDptID = $CurrDivision->ID;
         }
         sc_checkLoggedUserAccess2Division($CurrDivision, $BreadDivs);
@@ -530,8 +471,8 @@ ORDER BY `cnt` DESC");
         if ($CurrDivision->UnicKey != 'admin') {
             $smarty->assign('SubDivs', DivisionModule::getBranchDivisions($CurrDptID, array('xEnabled' => 1)));
         }
+        
         $smarty->assign('current_dpt', $CurrDptID);
-
         $smarty->assign('admin_departments', $AdminDeps);
         $smarty->assign('admin_departments_count', count($AdminDeps));
         $smarty->assign('admin_main_content_template', 'nav2level.tpl.html');
@@ -554,7 +495,7 @@ ORDER BY `cnt` DESC");
         }
         
         $Register->set('CURRENT_THEME_ENTRY', $themeEntry);
-        $smarty->assign('PAGE_VIEW', isset($GetVars['view']) ? $GetVars['view'] : '');
+//        $smarty->assign('PAGE_VIEW', isset($GetVars['view']) ? $GetVars['view'] : '');
         $smarty->assign('main_content_template', 'home.html');
 
         include(DIR_ROOT.'/includes/authorization.php');
@@ -565,6 +506,42 @@ ORDER BY `cnt` DESC");
         
         $smarty->assign('categoryID', isset($_GET['categoryID']) ? (int)$_GET['categoryID'] : 0);
         $smarty->template_dir = DIR_FTPLS;
+    
+        $css_m_main = array('/css/m.main.css');
+        $smarty->assign('css_m_main', $css_m_main);
+        
+        $css_main = array('/css/main.css');
+        $smarty->assign('css_main', $css_main);
+        
+        $js_multislidemenu = array('/js/multislidemenu.js');
+        $smarty->assign('js_multislidemenu', $js_multislidemenu);
+        
+        $js_m_multislidemenu = array('/js/m.multislidemenu.js');
+        $smarty->assign('js_m_multislidemenu', $js_m_multislidemenu);
+        
+        $js_baron = array('/js/baron.js');
+        $smarty->assign('js_baron', $js_baron);
+        
+        $js_head = array('/js/head.js');
+        $smarty->assign('js_head', $js_head);
+    
+        $js_m_head = array('/js/m.head.js');
+        $smarty->assign('js_m_head', $js_m_head);
+    
+        $js_functions = array('/js/functions-dev.js');
+        $smarty->assign('js_functions', $js_functions);
+        
+        $js_competitors = array('/js/competitors.js');
+        $smarty->assign('js_competitors', $js_competitors);
+        
+        $js_m_competitors = array('/js/m.competitors.js');
+        $smarty->assign('js_m_competitors', $js_m_competitors);
+        
+        $js_JsHttpRequest = array(URL_JS.'/JsHttpRequest.js');
+        $smarty->assign('js_JsHttpRequest', $js_JsHttpRequest);
+    
+        //$js_files = array('/js/multislidemenu.js', '/js/baron.js', '/js/head.js', '/js/functions-dev.js');
+        //$smarty->assign('js_files', $js_files);
     }
     
     $InheritableInterfaces = $CurrDivision->getInheritableInterfaces();
@@ -579,16 +556,14 @@ ORDER BY `cnt` DESC");
             ModulesFabric::callInterface($_Interface);
         }
     }
-
+    
     if (!$admin_mode) {
-
         //security warnings!
         if (file_exists(DIR_ROOT.'/install.php')) $Warnings[] = translate('warning_delete_install_php');
 
         if (!(is_writable(DIR_TEMP) & is_writable(DIR_PRODUCTS_FILES) & is_writable(DIR_PRODUCTS_PICTURES) & is_writable(DIR_COMPILEDTEMPLATES))) {
             $Warnings[] = translate('warning_wrong_chmod');
         }
-
         //show admin a administrative mode link
         if (isset($_SESSION['log']) && !strcmp($_SESSION['log'], ADMIN_LOGIN)) {
             $Warnings[] = '<br><a href="'.set_query('ukey=admin').'">'.translate('lnk_administrativemode').'</a><br />';
@@ -597,34 +572,11 @@ ORDER BY `cnt` DESC");
 
     $smarty->assign('Warnings', $Warnings);
     $smarty->assign('https_connection_flag', $urlEntry->getScheme() === 'https');
-    
-    // $smarty->assign('show_powered_by',SystemSettings::get('SHOW_POWERED_BY')&&!in_array($CurrDivision->UnicKey,array('cart','checkout','invoice')));
-    // $smarty->assign('show_powered_by_link',SystemSettings::get('SHOW_POWERED_BY')&&($CurrDivision->UnicKey == 'TitlePage'));
 
-    /*
-     * $smarty->assign('main_content_template', '404.html');
-     */
-
-    /*$undefined_smarty_vars = array('main_body_style','printable_version',
-            'main_body_tpl','page_not_found404','rss_link','survey_question',
-            'show_survey_results','survey_answers','error_message','searchstring',
-            'subscribe','GOOGLE_ANALYTICS_SET_TRANS');
-    foreach($undefined_smarty_vars as $undefined_smarty_var){
-        if($smarty->get_config_vars($undefined_smarty_var)===null){
-            $smarty->assign($undefined_smarty_var,null);
-        }
-    }
-    $undefined_get_vars = array('productwidget');
-    foreach($undefined_get_vars as $undefined_get_var){
-        if(!isset($_GET[$undefined_get_var])){
-            $_GET[$undefined_get_var] = null;
-        }
-    }
-*/
-    
     if (isset($_GET['market'])) {
         $smarty->assign('market_link', 'market');
     }
+    
     if (isset($_GET['sales'])) {
         salesDebug();
     }
@@ -632,48 +584,47 @@ ORDER BY `cnt` DESC");
     if ($error404) {
         $smarty->assign('page_title', '404 '.translate('err_cant_find_required_page').' ― '.CONF_SHOP_NAME);
     }
-    
-    if ($CurrDivision->MainTemplate && !detectPDA() && (!isset($_GET['view']) || $GetVars['view'] !== 'mobile')) {
+
+    if ($admin_mode || ($CurrDivision->MainTemplate && !detectMobile() && (!isset($_GET['view']) || $GetVars['view'] !== 'mobile'))) {
 
         if (isset($GetVars['view']) && ($GetVars['view'] === 'noframe' || $GetVars['view'] === 'printable')) {
             $smarty->assign('main_body_tpl', $smarty->get_template_vars('main_content_template'));
         }
-        // $smarty->assign('printable_version', (isset($GetVars['view']) &&($GetVars['view'] == 'printable'))?1:false);
-
-        // if($Register->is_set('widgets')&&$Register->get('widgets')){
-        // $smarty->assign('WIDGET_PROCESSING', 1);
-        // }
 
         $themeEntry = &$Register->get('CURRENT_THEME_ENTRY');
-        
+
         if (!$admin_mode && is_object($themeEntry)) {
             $smarty->assign('URL_THEME_OFFSET', $themeEntry->getURLOffset());
-            $smarty->assign('overridestyles', file_exists($themeEntry->getPath().'/overridestyles.css'));
         }
-        
+
         $currencyEntry = Currency::getSelectedCurrencyInstance();
-        
+
         if (is_object($currencyEntry)) {
             $smarty->assign('current_currency_js', $currencyEntry->getJSCurrencyInstance());
         }
-        
         print $smarty->fetch($CurrDivision->MainTemplate);
         
-    } elseif (!$admin_mode) {
-        
+    } else if (!$admin_mode) {
+
         $themeEntry = &$Register->get('CURRENT_THEME_ENTRY');
-        
-        if (!$admin_mode && is_object($themeEntry)) {
+
+        if (is_object($themeEntry)) {
             $smarty->assign('URL_THEME_OFFSET', $themeEntry->getURLOffset());
-            $smarty->assign('overridestyles', file_exists($themeEntry->getPath().'/overridestyles.css'));
         }
-        
+
         define('PDA_VERSION', 1);
-//         $smarty->assign('PAGE_VIEW', 'mobile');
-        $main_body_tpl = $smarty->get_template_vars('main_content_template') ? $smarty->get_template_vars('main_content_template') : 'home.html';
-//         if(file_exists(DIR_FTPLS.'/m.'.$main_body_tpl))$main_body_tpl = 'm.'.$main_body_tpl;
-//         $smarty->assign('main_body_tpl', $main_body_tpl);
-//         print $smarty->fetch('m.frame.html');
+//        $smarty->assign('PAGE_VIEW', 'mobile');
+        
+        $main_body_tpl = $smarty->get_template_vars('main_content_template') ? : 'home.html';
+        $frame = 'frame.html';
+        
+        if (file_exists(DIR_FTPLS.'/m.'.$main_body_tpl)) {
+            $main_body_tpl = 'm.'.$main_body_tpl;
+//            $frame = 'm.'.$frame;
+        }
+
+        $smarty->assign('main_body_tpl', $main_body_tpl);
+        print $smarty->fetch($frame);
     }
 
     //DEBUG futures
@@ -683,3 +634,12 @@ ORDER BY `cnt` DESC");
     ) {
         print 'time: <strong>'.$T->timerStop().'</strong><br />';
     }
+
+    //DEBUG futures
+    //        if (isset($_GET['debug']) &&
+    //            ($_GET['debug'] === 'time' ||
+    //                $_GET['debug'] === 'total_time')
+    //        ) {
+    //            print 'time: <strong>'.$T->timerStop().'</strong><br />';
+    //            var_dump(get_declared_classes());
+    //        }

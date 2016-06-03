@@ -1,63 +1,46 @@
-<div class="shapka" id="font-105">
-<table class="cs_product_info">
-	  <tbody>
-      <tr>
-	    <td width="160px">
-      </td>
-	    <td>
-        <div class=sort_name>
-          <div class="{if $sort=='name'} z_sort_active {else} z_sort_inactive {/if}">
-            <a href="/category/{$selected_category.slug}&sort=name&direction={if $direction=='ASC'}DESC{else}ASC{/if}">
-              <table><tr><td style="padding-left:5px;"><div class="arbopr" title="Отсортировать по Наименованию">Наименование&nbsp;</div>
-                <div class="{if $direction=='ASC'&&$sort=='name'}z_sort_desc{else}z_sort_asc{/if}"></div>
-              </td></tr></table>
-            </a>
-          </div>
-        </div>
-      </td>
-	    <td width="100px">
-		  <div>
-        <div class="{if $sort=='product_code'} z_sort_active {else} z_sort_inactive {/if}">
-          <a href="/category/{$selected_category.slug}&sort=product_code&direction={if $direction=='ASC'}DESC{else}ASC{/if}">
-    	      <table width="100px"><tr><td><div class="arbopr" title="Отсортировать по Артикулу">Артикул</div>
-                <div class="{if $direction=='ASC'&&$sort=='product_code'}z_sort_desc{else}z_sort_asc{/if}"></div>
-              </td></tr></table>
-          </a>
-        </div>
-      </td>
-      <td width="60px">
-        <div>
-          <div class="{if $sort=='Bonus'} z_sort_active {else} z_sort_inactive {/if}">
-            <a href="/category/{$selected_category.slug}&sort=Bonus&direction={if $direction=='ASC'}DESC{else}ASC{/if}">
-              <table width="60px"><tr><td><div class="arbopr" title="Отсортировать по Баллам">Баллы</div>
-                <div class="{if $direction=='ASC'&&$sort=='Bonus'}z_sort_desc{else}z_sort_asc{/if}"></div>
-              </td></tr></table>
-            </a>
-          </div>
-        </div>
-      </td>
-      <td width="80px">
-        <div>
-          <div class="{if $sort=='Price'} z_sort_active {else} z_sort_inactive {/if}">
-            <a href="/category/{$selected_category.slug}&sort=Price&direction={if $direction=='ASC'}DESC{else}ASC{/if}">
-              <table width="80px"><tr><td><div class="arbopr" title="Отсортировать по Цене">Цена</div>
-                <div class="{if $direction=='ASC'&&$sort=='Price'}z_sort_desc{else}z_sort_asc{/if}"></div>
-              </td></tr></table>
-            </a>
-          </div>
-        </div>
-      </td>
-      <td width="50px">
-      </td>
-      <td width="70px">
-          <div class="ost">
-            Остаток
-          </div>
-      </td>
-      <td width="55px">
-          <div class="zakaz">Заказано</div>
-      </td>
-    </tr>
-  </tbody>
-</table>
+<div class=shapka>
+    <table class=cs_product_info style="padding-left: 5px">
+        <tbody>
+        <tr>
+            <td>
+                <div class="{if $sort=='name'} z_sort_active {else} z_sort_inactive {/if}">
+                    <div class="arbopr sort_name">
+                        <a href="/category/{$selected_category.slug}&sort=name&direction={if $direction=='ASC'}DESC{else}ASC{/if}"  title="Отсортировать по Наименованию">Наименование</a>
+                    </div>
+                    <div class="{if $direction=='ASC'&&$sort=='name'}z_sort_asc{else}z_sort_desc{/if}"></div>
+                </div>
+            </td>
+            <td width=100px>
+                <div class="{if $sort=='product_code'} z_sort_active {else} z_sort_inactive {/if}">
+                    <div class=arbopr>
+                        <a href="/category/{$selected_category.slug}&sort=product_code&direction={if $direction=='ASC'}DESC{else}ASC{/if}" title="Отсортировать по Артикулу">Артикул</a>
+                    </div>
+                    <div class="{if $direction=='ASC'&&$sort=='product_code'}z_sort_asc{else}z_sort_desc{/if}"></div>
+                </div>
+            </td>
+            <td width=60px>
+                <div class="{if $sort=='Bonus'} z_sort_active {else} z_sort_inactive {/if}">
+                    <div class=arbopr>
+                        <a href="/category/{$selected_category.slug}&sort=Bonus&direction={if $direction=='ASC'}DESC{else}ASC{/if}" title="Отсортировать по Баллам">Баллы</a>
+                    </div>
+                    <div class="{if $direction=='ASC'&&$sort=='Bonus'}z_sort_asc{else}z_sort_desc{/if}"></div>
+                </div>
+            </td>
+            <td width=80px>
+                <div class="{if $sort=='Price'} z_sort_active {else} z_sort_inactive {/if}">
+                    <div class=arbopr>
+                        <a href="/category/{$selected_category.slug}&sort=Price&direction={if $direction=='ASC'}DESC{else}ASC{/if}" title="Отсортировать по Цене">Цена</a>
+                    </div>
+                    <div class="{if $direction=='ASC'&&$sort=='Price'}z_sort_asc{else}z_sort_desc{/if}"></div>
+                </div>
+            </td>
+            <td width=110px>
+                <div class=ost>Остаток</div>
+            </td>
+            <td width=65px>
+                <div class=zakaz>Заказано</div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </div>

@@ -96,7 +96,6 @@ class Storage{
 
 	protected function loadData($key,$default_data = null)
 	{
-		return isset($_SESSION['xPOST'][$_VarName])?$_SESSION['xPOST'][$_VarName]:$default_data;
+		return isset($_SESSION['xPOST'][$key])?$_SESSION['xPOST'][$key]:$default_data;
 	}
 }
-?>

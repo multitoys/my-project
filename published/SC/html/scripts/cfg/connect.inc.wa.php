@@ -10,8 +10,8 @@
     
     $_SERVER['REQUEST_URI'] = preg_replace('/["\'\<\>]{1,}/', '', $_SERVER['REQUEST_URI']);
     $_SESSION['timestamp'] = time();
-    
-    if (!isset($_SESSION['remote']) && $_SERVER['REMOTE_ADDR'] != '217.24.175.108') {
+    if (!isset($_SESSION['remote'])) {
+        if ($_SERVER['REMOTE_ADDR'] != '91.223.223.243')
             $_SESSION['remote'] = $_SERVER['REMOTE_ADDR'];
     }
     
@@ -40,19 +40,19 @@
     }
 
     if (!SystemSettings::get('SC_INSTALLED')) {
-//        if (SystemSettings::is_hosted()) {
-//            header("HTTP/1.0 404 Not Found");
-//            die("<!DOCTYPE HTML PUBLIC \"-//IETF//DTD HTML 2.0//EN\">
-//                    <html><head>
-//                    <title>404 Not Found</title>
-//                    </head><body>
-//                    <h1>Not Found</h1>
-//                    <p>The requested URL {$_SERVER['REQUEST_URI']} was not found on this server.</p>
-//                    <p>Additionally, a 404 Not Found
-//                    error was encountered while trying to use an ErrorDocument to handle the request.</p>
-//                    <hr>
-//                    </body></html>");
-//        }
+        if (SystemSettings::is_hosted()) {
+            header("HTTP/1.0 404 Not Found");
+            die("<!DOCTYPE HTML PUBLIC \"-//IETF//DTD HTML 2.0//EN\">
+<html><head>
+<title>404 Not Found</title>
+</head><body>
+<h1>Not Found</h1>
+<p>The requested URL {$_SERVER['REQUEST_URI']} was not found on this server.</p>
+<p>Additionally, a 404 Not Found
+error was encountered while trying to use an ErrorDocument to handle the request.</p>
+<hr>
+</body></html>");
+        }
         $url = 'http://'.str_replace('//', '/', ($_SERVER['SERVER_NAME'].WBS_INSTALL_PATH.'/'));
         print '<html><head><title>Error</title>
 				<meta http-equiv="Content-Type" content="text/html; charset=UTF-8;"></head><body>';
@@ -73,16 +73,16 @@
         if (true) {
             define('URL_IMAGES', URL_ROOT.'/images');
             define('URL_THEMES', URL_ROOT.'/themes');
-            define('URL_PRODUCTS_PICTURES', '/pictures');
+            define('URL_PRODUCTS_PICTURES', URL_ROOT.'/products_pictures');
         } else {
             define('URL_IMAGES', WBS_INSTALL_PATH.'/images');
             define('URL_THEMES', WBS_INSTALL_PATH.'/themes');
-            define('URL_PRODUCTS_PICTURES', '/pictures');
+            define('URL_PRODUCTS_PICTURES', WBS_INSTALL_PATH.'/products_pictures');
         }
     } else {
         define('URL_PUBDATA_ROOT', str_replace('//', '/', WBS_INSTALL_PATH.'/published/publicdata'));
         $DB_KEY = SystemSettings::get('DB_KEY');
-        foreach (array('images', 'themes', 'rss') as $fld) {
+        foreach (array('products_pictures', 'images', 'themes', 'rss') as $fld) {
             /*if(file_exists(DIR_ROOT.'/../../../..'.URL_PUBDATA_ROOT.'/'.$DB_KEY.'/attachments/SC/'.$fld))
                 {*/
             define('URL_'.strtoupper($fld), file_exists(WBS_DIR."/kernel/hosting_plans.php")?$fld:URL_PUBDATA_ROOT.'/'.$DB_KEY.'/attachments/SC/'.$fld);
@@ -92,7 +92,6 @@
                 define('URL_'.strtoupper($fld), URL_PUBDATA_ROOT.'/__DEFAULT/attachments/SC/'.$fld);
                 };*/
         };
-        define('URL_PRODUCTS_PICTURES', '/pictures');
         define('URL_IMAGES_DEF', WBS_INSTALL_PATH.'/published/SC/html/scripts/images');
     }
     // Copy general images to user directory
@@ -112,7 +111,6 @@
         define('DIR_RSS', DIR_PUBLICDATA_SC.'/rss');
         define('DIR_THEMES', DIR_PUBLICDATA_SC.'/themes');
         define('DIR_PRODUCTS_PICTURES', DIR_PUBLICDATA_SC.'/products_pictures');
-        define('DIR_LOGS_PICS', DIR_PUBLICDATA_SC.'/img_logs');
         define('DIR_PRODUCTS_FILES', DIR_DATA_SC.'/products_files');
         define('DIR_COMPILEDTEMPLATES', str_replace('//', '/', WBS_DIR.'/kernel/includes/smarty/compiled/SC/templates_c/'.$DB_KEY));
         define('DIR_SMARTY_CACHE', realpath(WBS_DIR.'/kernel/includes/smarty/cache'));
@@ -124,7 +122,7 @@
         define('URL_FLAGS', URL_IMAGES.'/flags');
     }
 
-    define('ERR_SCLOG_FILE', sprintf('%ssc-error_%s.log', DIR_TEMP, date('Y-m-d')));
+    define('ERR_SCLOG_FILE', sprintf('%s/sc-error_%s.log', DIR_TEMP, date('Y-m-d')));
     /*
     function db_getConnectData($key = null){
         static $return;

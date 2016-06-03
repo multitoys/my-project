@@ -6,8 +6,7 @@
      * Time: 14:09
      */
 
-    $categories
-        = array(
+    return array(
         'Конструкторы'            => array(
             'Конструктор JDLT'           => '283-Konstruktor-JDLT',
             'Конструктор Kazi'           => '282-Konstruktor-Kazi',
@@ -18,7 +17,7 @@
             'Конструкторы AUSINI, LIGAO' => '401-Konstruktori-AUSINI-LIGAO',
             'Конструкторы BELA'          => '415-Konstruktori-BELA',
             'Конструкторы Bela Friends'  => '1116-Konstruktori-Bela-Friends',
-            'Конструкторы BIONICLE' => '372-Konstruktori-BIONICLE-v-kolbah-i-korobkah',
+            //'Конструкторы BIONICLE' => '372-Konstruktori-BIONICLE-v-kolbah-i-korobkah',
             'Конструкторы BRICK'         => '405-Konstruktori-BRICK',
             'Конструкторы CHIMA'         => '403-Konstruktori-CHIMA',
             'Конструкторы COGO'          => '375-Konstruktori-COGO',
@@ -222,15 +221,16 @@
 //        ),
 
         'Новинки, Хиты, Акция' => array(
-            'Новинки' => 'page_size500?new=1',
-            'Хиты' => 'page_size500?bestseller=1',
-            'Акция' => 'page_size500?offer=1',
-            '27 февраля 2016' => 'shop/news/view/430?page_size=500',
-            '29 февраля 2016' => 'shop/news/view/433?page_size=500',
-            '1 марта 2016' => 'shop/news/view/437?page_size=500',
-            '2 марта 2016' => 'shop/news/view/439?page_size=500',
-            '3 марта 2016' => 'shop/news/view/441?page_size=500'
+//            'Новинки'        => 'page_size500?new=1',
+            'Хиты'           => 'page_size500?bestseller=1',
+            'Акция'          => 'page_size500?offer=1',
+            'Суперцена'      => 'page_size2000?super_price=1',
+            '27 апреля 2016'  => 'shop/news/view/527?page_size=500',
+            '29 апреля 2016'  => 'shop/news/view/531?page_size=500',
+            '30 апреля 2016'  => 'shop/news/view/533?page_size=500',
+            '3 мая 2016'  => 'shop/news/view/535?page_size=500',
+            '4 мая 2016'  => 'shop/news/view/536?page_size=500'
         )
     );
 
-    $parts = count($categories);
+    

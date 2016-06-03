@@ -6,12 +6,12 @@
         $r = mysql_fetch_row($res);
         $import = (int)$r[0];
         
-//        if (isset($_SESSION['import'], $_SESSION['newtree']) 
-//            && (int)$_SESSION['import'] === $import) {
-//            $disp = $_SESSION['newtree'];
-//        
-//            return $disp;
-//        }
+        if (isset($_SESSION['import'], $_SESSION['newtree']) 
+            && (int)$_SESSION['import'] === $import) {
+            $disp = $_SESSION['newtree'];
+        
+            return $disp;
+        }
         
         $haspopup = $params['haspopup'];
         $haspopup = '';

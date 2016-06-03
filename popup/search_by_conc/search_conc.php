@@ -46,10 +46,10 @@
             $limit = 30;
         } else {
             $conc_args = func_get_args();
-            $conc = $conc_args[0];
-            $code = $conc_args[1];
-            $price = $conc_args[2];
-            //$price = 0;
+//            $conc = $conc_args[0];
+//            $code = $conc_args[1];
+//            $price = $conc_args[2];
+            list($conc, $code, $price) = $conc_args;
             $limit = 2;
         }
 

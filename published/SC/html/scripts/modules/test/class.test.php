@@ -495,12 +495,19 @@
                     }
                 }
                 /* @var $smarty Smarty */
-                if ($local_settings['file'] == 'logo_mini.png') {
-                    $logo_sizes = 'width=196 height=27 ';
+                $logo = '';
+                if (isset($local_settings['view_mode']) && $local_settings['view_mode'] == 'mobile') {
+                    $local_settings['file'] = 'logo_mini.png';
+                    $logo = '<img  src="'.$logo_url.'" alt="'.xHtmlSpecialChars(CONF_SHOP_NAME).'" />';
+                
+                } elseif ($local_settings['file'] == 'logo_mini.png') {
+//                    $logo_sizes = 'width=196 height=27 ';
+                    $logo = '';
                 } elseif ($local_settings['file'] == 'logo.png') {
                     $logo_sizes = 'width=564 height=80 ';
+                    $logo = '<img '.$logo_sizes.' src="'.$logo_url.'" alt="'.xHtmlSpecialChars(CONF_SHOP_NAME).'" />';
                 }
-                print '<a href="'.xHtmlSetQuery('?ukey=home').'"><img '.$logo_sizes.' src="'.$logo_url.'" alt="'.xHtmlSpecialChars(CONF_SHOP_NAME).'" /></a>';
+                print '<a href="'.xHtmlSetQuery('?ukey=home').'">'.$logo.'</a>';
             }
 
             function cpt_maincontent()
@@ -513,6 +520,15 @@
 
                     $tpl_id = &$Register->get('__CPT_TPL_ID');
                     $smarty->assign('main_content_template', 'home.html');
+                    
+                } else if ($smarty->get_template_vars('main_content_template') && $smarty->get_template_vars('PAGE_VIEW') == 'mobile') {
+                    
+                    $main_content_template = $smarty->get_template_vars('main_content_template');
+                    
+                    if (file_exists(DIR_FTPLS.'/m.'.$main_content_template)) {
+                        $main_content_template = 'm.'.$main_content_template;
+                        $smarty->assign('main_content_template', $main_content_template);
+                    }
                 }
                 print $smarty->fetch($smarty->get_template_vars('main_content_template'));
             }
@@ -1090,7 +1106,16 @@
                     $_SESSION['cs_api_access'],
                     $_SESSION['cs_may_order_until']
                 );
-
+                if (isset($_SESSION['wbs_username']) && $_SESSION['wbs_username'] == 'YANDEX') {
+                    unset(
+                        $_SESSION['wbs_username'],
+                        $_SESSION['wbs_dbkey'],
+                        $_SESSION['LOGIN_PAGE_URL'],
+                        $_SESSION['SESSION_EXPIRE_PERIOD'],
+                        $_SESSION['WBS_ACCESS_SC'],
+                        $_SESSION['__WBS_SC_DATA']
+                    );
+                }
                 //calling session_unregister() is required since unset() may not work on some systems
                 //session_unregister('log');
                 //session_unregister('usd');

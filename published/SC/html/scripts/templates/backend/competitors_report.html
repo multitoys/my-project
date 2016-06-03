@@ -84,23 +84,23 @@
 
                 <div>
                     <label for="searchstring" title="По артикулу, наименованию или Коду 1С" style="color: #45AF10;">Поиск товаров:</label>
-                    <input type="text" class="search" rel="Поиск товаров" value=""
+                    <input type="text" class="search" rel="Поиск товаров" value="{$smarty.get.searchstring}"
                            style="width:100px;" name="searchstring" id="searchstring">
                 </div>
             </div>
 
             <div id=selections>
-                <div>
-                    <label for="competitor" style="color: #FF0000">Конкуренты: </label>
-                    <select name="competitor[]" style="width:191px;" id="competitor">
-                        <option value='all' {if $smarty.get.competitor[i] eq 'all'} selected="selected"{/if}>Все конкуренты</option>
-                        {section name=i loop=$Competitors}
-                            <option value="{$Competitors[i].conc}" {if $smarty.get.competitor eq $Competitors[i].conc} selected="selected"{/if}>
-                                {$Competitors[i].name}
-                            </option>
-                        {/section}
-                    </select>
-                </div>
+                {*<div>*}
+                    {*<label for="competitor" style="color: #FF0000">Конкуренты: </label>*}
+                    {*<select multiple name="competitors[]" style="width:191px;" id="competitor">*}
+                        {*<option value='all' {if $smarty.get.competitors[i] eq 'all'} selected="selected"{/if}>Все конкуренты</option>*}
+                        {*{section name=i loop=$Competitors}*}
+                            {*<option value="{$Competitors[i].conc}" {if $Competitors[i].included eq 1} selected="selected"{/if}>*}
+                                {*{$Competitors[i].name}*}
+                            {*</option>*}
+                        {*{/section}*}
+                    {*</select>*}
+                {*</div>*}
 
                 <div>
                     <label for="manufactured" style="color: #45AF10;">Производители:</label>
@@ -132,13 +132,28 @@
                 </div>
 
             </div>
+            
+            <div id=competitors>
+                <div>
+                    <label for="competitor" style="color: #FF0000">Конкуренты: </label>
+                    <select multiple name="competitors[]" style="width:191px;" id="competitor">
+                        <option value='all' {if $smarty.get.competitors[i] eq 'all'} selected="selected"{/if}>Все конкуренты</option>
+                        {section name=i loop=$Competitors}
+                            <option value="{$Competitors[i].conc}" {if $Competitors[i].included eq 1} selected="selected"{/if}>
+                                {$Competitors[i].name}
+                            </option>
+                        {/section}
+                    </select>
+                </div>
+            </div>
 
             <input id=ok type="submit" name="search" value="{"btn_find"|translate}">
-            <input id=update type="submit" name="update" value="Обновить данные" onclick="update()">
-
+            {*<input id=update type="submit" name="update" value="Обновить данные" onclick="update()">*}
         </div>
     </form>
     {if $GridRows}
+    {*<form action="{''|set_query}" method="post" name="MainPriceForm" id="MainPriceForm">*}
+        {*<input name="action" value="save_products" type="hidden" />*}
         <table width="100%" border="0" cellpadding="0" cellspacing="0" class="grid">
             <tr class="gridsheader" id="grheader">
                 {include file="backend/gridheader.tpl.html"}
@@ -155,29 +170,29 @@
                     <td class="to_right choco">{$GridRows[i].purchase}</td>
                     <td class="to_right choco{if $GridRows[i].margin < 13} red warning{/if}">{$GridRows[i].margin}%</td>
                     <td class="to_right bold{if $GridRows[i].max_diff > 0} red{else} blue{/if}">{$GridRows[i].Price}</td>
+                    {*<td class="to_right bold{if $GridRows[i].max_diff > 0} red{else} blue{/if}">*}
+                        {*<input type="text" class="multiply_price" name="price[{$GridRows[i].productID}]" size="7" value="{$GridRows[i].Price}" />*}
+                    {*</td>*}
                     <td class="to_right{if $GridRows[i].max_diff > 0} red{else} green{/if}">
                         <strong>{$GridRows[i].max_diff}%</strong>
                     </td>
-                    {if $smarty.get.competitor ne 'all' and $smarty.get.competitor ne ''}
-                        {assign var=conc value=$smarty.get.competitor}
-                        {assign var=diff value="diff_$conc"}
+                {section name=x loop=$Competitors}
+                    {if $Competitors[x].included eq 1}
+                        {assign var=conc value=$Competitors[x].conc}
+                        {assign var=diff value=$Competitors[x].diff}
+                        
                         <td class="to_right border{if $GridRows[i].$diff > 0} red{else} green{/if}">{$GridRows[i].$conc}</td>
                         <td class="to_right{if $GridRows[i].$diff > 0} red{else} green{/if}">{$GridRows[i].$diff}%</td>
-                    {else}
-                        {section name=x loop=$Competitors}
-                            {assign var=conc value=$Competitors[x].conc}
-                            {assign var=diff value=$Competitors[x].diff}
-                            <td class="to_right border{if $GridRows[i].$diff > 0} red{else} green{/if}">{$GridRows[i].$conc}</td>
-                            <td class="to_right{if $GridRows[i].$diff > 0} red{else} green{/if}">{$GridRows[i].$diff}%
-                            </td>
-                        {/section}
                     {/if}
+                {/section}
                 </tr>
             {/section}
             <tr class="gridsfooter">
                 <td colspan="11">{$TotalFound} &nbsp;{include file="backend/lister.tpl.html"}</td>
             </tr>
         </table>
+        {*<input id=update type="submit" name="updatePrice" value="Обновить данные">*}
+    {*</form>>*}
     {else}
         <p>&lt;{'lbl_not_found'|translate}&gt;</p>
     {/if}

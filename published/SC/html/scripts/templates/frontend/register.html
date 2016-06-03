@@ -28,15 +28,19 @@
 	<tbody id="reg_auth_fields">
 	<tr>
 		<td><span class="asterisk">*</span>{"usr_custinfo_login"|translate}</td>
-		<td><input type="text" name="login" value="{$login|escape:'html'}" /></td>
+		<td><input type="text" name="login" value="{$login|escape:'html'}" required /></td>
 	</tr>
 	<tr>
 		<td><span class="asterisk">*</span>{"usr_custinfo_password"|translate}</td>
-		<td><input type="password" name="cust_password1" value="{$cust_password1|escape:'html'}" /></td>
+		<td><input type="password" name="cust_password1" value="{$cust_password1|escape:'html'}" required /></td>
 	</tr>
 	<tr>
 		<td><span class="asterisk">*</span>{"usrreg_customer_confirm_password"|translate}</td>
-		<td><input type="password" name="cust_password2" value="{$cust_password2|escape:'html'}" /></td>
+		<td><input type="password" name="cust_password2" value="{$cust_password2|escape:'html'}" required /></td>
+	</tr>
+	<tr>
+		<td><span class="asterisk">*</span>Моб. телефон</td>
+		<td><input class=phone type="text" name="phone" value="" required /></td>
 	</tr>
 	{*</tbody>*}
 	
@@ -54,15 +58,15 @@
 *}
 			<span class="asterisk">*</span>{"usr_custinfo_first_name"|translate}
 		</td>
-		<td><input type="text" name="first_name" value="{$first_name|escape:'html'}" /></td>
+		<td><input type="text" name="first_name" value="{$first_name|escape:'html'}" required /></td>
 	</tr>
 	<tr class="row_{cycle values='odd,even'}">
 		<td><span class="asterisk">*</span>{"usr_custinfo_last_name"|translate}</td>
-		<td><input type="text" name="last_name" value="{$last_name|escape:'html'}" /></td>
+		<td><input type="text" name="last_name" value="{$last_name|escape:'html'}" required /></td>
 	</tr>
 	<tr class="row_{cycle values='odd,even'}">
 		<td><span class="asterisk">*</span>{"usr_custinfo_email"|translate}</td>
-		<td><input type="text" name="email" value="{$email|escape:'html'}"></td>
+		<td><input type="text" name="email" value="{$email|escape:'html'}" required ></td>
 	</tr>
 
 	{*<!-- ADDITIONAL FIELDS (SEE  admin.php?dpt=custord&sub=reg_fields URL) -->*}
@@ -74,7 +78,7 @@
 			{$additional_fields[i].reg_field_name|escape:'html'}
 		</td>
 		<td>
-			<input type='text' name='additional_field_{$additional_fields[i].reg_field_ID}' value='{$post_data[$__key]|escape:'html'}' />
+			<input type='text' name='additional_field_{$additional_fields[i].reg_field_ID}' value='{$post_data[$__key]|escape:'html'}' {if $additional_fields[i].reg_field_required} required{/if}/>
 		</td>
 	</tr>
 	{/section}

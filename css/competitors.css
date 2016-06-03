@@ -69,7 +69,7 @@ tr.even:hover td {
     clear: both;
 }
 
-#checkings, #selections, #discounts, #multi_select {
+#checkings, #selections, #competitors, #discounts {
     margin: 0 0 5px 5px;
 }
 
@@ -77,7 +77,7 @@ tr.even:hover td {
     border-right: 2px ridge #7987FF;
 }
 
-#selections {
+#selections, #competitors {
     border-left: 2px ridge #7987FF;
 }
 
@@ -111,9 +111,9 @@ label, select, .input_message {
 
 #ok, #update {
     width: 80px;
-    height: 70px;
+    height: 80px;
     padding: 0;
-    margin: 15px 0 0 5px;
+    margin: 5px;
     background-color: cornflowerblue;
     border: 0;
     color: white;

@@ -2,7 +2,7 @@
     if (!isset($_SERVER['REQUEST_URI'])) {
         $req = $_SERVER['PHP_SELF'];
         if (isset($_SERVER['QUERY_STRING']) && (strlen($_SERVER['QUERY_STRING']) > 0)) {
-            $req .= '?'.$_SERVER['QUERY_STRING'];
+            $req .= '?' . $_SERVER['QUERY_STRING'];
         }
         $_SERVER['REQUEST_URI'] = $GLOBALS['REQUEST_URI'] = $req;
     }
@@ -26,7 +26,7 @@
             $URLprefix = substr($URLprefix, 0, strlen($URLprefix) - 1);
         }
 
-        return ($mode."://".$URLprefix."/");
+        return ($mode . "://" . $URLprefix . "/");
     }
 
     /**
@@ -97,10 +97,10 @@
         $str = RoundFloatValue($float_value);
         $index = strpos($str, '.');
         if ($index === false) {
-            return $str.'.00';
+            return $str . '.00';
         } else {
             if (strlen($str) - 1 - $index == 1)
-                return $str.'0';
+                return $str . '0';
             else
                 return $str;
         }
@@ -114,12 +114,12 @@
 
         $dh = opendir($dir);
         $files = array();
-        $pattern = '|'.($name_template ? $name_template : '').'\.'.$extension.'$|msi';
+        $pattern = '|' . ($name_template ? $name_template : '') . '\.' . $extension . '$|msi';
         while (false !== ($filename = readdir($dh))) {
-            if (!is_dir($dir.'/'.$filename) && $filename != '.' && $filename != '..') {
+            if (!is_dir($dir . '/' . $filename) && $filename != '.' && $filename != '..') {
 
                 if (preg_match($pattern, $filename)) {
-                    $files[] = $dir.'/'.$filename;
+                    $files[] = $dir . '/' . $filename;
                 }
             }
         }
@@ -171,91 +171,92 @@
         return $currencyEntry->convertUnits($price, true);
     }
 
-    //    function AuxpageNavigator($a, $p, $q, $path, &$out)
-    //    {
-    //        //shows navigator [prev] 1 2 3 4 � [next]
-    //        //$a - count of elements in the array, which is being navigated
-    //        //$p - current p in array (showing elements [$p ... $p+$q])
-    //        //$q - quantity of items per page
-    //        //$path - link to the page (f.e: "index.php?categoryID=1&")
-    //
-    //        if ($a > $q) //if all elements couldn't be placed on the page
-    //        {
-    //            $c = (int)($p + $q) / $q;
-    //            $out .= "<ul class=uk-pagination data-uk-pagination=\"{items:$a, itemsOnPage:$q, currentPage:$c}\">";
-    //            //[prev]
-    //            if ($p > 0) $out .= '<li><a href="'.xHtmlSetQuery($path.'&p='.($p - $q)).'">&lt;&lt; '.translate('str_previous').'</a></li> &nbsp;&nbsp;';
-    //
-    //            //digital links
-    //            $k = $p / $q;
-    //
-    //            //not more than 4 links to the left
-    //            $min = $k - 4;
-    //            if ($min < 0) {
-    //                $min = 0;
-    //            } else {
-    //                if ($min >= 1) { //link on the 1st page
-    //                    $out .= "<li><a href=\"".xHtmlSetQuery($path.'&p=0')."\">1</a></li> &nbsp;&nbsp;";
-    //                    if ($min != 1) {
-    //                        $out .= '<li><span class=pagination>...</span></li>&nbsp;';
-    //                    };
-    //                }
-    //            }
-    //
-    //            for ($i = $min; $i < $k; $i++) {
-    //                $m = $i * $q + $q;
-    //                if ($m > $a) $m = $a;
-    //
-    //                $out .= '<li><a href="'.xHtmlSetQuery($path.'&p='.($i * $q))."\">".($i + 1).'</a></li> &nbsp;&nbsp;';
-    //            }
-    //
-    //            //# of current page
-    //            if (strcmp($p, 'show_all')) {
-    //                $min = $p + $q;
-    //                if ($min > $a) $min = $a;
-    //                $out .= '<li class=uk-active><span>'.($k + 1).'</span></li> &nbsp;&nbsp;';
-    //            } else {
-    //                $min = $q;
-    //                if ($min > $a) $min = $a;
-    //                $out .= '<li><a href="'.xHtmlSetQuery($path.'&p=0').'">1</a> </li>&nbsp;&nbsp;';
-    //            }
-    //
-    //            //not more than 5 links to the right
-    //            $min = $k + 4;
-    //            if ($min > ceil($a / $q)) {
-    //                $min = ceil($a / $q);
-    //            };
-    //            for ($i = $k + 1; $i < $min; $i++) {
-    //                $m = $i * $q + $q;
-    //                if ($m > $a) $m = $a;
-    //
-    //                $out .= '<li><a href="'.xHtmlSetQuery($path.'&p='.($i * $q))."\">".($i + 1).'</a></li> &nbsp;&nbsp;';
-    //            }
-    //
-    //            if ($min * $q < $a) { //the last link
-    //                if ($min * $q < $a - $q) $out .= '<li><span class=pagination>...</span></li>&nbsp;&nbsp;';
-    //                if (!($a % $q == 0))
-    //                    $out .= '<li><a href=\''.xHtmlSetQuery($path.'&p='.($a - $a % $q)).'\'>'.(floor($a / $q) + 1).'</a></li> &nbsp;&nbsp;';
-    //                else //$a is divided by $q
-    //                    $out .= '<li><a href=\''.xHtmlSetQuery($path.'&p='.($a - $q)).'\'>'.(floor($a / $q)).'</a></li> &nbsp;&nbsp;';
-    //            }
-    //
-    //            //[next]
-    //            if (strcmp($p, 'show_all'))
-    //                if ($p < $a - $q) $out .= '<li><a href="'.xHtmlSetQuery($path.'&p='.($p + $q)).'">'.translate('str_next').' &gt;&gt;</a></li> ';
-    //
-    //            //[show all]
-    //            if (SHOWALL_ALLOWED_RECORDS_NUM >= $a || (!SystemSettings::is_hosted() && SystemSettings::is_backend())) {
-    //                if (strcmp($p, 'show_all'))
-    //                    $out .= ' |&nbsp; <li><a href="'.xHtmlSetQuery($path.'&p=&show_all=yes').'">'.translate('str_showall').'</a></li>';
-    //                else
-    //                    $out .= ' |&nbsp; <li><a class=pagination></a><B>'.translate('str_showall').'</B></li>';
-    //            }
-    //            $out .= '</ul>';
-    //
-    //            return $out;
-    //        }
-    //    }
+    function AuxpageNavigator($a, $p, $q, $path, &$out) 
+    {
+        //shows navigator [prev] 1 2 3 4 � [next]
+        //$a - count of elements in the array, which is being navigated
+        //$p - current p in array (showing elements [$p ... $p+$q])
+        //$q - quantity of items per page
+        //$path - link to the page (f.e: "index.php?categoryID=1&")
+
+        if ($a > $q) { //if all elements couldn't be placed on the page
+            $c = (int)($p + $q) / $q;
+            $out .= "<ul class=navigator>";
+            //[prev]
+            if ($p > 0) $out .= '<li><a href="' . xHtmlSetQuery($path . '&p=' . ($p - $q)) . '" class="prev">&lt;&lt;</a></li> &nbsp;&nbsp;';
+
+            //digital links
+            $k = $p / $q;
+
+            //not more than 4 links to the left
+            $min = $k - 4;
+            if ($min < 0) {
+                $min = 0;
+            } else {
+                if ($min >= 1) { //link on the 1st page
+                    $out .= "<li><a href=\"" . xHtmlSetQuery($path . '&p=0') . "\">1</a></li> &nbsp;&nbsp;";
+                    if ($min != 1) {
+                        $out .= '<li><span class=disabled>...</span></li>&nbsp;';
+                    };
+                }
+            }
+
+            for ($i = $min; $i < $k; $i++) {
+                $m = $i * $q + $q;
+                if ($m > $a) $m = $a;
+
+                $out .= '<li><a href="' . xHtmlSetQuery($path . '&p=' . ($i * $q)) . "\">" . ($i + 1) . '</a></li> &nbsp;&nbsp;';
+            }
+
+            //# of current page
+            if (strcmp($p, 'show_all')) {
+                $min = $p + $q;
+                if ($min > $a) $min = $a;
+                $out .= '<li class=active><span class=current>' . ($k + 1) . '</span></li> &nbsp;&nbsp;';
+            } else {
+                $min = $q;
+                if ($min > $a) $min = $a;
+                $out .= '<li><a href="' . xHtmlSetQuery($path . '&p=0') . '">1</a> </li>&nbsp;&nbsp;';
+            }
+
+            //not more than 5 links to the right
+            $min = $k + 4;
+            if ($min > ceil($a / $q)) {
+                $min = ceil($a / $q);
+            };
+            for ($i = $k + 1; $i < $min; $i++) {
+                $m = $i * $q + $q;
+                if ($m > $a) $m = $a;
+
+                $out .= '<li><a href="' . xHtmlSetQuery($path . '&p=' . ($i * $q)) . "\">" . ($i + 1) . '</a></li> &nbsp;&nbsp;';
+            }
+
+            if ($min * $q < $a) { //the last link
+                if ($min * $q < $a - $q) $out .= '<li><span class=disabled>...</span></li>&nbsp;&nbsp;';
+                if (!($a % $q == 0))
+                    $out .= '<li><a href=\'' . xHtmlSetQuery($path . '&p=' . ($a - $a % $q)) . '\'>' . (floor($a / $q) + 1) . '</a></li> &nbsp;&nbsp;';
+                else //$a is divided by $q
+                    $out .= '<li><a href=\'' . xHtmlSetQuery($path . '&p=' . ($a - $q)) . '\'>' . (floor($a / $q)) . '</a></li> &nbsp;&nbsp;';
+            }
+
+            //[next]
+            if (strcmp($p, 'show_all'))
+                if ($p < $a - $q) $out .= '<li><a href="' . xHtmlSetQuery($path . '&p=' . ($p + $q)) . '" class="next">&gt;&gt;</a></li> ';
+
+            //[show all]
+//            if (SHOWALL_ALLOWED_RECORDS_NUM >= $a || (!SystemSettings::is_hosted() && SystemSettings::is_backend())) {
+//                if (strcmp($p, 'show_all'))
+//                    $out .= ' |&nbsp; <li><a href="' . xHtmlSetQuery($path . '&p=&show_all=yes') . '">' . translate('str_showall') . '</a></li>';
+//                else
+//                    $out .= ' |&nbsp; <li><a class=pagination></a><B>' . translate('str_showall') . '</B></li>';
+//            }
+            $out .= '</ul>';
+
+            return $out;
+        }
+        
+        return '';
+    }
 
     function SimpleNavigator($a, $p, $q, $path, &$out)
     {
@@ -268,20 +269,20 @@
         if ($a > $q) //if all elements couldn't be placed on the page
         {
             $c = (int)($p + $q) / $q;
-            $out .= '<ul>';
+            $out = '<ul>';
             //[prev]
-            if ($p > 0) $out .= '<li><a href="'.xHtmlSetQuery($path.'&p='.($p - $q)).'" class="page-link prev">&lt;&lt;</a></li> &nbsp;&nbsp;';
+            if ($p > 0) $out .= '<li><a href="' . ($path . ($p - $q)) . '/" class="page-link prev">&lt;&lt;</a></li> &nbsp;&nbsp;';
 
             //digital links
             $k = $p / $q;
 
             //not more than 4 links to the left
-            $min = $k - 4;
+            $min = $k - 1;
             if ($min < 0) {
                 $min = 0;
             } else {
                 if ($min >= 1) { //link on the 1st page
-                    $out .= '<li><a href="'.xHtmlSetQuery($path.'&p=0').'" class=page-link>1</a></li> &nbsp;&nbsp;';
+                    $out .= '<li><a href="' . ($path . '0/') . '" class=page-link>1</a></li> &nbsp;&nbsp;';
                     if ($min != 1) {
                         $out .= '<li><span class=disabled>...</span></li>&nbsp;';
                     };
@@ -292,22 +293,22 @@
                 $m = $i * $q + $q;
                 if ($m > $a) $m = $a;
 
-                $out .= '<li><a href="'.xHtmlSetQuery($path.'&p='.($i * $q)).'" class=page-link>'.($i + 1).'</a></li> &nbsp;&nbsp;';
+                $out .= '<li><a href="' . ($path . ($i * $q)) . '/" class=page-link>' . ($i + 1) . '</a></li> &nbsp;&nbsp;';
             }
 
             //# of current page
             if (strcmp($p, 'show_all')) {
                 $min = $p + $q;
                 if ($min > $a) $min = $a;
-                $out .= '<li class=active><span class=current>'.($k + 1).'</span></li> &nbsp;&nbsp;';
+                $out .= '<li class=active><span class=current>' . ($k + 1) . '</span></li> &nbsp;&nbsp;';
             } else {
                 $min = $q;
                 if ($min > $a) $min = $a;
-                $out .= '<li><a href="'.xHtmlSetQuery($path.'&p=0').'" class=page-link>1</a> </li>&nbsp;&nbsp;';
+                $out .= '<li><a href="' . ($path . '/') . '" class=page-link>1</a> </li>&nbsp;&nbsp;';
             }
 
             //not more than 5 links to the right
-            $min = $k + 4;
+            $min = $k + 2;
             if ($min > ceil($a / $q)) {
                 $min = ceil($a / $q);
             };
@@ -315,32 +316,34 @@
                 $m = $i * $q + $q;
                 if ($m > $a) $m = $a;
 
-                $out .= '<li><a href="'.xHtmlSetQuery($path.'&p='.($i * $q)).'" class=page-link>'.($i + 1).'</a></li> &nbsp;&nbsp;';
+                $out .= '<li><a href="' . ($path . ($i * $q)) . '/" class=page-link>' . ($i + 1) . '</a></li> &nbsp;&nbsp;';
             }
 
             if ($min * $q < $a) { //the last link
                 if ($min * $q < $a - $q) $out .= '<li><span class=disabled>...</span></li>&nbsp;&nbsp;';
                 if (!($a % $q == 0))
-                    $out .= '<li><a href="'.xHtmlSetQuery($path.'&p='.($a - $a % $q)).'" class=page-link>'.(floor($a / $q) + 1).'</a></li> &nbsp;&nbsp;';
+                    $out .= '<li><a href="' . ($path . ($a - $a % $q)) . '/" class=page-link>' . (floor($a / $q) + 1) . '</a></li> &nbsp;&nbsp;';
                 else //$a is divided by $q
-                    $out .= '<li><a href="'.xHtmlSetQuery($path.'&p='.($a - $q)).'" class=page-link>'.(floor($a / $q)).'</a></li> &nbsp;&nbsp;';
+                    $out .= '<li><a href="' . ($path . ($a - $q)) . '/" class=page-link>' . (floor($a / $q)) . '</a></li> &nbsp;&nbsp;';
             }
 
             //[next]
             if (strcmp($p, 'show_all'))
-                if ($p < $a - $q) $out .= '<li><a href="'.xHtmlSetQuery($path.'&p='.($p + $q)).'" class="page-link next">&gt;&gt;</a></li> ';
+                if ($p < $a - $q) $out .= '<li><a href="' . ($path . ($p + $q)) . '/" class="page-link next">&gt;&gt;</a></li> ';
 
             //[show all]
-            if (SHOWALL_ALLOWED_RECORDS_NUM >= $a || (!SystemSettings::is_hosted() && SystemSettings::is_backend())) {
-                if (strcmp($p, 'show_all'))
-                    $out .= ' |&nbsp; <li><a href="'.xHtmlSetQuery($path.'&p=&show_all=yes').'" class=page-link>'.translate('str_showall').'</a></li>';
-                else
-                    $out .= ' |&nbsp; <li><a  class=page-link></a><B>'.translate('str_showall').'</B></li>';
-            }
+//            if (SHOWALL_ALLOWED_RECORDS_NUM >= $a || (!SystemSettings::is_hosted() && SystemSettings::is_backend())) {
+//                if (strcmp($p, 'show_all'))
+//                    $out .= ' |&nbsp; <li><a href="'.($path.'&p=&show_all=yes').'" class=page-link>'.translate('str_showall').'</a></li>';
+//                else
+//                    $out .= ' |&nbsp; <li><a  class=page-link></a><B>'.translate('str_showall').'</B></li>';
+//            }
             $out .= '</ul>';
 
             return $out;
         }
+
+        return '';
     }
 
     function ShowNavigator($a, $offset, $q, $path, &$out)
@@ -355,7 +358,7 @@
         {
 
             //[prev]
-            if ($offset > 0) $out .= '<a class=no_underline href="'.xHtmlSetQuery($path.'&offset='.($offset - $q)).'">&lt;&lt; '.translate('str_previous').'</a>&nbsp;&nbsp;';
+            if ($offset > 0) $out .= '<a class=no_underline href="' . xHtmlSetQuery($path . '&offset=' . ($offset - $q)) . '">&lt;&lt; ' . translate('str_previous') . '</a>&nbsp;&nbsp;';
 
             //digital links
             $k = $offset / $q;
@@ -366,7 +369,7 @@
                 $min = 0;
             } else {
                 if ($min >= 1) { //link on the 1st page
-                    $out .= '<a class=no_underline href="'.xHtmlSetQuery($path.'&offset=0').'">1</a>&nbsp;&nbsp;';
+                    $out .= '<a class=no_underline href="' . xHtmlSetQuery($path . '&offset=0') . '">1</a>&nbsp;&nbsp;';
                     if ($min != 1) {
                         $out .= '... &nbsp;';
                     };
@@ -377,18 +380,18 @@
                 $m = $i * $q + $q;
                 if ($m > $a) $m = $a;
 
-                $out .= '<a class=no_underline href="'.xHtmlSetQuery($path.'&offset='.($i * $q)).'">'.($i + 1).'</a>&nbsp;&nbsp;';
+                $out .= '<a class=no_underline href="' . xHtmlSetQuery($path . '&offset=' . ($i * $q)) . '">' . ($i + 1) . '</a>&nbsp;&nbsp;';
             }
 
             //# of current page
             if (strcmp($offset, 'show_all')) {
                 $min = $offset + $q;
                 if ($min > $a) $min = $a;
-                $out .= '<span class=faq><b>'.($k + 1).'</b></span>&nbsp;&nbsp;';
+                $out .= '<span class=faq><b>' . ($k + 1) . '</b></span>&nbsp;&nbsp;';
             } else {
                 $min = $q;
                 if ($min > $a) $min = $a;
-                $out .= '<a class=no_underline href="'.xHtmlSetQuery($path.'&offset=0').'">1</a>&nbsp;&nbsp;';
+                $out .= '<a class=no_underline href="' . xHtmlSetQuery($path . '&offset=0') . '">1</a>&nbsp;&nbsp;';
             }
 
             //not more than 5 links to the right
@@ -400,30 +403,31 @@
                 $m = $i * $q + $q;
                 if ($m > $a) $m = $a;
 
-                $out .= '<a class=no_underline href="'.xHtmlSetQuery($path.'&offset='.($i * $q)).'">'.($i + 1).'</a>&nbsp;&nbsp;';
+                $out .= '<a class=no_underline href="' . xHtmlSetQuery($path . '&offset=' . ($i * $q)) . '">' . ($i + 1) . '</a>&nbsp;&nbsp;';
             }
 
             if ($min * $q < $a) { //the last link
                 if ($min * $q < $a - $q) $out .= ' ... &nbsp;&nbsp;';
                 if (!($a % $q == 0))
-                    $out .= '<a class=no_underline href="'.xHtmlSetQuery($path.'&offset='.($a - $a % $q)).'">'.(floor($a / $q) + 1).'</a>&nbsp;&nbsp;';
+                    $out .= '<a class=no_underline href="' . xHtmlSetQuery($path . '&offset=' . ($a - $a % $q)) . '">' . (floor($a / $q) + 1) . '</a>&nbsp;&nbsp;';
                 else //$a is divided by $q
-                    $out .= '<a class=no_underline href="'.xHtmlSetQuery($path.'&offset='.($a - $q)).'">'.(floor($a / $q)).'</a>&nbsp;&nbsp;';
+                    $out .= '<a class=no_underline href="' . xHtmlSetQuery($path . '&offset=' . ($a - $q)) . '">' . (floor($a / $q)) . '</a>&nbsp;&nbsp;';
             }
 
             //[next]
             if (strcmp($offset, 'show_all'))
-                if ($offset < $a - $q) $out .= '<a class=no_underline href="'.xHtmlSetQuery($path.'&offset='.($offset + $q)).'">'.translate('str_next').' &gt;&gt;</a> ';
+                if ($offset < $a - $q) $out .= '<a class=no_underline href="' . xHtmlSetQuery($path . '&offset=' . ($offset + $q)) . '">' . translate('str_next') . ' &gt;&gt;</a> ';
 
             //[show all]
             if (SHOWALL_ALLOWED_RECORDS_NUM >= $a || (!SystemSettings::is_hosted() && SystemSettings::is_backend())) {
                 if (strcmp($offset, 'show_all'))
-                    $out .= ' |&nbsp; <a class=no_underline href="'.xHtmlSetQuery($path.'&offset=&show_all=yes').'">'.translate('str_showall').'</a>';
+                    $out .= ' |&nbsp; <a class=no_underline href="' . xHtmlSetQuery($path . '&offset=&show_all=yes') . '">' . translate('str_showall') . '</a>';
                 else
-                    $out .= ' |'.'&nbsp;<b>'.translate('str_showall').'</b>';
+                    $out .= ' |' . '&nbsp;<b>' . translate('str_showall') . '</b>';
             }
         }
     }
+
     function SuperNavigator($a, $offset, $q, $path, &$out)
     {
         //shows navigator [prev] 1 2 3 4 � [next]
@@ -436,22 +440,24 @@
         {
 
 
-            $out .= '<ul id=navigation>';
+//            $out .= '<ul id=navigation>';
+            $out = '<ul>';
             //[prev]
-            if ($offset > 0) $out .= '<li><a class="page-link prev" href="'.xHtmlSetQuery($path.'&offset='.($offset - $q)).'">&lt;&lt;</a></li>&nbsp;&nbsp;';
+            if ($offset > 0) $out .= '<li><a class="page-link prev" href="' . xHtmlSetQuery($path . '&offset=' . ($offset - $q)) . '">&lt;&lt;</a></li>&nbsp;&nbsp;';
 
             //digital links
             $k = $offset / $q;
 
             //not more than 4 links to the left
-            $min = $k - 3;
+            $min = $k - 1;
             if ($min < 0) {
                 $min = 0;
             } else {
                 if ($min >= 1) { //link on the 1st page
-                    $out .= '<li><a class=page-link href="'.xHtmlSetQuery($path.'&offset=0').'">1</a></li>&nbsp;&nbsp;';
+                    $out .= '<li><a class=page-link href="' . xHtmlSetQuery($path . '&offset=0') . '">1</a></li>&nbsp;&nbsp;';
                     if ($min != 1) {
-                        $out .= '<li><span class=disabled>...</span></li>&nbsp;';
+//                        $out .= '<li><span class=disabled>...</span></li>&nbsp;';
+                        $out .= '<li class=disabled><span class=ellipse>...</span></li>&nbsp;&nbsp;';
                     };
                 }
             }
@@ -460,22 +466,22 @@
                 $m = $i * $q + $q;
                 if ($m > $a) $m = $a;
 
-                $out .= '<li><a class=page-link href="'.xHtmlSetQuery($path.'&offset='.($i * $q)).'">'.($i + 1).'</a></li>&nbsp;&nbsp;';
+                $out .= '<li><a class=page-link href="' . xHtmlSetQuery($path . '&offset=' . ($i * $q)) . '">' . ($i + 1) . '</a></li>&nbsp;&nbsp;';
             }
 
             //# of current page
             if (strcmp($offset, 'show_all')) {
                 $min = $offset + $q;
                 if ($min > $a) $min = $a;
-                $out .= '<li class=active><span class=current>'.($k + 1).'</span></li> &nbsp;&nbsp;';
+                $out .= '<li class=active><span class=current>' . ($k + 1) . '</span></li> &nbsp;&nbsp;';
             } else {
                 $min = $q;
                 if ($min > $a) $min = $a;
-                $out .= '<li><a class=page-link href="'.xHtmlSetQuery($path.'&offset=0').'">1</a></li>&nbsp;&nbsp;';
+                $out .= '<li><a class=page-link href="' . xHtmlSetQuery($path . '&offset=0') . '">1</a></li>&nbsp;&nbsp;';
             }
 
             //not more than 5 links to the right
-            $min = $k + 4;
+            $min = $k + 2;
             if ($min > ceil($a / $q)) {
                 $min = ceil($a / $q);
             };
@@ -483,31 +489,32 @@
                 $m = $i * $q + $q;
                 if ($m > $a) $m = $a;
 
-                $out .= '<li><a class=page-link href="'.xHtmlSetQuery($path.'&offset='.($i * $q)).'">'.($i + 1).'</a></li>&nbsp;&nbsp;';
+                $out .= '<li><a class=page-link href="' . xHtmlSetQuery($path . '&offset=' . ($i * $q)) . '">' . ($i + 1) . '</a></li>&nbsp;&nbsp;';
             }
 
             if ($min * $q < $a) { //the last link
                 if ($min * $q < $a - $q) $out .= '<li class=disabled><span class=ellipse>...</span></li>&nbsp;&nbsp;';
                 if (!($a % $q == 0))
-                    $out .= '<li><a class=no_underline href="'.xHtmlSetQuery($path.'&offset='.($a - $a % $q)).'">'.(floor($a / $q) + 1).'</a></li>&nbsp;&nbsp;';
+                    $out .= '<li><a class=no_underline href="' . xHtmlSetQuery($path . '&offset=' . ($a - $a % $q)) . '">' . (floor($a / $q) + 1) . '</a></li>&nbsp;&nbsp;';
                 else //$a is divided by $q
-                    $out .= '<li><a class=page-link href="'.xHtmlSetQuery($path.'&offset='.($a - $q)).'">'.(floor($a / $q)).'</a></li>&nbsp;&nbsp;';
+                    $out .= '<li><a class=page-link href="' . xHtmlSetQuery($path . '&offset=' . ($a - $q)) . '">' . (floor($a / $q)) . '</a></li>&nbsp;&nbsp;';
             }
 
             //[next]
             if (strcmp($offset, 'show_all'))
-                if ($offset < $a - $q) $out .= '<li><a class="page-link next" href="'.xHtmlSetQuery($path.'&offset='.($offset + $q)).'">&gt;&gt;</a></li> ';
+                if ($offset < $a - $q) $out .= '<li><a class="page-link next" href="' . xHtmlSetQuery($path . '&offset=' . ($offset + $q)) . '">&gt;&gt;</a></li> ';
 
             //[show all]
             if (SHOWALL_ALLOWED_RECORDS_NUM >= $a || (!SystemSettings::is_hosted() && SystemSettings::is_backend())) {
                 if (strcmp($offset, 'show_all'))
-                    $out .= ' |&nbsp; <li><a class=page-link href="'.xHtmlSetQuery($path.'&offset=&show_all=yes').'">'.translate('str_showall').'</a></li>';
+                    $out .= ' |&nbsp; <li><a class=page-link href="' . xHtmlSetQuery($path . '&offset=&show_all=yes') . '">' . translate('str_showall') . '</a></li>';
                 else
                     $out .= ' |&nbsp; <li><a  class=page-link></a>&gt;&gt;</li>';
             }
             $out .= '</ul>';
         }
     }
+
     function GetNavigatorHtml($url, $countRowOnPage = CONF_PRODUCTS_PER_PAGE,
                               $callBackFunction, $callBackParam, &$tableContent,
                               &$offset, &$count)
@@ -525,9 +532,11 @@
         $Register = &Register::getInstance();
         if (!$Register->is_set('show_all') || !$Register->get('show_all')) //show 'CONF_PRODUCTS_PER_PAGE' products on this page
         {
-            $tableContent = $callBackFunction($callBackParam, $count,
+            $tableContent = $callBackFunction(
+                $callBackParam,
+                $count,
                 array(
-                    'offset'         => $offset,
+                    'offset' => $offset,
                     'CountRowOnPage' => $countRowOnPage
                 )
             );
@@ -548,7 +557,7 @@
         if (isset($_SESSION["gids"]) && isset($_SESSION["log"])) {
 
             $customerID = regGetIdByLogin($_SESSION["log"]);
-            $q = db_query("SELECT itemID FROM ".SHOPPING_CARTS_TABLE." WHERE customerID=".$customerID);
+            $q = db_query("SELECT itemID FROM " . SHOPPING_CARTS_TABLE . " WHERE customerID=" . $customerID);
             $items = array();
             while ($item = db_fetch_row($q))
                 $items[] = $item["itemID"];
@@ -561,8 +570,8 @@
                 // search product in current user's shopping cart content
                 $itemID = null;
                 for ($j = 0; $j < count($items); $j++) {
-                    $q = db_query("SELECT count(*) FROM ".SHOPPING_CART_ITEMS_TABLE." WHERE productID=".$productID." AND ".
-                        " itemID=".$items[$j]);
+                    $q = db_query("SELECT count(*) FROM " . SHOPPING_CART_ITEMS_TABLE . " WHERE productID=" . $productID . " AND " .
+                        " itemID=" . $items[$j]);
                     $count = db_fetch_row($q);
                     $count = $count[0];
                     if ($count != 0) {
@@ -581,26 +590,26 @@
 
                 if ($itemID == null) {
                     // create new item
-                    db_query("INSERT INTO ".SHOPPING_CART_ITEMS_TABLE.
-                        " (productID) VALUES('".$productID."')\n") or die (db_error());
+                    db_query("INSERT INTO " . SHOPPING_CART_ITEMS_TABLE .
+                        " (productID) VALUES('" . $productID . "')\n") or die (db_error());
                     $itemID = db_insert_id();
 
                     // set content item
                     foreach ($_SESSION["configurations"][$key] as $var) {
-                        db_query("INSERT INTO ".
-                            SHOPPING_CART_ITEMS_CONTENT_TABLE." ( itemID, variantID ) ".
-                            " VALUES( '".$itemID."', '".$var."' )\n") or die (db_error());
+                        db_query("INSERT INTO " .
+                            SHOPPING_CART_ITEMS_CONTENT_TABLE . " ( itemID, variantID ) " .
+                            " VALUES( '" . $itemID . "', '" . $var . "' )\n") or die (db_error());
                     }
 
                     // insert item into cart
-                    db_query("insert ".SHOPPING_CARTS_TABLE.
-                        "(customerID, itemID, Quantity)".
-                        "values( '".$customerID."', '".$itemID."', '".$_SESSION["counts"][$key].
+                    db_query("insert " . SHOPPING_CARTS_TABLE .
+                        "(customerID, itemID, Quantity)" .
+                        "values( '" . $customerID . "', '" . $itemID . "', '" . $_SESSION["counts"][$key] .
                         "' )\n") or die (db_error());
                 } else {
-                    db_query("update ".SHOPPING_CARTS_TABLE.
-                        " set Quantity=Quantity + ".$_SESSION["counts"][$key]." ".
-                        " where customerID=".$customerID." and itemID=".$itemID."\n") or die (db_error());
+                    db_query("update " . SHOPPING_CARTS_TABLE .
+                        " set Quantity=Quantity + " . $_SESSION["counts"][$key] . " " .
+                        " where customerID=" . $customerID . " and itemID=" . $itemID . "\n") or die (db_error());
                 }
 
             }
@@ -688,11 +697,11 @@
                 else $_request .= 'index.php';
             };
             if (preg_match("/^\?categoryID=(\d+)\&category_slug=[a-z0-9_]+$/i", $_vars, $matches)) {
-                $_vars = '?categoryID='.$matches[1];
+                $_vars = '?categoryID=' . $matches[1];
             };
 
             if (preg_match("/^\?ukey=product\&productID=(\d+)\&product_slug=[a-z0-9_\-]+$/i", $_vars, $matches)) {
-                $_vars = '?productID='.$matches[1];
+                $_vars = '?productID=' . $matches[1];
             };
         };
 
@@ -705,7 +714,7 @@
         if (strpos($_vars, '?') !== false) {
 
             $Mode = URLRENDMODE_RESET;
-            $_vars = substr($_vars, 1, strlen($_vars) - 1).'&lang_iso2=';
+            $_vars = substr($_vars, 1, strlen($_vars) - 1) . '&lang_iso2=';
         } else {
 
             $Mode = URLRENDMODE_MODIFY;
@@ -775,20 +784,27 @@
 
         foreach ($newGetVars as $TokenName => $TokenValue) {
 
-            $newGetVars[$TokenName] = $TokenName.'='.$TokenValue;
+            if (!is_array($newGetVars[$TokenName])) {
+                $newGetVars[$TokenName] = $TokenName . '=' . $TokenValue;
+            } else {
+                foreach ($newGetVars[$TokenName] as $TokenSubValue) {
+                    $TokenSubName[] = $TokenName . '[]=' . $TokenSubValue;
+                }
+                $newGetVars[$TokenName] = implode('&', $TokenSubName);
+            }
         }
         $RenderedURL = implode('&', $newGetVars);
         if (strpos($_request, '?') !== false) {
 
-            $RenderedURL = preg_replace('/\?.*$/', '?'.$RenderedURL, $_request);
+            $RenderedURL = preg_replace('/\?.*$/', '?' . $RenderedURL, $_request);
         } else {
 
-            $RenderedURL = $_request.'?'.$RenderedURL;
+            $RenderedURL = $_request . '?' . $RenderedURL;
         }
 
         $RenderedURL = preg_replace('@[\?\&]{1,2}$@', '', $RenderedURL);
 
-        if (strlen($anchor) > 1) $RenderedURL = preg_replace('@#[^#]*$@', '', $RenderedURL).$anchor;
+        if (strlen($anchor) > 1) $RenderedURL = preg_replace('@#[^#]*$@', '', $RenderedURL) . $anchor;
         /**
          * Strore URL
          */
@@ -830,13 +846,13 @@
 
         if ($_pagenumber <= 0) return array(
             'CurrentPage' => 1,
-            'LastPage'    => 1,
-            'Range'       => array(1),
+            'LastPage' => 1,
+            'Range' => array(1),
         );
         $Lister = array(
             'CurrentPage' => $_pagenumber,
-            'LastPage'    => $_totalpages,
-            'Range'       => array(),
+            'LastPage' => $_totalpages,
+            'Range' => array(),
         );
         $lister_start = $_pagenumber - floor($_lister_num / 2);
         $lister_start = ($lister_start + $_lister_num <= $_totalpages ? $lister_start : $_totalpages - $_lister_num + 1);
@@ -887,7 +903,7 @@
 
             $mailSmarty->assign($_var, $_val);
         }
-        $_t = $mailSmarty->fetch('email/'.$_TemplateName);
+        $_t = $mailSmarty->fetch('email/' . $_TemplateName);
         ss_mail($_Email, $_Subject, $_t, true);
     }
 
@@ -1007,9 +1023,9 @@
         if (intval($_TimeControl)) {
 
             $_SESSION['_xSAVE_DATA'][$_ID] = array(
-                $_ID.'_DATA'      => $_Data,
-                $_ID.'_TIME_CTRL' => array(
-                    'timetag'   => time(),
+                $_ID . '_DATA' => $_Data,
+                $_ID . '_TIME_CTRL' => array(
+                    'timetag' => time(),
                     'timelimit' => $_TimeControl,
                 ),
             );
@@ -1027,13 +1043,13 @@
 
         if (is_array($_SESSION['_xSAVE_DATA'][$_ID])) {
 
-            if (isset($_SESSION['_xSAVE_DATA'][$_ID][$_ID.'_TIME_CTRL'])) {
+            if (isset($_SESSION['_xSAVE_DATA'][$_ID][$_ID . '_TIME_CTRL'])) {
 
-                if (($_SESSION['_xSAVE_DATA'][$_ID][$_ID.'_TIME_CTRL']['timetag'] + $_SESSION['_xSAVE_DATA'][$_ID][$_ID.'_TIME_CTRL']['timelimit']) < time()) {
+                if (($_SESSION['_xSAVE_DATA'][$_ID][$_ID . '_TIME_CTRL']['timetag'] + $_SESSION['_xSAVE_DATA'][$_ID][$_ID . '_TIME_CTRL']['timelimit']) < time()) {
                     return null;
                 } else {
 
-                    $Return = $_SESSION['_xSAVE_DATA'][$_ID][$_ID.'_DATA'];
+                    $Return = $_SESSION['_xSAVE_DATA'][$_ID][$_ID . '_DATA'];
                     unset($_SESSION['_xSAVE_DATA'][$_ID]);
 
                     return $Return;
@@ -1054,9 +1070,9 @@
 
         if (is_array($_SESSION['_xSAVE_DATA'][$_ID])) {
 
-            if (isset($_SESSION['_xSAVE_DATA'][$_ID][$_ID.'_TIME_CTRL'])) {
+            if (isset($_SESSION['_xSAVE_DATA'][$_ID][$_ID . '_TIME_CTRL'])) {
 
-                if (($_SESSION['_xSAVE_DATA'][$_ID][$_ID.'_TIME_CTRL']['timetag'] + $_SESSION['_xSAVE_DATA'][$_ID][$_ID.'_TIME_CTRL']['timelimit']) >= time()) {
+                if (($_SESSION['_xSAVE_DATA'][$_ID][$_ID . '_TIME_CTRL']['timetag'] + $_SESSION['_xSAVE_DATA'][$_ID][$_ID . '_TIME_CTRL']['timelimit']) >= time()) {
                     return 1;
                 } else {
                     return 0;
@@ -1078,13 +1094,13 @@
 
         if (is_array($_SESSION['_xSAVE_DATA'][$_ID])) {
 
-            if (isset($_SESSION['_xSAVE_DATA'][$_ID][$_ID.'_TIME_CTRL'])) {
+            if (isset($_SESSION['_xSAVE_DATA'][$_ID][$_ID . '_TIME_CTRL'])) {
 
-                if (($_SESSION['_xSAVE_DATA'][$_ID][$_ID.'_TIME_CTRL']['timetag'] + $_SESSION['_xSAVE_DATA'][$_ID][$_ID.'_TIME_CTRL']['timelimit']) < time()) {
+                if (($_SESSION['_xSAVE_DATA'][$_ID][$_ID . '_TIME_CTRL']['timetag'] + $_SESSION['_xSAVE_DATA'][$_ID][$_ID . '_TIME_CTRL']['timelimit']) < time()) {
                     return null;
                 } else {
 
-                    $Return = $_SESSION['_xSAVE_DATA'][$_ID][$_ID.'_DATA'];
+                    $Return = $_SESSION['_xSAVE_DATA'][$_ID][$_ID . '_DATA'];
 
                     return $Return;
                 }
@@ -1173,7 +1189,7 @@
     function GetCustomerByCustomerLogin($customerLogin)
     {
 
-        $query = "SELECT * FROM SC_customers WHERE Login='".$customerLogin."'";
+        $query = "SELECT * FROM SC_customers WHERE Login='" . $customerLogin . "'";
         $Customer = mysql_fetch_object(mysql_query($query));
 
         return $Customer;
@@ -1185,7 +1201,7 @@
         $query = "SELECT * FROM SC_currency_types WHERE CID=10";
         $currency = mysql_fetch_object(mysql_query($query));
 
-        $usd = $currency->currency_value;
+        $_SESSION['curs'] = $usd = $currency->currency_value;
         $usd = 1 / $usd;
         $usd = number_format($usd, 2);
 
@@ -1200,20 +1216,20 @@
             if ($numargs = func_num_args()) {
                 $_SESSION['enter'] = func_get_arg(0);
             }
-            
+
             $Customer = GetCustomerByCustomerLogin($_SESSION['log']);
-    
-            $cust_may_order = 1;
-            
-            if (!$Customer->unlimited_order) {
+
+            if ($Customer->unlimited_order) {
+                $cust_may_order = 1;
+            } else {
                 $cust_may_order = (strtotime($Customer->may_order_until) > $_SERVER['REQUEST_TIME']) ? 1 : 0;
             }
-            
+
             if ($Customer->token && $Customer->token !== xEscapeSQLstring($_SESSION['enter'])) {
                 unset($_SESSION['log'], $_SESSION['pass'], $_SESSION['enter']);
                 db_query("UPDATE SC_customers SET token = '', logged = TIMESTAMP(0) WHERE Login='$Customer->Login'");
             }
-            
+
             $_SESSION['cs_id'] = $Customer->customerID;
             $_SESSION['cs_first_name'] = $Customer->first_name;
             $_SESSION['cs_last_name'] = $Customer->last_name;
@@ -1222,15 +1238,15 @@
             $_SESSION['cs_skidka_ua'] = $Customer->skidka_ua;
             $_SESSION['cs_may_order'] = $cust_may_order;
             $_SESSION['cs_unlimited'] = $Customer->unlimited_order;
-            $_SESSION['cs_api_access'] = $Customer->api_access;
             $_SESSION['cs_vip'] = $Customer->vip;
+            $_SESSION['cs_api_access'] = $Customer->api_access;
             //            $_SESSION['cs_bonus'] = $Customer->1C;
 
             getUSDvalue();
 
             if (!$Customer->token || !$Customer->cust_password || !isset($_SESSION['pass']) || strcmp($Customer->cust_password, $_SESSION['pass'])) //unauthorized access
             {
-                unset($_SESSION['log'], $_SESSION['pass'], $_SESSION['enter']);
+                unset($_SESSION['log'], $_SESSION['pass'], $_SESSION['enter'], $_SESSION['cs_may_order']);
 //                unset(
 //                    $_SESSION['log'],
 //                    $_SESSION['usd'],
@@ -1284,7 +1300,7 @@
         if ($lastspace_i !== false)
             $String = substr($String, 0, $lastspace_i);
 
-        return $String.($origlength > $Length ? $EndString : '');
+        return $String . ($origlength > $Length ? $EndString : '');
     }
 
     function getUniqueWDataID($Length = 4)
@@ -1319,7 +1335,7 @@
         do {
 
             $fname = sprintf($_tpl, rand_name($_length));
-        } while (file_exists($_path.$fname) && 300 < $limit++);
+        } while (file_exists($_path . $fname) && 300 < $limit++);
 
         return $fname;
     }
@@ -1446,7 +1462,7 @@
 
 
         //DEBUG:
-        if (false && ($fp = fopen(DIR_TEMP.'/missed_locals.log', 'a'))) {
+        if (false && ($fp = fopen(DIR_TEMP . '/missed_locals.log', 'a'))) {
             $backtrace = debug_backtrace();
             $backtrace = $backtrace[0];
             $file = str_replace(WBS_DIR, '', str_replace('\\', '/', $backtrace['file']));
@@ -1479,7 +1495,7 @@
         print '<pre>';
         print_r($data);
         print '</pre>';
-        PEAR::raiseError($comment.' - '.ob_get_contents());
+        PEAR::raiseError($comment . ' - ' . ob_get_contents());
         ob_end_clean();
     }
 
@@ -1503,7 +1519,7 @@
         for ($wer = 0; $wer < $fldNum; $wer++) {
 
             $tPath = '';
-            for ($qwe = 0; $qwe <= $wer; $qwe++) $tPath .= $explFolders[$qwe].'/';
+            for ($qwe = 0; $qwe <= $wer; $qwe++) $tPath .= $explFolders[$qwe] . '/';
 
             if ($dont_check_path && strpos($dont_check_path, $tPath) === 0) continue;
             if (!file_exists($tPath) && $tPath) {
@@ -1530,10 +1546,10 @@
 
             if ($file == '.' || $file == '..') continue;
 
-            if (is_dir($src.'/'.$file)) {
-                copy_dir($src.'/'.$file, $dest.'/'.$file);
+            if (is_dir($src . '/' . $file)) {
+                copy_dir($src . '/' . $file, $dest . '/' . $file);
             } else {
-                copy($src.'/'.$file, $dest.'/'.$file);
+                copy($src . '/' . $file, $dest . '/' . $file);
             }
         }
 
@@ -1557,12 +1573,12 @@
 
                 if ($file == "." || $file == "..") continue;
 
-                if (is_file($path.'/'.$file)) {
+                if (is_file($path . '/' . $file)) {
 
-                    unlink($path.'/'.$file);
+                    unlink($path . '/' . $file);
                 } else {
 
-                    delete_file($path.'/'.$file);
+                    delete_file($path . '/' . $file);
                 }
             }
 
@@ -1602,12 +1618,12 @@
         $result = "";
 
         $compliances = array("а" => "a", "б" => "b", "в" => "v", "г" => "g", "д" => "d", "е" => "e", "ё" => "yo", "ж" => "zh", "з" => "z", "и" => "i", "й" => "j", "к" => "k",
-                             "л" => "l", "м" => "m", "н" => "n", "о" => "o", "п" => "p", "р" => "r", "с" => "s", "т" => "t", "у" => "u", "ф" => "f", "х" => "h", "ц" => "c", "ч" => "ch",
-                             "ш" => "sh", "щ" => "sh", "ы" => "y", "ь" => "'", "ю" => "ju", "я" => "ja", "э" => "e",
+            "л" => "l", "м" => "m", "н" => "n", "о" => "o", "п" => "p", "р" => "r", "с" => "s", "т" => "t", "у" => "u", "ф" => "f", "х" => "h", "ц" => "c", "ч" => "ch",
+            "ш" => "sh", "щ" => "sh", "ы" => "y", "ь" => "'", "ю" => "ju", "я" => "ja", "э" => "e",
 
-                             "А" => "A", "Б" => "B", "В" => "V", "Г" => "G", "Д" => "D", "Е" => "E", "Ё" => "Yo", "Ж" => "Zh", "З" => "Z", "И" => "I", "Й" => "J", "К" => "K",
-                             "Л" => "L", "М" => "M", "Н" => "N", "О" => "O", "П" => "P", "Р" => "R", "С" => "S", "Т" => "T", "У" => "U", "Ф" => "F", "Х" => "H", "Ц" => "C", "Ч" => "Ch",
-                             "Ш" => "Sh", "Щ" => "Sh", "Ы" => "Y", "Ь" => "'", "Ю" => "Ju", "Я" => "Ja", "Э" => "E");
+            "А" => "A", "Б" => "B", "В" => "V", "Г" => "G", "Д" => "D", "Е" => "E", "Ё" => "Yo", "Ж" => "Zh", "З" => "Z", "И" => "I", "Й" => "J", "К" => "K",
+            "Л" => "L", "М" => "M", "Н" => "N", "О" => "O", "П" => "P", "Р" => "R", "С" => "S", "Т" => "T", "У" => "U", "Ф" => "F", "Х" => "H", "Ц" => "C", "Ч" => "Ch",
+            "Ш" => "Sh", "Щ" => "Sh", "Ы" => "Y", "Ь" => "'", "Ю" => "Ju", "Я" => "Ja", "Э" => "E");
 //Use ASCII Page codes
         /*$compliances = array(184=>'yo',168=>'Yo',
                             192=>"A","B","V","G","D","E","Zh","Z","I","J","K",
@@ -1633,17 +1649,17 @@
     function utf8_bad_replace($str, $replace = '?')
     {
         $UTF8_BAD =
-            '([\x00-\x7F]'.                          # ASCII (including control chars)
-            '|[\xC2-\xDF][\x80-\xBF]'.               # non-overlong 2-byte
-            '|\xE0[\xA0-\xBF][\x80-\xBF]'.           # excluding overlongs
-            '|[\xE1-\xEC\xEE\xEF][\x80-\xBF]{2}'.    # straight 3-byte
-            '|\xED[\x80-\x9F][\x80-\xBF]'.           # excluding surrogates
-            '|\xF0[\x90-\xBF][\x80-\xBF]{2}'.        # planes 1-3
-            '|[\xF1-\xF3][\x80-\xBF]{3}'.            # planes 4-15
-            '|\xF4[\x80-\x8F][\x80-\xBF]{2}'.        # plane 16
+            '([\x00-\x7F]' .                          # ASCII (including control chars)
+            '|[\xC2-\xDF][\x80-\xBF]' .               # non-overlong 2-byte
+            '|\xE0[\xA0-\xBF][\x80-\xBF]' .           # excluding overlongs
+            '|[\xE1-\xEC\xEE\xEF][\x80-\xBF]{2}' .    # straight 3-byte
+            '|\xED[\x80-\x9F][\x80-\xBF]' .           # excluding surrogates
+            '|\xF0[\x90-\xBF][\x80-\xBF]{2}' .        # planes 1-3
+            '|[\xF1-\xF3][\x80-\xBF]{3}' .            # planes 4-15
+            '|\xF4[\x80-\x8F][\x80-\xBF]{2}' .        # plane 16
             '|(.{1}))';                              # invalid byte
         ob_start();
-        while (preg_match('/'.$UTF8_BAD.'/S', $str, $matches)) {
+        while (preg_match('/' . $UTF8_BAD . '/S', $str, $matches)) {
             if (!isset($matches[2])) {
                 echo $matches[0];
             } else {
@@ -1770,7 +1786,7 @@
                 }
             }
 
-            return $last_space.' '.$units_view[$last_units];
+            return $last_space . ' ' . $units_view[$last_units];
         }
     }
 
@@ -1778,7 +1794,7 @@
     {
         $container = $_SERVER['HTTP_USER_AGENT'];
         $useragents = array(
-            'Android', 'iPhone', 'iPod', 'Elaine/3.0', 'Palm', 'EudoraWeb', 'Blazer', 'AvantGo', 'Windows CE', 'Cellphone', 'Small', 'MMEF20', 'Danger', 'hiptop'
+            'Android', 'iPhone', 'Mobile', 'iPod', 'Elaine/3.0', 'Palm', 'EudoraWeb', 'Blazer', 'AvantGo', 'Windows CE', 'Cellphone', 'Small', 'MMEF20', 'Danger', 'hiptop'
         , 'Proxinet', 'ProxiNet', 'Newt', 'PalmOS', 'NetFront', 'SHARP-TQ-GX10', 'SonyEricsson', 'SymbianOS', 'UP.Browser'
         , 'UP.Link', 'TS21i-10', 'BlackBerry', 'MOT-V', 'portalmmm', 'Nokia', 'DoCoMo', 'Opera Mini'
         , 'Palm', 'Handspring', 'Nokia', 'Kyocera', 'Samsung', 'Motorola', 'Mot', 'Smartphone', 'Blackberry'
@@ -1792,29 +1808,51 @@
 
         return false;
     }
+    function detectIOS() 
+    {
+        $useragent = $_SERVER['HTTP_USER_AGENT'];
+        $msie = 'Mac OS';
+    
+        return stripos($useragent, $msie);
+    }
 
+//    function detectMSIE()
+//    {
+//        $useragent = $_SERVER['HTTP_USER_AGENT'];
+//        $msie = 'MSIE';
+//
+//        return stripos($useragent, $msie);
+//    }
+    
     function detectMSIE()
     {
         $useragent = $_SERVER['HTTP_USER_AGENT'];
-        $msie = 'MSIE';
-        $match = stripos($useragent, $msie);
-        
-        return $match;
-    }
+        $msies = array('IEMobile', 'Edge', 'MSIE');
 
-    function detectIOS()
-    {
-        $useragent = $_SERVER['HTTP_USER_AGENT'];
-        $mobiles = array('iPhone', 'Mobile', 'Android');
-
-        foreach ($mobiles as $mobile) {
-            $match = stripos($useragent, $mobile);
+        foreach ($msies as $msie) {
+            $match = stripos($useragent, $msie);
             if ($match) {
                return true; 
             }
         }
         
         return false;
+    }
+
+    function detectMobile()
+    {
+        $useragent = $_SERVER['HTTP_USER_AGENT'];
+        $Mobiles = array('IEMobile', 'Windows Phone', 'Android', 'iPhone', 'Mobile', 'iPod', 'Opera Mini');
+
+        foreach ($Mobiles as $Mobile) {
+            $match = stripos($useragent, $Mobile);
+            if ($match) {
+                return true;
+            }
+        }
+
+        return false;
+//        return stripos($_SERVER['HTTP_USER_AGENT'], 'Mobile');
     }
 
     function make_clean_slug($string, $prefix, $table, $slug_field, $id_field = '', $id = null)
@@ -1824,8 +1862,8 @@
         $Register = &Register::getInstance();
         $DBHandler = &$Register->get(VAR_DBHANDLER);
         /* @var DBHandler DataBase */
-        $query = "SELECT DISTINCT`{$slug_field}` as slug FROM {$table} WHERE `{$slug_field}` LIKE ?".($id ? " AND NOT(`{$id_field}` LIKE ?)" : '');
-        $DBHandler->ph_query($query, $prefix.$slug.'%', $id);
+        $query = "SELECT DISTINCT`{$slug_field}` as slug FROM {$table} WHERE `{$slug_field}` LIKE ?" . ($id ? " AND NOT(`{$id_field}` LIKE ?)" : '');
+        $DBHandler->ph_query($query, $prefix . $slug . '%', $id);
         while ($row = $DBHandler->fetch_assoc()) {
             $used_slug[] = $row['slug'];
         }
@@ -1833,8 +1871,8 @@
 
         $max_i = 100;
         $_slug = $slug;
-        while (($max_i--) > 0 && in_array($prefix.$_slug, $used_slug)) {
-            $_slug = $slug.'_'.rand_name(3);
+        while (($max_i--) > 0 && in_array($prefix . $_slug, $used_slug)) {
+            $_slug = $slug . '_' . rand_name(3);
         }
 
         return $_slug;
@@ -1846,7 +1884,7 @@
 
         if (isset($options['host']) && strlen($options['host'])) {
             curl_setopt($ch, CURLOPT_HTTPPROXYTUNNEL, true);
-            curl_setopt($ch, CURLOPT_PROXY, sprintf("%s%s", $options['host'], (isset($options['port']) && $options['port']) ? ':'.$options['port'] : ''));
+            curl_setopt($ch, CURLOPT_PROXY, sprintf("%s%s", $options['host'], (isset($options['port']) && $options['port']) ? ':' . $options['port'] : ''));
             //  print(sprintf("%s%s",$options['host'],(isset($options['port'])&&($options['port'])) ? ':'.$options['port'] : '').'<br><hr>');
 
             if (isset($options['user']) && strlen($options['user'])) {
@@ -1909,7 +1947,7 @@
 
     function showMeDump($see, $get_sales)
     {
-        echo '<pre><b>'.strtoupper($get_sales).'=></b>';
+        echo '<pre><b>' . strtoupper($get_sales) . '=></b>';
         print_r($see);
         echo '</pre><br/>';
     }
@@ -1922,7 +1960,7 @@
             LEFT JOIN SC_shopping_cart_items ON SC_shopping_carts.itemID = SC_shopping_cart_items.itemID
             LEFT JOIN SC_products ON SC_shopping_cart_items.productID = SC_products.productID
             WHERE SC_shopping_carts.customerID  = $CustomerID";
-        $res = mysql_query($query) or die(mysql_error()."<br>$query");
+        $res = mysql_query($query) or die(mysql_error() . "<br>$query");
         $in_cart = array();
         while ($row = mysql_fetch_object($res)) {
             $in_cart[$row->productID] = (int)($row->Quantity);
@@ -1952,36 +1990,36 @@
             $i = $start_row - $per_page;
             if ($i <= 0)
                 $i = 0;
-            $z_sort = isset($_REQUEST['sort']) ? '&amp;sort='.$sort.'&amp;direction='.$direction : "";
-            $output .= '<i>←</i><a href="'.$url.'&amp;p='.$i.$z_sort.'">Предыдущая</a>';
+            $z_sort = isset($_REQUEST['sort']) ? '&amp;sort=' . $sort . '&amp;direction=' . $direction : "";
+            $output .= '<i>←</i><a href="' . $url . '&amp;p=' . $i . $z_sort . '">Предыдущая</a>';
         } else {
             $output .= '<span><i>←</i>Предыдущая</span>';
         }
         $output .= '<span class=divider>&nbsp;|&nbsp;</span>';
         if ($cur_page < $num_pages) {
-            $z_sort = isset($_REQUEST['sort']) ? '&amp;sort='.$sort.'&amp;direction='.$direction : "";
-            $output .= '<a href="'.$url.'&amp;p='.($cur_page * $per_page).$z_sort.'">Следующая</a><i>→</i>';
+            $z_sort = isset($_REQUEST['sort']) ? '&amp;sort=' . $sort . '&amp;direction=' . $direction : "";
+            $output .= '<a href="' . $url . '&amp;p=' . ($cur_page * $per_page) . $z_sort . '">Следующая</a><i>→</i>';
         } else {
             $output .= '<span>Следующая<i>→</i></span>';
         }
         //  $output .= '<span></span>';
         if ($cur_page > ($num_links + 1)) {
-            $output .= '<a href="'.$url.'" title="Первая"></a>';
+            $output .= '<a href="' . $url . '" title="Первая"></a>';
         }
         for ($loop = 0; $loop <= $num_pages - 1; $loop++) {
             $i = ($loop * $per_page);
             if ($i >= 0) {
                 if (($cur_page - 1) == $loop) {
-                    $output .= '<span style="color: purple;">&nbsp;'.($loop + 1).'&nbsp;</span>'; // Текущая страница
+                    $output .= '<span style="color: purple;">&nbsp;' . ($loop + 1) . '&nbsp;</span>'; // Текущая страница
                 } else {
                     $n = ($i == 0) ? '' : $i;
-                    $z_sort = isset($_REQUEST['sort']) ? '&amp;sort='.$sort.'&amp;direction='.$direction : "";
-                    $output .= '<a href="'.$url.'&amp;p='.$n.$z_sort.'">&nbsp;'.($loop + 1).'&nbsp;</a>';
+                    $z_sort = isset($_REQUEST['sort']) ? '&amp;sort=' . $sort . '&amp;direction=' . $direction : "";
+                    $output .= '<a href="' . $url . '&amp;p=' . $n . $z_sort . '">&nbsp;' . ($loop + 1) . '&nbsp;</a>';
                 }
             }
         }
 
-        return '<strong>Страницы:&nbsp;</strong>'.$output;
+        return '<strong>Страницы:&nbsp;</strong>' . $output;
     }
 
     function escape($string, $esc_type = 'html')
@@ -2004,7 +2042,7 @@
                 // escape every character into hex
                 $return = '';
                 for ($x = 0; $x < strlen($string); $x++) {
-                    $return .= '%'.bin2hex($string[$x]);
+                    $return .= '%' . bin2hex($string[$x]);
                 }
 
                 return $return;
@@ -2012,7 +2050,7 @@
             case 'hexentity':
                 $return = '';
                 for ($x = 0; $x < strlen($string); $x++) {
-                    $return .= '&#x'.bin2hex($string[$x]).';';
+                    $return .= '&#x' . bin2hex($string[$x]) . ';';
                 }
 
                 return $return;
@@ -2020,7 +2058,7 @@
             case 'decentity':
                 $return = '';
                 for ($x = 0; $x < strlen($string); $x++) {
-                    $return .= '&#'.ord($string[$x]).';';
+                    $return .= '&#' . ord($string[$x]) . ';';
                 }
 
                 return $return;
@@ -2040,7 +2078,7 @@
                     $_ord = ord($string{$_i});
                     // non-standard char, escape it
                     if ($_ord >= 126) {
-                        $_res .= '&#'.$_ord.';';
+                        $_res .= '&#' . $_ord . ';';
                     } else {
                         $_res .= $string{$_i};
                     }
@@ -2059,27 +2097,27 @@
 
             return (($stri[1] >= "\xa0")
                 ?
-                ($stri[0].chr(ord($stri[1]) - 32))
+                ($stri[0] . chr(ord($stri[1]) - 32))
                 :
-                ($stri[0].$stri[1])).substr($stri, 2);
+                ($stri[0] . $stri[1])) . substr($stri, 2);
         } else {
             return ucfirst($stri);
         }
     }
-    
+
     function stripAll($data)
     {
         return stripslashes(trim(strip_tags($data)));
     }
-    
+
     function salesDebug()
     {
         if (isset($_SESSION['log']) && $_SESSION['log'] === 'sales') {
-            
+
             $get_sales = stripAll($_GET['sales']);
-            
+
             switch ($get_sales) {
-                
+
                 case 'session':
                     showMeDump($_SESSION, $get_sales);
                     break;
@@ -2102,4 +2140,21 @@
                     showMeDump($GLOBALS, $get_sales);
             }
         }
+    }
+    
+    function yandexXMLexist($discount = false) 
+    {
+        $file_info = '';
+        $cs_skidka = ($discount === true)?(int)$_SESSION['cs_skidka']:0;
+        $cs_skidka_ua = ($discount === true)?(int)$_SESSION['cs_skidka_ua']:0;
+        $market_file = DIR_TEMP.'/'.date('Y-m-d').'_'.((int)(date('H') / 4)).'_disc_'.$cs_skidka.'_'.$cs_skidka_ua.'_yandex.xml';
+        
+        if (file_exists($market_file) && filesize($market_file) > 1024*1024) {
+            $file_info = array(
+                'size'  => (string)round(filesize($market_file) / 1024),
+                'mtime' => Time::standartTime(filemtime($market_file)),
+            );
+        }
+        
+        return $file_info;
     }

@@ -1,18 +1,18 @@
 <div id="log2div">
-    <form action="{''|set_query_html}" method="post" name="authform">
-        <div class="form_login2">
+    <div class="form_login2">
+            <form action="{''|set_query_html}" method="post" name="authform">
             <input type="hidden" name="enter" value="{$enter}">
             <input type="hidden" name="GEO_REGION">
             <input type="hidden" name="GEO_CITY">
             <input type="hidden" name="GEO_ISP">
+            <label for="ln_user_login">Логин:</label>
             <input type="text" name="user_login" id="ln_user_login" placeholder="Логин"
-                   value="{$user_login|escape:'html'}" size="10" autofocus>
-            <br>
+                   value="{$user_login|escape:'html'}" size="10" autocomplete="on" autofocus>
+            <label for="ln_user_pw">Пароль:</label>
             <input name="user_pw" id="ln_user_pw" placeholder="Пароль" type="password" size="10">
-            <input class="login-button blue-button" type="submit" value='вход'/><br>
+            <input class="login-button blue-button" type="submit" value='войти'/>
             <span class="log2">или </span>
-            <a rel="nofollow" href="{'?ukey=register'|set_query_html}">{lbl_pgn_register}</a>
-        </div>
-    </form>
-    {*<script>getLayer('ln_user_login').focus();</script>*}
+            <a class=blue-button rel="nofollow" href="{'?ukey=register'|set_query_html}">{lbl_pgn_register}</a>
+        </form>
+    </div>
 </div>

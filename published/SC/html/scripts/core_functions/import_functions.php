@@ -37,6 +37,14 @@
         return $row[0];
     }
 
+    function getValues($fields, $table, $condition)
+    {
+        $query = "SELECT $fields FROM $table WHERE $condition LIMIT 1";
+        $result = mysql_query($query) or die('Ошибка в запросе: '.mysql_error().'<br>'.$query);
+
+        return mysql_fetch_object($result);
+    }
+
     function updateValue($table, $new_value, $condition = '')
     {
         $condition = ($condition)?"WHERE $condition":'';

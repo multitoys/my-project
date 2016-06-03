@@ -1,19 +1,21 @@
-<script defer src="{$smarty.const.URL_JS}/jquery.countdown-1437576318769.js" type="text/javascript"></script>
-<a href="/category/akcija/">
-<div class="zakcia_body" data-time="{$seconds}">
-    <div class="left">
-		<div>
-			<p id = "end">до конца акции осталось...</p>
+<script defer src="/js/jquery.countdown.min.js" type="text/javascript"></script>
+{section name=i loop=$Akcias}
+	<a href="/category/akcija/">
+	<div id="zakcia_body_{$Akcias[i].num}" class="zakcia_body" data-time="{$Akcias[i].seconds}">
+		<div class="left">
+			<div>
+				<p class = "end">до конца акции осталось...</p>
+			</div>
+			<div class="z_counter" id="z_counter_{$Akcias[i].num}"></div>
+			<div class="desc">
+				<div>Дней</div>
+				<div>Часов</div>
+				<div>Минут</div>
+				<div>Секунд</div>
+			</div >
 		</div>
-		<div id="z_counter"></div>
-		<div class="desc">
-			<div>Дней</div>
-			<div>Часов</div>
-			<div>Минут</div>
-			<div>Секунд</div>
-		</div >
+		{$Akcias[i].za_body}
 	</div>
-	{$za_body}
-</div>
-</a>
-<br />
+	</a>
+	<br />
+{/section}

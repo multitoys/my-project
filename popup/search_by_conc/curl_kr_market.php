@@ -11,7 +11,7 @@
 
     define('DIR_ROOT', $_SERVER['DOCUMENT_ROOT'].'/published/SC/html/scripts');
     define('DIR_COMPETITORS', $_SERVER['DOCUMENT_ROOT'].'/popup/search_by_conc');
-//    define('DIR_CURL', $_SERVER['DOCUMENT_ROOT'] . '/curl');
+    define('DIR_CURL', $_SERVER['DOCUMENT_ROOT'] . '/curl');
     
     include_once(DIR_ROOT.'/includes/init.php');
     include_once(DIR_CFG.'/connect.inc.wa.php');
@@ -60,13 +60,13 @@ TAG
 
         $login_url = 'http://kr-kindermarket.com.ua/auth';
         $refferer = 'http://kr-kindermarket.com.ua/';
-//        postAuth($login_url, 'email=alenkiselev%40mail.ru&password=bondarenko&login=', $headers);
+        postAuth($login_url, 'email=alenkiselev%40mail.ru&password=bondarenko&login=', $headers);
 
         $url = 'http://kr-kindermarket.com.ua/category';
-        $filename = DIR_COMPETITORS.'/category.html';
+        $filename = DIR_CURL.'/category.html';
         readUrl($url, $filename, $refferer, $headers);
 
-//        updateValue('Conc__kindermarket', 'enabled = 0');
+        updateValue('Conc__kindermarket', 'enabled = 0');
 
         $html = file_get_contents($filename);
 
@@ -98,7 +98,7 @@ TAG
             $category_url = URL_COMPETITORS.$category_url.URL_POSTFIX;
             $category = trim(decodeCodepage($categories[2][$i]));
             $category_file = rus2Translit($category);
-            $filename = DIR_COMPETITORS.'/'.$category_file.EXT;
+            $filename = DIR_CURL.'/'.$category_file.EXT;
             $products = '';
 
             readUrl($category_url, $filename, '', $headers);
@@ -123,7 +123,7 @@ TAG
                 $name
                     = mysql_real_escape_string(trim(str_replace($replace_name, '', decodeCodepage($products[2][$j]))));
                 $price = (double)$products[3][$j];
-                $price_usd = $price / 21.40;
+                $price_usd = $price / 23.75;
                 $product_code = mysql_real_escape_string(trim($products[4][$j]));
                 $productID = getValue('productID', 'Conc__kindermarket', "code = '$code'");
 
@@ -161,7 +161,7 @@ TAG
                 progressBar('products', $percent);
             }
             unlink($filename);
-            buferOut(10000);
+            buferOut(1);
         }
         progressBar('products', $percent, true);
         echo('<hr><span style="color:blue;">Обработано '.$no.' товаров</span><br><br>Новых '.$new.' товаров</span><br>');
@@ -180,6 +180,6 @@ TAG
       ');
         debugging($start);
     } else {
-        var_dump($_SESSION);
+//        var_dump($_SESSION);
         die('NO LOGIN SESSION');
     }

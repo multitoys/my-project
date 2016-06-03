@@ -1,11 +1,13 @@
 {strip}
-{*<script type="text/javascript" src="{$smarty.const.URL_JS}/category.js"></script>*}
-{* category view *}{*if $smarty.get.categoryID eq 100005}{$catalog_navigator=$catalog_navigator1}{/if*}
+{* category view *}
+{*if $smarty.get.categoryID eq 100005}{$catalog_navigator=$catalog_navigator1}{/if*}
 <div class="product_brief_head">
     <div id="cat_path">
         {*<ul class="cat_path_in_productpage">*}
         {if $selected_category.picture}
-            <div><img src="{$smarty.const.URL_PRODUCTS_PICTURES}/{$selected_category.picture|escape:'url'}" alt="{$selected_category.name|escape:'html'}" title="{$selected_category.name|escape:'html'}" />
+            <div>
+                <img src="{$smarty.const.URL_PRODUCTS_PICTURES}/{$selected_category.picture|escape:'url'}" 
+                     alt="{$selected_category.name|escape:'html'}" title="{$selected_category.name|escape:'html'}" />
             </div>
         {/if}
             <ul id=breadcrumbs-one>
@@ -14,34 +16,34 @@
                 {section name=i loop=$product_category_path}
                     {if $product_category_path[i].categoryID != 1}
                         <li>
-                        <a href='{"?categoryID=`$product_category_path[i].categoryID`&category_slug=`$product_category_path[i].slug`"|set_query_html}' aria-haspopup=true>{$product_category_path[i].name|escape:'html'|default:"(no name)"}</a>
-                        {if $subcategories_to_be_shown}
-                            <ul>
-                            {section name=i loop=$subcategories_to_be_shown}
-                        {if $subcategories_to_be_shown[i][3]}
-                            {assign var=_sub_category_url value="?categoryID=`$subcategories_to_be_shown[i][0]`&category_slug=`$subcategories_to_be_shown[i][3]`"|set_query_html}
-                        {else}
-                            {assign var=_sub_category_url value="?categoryID=`$subcategories_to_be_shown[i][0]`"|set_query_html}
-                        {/if}
-                                <li><a href="{$_sub_category_url}" aria-haspopup=true>{$subcategories_to_be_shown[i][1]}</a></li>
-                            {/section}
-                            </ul>
-                        {/if}
+                            <a href='{"?categoryID=`$product_category_path[i].categoryID`&category_slug=`$product_category_path[i].slug`"|set_query_html}' aria-haspopup=true>{$product_category_path[i].name|escape:'html'|default:"(no name)"}</a>
+                            {if $subcategories_to_be_shown}
+                                <ul>
+                                {section name=i loop=$subcategories_to_be_shown}
+                                    {if $subcategories_to_be_shown[i][3]}
+                                        {assign var=_sub_category_url value="?categoryID=`$subcategories_to_be_shown[i][0]`&category_slug=`$subcategories_to_be_shown[i][3]`"|set_query_html}
+                                    {else}
+                                        {assign var=_sub_category_url value="?categoryID=`$subcategories_to_be_shown[i][0]`"|set_query_html}
+                                    {/if}
+                                    <li><a href="{$_sub_category_url}" aria-haspopup=true>{$subcategories_to_be_shown[i][1]}</a></li>
+                                {/section}
+                                </ul>
+                            {/if}
                         </li>
                         {if !$smarty.section.i.last}
                         {*{$BREADCRUMB_DELIMITER}*}
                         &GreaterGreater;
-                    {/if}
+                        {/if}
                     {/if}
                 {/section}
             </ul>
-            <div>
-                {$selected_category.description}
-            </div>
-            <div>
-                <button class="blue-button addall" onclick="add_all2cart();">Заказать все</button>
-            </div>
-    </div>
+    <div>
+    {$selected_category.description}
+</div>
+<div>
+    <button class="blue-button addall" onclick="addAll2Cart();">Заказать все</button>
+</div>
+</div>
 {*<div id="cat_top_tree">*}
 	{*<div id="cat_info_left_block">*}
 		{* description *}
@@ -53,217 +55,50 @@
 {*{if $catalog_navigator}<p class='navigator'>{$catalog_navigator}</p>{/if}*}
 {if $catalog_navigator}<div class='simple-pagination compact-theme'>{$catalog_navigator}</div>{/if}
 <!-- Шапка таблицы -->
-{*include file="product_brief_head.html"*}
-<div class=shapka>
-    <table class=cs_product_info style="padding-left: 5px">
-        <tbody>
-            <tr>
-                <td>
-                    <div class="{if $sort=='name'} z_sort_active {else} z_sort_inactive {/if}">
-                        <div class="arbopr sort_name">
-                            <a href="/category/{$selected_category.slug}&sort=name&direction={if $direction=='ASC'}DESC{else}ASC{/if}"  title="Отсортировать по Наименованию">Наименование</a>
-                        </div>
-                        <div class="{if $direction=='ASC'&&$sort=='name'}z_sort_asc{else}z_sort_desc{/if}"></div>
-                    </div>
-                </td>
-                <td width=100px>
-                    <div class="{if $sort=='product_code'} z_sort_active {else} z_sort_inactive {/if}">
-                        <div class=arbopr>
-                            <a href="/category/{$selected_category.slug}&sort=product_code&direction={if $direction=='ASC'}DESC{else}ASC{/if}" title="Отсортировать по Артикулу">Артикул</a>
-                        </div>
-                        <div class="{if $direction=='ASC'&&$sort=='product_code'}z_sort_asc{else}z_sort_desc{/if}"></div>
-                    </div>
-                </td>
-                <td width=60px>
-                    <div class="{if $sort=='Bonus'} z_sort_active {else} z_sort_inactive {/if}">
-                        <div class=arbopr>
-                            <a href="/category/{$selected_category.slug}&sort=Bonus&direction={if $direction=='ASC'}DESC{else}ASC{/if}" title="Отсортировать по Баллам">Баллы</a>
-                        </div>
-                        <div class="{if $direction=='ASC'&&$sort=='Bonus'}z_sort_asc{else}z_sort_desc{/if}"></div>
-                    </div>
-                </td>
-                <td width=80px>
-                    <div class="{if $sort=='Price'} z_sort_active {else} z_sort_inactive {/if}">
-                        <div class=arbopr>
-                            <a href="/category/{$selected_category.slug}&sort=Price&direction={if $direction=='ASC'}DESC{else}ASC{/if}" title="Отсортировать по Цене">Цена</a>
-                        </div>
-                        <div class="{if $direction=='ASC'&&$sort=='Price'}z_sort_asc{else}z_sort_desc{/if}"></div>
-                    </div>
-                </td>
-                <td width=110px>
-                    <div class=ost>Остаток</div>
-                </td>
-                <td width=65px>
-                    <div class=zakaz>Заказано</div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+{include file="product_brief_head.html"}
 </div>
-</div>
-<div class="scroll-pane1">
-    <div class='delimiter'></div>
-	{*<table>*}
-	  {section name=i1 loop=$products_to_show}
-	  {*<tr>*}
-		{*<td>*}
-			{*include file="product_brief.html" product_info=$products_to_show[i1]*}
-			{*assign var=product_info value=$products_to_show[i1]*}
-			{* product brief view (from a category or search) *}
-			{if $products_to_show[i1] ne NULL}
-			{if $products_to_show[i1].slug}
-			{assign var=_product_url value="?ukey=product&productID=`$products_to_show[i1].productID`&product_slug=`$products_to_show[i1].slug`"|set_query_html}
-			{else}
-			{assign var=_product_url value="?ukey=product&productID=`$products_to_show[i1].productID`"|set_query_html}
-			{/if}
-			{if $widget}{assign var=_form_action_url value="&view=noframe&external=1"}{/if}
-			{assign var=_cnt value=$products_to_show[i1].productID}
-			<table class='cs_product_info'>
-				<tbody>
-					<tr>
-						<td width=160>
-                        {if $products_to_show[i1].pics_for_slider > 0}
-                            <div class="slider visual">
-                                <div class=controls  data-pid='{$smarty.const.URL_PRODUCTS_PICTURES}/{$products_to_show[i1].picture}'>
-                                    <div class="label prev_pic" onclick="changePic({$products_to_show[i1].code_1c},-1)"></div>
-                                    <div class="label next_pic" onclick="changePic({$products_to_show[i1].code_1c}, 1)"></div>
-                                </div>
-                                <img id='pic{$products_to_show[i1].code_1c}' data-pics='{$products_to_show[i1].pics_for_slider}' data-current=0 src="{$smarty.const.URL_PRODUCTS_PICTURES}/{$products_to_show[i1].thumbnail|escape:'url'}">
-                                <div class="corner color
-                                    {if $products_to_show[i1].akcia}
-                                         _akcia"><span></span>Акция{if $products_to_show[i1].akcia_skidka > 0} - {$products_to_show[i1].akcia_skidka}%{/if}
-                                    {elseif $products_to_show[i1].eproduct_available_days > 5}
-                                                              _superprice"><span></span>Суперцена!
-                                    {elseif $products_to_show[i1].sort_order}
-                                                              _newitemspostup"><span></span>Новое поступление
-                                    {elseif $products_to_show[i1].items_sold}
-                                                              _hit"><span></span>Хит продаж
-                                    {else}
-                                                              ">
-                                    {/if}
-                                </div>
-                            </div>
-                        {else}
-							<div class="visual">
-                                <a {$target} href='{$_product_url}'>
-                                    {if $products_to_show[i1].thumbnail}
-							    	    <img class='preview' width=160 height=120 data-pid='{$smarty.const.URL_PRODUCTS_PICTURES}/{$products_to_show[i1].picture|escape:'url'}' src="{$smarty.const.URL_PRODUCTS_PICTURES}/{$products_to_show[i1].thumbnail|escape:'url'}" alt="{$products_to_show[i1].name|escape:'html'}" title="{$products_to_show[i1].name|escape:'html'}">
-                                    {else}
-                                        <img width=153 height=117 src='/img/nophoto.jpg'>
-                                    {/if}
-							    </a>
-                                <div class="corner color
-                                    {if $products_to_show[i1].akcia}
-                                         _akcia"><span></span>Акция{if $products_to_show[i1].akcia_skidka > 0} - {$products_to_show[i1].akcia_skidka}%{/if}
-                                    {elseif $products_to_show[i1].eproduct_available_days > 5}
-                                         _superprice"><span></span>Суперцена!
-                                    {elseif $products_to_show[i1].sort_order}
-                                         _newitemspostup"><span></span>Новое поступление
-                                    {elseif $products_to_show[i1].items_sold}
-                                         _hit"><span></span>Хит продаж
-                                    {else}
-                                        ">
-                                    {/if}
-                                </div>
-                            </div>
-                        {/if}
-						</td>
-						<td>							
-							<div class='productname'><a href='{$_product_url}'>{$products_to_show[i1].name|escape:'html'}</a></div>
-						</td>
-						<td width=100>
-							<a href='{$_product_url}'>{$products_to_show[i1].product_code|escape:'html'}</a>
-						</td>
-						<td width=60>
-                            {if $products_to_show[i1].Bonus/$products_to_show[i1].Price>2}
-                                <div style='color: red; font-size: 14px;'><b>{$products_to_show[i1].Bonus|string_format:"%d"}</b></div>
-                            {else}
-                                <div class="totalPrice bonus">{$products_to_show[i1].Bonus|string_format:"%d"}</div>
-                            {/if}
-						</td>
-						{*if $products_to_show[i1].zakaz}
-						<td width='80px'>
-							<div>
-								<span style='color: red;font-size: 12px;'><i>под заказ!</i></span><br /><span style='color: grey;'><b>{$products_to_show[i1].PriceWithUnit}</b></span>
-							</div>
-						</td>*}
-						{if $products_to_show[i1].akcia && $products_to_show[i1].list_price}
-						
-						<td width=80>
-							<div class='akcia'>
-                            {if $smarty.const.CONF_SHOW_ADD2CART eq 1}
-                                {$products_to_show[i1].PriceWithUnit}<br /><span class='list_price'>{$products_to_show[i1].list_priceWithUnit}</span>
-                            {/if} 
-							</div>
-						</td>
-						{else}
-						<td width=80>
-                        {*{if $smarty.const.CONF_SHOW_ADD2CART eq 1}*}
-                            <div class="price">{$products_to_show[i1].PriceWithUnit}</div>
-                        {*{/if}*}
-						</td>
-						{/if}
-						<td>
-						</td>
-						<td width=175>
-							{if $currencies_count ne 0 && $products_to_show[i1].Price > 0}
-							{*<div class="pravay_chast">*}
-								{*cpt_product_add2cart_button request_product_count='request_product_count' overridestyle=':qa8pav'*}
-								{if $products_to_show[i1].ordering_available && $products_to_show[i1].Price>0 && ( $smarty.const.CONF_SHOW_ADD2CART eq 1 ) && ( $smarty.const.CONF_CHECKSTOCK==0 || $products_to_show[i1].in_stock > 0 ) }
-								<table width=175>
-									<tbody>
-										<tr>
-											<td>
-												<input name="product_qty" id='qty{$products_to_show[i1].productID}' class="cart_product_quantity" data-id='{$products_to_show[i1].productID}' type="text" size="2" value="" title='Количество'
-												onkeypress='if (event.keyCode == 13){literal}{add_2cart("#qty{/literal}{$products_to_show[i1].productID}{literal}");}{/literal}'>&nbsp;
-											</td>
-											<td style='vertical-align:middle;white-space:nowrap;'>
-												<div class="ostatok_div">
-													{if $products_to_show[i1].ostatok eq 'под заказ'}
-														<span style='  color: red; font-style: italic;'>&nbsp;под&nbsp;заказ!</span>
-													{else}
-														&nbsp;{$products_to_show[i1].ostatok}&nbsp;шт.
-													{/if}
-												</div>
-											</td>
-											<td>
-												<td style='vertical-align:middle;'>
-													<button class="z_add_cart" onclick='add_2cart("#qty{$products_to_show[i1].productID}");' type="button">
-														<div id="zpid_{$products_to_show[i1].productID}" class='in_cart'>
-                                                            <div class="animated zoomInDown">
-                                                                {if $shop_counts[$_cnt]}
-                                                                    {$shop_counts[$_cnt]}
-                                                                {else}
-                                                                    0
-                                                                {/if}
-                                                            </div>
-                                                        </div>
-													</button>
-												</td>
-											</tr>
-										</tbody>
-									</table>
-									{elseif $smarty.const.CONF_SHOW_ADD2CART eq 1 && $smarty.const.CONF_CHECKSTOCK && !$products_to_show[i1].in_stock && $products_to_show[i1].ordering_available}
-									<div class="prd_out_of_stock">{lbl_prd_out_of_stock}</div>
-									{/if}
-								{*</div>*}
-								{/if}
-							</td>
-						</tr>
-					</tbody>
-				</table>
-				<div class='delimiter'></div>
-				{if $products_to_show[i1].ordering_available && $products_to_show[i1].Price>0 && ( $smarty.const.CONF_SHOW_ADD2CART eq 1 ) && ( $smarty.const.CONF_CHECKSTOCK==0 || $products_to_show[i1].in_stock > 0 ) }
-				{elseif $smarty.const.CONF_SHOW_ADD2CART eq 1 && $smarty.const.CONF_CHECKSTOCK && !$products_to_show[i1].in_stock && $products_to_show[i1].ordering_available}
-				<div class="prd_out_of_stock">{lbl_prd_out_of_stock}</div>
-				{/if}
-				{/if}
-		{*</td>*}
-	  {*</tr>*}
-	  {/section}
-	{*</table>*}
-</div>
-	{*{if $catalog_navigator}<p class='navigator bottom-nav'>{$catalog_navigator}</p>{/if}*}
+    <div class="scroll-pane1">
+        <div id=content>
+            <div class='delimiter'></div>
+            {*<table>*}
+            {section name=i1 loop=$products_to_show}
+                {*<tr>*}
+                {*<td>*}
+                {*include file="product_brief.html" product_info=$products_to_show[i1]*}
+                {*assign var=product_info value=$products_to_show[i1]*}
+                {* product brief view (from a category or search) *}
+                {if $products_to_show[i1] ne NULL}
+                    {if $products_to_show[i1].slug}
+                        {assign var=_product_url value="?ukey=product&productID=`$products_to_show[i1].productID`&product_slug=`$products_to_show[i1].slug`"|set_query_html}
+                    {else}
+                        {assign var=_product_url value="?ukey=product&productID=`$products_to_show[i1].productID`"|set_query_html}
+                    {/if}
+                    {if $widget}{assign var=_form_action_url value="&view=noframe&external=1"}{/if}
+                    {assign var=_cnt value=$products_to_show[i1].productID}
+                    <table class='cs_product_info'>
+                        <tbody>
+                            <tr>
+                                {include file="product_brief.html"}
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class='delimiter'></div>
+                    {if $products_to_show[i1].ordering_available && $products_to_show[i1].Price>0 && ( $smarty.const.CONF_SHOW_ADD2CART eq 1 ) && ( $smarty.const.CONF_CHECKSTOCK==0 || $products_to_show[i1].in_stock > 0 ) }
+                    {elseif $smarty.const.CONF_SHOW_ADD2CART eq 1 && $smarty.const.CONF_CHECKSTOCK && !$products_to_show[i1].in_stock && $products_to_show[i1].ordering_available}
+                        <div class="prd_out_of_stock">{lbl_prd_out_of_stock}</div>
+                    {/if}
+                {/if}
+            {/section}
+            {*</table>*}
+            {if $catalog_navigator}<div class='simple-pagination compact-theme'>{$catalog_navigator}</div>{/if}
+        </div>
+        <div class="baron__track">
+            <div class="baron__free">
+                <div class="baron__bar"></div>
+            </div>
+        </div>
+    </div>
+    {*{if $catalog_navigator}<p class='navigator bottom-nav'>{$catalog_navigator}</p>{/if}*}
 {/if}
 {assign var="maxEl" value="0"}
 {section name=u loop=$products_to_show}{assign var="maxEl" value="`$maxEl+1`"}{/section}

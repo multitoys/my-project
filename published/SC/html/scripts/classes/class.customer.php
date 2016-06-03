@@ -42,6 +42,7 @@
         var $ActivationCode;
         var $skidka;
         var $skidka_ua;
+        var $api_access;
         var $vip;
         /*   var $open; */
 

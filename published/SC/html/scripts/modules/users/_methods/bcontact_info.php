@@ -11,9 +11,9 @@ class EditCustomerContactInfo extends ActionsController
             $ci['subscribed4news'] = 0;
         };
 
-        if(!array_key_exists('is_special_price', $ci))
+        if(!array_key_exists('api_access', $ci))
         {
-            $ci['is_special_price'] = 0;
+            $ci['api_access'] = 0;
         };
 
         if(!array_key_exists('ignore_skidka', $ci))

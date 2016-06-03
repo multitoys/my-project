@@ -8,8 +8,8 @@
     error_reporting(E_ERROR | E_PARSE);
 
     define('DIR_CLASSES', DIR_ROOT.'/classes');
-//    define('WBS_ROOT_PATH', realpath(DIR_ROOT.'/../../../../'));
-    define('WBS_ROOT_PATH', realpath(dirname(__FILE__)."/../../../../../"));
+define('WBS_ROOT_PATH', realpath( DIR_ROOT."/../../../../" ));
+//define('WBS_ROOT_PATH', realpath( dirname(__FILE__)."/../../../../../" ));
     define('WBS_DIR', WBS_ROOT_PATH.'/');
     if (!defined('SYSTEM_PATH')) {
         define('SYSTEM_PATH', WBS_DIR.'system');

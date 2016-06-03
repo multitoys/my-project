@@ -2,17 +2,17 @@
     function smarty_function_conc_tree ($params, &$smarty)
     {
         $auxpage = $params['auxpage'];
-        $disp = '<ul id="navmenu-v">';
-        $disp .= '<li><a href="" aria-haspopup=true>Конкуренты</a><ul><li><a href="/auxpage_divoland" aria-haspopup=true>Диволенд</a></li><li><a href="/auxpage_mixtoys" aria-haspopup=true>Микстойс</a></li><li><a href="/auxpage_dreamtoys" aria-haspopup=true>Веселка</a></li><li><a href="/auxpage_kindermarket" aria-haspopup=true>Киндер-Маркет</a></li><li><a href="/auxpage_grandtoys" aria-haspopup=true>Гранд-Тойс</a></li></ul></li>';
+        $disp = '<div id="slidemenu1"><ul>';
+        $disp .= '<li class=collapsible><a href="/">Конкуренты</a><ul><li><a href="/auxpage_divoland">Диволенд</a></li><li><a href="/auxpage_mixtoys">Микстойс</a></li><li><a href="/auxpage_dreamtoys">Веселка</a></li><li><a href="/auxpage_grandtoys">Гранд-Тойс</a></li></ul></li>';
         $sql = 'SELECT DISTINCT parent FROM Conc__'.$auxpage.' ORDER BY parent';
         if ($r = mysql_query($sql))
             while ($res = mysql_fetch_assoc($r)) {
                 if ($res['parent'] !== '') {
-                    $disp .= '<li><a href="/auxpage_'.$auxpage.'?div_par='.$res['parent'].'" aria-haspopup=true>'.$res['parent'].'</a>';
+                    $disp .= '<li class=collapsible><a href="/auxpage_'.$auxpage.'?div_par='.$res['parent'].'">'.$res['parent'].'</a>';
                     $disp .= subcategory($res['parent'], $auxpage).'';
                 }
             }
-        $disp .= '</ul>';
+        $disp .= '</ul></div>';
         return $disp;
     }
 
@@ -22,11 +22,11 @@
         $disp = '';
         if ($r = mysql_query($sql)) {
             if (mysql_num_rows($r) > 0) {
-                $disp .= '<ul class="animated slideInRight">';
+                $disp .= '<ul>';
                 while ($res = mysql_fetch_assoc($r)) {
                     if ($res['category'] !== '') {
                         $disp .= '<li>';
-                        $disp .= '<a href="/auxpage_'.$auxpage.'?div_cat='.$res['category'].'" aria-haspopup=true>'.$res['category'].'</a>';
+                        $disp .= '<a href="/auxpage_'.$auxpage.'?div_cat='.$res['category'].'">'.$res['category'].'</a>';
                     }
                 }
                 $disp .= '</li></ul>';

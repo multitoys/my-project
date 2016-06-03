@@ -1,7 +1,7 @@
 <?php
 define('CAPTURE_IMG',true);
 
-define('DIR_ROOT', str_replace("\\","/",realpath(dirname(__FILE__))));
+	define('DIR_ROOT', $_SERVER['DOCUMENT_ROOT'] . '/published/SC/html/scripts');
 include_once(DIR_ROOT.'/includes/init.php');
 include_once(DIR_ROOT.'/includes/constants.php');
 include_once(DIR_CFG.'/connect.inc.wa.php');
@@ -36,11 +36,10 @@ if(!is_dir(DIR_PRODUCTS_PICTURES)){//Patch to dinamicaly create path if it not e
         }
 		chdir( $currentDir );
 	}
-ClassManager::includeClass('IValidator');
+//ClassManager::includeClass('IValidator');
 
 
 $i = new IValidator();
 $i->RndCodes = '0123456789';
 $i->RndLength = 4;
 $i->generateImage();
-?>

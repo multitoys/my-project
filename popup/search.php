@@ -62,12 +62,13 @@
         $limit = 'LIMIT 100';
         $order = 't1.name_ru';
         $enabled = 't1.enabled AND';
-        $close = '<button class=\'search_close blue-button\' onclick=document.getElementById(\'live_search\').innerHTML=\'\';>&times;</button>';
+        $close = '<button class=\'search_close blue-button\' onclick=document.querySelector(\'div.container\').innerHTML=\'\';>&times;</button>';
         $all_res = '<ul><li><label for=search_ok>Все результаты поиска</label>... ' . $close . '</li>';
 
         $ukraine = '';
 
         if (array_key_exists('conc', $_POST)) {
+            $search = mb_strtolower($search, mb_detect_encoding($search));
             $limit = '';
             $order = 't1.product_code';
             $enabled = '';
@@ -79,8 +80,9 @@
                 $search = str_replace('#0#', '', $search);
                 $ukraine = ' AND ukraine = 0';
             }
+            $search = str_replace('+++', '.+', $search);
             $search = mysql_real_escape_string(str_replace($search_array, '.?', $search));
-            $condition = "(t1.product_code REGEXP '$search' OR  t1.name_ru REGEXP '$search' OR  t1.brand = '$search')";
+            $condition = "(LOWER(t1.product_code) REGEXP '$search' OR  LOWER(t1.name_ru) REGEXP '$search' OR  LOWER(t1.brand) = '$search')";
             $all_res = '<ul><li>Результаты поиска</li>';
         } else {
             $search = _searchPatternReplace($search);

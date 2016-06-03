@@ -236,6 +236,30 @@ TAG
     if (($handle = fopen($filename, 'r')) !== false) {
 
         $table = 'Conc__analogs';
+//        updateValue($table, 'enabled = 0');
+        $query
+            = "
+                            UPDATE $table
+                            SET 
+                                enabled = 0,
+                                max_diff = 0.00,
+                                kindermarket = NULL,
+                                usd_kindermarket = NULL,
+                                diff_kindermarket = 0.00,
+                                divoland = NULL,
+                                usd_divoland = NULL,
+                                diff_divoland = 0.00,
+                                dreamtoys = NULL,
+                                usd_dreamtoys = NULL,
+                                diff_dreamtoys = 0.00,
+                                mixtoys = NULL,
+                                usd_mixtoys = NULL,
+                                diff_mixtoys = 0.00,
+                                grandtoys = NULL,
+                                usd_grandtoys = NULL,
+                                diff_grandtoys = 0.00
+                        ";
+        $res = mysql_query($query) or die(mysql_error() . "<br>$query");
 //        $new_ua = array();
 
         while (($data = fgetcsv($handle, 1000, ';')) !== false) {
@@ -293,7 +317,7 @@ TAG
 //                $akcia_bally = is_numeric($akcia_bally)?$akcia_bally:0;
                 $akcia_bally = ($akcia_bally > 2) ? 1 : 0;
                 $doza = is_numeric($doza) ? $doza : 0;
-                $box = is_numeric($box) ? $box : 0;
+                $box = is_numeric($box) ? $box : 1;
                 $oldprice = ($oldprice > $price) ? $oldprice : 0;
                 $minorder = ($minorder > 0) ? 1 : 0;
                 $zakaz = ($zakaz > 0) ? 1 : 0;
@@ -403,6 +427,7 @@ TAG
                                     ukraine                 = $ua,
                                     doza                    = $doza,
                                     box                     = $box,
+                                    minorder                = $minorder, 
                                     zakaz                   = $zakaz,
                                     brand                   = '$brand',
                                     eproduct_available_days = $new
@@ -581,8 +606,8 @@ TAG
     $query = 'TRUNCATE TABLE  Search_products';
     $res = mysql_query($query) or die(mysql_error() . "<br>$query");
 
-    $query = 'INSERT INTO Search_products (categoryID, code_1c, product_code, name_ru, Price, enabled)
-              SELECT  categoryID, code_1c, product_code, name_ru, Price, enabled FROM SC_products  WHERE in_stock = 100';
+    $query = 'INSERT INTO Search_products (productID, categoryID, code_1c, product_code, name_ru, brand, purchase, Price, enabled)
+              SELECT  productID, categoryID, code_1c, product_code, name_ru, brand, purchase, Price, enabled FROM SC_products  WHERE in_stock = 100';
     $res = mysql_query($query) or die(mysql_error() . "<br>$query");
 
     //    $query = 'DELETE FROM `SC_shopping_cart_items`
@@ -598,6 +623,8 @@ TAG
     $res = mysql_query($query) or die(mysql_error() . "<br>$query");
 //    debugging($start);
 
+    
+    
     // добавление цен конкурентов в таблицу сравнения конкурентов
 //    $start = microtime(true);
     $query = 'SELECT competitor, currency_value FROM Conc__competitors';

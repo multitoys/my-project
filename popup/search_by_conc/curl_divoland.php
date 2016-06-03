@@ -17,7 +17,7 @@
     include_once(DIR_CFG . '/connect.inc.wa.php');
     include(DIR_FUNC . '/setting_functions.php');
     include_once(DIR_COMPETITORS . '/curl_competitors.php');
-    include(DIR_COMPETITORS . '/divoland_categories.php');
+
 
     $a = false;
 
@@ -32,7 +32,7 @@
         $DB_tree = new DataBase();
         $DB_tree->connect(SystemSettings::get('DB_HOST'), SystemSettings::get('DB_USER'), SystemSettings::get('DB_PASS'));
         $DB_tree->selectDB(SystemSettings::get('DB_NAME'));
-
+        $TABLE_CONC = 'Conc__divoland';
         echo(<<<TAG
 
 			<html>
@@ -46,8 +46,8 @@
 
 TAG
         );
-//    $usd = getValue('currency_value', 'Conc__competitors', 'CCID = 1');
-        $usd = 23.40;
+        $usd = getValue('currency_value', 'Conc__competitors', 'CCID = 1');
+        //$usd = 22.45;
 
         define('CODE_PATTERN', '<a[^<>]*?class="zoom[\s]+nyroModal"[\s]+href="/prodimages/normal/[\w]+/([\w]+?)\.jpg"[^<>]*?>[^<>]*?</a>[^<>]*?</div>[^<>]*?');
         define('NAME_PATTERN', '<a[\s]+class="name"[^<>]*?>(.*)</a>[^<>]*?');
@@ -71,17 +71,19 @@ TAG
 
         $login_url = URL_COMPETITORS . '/default/login';
         $refferer = URL_COMPETITORS;
-        
-//        postAuth($login_url, 'fdata[username]=' . LOGIN . '&fdata[password]=' . PASSWORD . '&fdata[city]=' . CITY . '&fdata[_csrf_token]=' . TOKEN, $headers);
 
-        updateValue('Conc__divoland', 'enabled = 0');
+//        postAuth($login_url, 'fdata[username]=' . LOGIN . '&fdata[password]=' . PASSWORD . '&fdata[city]=' . CITY . '&fdata[_csrf_token]=' . TOKEN, $headers);
+        updateValue($TABLE_CONC, 'enabled = 0');
+//        updateValue('Conc__divoland', 'enabled = 0');
 
         $no = 0;
         $new = 0;
         $part = 0;
         $percent = 0;
         $replace_name = array('&laquo;', '&raquo;', '&rdquo;', '&ldquo;', '&quot;', '&#039;', '\'', '.', '"', '„');
-
+        $refferer = '';
+        $categories = include(DIR_COMPETITORS . '/divoland_categories.php');
+        $parts = count($categories);
         foreach ($categories as $parent => $cats) {
 
             set_time_limit(0);
@@ -91,10 +93,11 @@ TAG
                 $url = str2Url(rus2translit($category));
                 $category_url = URL_COMPETITORS . URL_PREFIX . $url . URL_POSTFIX;
                 $filename = rus2Translit(trim($category));
-                $filename = DIR_COMPETITORS . '/' . $filename . EXT;
+                $filename = DIR_CURL . '/' . $filename . EXT;
                 $products = '';
 
-                readUrl($category_url, $filename, '', $headers);
+                readUrl($category_url, $filename, $refferer, $headers);
+                $refferer = $category_url;
 
                 $html = file_get_contents($filename);
                 preg_match_all(
@@ -105,42 +108,62 @@ TAG
                 );
 
                 $rowcount = count($products[1]);
-                echo('<p>обновление цен категории <b>&laquo;' . $category . '&raquo;</b>...(<i>' . $rowcount . ' товаров</i>)</p>');
-                buferOut();
 
-                for ($i = 0; $i < $rowcount; $i++) {
-                    set_time_limit(0);
-                    $code = mysql_real_escape_string(decodeCodepage($products[1][$i]));
-                    $name
-                        = mysql_real_escape_string(trim(str_replace($replace_name, '', decodeCodepage($products[2][$i]))));
-                    $price_usd = (double)$products[3][$i];
-                    $price = $price_usd * $usd;
-                    $productID = getValue('productID', 'Conc__divoland', "code = '$code'");
+                if (!$rowcount || $rowcount > 5000) {
 
-                    if ($productID) {
-                        $query
-                            = "
-                                UPDATE  Conc__divoland
+                    showError($category);
+
+                } else {
+
+//                    updateValue($TABLE_CONC, 'enabled = 0');
+
+
+                    echo('<p>обновление цен категории <b>&laquo;' . $category . '&raquo;</b>...(<i>' . $rowcount . ' товаров</i>)</p>');
+                    buferOut();
+
+                    for ($i = 0; $i < $rowcount; $i++) {
+                        set_time_limit(0);
+                        $code = mysql_real_escape_string(decodeCodepage($products[1][$i]));
+                        $name
+                            = mysql_real_escape_string(trim(str_replace($replace_name, '', decodeCodepage($products[2][$i]))));
+                        $price = (double)$products[3][$i];
+                        $price_usd = $price / $usd;
+//                        $productID = getValue('productID', $TABLE_CONC, "code = '$code'");
+                        $values = array('productID', 'price_uah', 'price_usd');
+                        $data = getValues($values, $TABLE_CONC, "code = '$code'");
+                        $date_modified = date("Y-m-d");
+
+                        if ($data->productID) {
+
+                            $date_modified = ($data->price_uah == $price || $data->price_usd == $price_usd) ? '' : ", date_modified='$date_modified'";
+
+                            $query
+                                = "
+                                UPDATE  $TABLE_CONC
                                 SET     parent    = '$parent',
                                         category  = '$category',
                                         name      = '$name',
                                         price_uah = $price,
                                         price_usd = $price_usd,
                                         enabled   = 1
-                                WHERE   productID =  $productID
+                                        $date_modified
+                                WHERE   productID    =  $data->productID
+                                ";
+                            $res = mysql_query($query) or die(mysql_error() . "<br>$query");
+                        } else {
+                            $query
+                                = "
+                                        INSERT INTO $TABLE_CONC
+                                                    (parent, category, code, name, price_uah, price_usd, date_modified)
+                                        VALUES      ('$parent', '$category', '$code', '$name', $price, $price_usd, '$date_modified')
                     ";
-                        $res = mysql_query($query) or die(mysql_error() . "<br>$query");
-                    } else {
-                        $query
-                            = "
-                                INSERT INTO Conc__divoland
-                                         (parent, category, code, name, price_uah, price_usd)
-                                VALUES   ('$parent', '$category', '$code', '$name', $price, $price_usd)
-                    ";
-                        $res = mysql_query($query) or die(mysql_error() . "<br>$query");
-                        $new++;
+                            $res = mysql_query($query) or die(mysql_error() . "<br>$query");
+                            $new++;
+                        }
+                        $no++;
                     }
-                    $no++;
+//                    unlink($filename);
+                    buferOut(2, 5);
                 }
             }
             $part++;
@@ -156,10 +179,10 @@ TAG
         echo('<hr><span style="color:blue;">Обработано ' . $no . ' товаров</span><br><br>Новых ' . $new . ' товаров</span><br>');
 
         // Оптимизация таблиц
-        $query = "UPDATE Conc__divoland SET parent='', category='' WHERE enabled=0";
+        $query = "UPDATE $TABLE_CONC SET parent='', category='' WHERE enabled=0";
         $res = mysql_query($query) or die(mysql_error() . "<br>$query");
 
-        $query = 'OPTIMIZE TABLE `Conc__divoland`, `Conc_search__divoland`';
+        $query = "OPTIMIZE TABLE $TABLE_CONC, `Conc_search__divoland`";
         $res = mysql_query($query) or die(mysql_error() . "<br>$query");
         mysql_close();
 

@@ -1,0 +1,37 @@
+{strip}
+{if !$CPT_CONSTRUCTOR_MODE}
+	{if $product_info.big_picture or $product_info.picture}
+        <div>    
+            <img id='img-current_picture' src="{$smarty.const.URL_PRODUCTS_PICTURES}/{if $product_info.big_picture}{$product_info.big_picture|escape:'url'}{else}{$product_info.picture|escape:'url'}{/if}" title="{$page_title|escape:'html'}" alt="{$page_title|escape:'html'}" />
+            <div class="corner color
+                                    {if $product_info.akcia}
+                                         _akcia">
+                                        <span></span>Акция
+                                        {if $product_info.akcia_skidka > 0} - {$product_info.akcia_skidka}%{/if}
+                                    {elseif $product_info.eproduct_available_days > 5}
+                                    _superprice"><span></span>Суперцена!
+                                    {elseif $product_info.sort_order}
+                                    _newitemspostup"><span></span>Новое поступление
+                                    {elseif $product_info.items_sold}
+                                    _hit"><span></span>Хит продаж
+                                    {else}
+                                    ">
+                                    {/if}
+            </div>
+        </div>
+    {/if}
+
+    {if $all_product_pictures}
+        <div id="box_product_thumbnails">
+            {foreach from=$all_product_pictures item=_picture name=frpict}
+                {*{if $_picture.photoID != $product_info.photoID}*}
+                    {*{counter name=_pict_num assign=_pict_num}*}
+                    <a class=dop_pics href='{$smarty.const.URL_PRODUCTS_PICTURES}/{if $_picture.enlarged}{$_picture.enlarged|escape:'url'}{else}{$_picture.filename|escape:'url'}{/if}'>
+                    <img src='{$smarty.const.URL_PRODUCTS_PICTURES}/{$_picture.thumbnail|escape:'url'}' alt="{$product_info.name|escape:'html'}" title="{$product_info.name|escape:'html'}">
+                    </a>
+                {*{/if}*}
+            {/foreach}
+        </div>
+    {/if}
+{/if}
+{/strip}

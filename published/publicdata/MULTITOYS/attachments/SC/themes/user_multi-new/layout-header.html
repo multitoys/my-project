@@ -1,0 +1,22 @@
+<header class="header-wrapper">
+    <div class="settings-wrapper">
+        <a class="show-hidden-menu" href="javascript:void(0);"></a>
+    </div>
+
+    {*<div class="logo-wrapper">*}
+        {*<a href="{$smarty.const.CONF_FULL_SHOP_URL}">*}
+            {*{$smarty.const.CONF_SHOP_NAME}*}
+        {*</a>*}
+    {*</div>*}
+    
+    <div class="logo-wrapper">
+        {cpt_logo file='logo_mini.png'}
+    </div>
+    <div class="basket-wrapper">
+        <a class="{*{if $shopping_cart_items}*}is-active{*{/if}*}" href="/cart">
+            {*{if $shopping_cart_items && $shopping_cart_value}*}
+                <span id=my__cart class="basket-count"></span>
+            {*{/if}*}
+        </a>
+    </div>
+</header>

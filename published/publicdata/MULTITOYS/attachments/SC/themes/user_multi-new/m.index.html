@@ -1,0 +1,136 @@
+{strip}
+{if !$smarty.session.log}
+    {include file="`$smarty.const.DIR_FTPLS`/m.login2.html"}
+{/if}
+<div id=main>
+    <div id=body>
+        <div class="header{*{if $smarty.session.log}*} inlog{*{/if}*}">
+            <div class=categories_show>
+                <a class="show-hidden-menu" href="javascript:void(0);"></a>
+            </div>
+            {*{if $smarty.session.log}*}
+                <div id=multi-logo-mini {if $smarty.session.log} class=log_in{/if}>
+                    <!-- cpt_container_start -->
+                    {cpt_logo file='logo_mini.png'}
+                    <!-- cpt_container_end -->
+                </div>
+            {*{else}*}
+                {*<div id="multi-logo">*}
+                    {*<!-- cpt_container_start[id=2] -->*}
+                    {*{cpt_logo file='logo.png'}*}
+                    {*<!-- cpt_container_end -->*}
+                {*</div>*}
+            {if !$smarty.session.log}
+                <div id=pass-login class=blue-button>
+                    <a id=link_login href="/login/">Вход</a>
+                </div>
+            {/if}
+        </div>
+        <div id=header>
+            {if $smarty.session.log}
+                <div class=cpt_product_search>
+                    <form method=get name=form action="/search">
+                        <input type=text class=input_message rel="Поиск товаров" placeholder="Поиск товаров" name=searchstring autocomplete=off id=searchstring>
+                        <input type=submit value="" id='search_ok' class=submit>
+                    </form>
+                </div>
+            {/if}
+            {if $smarty.session.cs_may_order}
+                <a href="/cart"><div id=my__cart></div></a>
+            {/if}
+        </div>
+        <div id=main_content>
+            <div id=columns>
+                <div id=left class=hidden-menu-wrapper>
+                    {if $smarty.session.log}
+                        <div id=out-login>
+                            <div class=seans_out><a href="/logout" id=logout>Выйти из сеанса</a></div>
+                            <div><a href="/myaccount" id=myaccount>Личный кабинет</a></div>
+                        </div>
+                    {/if}
+                    <div class="cpt_maincolumns menu-block-wrapper">
+                        {m_slidetree}
+                        {if $smarty.session.log and $smarty.session.cs_may_order}
+                            <div class=predloj>
+                                <div>Курс валют:</div>
+                                <div><span><b>USD = {$smarty.session.usd} грн</b></span></div>
+                                <h3>Ваши скидки:</h3>
+                                <div>Китай -&nbsp;<b>{$smarty.session.cs_skidka}%</b></div>
+                                <div>Украина -&nbsp;<b>{$smarty.session.cs_skidka_ua}%</b></div>
+                                <!-- cpt_container_start -->
+                                {cpt_currency_selection}
+                                <!-- cpt_container_end -->
+                            </div>
+                        {/if}
+                    </div>
+                </div>
+                <div id=center>
+                    {if $smarty.get.ukey=='remind_password'}
+                        {$MessageBlock}
+                        {include file="remind_password.html"}
+                    {elseif $smarty.session.log}
+                        {if $smarty.const.CONF_SHOW_ADD2CART ne 1}
+                            <div id=parent_popup onclick="document.getElementById('parent_popup').style.display='none';">
+                                <div id=popup class="animated bounceInDown">
+                                    <h1 style="text-align: center; font-size: 26px;">Уважаемые клиенты! <br />По техническим причинам<br />
+                                        сайт - НЕ РАБОТАЕТ!</h1>
+                                    <a class=close title="Закрыть"
+                                       onclick="document.getElementById('parent_popup').style.display='none';">&times;</a>
+                                </div>
+                            </div>
+                            <script>
+                                var delay_popup = 200;
+                                setTimeout("document.getElementById('parent_popup').style.display='block'", delay_popup);
+                            </script>
+                        {/if}
+                        {if $smarty.session.cs_may_order}
+                            {cpt_maincontent}
+                        {else}
+                            {if $CurrentDivision.ukey|isauthpage}
+                                {cpt_maincontent}
+                            {else}
+                                <p id = non-acsess>
+                                    Для получения доступа к полному перечню товаров,<br>
+                                    Вам необходимо связаться с нашим представителем
+                                </p><br>
+                                {cpt_product_lists list_id='hitu' limit='25'}
+                            {/if}
+                        {/if}
+                    {else}
+                        {if $CurrentDivision.ukey|isauthpage}
+                            {cpt_maincontent}
+                        {else}
+                            {if $smarty.get.already == 1}
+                                {$MessageBlock}
+                                {include file="remind_password.html"}
+                            {elseif $smarty.get.ukey=="act_customer"}
+                                {include file="login.html"}
+                            {else}
+                                {cs_show_main_page}
+                            {/if}
+                        {/if}
+                    {/if}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{/strip}
+{*{debug}*}
+
+{*<nav class="m_nav clearfix">*}
+{*{if $smarty.get.already}*}
+{*<div id="message-block"><span  class="error_message">Указанный пользователь уже авторизовался в системе!</span></div>*}
+{*{elseif $MessageBlock}*}
+{*{$MessageBlock}*}
+{*{else}*}
+{*<ul class="m_hmenu">*}
+{*<li class="cl-effect-21"><a href="/auxpage_1">О нас</a></li>*}
+{*<li class="cl-effect-21"><a href="/auxpage_2">Сотрудничество</a></li>*}
+{*<li class="cl-effect-21"><a href="/auxpage_bonus-programm">Бонусная программа</a></li>*}
+{*<li class="cl-effect-21"><a href="/auxpage_contacts">Контакты</a></li>*}
+{*<li class="cl-effect-21"><a href="/news">Новости</a></li>*}
+{*<li class="cl-effect-21"><a href="/auxpage_zamena-braka">Замена брака</a></li>*}
+{*</ul>*}
+{*{/if}*}
+{*</nav>*}

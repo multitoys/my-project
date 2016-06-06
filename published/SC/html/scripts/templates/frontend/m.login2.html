@@ -1,0 +1,27 @@
+<div id="log2div">
+    <div class="form_login2">
+            <form action="{''|set_query_html}" method="post" name="authform">
+                <ul>
+                    <li>
+                        <input type="hidden" name="enter" value="{$enter}">
+                        <input type="hidden" name="GEO_REGION">
+                        <input type="hidden" name="GEO_CITY">
+                        <input type="hidden" name="GEO_ISP">
+                        <label for="ln_user_login">Логин:</label>
+                        <input type="text" name="user_login" id="ln_user_login" placeholder="Логин" value="{$user_login|escape:'html'}" size="10" autocomplete="on" autofocus>
+                    </li>
+                    <li>
+                        <label for="ln_user_pw">Пароль:</label>
+                        <input name="user_pw" id="ln_user_pw" placeholder="Пароль" type="password" size="10">
+                    </li>
+                </ul>
+                <div class="submitline">
+                    <input class="login-button blue-button" type="submit" value='Войти'/>
+                </div>
+                <div class="log-links">
+                    <span class="log2">или </span>
+                    <a class=blue-button rel="nofollow" href="{'?ukey=register'|set_query_html}">{lbl_pgn_register}</a>
+                </div>
+        </form>
+    </div>
+</div>

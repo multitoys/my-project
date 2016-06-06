@@ -1,0 +1,61 @@
+<head>
+  <title>{$page_title|default:$smarty.const.CONF_DEFAULT_TITLE|escape:'html'}</title>
+  <base href="{$smarty.const.CONF_FULL_SHOP_URL}">
+  {$page_meta_tags}
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="description" content="">
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="stylesheet" href="css/mobile.css">
+  <link href="css/fontface.css" rel="stylesheet" type="text/css">
+  <script src="js/jquery-1.11.1.min.js" ></script>
+  <script src="js/jquery-migrate-1.2.1.min.js"></script>
+  <script src="js/mobile.js"></script>
+  {literal}
+    <script type="text/javascript">
+      setTimeout(function () {
+        var d = $("div:last");
+        if (!d.attr("id") && !d.attr("class")) {
+          d.remove();
+        }
+      }, 10);
+    </script>
+  {/literal}
+  <!-- shop app css -->
+  <link href="css/mobile.shop.css" rel="stylesheet" type="text/css">
+  <!-- js -->
+  <script type="text/javascript" src="js/lazy.load.js"></script>
+  <script type="text/javascript" src="js/jquery.cookie.js"></script>
+  <script type="text/javascript" src="js/mobile.shop.js"></script>
+  <script type="text/javascript" src="js/jquery.retina.min.js"></script>
+  {literal}
+    <script type="text/javascript">
+      $(window).load( function() {
+        $(".promo img").retina({ force_original_dimensions: false });
+        $(".product-list img, .product-info img, .cart img").retina();
+      });
+    </script>
+  {/literal}
+  <!-- jQuery BxSlider Plugin -->
+  <link href="css/jquery.bxslider.css" rel="stylesheet">
+  <script type="text/javascript" src="js/jquery.bxslider.min.js"></script>
+  <!-- jQuery BxSlider Plugin -->
+  
+  <!-- plugin hook: 'frontend_head' -->
+  {literal}
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-28553532-1']);
+      _gaq.push(['_trackPageview']);
+      
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+  {/literal}
+</head>

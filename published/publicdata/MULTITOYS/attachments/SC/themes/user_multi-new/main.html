@@ -1,0 +1,50 @@
+<main class="wa-shop-wrapper">
+    <div class="shop-page-wrapper">       
+    <!-- CONTENT -->
+    {if $smarty.get.ukey=='remind_password'}
+        {$MessageBlock}
+        {include file="remind_password.html"}
+    {elseif $smarty.session.log}
+        {if $smarty.const.CONF_SHOW_ADD2CART ne 1}
+            <div id="parent_popup" onclick="document.getElementById('parent_popup').style.display='none';">
+                <div id="popup" class="animated bounceInDown">
+                    <h1 style="text-align: center; font-size: 26px;">Уважаемые клиенты! <br />По техническим причинам<br />
+                        сайт - НЕ РАБОТАЕТ!</h1>
+                    <a class="close" title="Закрыть"
+                       onclick="document.getElementById('parent_popup').style.display='none';">&times;</a>
+                </div>
+            </div>
+            <script type="text/javascript">
+                var delay_popup = 200;
+                setTimeout("document.getElementById('parent_popup').style.display='block'", delay_popup);
+            </script>
+        {/if}
+        {if $smarty.session.cs_may_order}
+            {cpt_maincontent}
+        {elseif $CurrentDivision.ukey|isauthpage}
+            {cpt_maincontent}
+        {else}
+            <p id = "non-acsess">
+                Для получения доступа к полному перечню товаров,<br>
+                Вам необходимо связаться с нашим представителем
+            </p><br>
+            {cpt_product_lists list_id='hitu' limit='25'}
+        {/if}
+    {else}
+        {if $CurrentDivision.ukey|isauthpage}
+            {cpt_maincontent}
+        {else}
+            {if $smarty.get.already == 1}
+                {$MessageBlock}
+                {include file="remind_password.html"}
+            {elseif $smarty.get.ukey=="act_customer"}
+                {include file="login.html"}
+            {else}
+                {cs_show_main_page}
+            {/if}
+        {/if}
+    {/if}
+    <!-- CONTENT -->
+    </div>
+</main>
+

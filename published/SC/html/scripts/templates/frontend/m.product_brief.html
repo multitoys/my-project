@@ -1,0 +1,68 @@
+{strip}
+    <h2 class=productname>
+        <a href='{$_product_url}'>{$products_to_show[i1].name|escape:'html'}</a>
+    </h2>
+    <div class=product>
+    {if $products_to_show[i1].pics_for_slider > 0}
+        <div class="slider visual">
+            <div class=controls>
+                <div class="label prev_pic" onclick="changePic('{$products_to_show[i1].code_1c}',-1)"></div>
+                <div class="label next_pic" onclick="changePic('{$products_to_show[i1].code_1c}', 1)"></div>
+            </div>
+            <img id='pic{$products_to_show[i1].code_1c}' class='preview' data-pid='{$smarty.const.URL_PRODUCTS_PICTURES}/{$products_to_show[i1].picture|escape:'url'}' data-pics='{$products_to_show[i1].pics_for_slider}' data-current=0 src="{$smarty.const.URL_PRODUCTS_PICTURES}/{$products_to_show[i1].thumbnail|escape:'url'}">
+            
+            <div class="corner color
+                                        {if $products_to_show[i1].akcia}
+                                             _akcia">
+                <span></span>Акция{if $products_to_show[i1].akcia_skidka > 0} - {$products_to_show[i1].akcia_skidka}%{/if}
+                {elseif $products_to_show[i1].eproduct_available_days > 5}
+                _superprice"><span></span>Суперцена!
+                {elseif $products_to_show[i1].sort_order}
+                _newitemspostup"><span></span>Новое поступление
+                {elseif $products_to_show[i1].items_sold}
+                _hit"><span></span>Хит продаж
+                {else}
+                ">
+                {/if}
+            </div>
+        </div>
+    {else}
+
+        <div class="visual">
+            <a {*{$target}*} href='{$_product_url}'>
+                {if $products_to_show[i1].thumbnail}
+                    <img class='preview' {*width=160 height=120 *}data-pid='{$smarty.const.URL_PRODUCTS_PICTURES}/{$products_to_show[i1].picture|escape:'url'}' src="{$smarty.const.URL_PRODUCTS_PICTURES}/{$products_to_show[i1].thumbnail|escape:'url'}" alt="{$products_to_show[i1].name|escape:'html'}" title="{$products_to_show[i1].name|escape:'html'}">
+                {else}
+                    <img {*width=153 height=117*} src='/img/nophoto.jpg'>
+                {/if}
+            </a>
+            
+            <div class="corner color{if $products_to_show[i1].akcia}_akcia">
+                <span></span>Акция{if $products_to_show[i1].akcia_skidka > 0} - {$products_to_show[i1].akcia_skidka}%{/if}
+                {elseif $products_to_show[i1].eproduct_available_days > 5}
+                _superprice"><span></span>Суперцена!
+                {elseif $products_to_show[i1].sort_order}
+                _newitemspostup"><span></span>Новое поступление
+                {elseif $products_to_show[i1].items_sold}
+                _hit"><span></span>Хит продаж
+                {else}
+                ">
+                {/if}
+            </div>
+        </div>
+    {/if}
+        <div class=product_brief>
+            {include file="m.product_price.html" product_info=$products_to_show[i1]}
+            <div class="ostatok_div">
+                <div>На складе:&nbsp;</div>
+                <div>
+                    {if $products_to_show[i1].ostatok eq 'под заказ'}
+                        <span style='  color: red; font-style: italic;'>под&nbsp;заказ!</span>
+                    {else}
+                        {$products_to_show[i1].ostatok}&nbsp;шт.
+                    {/if}
+                </div>
+            </div>
+        </div>
+    </div>
+{/strip}

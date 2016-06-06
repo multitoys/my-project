@@ -1,0 +1,82 @@
+<section class="hidden-menu-wrapper">
+    <div class="menu-block-wrapper">
+        <div class="logo-wrapper">
+            {cpt_logo file='logo_mini.png' view_mode=mobile}
+        </div>
+        <div class="shop-details-wrapper">
+            <div class="phone-wrapper">+38 (056) 374 54 23</div>
+        </div>
+        <div class="search-wrapper">
+            <form action="/search" method="get">
+                <div class="relative">
+                    <input class="text-field" type="text" value="{if !empty($searchstring)}{$searchstring}{/if}" name="query" placeholder="Поиск товаров">
+                    <input class="submit-field" type="submit" value="">
+                </div>
+            </form>
+        </div>
+        <nav class="nav-wrapper" role="navigation">
+            <div class="nav-group">
+                <div class="nav-header">Информация</div>
+                <div class="nav-list">
+                    <div class="nav-item">
+                        <a href="/auxpage_1">О нас</a>
+                    </div>
+                    <div class="nav-item">
+                        <a href="/auxpage_2">Сотрудничество</a>
+                    </div>
+                    <div class="nav-item">
+                        <a href="/auxpage_bonus-programm">Бонусная программа</a>
+                    </div>
+                    <div class="nav-item">
+                        <a href="/auxpage_contacts">Контакты</a>
+                    </div>
+                    <div class="nav-item">
+                        <a href="/news">Новости</a>
+                    </div>
+                    <div class="nav-item">
+                        <a href="/auxpage_zamena-braka">Замена брака</a>
+                    </div>
+                </div>
+            </div>
+            <!-- USER ACCOUNT -->
+            <div class="nav-group">
+                <div class="nav-header"><a href="/myaccount" id="myaccount">Личный кабинет</a></div>
+                <div class="nav-list">
+                    {if $smarty.session.log}
+                        {*<div class="nav-item user-nav-item">*}
+                        <div class="nav-item">
+                            <a href="/logout" id="logout">Выйти из сеанса</a>
+                        </div>
+                    {else}
+                        <div class="nav-item">
+                            <form action="{''|set_query_html}" method="post" name="authform">
+                                <input type="hidden" name="enter" value="{$enter}">
+                                <input type="hidden" name="GEO_REGION">
+                                <input type="hidden" name="GEO_CITY">
+                                <input type="hidden" name="GEO_ISP">
+                                <label for="ln_user_login">Логин:</label>
+                                <input type="text" name="user_login" id="ln_user_login" placeholder="Логин"
+                                       value="{$user_login|escape:'html'}" size="10" autocomplete="on">
+                                <label for="ln_user_pw">Пароль:</label>
+                                <input name="user_pw" id="ln_user_pw" placeholder="Пароль" type="password" size="10">
+                                <input class="login-button blue-button" type="submit" value='войти'/>
+                            </form>
+                        </div>
+                        <div class="nav-item">
+                            <a rel="nofollow"
+                               href="{'?ukey=register'|set_query_html}">
+                                {lbl_pgn_register}
+                            </a>
+                        </div>
+                        <div class="nav-item">
+                            <a rel="nofollow"
+                               href="{'?ukey=remind_password'|set_query_html}">
+                                {lbl_lnk_forgot_password}
+                            </a>
+                        </div>
+                    {/if}
+                </div>
+            </div>
+        </nav>
+    </div>
+</section>

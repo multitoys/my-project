@@ -1,0 +1,19 @@
+{*{strip}*}
+    <div class=counter>
+        <a class='count-control control-down' href="javascript:void(0);" onclick='decreaseNumber({$product_info.productID})'>-</a>
+        <input id='qty{$product_info.productID}' class=cart_product_quantity type=text value=1 name=product_qty title='Количество' size=2 data-id='{$product_info.productID}' onkeyup='if (event.keyCode == 13) {ldelim}add2Cart("#qty{$product_info.productID}");{rdelim}' {*disabled*}>
+        <a class='count-control control-up' href="javascript:void(0);" onclick='increaseNumber({$product_info.productID})'>+</a>
+    </div>
+    <button class="z_add_cart" onclick='add2Cart("#qty{$product_info.productID}");' type="button">
+        <div class='in_cart'>
+            <span class="glyphicons glyphicons-cart-tick" aria-hidden="true"></span>
+            <div id="zpid_{$product_info.productID}">
+                {if $shop_counts[$_cnt]}
+                    {$shop_counts[$_cnt]}
+                {else}
+                    Купить
+                {/if}
+            </div>
+        </div>
+    </button>
+{*{/strip}*}

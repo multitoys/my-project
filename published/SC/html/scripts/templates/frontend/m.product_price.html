@@ -1,0 +1,72 @@
+{*{if !$CPT_CONSTRUCTOR_MODE}*}
+    
+    {* product code (SKU) *}
+    {if $product_info.product_code && $smarty.const.CONF_ENABLE_PRODUCT_SKU}
+        <div class=product_code>
+            {"prdset_product_code"|translate}:&nbsp;
+            <span class="productCode">{$product_info.product_code|escape:'html'}</span>
+        </div>
+    {/if}
+    
+    <div class=after_code>
+    
+		<div class=wrapper>
+            {* Bonus *}
+            {if $product_info.Bonus > 0}
+                <div>
+                    {*Бонусы:*}
+                    <span class=totalPrice>{$product_info.Bonus}&nbsp;баллов</span>
+                </div>
+            {/if}
+        
+    
+            {if $currencies_count ne 0 && $product_info.Price > 0}
+                {* show list price? *}
+                {*{if $smarty.const.CONF_SHOW_ADD2CART eq 1}*}
+                    {if $product_info.list_price > 0 && $product_info.list_price > $product_info.Price && $product_info.Price > 0}
+                        <div>
+                            {*Старая цена:&nbsp;*}
+                            <span class="regularPrice">{$product_info.list_priceWithUnit}</span>
+                        </div>
+                        {*<div>*}
+                            {*Новая цена:&nbsp;*}
+                    {*{else}*}
+                        {*<div>*}
+                            {*Цена: *}
+                    {/if}
+                        <div>
+                            <span class="productPrice">{$product_info.PriceWithUnit}</span>
+                        </div>
+                {*{/if}*}
+            {/if}
+        </div>
+		<div class=add_to_cart>
+			{if $currencies_count ne 0 && $product_info.Price > 0}
+				{if $product_info.ordering_available && $product_info.Price>0 && ( $smarty.const.CONF_SHOW_ADD2CART eq 1 ) && ( $smarty.const.CONF_CHECKSTOCK==0 || $product_info.in_stock > 0 ) }
+					{include file="m.product_add2cart_button.html"}
+				{elseif $smarty.const.CONF_SHOW_ADD2CART eq 1 && $smarty.const.CONF_CHECKSTOCK && !$product_info.in_stock && $product_info.ordering_available}
+					<div class="prd_out_of_stock">{lbl_prd_out_of_stock}</div>
+				{/if}
+			{/if}
+		</div>
+    </div>
+	{* in stock info *}
+	{*{if $smarty.const.CONF_CHECKSTOCK == '1' && $smarty.const.CONF_SHOW_ADD2CART eq 1}*}
+		{*{if $product_info.in_stock > 0}*}
+		{*<div>*}
+			{*{"str_in_stock"|translate}:*}
+			{*{if $smarty.const.CONF_EXACT_PRODUCT_BALANCE}*}
+				{*{$product_info.in_stock}*}
+			{*{else}*}
+				{*{"str_answer_yes"|translate}*}
+			{*{/if}*}
+		{*</div>*}
+		{*{/if}*}
+	{*{/if}*}
+
+	{if $product_info.min_order_amount > 1}
+        <div>
+            {"prdset_minimal_order_quantity"|translate}: {$product_info.min_order_amount}
+                {"str_items"|translate}
+        </div>
+	{/if}

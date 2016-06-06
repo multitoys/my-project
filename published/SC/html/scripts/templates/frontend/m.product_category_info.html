@@ -1,0 +1,38 @@
+<ul id=breadcrumbs-one>
+    <li><a href="{"?"|set_query}">{"lnk_homepage"|translate}</a></li>&GreaterGreater;
+    {section name=i loop=$product_category_path}
+        {if $product_category_path[i].categoryID != 1}
+            <li>
+                <a href='{"?categoryID=`$product_category_path[i].categoryID`&category_slug=`$product_category_path[i].slug`"|set_query_html}'>{$product_category_path[i].name|escape:'html'|default:"(no name)"}</a>
+                {if $subcategories_to_be_shown}
+                    <ul>
+                        {section name=i loop=$subcategories_to_be_shown}
+                            {if $subcategories_to_be_shown[i][3]}
+                                {assign var=_sub_category_url value="?categoryID=`$subcategories_to_be_shown[i][0]`&category_slug=`$subcategories_to_be_shown[i][3]`"|set_query_html}
+                            {else}
+                                {assign var=_sub_category_url value="?categoryID=`$subcategories_to_be_shown[i][0]`"|set_query_html}
+                            {/if}
+                            <li><a href="{$_sub_category_url}">{$subcategories_to_be_shown[i][1]}</a></li>
+                        {/section}
+                    </ul>
+                {/if}
+            </li>
+            {if !$smarty.section.i.last}
+                &GreaterGreater;
+            {/if}
+        {/if}
+    {/section}
+</ul>
+
+{*<table cellpadding="0" cellspacing="0">*}
+{*<tr>*}
+	{*<td>*}
+	{*<a href="{'?'|set_query_html}" class="cat">{"lnk_homepage"|translate}</a>*}
+	{*{section name=i loop=$product_category_path}*}
+		{*{if $product_category_path[i].categoryID != 1}*}
+			{*{$BREADCRUMB_DELIMITER} <a class="cat" href='{"?categoryID=`$product_category_path[i].categoryID`&category_slug=`$product_category_path[i].slug`"|set_query_html}'>{$product_category_path[i].name|escape:'html'}</a>*}
+		{*{/if}*}
+	{*{/section}*}
+	{*</td>*}
+{*</tr>*}
+{*</table>*}

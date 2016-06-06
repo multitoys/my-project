@@ -1,0 +1,308 @@
+// Stylus variables
+
+.cart-page-wrapper
+
+    .page-header
+        margin 0 0 0 0.5rem
+
+    .cart-product-list
+        $default-block()
+        padding: 0.5em 0
+
+        .cart-product-item
+            padding: 1em 0.5em
+            border-top: 10px solid #fafafa;
+
+            &:first-child
+                margin-top: 0
+                border-top: 0
+                padding-top: 0.25em
+
+            & > .left-column
+                float: left
+                width: 30%
+
+            & > .right-column
+                float right
+                width: 70%;
+                padding: 0 0 0 0.5em
+                box-sizing border-box
+                white-space nowrap
+
+            .item-thumb
+                img
+                    width 100%
+                    border: 1px solid rgba(0,0,0,0.1)
+                    $border-radius(3px)
+                    box-sizing border-box
+
+            .item-name
+                font-size: 1.1em
+                margin: 0 0 0.45em
+                padding: 0 0 0.3em
+                border-bottom: 1px solid rgba(0,0,0,0.1)
+                
+                a
+                    text-decoration: none;
+
+            .item-qty
+                display inline-block
+                vertical-align top
+
+                input
+                    width: 5.3em
+                    height: 2.6em
+                    padding: 0.25em
+                    text-align center
+
+                    $box-shadow(0 0 5px rgba(0,0,0,0.1))
+
+            .volume-buttons
+                display inline-block
+                vertical-align top
+
+                a
+                    width 3.1rem
+                    height: 2.6rem
+                    padding: 0
+
+                    border-color: rgba(0,0,0,0.1)
+
+                    font: normal 1.4em/2.6rem Arial, sans-serif
+                    text-align: center
+                    color: #555
+
+                    $box-shadow(none);
+
+            .services
+                margin: 0.5em 0 0
+
+                .line
+                    margin: 0.5em 0 0
+
+                    &:first-child
+                        margin-top: 0
+
+            .item-total
+                margin: 0.5em 0 0
+                text-align right
+                font-size: 1.3em
+
+    .cart-sum-wrapper
+        $default-block()
+
+        .cart-coupon
+            input
+                margin: 0 0 0.5em
+
+        .row
+            margin: 1em 0 0
+
+            &:first-child
+                margin-top: 0
+
+        .header-block
+            font-size: 1.2em
+            margin: 0 0 0.5em
+
+        .cart-discount
+            font-size: 1.2em
+
+        .cart-total
+            font-size: 1.4em
+            font-weight: bold
+
+        .featured-shipping-and-payment
+            margin: 0.5em 0
+
+.checkout-page-wrapper
+    $default-block()
+    margin: 0
+
+    .checkout-header
+        padding: 0 0 0.5em
+        margin: 0 0 0.5em
+        border-bottom: 1px solid rgba(0,0,0,0.1)
+
+        .header
+            font-size: 1rem
+
+        .cart-sum-total
+            padding: 0.25em 0
+            font-size: 1.2em
+
+    .authorized-user-wrapper
+        display table
+        width: 100%
+
+        .left-column
+            display table-cell
+            vertical-align top
+            width: 50px;
+            
+            img
+                border-radius: 50%
+
+        .right-column
+            display table-cell
+            vertical-align top
+            padding: 0.37em 0.5em
+
+    .checkout-step-content
+        margin: 1em 0 0
+
+        .wa-field
+            margin: 0.75em 0 0
+            color: #888
+
+            &:first-child
+                margin-top: 0
+
+            .wa-name
+                display none
+
+            .wa-value
+                margin: 0.5em 0 0
+
+                .field
+                    display block
+                    margin: 0.5em 0 0
+
+                    &:first-child
+                        margin-top: 0
+
+            &.wa-field-address-shipping
+                .wa-value
+                    .field > span
+                        display none
+
+        input[type="submit"]
+            margin: 1em 0 0
+
+        ul
+            list-style none
+
+            li
+                margin: 0.5em 0 0
+
+        .wa-auth-adapters
+            li
+                display inline-block
+                vertical-align top
+                margin: 0
+
+                a
+                    display block
+
+                    margin: 0 0.25em 0.25em 0;
+                    padding: 0.5em;
+
+                    border: 1px solid rgba(0,0,0,0.1)
+
+                    $border-radius(3px)
+
+                    font-size: 0.9em
+
+                    color $color-black
+                    text-decoration none
+
+                    background: #fcd630;
+                    background: #fcd630 -moz-linear-gradient(top, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0.0) 100%);
+                    background: #fcd630 -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,0.5)), color-stop(100%,rgba(255,255,255,0.0)));
+                    background: #fcd630 -webkit-linear-gradient(top, rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.0) 100%);
+                    background: #fcd630 -o-linear-gradient(top, rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.0) 100%);
+                    background: #fcd630 -ms-linear-gradient(top, rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.0) 100%);
+                    background: #fcd630 linear-gradient(to bottom, rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.0) 100%);
+
+                    img
+                        vertical-align middle
+                        margin: 0 0.2rem 0 0;
+        .checkout-options
+            margin: 0
+
+            .header
+                img
+                    vertical-align middle
+
+            li
+                margin: 0.5em 0 0
+                border-top: 1px solid rgba(0,0,0,0.1)
+                padding: 0.5em 0
+
+                &:first-child
+                    border-top: 0
+                    margin-top: 0
+
+                &.is-selected
+                    border-color: transparent
+                    margin: 0.5em -0.5em 0
+                    padding: 0.5em
+                    background #e2f4ff;
+
+                img
+                    vertical-align middle
+
+            .rate
+                .line
+                    margin: 0.5em 0 0
+
+                    .label
+                        color: #666
+
+                    .value
+                        margin: 0.25em 0 0
+                        font-weight bold
+
+                .price
+                    font-size: 1.2em
+
+            .error
+                color: #c03
+                font-style: italic
+
+        .confirm-table-wrapper
+            .cart-list
+                margin: 1rem 0 0
+
+                .cart-item
+                    margin: 1rem 0 0
+                    line-height: 1.5rem
+                    border-top: 1px solid #f9f9f9;
+                    padding: 1rem 0 0 0;
+
+                    &:first-child
+                        margin-top: 0
+
+                    .name
+                        font-weight bold
+
+                    .value
+                        padding: 0 0 0 1rem
+                        font-size: 0.9rem
+
+                    .tax
+                        padding: 0 0 0 1rem
+                        font-size: 0.9rem
+
+                    .total
+                        padding: 0 0 0 1rem
+
+                    .bold
+                        font-weight bold
+
+            .table
+                tr
+                    td
+                        padding: 0.5em
+                        word-wrap break-word
+
+                        &:first-child
+                            width: 33%
+
+                        &.align-right
+                            text-align right
+
+                    &.total-sum
+                        td
+                            font-weight bold
+                            font-size: 1.1em

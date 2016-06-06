@@ -1,0 +1,10 @@
+{zakcia}
+
+{get_topproducts var=akcia limit=30}
+
+{if $akcia}
+    {include file="product_top.html" top=$akcia str='str_akcia_items'}
+{else}
+    {get_topproducts var=items_sold limit=30}
+    {include file="product_top.html" top=$items_sold str='str_items_sold_items'}
+{/if}

@@ -1,0 +1,15 @@
+<form rel="{$product_info.productID}" action='{""|set_query_html}' method="post">
+	
+    <input name="productID" value="{$product_info.productID}" type="hidden" />
+    <input class="product_price" value="{$product_info.price_incurr|escape:'html'}" type="hidden" />
+    <input class="product_list_price" value="{$product_info.list_price_incurr|escape:'html'}" type="hidden" />
+    
+    {if !$ajax}
+        <div id=cat_path>
+            {include file="m.product_category_info.html"}
+        </div>
+    {/if}
+    
+    {include file="m.product_info.html"}
+    
+</form>

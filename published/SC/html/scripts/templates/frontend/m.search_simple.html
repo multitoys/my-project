@@ -1,0 +1,46 @@
+{* simple search *}
+{strip}
+{if $products_to_show_count > 0}
+<div class="product_brief_head">
+	<p id="cat_path">{$page_title|escape:'html'} {"srch_found"|translate} <b>{$products_found}</b> {"srch_products_plural"|translate}</p>
+    
+	{if $search_navigator}<div class='simple-pagination compact-theme'>{$search_navigator}</div>{/if}
+
+    <div class="scroll-pane1">
+        <div id=content>
+            {section name=i1 loop=$products_to_show}
+                {if $products_to_show[i1] ne NULL}
+                    {if $products_to_show[i1].slug}
+                        {assign var=_product_url value="?ukey=product&productID=`$products_to_show[i1].productID`&product_slug=`$products_to_show[i1].slug`"|set_query_html}
+                    {else}
+                        {assign var=_product_url value="?ukey=product&productID=`$products_to_show[i1].productID`"|set_query_html}
+                    {/if}
+                    {if $widget}{assign var=_form_action_url value="&view=noframe&external=1"}{/if}
+                    {assign var=_cnt value=$products_to_show[i1].productID}
+                    
+                    <table class=cs_product_info>
+                        <tbody>
+                        <tr>
+                            <td>
+                                {include file="m.product_brief.html" product_info=$products_to_show[i1]}
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                {/if}
+            {/section}
+            
+            {if $catalog_navigator}<div class='simple-pagination compact-theme'>{$catalog_navigator}</div>{/if}
+        </div>
+    </div>
+    {if $search_navigator}<div class='simple-pagination compact-theme'>{$search_navigator}</div>{/if}
+{else}
+	<p>{"srch_no_matches_found"|translate}</p>
+{/if}
+    <div id="parent_popup" onclick="document.getElementById('parent_popup').style.display='none';">
+        <div id="popup" class="animated bounceInDown">
+            <div id=modal></div>
+            <a class="close" title="Закрыть" onclick="document.getElementById('parent_popup').style.display='none';">&times;</a>
+        </div>
+    </div>
+{/strip}

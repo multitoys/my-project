@@ -1,0 +1,41 @@
+<div class=product_info>
+
+    <!-- cpt_container_start -->
+    {cpt_product_name}
+    <!-- cpt_container_end -->
+
+    <div class=cpt_product_images>
+        {include file="m.product_images.html"}
+    </div>
+    
+    
+
+    <div id=product_info_block>
+        <div class=product_info_block>
+            <div class=cpt_product_price>
+                {include file="m.product_price_info.html"}
+            </div>
+            <div class="ostatok_div">
+                <div>На складе:&nbsp;</div>
+                <div>
+                    {if $product_info.ostatok eq 'под заказ'}
+                        <span style='  color: red; font-style: italic;'>под&nbsp;заказ!</span>
+                    {else}
+                        {$product_info.ostatok}&nbsp;шт.
+                    {/if}
+                </div>
+            </div>
+        </div>
+        <div class=add_to_cart>
+            {if $currencies_count ne 0 && $product_info.Price > 0}
+                {if $product_info.ordering_available && $product_info.Price>0 && ( $smarty.const.CONF_SHOW_ADD2CART eq 1 ) && ( $smarty.const.CONF_CHECKSTOCK==0 || $product_info.in_stock > 0 ) }
+                    {include file="m.product_add2cart_button.html"}
+                {elseif $smarty.const.CONF_SHOW_ADD2CART eq 1 && $smarty.const.CONF_CHECKSTOCK && !$product_info.in_stock && $product_info.ordering_available}
+                    <div class="prd_out_of_stock">{lbl_prd_out_of_stock}</div>
+                {/if}
+            {/if}
+        </div>
+        {cpt_product_description}
+    </div>
+
+</div>

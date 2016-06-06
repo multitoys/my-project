@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ru-RU"">
+<head>
+	{include file="layout-head.html"}
+</head>
+<body id=scrollBackTop>
+<!-- HEADER -->
+{include file="layout-header.html"}
+<!-- END HEADER -->
+
+<!-- WRAPPER -->
+<div class="site-wrapper">
+	<div id="BackTop"></div>
+	<!-- CONTENT -->
+	{include file="main.html"}
+	{*{if $main_body_tpl}*}
+	{*{include file=$main_body_tpl}*}
+	{*{else}*}
+	{*{if $page_not_found404}*}
+	{*{include file="404.html"}*}
+	{*{elseif $market_link}*}
+	{*{include file="market.html"}*}
+	{*{else}*}
+	{*{include file="main.html"}*}
+	{*{/if}*}
+	{*{/if}*}
+	<!-- END CONTENT -->
+</div>
+<!-- /WRAPPER -->
+
+<!--HIDDEN MENU-->
+{include file="layout-menu.html"}
+<!--HIDDEN MENU-->
+</body>
+</html>

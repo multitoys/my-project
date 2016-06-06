@@ -1,0 +1,1092 @@
+/*
+ * Webasyst "Mobile" Theme
+ *
+ * Shop CSS File
+ *
+ * @link http://www.webasyst.com/
+ * @author Webasyst LLC
+ * @copyright 2015 Webasyst LLC
+ * @package Webasyst
+ */
+
+/* Shop APP Styles */
+@import "../../../../site/themes/mobile/styl/variables.styl";
+
+.wa-shop-wrapper
+    padding: 0.5em;
+
+    & > .header-block
+        margin: 0 0 0.5rem 0.5rem
+
+    .related-product-info
+        margin: 0.5rem 0 0
+
+    .promos-wrapper
+        .promos-list
+            .promo-item
+                margin: 0.5em 0 0
+
+                a
+                    position: relative;
+                    display: block;
+                    padding: 1em 1em 0;
+                    height: 8em;
+                    background transparent 50% no-repeat;
+                    background-size: cover;
+
+                    text-align: center;
+                    text-shadow: 0 1px 1px #000;
+                    text-decoration none
+                    color: #000;
+                    overflow: hidden;
+
+                    &:before
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        width: 100%
+                        height: 100%;
+                        content: "";
+                        background: rgba(0,0,0,0.1);
+
+                    h5
+                        font-size: 1.3em;
+                        text-shadow: 0 1px 2px #000;
+
+                    p
+                        font-size: 0.9em;
+                        line-height 1.25em
+                        text-shadow: 0 1px 2px #000;
+                        max-height: 5em;
+                        overflow hidden
+
+    .category-name
+        margin: 0 0 0.5rem 0.5rem
+
+    .bx-wrapper
+        border-radius: 0
+        box-shadow: none
+
+    .empty-cart-page-wrapper
+    .shop-page-wrapper
+        $default-block()
+        margin: 0
+
+    .shop-page-wrapper
+        p
+            overflow hidden
+
+        img
+            max-width: 100% !important
+            height: auto !important
+
+    .no-product-wrapper
+    .catalog-filter-wrapper
+    .product-item-wrapper
+        $default-block()
+
+    .breadcrumbs
+        margin: 0 0 0.5em
+        padding: 0.5em
+        color: #aaa
+        
+        a
+            color: #aaa
+
+    .coupon-wrapper
+        .coupon-item
+            position relative
+            $default-block()
+
+    .catalog-filter-wrapper
+        &.is-shown
+            .filter-content-wrapper
+                padding: 0.5em 0 0
+                margin: 0.5em 0 0
+                border-top: 1px solid rgba(0,0,0,0.1);
+                height: auto
+
+        .show-link-wrapper
+            a
+                position relative
+                display block
+                padding: 0.1em 0.8em 0.1em 1.5em
+                text-decoration none
+
+                &:before
+                    position absolute
+                    top: 0
+                    left: 0
+                    content: ""
+                    width: 1.2em
+                    height: 100%
+                    background transparent url("../../../site/themes/mobile/img/icons/hamburger.png") 50% no-repeat
+                    background-size: 1em
+
+        .filter-content-wrapper
+            height: 0
+            overflow hidden
+
+            .filter-group
+                margin: 0.25em 0 0
+
+                .filter-header
+                    margin: 0
+
+                .filter-list
+                    margin: 0.75em 0
+
+                    .filter-item
+                        margin-left: 0.5em
+
+                        &.filter-price-item
+                            text-align center
+                            margin-left: 0
+
+                            input[type="text"]
+                                width: 33%
+                                padding: 0.25em 0.4em
+                                vertical-align middle
+                                text-align center
+
+            .button-wrapper
+                margin: 0.25em 0 0
+
+    .shop-list-wrapper
+        margin: 0.5em 0 0;
+
+        &:first-child
+            margin-top: 0;
+
+        .product-item-wrapper
+            position relative
+            display table
+            margin: 0.5em 0 0;
+            padding: 0.5em;
+            width 100%;
+            box-sizing border-box
+
+            &:first-child
+                margin-top: 0;
+
+            .image-block
+                position relative
+                display: table-cell;
+                vertical-align middle;
+
+                padding: 0 0.5rem 0 0;
+                width: 30%
+                border: solid #f0f0f0
+                border-width 0 1px 0 0;
+
+                text-align center
+
+                box-sizing border-box
+                font-size: 0;
+
+                img
+                    max-width 100%
+                    max-height 5rem
+
+                .badge-wrapper
+                    position absolute
+                    top: 0
+                    left: 0
+
+            .text-block
+                display: table-cell;
+                vertical-align top;
+
+                padding: 0 0.5em;
+                border: solid #f0f0f0
+                border-width 0 0 0 0;
+
+                box-sizing border-box
+
+                .product-header
+                    font-size: 1.1em
+                    margin: 0
+                    
+                    a
+                        text-decoration: none
+
+                .controls-wrapper
+                    margin: 0.5em 0 0;
+
+                    .price-wrapper
+                        .price
+                            display inline-block
+                            vertical-align middle
+
+                            font-size: 1em
+                            font-weight bold
+                            color: #c03
+
+                            span
+                                font-weight normal
+
+                    .old-price
+                        display inline-block
+                        vertical-align middle
+                        font-size: 0.8em
+                        color: #c99
+                        text-decoration line-through
+
+                    .out-of-stock
+                        margin: 0.25em 0 0
+                        color: #aaa
+
+            .link-block
+                display: table-cell;
+                vertical-align middle;
+
+                padding: 0.5em;
+                width: 2em;
+                box-sizing border-box
+
+                & > a
+                    position absolute
+                    top: 0;
+                    left: 0;
+                    display block
+                    width 100%;
+                    height: 100%;
+                    background transparent url("../../../site/themes/mobile/img/icons/arrow-right.png") 95% 50% no-repeat;
+                    background-size: 1em;
+
+    .product-page-wrapper
+        margin: 0
+        padding: 0.5em
+        border: 1px solid rgba(0,0,0,0.1)
+        background #fff
+        $box-shadow(0 0 5px 0 rgba(127,127,127,0.1));
+
+        /*.header-block*/
+
+        .product-gallery
+
+            .product-core-image
+            .product-gallery
+                font-size: 0
+                line-height 0
+
+                img
+                    width: 100%;
+
+            .product-gallery
+                text-align left
+
+                .image
+                    margin: 0.15rem 1%
+                    display inline-block
+                    vertical-align top
+                    width: 31%
+                    border: 1px solid transparent
+                    box-sizing border-box
+
+                    img
+                        border: 1px solid rgba(0,0,0,0.1);
+                        $border-radius(3px)
+
+        .product-sidebar
+            margin: 1em 0 0
+
+            .skus
+                margin: 1em 0 0
+                border-top: 1px solid rgba(0,0,0,0.1)
+                padding: 1em 0 0
+
+                .skus-item
+                    margin: 0.5em 0 0
+
+                    &:first-child
+                        margin-top: 0
+
+                    .price
+                        font-weight bold
+                        color: #c03
+
+                    .hint
+                        margin: 0 0.1rem
+                        font-size: 0.8666em
+                        color: #aaa
+
+            .options
+
+                .inline-select
+                    margin: 0.5em 0 0
+                    border-top: 1px solid rgba(0,0,0,0.1)
+                    padding: 0 0 0
+
+                    a
+                        display inline-block
+                        vertical-align middle
+                        min-width: 2.5em
+                        padding: 0.75em
+                        margin: 0.5em 0.5em 0 0 !important
+                        box-sizing border-box
+                        text-align center
+                        $border-radius(3px)
+
+                        border: 1px solid rgba(123,123,123,0.1)
+                        text-decoration: none
+                        overflow hidden
+
+                        i
+                            display none
+
+                        &:not(.selected)
+                            background-color: #fff !important
+
+                        &.selected
+                            border none
+                            color #fff
+                            background #007aff
+
+                    &.color
+                        a
+                            padding: 0.125em;
+
+                            .color_name
+                                display inline-block
+                                vertical-align top
+                                padding: 0.75em
+                                color: #000 !important
+
+                            &.selected
+
+                                .color_name
+                                    border: 0.125em solid #fff
+                                    background #007aff
+                                    color: #fff !important
+
+            .stocks
+                margin: 0.5em 0
+                border-top: 1px solid rgba(0,0,0,0.1)
+                padding: 1em 0 0
+
+                .stock-high
+                .stock-low
+                .stock-critical
+                .stock-none
+                    position: relative;
+                    padding: 0 0 0 13px;
+
+                    &:before
+                        position absolute
+                        left: 0;
+                        top: 3px;
+                        width: 10px;
+                        height: 12px;
+                        content: "";
+                        background transparent 50% no-repeat
+                        background-size auto 100%;
+
+                .stock-high
+                    color: #0a0
+                    &:before
+                        background-image: url("img/icons/stock-high.png")
+
+                .stock-low
+                    color: #a80
+                    &:before
+                        background-image: url("img/icons/stock-low.png")
+
+                .stock-critical
+                    color: #e00
+                    &:before
+                        background-image: url("img/icons/stock-critical.png")
+
+                .stock-none
+                    color: #aaa
+                    &:before
+                        background-image: url("img/icons/stock-none.png")
+
+            .purchase
+                margin: 1em 0
+
+                .service-list-wrapper
+                    margin: 1em 0 0
+                    padding: 1em 0
+                    border: solid rgba(0,0,0,0.1)
+                    border-width 1px 0
+
+                    .service-item
+                        margin: 0.5em 0 0
+
+                        &:first-child
+                            margin-top: 0
+
+                .add2cart
+                    position relative
+                    margin: 0.5em 0 0
+
+                    .quantity-wrapper
+                        position absolute
+                        top: 0;
+                        left: 0;
+
+                        background transparent
+                        display inline-block;
+                        white-space nowrap
+
+                        input[type="text"]
+                            width: 3em
+                            padding: 0.5em
+                            text-align center
+
+                        .volume-buttons
+                            display inline-block
+                            vertical-align top
+
+                            a
+                                width 2.6rem
+                                height: 2.6rem
+                                padding: 0
+
+                                border-color: rgba(0,0,0,0.1)
+
+                                font: normal 1.4rem/2.6rem Arial, sans-serif
+                                text-align: center
+                                color: #555
+
+                                $box-shadow(none);
+
+                    .price-wrapper
+                        margin: 1em 0
+                        text-align right
+                        line-height 2.5em
+                        white-space nowrap
+                        overflow hidden
+
+                        .price
+                            margin: 0.5em 0
+                            font-size: 1.5em
+                            color: #c03
+
+                        .compare-at-price
+                            text-decoration line-through
+                            color: #c99
+
+                    input[type="submit"]
+                        margin: 0
+
+                    .added2cart
+                        margin: 1em -0.5em 0
+                        padding: 0.5em
+                        background #fea
+
+                        .button-block
+                            margin: 1em 0 0
+
+        .tab-list-wrapper
+            overflow: hidden;
+
+            .tab-list
+                display inline-block
+                min-width: 100%
+                margin: 1.5em 0 0
+                border: solid rgba(0,0,0,0.1);
+                border-width 0 0 1px 0;
+                white-space: nowrap;
+                box-sizing border-box
+
+                .tab-item
+                    position relative
+                    top: 1px
+
+                    display inline-block
+                    vertical-align top
+                    padding: 0.5em 1em
+                    margin-right 0.25em
+
+                    border: 1px solid rgba(0,0,0,0.1)
+                    border-bottom-color transparent
+                    $border-radius(5px 5px 0 0)
+
+                    text-decoration: none;
+
+                    &.active-tab-item
+                        border-bottom-color: #fff
+
+        .tab-content-wrapper
+            .tab-content-item
+                margin: 1em 0 0;
+                min-height: 10em;
+                display none
+
+                &.is-shown
+                    display block
+
+        .rating-text
+            .star
+            .star-half
+            .star-full
+            .star-empty
+                color: $star-color;
+
+                &:before
+                    display: inline-block;
+                    width: 1em;
+                    speak: none;
+                    font: normal 1em/1em "fontello";
+                    text-decoration: none;
+                    text-transform: none;
+                    text-align: center;
+
+            .star-half:before
+                content: '\e802';
+
+            .star:before
+            .star-full:before
+                content: '\e800';
+
+            .star-empty:before
+                content: '\e801';
+
+        .rating-distribution
+            width: 100%;
+            box-sizing border-box
+
+            td
+                background transparent
+                border: 0;
+                vertical-align middle
+
+                padding: 0.3em
+
+            .column-1
+                width: 5%
+
+            .column-3
+                width: 20%
+
+            .bar
+                background: #eee;
+
+                .filling
+                    background: $star-color;
+                    height: 0.8em;
+
+            .rating
+                white-space nowrap
+
+                .star
+                    color: $star-color;
+
+                    &:before
+                        display: inline-block;
+                        width: 1em;
+                        speak: none;
+                        font: normal 1em/1em "fontello";
+                        text-decoration: none;
+                        text-transform: none;
+                        text-align: center;
+                        content: '\e800';
+
+    .tab-content-item
+        .review-wrapper
+            .review-item
+                margin: 2rem 0 0.5rem
+
+    .review-wrapper
+        margin: 0 0 0
+
+        & > .review-item
+            margin: 2rem 0 0.5rem
+
+            &:first-child
+                margin-top: 0
+
+        .review-item
+            padding: 0.5em
+            background rgba(222,222,222,0.1)
+
+            .review-header
+                margin: 0 0 0.2rem
+                padding: 0 0 0.2rem
+                border-bottom: 1px solid rgba(0,0,0,0.1)
+
+                .review-rating
+                    .rate-item
+                        margin: 0;
+                        font-size: 0.75em;
+                        color: $star-color;
+
+                .username
+                    margin: 0.5em 0 0
+
+                .date
+                    color: #b4b4b4
+
+        .inner-review-wrapper
+            padding: 0 0 0 3rem
+
+            .review-item
+                margin: 0 0 2rem
+                position relative
+
+                .review-header
+                    display none
+
+                &:after
+                    position absolute
+                    top: -0.2em;
+                    right: 100%;
+                    margin: 0 0.5rem 0 0
+                    content: ""
+                    opacity: 0.33
+                    width: 2.5rem
+                    height: 2.5rem
+                    background transparent url("../../../site/themes/mobile/img/icons/arrow-child.png") 50% no-repeat
+                    background-size: 1em
+
+    .mini-product-list
+        margin: 1em 0 0
+
+        .product-item
+            a
+                text-decoration: none
+
+            .desc-block
+                position relative
+                margin: 0.5em 0 0
+                padding: 0 2em 0 0;
+                min-height: 4.7em;
+
+                .header-item
+                    margin: 0.5em 0 0.25em
+                    overflow hidden
+                    text-overflow ellipsis
+                    white-space nowrap
+
+                .out-of-stock
+                    color: #aaa
+                    margin-top: 0.25rem;
+                    font-weight bold
+
+                .price
+                    color: #c03
+                    font-weight: bold
+                    font-size: 1.2em
+
+                .compare-at-price
+                    color: #c99
+                    text-decoration line-through
+
+                input[type="submit"]
+                    margin: 0.5em 0 0
+
+                .item-link
+                    display block
+                    position absolute
+                    top: 0;
+                    right: 0;
+                    width: 2em;
+                    height: 100%;
+                    background transparent url("../../../site/themes/mobile/img/icons/arrow-right.png") 50% no-repeat;
+                    background-size: 1em;
+                    text-indent -9999px;
+
+    .shop-slider-wrapper
+        margin: 0
+
+        background #fff
+        box-shadow none
+
+        .bx-controls
+            .bx-pager
+                right: 0
+                text-align: center
+                opacity: 0.5
+
+        .bx-controls-direction
+            margin: 0
+
+            .bx-prev
+            .bx-next
+                position: absolute;
+                top: 0
+                height: 100%;
+                width: 2em
+                margin: 0
+                padding: 0
+                text-indent: -9999px;
+                z-index inherit
+                background transparent no-repeat
+                background-size: auto 4em;
+
+            .bx-prev
+                left: 0
+                background-image url("img/bx-controls.png")
+                background-position -1em 50%
+
+            .bx-next
+                right: 0
+                background-image url("img/bx-controls.png")
+                background-position -5em 50%
+
+        ul
+        li
+            list-style none
+            margin: 0
+            padding: 0
+
+        li
+            position relative
+
+            a
+                text-decoration: none
+
+            h2
+                /*position absolute*/
+                /*left: 0;*/
+                /*top: 0;*/
+                /*right: 0;*/
+                padding: 0 0.3em;
+                background rgba(255,255,255,0.66);
+                $border-radius(3px)
+                text-align center
+
+            .slide-image
+                text-align: center;
+
+                .badge
+                    display none;
+
+            p[itemprop="description"]
+                overflow hidden
+                max-height 5em;
+
+            .price
+                font-weight bold
+                font-size: 1.2em
+                color: #c03
+
+            .info
+                /*position absolute*/
+                /*left: 0;*/
+                /*bottom: 0;*/
+                /*right: 0;*/
+                text-align center
+                padding: 0.2em 0.35em
+                background rgba(255,255,255,0.8);
+                $border-radius(3px)
+
+    .shop-review-wrapper
+
+        & > h1
+            margin-left: 0.5rem
+
+        .reviews-form-wrapper
+        .reviews-list-wrapper
+            $default-block()
+
+        .write-review
+            margin: 0
+
+        /*.is-active*/
+        /*background-color: #fff;*/
+
+        .review-form
+            display none
+            margin: 1em 0 0;
+
+            &.is-shown
+                display block
+
+            .wa-auth-adapters
+                list-style none
+
+                li
+                    display inline-block
+                    vertical-align top
+
+                    margin: 0
+                    padding: 0;
+
+                    a
+                        display block
+
+                        margin: 0 0.25em 0.25em 0;
+                        padding: 0.5em;
+
+                        border: 1px solid rgba(0,0,0,0.1)
+
+                        $border-radius(3px)
+
+                        font-size: 0.9em
+
+                        color $color-black
+                        text-decoration none
+
+                        background: #fcd630;
+                        background: #fcd630 -moz-linear-gradient(top, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0.0) 100%);
+                        background: #fcd630 -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,0.5)), color-stop(100%,rgba(255,255,255,0.0)));
+                        background: #fcd630 -webkit-linear-gradient(top, rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.0) 100%);
+                        background: #fcd630 -o-linear-gradient(top, rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.0) 100%);
+                        background: #fcd630 -ms-linear-gradient(top, rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.0) 100%);
+                        background: #fcd630 linear-gradient(to bottom, rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.0) 100%);
+
+                        img
+                            vertical-align middle
+                            margin: 0 0.2rem 0 0;
+
+            .user-name-block
+                img
+                    max-width: 1.25rem
+                    position: relative;
+                    top: -1px;
+
+                    margin: 0 0.25rem 0 0;
+
+                    vertical-align middle
+                    $border-radius(50%)
+
+            .review-field
+                margin: 1em 0 0
+
+                label
+                    text-transform uppercase
+                    font-size: 0.8em
+
+                &:first-child
+                    margin-top: 0
+
+            .reply-notification
+                display none;
+
+            .wa-captcha
+                img
+                    $border-radius(5px)
+
+                strong
+                    display: none
+
+                input[type="text"]
+                    margin: 0.6em 0 0;
+
+            .rate-wrapper
+
+                .rate-list-wrapper
+                    margin: 0.25em 0 0
+
+                    .rate-item
+                        font-size: 2.5em
+                        color: $star-color;
+
+            .errors-wrapper
+                .error
+                    margin: 0.25em 0
+                    line-height 1.5em
+                    font-style italic
+                    color: #c03
+
+    .mini-product-list
+        margin: 0.5rem 0 0
+        font-size: 0
+
+        .product-item
+            $default-block()
+            display inline-block
+            vertical-align top
+            width: 44%
+            margin: 0 1% 0.25em 0;
+            padding: 2%;
+
+            font-size: 0.8rem
+
+            .image
+
+                img
+                    width: 100%
+
+    .shop-orders-page
+        $default-block()
+        margin: 0;
+
+        .orders-list-wrapper
+
+            .order-item
+                margin: 1em 0 0
+                background rgba(250,250,250,0.1)
+
+                $border-radius(3px);
+
+                &:first-child
+                    margin-top: 0
+
+                .header-block
+                    display block
+                    padding: 0.5em
+                    background: rgba(0,0,0,0.1);
+                    text-decoration none
+                    color: #fff
+
+                    & > span
+                        display block
+
+                    .left-column
+                        float: left
+
+                    .right-column
+                        float: right
+
+                .content-block
+                    border: solid rgba(127,127,127,0.1);
+                    border-width 0 1px 1px;
+                    padding: 0.5em
+
+                .col-block
+                    margin: 0.5em 0 0
+
+                    &:first-child
+                        margin-top: 0
+
+                    .label
+                        font-size: 0.85em
+                        color: #888
+
+                    .value
+                        margin: 0.25em 0 0
+
+                        .goods-list
+                            font-size: 0.9em
+
+                            li
+                                margin: 0.5em 0 0 2em
+
+    .order-page-wrapper
+        $default-block()
+        margin: 0;
+
+        .color-header
+            margin: -0.5rem -0.5rem 1rem
+            padding: 0.5rem
+            color: #fff
+
+        .table
+            tr
+                td
+                    padding: 0.25em 0.15em
+                    font-size: 0.9em
+                    word-wrap break-word
+
+                    &:first-child
+                        font-size: 0.8em
+                        width: 33%
+
+                    &.align-right
+                        text-align right
+
+                &.total-sum
+                    td
+                        font-weight bold
+                        font-size: 1.1em
+
+        #paymentForm
+            #qiwi-phone-prefix
+                display none
+
+            #qiwi-phone
+                margin: 1rem 0
+
+            .pay-button
+                margin: 1rem 0 0;
+
+    .sort-list-wrapper
+        $default-block()
+        box-sizing border-box
+        display table
+        width: 100%
+
+        .header-item
+            display table-cell
+            vertical-align middle
+            margin: 0
+
+        .sort-list
+            display none
+
+        .sort-select
+            display table-cell
+            vertical-align top
+            min-height 2.625rem;
+            opacity 0
+
+            &.is-shown
+                opacity: 1
+
+            select
+                margin: 0
+
+    .brands
+        list-style none
+        border: 1px solid rgba(0,0,0,0.1)
+        background #fff
+        overflow hidden
+        margin: 0.5rem 0 0
+
+        li
+            display block
+            width: 100%
+            box-sizing border-box
+
+            margin: 0
+            padding: 0
+            border: solid rgba(0,0,0,0.1)
+            border-width 1px 0 0
+
+            &:first-child
+                border-width 0
+
+            a
+                position relative
+                display block
+                padding: 0.8em 2em 0.8em 0.8em
+                text-decoration none
+
+                &:after
+                    position absolute
+                    top: 0;
+                    right: 0;
+                    content: ""
+                    display block
+                    width: 2em
+                    height: 100%
+                    background transparent url("../../../site/themes/mobile/img/icons/arrow-right.png") 50% no-repeat
+                    background-size 0.6em
+
+        & + .content-nav-wrapper
+            margin-top: 0
+            border-top: 0
+
+/* CHECKOUT STYLES */
+@import "checkout.styl"
+/* END CHECKOUT STYLES */
+
+@media (orientation:portrait)
+    .shop-slider-wrapper
+        .slide-image
+            height: 270px !important;
+            line-height 270px
+
+    @media (max-width: 320px)
+        .shop-slider-wrapper
+            .slide-image
+                height: 225px !important;
+                line-height 225px
+
+@media (orientation:landscape)
+    .shop-slider-wrapper
+        .slide-image
+            height: 300px !important;
+            line-height 300px
+
+    @media (max-width: 480px)
+        .shop-slider-wrapper
+            .slide-image
+                height: 270px !important;
+                line-height 270px
+
+/* END SHOP APP STYLES */

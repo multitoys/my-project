@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.9, created on 2016-06-03 09:58:00
+<?php /* Smarty version 2.6.9, created on 2016-06-06 09:07:21
          compiled from frame.html */ ?>
 <?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
 smarty_core_load_plugins(array('plugins' => array(array('function', 'component', 'frame.html', 3, false),)), $this); ?>
@@ -8,7 +8,8 @@ smarty_core_load_plugins(array('plugins' => array(array('function', 'component',
 
     <?php else: ?>
         <script>window.location.reload(true);</script>
-    <?php endif;  else: ?>
+    <?php endif; ?>
+<?php else: ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,22 +25,26 @@ unset($_smarty_tpl_vars);
 $this->_smarty_include(array('smarty_include_tpl_file' => "404.html", 'smarty_include_vars' => array()));
 $this->_tpl_vars = $_smarty_tpl_vars;
 unset($_smarty_tpl_vars);
-  elseif ($this->_tpl_vars['market_link']): ?>
+ ?>
+<?php elseif ($this->_tpl_vars['market_link']): ?>
     <?php $_smarty_tpl_vars = $this->_tpl_vars;
 $this->_smarty_include(array('smarty_include_tpl_file' => "market.html", 'smarty_include_vars' => array()));
 $this->_tpl_vars = $_smarty_tpl_vars;
 unset($_smarty_tpl_vars);
-  elseif ($this->_tpl_vars['PAGE_VIEW'] == 'mobile'): ?>
+ ?>
+<?php elseif ($this->_tpl_vars['PAGE_VIEW'] == 'mobile'): ?>
     <?php $_smarty_tpl_vars = $this->_tpl_vars;
 $this->_smarty_include(array('smarty_include_tpl_file' => "m.index.html", 'smarty_include_vars' => array()));
 $this->_tpl_vars = $_smarty_tpl_vars;
 unset($_smarty_tpl_vars);
-  else: ?>
+ ?>
+<?php else: ?>
     <?php $_smarty_tpl_vars = $this->_tpl_vars;
 $this->_smarty_include(array('smarty_include_tpl_file' => "index.html", 'smarty_include_vars' => array()));
 $this->_tpl_vars = $_smarty_tpl_vars;
 unset($_smarty_tpl_vars);
-  endif; ?>
+ ?>
+<?php endif; ?>
 </body>
 </html>
-<?php endif; ?>
+<?php endif; ?>

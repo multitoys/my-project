@@ -1,10 +1,43 @@
+function extracted() {
+    var productModal = $(".visual").find("a"),
+        parentPopup = $("#parent_popup"),
+        popup = $("#popup"),
+        modal = $("#modal");
+
+    $("#close").click(function () {
+        parentPopup.css("display: none");
+    });
+
+    productModal.click(function () {
+
+        var url = $(this).attr("href");
+
+        $.ajax({
+            url: url + "?ajax=1",
+            success: function (data) {
+                modal.html(data);
+                $(".dop_pics").click(function () {
+                    var newSrc = $(this).attr("href"),
+                        curPic = $("#img-current_picture");
+
+                    curPic.attr("src", newSrc);
+
+                    return false;
+                });
+                document.getElementById('parent_popup').style.display = 'block';
+            }
+        });
+
+        return false;
+    });
+}
 $(document).ready(function () {
     
     var content = $("#content"), 
-        scrollPane = $(".scroll-pane1"), 
+        // scrollPane = $(".scroll-pane1"), 
         controls = $(".controls"), 
-        quantity = $(".cart_product_quantity"), 
-        cuttedPath, slideMenuNull;
+        // quantity = $(".cart_product_quantity"), 
+        cuttedPath/*, slideMenuNull*/;
     
     $("#slidemenu1").multiSlideMenu({
         scrollToTopSpeed: 100,
@@ -12,39 +45,14 @@ $(document).ready(function () {
         slideSpeed: 300,
         backLinkContent: "Назад",
         loadContainer: "#center",
-        loadOnlyLatest: true
+        loadOnlyLatest: true,
         //beforeLoad : function(){
         //    $("body").removeClass('menu-is-shown');
         //},
-        //afterLoadDone: function () {
-        //    //$("body").removeClass('menu-is-shown');
-        //    //var controls = $(".controls"), 
-        //    //    quantity = $(".cart_product_quantity");
-        //    // try {
-        //    //     mainScroll = baron({
-        //    //         root: ".scroll-pane1",
-        //    //         scroller: "#content",
-        //    //         bar: ".baron__bar",
-        //    //         scrollingCls: "_scrolling"
-        //    //     }).autoUpdate().controls({track: ".baron__track"});
-        //    // } catch (e) {
-        //    //     console.log(e.stack);
-        //    // }
-        //    // resizeCatalog();
-        //
-        //    //if (controls.tooltip) {
-        //    //    controls.tooltip({
-        //    //        delay: 1, bodyHandler: function () {
-        //    //            return $("<img/>").attr("src", $(this).attr("data-pid"));
-        //    //        }
-        //    //    });
-        //    //}
-        //    //if (quantity.spin) {
-        //    //    quantity.spin({min: 0, max: 999});
-        //    //}
-        //    //$("a.page-link").click(navigation);
-        //    //$("div.shapka").find("a").click(navigation);
-        //}
+        afterLoadDone: function () {
+            extracted();
+            $("a.page-link").click(navigation);
+        }
     });
     
     //slideMenuNull = $("#slidemenu0");
@@ -81,6 +89,7 @@ $(document).ready(function () {
         //    quantity.spin({min: 0, max: 999});
         //}
         $("a.page-link").click(navigation);
+        extracted();
         //$("div.shapka").find("a").click(navigation);
     }
     
@@ -167,46 +176,15 @@ $(document).ready(function () {
             }
         }
     });
-
-
-    var productModal = $(".visual").find("a"),
-        parentPopup = $("#parent_popup"),
-        popup = $("#popup"),
-        modal = $("#modal");
     
-    $("#close").click(function () {
-        parentPopup.css("display: none");
-    });
-    
-    productModal.click(function () {
-        var url = $(this).attr("href");
-            
-        $.ajax({
-            url: url + "?ajax=1", 
-            success: function (data) {
-                modal.html(data);
-                $(".dop_pics").click(function () {
-                    var newSrc = $(this).attr("href"),
-                        curPic = $("#img-current_picture");
-
-                    curPic.attr("src", newSrc);
-
-                    return false;
-                });
-                document.getElementById('parent_popup').style.display='block';
-            }
-        });
-
-        return false;
-    });
-    $(".dop_pics").click(function () {
-        var newSrc = $(this).attr("href"),
-            curPic = $("#img-current_picture");
-
-        curPic.attr("src", newSrc);
-
-        return false;
-    });
+    // $(".dop_pics").click(function () {
+    //     var newSrc = $(this).attr("href"),
+    //         curPic = $("#img-current_picture");
+    //
+    //     curPic.attr("src", newSrc);
+    //
+    //     return false;
+    // });
     
     
     //$(window).bind("popstate", function () {

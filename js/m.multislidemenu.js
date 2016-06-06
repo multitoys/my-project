@@ -108,11 +108,11 @@
                         var cuttedPath = window.location.pathname.split("/");
                         switch (cuttedPath[1]) {
                             case "cart":
-                            case "auxpage_divoland":
-                            case "auxpage_mixtoys":
-                            case "auxpage_dreamtoys":
-                            case "auxpage_grandtoys":
-                            case "auxpage_kindermarket":
+                            // case "auxpage_divoland":
+                            // case "auxpage_mixtoys":
+                            // case "auxpage_dreamtoys":
+                            // case "auxpage_grandtoys":
+                            // case "auxpage_kindermarket":
                                 return "";
                             default:
                                 return loadContainer;
@@ -158,8 +158,11 @@
             }
         };
         base.changeUri = function (url) {
-            if (!!(window.history && history.pushState)) {
-                window.history.pushState({}, "", url);
+            // if (!!(window.history && history.pushState)) {
+            //     window.history.pushState({}, "", url);
+            // }
+            if (url != window.location) {
+                window.history.pushState(null, null, url);
             }
         };
         base._menuItemClicked = function (element, event, depth) {

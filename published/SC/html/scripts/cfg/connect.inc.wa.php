@@ -63,7 +63,7 @@ error was encountered while trying to use an ErrorDocument to handle the request
 
     define('MOD_REWRITE_SUPPORT', SystemSettings::get('MOD_REWRITE_SUPPORT'));
 
-    if (MOD_REWRITE_SUPPORT || true) {
+    if (MOD_REWRITE_SUPPORT || false) {
         define('URL_IMAGES_COMMON', URL_ROOT.'/images_common');
     } else {
         define('URL_IMAGES_COMMON', WBS_INSTALL_PATH.'/images_common');

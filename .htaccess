@@ -13,7 +13,7 @@ RewriteRule ^shop/(imgval.php|wbs_messageserserver.php) published/SC/html/script
 
 RewriteCond  %{REQUEST_FILENAME} !-f
 RewriteRule ^(repo_themes|js|3rdparty|images_common|products_pictures|images|themes|css)/(.*)$ published/SC/html/scripts/$1/$2?frontend=1 [L]
-RewriteRule ^(pictures)/(.*)$ published/publicdata/MULTITOYS/attachments/SC/products_$1/$2?frontend=1 [L]
+RewriteRule ^(/pictures)/(.*)$ published/publicdata/MULTITOYS/attachments/SC/products_$1/$2?frontend=1 [L]
 RewriteRule ^(search_pictures)/(.*)$ published/publicdata/MULTITOYS/attachments/SC/$1/$2?frontend=1 [L]
 
 RewriteCond  %{REQUEST_FILENAME} !-f

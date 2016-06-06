@@ -388,7 +388,7 @@ h2 {
 }
 
 .cpt_product_price {
-    line-height: 2em;
+    line-height: 2em
 }
 
 .productPrice {
@@ -411,7 +411,7 @@ h2 {
 
 .productCode {
     word-break: break-all;
-    color: green;
+    color: green
 }
 
 .review_block {
@@ -1145,18 +1145,18 @@ ol {
     padding: .5em;
     position: relative;
     height: 100%;
-    border-radius: .5em;
+    border-radius: .5em
 }
 
 .close {
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0,0,0,.5);
     border: #fffefe solid 1px;
     height: 1em;
     line-height: 1em;
     text-decoration: none;
     font-size: 3.5em;
     width: 1em;
-    box-shadow: 0px 0px 3px 2px white;
+    box-shadow: 0 0 3px 2px white;
     border-radius: 2px;
     text-align: center;
     box-sizing: border-box;
@@ -1165,27 +1165,8 @@ ol {
     cursor: pointer;
     user-select: none;
     -moz-user-select: none;
-    -webkit-user-select: none;
+    -webkit-user-select: none
 }
-
-/*.close {*/
-    /*background-color: rgba(0,0,0,0.5);*/
-    /*border: #fffefe solid 1px;*/
-    /*height: 1em;*/
-    /*line-height: 1em;*/
-    /*position: absolute;*/
-    /*right: .1rem;*/
-    /*text-decoration: none;*/
-    /*font-size: 3em;*/
-    /*top: 0;*/
-    /*width: 1em;*/
-    /*box-shadow: 0 0 3px 2px white;*/
-    /*border-radius: 2px;*/
-    /*transition: .2s;*/
-    /*text-align: center;*/
-    /*box-sizing: border-box;*/
-    /*color: #fffefe;*/
-/*}*/
 
 .close:active {
     background-color: rgba(0,122,200,.5);
@@ -1589,7 +1570,7 @@ ul#breadcrumbs-one li li:hover {
     font-size: 1.5em;
     text-align: center;
     color: white;
-    background-color: coral;
+    background-color: coral
 }
 
 .align_top {
@@ -1603,7 +1584,7 @@ ul#breadcrumbs-one li li:hover {
     font-style: italic;
     box-shadow: 0 1px 5px 0 rgba(74,74,74,0.5);
     box-sizing: border-box;
-    width: 70%;
+    width: 70%
 }
 
 .cpt_currency_selection {
@@ -2873,13 +2854,13 @@ a#link_close {
 .cpt_product_images {
     position: relative;
     margin: 1em auto;
-    padding: 0 .5em;
+    padding: 0 .5em
 }
 
 div#product_info_block {
     margin: .5em;
     padding: .5em;
-    font-size: 1.1em;
+    font-size: 1.1em
 }
 
 #product_info_block>div.add_to_cart {
@@ -2902,7 +2883,7 @@ div#product_info_block {
 
 .product_code {
     display: flex;
-    width: 100%;
+    width: 100%
 }
 
 .after_code {
@@ -2939,26 +2920,28 @@ span.youSavePrice {
     float: right;
     width: 70%;
     text-align: right;
-    box-sizing: border-box
+    box-sizing: border-box;
 }
 
 .cart_item {
-    margin-bottom: .5em;
+    margin-bottom: .25em;
     border: 1px solid #b0bec5;
     background: #fff;
     width: 100%;
-    box-sizing: border-box
+    box-sizing: border-box;
 }
 
 .cart_wrapper {
     margin: .5em 0 4.5em;
-    padding: .5em 0 .25em
+    padding: .5em 0 .25em;
 }
 
 .cart_item_name {
+    /* height: 1.6em; */
     background-color: #b2ebf2;
     margin-bottom: .25em;
-    padding: 0 .25em
+    padding: 0 .25em;
+    /* overflow: hidden; */
 }
 
 .display_none {
@@ -2970,19 +2953,19 @@ span.youSavePrice {
 }
 
 div#box_product_thumbnails {
-    margin-top: 0.5em;
-    box-shadow: 0px 1px 4px 0px #9e9e9e;
+    margin-top: .5em;
+    box-shadow: 0 1px 4px 0 #9e9e9e;
     border: 1px solid #4caf50;
     width: 100%;
     text-align: center;
     display: table;
-    box-sizing: border-box;
+    box-sizing: border-box
 }
 
 a.dop_pics {
     display: table-cell;
     border-right: 1px solid #4caf50;
-    margin: 0 auto;
+    margin: 0 auto
 }
 
 a.dop_pics:last-of-type {
@@ -2991,15 +2974,20 @@ a.dop_pics:last-of-type {
 
 .cart_item div.counter {
     height: 100%;
-    width: 28px;
+    width: 22px;
     float: right;
-    margin: 0 .25em 0 1.5em
+    margin: 0 .25em 0 1.5em;
 }
 
 .cart_item a.count-control,.cart_item input.cart_product_quantity {
-    width: 26px;
-    height: 26px;
-    display: block
+    width: 28px;
+    height: 22px;
+    display: block;
+    line-height: initial;
+}
+
+.cart_item input.cart_product_quantity {
+    height: 18px
 }
 
 .cart_item_name a {
@@ -3015,31 +3003,32 @@ a.dop_pics:last-of-type {
     font-family: Tahoma,Verdana,Arial,Helvetica;
     background: #fff59d;
     width: 100%;
-    box-sizing: border-box
+    box-sizing: border-box;
 }
 
 .cart_item img.preview {
     margin: 0 .25em;
-    height: 5rem
+    height: 4rem;
+    border: 1px solid lightgreen;
 }
 
 .cart_item_total span {
     font-family: Tahoma,Verdana,Arial,Helvetica;
     color: forestgreen;
     font-size: 1.1em;
-    background-color: white;
     padding: 0 .25em 1px;
-    display: inline-block
+    display: inline-block;
 }
 
 .cart_item_total div {
     color: #01579b;
-    padding-left: .25em
+    padding-left: .25em;
 }
 
 .cart_item_sum span {
     color: #2196f3;
-    width: 5.5em
+    width: 5.5em;
+    background-color: white;
 }
 
 .cart_item_bonus {
@@ -3047,7 +3036,7 @@ a.dop_pics:last-of-type {
 }
 
 .cart_item_sum {
-    width: 55%
+    width: 55%;
 }
 
 div#cart_total {
@@ -3117,8 +3106,7 @@ div#cart_footer {
     }
 
     .product_code {
-        font-size: .9em;
-        /* word-break: break-word; */
+        font-size: .9em
     }
 
     .productPrice {
@@ -3146,10 +3134,26 @@ div#cart_footer {
     }
 }
 
+@media screen and (min-width: 630px) {
+    .cart_item {
+        height: 9.75em;
+        width: 49.5%;
+        float: left;
+        margin-bottom: .5em;
+    }
+
+    .cart_item:nth-of-type(odd) {
+        margin-right: 1%;
+    }
+    .cart_item_name {
+        height: 1.6em;
+        overflow: hidden;
+    }
+}
+
 @font-face {
     font-family: 'Glyphicons Regular';
-    /*src: url('/css/font/glyphicons-halflings-regular.eot');*/
-    src: /*url('/css/font/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'),*/url('/css/font/glyphicons-regular.woff2') format('woff2'),url('/css/font/glyphicons-halflings-regular.woff') format('woff'),url('/css/font/glyphicons-halflings-regular.ttf') format('truetype'),url('/css/font/glyphicons-halflings-regular.svg#glyphiconsregular') format('svg')
+    src: url('/css/font/glyphicons-regular.woff2') format('woff2'),url('/css/font/glyphicons-halflings-regular.woff') format('woff'),url('/css/font/glyphicons-halflings-regular.ttf') format('truetype'),url('/css/font/glyphicons-halflings-regular.svg#glyphiconsregular') format('svg')
 }
 
 .glyphicons {

@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.9, created on 2016-06-03 09:58:00
+<?php /* Smarty version 2.6.9, created on 2016-06-06 14:24:18
          compiled from index.html */ ?>
 <?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
 smarty_core_load_plugins(array('plugins' => array(array('function', 'component', 'index.html', 8, false),array('function', 'welcome', 'index.html', 28, false),array('function', 'conc_tree', 'index.html', 85, false),array('function', 'slidetree', 'index.html', 88, false),array('function', 'cs_show_main_page', 'index.html', 149, false),array('modifier', 'isauthpage', 'index.html', 129, false),)), $this); ?>
@@ -19,3 +19,4 @@ $this->_smarty_include(array('smarty_include_tpl_file' => "login.html", 'smarty_
 $this->_tpl_vars = $_smarty_tpl_vars;
 unset($_smarty_tpl_vars);
   echo '';  else:  echo '';  echo smarty_function_cs_show_main_page(array(), $this); echo '';  endif;  echo '';  endif;  echo '';  endif;  echo '</div>';  if ($_GET['ukey'] != 'cart'):  echo '<div id="right"';  if ($this->_tpl_vars['conc']):  echo ' class=conc data-code=""><div id=lists class="cpt_maincolumns"><div id=conc_search class=cpt_product_lists><div class=conc_search_res><div class=conc_container></div><div class="baron__track"><div class="baron__free"><div class="baron__bar"></div></div></div></div></div>';  else:  echo '><div id=lists class="cpt_maincolumns"><!-- cpt_container_start -->';  echo smarty_function_component(array('cpt_id' => 'product_lists','list_id' => 'hitu','limit' => '25'), $this); echo '<!-- cpt_container_end -->';  endif;  echo '</div></div>';  endif;  echo '</div></div></div></div>'; ?>
+

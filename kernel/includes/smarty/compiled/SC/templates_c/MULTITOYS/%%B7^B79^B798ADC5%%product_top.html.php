@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.9, created on 2016-06-02 17:02:39
+<?php /* Smarty version 2.6.9, created on 2016-06-06 14:24:03
          compiled from product_top.html */ ?>
 <?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
 smarty_core_load_plugins(array('plugins' => array(array('modifier', 'translate', 'product_top.html', 4, false),array('modifier', 'set_query_html', 'product_top.html', 12, false),array('modifier', 'escape', 'product_top.html', 14, false),)), $this); ?>

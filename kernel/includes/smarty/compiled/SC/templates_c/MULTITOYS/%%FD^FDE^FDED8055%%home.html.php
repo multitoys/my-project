@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.9, created on 2016-06-02 12:53:35
+<?php /* Smarty version 2.6.9, created on 2016-06-06 14:23:58
          compiled from home.html */ ?>
 <?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
 smarty_core_load_plugins(array('plugins' => array(array('function', 'zakcia', 'home.html', 10, false),array('function', 'get_topproducts', 'home.html', 86, false),)), $this); ?>
@@ -7,7 +7,7 @@ smarty_core_load_plugins(array('plugins' => array(array('function', 'zakcia', 'h
         <?php echo smarty_function_zakcia(array(), $this);?>
 
 
-        
+                                                                                                                                                                                                                   
                                                                                     
     
             

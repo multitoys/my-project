@@ -173,12 +173,11 @@ a .cpt_divisions_navigation ul li {
     left: 0;
     min-height: 100%;
     box-sizing: border-box;
-    /* padding-top:3rem; */
     width: 60%;
     max-width: 250px;
     background-color: rgba(255,255,192,.95);
     box-shadow: 3px 0 3px 0 rgba(0,0,0,.5);
-    z-index: 99999;
+    z-index: 99999
 }
 
 ul a {
@@ -230,7 +229,7 @@ ul a:hover {
 }
 
 .cpt_product_search form {
-    background-color: #FFFFFF;
+    background-color: #fff;
     background-color: cornflowerblue;
     border: 1px solid white;
     display: block;
@@ -240,7 +239,7 @@ ul a:hover {
     z-index: 1030;
     box-sizing: border-box;
     height: 3em;
-    box-shadow: 0 0 .5rem 0 rgba(0,0,0,.5);
+    box-shadow: 0 0 .5rem 0 rgba(0,0,0,.5)
 }
 
 .header_portfolio div {
@@ -549,7 +548,7 @@ h2 {
     border: none 0;
     padding: .2em 0 0 0;
     margin: .75em 0 0 0;
-    box-sizing: border-box
+    box-sizing: border-box;
 }
 
 .auxmenu {
@@ -641,8 +640,7 @@ h2 {
     -moz-transition: left 300ms linear;
     -ms-transition: left 300ms linear;
     -o-transition: left 300ms linear;
-    transition: left 300ms linear;
-    /* box-shadow: 3px 0 3px 0 rgba(0,0,0,.5); */
+    transition: left 300ms linear
 }
 
 #live_search li,#right.conc li {
@@ -740,9 +738,7 @@ h2 {
 
 #searchstring,#searchstring_conc {
     border-radius: .2em;
-    /* background-color: #ECEFF1; */
     margin: auto;
-    /* padding: .5em; */
     padding-left: 15%;
     box-sizing: border-box;
     font-size: 1em;
@@ -751,9 +747,7 @@ h2 {
     font-style: normal;
     z-index: 1050;
     width: 100%;
-    /* vertical-align: middle; */
-    /* line-height: 1; */
-    height: 100%;
+    height: 100%
 }
 
 #search_ok {
@@ -765,11 +759,10 @@ h2 {
     width: 16px;
     height: 16px;
     padding: 0;
-    /* color:#1f1f1f !important; */
     cursor: pointer;
     background-repeat: no-repeat;
     background-color: transparent;
-    z-index: 9999;
+    z-index: 9999
 }
 
 .submit {
@@ -1007,7 +1000,7 @@ ol {
     margin-left: 0;
     margin-right: 0;
     position: relative;
-    min-width: 100%;
+    min-width: 100%
 }
 
 #columns>div {
@@ -1104,15 +1097,14 @@ ol {
 
 .multiSlideMenu-nav {
     position: relative;
-    overflow: hidden;
-    /* margin-top: 3em; */
+    overflow: hidden
 }
 
 .multiSlideMenu-wrapper {
     left: 0;
     position: relative;
     top: 0;
-    height: 100%;
+    height: 100%
 }
 
 .multiSlideMenu-menu {
@@ -1121,7 +1113,7 @@ ol {
     padding: 0;
     list-style: none;
     display: inherit;
-    left: 0;
+    left: 0
 }
 
 .multiSlideMenu-inheritedmenu {
@@ -1541,7 +1533,7 @@ ul#breadcrumbs-one li li:hover {
     width: 40%;
     max-width: 40%;
     min-height: 4em;
-    background: cornflowerblue;
+    background: cornflowerblue
 }
 
 #right ul li img:hover {
@@ -2603,13 +2595,12 @@ input#checkout_button:hover {
 }
 
 #slidemenu1,#slidemenu0 {
-    width: 100%;
+    width: 100%
 }
 
 #slidemenu1 ul,#slidemenu0 ul {
     margin: 0;
-    padding: 0;
-    /* height: 100%; */
+    padding: 0
 }
 
 .collapsible {
@@ -2656,11 +2647,11 @@ li.selected {
 
 #slidemenu1 li:last-child {
     margin-bottom: 0;
-    padding-bottom: 0;
+    padding-bottom: 0
 }
 
-#slidemenu1 .multiSlideMenu-back:last-child, #slidemenu0 .multiSlideMenu-back:last-child {
-    background-color: #607D8B;
+#slidemenu1 .multiSlideMenu-back:last-child,#slidemenu0 .multiSlideMenu-back:last-child {
+    background-color: #607d8b
 }
 
 #new_postup {
@@ -3196,7 +3187,7 @@ div#cart_footer {
 
 .glyphicons-540-cart-tick:before {
     content: "\e540";
-    transition: content .5s ease-out .5s
+    /* transition:content .5s ease-out .5s */
 }
 
 .glyphicons-203-shopping-cart:before {
@@ -3204,9 +3195,10 @@ div#cart_footer {
     transition: content .5s ease-out .5s
 }
 
-.z_add_cart:active .glyphicons-540-cart-tick:before, .z_add_cart:active .glyphicons-203-shopping-cart:before {
+.z_add_cart:active .glyphicons-540-cart-tick:before,.z_add_cart:active .glyphicons-203-shopping-cart:before {
     content: "\e209";
-    transition: content .5s ease-out .5s
+    color: white;
+    /* transition:content .5s ease-out .5s; */
 }
 
 #popup div#cat_path {

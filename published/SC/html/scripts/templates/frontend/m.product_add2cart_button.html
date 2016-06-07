@@ -4,7 +4,7 @@
         <input id='qty{$product_info.productID}' class=cart_product_quantity type=text value=1 name=product_qty title='Количество' size=2 data-id='{$product_info.productID}' onkeyup='if (event.keyCode == 13) {ldelim}add2Cart("#qty{$product_info.productID}");{rdelim}' {*disabled*}>
         <a class='count-control control-up' href="javascript:void(0);" onclick='increaseNumber({$product_info.productID})'>+</a>
     </div>
-    <button class="z_add_cart" onclick='add2Cart("#qty{$product_info.productID}");' type="button">
+    <button class="z_add_cart{if !$shop_counts[$_cnt]} cart_empty{/if}" onclick='add2Cart("#qty{$product_info.productID}");' type="button">
         <div class='in_cart'>
             {if $shop_counts[$_cnt]}
                 <span class="glyphicons glyphicons-540-cart-tick" aria-hidden="true"></span>

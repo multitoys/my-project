@@ -327,6 +327,7 @@ function updateClientInfo(id, qt) {
 
     if (!oldVal) {
         cartIcon.removeClass('glyphicons-203-shopping-cart').addClass('glyphicons-540-cart-tick');
+        zpid.closest('button.z_add_cart').removeClass('cart_empty');
     }
     
     //zpid.html('<div class="animated fadeInDownBig">' + newVal + "</div>");

@@ -52,6 +52,7 @@ $(document).ready(function () {
         afterLoadDone: function () {
             extracted();
             $("a.page-link").click(navigation);
+            $("div#loader").addClass('display_none');
         }
     });
     
@@ -274,14 +275,15 @@ $(document).ready(function () {
         if (strpos(url, "?") !== false) {
             glue = "&";
         }
-        $("#center").addClass("smoke");
-        scrollPaine.addClass("loader");
+        $("div#loader").removeClass('display_none');
+        // $("#center").addClass("smoke");
+        // scrollPaine.addClass("loader");
 
         $.ajax({
             url: url + glue + "ajax=1", success: function (data) {
-                $("#center").html(data).removeClass("smoke");
-                var preview = $(".preview"), controls = $(".controls"), quantity = $(".cart_product_quantity");
-                scrollPaine.removeClass("loader");
+                $("div#loader").addClass('display_none');
+                // var preview = $(".preview"), controls = $(".controls"), quantity = $(".cart_product_quantity");
+                // scrollPaine.removeClass("loader");
                 $("a.page-link").click(navigation);
             }
         });

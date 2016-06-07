@@ -27,7 +27,7 @@
 {*<link rel="stylesheet" href="/css/m.main.css" type="text/css">*}
 {combine input=$css_m_main output='/cache/m.main.css' age='5'}
 <script {$defer|default:' '} src='/js/jquery-1.11.0.min.js'></script>
-{combine input=$js_m_multislidemenu output='/cache/m.multislidemenu.js' age='3600' defer=$defer}
+{combine input=$js_m_multislidemenu output='/cache/m.multislidemenu.js' age='5' defer=$defer}
 {*<script src="/js/m.multislidemenu.js"></script>*}
 {combine input=$js_m_head output='/cache/m.head.js' age='5' defer=$defer}
 {*<script src="/js/m.head.js"></script>*}
@@ -51,9 +51,9 @@
 <link rel="stylesheet" type="text/css" href="/source/jquery.fancybox.css" media="screen"/>
 <script {$defer|default:' '} type="text/javascript" src="/lib/jquery.mousewheel-3.0.6.pack.js"></script>
 {*<script {$defer|default:' '} type="text/javascript" src="/source/jquery.fancybox.pack-1454601305626.js"></script>*}
-{if $PAGE_VIEW eq 'mobile'}
-{combine input=$js_m_competitors output='/cache/m.competitors.js' age='5' defer=$defer}
-{else}
+{if $PAGE_VIEW ne 'mobile'}
+{*{combine input=$js_m_competitors output='/cache/m.competitors.js' age='3600' defer=$defer}*}
+{*{else}*}
 {combine input=$js_competitors output='/cache/competitors.js' age='5' defer=$defer}
 {/if}
 {/if}

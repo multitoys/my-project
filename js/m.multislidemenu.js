@@ -124,14 +124,14 @@
                         return;
                     } else {
                         $("body").removeClass('menu-is-shown');
-                        loadContainer.addClass("loader");
+                        $("div#loader").removeClass('display_none');
                     }
                 }
                 if (strpos(url, "?") !== false) {
                     glue = "&";
                 }
                 $.ajax({url: url + glue + "ajax=1", type: "get"}).done(function (data) {
-                    loadContainer.html(data).removeClass("loader");
+                    loadContainer.html(data);
                     base.changeTitle();
                     base.changeUri(url);
                     if (base.o.afterLoadDone && typeof(base.o.afterLoadDone) === "function") {

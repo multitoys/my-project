@@ -321,8 +321,14 @@ function loadCart() {
 }
 function updateClientInfo(id, qt) {
     var zpid = $("#zpid_" + id);
+    var cartIcon = zpid.prev();
     var oldVal = parseInt(zpid.text());
     var newVal = ((oldVal)?oldVal:0) + parseInt(qt);
+
+    if (!oldVal) {
+        cartIcon.removeClass('glyphicons-203-shopping-cart').addClass('glyphicons-540-cart-tick');
+    }
+    
     //zpid.html('<div class="animated fadeInDownBig">' + newVal + "</div>");
     zpid.html(newVal);
 }

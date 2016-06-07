@@ -3194,13 +3194,18 @@ div#cart_footer {
     -moz-osx-font-smoothing: grayscale
 }
 
-.glyphicons-cart-tick:before {
-    content: "\e209";
+.glyphicons-540-cart-tick:before {
+    content: "\e540";
     transition: content .5s ease-out .5s
 }
 
-.z_add_cart:active .glyphicons-cart-tick:before {
-    content: "\e540";
+.glyphicons-203-shopping-cart:before {
+    content: "\e203";
+    transition: content .5s ease-out .5s
+}
+
+.z_add_cart:active .glyphicons-540-cart-tick:before, .z_add_cart:active .glyphicons-203-shopping-cart:before {
+    content: "\e209";
     transition: content .5s ease-out .5s
 }
 

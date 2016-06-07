@@ -6,13 +6,15 @@
     </div>
     <button class="z_add_cart" onclick='add2Cart("#qty{$product_info.productID}");' type="button">
         <div class='in_cart'>
-            <span class="glyphicons glyphicons-cart-tick" aria-hidden="true"></span>
-            <div id="zpid_{$product_info.productID}">
-                {if $shop_counts[$_cnt]}
-                    {$shop_counts[$_cnt]}
-                {else}
-                    Купить
-                {/if}
+            {if $shop_counts[$_cnt]}
+                <span class="glyphicons glyphicons-540-cart-tick" aria-hidden="true"></span>
+                <div id="zpid_{$product_info.productID}">
+                {$shop_counts[$_cnt]}
+            {else}
+                <span class="glyphicons glyphicons-203-shopping-cart" aria-hidden="true"></span>
+                <div id="zpid_{$product_info.productID}">
+                Купить
+            {/if}
             </div>
         </div>
     </button>

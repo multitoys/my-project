@@ -35,7 +35,7 @@ $(document).ready(function () {
     
     var content = $("#content"), 
         // scrollPane = $(".scroll-pane1"), 
-        controls = $(".controls"), 
+        // controls = $(".controls"), 
         // quantity = $(".cart_product_quantity"), 
         cuttedPath/*, slideMenuNull*/;
     
@@ -270,8 +270,10 @@ $(document).ready(function () {
     }
 
     function navigation() {
-        var url = $(this).attr("href"), scrollPaine = $(".scroll-pane1"), glue = "?";
-        console.log(url);
+        var url = $(this).attr("href"), 
+            /*scrollPaine = $(".scroll-pane1"),*/ 
+            glue = "?";
+        // console.log(url);
         if (strpos(url, "?") !== false) {
             glue = "&";
         }
@@ -281,6 +283,7 @@ $(document).ready(function () {
 
         $.ajax({
             url: url + glue + "ajax=1", success: function (data) {
+                $("#center").html(data);
                 $("div#loader").addClass('display_none');
                 // var preview = $(".preview"), controls = $(".controls"), quantity = $(".cart_product_quantity");
                 // scrollPaine.removeClass("loader");

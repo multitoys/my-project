@@ -9,46 +9,37 @@
             <div class=categories_show>
                 <a class="show-hidden-menu" href="javascript:void(0);"></a>
             </div>
-            {*{if $smarty.session.log}*}
-                <div id=multi-logo-mini {if $smarty.session.log} class=log_in{/if}>
-                    <!-- cpt_container_start -->
-                    {cpt_logo file='logo_mini.png'}
-                    <!-- cpt_container_end -->
-                </div>
-            {*{else}*}
-                {*<div id="multi-logo">*}
-                    {*<!-- cpt_container_start[id=2] -->*}
-                    {*{cpt_logo file='logo.png'}*}
-                    {*<!-- cpt_container_end -->*}
-                {*</div>*}
+            <div id=multi-logo-mini {if $smarty.session.log} class=log_in{/if}>
+                <!-- cpt_container_start -->
+                {cpt_logo file='logo_mini.png'}
+                <!-- cpt_container_end -->
+            </div>
             {if !$smarty.session.log}
                 <div id=pass-login class=blue-button>
                     <a id=link_login href="/login/">Вход</a>
                 </div>
             {/if}
         </div>
+    {if $smarty.session.log}
         <div id=header>
-            {if $smarty.session.log}
-                <div class=cpt_product_search>
-                    <form method=get name=form action="/search">
-                        <input type=text class=input_message rel="Поиск товаров" placeholder="Поиск товаров" name=searchstring autocomplete=off id=searchstring>
-                        <input type=submit value="" id='search_ok' class=submit>
-                    </form>
-                </div>
-            {/if}
-            {if $smarty.session.cs_may_order}
-                <a href="/cart"><div id=my__cart></div></a>
-            {/if}
+            <div class=cpt_product_search>
+                <form method=get name=form action="/search">
+                    <input type=text class=input_message rel="Поиск товаров" placeholder="Поиск товаров" name=searchstring autocomplete=off id=searchstring>
+                    <input type=submit value="" id='search_ok' class=submit>
+                </form>
+            </div>
+            <div id=out-login>
+                <div class=seans_out><a href="/logout" id=logout>Выйти из сеанса</a></div>
+                <div><a href="/myaccount" id=myaccount>Личный кабинет</a></div>
+            </div>
+        {if $smarty.session.cs_may_order}
+            <a href="/cart"><div id=my__cart></div></a>
+        {/if}
+    {/if}
         </div>
         <div id=main_content>
             <div id=columns>
                 <div id=left class=hidden-menu-wrapper>
-                    {if $smarty.session.log}
-                        <div id=out-login>
-                            <div class=seans_out><a href="/logout" id=logout>Выйти из сеанса</a></div>
-                            <div><a href="/myaccount" id=myaccount>Личный кабинет</a></div>
-                        </div>
-                    {/if}
                     <div class="cpt_maincolumns menu-block-wrapper">
                         {m_slidetree}
                         {if $smarty.session.log and $smarty.session.cs_may_order}

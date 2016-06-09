@@ -31,6 +31,7 @@ function extracted() {
         return false;
     });
 }
+
 $(document).ready(function () {
     
     var content = $("#content"), 
@@ -296,10 +297,12 @@ $(document).ready(function () {
         return false;
     }
 });
+
 function strpos(haystack, needle, offset) {
     var i = haystack.indexOf(needle, offset);
     return i >= 0 ? i : false;
 }
+
 function explode(delimiter, string) {
     var emptyArray = {0: ""};
     if (arguments.length != 2 || typeof arguments[0] == "undefined" || typeof arguments[1] == "undefined") {
@@ -316,14 +319,17 @@ function explode(delimiter, string) {
     }
     return string.toString().split(delimiter.toString());
 }
+
 function zakcia(seconds) {
     var startDate = new Date();
     startDate.setSeconds(seconds);
     $("#z_counter").countdown({image: "/img/_digits.png", startTime: startDate});
 }
+
 function loadCart() {
     $("#my__cart").load("/popup/show_cart.php");
 }
+
 function updateClientInfo(id, qt) {
     var zpid = $("#zpid_" + id);
     var cartIcon = zpid.prev();
@@ -338,6 +344,7 @@ function updateClientInfo(id, qt) {
     //zpid.html('<div class="animated fadeInDownBig">' + newVal + "</div>");
     zpid.html(newVal);
 }
+
 function increaseNumber(id) {
     var value = $('#qty' + id),
         nCol = value.val();
@@ -348,6 +355,7 @@ function increaseNumber(id) {
     value.val(nCol);
     return false;
 }
+
 function decreaseNumber(id) {
     var value = $('#qty' + id),
         nCol = value.val();
@@ -358,24 +366,7 @@ function decreaseNumber(id) {
     value.val(nCol);
     return false;
 }
-//function addAll2Cart() {
-//    var myCart = $("#my__cart");
-//    myCart.html('<div style="float:right"><p style="font-size:14px;line-height:37px;color:white">Загрузка товаров...</p></div>');
-//    $("[name=product_qty]").each(function () {
-//        var id = $(this).attr("data-id");
-//        var qt = $(this).val();
-//        var query = "?ukey=cart&view=noframe&action=add_product&force=yes&productID=" + id + "&product_qty=" + qt;
-//        if (qt > 0) {
-//            $.ajax({
-//                type: "GET", url: query, dataType: "html", async: true, success: function () {
-//                    updateClientInfo(id, qt);
-//                }
-//            });
-//            $(this).val("");
-//        }
-//    });
-//    setTimeout(loadCart, 300);
-//}
+
 function add2Cart(who) {
     var myCart = $("#my__cart");
     // myCart.html('<div style="float:right"><p style="font-size:14px;line-height:37px;color:white">Загрузка товаров...</p></div>');
@@ -397,6 +388,7 @@ function add2Cart(who) {
     $(who).val("");
     setTimeout(loadCart, 250);
 }
+
 function Recard() {
     var sOut = "";
 
@@ -418,6 +410,7 @@ function Recard() {
 
     eval(sOut);
 }
+
 function Reprise(oldVal) {
 
     var all = 0;
@@ -462,6 +455,7 @@ function Reprise(oldVal) {
     Recard();
     setTimeout(loadCart, 250);
 }
+
 function CountDOWN(id, removeItem) {
     removeItem = removeItem || false;
     if (!removeItem) {
@@ -480,6 +474,7 @@ function CountDOWN(id, removeItem) {
         Reprise(oldVal);
     }
 }
+
 function CountUP(id) {
     var val = parseInt($('#count_' + id).val());
     val++;
@@ -492,6 +487,7 @@ function CountUP(id) {
 
     Reprise();
 }
+
 function _changeCurrency() {
     document.ChangeCurrencyForm.submit();
 }
@@ -588,6 +584,7 @@ function changePic(id, direction) {
 //        }
 //    }, 1500));
 //});
+
 (function ($) {
     $.scrollUp = function (options) {
         var defaults = {
@@ -635,6 +632,7 @@ function changePic(id, direction) {
         });
     };
 })(jQuery);
+
 //(function ($) {
 //    var helper = {}, current, title, tID, track = false;
 //    $.tooltip = {
@@ -797,7 +795,6 @@ function changePic(id, direction) {
 //        }
 //    }
 //})(jQuery);
-
 /**
  * User Script for Mobile Theme
  * */
@@ -1153,9 +1150,7 @@ var UserTouch = ( function() {
 //    $(document).ready(function() {
 //        bindEvents();
 //    });
-
 //})(jQuery);
-
 // Cash Type Change JS
 //( function($) {
 //
@@ -1175,7 +1170,6 @@ var UserTouch = ( function() {
 //    });
 //
 //})(jQuery);
-
 // Show Catalog Filter JS
 //( function($) {
 //    var bindEvents = function() {
@@ -1203,8 +1197,6 @@ var UserTouch = ( function() {
 //    $(document).ready( function() {
 //        bindEvents();
 //    });
-
-
     //var initialPoint;
     //var finalPoint;
     //$(".slider").on('touchstart', function(event) {
